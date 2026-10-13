@@ -1,9 +1,10 @@
 use std::collections::HashMap;
 use std::future::Future;
 use std::hash::Hash;
-use std::sync::{Arc, Mutex, MutexGuard, PoisonError};
+use std::sync::{Arc, Mutex, MutexGuard, PoisonError, Weak};
 use std::time::{Duration, Instant};
 
+use tokio::runtime::Handle;
 use tokio::sync::OnceCell;
 
 use crate::error::Result;
@@ -14,15 +15,24 @@ struct Fetched<Value> {
 }
 
 type Slot<Value> = Arc<OnceCell<Fetched<Value>>>;
+type Slots<Key, Value> = Mutex<HashMap<Key, Slot<Value>>>;
 
 pub struct TtlCache<Key, Value> {
     time_to_live: Duration,
-    slots: Mutex<HashMap<Key, Slot<Value>>>,
+    slots: Arc<Slots<Key, Value>>,
 }
 
 fn is_expired<Value>(slot: &Slot<Value>, time_to_live: Duration) -> bool {
     slot.get()
         .is_some_and(|fetched| fetched.fetched_at.elapsed() >= time_to_live)
+}
+
+fn locked<Key, Value>(slots: &Slots<Key, Value>) -> MutexGuard<'_, HashMap<Key, Slot<Value>>> {
+    slots.lock().unwrap_or_else(PoisonError::into_inner)
+}
+
+fn remove_expired<Key, Value>(slots: &mut HashMap<Key, Slot<Value>>, time_to_live: Duration) {
+    slots.retain(|_, slot| !is_expired(slot, time_to_live));
 }
 
 async fn fetch_now<Value, Pending>(pending: Pending) -> Result<Fetched<Value>>
@@ -36,11 +46,22 @@ where
     })
 }
 
-impl<Key: Eq + Hash + Clone, Value> TtlCache<Key, Value> {
+async fn evict_once_expired<Key, Value>(slots: Weak<Slots<Key, Value>>, time_to_live: Duration) {
+    tokio::time::sleep(time_to_live).await;
+    if let Some(slots) = slots.upgrade() {
+        remove_expired(&mut locked(&slots), time_to_live);
+    }
+}
+
+impl<Key, Value> TtlCache<Key, Value>
+where
+    Key: Eq + Hash + Clone + Send + 'static,
+    Value: Send + Sync + 'static,
+{
     pub fn new(time_to_live: Duration) -> Self {
         Self {
             time_to_live,
-            slots: Mutex::new(HashMap::new()),
+            slots: Arc::new(Mutex::new(HashMap::new())),
         }
     }
 
@@ -50,23 +71,36 @@ impl<Key: Eq + Hash + Clone, Value> TtlCache<Key, Value> {
         Pending: Future<Output = Result<Value>>,
     {
         let slot = self.live_slot(key);
-        let fetched = slot.get_or_try_init(|| fetch_now(fetch())).await?;
+        let mut fetched_here = false;
+        let fetched = slot
+            .get_or_try_init(|| {
+                fetched_here = true;
+                fetch_now(fetch())
+            })
+            .await?;
+        if fetched_here {
+            self.schedule_eviction();
+        }
         Ok(Arc::clone(&fetched.value))
     }
 
     pub fn invalidate_all(&self) {
-        self.locked_slots().clear();
+        locked(&self.slots).clear();
     }
 
     fn live_slot(&self, key: &Key) -> Slot<Value> {
-        let time_to_live = self.time_to_live;
-        let mut slots = self.locked_slots();
-        slots.retain(|_, slot| !is_expired(slot, time_to_live));
+        let mut slots = locked(&self.slots);
+        remove_expired(&mut slots, self.time_to_live);
         Arc::clone(slots.entry(key.clone()).or_default())
     }
 
-    fn locked_slots(&self) -> MutexGuard<'_, HashMap<Key, Slot<Value>>> {
-        self.slots.lock().unwrap_or_else(PoisonError::into_inner)
+    fn schedule_eviction(&self) {
+        let Ok(runtime) = Handle::try_current() else {
+            tracing::debug!("no async runtime, expired entries are pruned on next use");
+            return;
+        };
+        let slots = Arc::downgrade(&self.slots);
+        runtime.spawn(evict_once_expired(slots, self.time_to_live));
     }
 }
 
@@ -138,6 +172,36 @@ mod tests {
             .get_or_fetch(&1, || async { Err(ApiError::NotFound) })
             .await;
         assert!(matches!(failed, Err(ApiError::NotFound)));
+        let fetches = AtomicUsize::new(0);
+        assert_eq!(cached_value(&cache, 1, &fetches).await, 1);
+        assert_eq!(fetches.load(Ordering::SeqCst), 1);
+    }
+
+    #[tokio::test]
+    async fn expired_entries_are_released_without_further_use() {
+        let cache = TtlCache::new(Duration::from_millis(20));
+        let fetches = AtomicUsize::new(0);
+        cached_value(&cache, 1, &fetches).await;
+        assert_eq!(locked(&cache.slots).len(), 1);
+        tokio::time::sleep(Duration::from_millis(200)).await;
+        assert!(locked(&cache.slots).is_empty());
+    }
+
+    #[tokio::test]
+    async fn a_fetch_in_flight_during_invalidation_is_not_reused() {
+        let cache: TtlCache<u8, u32> = TtlCache::new(MINUTE);
+        let release = tokio::sync::Notify::new();
+        let gated_fetch = cache.get_or_fetch(&1, || async {
+            release.notified().await;
+            Ok(100)
+        });
+        let invalidate_then_release = async {
+            tokio::task::yield_now().await;
+            cache.invalidate_all();
+            release.notify_one();
+        };
+        let (stale, ()) = tokio::join!(gated_fetch, invalidate_then_release);
+        assert_eq!(stale.ok().map(|value| *value), Some(100));
         let fetches = AtomicUsize::new(0);
         assert_eq!(cached_value(&cache, 1, &fetches).await, 1);
         assert_eq!(fetches.load(Ordering::SeqCst), 1);

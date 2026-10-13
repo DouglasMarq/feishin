@@ -118,23 +118,35 @@ impl SubsonicServer {
         }
     }
 
+    async fn album_list_window(
+        &self,
+        base_params: &Params,
+        window: SearchWindow,
+    ) -> Result<(usize, Option<usize>)> {
+        let params = base_params
+            .clone()
+            .add("size", window.count)
+            .add("offset", window.offset);
+        let (response, total_count): (AlbumList2, _) =
+            self.fetch_with_total("getAlbumList2.view", params).await?;
+        Ok((album_list_length(response), total_count))
+    }
+
     async fn count_server_album_list(&self, query: &AlbumListQuery) -> Result<usize> {
-        let base_params = album_list_params(query, AlbumListType::AlphabeticalByName);
-        let mut start = 0;
-        loop {
-            let params = base_params
-                .clone()
-                .add("size", MAX_ITEMS)
-                .add("offset", start);
-            let (response, total_count): (AlbumList2, _) =
-                self.fetch_with_total("getAlbumList2.view", params).await?;
-            if let Some(total_count) = total_count {
-                return Ok(total_count);
-            }
-            let received = album_list_length(response);
-            start += received;
-            if received != MAX_ITEMS {
-                return Ok(start);
+        let base_params = &album_list_params(query, AlbumListType::AlphabeticalByName);
+        let first_page = SearchWindow {
+            offset: 0,
+            count: MAX_ITEMS,
+        };
+        match self.album_list_window(base_params, first_page).await? {
+            (_, Some(total_count)) => Ok(total_count),
+            (received, None) if received < MAX_ITEMS => Ok(received),
+            _ => {
+                count_by_probing(|offset, count| async move {
+                    let window = SearchWindow { offset, count };
+                    Ok(self.album_list_window(base_params, window).await?.0)
+                })
+                .await
             }
         }
     }

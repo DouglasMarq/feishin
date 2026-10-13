@@ -41,7 +41,7 @@ where
     while bounds.absent < COUNT_CEILING && item_exists(fetch_page_length, bounds.absent).await? {
         bounds = CountBounds {
             present: bounds.absent + 1,
-            absent: bounds.absent.saturating_mul(2),
+            absent: bounds.absent.saturating_mul(2).min(COUNT_CEILING),
         };
     }
     Ok(bounds)
@@ -79,7 +79,7 @@ where
     let bounds = gallop(&fetch_page_length).await?;
     let bounds = narrow(bounds, &fetch_page_length).await?;
     let remaining = fetch_page_length(bounds.present, MAX_ITEMS).await?;
-    Ok(bounds.present + remaining)
+    Ok((bounds.present + remaining).min(bounds.absent))
 }
 
 #[cfg(test)]
@@ -130,5 +130,17 @@ mod tests {
         assert_eq!(listing.counted().await, Some(100_000));
         assert!(listing.fetched_items.load(Ordering::SeqCst) <= 2 * MAX_ITEMS);
         assert!(listing.requests.load(Ordering::SeqCst) <= 20);
+    }
+
+    #[tokio::test]
+    async fn listings_that_ignore_offsets_stop_at_the_ceiling() {
+        let requests = AtomicUsize::new(0);
+        let counted = count_by_probing(|_offset, count| {
+            requests.fetch_add(1, Ordering::SeqCst);
+            async move { Ok(count) }
+        })
+        .await;
+        assert_eq!(counted.ok(), Some(COUNT_CEILING));
+        assert!(requests.load(Ordering::SeqCst) <= 40);
     }
 }

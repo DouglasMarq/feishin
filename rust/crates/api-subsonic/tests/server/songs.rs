@@ -170,7 +170,7 @@ async fn mount_albums_and_artist(mock: &MockServer) {
         .respond_with(ok(json!({
             "artist": { "id": "ar-1", "name": "Artist", "albumCount": 1, "album": [album("al-2", "Second")] }
         })))
-        .expect(2)
+        .expect(1)
         .mount(mock)
         .await;
     let mut first = album("al-1", "First");

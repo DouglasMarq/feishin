@@ -87,10 +87,8 @@ impl SubsonicServer {
                 Ok(cloned_page(client_page(songs, paging)))
             }
             SongSource::AlbumsAndArtists => {
-                let songs = self
-                    .songs_of_albums_and_artists(&query.album_ids, &query.artist_ids)
-                    .await?;
-                Ok(client_page(self.normalize_songs(songs), paging))
+                let songs = self.album_and_artist_songs(query).await?;
+                Ok(cloned_page(client_page(songs.iter().collect(), paging)))
             }
             SongSource::All => {
                 self.searched_song_page(LIST_ALL_SONGS_QUERY, paging, folder)
@@ -144,10 +142,7 @@ impl SubsonicServer {
             SongSource::Favorites => {
                 Ok(starred_songs_matching(&*self.starred(folder).await?, query).len())
             }
-            SongSource::AlbumsAndArtists => Ok(self
-                .songs_of_albums_and_artists(&query.album_ids, &query.artist_ids)
-                .await?
-                .len()),
+            SongSource::AlbumsAndArtists => Ok(self.album_and_artist_songs(query).await?.len()),
             SongSource::All | SongSource::Random => {
                 count_by_probing(|offset, count| async move {
                     let window = SearchWindow { offset, count };

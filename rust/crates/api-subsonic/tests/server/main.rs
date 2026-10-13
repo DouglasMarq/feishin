@@ -7,6 +7,8 @@ mod artists;
 #[cfg(test)]
 mod auth;
 #[cfg(test)]
+mod discography_caching;
+#[cfg(test)]
 mod library;
 #[cfg(test)]
 mod list_caching;

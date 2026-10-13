@@ -4,7 +4,7 @@ use feishin_api::Result;
 use feishin_core::model::{Playlist, Song, SongListQuery};
 
 use super::SubsonicServer;
-use super::list_caches::{AllPlaylists, MusicFolderKey, StarredItems};
+use super::list_caches::{AlbumAndArtistIds, AllPlaylists, MusicFolderKey, StarredItems};
 use crate::client::Params;
 use crate::normalize;
 use crate::types::{GetArtists, Playlists, Starred2, SubsonicArtist};
@@ -27,6 +27,21 @@ pub fn starred_songs_matching<'starred>(
 }
 
 impl SubsonicServer {
+    pub(super) async fn album_and_artist_songs(
+        &self,
+        query: &SongListQuery,
+    ) -> Result<Arc<Vec<Song>>> {
+        self.list_caches
+            .album_and_artist_songs
+            .get_or_fetch(&AlbumAndArtistIds::of(query), || async {
+                let songs = self
+                    .songs_of_albums_and_artists(&query.album_ids, &query.artist_ids)
+                    .await?;
+                Ok(self.normalize_songs(songs))
+            })
+            .await
+    }
+
     pub(super) async fn starred(&self, music_folder_id: Option<&str>) -> Result<Arc<StarredItems>> {
         self.list_caches
             .starred

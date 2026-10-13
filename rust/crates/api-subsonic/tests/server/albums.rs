@@ -1,3 +1,6 @@
+use std::sync::Arc;
+use std::sync::atomic::{AtomicUsize, Ordering};
+
 use feishin_api::MusicServer;
 use feishin_core::model::{AlbumListQuery, AlbumSort};
 use serde_json::{Value, json};
@@ -139,29 +142,51 @@ async fn album_list_favorites_and_search() {
     assert_eq!(server.album_count(&search).await.ok(), Some(1));
 }
 
-#[tokio::test]
-async fn album_count_pages_without_total_header() {
-    let mock = MockServer::start().await;
+async fn mount_headerless_album_list(mock: &MockServer, total: usize) -> Arc<AtomicUsize> {
+    let downloaded_albums = Arc::new(AtomicUsize::new(0));
+    let counter = Arc::clone(&downloaded_albums);
     Mock::given(path("/rest/getAlbumList2.view"))
         .and(query_param("type", "alphabeticalByName"))
-        .and(query_param("size", "500"))
-        .respond_with(|request: &Request| {
-            let albums: Vec<Value> = offset_response(request, 1_203, "offset", "size")
+        .respond_with(move |request: &Request| {
+            let albums: Vec<Value> = offset_response(request, total, "offset", "size")
                 .iter()
                 .map(|_| album("a", "x"))
                 .collect();
+            counter.fetch_add(albums.len(), Ordering::SeqCst);
             ok(json!({ "albumList2": { "album": albums } }))
         })
-        .expect(3)
-        .mount(&mock)
+        .mount(mock)
         .await;
-    assert_eq!(
-        server(&mock)
-            .album_count(&AlbumListQuery::default())
-            .await
-            .ok(),
-        Some(1_203)
-    );
+    downloaded_albums
+}
+
+async fn headerless_album_count(total: usize) -> (Option<usize>, usize, usize) {
+    let mock = MockServer::start().await;
+    let downloaded_albums = mount_headerless_album_list(&mock, total).await;
+    let counted = server(&mock)
+        .album_count(&AlbumListQuery::default())
+        .await
+        .ok();
+    let requests = mock.received_requests().await.unwrap_or_default().len();
+    (counted, requests, downloaded_albums.load(Ordering::SeqCst))
+}
+
+#[tokio::test]
+async fn small_album_count_without_total_header_takes_one_page() {
+    assert_eq!(headerless_album_count(321).await, (Some(321), 1, 321));
+}
+
+#[tokio::test]
+async fn large_album_count_without_total_header_probes_instead_of_paging() {
+    for total in [500, 1_203, 40_000] {
+        let (counted, requests, downloaded) = headerless_album_count(total).await;
+        assert_eq!(counted, Some(total));
+        assert!(requests <= 20, "{requests} requests for {total} albums");
+        assert!(
+            downloaded <= 1_100,
+            "{downloaded} albums downloaded for {total}"
+        );
+    }
 }
 
 #[tokio::test]
