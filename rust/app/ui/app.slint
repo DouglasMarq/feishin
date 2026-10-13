@@ -19,6 +19,7 @@ import { SearchView } from "search.slint";
 import { SettingsView } from "settings.slint";
 import { NowPlayingView } from "now_playing.slint";
 import { PlaylistPicker, PlaylistPickerState } from "playlist_picker.slint";
+import { FoldersView } from "folders.slint";
 import { ShareClipboard } from "share.slint";
 
 export { Actions, AppState, LoginState, Page, PlayerState, QueueRow, QueueState, Route, TrackRow, TracksState } from "globals.slint";
@@ -35,6 +36,7 @@ export { SearchState } from "search.slint";
 export { SettingsState } from "settings.slint";
 export { NowPlayingState } from "now_playing.slint";
 export { PlaylistPickerState } from "playlist_picker.slint";
+export { FoldersState } from "folders.slint";
 export { ShareState } from "share.slint";
 
 
@@ -122,6 +124,7 @@ export component AppWindow inherits Window {
                     if AppState.route == Route.search: SearchView { }
                     if AppState.route == Route.settings: SettingsView { }
                     if AppState.route == Route.now-playing: NowPlayingView { }
+                    if AppState.route == Route.folders: FoldersView { }
                 }
 
                 if AppState.queue-open: QueuePanel { }

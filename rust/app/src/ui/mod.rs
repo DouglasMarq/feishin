@@ -23,6 +23,7 @@ pub mod albums;
 pub mod artist_detail;
 pub mod artists;
 pub mod favorites;
+pub mod folders;
 pub mod genres;
 pub mod home;
 pub mod library_scan;
@@ -92,6 +93,7 @@ pub fn install(window: &AppWindow, ctx: &Context, settings: &Settings) {
     playlists::install(window, ctx);
     playlist_detail::install(window, ctx);
     favorites::install(window, ctx);
+    folders::install(window, ctx);
     search::install(window, ctx);
     settings::install(window, ctx);
     sharing::install(window, ctx);
