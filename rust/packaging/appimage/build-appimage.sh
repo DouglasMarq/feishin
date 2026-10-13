@@ -15,6 +15,7 @@ output_dir="$(cd "$requested_output_dir" && pwd)"
 machine="$(uname -m)"
 work_dir="$(mktemp -d -t feishin-appimage.XXXXXX)"
 app_dir="$work_dir/AppDir"
+forced_libraries=(libjack.so.0 libpipewire-0.3.so.0)
 trap 'rm -rf "$work_dir"' EXIT
 export APPIMAGE_EXTRACT_AND_RUN=1
 
@@ -50,10 +51,19 @@ assemble_app_dir() {
     mv "$app_dir/usr/share/metainfo/$app_id.metainfo.xml" "$app_dir/usr/share/metainfo/$app_id.appdata.xml"
 }
 
+forced_library_arguments() {
+    local soname library_path
+    for soname in "${forced_libraries[@]}"; do
+        library_path="$(ldd "$app_dir/usr/bin/feishin" | awk -v soname="$soname" '$1 == soname { print $3 }')"
+        [[ -n "$library_path" ]] && printf '%s\n' --library "$library_path"
+    done
+}
+
 bundle_libraries() {
-    local linuxdeploy
+    local linuxdeploy forced_arguments
     linuxdeploy="$(tool_path linuxdeploy "${LINUXDEPLOY:-}" linuxdeploy/linuxdeploy)"
-    "$linuxdeploy" --appdir "$app_dir" \
+    mapfile -t forced_arguments < <(forced_library_arguments)
+    "$linuxdeploy" --appdir "$app_dir" "${forced_arguments[@]}" \
         --executable "$app_dir/usr/bin/feishin" \
         --desktop-file "$app_dir/usr/share/applications/$app_id.desktop" \
         --icon-file "$app_dir/usr/share/icons/hicolor/256x256/apps/$app_id.png" \
