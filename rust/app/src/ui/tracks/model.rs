@@ -1,14 +1,20 @@
 use std::cell::RefCell;
-use std::collections::{HashMap, HashSet};
+use std::collections::HashSet;
 
 use feishin_core::model::{Paging, Song, SongListQuery};
 use slint::{Model, ModelNotify, ModelTracker};
 
 use super::row::track_row;
 use super::selection::{Selection, SelectionSnapshot};
+use crate::ui::page_cache::{PageCache, PageShape};
 use crate::ui::{TrackRow, clamp_i32};
 
 pub const PAGE_SIZE: usize = 100;
+const CACHED_PAGES: usize = 24;
+const TRACK_PAGES: PageShape = PageShape {
+    page_size: PAGE_SIZE,
+    capacity: CACHED_PAGES,
+};
 
 pub enum Request {
     Count {
@@ -29,30 +35,38 @@ pub(super) fn paging_for_page(page: usize) -> Paging {
     }
 }
 
-#[derive(Default)]
 struct ListState {
     generation: u64,
     query: SongListQuery,
     total: usize,
-    pages: HashMap<usize, Vec<Song>>,
-    requested: HashSet<usize>,
+    pages: PageCache<Song>,
     current_song: Option<String>,
     selection: Selection,
 }
 
+impl Default for ListState {
+    fn default() -> Self {
+        Self {
+            generation: 0,
+            query: SongListQuery::default(),
+            total: 0,
+            pages: PageCache::new(TRACK_PAGES),
+            current_song: None,
+            selection: Selection::default(),
+        }
+    }
+}
+
 impl ListState {
     fn song(&self, index: usize) -> Option<&Song> {
-        self.pages.get(&(index / PAGE_SIZE))?.get(index % PAGE_SIZE)
+        self.pages.get(index)
     }
 
     fn index_of(&self, song_id: Option<&str>) -> Option<usize> {
         let song_id = song_id?;
-        self.pages.iter().find_map(|(page, songs)| {
-            songs
-                .iter()
-                .position(|song| song.id == song_id)
-                .map(|position| page * PAGE_SIZE + position)
-        })
+        self.pages
+            .rows()
+            .find_map(|(index, song)| (song.id == song_id).then_some(index))
     }
 
     fn loaded_row(&self, row: usize) -> Option<TrackRow> {
@@ -64,23 +78,27 @@ impl ListState {
         })
     }
 
-    fn request_page_once(&mut self, page: usize) -> Option<Request> {
-        self.requested.insert(page).then(|| Request::Page {
-            generation: self.generation,
-            query: self.query.clone(),
-            page,
-        })
+    fn visible_row(&self, row: usize) -> TrackRow {
+        self.loaded_row(row)
+            .unwrap_or_else(|| placeholder_row(row, self.selection.contains(row)))
+    }
+
+    fn page_requests_for(&mut self, row: usize) -> Vec<Request> {
+        let total = self.total;
+        self.pages
+            .pages_to_fetch(row, total)
+            .into_iter()
+            .map(|page| Request::Page {
+                generation: self.generation,
+                query: self.query.clone(),
+                page,
+            })
+            .collect()
     }
 
     fn rows_matching(&mut self, ids: &HashSet<&str>) -> Vec<(usize, &mut Song)> {
         self.pages
-            .iter_mut()
-            .flat_map(|(page, songs)| {
-                songs
-                    .iter_mut()
-                    .enumerate()
-                    .map(move |(position, song)| (page * PAGE_SIZE + position, song))
-            })
+            .rows_mut()
             .filter(|(_, song)| ids.contains(song.id.as_str()))
             .collect()
     }
@@ -147,7 +165,7 @@ impl TracksModel {
             if state.generation != generation {
                 return;
             }
-            let start = page * PAGE_SIZE;
+            let start = state.pages.first_index_of(page);
             let range = start..(start + songs.len()).min(state.total);
             state.pages.insert(page, songs);
             range
@@ -158,7 +176,7 @@ impl TracksModel {
     pub fn page_failed(&self, generation: u64, page: usize) {
         let mut state = self.state.borrow_mut();
         if state.generation == generation {
-            state.requested.remove(&page);
+            state.pages.forget_request(page);
         }
     }
 
@@ -220,15 +238,6 @@ impl TracksModel {
         }
     }
 
-    pub fn first_selected(&self) -> Option<Song> {
-        let state = self.state.borrow();
-        state
-            .selection
-            .rows()
-            .next()
-            .and_then(|index| state.song(index).cloned())
-    }
-
     pub fn update_songs(&self, ids: &[String], update: impl Fn(&mut Song)) {
         let ids: HashSet<&str> = ids.iter().map(String::as_str).collect();
         let changed: Vec<usize> = {
@@ -260,21 +269,18 @@ impl Model for TracksModel {
     }
 
     fn row_data(&self, row: usize) -> Option<TrackRow> {
-        let (selected, request) = {
+        let (visible, requests) = {
             let mut state = self.state.borrow_mut();
             if row >= state.total {
                 return None;
             }
-            if let Some(loaded) = state.loaded_row(row) {
-                return Some(loaded);
-            }
-            let selected = state.selection.contains(row);
-            (selected, state.request_page_once(row / PAGE_SIZE))
+            let requests = state.page_requests_for(row);
+            (state.visible_row(row), requests)
         };
-        if let Some(request) = request {
+        for request in requests {
             (self.fetch)(request);
         }
-        Some(placeholder_row(row, selected))
+        Some(visible)
     }
 
     fn model_tracker(&self) -> &dyn ModelTracker {

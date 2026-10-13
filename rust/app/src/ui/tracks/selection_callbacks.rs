@@ -78,20 +78,24 @@ fn install_selection_actions(window: &AppWindow, ctx: &Context) {
     });
 }
 
-fn install_navigation(window: &AppWindow) {
+fn install_navigation(window: &AppWindow, ctx: &Context) {
     let state = window.global::<TracksState>();
 
     let weak = window.as_weak();
+    let album_ctx = ctx.clone();
     state.on_go_to_album(move || {
         if let Some(window) = weak.upgrade() {
-            go_to(&window, Route::AlbumDetail, |song| song.album_id.clone());
+            go_to(&window, &album_ctx, Route::AlbumDetail, |song| {
+                song.album_id.clone()
+            });
         }
     });
 
     let weak = window.as_weak();
+    let artist_ctx = ctx.clone();
     state.on_go_to_artist(move || {
         if let Some(window) = weak.upgrade() {
-            go_to(&window, Route::ArtistDetail, |song| {
+            go_to(&window, &artist_ctx, Route::ArtistDetail, |song| {
                 primary_artist_id(song).map(str::to_owned)
             });
         }
@@ -129,6 +133,6 @@ fn install_row_edits(window: &AppWindow, ctx: &Context) {
 pub(super) fn install(window: &AppWindow, ctx: &Context) {
     install_row_selection(window);
     install_selection_actions(window, ctx);
-    install_navigation(window);
+    install_navigation(window, ctx);
     install_row_edits(window, ctx);
 }

@@ -28,6 +28,7 @@ pub mod home;
 pub mod login;
 pub mod nav;
 pub mod now_playing;
+pub mod page_cache;
 pub mod player;
 pub mod playlist_detail;
 pub mod playlist_picker;
