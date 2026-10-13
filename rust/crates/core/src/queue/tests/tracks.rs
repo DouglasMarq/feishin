@@ -156,6 +156,23 @@ fn removing_the_last_track_of_an_album_frees_its_shared_strings() {
 }
 
 #[test]
+fn removing_a_track_frees_its_strings_even_after_a_view_was_published() {
+    let mut queue = Queue::with_seed(7);
+    queue.play_now(
+        vec![song_on_album("a", "Kept"), song_on_album("b", "Dropped")],
+        Some("a"),
+    );
+    let dropped_album = queue
+        .items()
+        .get(1)
+        .and_then(|item| item.track.album.as_ref().map(Arc::downgrade));
+    drop(queue.view());
+    queue.remove(&[queue.items()[1].uid]);
+    assert_eq!(dropped_album.map(|album| album.strong_count()), Some(0));
+    assert_invariants(&queue);
+}
+
+#[test]
 fn removing_most_of_a_long_queue_releases_its_spare_capacity() {
     let mut queue = Queue::with_seed(8);
     queue.play_now(numbered_songs(1_000), Some("s0"));

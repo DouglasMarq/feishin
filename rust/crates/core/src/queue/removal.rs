@@ -26,8 +26,8 @@ impl Queue {
             .retain(|uid, _item_index| !removed_uids.contains(uid));
         self.reindex_from(first_removed_index);
         self.release_spare_capacity();
-        self.interner.release_unused();
         self.bump_revision();
+        self.interner.release_unused();
     }
 
     pub fn clear(&mut self) {

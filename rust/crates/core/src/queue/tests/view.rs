@@ -65,6 +65,16 @@ fn view_shares_tracks_with_the_queue() {
 }
 
 #[test]
+fn item_missing_from_the_play_order_has_no_position() {
+    let mut queue = playing_queue(3);
+    queue.shuffled_play_order = Some(vec![1, 2]);
+    queue.bump_revision();
+    assert_eq!(queue.current_position(), None);
+    assert_eq!(queue.view().current_position(), None);
+    assert!(queue.view().current().is_none());
+}
+
+#[test]
 fn empty_queue_has_an_empty_view() {
     let view = Queue::with_seed(1).view();
     assert!(view.is_empty());

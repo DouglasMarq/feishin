@@ -3,6 +3,8 @@ use std::sync::Arc;
 
 use super::{Queue, QueueItem, Uid};
 
+const UNPLACED: usize = usize::MAX;
+
 #[derive(Debug, Default, PartialEq)]
 pub(super) struct QueueLayout {
     items: Box<[QueueItem]>,
@@ -25,7 +27,10 @@ impl QueueLayout {
 
     pub(super) fn position_of_index(&self, item_index: usize) -> Option<usize> {
         match &self.positions_by_index {
-            Some(positions) => positions.get(item_index).copied(),
+            Some(positions) => positions
+                .get(item_index)
+                .copied()
+                .filter(|&position| position != UNPLACED),
             None => (item_index < self.items.len()).then_some(item_index),
         }
     }
@@ -46,7 +51,7 @@ impl QueueLayout {
 }
 
 fn positions_by_index(play_order: &[usize], item_count: usize) -> Box<[usize]> {
-    let mut positions = vec![usize::MAX; item_count];
+    let mut positions = vec![UNPLACED; item_count];
     for (position, &item_index) in play_order.iter().enumerate() {
         if let Some(slot) = positions.get_mut(item_index) {
             *slot = position;

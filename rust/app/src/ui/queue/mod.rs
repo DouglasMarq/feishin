@@ -11,6 +11,9 @@ mod model;
 #[cfg(test)]
 mod tests;
 
+#[cfg(test)]
+mod view_tests;
+
 pub use model::{QueueModel, SharedQueueView, ViewChange, row_at};
 
 const NO_POSITION: i32 = -1;
