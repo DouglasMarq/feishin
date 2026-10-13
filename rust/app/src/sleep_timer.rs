@@ -1,5 +1,3 @@
-//! Sleep timer: pauses playback after a delay of listening time, or when the current track ends.
-
 use std::time::{Duration, Instant};
 
 use slint::ComponentHandle;
@@ -10,6 +8,8 @@ use crate::controller::{Command, UiSink, UiUpdate};
 use crate::ui::{AppWindow, Context, PlayerState, format_duration, on_ui};
 
 pub const TICK: Duration = Duration::from_secs(1);
+const MS_PER_MINUTE: u64 = 60_000;
+const MS_PER_SECOND: u64 = 1000;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum SleepMode {
@@ -19,7 +19,7 @@ pub enum SleepMode {
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum SleepStatus {
-    Remaining { ms: u64 },
+    Remaining { remaining_ms: u64 },
     EndOfTrack,
 }
 
@@ -30,14 +30,13 @@ pub struct SleepTimer {
 }
 
 impl SleepTimer {
-    /// Starts (or replaces) the timer. Timed modes tick through `commands`, so this needs a Tokio runtime.
     pub fn start(&mut self, mode: SleepMode, commands: &UnboundedSender<Command>) {
         self.cancel();
         self.status = Some(match mode {
             SleepMode::Minutes(minutes) => {
                 self.ticker = Some(spawn_ticker(commands.clone()));
                 SleepStatus::Remaining {
-                    ms: u64::from(minutes) * 60_000,
+                    remaining_ms: u64::from(minutes) * MS_PER_MINUTE,
                 }
             }
             SleepMode::EndOfTrack => SleepStatus::EndOfTrack,
@@ -59,20 +58,19 @@ impl SleepTimer {
         self.status == Some(SleepStatus::EndOfTrack)
     }
 
-    /// Counts down listening time only; returns `true` when the timer fires (it is then cancelled).
     pub fn tick(&mut self, elapsed_ms: u64, playing: bool) -> bool {
-        let Some(SleepStatus::Remaining { ms }) = self.status else {
+        let Some(SleepStatus::Remaining { remaining_ms }) = self.status else {
             return false;
         };
         if !playing {
             return false;
         }
-        if elapsed_ms >= ms {
+        if elapsed_ms >= remaining_ms {
             self.cancel();
             return true;
         }
         self.status = Some(SleepStatus::Remaining {
-            ms: ms - elapsed_ms,
+            remaining_ms: remaining_ms - elapsed_ms,
         });
         false
     }
@@ -87,12 +85,12 @@ impl Drop for SleepTimer {
 fn spawn_ticker(commands: UnboundedSender<Command>) -> AbortHandle {
     tokio::spawn(async move {
         let mut interval = tokio::time::interval_at(tokio::time::Instant::now() + TICK, TICK);
-        let mut last = Instant::now();
+        let mut previous_tick = Instant::now();
         loop {
             interval.tick().await;
             let now = Instant::now();
-            let elapsed_ms = now.duration_since(last).as_millis() as u64;
-            last = now;
+            let elapsed_ms = now.duration_since(previous_tick).as_millis() as u64;
+            previous_tick = now;
             if commands.send(Command::SleepTick { elapsed_ms }).is_err() {
                 return;
             }
@@ -101,40 +99,44 @@ fn spawn_ticker(commands: UnboundedSender<Command>) -> AbortHandle {
     .abort_handle()
 }
 
-fn label(status: SleepStatus) -> String {
+fn sleep_label(status: SleepStatus) -> String {
     match status {
-        SleepStatus::Remaining { ms } => format_duration(ms.div_ceil(1000) * 1000),
+        SleepStatus::Remaining { remaining_ms } => {
+            format_duration(remaining_ms.div_ceil(MS_PER_SECOND) * MS_PER_SECOND)
+        }
         SleepStatus::EndOfTrack => "End of track".into(),
     }
 }
 
-pub fn install(window: &AppWindow, ctx: &Context) {
-    let state = window.global::<PlayerState>();
-    let start_ctx = ctx.clone();
-    state.on_start_sleep_timer(move |minutes| {
-        let mode = match u32::try_from(minutes) {
-            Ok(0) | Err(_) => SleepMode::EndOfTrack,
-            Ok(minutes) => SleepMode::Minutes(minutes),
-        };
-        start_ctx.send(Command::SleepTimer(Some(mode)));
-    });
-    let cancel_ctx = ctx.clone();
-    state.on_cancel_sleep_timer(move || cancel_ctx.send(Command::SleepTimer(None)));
+fn sleep_mode_for_minutes(minutes: i32) -> SleepMode {
+    match u32::try_from(minutes) {
+        Ok(0) | Err(_) => SleepMode::EndOfTrack,
+        Ok(minutes) => SleepMode::Minutes(minutes),
+    }
 }
 
-/// Forwards controller updates to `inner` and shows the sleep timer in the player bar.
-pub struct SleepTimerUi<S> {
-    inner: S,
+pub fn install(window: &AppWindow, context: &Context) {
+    let state = window.global::<PlayerState>();
+    let start_context = context.clone();
+    state.on_start_sleep_timer(move |minutes| {
+        start_context.send(Command::SleepTimer(Some(sleep_mode_for_minutes(minutes))));
+    });
+    let cancel_context = context.clone();
+    state.on_cancel_sleep_timer(move || cancel_context.send(Command::SleepTimer(None)));
+}
+
+pub struct SleepTimerUi<Inner> {
+    inner: Inner,
     window: slint::Weak<AppWindow>,
 }
 
-impl<S> SleepTimerUi<S> {
-    pub fn new(inner: S, window: slint::Weak<AppWindow>) -> Self {
+impl<Inner> SleepTimerUi<Inner> {
+    pub fn new(inner: Inner, window: slint::Weak<AppWindow>) -> Self {
         Self { inner, window }
     }
 }
 
-impl<S: UiSink> UiSink for SleepTimerUi<S> {
+impl<Inner: UiSink> UiSink for SleepTimerUi<Inner> {
     fn send(&self, update: UiUpdate) {
         self.inner.send(update);
     }
@@ -143,7 +145,7 @@ impl<S: UiSink> UiSink for SleepTimerUi<S> {
         on_ui(&self.window, move |window| {
             let state = window.global::<PlayerState>();
             state.set_sleep_active(status.is_some());
-            state.set_sleep_label(status.map(label).unwrap_or_default().into());
+            state.set_sleep_label(status.map(sleep_label).unwrap_or_default().into());
         });
     }
 }
@@ -155,12 +157,19 @@ mod tests {
     #[test]
     fn counts_down_only_while_playing() {
         let mut timer = SleepTimer {
-            status: Some(SleepStatus::Remaining { ms: 2_500 }),
+            status: Some(SleepStatus::Remaining {
+                remaining_ms: 2_500,
+            }),
             ticker: None,
         };
         assert!(!timer.tick(1_000, true));
         assert!(!timer.tick(1_000, false));
-        assert_eq!(timer.status(), Some(SleepStatus::Remaining { ms: 1_500 }));
+        assert_eq!(
+            timer.status(),
+            Some(SleepStatus::Remaining {
+                remaining_ms: 1_500
+            })
+        );
         assert!(!timer.tick(1_000, true));
         assert!(timer.tick(1_000, true));
         assert_eq!(timer.status(), None);
@@ -179,8 +188,18 @@ mod tests {
 
     #[test]
     fn labels_round_up_to_the_second() {
-        assert_eq!(label(SleepStatus::Remaining { ms: 61_200 }), "1:02");
-        assert_eq!(label(SleepStatus::Remaining { ms: 15 * 60_000 }), "15:00");
-        assert_eq!(label(SleepStatus::EndOfTrack), "End of track");
+        assert_eq!(
+            sleep_label(SleepStatus::Remaining {
+                remaining_ms: 61_200
+            }),
+            "1:02"
+        );
+        assert_eq!(
+            sleep_label(SleepStatus::Remaining {
+                remaining_ms: 15 * 60_000
+            }),
+            "15:00"
+        );
+        assert_eq!(sleep_label(SleepStatus::EndOfTrack), "End of track");
     }
 }

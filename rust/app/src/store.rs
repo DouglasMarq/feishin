@@ -12,7 +12,6 @@ use feishin_storage::settings::Settings;
 use serde::Serialize;
 use serde::de::DeserializeOwned;
 
-/// Persistence used by the app (`feishin_storage` in real mode).
 pub trait Store: Send + Sync {
     fn load_settings(&self) -> Result<Settings>;
     fn save_settings(&self, settings: &Settings) -> Result<()>;
@@ -62,10 +61,9 @@ impl Store for SystemStore {
         Ok(queue_store::save(&self.paths, queue)?)
     }
     fn credential(&self, server_id: &str) -> Result<Option<Credential>> {
-        match credentials::get(server_id)? {
-            Some(json) => Ok(Some(Credential::from_json(&json)?)),
-            None => Ok(None),
-        }
+        Ok(credentials::get(server_id)?
+            .map(|json| Credential::from_json(&json))
+            .transpose()?)
     }
     fn set_credential(&self, server_id: &str, credential: &Credential) -> Result<()> {
         Ok(credentials::set(server_id, &credential.to_json())?)
@@ -79,7 +77,6 @@ impl Store for SystemStore {
     }
 }
 
-/// JSON files in one directory and in-memory credentials; used by `--demo` and tests.
 pub struct JsonStore {
     dir: PathBuf,
     credentials: Mutex<HashMap<String, Credential>>,
@@ -99,16 +96,16 @@ impl JsonStore {
             Ok(bytes) => Ok(Some(
                 serde_json::from_slice(&bytes).with_context(|| path.display().to_string())?,
             )),
-            Err(e) if e.kind() == std::io::ErrorKind::NotFound => Ok(None),
-            Err(e) => Err(e.into()),
+            Err(error) if error.kind() == std::io::ErrorKind::NotFound => Ok(None),
+            Err(error) => Err(error.into()),
         }
     }
 
     fn write<T: Serialize>(&self, name: &str, value: &T) -> Result<()> {
         std::fs::create_dir_all(&self.dir)?;
-        let tmp = self.dir.join(format!("{name}.tmp"));
-        std::fs::write(&tmp, serde_json::to_vec(value)?)?;
-        std::fs::rename(&tmp, self.dir.join(name))?;
+        let staging_path = self.dir.join(format!("{name}.tmp"));
+        std::fs::write(&staging_path, serde_json::to_vec(value)?)?;
+        std::fs::rename(&staging_path, self.dir.join(name))?;
         Ok(())
     }
 }

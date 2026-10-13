@@ -15,7 +15,6 @@ pub struct Track {
     pub duration_ms: u64,
 }
 
-/// What the controller needs from an audio backend (`feishin_player::Player` in real mode).
 pub trait AudioOutput: Send {
     fn load(&self, track: &Track, start_ms: u64) -> Result<()>;
     fn preload_next(&self, track: &Track) -> Result<()>;
@@ -29,7 +28,6 @@ pub trait AudioOutput: Send {
     fn set_replay_gain(&self, _mode: ReplayGainSetting) -> Result<()> {
         Ok(())
     }
-    /// `None` selects the system default output.
     fn set_audio_device(&self, _device: Option<&str>) -> Result<()> {
         Ok(())
     }
@@ -109,7 +107,6 @@ struct FakeState {
     playing: bool,
 }
 
-/// Silent output for `--demo`: advances a clock and emits the same events as the real player.
 pub struct FakeAudio {
     state: Arc<Mutex<FakeState>>,
     on_event: Arc<EventCallback>,
@@ -121,23 +118,27 @@ impl FakeAudio {
     pub fn new(on_event: EventCallback) -> Self {
         let state = Arc::new(Mutex::new(FakeState::default()));
         let on_event = Arc::new(on_event);
-        let weak = Arc::downgrade(&state);
-        let events = Arc::clone(&on_event);
-        std::thread::Builder::new()
+        let clock_state = Arc::downgrade(&state);
+        let clock_events = Arc::clone(&on_event);
+        if let Err(error) = std::thread::Builder::new()
             .name("fake-audio".into())
-            .spawn(move || Self::clock(weak, events))
-            .ok();
+            .spawn(move || Self::clock(clock_state, clock_events))
+        {
+            tracing::warn!("starting the demo audio clock failed: {error}");
+        }
         Self { state, on_event }
     }
 
     fn clock(state: Weak<Mutex<FakeState>>, on_event: Arc<EventCallback>) {
-        while let Some(state) = state.upgrade() {
+        while let Some(shared_state) = state.upgrade() {
             std::thread::sleep(Self::TICK);
-            let events = match state.lock() {
-                Ok(mut state) => Self::tick(&mut state, Self::TICK.as_millis() as u64),
+            let events = match shared_state.lock() {
+                Ok(mut locked_state) => {
+                    Self::tick(&mut locked_state, Self::TICK.as_millis() as u64)
+                }
                 Err(_) => return,
             };
-            drop(state);
+            drop(shared_state);
             events.into_iter().for_each(|event| on_event(event));
         }
     }
@@ -168,13 +169,13 @@ impl FakeAudio {
         events
     }
 
-    fn update(&self, f: impl FnOnce(&mut FakeState) -> Option<PlayerEvent>) -> Result<()> {
+    fn update(&self, mutation: impl FnOnce(&mut FakeState) -> Option<PlayerEvent>) -> Result<()> {
         let event = {
             let mut state = self
                 .state
                 .lock()
                 .map_err(|_| anyhow::anyhow!("fake audio state poisoned"))?;
-            f(&mut state)
+            mutation(&mut state)
         };
         if let Some(event) = event {
             (self.on_event)(event);

@@ -3,11 +3,10 @@ use std::sync::Arc;
 use anyhow::Result;
 use async_trait::async_trait;
 use feishin_api::{Credential, MusicServer};
-use feishin_core::model::ServerConfig;
+use feishin_core::model::{ServerConfig, ServerType};
 
 use crate::demo::{DEMO_SONG_COUNT, FakeServer, demo_credential};
 
-/// Creates `MusicServer` sessions, either by logging in or from a saved credential.
 #[async_trait]
 pub trait Connector: Send + Sync {
     async fn login(
@@ -32,7 +31,6 @@ impl Connector for ServerConnector {
         config: ServerConfig,
         password: &str,
     ) -> Result<(Arc<dyn MusicServer>, Credential)> {
-        use feishin_core::model::ServerType;
         Ok(match config.server_type {
             ServerType::Navidrome => {
                 let (server, credential) =
@@ -57,7 +55,6 @@ impl Connector for ServerConnector {
         config: &ServerConfig,
         credential: &Credential,
     ) -> Result<Arc<dyn MusicServer>> {
-        use feishin_core::model::ServerType;
         let config = config.clone();
         Ok(match config.server_type {
             ServerType::Navidrome => Arc::new(
@@ -73,7 +70,6 @@ impl Connector for ServerConnector {
     }
 }
 
-/// Accepts any login and serves the generated demo library.
 pub struct DemoConnector;
 
 #[async_trait]

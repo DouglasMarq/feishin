@@ -1,6 +1,3 @@
-//! Server play queue sync, like Feishin's `savePlayQueue` / `getPlayQueue`: saved after changes and on
-//! exit, restored on startup when the local queue is empty.
-
 use std::sync::{Arc, Mutex};
 use std::time::Duration;
 
@@ -21,7 +18,6 @@ pub struct PlayQueueState {
 }
 
 impl PlayQueueState {
-    /// The queue in play order, or `None` when it holds songs from another server.
     pub fn of(queue: &Queue, position_ms: u64, server_id: &str) -> Option<Self> {
         let items = queue.display_order();
         if items.iter().any(|item| item.song.server_id != server_id) {
@@ -35,7 +31,6 @@ impl PlayQueueState {
     }
 }
 
-/// Debounces saves: only the latest scheduled state is sent, and only when it differs from the last one.
 #[derive(Clone, Default)]
 pub struct PlayQueueSync {
     shared: Arc<Mutex<Shared>>,
@@ -62,7 +57,6 @@ impl Shared {
 }
 
 impl PlayQueueSync {
-    /// Saves `state` after the debounce delay unless another schedule supersedes it. Needs a Tokio runtime.
     pub fn schedule(&self, server: Arc<dyn MusicServer>, state: PlayQueueState) {
         let Ok(mut shared) = self.shared.lock() else {
             return;
@@ -80,18 +74,17 @@ impl PlayQueueSync {
                 .ok()
                 .and_then(|mut shared| shared.take_if_current(generation, state));
             if let Some(state) = due {
-                save(server.as_ref(), &state).await;
+                save_to_server(server.as_ref(), &state).await;
             }
         });
     }
 
-    /// Cancels pending saves and saves `state` now, giving up after a short timeout.
     pub async fn flush(&self, server: Arc<dyn MusicServer>, state: PlayQueueState) {
         if let Ok(mut shared) = self.shared.lock() {
             shared.generation += 1;
             shared.saved = Some(state.clone());
         }
-        if tokio::time::timeout(SHUTDOWN_TIMEOUT, save(server.as_ref(), &state))
+        if tokio::time::timeout(SHUTDOWN_TIMEOUT, save_to_server(server.as_ref(), &state))
             .await
             .is_err()
         {
@@ -99,7 +92,6 @@ impl PlayQueueSync {
         }
     }
 
-    /// Marks `state` as already on the server (just restored from it).
     pub fn mark_saved(&self, state: PlayQueueState) {
         if let Ok(mut shared) = self.shared.lock() {
             shared.saved = Some(state);
@@ -107,14 +99,16 @@ impl PlayQueueSync {
     }
 }
 
-async fn save(server: &dyn MusicServer, state: &PlayQueueState) {
+async fn save_to_server(server: &dyn MusicServer, state: &PlayQueueState) {
     match server
         .save_play_queue(&state.song_ids, state.current.as_deref(), state.position_ms)
         .await
     {
         Ok(()) => {}
-        Err(ApiError::Unsupported(what)) => tracing::debug!("play queue sync: {what}"),
-        Err(e) => tracing::warn!("saving the play queue failed: {e}"),
+        Err(ApiError::Unsupported(unsupported)) => {
+            tracing::debug!("play queue sync: {unsupported}")
+        }
+        Err(error) => tracing::warn!("saving the play queue failed: {error}"),
     }
 }
 
@@ -149,7 +143,9 @@ mod tests {
     #[test]
     fn state_follows_play_order_and_rejects_foreign_songs() {
         let mut queue = Queue::with_seed(1);
-        let songs: Vec<_> = (0..3).map(|i| test_song(&format!("s{i}"), 1000)).collect();
+        let songs: Vec<_> = (0..3)
+            .map(|index| test_song(&format!("s{index}"), 1000))
+            .collect();
         queue.play_now(songs, Some("s1"));
         assert_eq!(
             PlayQueueState::of(&queue, 700, "demo"),
