@@ -136,8 +136,8 @@ impl MusicServer for JellyfinServer {
         self.song_lyrics(song).await
     }
 
-    fn stream_url(&self, song: &Song, options: &StreamOptions) -> String {
-        self.song_stream_url(&song.id, options)
+    fn stream_url(&self, song_id: &str, options: &StreamOptions) -> String {
+        self.song_stream_url(song_id, options)
     }
 
     fn cover_art_url(&self, cover_art_id: &str, edge_pixels: Option<u32>) -> String {

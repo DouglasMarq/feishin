@@ -38,7 +38,7 @@ fn invalid_queue_file(error: impl Display) -> StorageError {
 #[cfg(test)]
 mod tests {
     use feishin_core::model::{ArtistRef, Song};
-    use feishin_core::queue::{QueueItem, RepeatMode};
+    use feishin_core::queue::{QueueItem, QueueTrack, RepeatMode};
 
     use super::*;
 
@@ -79,11 +79,11 @@ mod tests {
                 items: vec![
                     QueueItem {
                         uid: 1,
-                        song: song("a"),
+                        track: QueueTrack::from(&song("a")),
                     },
                     QueueItem {
                         uid: 2,
-                        song: song("b"),
+                        track: QueueTrack::from(&song("b")),
                     },
                 ],
                 shuffled: Some(vec![1, 0]),
@@ -125,6 +125,36 @@ mod tests {
         save(&paths, &other).unwrap();
         assert_eq!(load(&paths).unwrap(), Some(other));
         assert_eq!(std::fs::read_dir(&paths.data_dir).unwrap().count(), 1);
+    }
+
+    #[test]
+    fn queue_saved_with_full_songs_still_loads() {
+        let directory = tempfile::tempdir().unwrap();
+        let paths = Paths::under(directory.path());
+        std::fs::create_dir_all(&paths.data_dir).unwrap();
+        let legacy = serde_json::json!({
+            "snapshot": {
+                "items": [{ "uid": 1, "song": song("a") }, { "uid": 2, "song": song("b") }],
+                "shuffled": [1, 0],
+                "current_uid": 2,
+                "repeat": "All",
+                "next_uid": 3,
+            },
+            "position_ms": 12_345,
+        });
+        std::fs::write(paths.data_dir.join(QUEUE_FILE), legacy.to_string()).unwrap();
+        assert_eq!(load(&paths).unwrap(), Some(sample()));
+    }
+
+    #[test]
+    fn saved_queue_holds_only_compact_tracks() {
+        let directory = tempfile::tempdir().unwrap();
+        let paths = Paths::under(directory.path());
+        save(&paths, &sample()).unwrap();
+        let json = std::fs::read_to_string(paths.data_dir.join(QUEUE_FILE)).unwrap();
+        assert!(json.contains("\"track\""));
+        assert!(!json.contains("\"genres\""));
+        assert!(!json.contains("\"song\""));
     }
 
     #[test]

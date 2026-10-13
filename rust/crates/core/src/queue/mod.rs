@@ -1,4 +1,6 @@
+mod indexing;
 mod insertion;
+mod interner;
 mod item;
 mod lookup;
 mod navigation;
@@ -7,13 +9,18 @@ mod removal;
 mod reordering;
 mod shuffling;
 mod snapshot;
+mod track;
 
 #[cfg(test)]
 mod tests;
 
+use std::collections::HashMap;
+
 pub use item::{Advance, QueueItem, RepeatMode, Uid};
 pub use snapshot::QueueSnapshot;
+pub use track::QueueTrack;
 
+use interner::TrackInterner;
 use random::SplitMix64;
 
 const FIRST_UID: Uid = 1;
@@ -22,10 +29,13 @@ const FIRST_POSITION: usize = 0;
 #[derive(Debug, Clone)]
 pub struct Queue {
     items: Vec<QueueItem>,
+    uid_indexes: HashMap<Uid, usize>,
     shuffled_play_order: Option<Vec<usize>>,
     current_uid: Option<Uid>,
     repeat: RepeatMode,
     next_uid: Uid,
+    revision: u64,
+    interner: TrackInterner,
     random_generator: SplitMix64,
 }
 
@@ -47,10 +57,13 @@ impl Queue {
     fn with_generator(random_generator: SplitMix64) -> Self {
         Self {
             items: Vec::new(),
+            uid_indexes: HashMap::new(),
             shuffled_play_order: None,
             current_uid: None,
             repeat: RepeatMode::None,
             next_uid: FIRST_UID,
+            revision: 0,
+            interner: TrackInterner::default(),
             random_generator,
         }
     }
@@ -75,6 +88,10 @@ impl Queue {
 
     pub fn is_empty(&self) -> bool {
         self.items.is_empty()
+    }
+
+    pub fn revision(&self) -> u64 {
+        self.revision
     }
 
     pub fn current(&self) -> Option<&QueueItem> {

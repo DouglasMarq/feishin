@@ -6,11 +6,11 @@ fn next_with_repeat_none() {
     for advance in [Advance::Auto, Advance::Manual] {
         let mut queue = queue_playing(&["a", "b", "c"], "a", RepeatMode::None);
         assert_eq!(
-            queue.next(advance).map(|item| item.song.id.as_str()),
+            queue.next(advance).map(|item| item.track.song_id.as_str()),
             Some("b")
         );
         assert_eq!(
-            queue.next(advance).map(|item| item.song.id.as_str()),
+            queue.next(advance).map(|item| item.track.song_id.as_str()),
             Some("c")
         );
         assert!(queue.next(advance).is_none());
@@ -23,11 +23,11 @@ fn next_with_repeat_all_wraps() {
     for advance in [Advance::Auto, Advance::Manual] {
         let mut queue = queue_playing(&["a", "b", "c"], "b", RepeatMode::All);
         assert_eq!(
-            queue.next(advance).map(|item| item.song.id.as_str()),
+            queue.next(advance).map(|item| item.track.song_id.as_str()),
             Some("c")
         );
         assert_eq!(
-            queue.next(advance).map(|item| item.song.id.as_str()),
+            queue.next(advance).map(|item| item.track.song_id.as_str()),
             Some("a")
         );
         assert_eq!(current_id(&queue).as_deref(), Some("a"));
@@ -43,17 +43,19 @@ fn next_with_repeat_one_repeats_only_on_auto() {
     assert_eq!(
         queue
             .next(Advance::Manual)
-            .map(|item| item.song.id.as_str()),
+            .map(|item| item.track.song_id.as_str()),
         Some("c")
     );
     assert_eq!(
         queue
             .next(Advance::Manual)
-            .map(|item| item.song.id.as_str()),
+            .map(|item| item.track.song_id.as_str()),
         Some("c")
     );
     assert_eq!(
-        queue.next(Advance::Auto).map(|item| item.song.id.as_str()),
+        queue
+            .next(Advance::Auto)
+            .map(|item| item.track.song_id.as_str()),
         Some("c")
     );
 }
@@ -63,11 +65,11 @@ fn previous_with_every_repeat_mode() {
     for repeat in [RepeatMode::None, RepeatMode::All, RepeatMode::One] {
         let mut queue = queue_playing(&["a", "b", "c"], "c", repeat);
         assert_eq!(
-            queue.previous().map(|item| item.song.id.as_str()),
+            queue.previous().map(|item| item.track.song_id.as_str()),
             Some("b")
         );
         assert_eq!(
-            queue.previous().map(|item| item.song.id.as_str()),
+            queue.previous().map(|item| item.track.song_id.as_str()),
             Some("a")
         );
         let expected = match repeat {
@@ -75,7 +77,7 @@ fn previous_with_every_repeat_mode() {
             RepeatMode::None | RepeatMode::One => "a",
         };
         assert_eq!(
-            queue.previous().map(|item| item.song.id.as_str()),
+            queue.previous().map(|item| item.track.song_id.as_str()),
             Some(expected)
         );
         assert_eq!(current_id(&queue).as_deref(), Some(expected));
@@ -90,18 +92,20 @@ fn single_item_queue_navigation() {
     assert_eq!(current_id(&queue).as_deref(), Some("a"));
     queue.set_repeat(RepeatMode::All);
     assert_eq!(
-        queue.next(Advance::Auto).map(|item| item.song.id.as_str()),
+        queue
+            .next(Advance::Auto)
+            .map(|item| item.track.song_id.as_str()),
         Some("a")
     );
     assert_eq!(
-        queue.previous().map(|item| item.song.id.as_str()),
+        queue.previous().map(|item| item.track.song_id.as_str()),
         Some("a")
     );
     queue.set_repeat(RepeatMode::One);
     assert_eq!(
         queue
             .next(Advance::Manual)
-            .map(|item| item.song.id.as_str()),
+            .map(|item| item.track.song_id.as_str()),
         Some("a")
     );
 }

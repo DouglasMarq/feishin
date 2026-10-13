@@ -68,6 +68,6 @@ pub trait MusicServer: Send + Sync {
 
     async fn lyrics(&self, song: &Song) -> Result<Option<String>>;
 
-    fn stream_url(&self, song: &Song, options: &StreamOptions) -> String;
+    fn stream_url(&self, song_id: &str, options: &StreamOptions) -> String;
     fn cover_art_url(&self, cover_art_id: &str, edge_pixels: Option<u32>) -> String;
 }

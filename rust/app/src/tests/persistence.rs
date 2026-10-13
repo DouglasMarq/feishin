@@ -44,7 +44,7 @@ fn assert_connect_republishes_the_restored_song(restored: &mut Harness) {
     });
     let republished = restored
         .ui
-        .any(|update| matches!(update, UiUpdate::NowPlaying(Some(song)) if song.id == "s3"));
+        .any(|update| matches!(update, UiUpdate::NowPlaying(Some(track)) if track.song_id == "s3"));
     assert!(
         republished,
         "connecting must republish the restored song so its cover loads"

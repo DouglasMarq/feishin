@@ -176,8 +176,8 @@ impl MusicServer for FakeServer {
         Ok(parse_song_index(&song.id).map(|index| demo_lyrics(index, song.duration_ms)))
     }
 
-    fn stream_url(&self, song: &Song, _options: &StreamOptions) -> String {
-        format!("demo://stream/{}", song.id)
+    fn stream_url(&self, song_id: &str, _options: &StreamOptions) -> String {
+        format!("demo://stream/{song_id}")
     }
 
     fn cover_art_url(&self, cover_art_id: &str, size: Option<u32>) -> String {

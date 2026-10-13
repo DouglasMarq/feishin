@@ -1,5 +1,5 @@
 use super::support::{
-    assert_invariants, current_id, item_ids, numbered_songs, play_uids, song, songs,
+    assert_invariants, current_id, item_ids, numbered_songs, play_uids, songs, track,
 };
 use crate::queue::{Advance, Queue, QueueItem, QueueSnapshot, RepeatMode};
 
@@ -33,7 +33,7 @@ fn snapshot_round_trip() {
             restored
                 .items()
                 .iter()
-                .all(|item| item.uid < snapshot.next_uid || item.song.id == "y")
+                .all(|item| item.uid < snapshot.next_uid || item.track.song_id == "y")
         );
     }
 }
@@ -42,15 +42,15 @@ fn items_with_duplicate_uids() -> Vec<QueueItem> {
     vec![
         QueueItem {
             uid: 5,
-            song: song("a"),
+            track: track("a"),
         },
         QueueItem {
             uid: 5,
-            song: song("b"),
+            track: track("b"),
         },
         QueueItem {
             uid: 9,
-            song: song("c"),
+            track: track("c"),
         },
     ]
 }

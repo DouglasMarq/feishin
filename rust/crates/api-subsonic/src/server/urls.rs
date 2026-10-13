@@ -1,5 +1,4 @@
 use feishin_api::StreamOptions;
-use feishin_core::model::Song;
 
 use super::SubsonicServer;
 use crate::client::{API_VERSION, CLIENT_NAME, encode_uri_component};
@@ -13,10 +12,10 @@ impl SubsonicServer {
         )
     }
 
-    pub(super) fn build_stream_url(&self, song: &Song, options: &StreamOptions) -> String {
+    pub(super) fn build_stream_url(&self, song_id: &str, options: &StreamOptions) -> String {
         let mut url = format!(
             "{}&v={API_VERSION}&c={CLIENT_NAME}&{}",
-            self.item_url("stream.view", &song.id),
+            self.item_url("stream.view", song_id),
             self.client.auth()
         );
         if let Some(format) = options

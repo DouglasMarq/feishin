@@ -1,4 +1,4 @@
-use std::collections::HashSet;
+use std::collections::{HashMap, HashSet};
 
 use super::{Queue, Uid};
 
@@ -20,11 +20,17 @@ impl Queue {
         }
         self.reindex_shuffled_order_without(&removed_uids);
         self.items.retain(|item| !removed_uids.contains(&item.uid));
+        self.reindex_all();
+        self.interner.release_unused();
+        self.bump_revision();
     }
 
     pub fn clear(&mut self) {
-        self.items.clear();
+        self.items = Vec::new();
+        self.uid_indexes = HashMap::new();
+        self.interner.clear();
         self.current_uid = None;
+        self.bump_revision();
         if let Some(play_order) = &mut self.shuffled_play_order {
             play_order.clear();
         }

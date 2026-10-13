@@ -35,13 +35,13 @@ impl Controller {
             self.fetch_server_queue();
             return;
         }
-        let Some(song) = self.current_song() else {
+        let Some(track) = self.current_track() else {
             return;
         };
-        self.update_media_metadata(&song);
+        self.update_media_metadata(&track);
         self.deps
             .ui
-            .send(UiUpdate::NowPlaying(Some(Box::new(song))));
+            .send(UiUpdate::NowPlaying(Some(Box::new(track))));
     }
 
     pub(super) fn remove_server(&mut self, server_id: &str) {

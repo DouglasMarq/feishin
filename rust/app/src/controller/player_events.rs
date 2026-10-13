@@ -100,11 +100,11 @@ impl Controller {
 
     fn begin_playing_current(&mut self) {
         self.playing = true;
-        if let Some(song) = self.current_song() {
+        if let Some(track) = self.current_track() {
             self.scrobble_tracker
-                .start(&song.id, song.duration_ms, now_ms());
-            self.send_scrobble(song.id.clone(), false, None);
-            self.update_media_metadata(&song);
+                .start(track.song_id.as_str(), track.duration_ms, now_ms());
+            self.send_scrobble(track.song_id.to_string(), false, None);
+            self.update_media_metadata(&track);
         }
         self.update_media_status();
         self.publish_playback();

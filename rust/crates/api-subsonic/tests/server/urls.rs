@@ -1,7 +1,7 @@
 use feishin_api::{Credential, MusicServer, StreamOptions};
 use feishin_api_subsonic::SubsonicServer;
 
-use crate::support::{CREDENTIAL, config, server_song};
+use crate::support::{CREDENTIAL, config};
 
 #[test]
 fn url_builders() {
@@ -10,11 +10,9 @@ fn url_builders() {
     };
     let server = SubsonicServer::with_credential(config("https://music.example.com/"), &credential)
         .expect("server");
-    let mut song = server_song(&server);
-    song.id = "a b/c".into();
 
     assert_eq!(
-        server.stream_url(&song, &StreamOptions::default()),
+        server.stream_url("a b/c", &StreamOptions::default()),
         format!(
             "https://music.example.com/rest/stream.view?id=a%20b%2Fc&v=1.13.0&c=Feishin&{CREDENTIAL}"
         )
@@ -24,7 +22,7 @@ fn url_builders() {
         format: Some("opus".into()),
     };
     assert_eq!(
-        server.stream_url(&song, &options),
+        server.stream_url("a b/c", &options),
         format!(
             "https://music.example.com/rest/stream.view?id=a%20b%2Fc&v=1.13.0&c=Feishin&{CREDENTIAL}&format=opus&maxBitRate=192"
         )

@@ -1,5 +1,5 @@
 use feishin_core::model::Song;
-use feishin_core::queue::{RepeatMode, Uid};
+use feishin_core::queue::{QueueTrack, RepeatMode, Uid};
 
 use crate::sleep_timer::SleepStatus;
 
@@ -14,7 +14,7 @@ pub struct QueueEntry {
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum UiUpdate {
-    NowPlaying(Option<Box<Song>>),
+    NowPlaying(Option<Box<QueueTrack>>),
     Playback {
         playing: bool,
         position_ms: u64,

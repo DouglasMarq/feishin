@@ -1,10 +1,9 @@
-use feishin_core::model::Song;
-use feishin_core::queue::RepeatMode;
+use feishin_core::queue::{QueueTrack, RepeatMode};
 use feishin_storage::cover_cache::DecodedImage;
 use slint::{ComponentHandle, Image, Rgba8Pixel, SharedPixelBuffer};
 
 use super::{AppWindow, Context, PlayerState, clamp_i32, on_ui, queue, show_status, tracks};
-use crate::controller::{Command, UiSink, UiUpdate, artist_names};
+use crate::controller::{Command, UiSink, UiUpdate};
 
 const COVER_SIZE: u32 = 128;
 
@@ -42,12 +41,12 @@ impl SlintSink {
         Self { window, ctx }
     }
 
-    fn load_cover(&self, song: &Song) {
-        let (Some(cover_id), Some(server)) = (song.cover_art_id.clone(), self.ctx.session.get())
+    fn load_cover(&self, track: &QueueTrack) {
+        let (Some(cover_id), Some(server)) = (track.cover_art_id.clone(), self.ctx.session.get())
         else {
             return;
         };
-        let song_id = song.id.clone();
+        let song_id = track.song_id.to_string();
         let covers = self.ctx.covers.clone();
         let window = self.window.clone();
         self.ctx.rt.spawn(async move {
@@ -83,28 +82,29 @@ pub fn to_image(cover: &DecodedImage) -> Option<Image> {
 impl UiSink for SlintSink {
     fn send(&self, update: UiUpdate) {
         let cover_for = match &update {
-            UiUpdate::NowPlaying(Some(song)) => Some(song.clone()),
+            UiUpdate::NowPlaying(Some(track)) => Some(track.clone()),
             _ => None,
         };
         on_ui(&self.window, move |window| apply(window, update));
-        if let Some(song) = cover_for {
-            self.load_cover(&song);
+        if let Some(track) = cover_for {
+            self.load_cover(&track);
         }
     }
 }
 
-fn show_song(window: &AppWindow, song: Song) {
+fn show_song(window: &AppWindow, track: &QueueTrack) {
     let state = window.global::<PlayerState>();
-    if state.get_song_id() != song.id.as_str() {
+    let song_id = track.song_id.as_str();
+    if state.get_song_id() != song_id {
         state.set_has_cover(false);
         state.set_cover(Image::default());
     }
     state.set_has_song(true);
-    state.set_song_id(song.id.as_str().into());
-    state.set_title(song.title.as_str().into());
-    state.set_artists(artist_names(&song).into());
-    state.set_album(song.album.unwrap_or_default().into());
-    tracks::set_current(window, Some(&song.id));
+    state.set_song_id(song_id.into());
+    state.set_title((*track.title).into());
+    state.set_artists(track.artist_names().into());
+    state.set_album(track.album.as_deref().unwrap_or_default().into());
+    tracks::set_current(window, Some(song_id));
 }
 
 fn clear_song(window: &AppWindow) {
@@ -142,7 +142,7 @@ fn quit() {
 fn apply(window: &AppWindow, update: UiUpdate) {
     let state = window.global::<PlayerState>();
     match update {
-        UiUpdate::NowPlaying(Some(song)) => show_song(window, *song),
+        UiUpdate::NowPlaying(Some(track)) => show_song(window, &track),
         UiUpdate::NowPlaying(None) => clear_song(window),
         UiUpdate::Playback {
             playing,

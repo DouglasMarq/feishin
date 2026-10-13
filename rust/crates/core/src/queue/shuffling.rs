@@ -12,6 +12,7 @@ impl Queue {
             return;
         }
         self.shuffled_play_order = enabled.then(|| self.shuffled_order(self.current_index()));
+        self.bump_revision();
     }
 
     pub(super) fn shuffled_order(&mut self, first_index: Option<usize>) -> Vec<usize> {

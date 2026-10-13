@@ -1,6 +1,6 @@
 use feishin_api::{MusicServer, StreamOptions};
 
-use crate::support::{sample_song, server_at};
+use crate::support::server_at;
 
 const SERVER_URL: &str = "https://jf.example";
 
@@ -8,7 +8,7 @@ const SERVER_URL: &str = "https://jf.example";
 fn stream_url_downloads_original_without_options() {
     let jellyfin = server_at(SERVER_URL);
     assert_eq!(
-        jellyfin.stream_url(&sample_song("s1"), &StreamOptions::default()),
+        jellyfin.stream_url("s1", &StreamOptions::default()),
         "https://jf.example/Items/s1/Download?apiKey=tok123&playSessionId="
     );
 }
@@ -21,7 +21,7 @@ fn stream_url_transcodes_to_requested_format_and_bitrate() {
         format: Some("opus".into()),
     };
     assert_eq!(
-        jellyfin.stream_url(&sample_song("s1"), &options),
+        jellyfin.stream_url("s1", &options),
         "https://jf.example/audio/s1/universal?userId=u1&deviceId=&audioCodec=opus&apiKey=tok123\
          &playSessionId=feishin-s1-opus-0-0&container=opus&transcodingProtocol=http\
          &transcodingContainer=opus&maxStreamingBitrate=192000"
@@ -36,7 +36,7 @@ fn stream_url_transcodes_to_mp3_when_only_bitrate_is_set() {
         format: None,
     };
     assert_eq!(
-        jellyfin.stream_url(&sample_song("s1"), &options),
+        jellyfin.stream_url("s1", &options),
         "https://jf.example/audio/s1/universal?userId=u1&deviceId=&audioCodec=mp3&apiKey=tok123\
          &playSessionId=feishin-s1-mp3-0-0&container=mp3&transcodingProtocol=http\
          &transcodingContainer=mp3&maxStreamingBitrate=128000"
