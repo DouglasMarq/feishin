@@ -1,23 +1,38 @@
-import { LineEdit, ListView } from "std-widgets.slint";
+import { ComboBox, LineEdit, ListView } from "std-widgets.slint";
 import { Theme, Icons } from "theme.slint";
-import { TracksState, TrackRow } from "globals.slint";
+import { AppState, Route, TracksState, TrackRow } from "globals.slint";
 import { Icon } from "widgets.slint";
+
+global Glyphs {
+    out property <string> star: "M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z";
+    out property <string> heart-outline: "M16.5 3c-1.74 0-3.41.81-4.5 2.09C10.91 3.81 9.24 3 7.5 3 4.42 3 2 5.42 2 8.5c0 3.78 3.4 6.86 8.55 11.54L12 21.35l1.45-1.32C18.6 15.36 22 12.28 22 8.5 22 5.42 19.58 3 16.5 3zm-4.4 15.55l-.1.1-.1-.1C7.14 14.24 4 11.39 4 8.5 4 6.5 5.5 5 7.5 5c1.54 0 3.04.99 3.57 2.36h1.87C13.46 5.99 14.96 5 16.5 5c2 0 3.5 1.5 3.5 3.5 0 2.89-3.14 5.74-7.9 10.05z";
+}
 
 export component HeaderCell inherits Rectangle {
     in property <string> text;
+    /// Shown instead of `text` when set.
+    in property <string> icon;
     in property <string> column;
     in property <bool> sortable: true;
     in property <TextHorizontalAlignment> align: left;
     in-out property <length> column-width;
     property <bool> sorted: root.sortable && TracksState.sort-column == root.column;
+    /// Right click, in window coordinates.
+    callback context-menu(length, length);
     width: root.column-width;
     height: 32px;
 
     TouchArea {
-        enabled: root.sortable;
         mouse-cursor: root.sortable ? pointer : default;
         clicked => {
-            TracksState.sort-by(root.column);
+            if (root.sortable) {
+                TracksState.sort-by(root.column);
+            }
+        }
+        pointer-event(event) => {
+            if (event.kind == PointerEventKind.down && event.button == PointerEventButton.right) {
+                root.context-menu(self.absolute-position.x + self.mouse-x, self.absolute-position.y + self.mouse-y);
+            }
         }
     }
 
@@ -26,7 +41,7 @@ export component HeaderCell inherits Rectangle {
         padding-right: 10px;
         spacing: 2px;
 
-        Text {
+        if root.icon == "": Text {
             text: root.text;
             color: root.sorted ? Theme.foreground : Theme.muted;
             font-size: 12px;
@@ -35,6 +50,18 @@ export component HeaderCell inherits Rectangle {
             horizontal-alignment: root.align;
             overflow: elide;
             horizontal-stretch: 1;
+        }
+
+        if root.icon != "": Rectangle {
+            horizontal-stretch: 1;
+
+            Icon {
+                x: 0;
+                path: root.icon;
+                color: root.sorted ? Theme.foreground : Theme.muted;
+                width: 14px;
+                height: 14px;
+            }
         }
 
         if root.sorted: Icon {
@@ -72,18 +99,127 @@ export component Cell inherits Rectangle {
     }
 }
 
+component LinkCell inherits Rectangle {
+    in property <string> text;
+    in property <bool> enabled: true;
+    callback clicked();
+    callback context-menu(length, length);
+
+    label := Text {
+        x: 8px;
+        width: parent.width - 18px;
+        text: root.text;
+        color: link.has-hover && root.enabled ? Theme.foreground : Theme.muted;
+        vertical-alignment: center;
+        overflow: elide;
+    }
+
+    link := TouchArea {
+        x: 8px;
+        width: min(label.preferred-width, parent.width - 18px);
+        enabled: root.enabled;
+        mouse-cursor: pointer;
+        clicked => {
+            root.clicked();
+        }
+        pointer-event(event) => {
+            if (event.kind == PointerEventKind.down && event.button == PointerEventButton.right) {
+                root.context-menu(self.absolute-position.x + self.mouse-x, self.absolute-position.y + self.mouse-y);
+            }
+        }
+    }
+}
+
+component FavoriteCell inherits Rectangle {
+    in property <bool> favorite;
+    in property <bool> row-hover;
+    callback toggle();
+    callback context-menu(length, length);
+
+    if root.favorite || root.row-hover: Icon {
+        x: 8px;
+        path: root.favorite ? Icons.heart : Glyphs.heart-outline;
+        color: root.favorite ? Theme.danger : (touch.has-hover ? Theme.foreground : Theme.muted);
+        width: 16px;
+        height: 16px;
+    }
+
+    touch := TouchArea {
+        x: 4px;
+        width: 24px;
+        mouse-cursor: pointer;
+        clicked => {
+            root.toggle();
+        }
+        pointer-event(event) => {
+            if (event.kind == PointerEventKind.down && event.button == PointerEventButton.right) {
+                root.context-menu(self.absolute-position.x + self.mouse-x, self.absolute-position.y + self.mouse-y);
+            }
+        }
+    }
+}
+
+component RatingCell inherits Rectangle {
+    in property <int> rating;
+    callback rate(int);
+    callback context-menu(length, length);
+    property <int> hovered: -1;
+
+    HorizontalLayout {
+        x: 6px;
+        alignment: start;
+
+        for i in 5: Rectangle {
+            width: 17px;
+
+            Icon {
+                path: Glyphs.star;
+                color: (root.hovered >= 0 ? i <= root.hovered : i < root.rating) ? (root.hovered >= 0 ? Theme.foreground : Theme.muted) : #ffffff1a;
+                width: 15px;
+                height: 15px;
+            }
+
+            TouchArea {
+                mouse-cursor: pointer;
+                changed has-hover => {
+                    if (self.has-hover) {
+                        root.hovered = i;
+                    } else if (root.hovered == i) {
+                        root.hovered = -1;
+                    }
+                }
+                clicked => {
+                    root.rate(i + 1 == root.rating ? 0 : i + 1);
+                }
+                pointer-event(event) => {
+                    if (event.kind == PointerEventKind.down && event.button == PointerEventButton.right) {
+                        root.context-menu(self.absolute-position.x + self.mouse-x, self.absolute-position.y + self.mouse-y);
+                    }
+                }
+            }
+        }
+    }
+}
+
 export component Skeleton inherits Rectangle {
     height: 10px;
     border-radius: 5px;
     background: Theme.surface-raised;
 }
 
+/// One song row. Album and artist names link to their pages; `select` and `context-menu` are optional.
 export component TrackRowView inherits Rectangle {
     in property <TrackRow> track;
     callback play();
     callback clicked();
+    /// Left press with Ctrl / Shift state.
+    callback select(bool, bool);
+    /// Right press, in window coordinates.
+    callback context-menu(length, length);
+    callback toggle-favorite();
+    callback rate(int);
     height: 36px;
-    background: touch.has-hover ? Theme.hover : transparent;
+    background: root.track.selected ? Theme.selected : (touch.has-hover ? Theme.hover : transparent);
 
     touch := TouchArea {
         clicked => {
@@ -92,6 +228,15 @@ export component TrackRowView inherits Rectangle {
         double-clicked => {
             if (root.track.loaded) {
                 root.play();
+            }
+        }
+        pointer-event(event) => {
+            if (event.kind == PointerEventKind.down && root.track.loaded) {
+                if (event.button == PointerEventButton.left) {
+                    root.select(event.modifiers.control, event.modifiers.shift);
+                } else if (event.button == PointerEventButton.right) {
+                    root.context-menu(self.absolute-position.x + self.mouse-x, self.absolute-position.y + self.mouse-y);
+                }
             }
         }
 
@@ -145,29 +290,66 @@ export component TrackRowView inherits Rectangle {
                     text-color: root.track.playing ? Theme.primary : Theme.foreground;
                 }
 
-                Cell {
+                if TracksState.show-artist: LinkCell {
                     width: TracksState.w-artist;
                     text: root.track.artists;
+                    enabled: root.track.artist-id != "";
+                    clicked => {
+                        AppState.navigate(Route.artist-detail, root.track.artist-id);
+                    }
+                    context-menu(x, y) => {
+                        root.context-menu(x, y);
+                    }
                 }
 
-                Cell {
+                if TracksState.show-album: LinkCell {
                     width: TracksState.w-album;
                     text: root.track.album;
+                    enabled: root.track.album-id != "";
+                    clicked => {
+                        AppState.navigate(Route.album-detail, root.track.album-id);
+                    }
+                    context-menu(x, y) => {
+                        root.context-menu(x, y);
+                    }
                 }
 
-                Cell {
+                if TracksState.show-year: Cell {
                     width: TracksState.w-year;
                     text: root.track.year;
                 }
 
-                Cell {
+                if TracksState.show-plays: Cell {
                     width: TracksState.w-plays;
                     text: root.track.plays;
                 }
 
-                Cell {
+                if TracksState.show-duration: Cell {
                     width: TracksState.w-duration;
                     text: root.track.duration;
+                }
+
+                if TracksState.show-favorite: FavoriteCell {
+                    width: TracksState.w-favorite;
+                    favorite: root.track.favorite;
+                    row-hover: touch.has-hover;
+                    toggle => {
+                        root.toggle-favorite();
+                    }
+                    context-menu(x, y) => {
+                        root.context-menu(x, y);
+                    }
+                }
+
+                if TracksState.show-rating: RatingCell {
+                    width: TracksState.w-rating;
+                    rating: root.track.rating;
+                    rate(value) => {
+                        root.rate(value);
+                    }
+                    context-menu(x, y) => {
+                        root.context-menu(x, y);
+                    }
                 }
 
                 Rectangle { }
@@ -199,10 +381,54 @@ export component TrackRowView inherits Rectangle {
     }
 }
 
+component FilterChip inherits Rectangle {
+    in property <string> text;
+    in property <string> icon;
+    in property <bool> active;
+    callback clicked();
+    height: 30px;
+    border-radius: 15px;
+    border-width: 1px;
+    border-color: root.active ? Theme.primary : Theme.border;
+    background: root.active ? Theme.selected : (touch.has-hover ? Theme.hover : transparent);
+
+    HorizontalLayout {
+        padding-left: 12px;
+        padding-right: 12px;
+        spacing: 6px;
+
+        if root.icon != "": Icon {
+            y: (parent.height - self.height) / 2;
+            path: root.icon;
+            color: root.active ? Theme.danger : Theme.muted;
+            width: 14px;
+            height: 14px;
+        }
+
+        Text {
+            text: root.text;
+            color: root.active ? Theme.foreground : Theme.muted;
+            vertical-alignment: center;
+        }
+    }
+
+    touch := TouchArea {
+        mouse-cursor: pointer;
+        clicked => {
+            root.clicked();
+        }
+    }
+}
+
 export component TracksView inherits Rectangle {
     callback row-clicked();
+    property <bool> filtered: TracksState.filter-favorite || TracksState.genre-index > 0 || TracksState.year-from != "" || TracksState.year-to != "";
     min-width: 320px;
     background: Theme.background;
+
+    init => {
+        TracksState.load-genres();
+    }
 
     VerticalLayout {
         HorizontalLayout {
@@ -231,65 +457,217 @@ export component TracksView inherits Rectangle {
             LineEdit {
                 width: 280px;
                 placeholder-text: "Search";
+                text <=> TracksState.search-text;
                 edited(text) => {
                     TracksState.search-edited(text);
                 }
             }
         }
 
-        Rectangle {
+        HorizontalLayout {
+            padding-left: 20px;
+            padding-right: 20px;
+            padding-bottom: 12px;
+            spacing: 8px;
+            alignment: start;
+
+            FilterChip {
+                y: (parent.height - self.height) / 2;
+                text: "Favorites";
+                icon: Icons.heart;
+                active: TracksState.filter-favorite;
+                clicked => {
+                    TracksState.filter-favorite = !TracksState.filter-favorite;
+                    TracksState.filters-changed(false);
+                }
+            }
+
+            ComboBox {
+                width: 180px;
+                model: TracksState.genres;
+                current-index <=> TracksState.genre-index;
+                selected => {
+                    TracksState.filters-changed(false);
+                }
+            }
+
+            LineEdit {
+                width: 96px;
+                input-type: number;
+                placeholder-text: "Year from";
+                text <=> TracksState.year-from;
+                edited => {
+                    TracksState.filters-changed(true);
+                }
+                accepted => {
+                    TracksState.filters-changed(false);
+                }
+            }
+
+            LineEdit {
+                width: 96px;
+                input-type: number;
+                placeholder-text: "Year to";
+                text <=> TracksState.year-to;
+                edited => {
+                    TracksState.filters-changed(true);
+                }
+                accepted => {
+                    TracksState.filters-changed(false);
+                }
+            }
+
+            if root.filtered: FilterChip {
+                y: (parent.height - self.height) / 2;
+                text: "Clear filters";
+                clicked => {
+                    TracksState.filter-favorite = false;
+                    TracksState.genre-index = 0;
+                    TracksState.year-from = "";
+                    TracksState.year-to = "";
+                    TracksState.filters-changed(false);
+                }
+            }
+        }
+
+        header := Rectangle {
             height: 33px;
             min-width: 0px;
             clip: true;
 
-            HorizontalLayout {
-                x: list.content-x;
+            header-menu := ContextMenuArea {
+                Menu {
+                    MenuItem {
+                        title: "Artist";
+                        checkable: true;
+                        checked <=> TracksState.show-artist;
+                    }
 
-                HeaderCell {
-                    text: "#";
-                    column: "index";
-                    sortable: false;
-                    align: right;
-                    column-width <=> TracksState.w-index;
+                    MenuItem {
+                        title: "Album";
+                        checkable: true;
+                        checked <=> TracksState.show-album;
+                    }
+
+                    MenuItem {
+                        title: "Year";
+                        checkable: true;
+                        checked <=> TracksState.show-year;
+                    }
+
+                    MenuItem {
+                        title: "Plays";
+                        checkable: true;
+                        checked <=> TracksState.show-plays;
+                    }
+
+                    MenuItem {
+                        title: "Time";
+                        checkable: true;
+                        checked <=> TracksState.show-duration;
+                    }
+
+                    MenuItem {
+                        title: "Favorite";
+                        checkable: true;
+                        checked <=> TracksState.show-favorite;
+                    }
+
+                    MenuItem {
+                        title: "Rating";
+                        checkable: true;
+                        checked <=> TracksState.show-rating;
+                    }
                 }
 
-                HeaderCell {
-                    text: "Title";
-                    column: "title";
-                    column-width <=> TracksState.w-title;
-                }
+                HorizontalLayout {
+                    x: list.content-x;
 
-                HeaderCell {
-                    text: "Artist";
-                    column: "artist";
-                    column-width <=> TracksState.w-artist;
-                }
+                    HeaderCell {
+                        text: "#";
+                        column: "index";
+                        sortable: false;
+                        align: right;
+                        column-width <=> TracksState.w-index;
+                        context-menu(x, y) => {
+                            header-menu.show({ x: x - header.absolute-position.x, y: y - header.absolute-position.y });
+                        }
+                    }
 
-                HeaderCell {
-                    text: "Album";
-                    column: "album";
-                    column-width <=> TracksState.w-album;
-                }
+                    HeaderCell {
+                        text: "Title";
+                        column: "title";
+                        column-width <=> TracksState.w-title;
+                        context-menu(x, y) => {
+                            header-menu.show({ x: x - header.absolute-position.x, y: y - header.absolute-position.y });
+                        }
+                    }
 
-                HeaderCell {
-                    text: "Year";
-                    column: "year";
-                    column-width <=> TracksState.w-year;
-                }
+                    if TracksState.show-artist: HeaderCell {
+                        text: "Artist";
+                        column: "artist";
+                        column-width <=> TracksState.w-artist;
+                        context-menu(x, y) => {
+                            header-menu.show({ x: x - header.absolute-position.x, y: y - header.absolute-position.y });
+                        }
+                    }
 
-                HeaderCell {
-                    text: "Plays";
-                    column: "plays";
-                    column-width <=> TracksState.w-plays;
-                }
+                    if TracksState.show-album: HeaderCell {
+                        text: "Album";
+                        column: "album";
+                        column-width <=> TracksState.w-album;
+                        context-menu(x, y) => {
+                            header-menu.show({ x: x - header.absolute-position.x, y: y - header.absolute-position.y });
+                        }
+                    }
 
-                HeaderCell {
-                    text: "Time";
-                    column: "duration";
-                    column-width <=> TracksState.w-duration;
-                }
+                    if TracksState.show-year: HeaderCell {
+                        text: "Year";
+                        column: "year";
+                        column-width <=> TracksState.w-year;
+                        context-menu(x, y) => {
+                            header-menu.show({ x: x - header.absolute-position.x, y: y - header.absolute-position.y });
+                        }
+                    }
 
-                Rectangle { }
+                    if TracksState.show-plays: HeaderCell {
+                        text: "Plays";
+                        column: "plays";
+                        column-width <=> TracksState.w-plays;
+                        context-menu(x, y) => {
+                            header-menu.show({ x: x - header.absolute-position.x, y: y - header.absolute-position.y });
+                        }
+                    }
+
+                    if TracksState.show-duration: HeaderCell {
+                        text: "Time";
+                        column: "duration";
+                        column-width <=> TracksState.w-duration;
+                        context-menu(x, y) => {
+                            header-menu.show({ x: x - header.absolute-position.x, y: y - header.absolute-position.y });
+                        }
+                    }
+
+                    if TracksState.show-favorite: HeaderCell {
+                        icon: Icons.heart;
+                        column: "favorite";
+                        column-width <=> TracksState.w-favorite;
+                        context-menu(x, y) => {
+                            header-menu.show({ x: x - header.absolute-position.x, y: y - header.absolute-position.y });
+                        }
+                    }
+
+                    if TracksState.show-rating: HeaderCell {
+                        text: "Rating";
+                        column: "rating";
+                        column-width <=> TracksState.w-rating;
+                        context-menu(x, y) => {
+                            header-menu.show({ x: x - header.absolute-position.x, y: y - header.absolute-position.y });
+                        }
+                    }
+
+                    Rectangle { }
+                }
             }
 
             Rectangle {
@@ -299,19 +677,154 @@ export component TracksView inherits Rectangle {
             }
         }
 
-        Rectangle {
+        list-area := Rectangle {
             min-width: 0px;
+            vertical-stretch: 1;
             clip: true;
 
-            list := ListView {
-                for row in TracksState.rows: TrackRowView {
-                    track: row;
-                    clicked => {
-                        root.row-clicked();
+            row-menu := ContextMenuArea {
+                Menu {
+                    MenuItem {
+                        title: "Play";
+                        enabled: TracksState.selected-count > 0;
+                        activated => {
+                            TracksState.play-selected();
+                        }
                     }
-                    play => {
-                        root.row-clicked();
-                        TracksState.play-row(row.index - 1);
+
+                    MenuItem {
+                        title: "Play next";
+                        enabled: TracksState.selected-count > 0;
+                        activated => {
+                            TracksState.queue-selected(true);
+                        }
+                    }
+
+                    MenuItem {
+                        title: "Add to queue";
+                        enabled: TracksState.selected-count > 0;
+                        activated => {
+                            TracksState.queue-selected(false);
+                        }
+                    }
+
+                    MenuSeparator { }
+
+                    MenuItem {
+                        title: "Add to playlist";
+                        enabled: TracksState.selected-count > 0;
+                        activated => {
+                            TracksState.add-selected-to-playlist();
+                        }
+                    }
+
+                    MenuSeparator { }
+
+                    MenuItem {
+                        title: "Add to favorites";
+                        enabled: TracksState.selected-count > 0;
+                        activated => {
+                            TracksState.favorite-selected(true);
+                        }
+                    }
+
+                    MenuItem {
+                        title: "Remove from favorites";
+                        enabled: TracksState.selected-count > 0;
+                        activated => {
+                            TracksState.favorite-selected(false);
+                        }
+                    }
+
+                    Menu {
+                        title: "Set rating";
+                        enabled: TracksState.selected-count > 0;
+
+                        MenuItem {
+                            title: "No rating";
+                            activated => {
+                                TracksState.rate-selected(0);
+                            }
+                        }
+
+                        MenuItem {
+                            title: "1 star";
+                            activated => {
+                                TracksState.rate-selected(1);
+                            }
+                        }
+
+                        MenuItem {
+                            title: "2 stars";
+                            activated => {
+                                TracksState.rate-selected(2);
+                            }
+                        }
+
+                        MenuItem {
+                            title: "3 stars";
+                            activated => {
+                                TracksState.rate-selected(3);
+                            }
+                        }
+
+                        MenuItem {
+                            title: "4 stars";
+                            activated => {
+                                TracksState.rate-selected(4);
+                            }
+                        }
+
+                        MenuItem {
+                            title: "5 stars";
+                            activated => {
+                                TracksState.rate-selected(5);
+                            }
+                        }
+                    }
+
+                    MenuSeparator { }
+
+                    MenuItem {
+                        title: "Go to album";
+                        enabled: TracksState.selected-count == 1;
+                        activated => {
+                            TracksState.go-to-album();
+                        }
+                    }
+
+                    MenuItem {
+                        title: "Go to artist";
+                        enabled: TracksState.selected-count == 1;
+                        activated => {
+                            TracksState.go-to-artist();
+                        }
+                    }
+                }
+
+                list := ListView {
+                    for row in TracksState.rows: TrackRowView {
+                        track: row;
+                        clicked => {
+                            root.row-clicked();
+                        }
+                        play => {
+                            root.row-clicked();
+                            TracksState.play-row(row.index - 1);
+                        }
+                        select(toggle, extend) => {
+                            TracksState.select-row(row.index - 1, toggle, extend);
+                        }
+                        context-menu(x, y) => {
+                            TracksState.context-row(row.index - 1);
+                            row-menu.show({ x: x - list-area.absolute-position.x, y: y - list-area.absolute-position.y });
+                        }
+                        toggle-favorite => {
+                            TracksState.toggle-favorite(row.index - 1);
+                        }
+                        rate(value) => {
+                            TracksState.rate-row(row.index - 1, value);
+                        }
                     }
                 }
             }
