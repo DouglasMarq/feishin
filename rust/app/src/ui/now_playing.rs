@@ -764,12 +764,15 @@ mod tests {
 
         let similar = state.get_similar().row_data(0).unwrap();
         state.invoke_play_similar(similar.id.clone());
-        match commands.try_recv() {
-            Ok(Command::PlaySongs { songs, song_id }) => {
-                assert_eq!(songs.len(), state.get_similar().row_count());
-                assert_eq!(song_id.as_deref(), Some(similar.id.as_str()));
-            }
-            _ => panic!("expected PlaySongs"),
-        }
+        let played =
+            std::iter::from_fn(|| commands.try_recv().ok()).find_map(|command| match command {
+                Command::PlaySongs { songs, song_id } => Some((songs, song_id)),
+                _ => None,
+            });
+        let Some((songs, song_id)) = played else {
+            panic!("expected PlaySongs");
+        };
+        assert_eq!(songs.len(), state.get_similar().row_count());
+        assert_eq!(song_id.as_deref(), Some(similar.id.as_str()));
     }
 }

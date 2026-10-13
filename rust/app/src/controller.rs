@@ -435,6 +435,11 @@ impl Controller {
         self.persist_credential();
         if self.queue.is_empty() {
             self.fetch_server_queue();
+        } else if let Some(song) = self.queue.current().map(|item| item.song.clone()) {
+            self.update_media_metadata(&song);
+            self.deps
+                .ui
+                .send(UiUpdate::NowPlaying(Some(Box::new(song))));
         }
     }
 

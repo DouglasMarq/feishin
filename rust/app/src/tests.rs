@@ -459,6 +459,29 @@ async fn settings_and_queue_survive_a_restart() {
     assert_eq!(restored.current_id().as_deref(), Some("s3"));
     assert!(restored.audio.take().is_empty());
 
+    let config = restored
+        .store
+        .load_settings()
+        .ok()
+        .and_then(|s| s.servers.first().cloned())
+        .unwrap_or_else(crate::demo::FakeServer::config_for_demo);
+    restored.ui.0.lock().unwrap().clear();
+    restored.controller.handle(Command::Connected {
+        config,
+        others: Vec::new(),
+    });
+    let republished = restored
+        .ui
+        .0
+        .lock()
+        .unwrap()
+        .iter()
+        .any(|update| matches!(update, UiUpdate::NowPlaying(Some(song)) if song.id == "s3"));
+    assert!(
+        republished,
+        "connecting must republish the restored song so its cover loads"
+    );
+
     restored.controller.handle(Command::TogglePause);
     let uid = restored.current_uid().unwrap_or(Uid::MAX);
     assert_eq!(restored.audio.take(), [AudioCall::Load(uid, 12_345)]);
