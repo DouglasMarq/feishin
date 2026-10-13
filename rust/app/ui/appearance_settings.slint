@@ -178,8 +178,8 @@ export component ThemePicker inherits Rectangle {
                         current: index == root.selected;
                         clicked => {
                             root.selected = index;
-                            menu.close();
                             root.chosen();
+                            menu.close();
                         }
                     }
                 }

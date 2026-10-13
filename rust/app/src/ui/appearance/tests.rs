@@ -248,3 +248,6 @@ fn light_accents_get_dark_text() {
         Color::from_rgb_u8(0x14, 0x14, 0x14)
     );
 }
+
+#[cfg(debug_assertions)]
+mod clicks;
