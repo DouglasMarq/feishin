@@ -80,7 +80,7 @@ impl FromStr for AccentColor {
     fn from_str(text: &str) -> Result<Self, Self::Err> {
         let trimmed = text.trim();
         let digits = trimmed.strip_prefix('#').unwrap_or(trimmed);
-        if digits.len() != 6 || !digits.is_ascii() {
+        if digits.len() != 6 || !digits.chars().all(|digit| digit.is_ascii_hexdigit()) {
             return Err(InvalidAccentColor);
         }
         Ok(Self::new(
@@ -150,7 +150,9 @@ mod tests {
 
     #[test]
     fn malformed_accent_colors_are_rejected() {
-        for text in ["", "#123", "#12345g", "#1234567", "#ééé", "blue"] {
+        for text in [
+            "", "#123", "#12345g", "#1234567", "#ééé", "blue", "#+1+2+3", "+a+b+c",
+        ] {
             assert_eq!(
                 text.parse::<AccentColor>(),
                 Err(InvalidAccentColor),
