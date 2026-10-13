@@ -19,11 +19,11 @@ impl SubsonicServer {
     pub(super) async fn fetch_random_songs(
         &self,
         count: usize,
-        genre: Option<&str>,
+        genre_id: Option<&str>,
     ) -> Result<Vec<Song>> {
         let params = Params::new()
             .add("size", count)
-            .add_optional("genre", genre);
+            .add_optional("genre", genre_id);
         let response: RandomSongs = self.fetch("getRandomSongs.view", params).await?;
         let songs = response
             .random_songs

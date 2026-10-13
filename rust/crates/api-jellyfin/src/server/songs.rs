@@ -70,11 +70,11 @@ impl JellyfinServer {
     pub(super) async fn random_song_list(
         &self,
         count: usize,
-        genre: Option<&str>,
+        genre_id: Option<&str>,
     ) -> Result<Vec<Song>> {
         let params = QueryParams::default()
             .fields(SONG_FIELDS)
-            .set_optional("GenreIds", genre)
+            .set_optional("GenreIds", genre_id)
             .set("IncludeItemTypes", SONG_ITEM_TYPE)
             .set("Limit", count)
             .set("Recursive", true)
