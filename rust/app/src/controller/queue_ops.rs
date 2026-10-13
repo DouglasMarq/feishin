@@ -32,6 +32,7 @@ impl Controller {
 
     pub(super) fn play_songs(&mut self, songs: Vec<Song>, song_id: Option<String>) {
         self.play_request += 1;
+        self.list_streams.cancel_all();
         self.queue.play_now(songs, song_id.as_deref());
         self.publish_queue();
         self.load_current(0);
@@ -78,6 +79,7 @@ impl Controller {
     }
 
     pub(super) fn clear_queue(&mut self) {
+        self.list_streams.cancel_all();
         self.queue.clear();
         self.stop_with_empty_queue();
         self.queue_changed();

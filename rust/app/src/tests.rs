@@ -1,4 +1,5 @@
 mod harness;
+mod list_streaming;
 mod media_session;
 mod persistence;
 mod playback;

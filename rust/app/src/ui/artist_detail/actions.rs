@@ -1,10 +1,11 @@
-use feishin_core::model::{ItemKind, Paging, SongListQuery, SongSort};
+use feishin_core::model::{ItemKind, SongListQuery, SongSort};
 use slint::ComponentHandle;
 
 use super::super::artists;
 use super::super::{AppWindow, ArtistDetailState, Context, PlayerState, on_ui, show_status};
 use super::current::{is_current, update_current};
 use crate::controller::Command;
+use crate::list_stream::{ListRow, Placement, RowRanges, SongSource};
 
 pub fn artist_songs_query(artist_id: &str) -> SongListQuery {
     SongListQuery {
@@ -14,46 +15,23 @@ pub fn artist_songs_query(artist_id: &str) -> SongListQuery {
     }
 }
 
-fn first_song_sort(shuffle: bool, discography_sort: SongSort) -> SongSort {
-    match shuffle {
-        true => SongSort::Random,
-        false => discography_sort,
-    }
-}
-
 pub fn play_artist(window: &AppWindow, ctx: &Context, artist_id: &str, shuffle: bool) {
-    let Some(server) = ctx.session.get() else {
+    let source = SongSource::Library(artist_songs_query(artist_id));
+    if !shuffle {
+        ctx.send(Command::PlayFromList {
+            source,
+            song_id: None,
+            row_index: ListRow(0),
+        });
         return;
-    };
-    if shuffle && !window.global::<PlayerState>().get_shuffle() {
+    }
+    if !window.global::<PlayerState>().get_shuffle() {
         ctx.send(Command::ToggleShuffle);
     }
-    let query = artist_songs_query(artist_id);
-    let first_song_query = SongListQuery {
-        sort: first_song_sort(shuffle, query.sort),
-        ..query.clone()
-    };
-    let commands = ctx.clone();
-    let weak_window = window.as_weak();
-    ctx.rt.spawn(async move {
-        let paging = Paging {
-            start_index: 0,
-            limit: 1,
-        };
-        match server.song_list(&first_song_query, paging).await {
-            Ok(page) => match page.items.into_iter().next() {
-                Some(song) => commands.send(Command::PlayFromList {
-                    query,
-                    song_id: song.id,
-                }),
-                None => on_ui(&weak_window, |window| {
-                    show_status(window, "This artist has no songs");
-                }),
-            },
-            Err(error) => on_ui(&weak_window, move |window| {
-                show_status(window, &format!("Could not play the artist: {error}"));
-            }),
-        }
+    ctx.send(Command::EnqueueFromList {
+        source,
+        ranges: vec![RowRanges::WHOLE_LIST],
+        placement: Placement::Now,
     });
 }
 

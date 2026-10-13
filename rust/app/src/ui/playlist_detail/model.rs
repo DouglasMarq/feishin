@@ -97,6 +97,10 @@ impl PlaylistSongsModel {
         true
     }
 
+    pub fn playlist_id(&self) -> String {
+        self.state.borrow().playlist_id.clone()
+    }
+
     pub fn total(&self) -> usize {
         self.state.borrow().total
     }

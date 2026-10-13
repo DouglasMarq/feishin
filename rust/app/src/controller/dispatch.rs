@@ -12,12 +12,9 @@ impl Controller {
             Command::Player(event) => self.on_player_event(event),
             Command::Media(event) => self.on_media_event(event),
             Command::Connected { config, others } => self.connected(config, others),
-            Command::PlayFromList { query, song_id } => self.play_from_list(query, song_id),
-            Command::PlayNow {
-                request,
-                songs,
-                song_id,
-            } => self.play_requested(request, songs, &song_id),
+            command @ (Command::PlayFromList { .. }
+            | Command::EnqueueFromList { .. }
+            | Command::ListStream(_)) => self.dispatch_list_command(command),
             Command::TogglePause => self.toggle_pause(),
             Command::Next => self.next(),
             Command::Previous => self.previous(),

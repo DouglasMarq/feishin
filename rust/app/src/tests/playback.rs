@@ -23,7 +23,7 @@ async fn play_from_list_queues_the_whole_list_and_loads_the_clicked_song() {
             .unwrap_or_default();
     let clicked = expected[700].clone();
 
-    harness.play_from_list(query.clone(), &clicked).await;
+    harness.play_from_list(query.clone(), 700, &clicked).await;
 
     assert_eq!(harness.queued_ids(), expected);
     assert_eq!(harness.current_id(), Some(clicked.clone()));
@@ -35,7 +35,7 @@ async fn play_from_list_queues_the_whole_list_and_loads_the_clicked_song() {
         position_ms: 30_000,
         duration_ms: None,
     });
-    harness.play_from_list(query, &clicked).await;
+    harness.play_from_list(query, 700, &clicked).await;
     let restarted = harness.current_uid().unwrap_or(Uid::MAX);
     assert_eq!(harness.current_id(), Some(clicked));
     assert_eq!(harness.audio.take(), [AudioCall::Load(restarted, 0)]);
@@ -45,15 +45,9 @@ async fn play_from_list_queues_the_whole_list_and_loads_the_clicked_song() {
 async fn stale_list_fetches_are_ignored() {
     let mut harness = start_harness(test_settings(false, false));
     let query = SongListQuery::default();
-    harness.controller.handle(Command::PlayFromList {
-        query: query.clone(),
-        song_id: "song-1".into(),
-    });
-    harness.controller.handle(Command::PlayFromList {
-        query,
-        song_id: "song-2".into(),
-    });
-    harness.handle_follow_ups(2).await;
+    harness.request_from_list(query.clone(), 0, "song-1");
+    harness.request_from_list(query, 0, "song-2");
+    harness.finish_streams().await;
     assert_eq!(harness.current_id().as_deref(), Some("song-2"));
     assert_eq!(harness.audio.take().len(), 1);
 }
