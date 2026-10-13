@@ -1,7 +1,7 @@
 import { ScrollView } from "std-widgets.slint";
 import { Theme, Icons } from "theme.slint";
 import { Actions, AppState, PlayerState, Route } from "globals.slint";
-import { Icon, IconButton } from "widgets.slint";
+import { Icon, IconButton, TooltipAnchor } from "widgets.slint";
 import { Cell, Skeleton } from "tracks.slint";
 
 export struct AlbumDetailArtist {
@@ -65,6 +65,11 @@ component Rating inherits HorizontalLayout {
 
         Star {
             filled: root.hovered >= 0 ? i <= root.hovered : i < root.value;
+        }
+
+        TooltipAnchor {
+            text: i + 1 == root.value ? "Clear rating" : i == 0 ? "Rate 1 star" : "Rate " + (i + 1) + " stars";
+            hovered: touch.has-hover;
         }
 
         touch := TouchArea {
@@ -239,6 +244,11 @@ component AlbumTrackRowView inherits Rectangle {
                                 height: 18px;
                             }
 
+                            TooltipAnchor {
+                                text: "Play";
+                                hovered: play-touch.has-hover;
+                            }
+
                             play-touch := TouchArea {
                                 mouse-cursor: pointer;
                                 clicked => {
@@ -398,6 +408,11 @@ export component AlbumDetailView inherits Rectangle {
                         height: 28px;
                     }
 
+                    TooltipAnchor {
+                        text: "Play";
+                        hovered: play-touch.has-hover;
+                    }
+
                     play-touch := TouchArea {
                         mouse-cursor: pointer;
                         clicked => {
@@ -412,6 +427,7 @@ export component AlbumDetailView inherits Rectangle {
                     height: 40px;
                     icon: Icons.shuffle;
                     icon-size: 24px;
+                    tooltip: "Shuffle";
                     clicked => {
                         AlbumDetailState.shuffle();
                     }
@@ -424,6 +440,7 @@ export component AlbumDetailView inherits Rectangle {
                     icon: Icons.heart;
                     icon-size: 24px;
                     icon-color: AlbumDetailState.favorite ? Theme.danger : Theme.muted;
+                    tooltip: AlbumDetailState.favorite ? "Remove from favorites" : "Add to favorites";
                     clicked => {
                         AlbumDetailState.toggle-favorite();
                     }

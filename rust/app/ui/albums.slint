@@ -68,6 +68,7 @@ export component AlbumsView inherits Rectangle {
                 y: (parent.height - self.height) / 2;
                 icon: AlbumsState.sort-desc ? Icons.arrow-down : Icons.arrow-up;
                 icon-size: 24px;
+                tooltip: AlbumsState.sort-desc ? "Sort: descending" : "Sort: ascending";
                 clicked => {
                     AlbumsState.sort-desc = !AlbumsState.sort-desc;
                     AlbumsState.query-changed();
@@ -78,6 +79,7 @@ export component AlbumsView inherits Rectangle {
                 y: (parent.height - self.height) / 2;
                 icon: Icons.heart;
                 active: AlbumsState.favorites-only;
+                tooltip: AlbumsState.favorites-only ? "Favorites only: on" : "Favorites only: off";
                 clicked => {
                     AlbumsState.favorites-only = !AlbumsState.favorites-only;
                     AlbumsState.query-changed();
