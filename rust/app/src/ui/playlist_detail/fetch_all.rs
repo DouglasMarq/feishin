@@ -16,10 +16,17 @@ pub async fn fetch_all_playlist_songs(
         let page = server.playlist_song_page(playlist_id, paging).await?;
         let received = page.items.len();
         songs.extend(page.items);
-        let reached_total = page.total_count.is_some_and(|total| songs.len() >= total);
-        if received < FETCH_ALL_PAGE_SIZE || reached_total {
+        if is_last_page(received, songs.len(), page.total_count) {
             return Ok(songs);
         }
+    }
+}
+
+fn is_last_page(received: usize, collected: usize, total_count: Option<usize>) -> bool {
+    match total_count {
+        _ if received == 0 => true,
+        Some(total) => collected >= total,
+        None => received < FETCH_ALL_PAGE_SIZE,
     }
 }
 
@@ -29,6 +36,19 @@ mod tests {
 
     use super::*;
     use crate::demo::FakeServer;
+
+    #[test]
+    fn short_pages_continue_until_the_reported_total() {
+        assert!(!is_last_page(200, 200, Some(450)));
+        assert!(is_last_page(250, 450, Some(450)));
+        assert!(is_last_page(0, 200, Some(450)));
+        assert!(!is_last_page(
+            FETCH_ALL_PAGE_SIZE,
+            FETCH_ALL_PAGE_SIZE,
+            None
+        ));
+        assert!(is_last_page(10, 510, None));
+    }
 
     #[tokio::test]
     async fn fetch_all_pages_through_the_whole_playlist() {

@@ -10,8 +10,24 @@ use crate::ui::{AppWindow, Context, PlayerState, on_ui, show_status};
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum PlayStart {
-    FromTop { shuffle: bool },
-    AtSong(String),
+    FromTop {
+        shuffle: bool,
+    },
+    AtRow {
+        index: usize,
+        song_id: Option<String>,
+    },
+}
+
+impl PlayStart {
+    fn song_id_in(self, songs: &[Song]) -> Option<String> {
+        match self {
+            Self::FromTop { .. } => None,
+            Self::AtRow { index, song_id } => {
+                song_id.or_else(|| songs.get(index).map(|song| song.id.clone()))
+            }
+        }
+    }
 }
 
 pub fn play_playlist(window: &AppWindow, ctx: &Context, shared: &SharedDetail, start: PlayStart) {
@@ -49,14 +65,33 @@ fn finish_play(
 }
 
 fn send_play(window: &AppWindow, ctx: &Context, songs: Vec<Song>, start: PlayStart) {
-    let song_id = match start {
-        PlayStart::FromTop { shuffle } => {
-            if shuffle && !window.global::<PlayerState>().get_shuffle() {
-                ctx.send(Command::ToggleShuffle);
-            }
-            None
-        }
-        PlayStart::AtSong(song_id) => Some(song_id),
-    };
+    let shuffle_requested = matches!(start, PlayStart::FromTop { shuffle: true });
+    if shuffle_requested && !window.global::<PlayerState>().get_shuffle() {
+        ctx.send(Command::ToggleShuffle);
+    }
+    let song_id = start.song_id_in(&songs);
     ctx.send(Command::PlaySongs { songs, song_id });
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::demo::test_song;
+
+    #[test]
+    fn rows_start_at_their_song_even_before_their_page_loaded() {
+        let songs = vec![test_song("first", 1000), test_song("second", 1000)];
+        let unloaded = PlayStart::AtRow {
+            index: 1,
+            song_id: None,
+        };
+        assert_eq!(unloaded.song_id_in(&songs).as_deref(), Some("second"));
+        let loaded = PlayStart::AtRow {
+            index: 1,
+            song_id: Some("chosen".into()),
+        };
+        assert_eq!(loaded.song_id_in(&songs).as_deref(), Some("chosen"));
+        let top = PlayStart::FromTop { shuffle: true };
+        assert_eq!(top.song_id_in(&songs), None);
+    }
 }

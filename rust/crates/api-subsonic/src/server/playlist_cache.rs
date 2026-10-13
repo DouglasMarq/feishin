@@ -47,9 +47,11 @@ struct CacheEntry {
     contents: Arc<CachedPlaylist>,
 }
 
+type Entries = Arc<Mutex<HashMap<String, CacheEntry>>>;
+
 pub struct PlaylistCache {
     time_to_live: Duration,
-    entries: Mutex<HashMap<String, CacheEntry>>,
+    entries: Entries,
 }
 
 impl Default for PlaylistCache {
@@ -62,7 +64,7 @@ impl PlaylistCache {
     pub fn new(time_to_live: Duration) -> Self {
         Self {
             time_to_live,
-            entries: Mutex::default(),
+            entries: Entries::default(),
         }
     }
 
@@ -72,16 +74,18 @@ impl PlaylistCache {
         load: impl Future<Output = Result<CachedPlaylist>>,
     ) -> Result<Arc<CachedPlaylist>> {
         let mut entries = self.entries.lock().await;
-        if let Some(entry) = entries.get(id).filter(|entry| self.is_fresh(entry)) {
+        drop_expired(&mut entries, self.time_to_live);
+        if let Some(entry) = entries.get(id) {
             return Ok(Arc::clone(&entry.contents));
         }
         let contents = Arc::new(load.await?);
-        self.make_room(&mut entries);
+        make_room(&mut entries);
         let entry = CacheEntry {
             stored_at: Instant::now(),
             contents: Arc::clone(&contents),
         };
         entries.insert(id.to_owned(), entry);
+        self.schedule_expiry();
         Ok(contents)
     }
 
@@ -89,18 +93,30 @@ impl PlaylistCache {
         self.entries.lock().await.remove(id);
     }
 
-    fn is_fresh(&self, entry: &CacheEntry) -> bool {
-        entry.stored_at.elapsed() < self.time_to_live
+    fn schedule_expiry(&self) {
+        let Ok(runtime) = tokio::runtime::Handle::try_current() else {
+            tracing::debug!("no async runtime to expire cached playlists");
+            return;
+        };
+        let entries = Arc::clone(&self.entries);
+        let time_to_live = self.time_to_live;
+        runtime.spawn(async move {
+            tokio::time::sleep(time_to_live).await;
+            drop_expired(&mut *entries.lock().await, time_to_live);
+        });
     }
+}
 
-    fn make_room(&self, entries: &mut HashMap<String, CacheEntry>) {
-        entries.retain(|_, entry| self.is_fresh(entry));
-        while entries.len() >= MAX_CACHED_PLAYLISTS {
-            let Some(oldest) = oldest_id(entries) else {
-                return;
-            };
-            entries.remove(&oldest);
-        }
+fn drop_expired(entries: &mut HashMap<String, CacheEntry>, time_to_live: Duration) {
+    entries.retain(|_, entry| entry.stored_at.elapsed() < time_to_live);
+}
+
+fn make_room(entries: &mut HashMap<String, CacheEntry>) {
+    while entries.len() >= MAX_CACHED_PLAYLISTS {
+        let Some(oldest) = oldest_id(entries) else {
+            return;
+        };
+        entries.remove(&oldest);
     }
 }
 
@@ -184,6 +200,17 @@ mod tests {
         load_counted(&cache, "p1", &loads).await;
         load_counted(&cache, "p1", &loads).await;
         assert_eq!(loads.load(Ordering::SeqCst), 2);
+    }
+
+    #[tokio::test]
+    async fn expired_playlists_are_released_without_another_request() {
+        let time_to_live = Duration::from_millis(20);
+        let cache = PlaylistCache::new(time_to_live);
+        let loads = AtomicUsize::new(0);
+        load_counted(&cache, "p1", &loads).await;
+        assert_eq!(cache.entries.lock().await.len(), 1);
+        tokio::time::sleep(time_to_live * 5).await;
+        assert!(cache.entries.lock().await.is_empty());
     }
 
     #[tokio::test]

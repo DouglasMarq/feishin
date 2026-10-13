@@ -57,11 +57,14 @@ fn install_play_row(window: &AppWindow, ctx: &Context, shared: &SharedDetail) {
             let (Some(window), Ok(index)) = (weak.upgrade(), usize::try_from(index)) else {
                 return;
             };
-            let Some(song_id) = with_model(&window, |model| model.song_id_at(index)).flatten()
-            else {
+            let Some(song_id) = with_model(&window, |model| {
+                (index < model.total()).then(|| model.song_id_at(index))
+            })
+            .flatten() else {
                 return;
             };
-            play_playlist(&window, &row_ctx, &row_shared, PlayStart::AtSong(song_id));
+            let start = PlayStart::AtRow { index, song_id };
+            play_playlist(&window, &row_ctx, &row_shared, start);
         });
 }
 

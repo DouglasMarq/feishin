@@ -153,3 +153,23 @@ async fn scrolling_a_large_playlist_keeps_a_bounded_cache() {
     assert!(cached_songs <= MAX_CACHED_PAGES * PAGE_SIZE);
     assert_eq!(model.song_id_at(9_999).as_deref(), Some("song-9999"));
 }
+
+#[test]
+fn late_pages_far_from_the_view_are_dropped_and_requested_again() {
+    let (model, log) = logging_model();
+    model.reset(1, "playlist-1");
+    model.apply_first_page(1, 20 * PAGE_SIZE, page_of_songs(0, PAGE_SIZE));
+    model.row_data(19 * PAGE_SIZE + 50);
+    assert_eq!(requested_pages(&log), [(1, 19)]);
+    for page in 1..MAX_CACHED_PAGES {
+        model.row_data(page * PAGE_SIZE);
+        model.apply_page(1, page, page_of_songs(page, PAGE_SIZE));
+    }
+    assert_eq!(requested_pages(&log).len(), MAX_CACHED_PAGES - 1);
+
+    model.apply_page(1, 19, page_of_songs(19, PAGE_SIZE));
+    assert!(model.song_id_at(19 * PAGE_SIZE + 50).is_none());
+    assert!(model.song_id_at(0).is_some());
+    model.row_data(19 * PAGE_SIZE + 50);
+    assert_eq!(requested_pages(&log), [(1, 19)]);
+}
