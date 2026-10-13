@@ -1,6 +1,8 @@
+mod color_scheme;
 mod discord;
 mod mpris;
 
+pub use color_scheme::{SystemColorScheme, watch_color_scheme};
 pub use discord::{DEFAULT_DISCORD_CLIENT_ID, DiscordDisplayType, DiscordOptions, DiscordPresence};
 pub use mpris::MediaControls;
 
@@ -10,6 +12,8 @@ pub enum PlatformError {
     MediaControls(String),
     #[error("discord error: {0}")]
     Discord(String),
+    #[error("desktop settings error: {0}")]
+    DesktopSettings(String),
 }
 
 pub type Result<T> = std::result::Result<T, PlatformError>;

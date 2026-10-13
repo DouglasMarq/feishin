@@ -7,6 +7,7 @@ publish.workspace = true
 
 [dependencies]
 discord-rich-presence = "1.1"
+futures-util = { version = "0.3.34", default-features = false, features = ["std"] }
 mpris-server = { version = "0.10", features = ["tokio"] }
 thiserror.workspace = true
 tokio = { workspace = true, features = ["rt"] }
