@@ -1,17 +1,131 @@
-import { Theme } from "theme.slint";
-import { AppState } from "globals.slint";
+import { ComboBox, LineEdit } from "std-widgets.slint";
+import { Theme, Icons } from "theme.slint";
+import { AppState, Route } from "globals.slint";
+import { IconButton } from "widgets.slint";
+import { AlbumGrid, AlbumGridRow } from "album_grid.slint";
 
 export global AlbumsState {
+    in property <[AlbumGridRow]> rows;
+    in property <int> total;
+    in property <bool> loading;
+    in property <[string]> sort-options;
+    in-out property <int> sort;
+    in-out property <bool> sort-desc;
+    in-out property <bool> favorites-only;
+    in-out property <string> search;
     callback load(string);
+    callback columns-changed(int);
+    callback search-edited();
+    callback query-changed();
+    callback play(string);
+    callback play-next(string);
+    callback add-to-queue(string);
+    callback add-to-playlist(string);
 }
 
 export component AlbumsView inherits Rectangle {
+    min-width: 320px;
+    background: Theme.background;
+
     init => {
         AlbumsState.load(AppState.detail-id);
     }
 
-    Text {
-        text: "Albums";
-        color: Theme.muted;
+    VerticalLayout {
+        HorizontalLayout {
+            padding: 20px;
+            padding-bottom: 12px;
+            spacing: 12px;
+
+            Text {
+                text: "Albums";
+                font-size: 24px;
+                font-weight: 700;
+                color: Theme.foreground;
+                vertical-alignment: center;
+            }
+
+            Text {
+                text: AlbumsState.loading ? "" : AlbumsState.total;
+                color: Theme.muted;
+                vertical-alignment: center;
+            }
+
+            Rectangle {
+                horizontal-stretch: 1;
+            }
+
+            ComboBox {
+                width: 170px;
+                model: AlbumsState.sort-options;
+                current-index <=> AlbumsState.sort;
+                selected => {
+                    AlbumsState.query-changed();
+                }
+            }
+
+            IconButton {
+                y: (parent.height - self.height) / 2;
+                icon: AlbumsState.sort-desc ? Icons.arrow-down : Icons.arrow-up;
+                icon-size: 24px;
+                clicked => {
+                    AlbumsState.sort-desc = !AlbumsState.sort-desc;
+                    AlbumsState.query-changed();
+                }
+            }
+
+            IconButton {
+                y: (parent.height - self.height) / 2;
+                icon: Icons.heart;
+                active: AlbumsState.favorites-only;
+                clicked => {
+                    AlbumsState.favorites-only = !AlbumsState.favorites-only;
+                    AlbumsState.query-changed();
+                }
+            }
+
+            LineEdit {
+                width: 240px;
+                placeholder-text: "Search";
+                text <=> AlbumsState.search;
+                edited => {
+                    AlbumsState.search-edited();
+                }
+            }
+        }
+
+        Rectangle {
+            AlbumGrid {
+                rows: AlbumsState.rows;
+                columns-changed(columns) => {
+                    AlbumsState.columns-changed(columns);
+                }
+                open(id) => {
+                    AppState.navigate(Route.album-detail, id);
+                }
+                play(id) => {
+                    AlbumsState.play(id);
+                }
+                play-next(id) => {
+                    AlbumsState.play-next(id);
+                }
+                add-to-queue(id) => {
+                    AlbumsState.add-to-queue(id);
+                }
+                add-to-playlist(id) => {
+                    AlbumsState.add-to-playlist(id);
+                }
+                open-artist(id) => {
+                    AppState.navigate(Route.artist-detail, id);
+                }
+            }
+
+            if !AlbumsState.loading && AlbumsState.total == 0: Text {
+                text: "No albums found";
+                color: Theme.muted;
+                horizontal-alignment: center;
+                vertical-alignment: center;
+            }
+        }
     }
 }

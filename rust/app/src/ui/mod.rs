@@ -15,6 +15,7 @@ use crate::store::Store;
 slint::include_modules!();
 
 pub mod album_detail;
+pub mod album_grid;
 pub mod albums;
 pub mod artist_detail;
 pub mod artists;
