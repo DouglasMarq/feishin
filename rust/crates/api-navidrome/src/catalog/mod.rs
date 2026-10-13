@@ -1,0 +1,11 @@
+mod albums;
+mod annotations;
+mod artists;
+mod library;
+mod paging;
+mod play_queue;
+mod playlists;
+mod songs;
+mod urls;
+
+const SUBSONIC_MAX_ITEMS: usize = 500;
