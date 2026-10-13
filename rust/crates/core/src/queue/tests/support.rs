@@ -2,7 +2,7 @@ use std::collections::HashSet;
 
 use crate::model::Song;
 use crate::queue::snapshot::is_permutation;
-use crate::queue::{Queue, RepeatMode, Uid};
+use crate::queue::{Queue, QueueTrack, RepeatMode, Uid};
 
 pub(super) fn song(id: &str) -> Song {
     Song {
@@ -32,6 +32,10 @@ pub(super) fn song(id: &str) -> Song {
     }
 }
 
+pub(super) fn track(id: &str) -> QueueTrack {
+    QueueTrack::from(&song(id))
+}
+
 pub(super) fn songs(ids: &[&str]) -> Vec<Song> {
     ids.iter().map(|id| song(id)).collect()
 }
@@ -48,7 +52,7 @@ pub(super) fn play_ids(queue: &Queue) -> Vec<String> {
     queue
         .display_order()
         .iter()
-        .map(|item| item.song.id.clone())
+        .map(|item| item.track.song_id.to_string())
         .collect()
 }
 
@@ -56,7 +60,7 @@ pub(super) fn item_ids(queue: &Queue) -> Vec<String> {
     queue
         .items()
         .iter()
-        .map(|item| item.song.id.clone())
+        .map(|item| item.track.song_id.to_string())
         .collect()
 }
 
@@ -65,7 +69,7 @@ pub(super) fn play_uids(queue: &Queue) -> Vec<Uid> {
 }
 
 pub(super) fn current_id(queue: &Queue) -> Option<String> {
-    queue.current().map(|item| item.song.id.clone())
+    queue.current().map(|item| item.track.song_id.to_string())
 }
 
 pub(super) fn current_uid(queue: &Queue) -> Option<Uid> {
@@ -76,7 +80,7 @@ pub(super) fn uid_of(queue: &Queue, id: &str) -> Uid {
     queue
         .items()
         .iter()
-        .find(|item| item.song.id == id)
+        .find(|item| item.track.song_id == id)
         .map(|item| item.uid)
         .unwrap_or_else(|| panic!("no item with song id {id}"))
 }
@@ -99,6 +103,7 @@ pub(super) fn assert_invariants(queue: &Queue) {
     if let Some(play_order) = queue.snapshot().shuffled {
         assert!(is_permutation(&play_order, queue.len()));
     }
+    assert_uid_indexes_match(queue);
     let highest_uid = queue.items().iter().map(|item| item.uid).max();
     assert!(queue.snapshot().next_uid > highest_uid.unwrap_or(0));
 }
@@ -111,5 +116,12 @@ fn assert_current_is_consistent(queue: &Queue, item_uids: &HashSet<Uid>, display
             assert_eq!(display[position], current.uid);
         }
         None => assert_eq!(queue.current_position(), None),
+    }
+}
+
+fn assert_uid_indexes_match(queue: &Queue) {
+    assert_eq!(queue.uid_indexes.len(), queue.len(), "no stale uid indexes");
+    for (item_index, item) in queue.items().iter().enumerate() {
+        assert_eq!(queue.index_of(item.uid), Some(item_index));
     }
 }

@@ -1,13 +1,14 @@
 use serde::{Deserialize, Serialize};
 
-use crate::model::Song;
+use super::QueueTrack;
 
 pub type Uid = u64;
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct QueueItem {
     pub uid: Uid,
-    pub song: Song,
+    #[serde(alias = "song")]
+    pub track: QueueTrack,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default, Serialize, Deserialize)]

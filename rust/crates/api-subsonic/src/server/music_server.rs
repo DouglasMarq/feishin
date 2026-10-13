@@ -132,8 +132,8 @@ impl MusicServer for SubsonicServer {
         self.fetch_lyrics(song).await
     }
 
-    fn stream_url(&self, song: &Song, options: &StreamOptions) -> String {
-        self.build_stream_url(song, options)
+    fn stream_url(&self, song_id: &str, options: &StreamOptions) -> String {
+        self.build_stream_url(song_id, options)
     }
 
     fn cover_art_url(&self, cover_art_id: &str, size: Option<u32>) -> String {

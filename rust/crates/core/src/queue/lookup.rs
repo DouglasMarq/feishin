@@ -2,7 +2,7 @@ use super::{Queue, QueueItem, Uid};
 
 impl Queue {
     pub(super) fn index_of(&self, uid: Uid) -> Option<usize> {
-        self.items.iter().position(|item| item.uid == uid)
+        self.uid_indexes.get(&uid).copied()
     }
 
     pub(super) fn current_index(&self) -> Option<usize> {

@@ -91,7 +91,7 @@ fn clear_keeps_modes() {
     assert_eq!(queue.repeat(), RepeatMode::All);
     let current = queue
         .play_now(numbered_songs(3), Some("s1"))
-        .map(|item| item.song.id.clone());
+        .map(|item| item.track.song_id.to_string());
     assert_eq!(current.as_deref(), Some("s1"));
     assert_eq!(queue.current_position(), Some(0));
 }

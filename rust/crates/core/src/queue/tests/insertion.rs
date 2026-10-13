@@ -14,7 +14,7 @@ fn add_next_without_shuffle_inserts_after_current() {
     assert_eq!(
         queue
             .next(Advance::Manual)
-            .map(|item| item.song.id.as_str()),
+            .map(|item| item.track.song_id.as_str()),
         Some("x")
     );
     assert_invariants(&queue);

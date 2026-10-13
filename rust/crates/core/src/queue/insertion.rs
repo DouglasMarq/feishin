@@ -7,7 +7,10 @@ impl Queue {
         songs: Vec<Song>,
         start_song_id: Option<&str>,
     ) -> Option<&QueueItem> {
-        self.items = self.create_items(songs);
+        self.interner.clear();
+        self.items = self.create_items(&songs);
+        self.reindex_all();
+        self.bump_revision();
         let start_index = start_song_id.and_then(|song_id| self.index_of_song(song_id));
         let start_position = self.start_position_after_replacing(start_index);
         self.current_uid = self.uid_at_position(start_position);
@@ -21,15 +24,19 @@ impl Queue {
         let added_count = songs.len();
         let insert_index = self.current_index().map_or(0, |index| index + 1);
         let insert_position = self.current_position().map_or(0, |position| position + 1);
-        let new_items = self.create_items(songs);
+        let new_items = self.create_items(&songs);
         self.items.splice(insert_index..insert_index, new_items);
+        self.reindex_from(insert_index);
+        self.bump_revision();
         self.insert_into_shuffled_order(insert_index, insert_position, added_count);
     }
 
     pub fn add_last(&mut self, songs: Vec<Song>) {
         let first_new_index = self.items.len();
-        let new_items = self.create_items(songs);
+        let new_items = self.create_items(&songs);
         self.items.extend(new_items);
+        self.reindex_from(first_new_index);
+        self.bump_revision();
 
         let Some(mut play_order) = self.shuffled_play_order.take() else {
             return;
@@ -45,18 +52,20 @@ impl Queue {
         uid
     }
 
-    fn create_items(&mut self, songs: Vec<Song>) -> Vec<QueueItem> {
+    fn create_items(&mut self, songs: &[Song]) -> Vec<QueueItem> {
         songs
-            .into_iter()
+            .iter()
             .map(|song| QueueItem {
                 uid: self.allocate_uid(),
-                song,
+                track: self.interner.track_of(song),
             })
             .collect()
     }
 
     fn index_of_song(&self, song_id: &str) -> Option<usize> {
-        self.items.iter().position(|item| item.song.id == song_id)
+        self.items
+            .iter()
+            .position(|item| item.track.song_id == song_id)
     }
 
     fn start_position_after_replacing(&mut self, start_index: Option<usize>) -> usize {

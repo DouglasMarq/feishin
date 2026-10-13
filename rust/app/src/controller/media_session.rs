@@ -1,4 +1,4 @@
-use feishin_core::model::Song;
+use feishin_core::queue::QueueTrack;
 use feishin_platform::{MediaControlEvent, NowPlaying, PlaybackStatus};
 
 use super::{Controller, UiUpdate};
@@ -9,17 +9,17 @@ fn volume_percent(fraction: f64) -> u8 {
     (fraction.clamp(0.0, 1.0) * 100.0).round() as u8
 }
 
-fn now_playing_of(song: &Song, cover_url: Option<String>) -> NowPlaying {
+fn now_playing_of(track: &QueueTrack, cover_url: Option<String>) -> NowPlaying {
     NowPlaying {
-        track_id: song.id.clone(),
-        title: song.title.clone(),
-        artists: song
+        track_id: track.song_id.to_string(),
+        title: track.title.to_string(),
+        artists: track
             .artists
             .iter()
             .map(|artist| artist.name.clone())
             .collect(),
-        album: song.album.clone(),
-        duration_ms: Some(song.duration_ms),
+        album: track.album.as_deref().map(str::to_owned),
+        duration_ms: Some(track.duration_ms),
         cover_url,
     }
 }
@@ -54,16 +54,17 @@ impl Controller {
         self.seek(target.min(self.duration_ms));
     }
 
-    pub(super) fn update_media_metadata(&mut self, song: &Song) {
+    pub(super) fn update_media_metadata(&mut self, track: &QueueTrack) {
         let cover_url = self.deps.session.get().and_then(|server| {
-            song.cover_art_id
+            track
+                .cover_art_id
                 .as_deref()
                 .map(|cover_art_id| server.cover_art_url(cover_art_id, Some(MEDIA_COVER_SIZE)))
         });
         if let Err(error) = self
             .deps
             .media
-            .set_metadata(&now_playing_of(song, cover_url))
+            .set_metadata(&now_playing_of(track, cover_url))
         {
             tracing::debug!("media session metadata: {error:#}");
         }

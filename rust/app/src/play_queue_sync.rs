@@ -20,12 +20,15 @@ pub struct PlayQueueState {
 impl PlayQueueState {
     pub fn of(queue: &Queue, position_ms: u64, server_id: &str) -> Option<Self> {
         let items = queue.display_order();
-        if items.iter().any(|item| item.song.server_id != server_id) {
+        if items.iter().any(|item| &*item.track.server_id != server_id) {
             return None;
         }
         Some(Self {
-            song_ids: items.iter().map(|item| item.song.id.clone()).collect(),
-            current: queue.current().map(|item| item.song.id.clone()),
+            song_ids: items
+                .iter()
+                .map(|item| item.track.song_id.to_string())
+                .collect(),
+            current: queue.current().map(|item| item.track.song_id.to_string()),
             position_ms: queue.current().map_or(0, |_| position_ms),
         })
     }

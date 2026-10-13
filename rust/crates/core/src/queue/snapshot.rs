@@ -36,7 +36,8 @@ impl Queue {
 
         let mut queue = Self::new();
         queue.next_uid = first_free_uid(next_uid, &items);
-        queue.items = queue.with_unique_uids(items);
+        queue.items = queue.restored_items(items);
+        queue.reindex_all();
         queue.repeat = repeat;
         queue.current_uid = current_uid.filter(|&uid| queue.index_of(uid).is_some());
         queue.shuffled_play_order =
@@ -44,14 +45,19 @@ impl Queue {
         queue
     }
 
-    fn with_unique_uids(&mut self, mut items: Vec<QueueItem>) -> Vec<QueueItem> {
+    fn restored_items(&mut self, items: Vec<QueueItem>) -> Vec<QueueItem> {
         let mut seen_uids = HashSet::with_capacity(items.len());
-        for item in &mut items {
-            if !seen_uids.insert(item.uid) {
-                item.uid = self.allocate_uid();
-            }
-        }
         items
+            .into_iter()
+            .map(|item| {
+                let uid = match seen_uids.insert(item.uid) {
+                    true => item.uid,
+                    false => self.allocate_uid(),
+                };
+                let track = self.interner.reintern(item.track);
+                QueueItem { uid, track }
+            })
+            .collect()
     }
 
     fn valid_or_regenerated_order(&mut self, play_order: Vec<usize>) -> Vec<usize> {

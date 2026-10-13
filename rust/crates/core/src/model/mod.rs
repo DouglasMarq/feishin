@@ -6,6 +6,7 @@ mod paging;
 mod search;
 mod server;
 mod song;
+mod song_id;
 
 pub use album::{Album, AlbumDetail};
 pub use artist::{Artist, ArtistDetail, ArtistRef};
@@ -17,3 +18,4 @@ pub use paging::{Page, Paging};
 pub use search::{ItemKind, SearchResults};
 pub use server::{ServerConfig, ServerPlayQueue, ServerType};
 pub use song::{ReplayGain, Song};
+pub use song_id::SongId;

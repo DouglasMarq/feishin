@@ -3,7 +3,7 @@ use serde::{Deserialize, Serialize};
 use super::album::Album;
 use super::song::Song;
 
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[derive(Debug, Clone, PartialEq, Eq, Hash, Serialize, Deserialize)]
 pub struct ArtistRef {
     pub id: String,
     pub name: String,

@@ -18,8 +18,7 @@ mod volume;
 use std::sync::Arc;
 
 use feishin_api::Credential;
-use feishin_core::model::Song;
-use feishin_core::queue::{Queue, Uid};
+use feishin_core::queue::{Queue, QueueTrack, Uid};
 use feishin_storage::queue_store::StoredQueue;
 use feishin_storage::settings::Settings;
 use tokio::sync::mpsc;
@@ -76,7 +75,7 @@ impl Controller {
         seed: Option<u64>,
     ) -> Self {
         let (queue, position_ms) = initial_queue(stored, seed);
-        let duration_ms = queue.current().map_or(0, |item| item.song.duration_ms);
+        let duration_ms = queue.current().map_or(0, |item| item.track.duration_ms);
         let mut controller = Self {
             deps,
             queue,
@@ -121,11 +120,13 @@ impl Controller {
         self.sleep_timer.status()
     }
 
-    fn current_song(&self) -> Option<Song> {
-        self.queue.current().map(|item| item.song.clone())
+    fn current_track(&self) -> Option<QueueTrack> {
+        self.queue.current().map(|item| item.track.clone())
     }
 
     fn current_duration_ms(&self) -> u64 {
-        self.queue.current().map_or(0, |item| item.song.duration_ms)
+        self.queue
+            .current()
+            .map_or(0, |item| item.track.duration_ms)
     }
 }

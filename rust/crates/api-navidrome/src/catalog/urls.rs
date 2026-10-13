@@ -1,5 +1,4 @@
 use feishin_api::StreamOptions;
-use feishin_core::model::Song;
 
 use crate::NavidromeServer;
 use crate::http::ResponseFormat;
@@ -8,8 +7,8 @@ use crate::query::QueryParams;
 const CACHE_BUSTER_SEPARATOR: &str = "&_=";
 
 impl NavidromeServer {
-    pub(crate) fn build_stream_url(&self, song: &Song, options: &StreamOptions) -> String {
-        let mut params: QueryParams = vec![("id", song.id.clone())];
+    pub(crate) fn build_stream_url(&self, song_id: &str, options: &StreamOptions) -> String {
+        let mut params: QueryParams = vec![("id", song_id.to_owned())];
         params.extend(options.format.clone().map(|format| ("format", format)));
         params.extend(
             options

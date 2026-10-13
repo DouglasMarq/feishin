@@ -11,7 +11,7 @@ fn play_now_without_shuffle_keeps_order_and_starts_at_song() {
     let mut queue = Queue::with_seed(3);
     let current = queue
         .play_now(songs(&["a", "b", "c", "d"]), Some("c"))
-        .map(|item| item.song.id.clone());
+        .map(|item| item.track.song_id.to_string());
     assert_eq!(current.as_deref(), Some("c"));
     assert_eq!(play_ids(&queue), ["a", "b", "c", "d"]);
     assert_eq!(item_ids(&queue), ["a", "b", "c", "d"]);
@@ -47,7 +47,7 @@ fn play_now_with_shuffle_reshuffles_every_call_with_start_song_first() {
     for _ in 0..10 {
         let current = queue
             .play_now(numbered_songs(20), Some("s7"))
-            .map(|item| item.song.id.clone());
+            .map(|item| item.track.song_id.to_string());
         assert_eq!(current.as_deref(), Some("s7"));
         assert_eq!(play_ids(&queue)[0], "s7");
         assert_eq!(queue.current_position(), Some(0));

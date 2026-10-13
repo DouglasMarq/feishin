@@ -31,6 +31,7 @@ impl Queue {
         };
         stationary_indexes.splice(insert_position..insert_position, moved_indexes);
         self.apply_play_order(stationary_indexes);
+        self.bump_revision();
     }
 
     fn destination(
@@ -70,5 +71,6 @@ impl Queue {
             .iter()
             .filter_map(|&item_index| previous_items.get_mut(item_index).and_then(Option::take))
             .collect();
+        self.reindex_all();
     }
 }

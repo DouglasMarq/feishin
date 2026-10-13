@@ -56,8 +56,8 @@ impl Controller {
         };
         Some(Track {
             uid: item.uid,
-            url: server.stream_url(&item.song, &options),
-            duration_ms: item.song.duration_ms,
+            url: server.stream_url(item.track.song_id.as_str(), &options),
+            duration_ms: item.track.duration_ms,
         })
     }
 
@@ -72,15 +72,15 @@ impl Controller {
                 .send(UiUpdate::Error("Not connected to a server".into()));
             return;
         };
-        let song = item.song.clone();
+        let now_playing = item.track.clone();
         self.scrobble_tracker.stop();
         self.preloaded = None;
         self.position_ms = start_ms;
-        self.duration_ms = song.duration_ms;
+        self.duration_ms = now_playing.duration_ms;
         self.start_audio(&track, start_ms);
         self.deps
             .ui
-            .send(UiUpdate::NowPlaying(Some(Box::new(song))));
+            .send(UiUpdate::NowPlaying(Some(Box::new(now_playing))));
         self.deps.ui.send(UiUpdate::QueueCurrent(Some(track.uid)));
         self.publish_playback();
         self.schedule_queue_sync();

@@ -186,7 +186,7 @@ impl Harness {
         self.controller
             .queue()
             .current()
-            .map(|item| item.song.id.clone())
+            .map(|item| item.track.song_id.to_string())
     }
 
     pub(super) fn queued_ids(&self) -> Vec<String> {
@@ -194,7 +194,7 @@ impl Harness {
             .queue()
             .display_order()
             .iter()
-            .map(|item| item.song.id.clone())
+            .map(|item| item.track.song_id.to_string())
             .collect()
     }
 
@@ -203,7 +203,7 @@ impl Harness {
             .queue()
             .display_order()
             .iter()
-            .find(|item| item.song.id == song_id)
+            .find(|item| item.track.song_id == song_id)
             .map(|item| item.uid)
     }
 
