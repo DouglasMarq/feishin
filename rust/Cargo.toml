@@ -11,6 +11,7 @@ members = [
     "crates/platform",
     "crates/player",
     "crates/storage",
+    "crates/youtube",
     "spikes/ui-slint",
 ]
 
@@ -31,6 +32,7 @@ feishin-lyrics = { path = "crates/lyrics" }
 feishin-platform = { path = "crates/platform" }
 feishin-player = { path = "crates/player" }
 feishin-storage = { path = "crates/storage" }
+feishin-youtube = { path = "crates/youtube" }
 reqwest = { version = "0.13", default-features = false, features = ["json", "rustls", "query"] }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
