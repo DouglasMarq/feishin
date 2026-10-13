@@ -1,0 +1,57 @@
+{
+  "state": {
+    "currentServer": {
+      "id": "nd-1",
+      "name": "Navidrome",
+      "credential": "x"
+    },
+    "deviceId": "dev",
+    "serverList": {
+      "nd-1": {
+        "credential": "u=alice&s=salt&t=token",
+        "features": {},
+        "id": "nd-1",
+        "isAdmin": true,
+        "name": "Navidrome Música",
+        "ndCredential": "jwt.token.value",
+        "savePassword": false,
+        "type": "navidrome",
+        "url": "https://nd.example.com/",
+        "userId": "user-1",
+        "username": "alice",
+        "version": "0.53.0"
+      },
+      "ss-1": {
+        "credential": "u=bob&p=enc:abc",
+        "id": "ss-1",
+        "name": "Subsonic",
+        "preferRemoteUrl": true,
+        "remoteUrl": "https://remote.example.com",
+        "type": "subsonic",
+        "url": "http://192.168.1.2:4040",
+        "userId": null,
+        "username": "bob"
+      },
+      "jf-1": {
+        "credential": "jellyfin-token",
+        "id": "jf-1",
+        "name": "Jellyfin",
+        "type": "jellyfin",
+        "url": "http://jf.local:8096",
+        "userId": "jf-user",
+        "username": "carol"
+      },
+      "nd-2": {
+        "credential": "",
+        "id": "nd-2",
+        "name": "Logged out",
+        "ndCredential": "",
+        "type": "navidrome",
+        "url": "http://nd2.local",
+        "userId": null,
+        "username": "dave"
+      }
+    }
+  },
+  "version": 2
+}

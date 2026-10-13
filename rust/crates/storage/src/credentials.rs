@@ -1,5 +1,3 @@
-//! Server credentials in the system keyring (Secret Service on Linux), keyed by server id.
-
 use std::sync::{Arc, OnceLock};
 
 use keyring_core::{Entry, Error};
@@ -9,7 +7,7 @@ use crate::{Result, StorageError};
 pub const SERVICE: &str = "feishin-rs";
 
 pub fn set(server_id: &str, credential: &str) -> Result<()> {
-    off_runtime(|| {
+    run_outside_async_runtime(|| {
         entry(server_id)?
             .set_password(credential)
             .map_err(keyring_error)
@@ -17,32 +15,31 @@ pub fn set(server_id: &str, credential: &str) -> Result<()> {
 }
 
 pub fn get(server_id: &str) -> Result<Option<String>> {
-    off_runtime(|| match entry(server_id)?.get_password() {
+    run_outside_async_runtime(|| match entry(server_id)?.get_password() {
         Ok(credential) => Ok(Some(credential)),
         Err(Error::NoEntry) => Ok(None),
-        Err(e) => Err(keyring_error(e)),
+        Err(error) => Err(keyring_error(error)),
     })
 }
 
 pub fn delete(server_id: &str) -> Result<()> {
-    off_runtime(|| match entry(server_id)?.delete_credential() {
+    run_outside_async_runtime(|| match entry(server_id)?.delete_credential() {
         Ok(()) | Err(Error::NoEntry) => Ok(()),
-        Err(e) => Err(keyring_error(e)),
+        Err(error) => Err(keyring_error(error)),
     })
 }
 
-/// The Secret Service store blocks on its own async runtime, which panics when called from inside
-/// a Tokio runtime, so keyring calls always run on a short-lived plain thread.
-fn off_runtime<T: Send>(f: impl FnOnce() -> Result<T> + Send) -> Result<T> {
+fn run_outside_async_runtime<T: Send>(
+    keyring_call: impl FnOnce() -> Result<T> + Send,
+) -> Result<T> {
     std::thread::scope(|scope| {
         scope
-            .spawn(f)
+            .spawn(keyring_call)
             .join()
             .unwrap_or_else(|_| Err(StorageError::Keyring("keyring thread panicked".into())))
     })
 }
 
-/// Replaces the platform keyring with a process-wide in-memory store (for tests and keyring-less sessions).
 pub fn use_in_memory_store() -> Result<()> {
     let store = keyring_core::mock::Store::new().map_err(keyring_error)?;
     keyring_core::set_default_store(store);
@@ -58,17 +55,19 @@ fn ensure_store() -> Result<()> {
     if keyring_core::get_default_store().is_some() {
         return Ok(());
     }
-    static PLATFORM: OnceLock<std::result::Result<(), String>> = OnceLock::new();
-    PLATFORM
-        .get_or_init(|| {
-            let store = platform_store().map_err(|e| e.to_string())?;
-            if keyring_core::get_default_store().is_none() {
-                keyring_core::set_default_store(store);
-            }
-            Ok(())
-        })
+    static PLATFORM_STORE_INSTALLATION: OnceLock<std::result::Result<(), String>> = OnceLock::new();
+    PLATFORM_STORE_INSTALLATION
+        .get_or_init(install_platform_store)
         .clone()
         .map_err(StorageError::Keyring)
+}
+
+fn install_platform_store() -> std::result::Result<(), String> {
+    let store = platform_store().map_err(|error| error.to_string())?;
+    if keyring_core::get_default_store().is_none() {
+        keyring_core::set_default_store(store);
+    }
+    Ok(())
 }
 
 #[cfg(all(
@@ -91,22 +90,22 @@ fn platform_store() -> keyring_core::Result<Arc<keyring_core::CredentialStore>> 
     ))
 }
 
-fn keyring_error(e: Error) -> StorageError {
-    StorageError::Keyring(e.to_string())
+fn keyring_error(error: Error) -> StorageError {
+    StorageError::Keyring(error.to_string())
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
 
-    fn mock() {
-        static INIT: std::sync::Once = std::sync::Once::new();
-        INIT.call_once(|| use_in_memory_store().unwrap());
+    fn use_mock_keyring() {
+        static MOCK_KEYRING_INSTALLED: std::sync::Once = std::sync::Once::new();
+        MOCK_KEYRING_INSTALLED.call_once(|| use_in_memory_store().unwrap());
     }
 
     #[test]
     fn set_get_delete() {
-        mock();
+        use_mock_keyring();
         assert_eq!(get("server-a").unwrap(), None);
         set(
             "server-a",
@@ -125,13 +124,13 @@ mod tests {
 
     #[test]
     fn delete_missing_is_ok() {
-        mock();
+        use_mock_keyring();
         delete("never-saved").unwrap();
     }
 
     #[test]
     fn entries_are_isolated_by_server_id() {
-        mock();
+        use_mock_keyring();
         set("server-1", "one").unwrap();
         set("server-2", "two").unwrap();
         assert_eq!(get("server-1").unwrap().as_deref(), Some("one"));
@@ -143,7 +142,7 @@ mod tests {
 
     #[tokio::test(flavor = "multi_thread")]
     async fn works_inside_a_tokio_runtime() {
-        mock();
+        use_mock_keyring();
         set("server-rt", "inside").unwrap();
         assert_eq!(get("server-rt").unwrap().as_deref(), Some("inside"));
         delete("server-rt").unwrap();
@@ -151,7 +150,7 @@ mod tests {
 
     #[test]
     fn credential_json_round_trips_through_keyring() {
-        mock();
+        use_mock_keyring();
         let credential = feishin_api::Credential::Navidrome {
             subsonic: "u=me&s=salt&t=token".into(),
             nd_token: Some("jwt".into()),

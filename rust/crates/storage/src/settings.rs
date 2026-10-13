@@ -1,7 +1,9 @@
+use std::fmt::Display;
+
 use feishin_core::model::ServerConfig;
 use serde::{Deserialize, Serialize};
 
-use crate::{Paths, Result, StorageError, write_atomic};
+use crate::{Paths, Result, StorageError, none_when_missing, write_atomic};
 
 pub const SETTINGS_FILE: &str = "settings.toml";
 
@@ -46,7 +48,7 @@ pub struct ColumnSetting {
     pub id: String,
     #[serde(default = "default_column_width")]
     pub width: f32,
-    #[serde(default = "default_true")]
+    #[serde(default = "visible_by_default")]
     pub visible: bool,
 }
 
@@ -54,7 +56,7 @@ fn default_column_width() -> f32 {
     100.0
 }
 
-fn default_true() -> bool {
+fn visible_by_default() -> bool {
     true
 }
 
@@ -73,7 +75,6 @@ pub struct IntegrationSettings {
     pub mpris: bool,
     pub discord_rich_presence: bool,
     pub discord_client_id: Option<String>,
-    /// Lyrics providers in priority order, e.g. `["server", "lrclib", "netease", "genius"]`.
     pub lyrics_sources: Vec<String>,
 }
 
@@ -99,22 +100,22 @@ pub struct Settings {
 }
 
 impl Settings {
-    /// Loads `settings.toml` from the config dir; returns defaults when the file does not exist.
     pub fn load(paths: &Paths) -> Result<Self> {
-        let text = match std::fs::read_to_string(paths.config_dir.join(SETTINGS_FILE)) {
-            Ok(text) => text,
-            Err(e) if e.kind() == std::io::ErrorKind::NotFound => return Ok(Self::default()),
-            Err(e) => return Err(e.into()),
+        let settings_path = paths.config_dir.join(SETTINGS_FILE);
+        let Some(text) = none_when_missing(std::fs::read_to_string(settings_path))? else {
+            return Ok(Self::default());
         };
-        toml::from_str(&text).map_err(|e| StorageError::Invalid(format!("{SETTINGS_FILE}: {e}")))
+        toml::from_str(&text).map_err(invalid_settings_file)
     }
 
-    /// Writes atomically (temp file + rename).
     pub fn save(&self, paths: &Paths) -> Result<()> {
-        let text = toml::to_string_pretty(self)
-            .map_err(|e| StorageError::Invalid(format!("{SETTINGS_FILE}: {e}")))?;
+        let text = toml::to_string_pretty(self).map_err(invalid_settings_file)?;
         write_atomic(&paths.config_dir.join(SETTINGS_FILE), text.as_bytes())
     }
+}
+
+fn invalid_settings_file(error: impl Display) -> StorageError {
+    StorageError::Invalid(format!("{SETTINGS_FILE}: {error}"))
 }
 
 #[cfg(test)]
@@ -124,9 +125,9 @@ mod tests {
     use super::*;
 
     fn temp_paths() -> (tempfile::TempDir, Paths) {
-        let dir = tempfile::tempdir().unwrap();
-        let paths = Paths::under(dir.path());
-        (dir, paths)
+        let directory = tempfile::tempdir().unwrap();
+        let paths = Paths::under(directory.path());
+        (directory, paths)
     }
 
     fn sample() -> Settings {
@@ -165,13 +166,13 @@ mod tests {
 
     #[test]
     fn missing_file_gives_defaults() {
-        let (_dir, paths) = temp_paths();
+        let (_directory, paths) = temp_paths();
         assert_eq!(Settings::load(&paths).unwrap(), Settings::default());
     }
 
     #[test]
     fn round_trip() {
-        let (_dir, paths) = temp_paths();
+        let (_directory, paths) = temp_paths();
         let settings = sample();
         settings.save(&paths).unwrap();
         assert_eq!(Settings::load(&paths).unwrap(), settings);
@@ -179,20 +180,20 @@ mod tests {
 
     #[test]
     fn save_overwrites_and_leaves_only_the_file() {
-        let (_dir, paths) = temp_paths();
+        let (_directory, paths) = temp_paths();
         sample().save(&paths).unwrap();
         Settings::default().save(&paths).unwrap();
         assert_eq!(Settings::load(&paths).unwrap(), Settings::default());
         let names: Vec<_> = std::fs::read_dir(&paths.config_dir)
             .unwrap()
-            .map(|e| e.unwrap().file_name().into_string().unwrap())
+            .map(|entry| entry.unwrap().file_name().into_string().unwrap())
             .collect();
         assert_eq!(names, vec![SETTINGS_FILE.to_string()]);
     }
 
     #[test]
     fn tolerates_unknown_and_missing_fields() {
-        let (_dir, paths) = temp_paths();
+        let (_directory, paths) = temp_paths();
         std::fs::create_dir_all(&paths.config_dir).unwrap();
         std::fs::write(
             paths.config_dir.join(SETTINGS_FILE),
@@ -230,7 +231,7 @@ a = 1
 
     #[test]
     fn invalid_toml_is_an_error() {
-        let (_dir, paths) = temp_paths();
+        let (_directory, paths) = temp_paths();
         std::fs::create_dir_all(&paths.config_dir).unwrap();
         std::fs::write(paths.config_dir.join(SETTINGS_FILE), "volume = [").unwrap();
         assert!(matches!(
