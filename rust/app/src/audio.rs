@@ -187,7 +187,7 @@ impl FakeAudio {
 
     fn advance_when_due(state: &mut FakeState, duration_ms: u64) -> Vec<PlayerEvent> {
         let overlap_ms = match state.next {
-            Some(_) => state.crossfade_ms.min(duration_ms / 2),
+            Some(_) => state.crossfade_ms.min(duration_ms * 2 / 5),
             None => 0,
         };
         if state.position_ms + overlap_ms < duration_ms {

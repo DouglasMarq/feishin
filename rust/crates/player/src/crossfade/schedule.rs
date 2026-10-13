@@ -9,6 +9,7 @@ const LONGEST_RECHECK: Duration = Duration::from_millis(500);
 const OUTGOING_END_GRACE_SECONDS: f64 = 1.5;
 pub(crate) const OUTPUT_BUFFER_SECONDS: f64 = 0.2;
 const DRAIN_MARGIN_SECONDS: f64 = OUTPUT_BUFFER_SECONDS + 0.05;
+const LONGEST_FADE_SHARE_OF_TRACK: f64 = 0.4;
 
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub(crate) struct FadeWindow {
@@ -18,8 +19,12 @@ pub(crate) struct FadeWindow {
 
 impl FadeWindow {
     pub(crate) fn planned(duration: Option<f64>, crossfade: Duration) -> Option<Self> {
-        let audible_end = duration.filter(|seconds| seconds.is_finite())? - DRAIN_MARGIN_SECONDS;
-        let length = crossfade.as_secs_f64().min(audible_end / 2.0);
+        let duration = duration.filter(|seconds| seconds.is_finite())?;
+        let audible_end = duration - DRAIN_MARGIN_SECONDS;
+        let length = crossfade
+            .as_secs_f64()
+            .min(duration * LONGEST_FADE_SHARE_OF_TRACK)
+            .min(audible_end);
         (length > 0.0).then_some(Self {
             start: audible_end - length,
             end: audible_end,
@@ -122,12 +127,11 @@ mod tests {
     }
 
     #[test]
-    fn window_is_at_most_half_of_a_short_track() {
-        let end = audible_end(4.0);
-        assert_eq!(
-            FadeWindow::planned(Some(4.0), SIX_SECONDS),
-            Some(window(end / 2.0, end))
-        );
+    fn window_leaves_more_than_half_of_a_short_track_unfaded() {
+        let end = audible_end(10.0);
+        let planned = FadeWindow::planned(Some(10.0), SIX_SECONDS);
+        assert_eq!(planned, Some(window(end - 4.0, end)));
+        assert!(planned.is_some_and(|fade| fade.start > 5.0));
     }
 
     #[test]
