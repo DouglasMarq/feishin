@@ -1,5 +1,6 @@
 mod app;
 mod audio;
+mod cli;
 mod connect;
 mod controller;
 mod covers;
@@ -19,16 +20,10 @@ mod tests;
 
 use std::process::ExitCode;
 
+use cli::{Invocation, parse_arguments, usage};
 use tracing_subscriber::EnvFilter;
 
-const USAGE: &str = "Usage: feishin [--demo]\n\n  --demo  run with a generated library and silent audio, without a server\n";
-const UNKNOWN_ARGUMENT_EXIT_CODE: u8 = 2;
-
-enum Invocation {
-    Run(app::Mode),
-    Help,
-    UnknownArgument(String),
-}
+const USAGE_ERROR_EXIT_CODE: u8 = 2;
 
 fn init_tracing() {
     tracing_subscriber::fmt()
@@ -36,18 +31,6 @@ fn init_tracing() {
             EnvFilter::try_from_default_env().unwrap_or_else(|_| EnvFilter::new("warn")),
         )
         .init();
-}
-
-fn parse_arguments(arguments: impl IntoIterator<Item = String>) -> Invocation {
-    let mut mode = app::Mode::Real;
-    for argument in arguments {
-        match argument.as_str() {
-            "--demo" => mode = app::Mode::Demo,
-            "-h" | "--help" => return Invocation::Help,
-            _ => return Invocation::UnknownArgument(argument),
-        }
-    }
-    Invocation::Run(mode)
 }
 
 fn run_app(mode: app::Mode) -> ExitCode {
@@ -64,12 +47,12 @@ fn main() -> ExitCode {
     init_tracing();
     match parse_arguments(std::env::args().skip(1)) {
         Invocation::Help => {
-            print!("{USAGE}");
+            print!("{}", usage());
             ExitCode::SUCCESS
         }
-        Invocation::UnknownArgument(argument) => {
-            eprint!("unknown argument: {argument}\n\n{USAGE}");
-            ExitCode::from(UNKNOWN_ARGUMENT_EXIT_CODE)
+        Invocation::Misuse(error) => {
+            eprint!("{error}\n\n{}", usage());
+            ExitCode::from(USAGE_ERROR_EXIT_CODE)
         }
         Invocation::Run(mode) => run_app(mode),
     }

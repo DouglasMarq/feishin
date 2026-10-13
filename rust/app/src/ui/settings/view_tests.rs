@@ -35,7 +35,7 @@ fn open_settings_page() -> SettingsPage {
         commands,
         session: Session::default(),
         store: Arc::new(JsonStore::new(dir.path())),
-        connector: Arc::new(DemoConnector),
+        connector: Arc::new(DemoConnector::default()),
         covers: Arc::new(DemoCovers),
     };
     let shared = Arc::new(Shared::default());

@@ -1,6 +1,7 @@
 use feishin_api::Credential;
 use feishin_core::model::{ServerPlayQueue, Song};
 
+use super::library::DemoLibrary;
 use super::scrobbles::ScrobbleCall;
 use super::server::FakeServer;
 use super::songs::blank_song;
@@ -11,7 +12,7 @@ pub fn test_song(id: &str, duration_ms: u64) -> Song {
 
 impl FakeServer {
     pub fn new(song_count: usize) -> Self {
-        Self::with_config(Self::config_for_demo(), song_count)
+        Self::with_config(Self::config_for_demo(), DemoLibrary::with_songs(song_count))
     }
 
     pub fn saved_play_queue(&self) -> (usize, Option<ServerPlayQueue>) {

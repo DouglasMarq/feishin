@@ -3,28 +3,27 @@ use std::ops::Range;
 use feishin_core::model::{Album, Artist, Song};
 
 use super::catalog::{
-    SONGS_PER_ALBUM, album_artist, album_is_favorite, album_name, album_of_song, album_year,
-    artist_name, artist_ref, first_song_of_album, genre_name, rating_from_hash, song_duration,
-    song_genre, song_title, song_traits_hash,
+    album_is_favorite, album_name, album_of_song, album_year, artist_name, artist_ref, genre_name,
+    rating_from_hash, song_duration, song_genre, song_play_count, song_title, song_traits_hash,
 };
 use super::hashing::{pick_word, scramble};
 use super::ids::{album_cover_id, album_id, artist_cover_id, artist_id, parse_song_index, song_id};
+use super::library::SONGS_PER_ALBUM;
 use super::server::FakeServer;
 use super::songs::blank_song;
 use super::vocabulary::GENRES;
 
 impl FakeServer {
     pub(super) fn total_album_count(&self) -> usize {
-        self.song_count.div_ceil(SONGS_PER_ALBUM)
+        self.library.album_count()
     }
 
     pub(super) fn album_song_range(&self, album: usize) -> Range<usize> {
-        let first_song = first_song_of_album(album);
-        first_song..(first_song + SONGS_PER_ALBUM).min(self.song_count)
+        self.library.album_song_range(album)
     }
 
     pub(super) fn song_index_in_library(&self, song_id: &str) -> Option<usize> {
-        parse_song_index(song_id).filter(|&index| index < self.song_count)
+        parse_song_index(song_id).filter(|&index| self.library.contains_song(index))
     }
 
     pub(super) fn song_indexes(&self, song_ids: &[String]) -> Vec<usize> {
@@ -36,7 +35,7 @@ impl FakeServer {
 
     pub fn song_at(&self, index: usize) -> Song {
         let album = album_of_song(index);
-        let artist = album_artist(album);
+        let artist = self.library.album_artist(album);
         let hash = song_traits_hash(index);
         Song {
             title: song_title(index),
@@ -49,7 +48,7 @@ impl FakeServer {
             year: Some(album_year(album)),
             genres: vec![genre_name(song_genre(index)).to_owned()],
             bitrate_kbps: Some(320),
-            play_count: (hash % 60) as u32,
+            play_count: song_play_count(index),
             user_rating: rating_from_hash(hash),
             favorite: hash.is_multiple_of(9),
             cover_art_id: Some(album_cover_id(album)),
@@ -61,7 +60,7 @@ impl FakeServer {
 
     pub(super) fn album_at(&self, album: usize) -> Album {
         let songs = self.album_song_range(album);
-        let artist = album_artist(album);
+        let artist = self.library.album_artist(album);
         Album {
             id: album_id(album),
             server_id: self.config.id.clone(),
@@ -71,7 +70,7 @@ impl FakeServer {
             year: Some(album_year(album)),
             genres: vec![genre_name(song_genre(songs.start)).to_owned()],
             song_count: songs.len() as u32,
-            duration_ms: songs.map(song_duration).sum(),
+            duration_ms: self.album_duration_ms(album),
             cover_art_id: Some(album_cover_id(album)),
             play_count: 0,
             user_rating: None,
@@ -81,30 +80,41 @@ impl FakeServer {
         }
     }
 
-    pub(super) fn artist_albums(&self, artist: usize) -> impl Iterator<Item = usize> {
-        (0..self.total_album_count()).filter(move |&album| album_artist(album) == artist)
+    pub(super) fn artist_albums(&self, artist: usize) -> &[usize] {
+        self.artist_albums.albums_of(artist)
+    }
+
+    pub(super) fn artist_song_count(&self, artist: usize) -> u32 {
+        self.artist_albums(artist)
+            .iter()
+            .map(|&album| self.album_song_range(album).len() as u32)
+            .sum()
     }
 
     pub(super) fn artist_at(&self, artist: usize) -> Artist {
-        let albums: Vec<usize> = self.artist_albums(artist).collect();
-        let songs = albums
-            .iter()
-            .map(|&album| self.album_at(album).song_count)
-            .sum::<u32>();
-        let hash = scramble(artist as u64 ^ 0xb10);
+        let albums = self.artist_albums(artist);
+        let hash = artist_traits_hash(artist);
         let name = artist_name(artist);
         Artist {
             id: artist_id(artist),
             server_id: self.config.id.clone(),
             album_count: Some(albums.len() as u32),
-            song_count: Some(songs),
+            song_count: Some(self.artist_song_count(artist)),
             cover_art_id: Some(artist_cover_id(artist)),
-            favorite: hash.is_multiple_of(5),
+            favorite: artist_is_favorite(artist),
             user_rating: rating_from_hash(hash),
-            biography: Some(artist_biography(&name, hash, &albums)),
+            biography: Some(artist_biography(&name, hash, albums)),
             name,
         }
     }
+}
+
+pub(super) fn artist_traits_hash(artist: usize) -> u64 {
+    scramble(artist as u64 ^ 0xb10)
+}
+
+pub(super) fn artist_is_favorite(artist: usize) -> bool {
+    artist_traits_hash(artist).is_multiple_of(5)
 }
 
 fn artist_biography(name: &str, hash: u64, albums: &[usize]) -> String {

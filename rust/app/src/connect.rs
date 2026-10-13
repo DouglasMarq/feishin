@@ -5,7 +5,7 @@ use async_trait::async_trait;
 use feishin_api::{Credential, MusicServer};
 use feishin_core::model::{ServerConfig, ServerType};
 
-use crate::demo::{DEMO_SONG_COUNT, FakeServer, demo_credential};
+use crate::demo::{DemoLibrary, FakeServer, demo_credential};
 
 #[async_trait]
 pub trait Connector: Send + Sync {
@@ -70,7 +70,16 @@ impl Connector for ServerConnector {
     }
 }
 
-pub struct DemoConnector;
+#[derive(Debug, Clone, Copy, Default)]
+pub struct DemoConnector {
+    library: DemoLibrary,
+}
+
+impl DemoConnector {
+    pub const fn new(library: DemoLibrary) -> Self {
+        Self { library }
+    }
+}
 
 #[async_trait]
 impl Connector for DemoConnector {
@@ -79,7 +88,7 @@ impl Connector for DemoConnector {
         config: ServerConfig,
         _password: &str,
     ) -> Result<(Arc<dyn MusicServer>, Credential)> {
-        let server = FakeServer::with_config(config, DEMO_SONG_COUNT);
+        let server = FakeServer::with_config(config, self.library);
         Ok((Arc::new(server), demo_credential()))
     }
 
@@ -90,7 +99,7 @@ impl Connector for DemoConnector {
     ) -> Result<Arc<dyn MusicServer>> {
         Ok(Arc::new(FakeServer::with_config(
             config.clone(),
-            DEMO_SONG_COUNT,
+            self.library,
         )))
     }
 }

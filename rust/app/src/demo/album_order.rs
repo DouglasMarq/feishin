@@ -1,8 +1,11 @@
 use std::time::{SystemTime, UNIX_EPOCH};
 
-use feishin_core::model::{Album, AlbumListQuery, AlbumSort, SortOrder};
+use feishin_core::model::{AlbumListQuery, AlbumSort, SortOrder};
 
-use super::catalog::{album_artist, artist_name, first_song_of_album, song_genre};
+use super::catalog::{
+    album_is_favorite, album_name, album_year, artist_name, first_song_of_album, song_duration,
+    song_genre,
+};
 use super::hashing::scramble;
 use super::ids::{artist_id, genre_id};
 use super::server::FakeServer;
@@ -24,13 +27,12 @@ impl FakeServer {
     }
 
     fn album_is_listed(&self, album: usize, query: &AlbumListQuery, search: Option<&str>) -> bool {
-        let summary = self.album_at(album);
-        search.is_none_or(|search| album_matches_search(album, &summary, search))
+        let artist = self.library.album_artist(album);
+        search.is_none_or(|search| album_matches_search(album, artist, search))
             && query
                 .favorite
-                .is_none_or(|favorite| favorite == summary.favorite)
-            && (query.artist_ids.is_empty()
-                || query.artist_ids.contains(&artist_id(album_artist(album))))
+                .is_none_or(|favorite| favorite == album_is_favorite(album))
+            && (query.artist_ids.is_empty() || query.artist_ids.contains(&artist_id(artist)))
             && (query.genre_ids.is_empty()
                 || query
                     .genre_ids
@@ -38,15 +40,14 @@ impl FakeServer {
     }
 
     fn album_sort_key(&self, album: usize, sort: AlbumSort, random_seed: u64) -> (String, i64) {
-        let summary = self.album_at(album);
         let numeric = |value: i64| (String::new(), value);
         match sort {
-            AlbumSort::Name => (summary.name.to_lowercase(), 0),
-            AlbumSort::AlbumArtist => (artist_name(album_artist(album)), 0),
-            AlbumSort::Year => numeric(i64::from(summary.year.unwrap_or_default())),
-            AlbumSort::SongCount => numeric(i64::from(summary.song_count)),
-            AlbumSort::Duration => numeric(summary.duration_ms as i64),
-            AlbumSort::Favorited => numeric(i64::from(summary.favorite)),
+            AlbumSort::Name => (album_name(album).to_lowercase(), 0),
+            AlbumSort::AlbumArtist => (artist_name(self.library.album_artist(album)), 0),
+            AlbumSort::Year => numeric(i64::from(album_year(album))),
+            AlbumSort::SongCount => numeric(self.album_song_range(album).len() as i64),
+            AlbumSort::Duration => numeric(self.album_duration_ms(album) as i64),
+            AlbumSort::Favorited => numeric(i64::from(album_is_favorite(album))),
             AlbumSort::RecentlyAdded => numeric(-(album as i64)),
             AlbumSort::RecentlyPlayed => numeric((scramble(album as u64 ^ 0x91a) % 10_000) as i64),
             AlbumSort::PlayCount => numeric((scramble(album as u64 ^ 0xc0) % 10_000) as i64),
@@ -54,13 +55,15 @@ impl FakeServer {
             AlbumSort::Rating => numeric(scramble(album as u64 ^ 0xa1) as i64),
         }
     }
+
+    pub(super) fn album_duration_ms(&self, album: usize) -> u64 {
+        self.album_song_range(album).map(song_duration).sum()
+    }
 }
 
-fn album_matches_search(album: usize, summary: &Album, search: &str) -> bool {
-    summary.name.to_lowercase().contains(search)
-        || artist_name(album_artist(album))
-            .to_lowercase()
-            .contains(search)
+fn album_matches_search(album: usize, artist: usize, search: &str) -> bool {
+    album_name(album).to_lowercase().contains(search)
+        || artist_name(artist).to_lowercase().contains(search)
 }
 
 fn random_seed() -> u64 {

@@ -7,7 +7,7 @@ use super::server::FakeServer;
 impl FakeServer {
     pub(super) fn album_detail(&self, id: &str) -> Result<AlbumDetail> {
         let album = parse_album_index(id)
-            .filter(|&album| album < self.total_album_count())
+            .filter(|&album| self.library.contains_album(album))
             .ok_or(ApiError::NotFound)?;
         Ok(AlbumDetail {
             album: self.album_at(album),

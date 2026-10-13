@@ -14,7 +14,7 @@ use crate::audio::{AudioOutput, FakeAudio, MpvOutput};
 use crate::connect::{Connector, DemoConnector, ServerConnector};
 use crate::controller::{Command, Controller, Deps, forward_command};
 use crate::covers::{CachedCovers, CoverProvider, DemoCovers};
-use crate::demo::{FakeServer, demo_credential};
+use crate::demo::{DemoLibrary, FakeServer, demo_credential};
 use crate::discord::DiscordSession;
 use crate::media::{MediaSession, MediaSessions, Mpris, NoMediaSession};
 use crate::session::Session;
@@ -28,7 +28,7 @@ const RUNTIME_SHUTDOWN_TIMEOUT: Duration = Duration::from_secs(1);
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Mode {
     Real,
-    Demo,
+    Demo(DemoLibrary),
 }
 
 struct Backends {
@@ -41,15 +41,15 @@ type SavedLogin = (ServerConfig, Result<Option<Credential>>);
 
 fn backends(mode: Mode) -> Result<Backends> {
     match mode {
-        Mode::Demo => Ok(demo_backends()),
+        Mode::Demo(library) => Ok(demo_backends(library)),
         Mode::Real => real_backends(),
     }
 }
 
-fn demo_backends() -> Backends {
+fn demo_backends(library: DemoLibrary) -> Backends {
     Backends {
         store: Arc::new(JsonStore::new(std::env::temp_dir().join("feishin-rs-demo"))),
-        connector: Arc::new(DemoConnector),
+        connector: Arc::new(DemoConnector::new(library)),
         covers: Arc::new(DemoCovers),
     }
 }
@@ -74,7 +74,7 @@ fn audio_output(
         forward_command(&commands, Command::Player(event));
     });
     Ok(match mode {
-        Mode::Demo => Box::new(FakeAudio::new(on_event)),
+        Mode::Demo(_) => Box::new(FakeAudio::new(on_event)),
         Mode::Real => Box::new(MpvOutput::new(&settings.playback, on_event)?),
     })
 }
@@ -147,7 +147,7 @@ fn last_used_login(context: &Context, settings: &Settings) -> Option<SavedLogin>
 
 fn saved_login(context: &Context, settings: &Settings, mode: Mode) -> Option<SavedLogin> {
     match mode {
-        Mode::Demo => Some(demo_login(context)),
+        Mode::Demo(_) => Some(demo_login(context)),
         Mode::Real => last_used_login(context, settings),
     }
 }
