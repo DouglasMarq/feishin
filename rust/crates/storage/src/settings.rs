@@ -1,3 +1,5 @@
+mod youtube;
+
 use std::fmt::Display;
 use std::time::Duration;
 
@@ -6,6 +8,8 @@ use serde::{Deserialize, Serialize};
 
 use crate::appearance::AppearanceSettings;
 use crate::{Paths, Result, StorageError, none_when_missing, write_atomic};
+
+pub use youtube::YouTubeSettings;
 
 pub const SETTINGS_FILE: &str = "settings.toml";
 pub const MAX_CROSSFADE_SECONDS: u8 = 12;
@@ -116,6 +120,7 @@ pub struct Settings {
     pub integrations: IntegrationSettings,
     pub appearance: AppearanceSettings,
     pub radio: RadioSettings,
+    pub youtube: YouTubeSettings,
 }
 
 impl Settings {
@@ -183,6 +188,15 @@ mod tests {
             },
             appearance: AppearanceSettings::default(),
             radio: sample_radio(),
+            youtube: sample_youtube(),
+        }
+    }
+
+    fn sample_youtube() -> YouTubeSettings {
+        YouTubeSettings {
+            yt_dlp_path: Some("/opt/yt-dlp".into()),
+            cookies_from_browser: Some(feishin_youtube::CookieBrowser::Firefox),
+            country: Some("BR".into()),
         }
     }
 
@@ -262,6 +276,7 @@ a = 1
         );
         assert_eq!(settings.integrations, IntegrationSettings::default());
         assert_eq!(settings.radio, RadioSettings::default());
+        assert_eq!(settings.youtube, YouTubeSettings::default());
     }
 
     #[test]

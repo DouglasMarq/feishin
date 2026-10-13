@@ -44,6 +44,8 @@ impl Controller {
             Command::SaveAppearance(appearance) => self.save_appearance(appearance),
             Command::RemoveServer(server_id) => self.remove_server(&server_id),
             Command::Radio(command) => self.on_radio_command(command),
+            Command::Tracks(command) => self.on_track_command(command),
+            Command::YouTube(command) => self.on_youtube_command(command),
         }
     }
 }

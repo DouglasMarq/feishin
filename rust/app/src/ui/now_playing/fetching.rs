@@ -73,7 +73,7 @@ pub(super) async fn fetch_similar(
     });
 }
 
-fn configured_lyrics_sources(ctx: &Context) -> Vec<String> {
+pub(super) fn configured_lyrics_sources(ctx: &Context) -> Vec<String> {
     match ctx.store.load_settings() {
         Ok(settings) => settings.integrations.lyrics_sources,
         Err(error) => {
@@ -97,7 +97,7 @@ pub(super) async fn fetch_lyrics(
     });
 }
 
-fn apply_lyrics_result(
+pub(super) fn apply_lyrics_result(
     window: &AppWindow,
     view: &View,
     song_id: &str,

@@ -23,6 +23,7 @@ pub mod albums;
 pub mod appearance;
 pub mod artist_detail;
 pub mod artists;
+pub mod discover;
 pub mod favorites;
 pub mod folders;
 pub mod genres;

@@ -1,3 +1,5 @@
+use feishin_core::queue::QueueTrack;
+
 use super::Controller;
 
 pub(super) fn now_ms() -> i64 {
@@ -8,6 +10,16 @@ pub(super) fn now_ms() -> i64 {
 }
 
 impl Controller {
+    pub(super) fn start_scrobbling(&mut self, track: &QueueTrack) {
+        let Some(song_id) = track.server_song_id() else {
+            self.scrobble_tracker.stop();
+            return;
+        };
+        self.scrobble_tracker
+            .start(song_id, track.duration_ms, now_ms());
+        self.send_scrobble(song_id.to_owned(), false, None);
+    }
+
     pub(super) fn send_scrobble(
         &self,
         song_id: String,

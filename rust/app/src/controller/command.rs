@@ -1,14 +1,16 @@
 use std::ops::Range;
 
 use feishin_core::model::{ServerConfig, ServerPlayQueue, Song};
-use feishin_core::queue::Uid;
+use feishin_core::queue::{QueueTrack, Uid};
 use feishin_platform::MediaControlEvent;
 use feishin_player::{AudioDevice, PlayerEvent};
 use feishin_storage::appearance::AppearanceSettings;
-use feishin_storage::settings::{IntegrationSettings, PlaybackSettings, Settings, UiSettings};
+use feishin_storage::settings::{
+    IntegrationSettings, PlaybackSettings, Settings, UiSettings, YouTubeSettings,
+};
 use tokio::sync::{mpsc, oneshot};
 
-use super::{PersistenceEvent, RadioCommand};
+use super::{PersistenceEvent, RadioCommand, YouTubeResolution};
 use crate::list_stream::{ListRow, Placement, SongSource, StreamMessage};
 use crate::sleep_timer::SleepMode;
 
@@ -73,6 +75,22 @@ pub enum Command {
     SaveAppearance(AppearanceSettings),
     RemoveServer(String),
     Radio(RadioCommand),
+    Tracks(TrackCommand),
+    YouTube(YouTubeCommand),
+}
+
+pub enum TrackCommand {
+    PlayNow {
+        tracks: Vec<QueueTrack>,
+        start_index: Option<usize>,
+    },
+    AddNext(Vec<QueueTrack>),
+    AddLast(Vec<QueueTrack>),
+}
+
+pub enum YouTubeCommand {
+    SaveSettings(YouTubeSettings),
+    Resolved(YouTubeResolution),
 }
 
 pub fn forward_command(commands: &mpsc::UnboundedSender<Command>, command: Command) {

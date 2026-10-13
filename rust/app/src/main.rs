@@ -6,6 +6,7 @@ mod controller;
 mod covers;
 mod demo;
 mod discord;
+mod discover;
 mod identity;
 mod library;
 mod list_stream;
@@ -18,6 +19,7 @@ mod sleep_timer;
 mod store;
 mod termination;
 mod ui;
+mod youtube;
 
 #[cfg(test)]
 mod tests;

@@ -4,6 +4,7 @@ use feishin_api::MusicServer;
 use feishin_core::model::Song;
 use slint::{ComponentHandle, ModelRc, VecModel};
 
+use super::external::load_external;
 use super::fetching::{fetch_cover, fetch_lyrics, fetch_similar};
 use super::view::View;
 use crate::ui::{AppWindow, ArtistLink, Context, LyricsStatus, NowPlayingState, on_ui};
@@ -23,6 +24,10 @@ pub(super) fn load(window: &AppWindow, ctx: &Context, view: &View, song_id: &str
         return;
     }
     view.clear(window, song_id);
+    if let Some(track) = view.external_track(song_id) {
+        load_external(window, ctx, view, &track);
+        return;
+    }
     let Some(server) = ctx.session.get().filter(|_| !song_id.is_empty()) else {
         return;
     };

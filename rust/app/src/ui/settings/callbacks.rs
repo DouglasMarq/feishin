@@ -7,6 +7,8 @@ use super::loading::{load, save_integrations};
 use super::lyrics_sources::move_lyrics_source;
 use super::servers::{log_out, remove_server, switch_server};
 use super::view::{PlaybackForm, Shared};
+use super::youtube::apply_youtube;
+use super::youtube_link::{add_link, play_link, play_link_next};
 use crate::controller::Command;
 use crate::ui::{AppState, AppWindow, Context, SettingsState, login};
 
@@ -126,6 +128,13 @@ fn install_server_callbacks(state: &SettingsState, binding: &Binding) {
     state.on_log_out(binding.action(|window, ctx, shared| log_out(window, ctx, shared)));
 }
 
+fn install_youtube_callbacks(state: &SettingsState, binding: &Binding) {
+    state.on_youtube_changed(binding.action(apply_youtube));
+    state.on_play_youtube_link(binding.action(play_link));
+    state.on_play_youtube_link_next(binding.action(play_link_next));
+    state.on_add_youtube_link(binding.action(add_link));
+}
+
 pub(super) fn install_with(window: &AppWindow, ctx: &Context, shared: &Arc<Shared>) {
     let state = window.global::<SettingsState>();
     let binding = Binding::new(window, ctx, shared);
@@ -136,5 +145,6 @@ pub(super) fn install_with(window: &AppWindow, ctx: &Context, shared: &Arc<Share
     install_lyrics_source_callbacks(&state, &binding);
     state.on_interface_changed(binding.action(apply_interface));
     install_server_callbacks(&state, &binding);
+    install_youtube_callbacks(&state, &binding);
     load(window, ctx, shared);
 }

@@ -20,7 +20,26 @@ impl Queue {
         start_index: Option<usize>,
     ) -> Option<&QueueItem> {
         self.interner.clear();
-        self.items = self.create_items(&songs);
+        let items = self.create_items(&songs);
+        self.replace_items(items, start_index)
+    }
+
+    pub fn add_next(&mut self, songs: Vec<Song>) {
+        let items = self.create_items(&songs);
+        self.insert_after_current(items);
+    }
+
+    pub fn add_last(&mut self, songs: Vec<Song>) {
+        let items = self.create_items(&songs);
+        self.append_items(items);
+    }
+
+    pub(super) fn replace_items(
+        &mut self,
+        items: Vec<QueueItem>,
+        start_index: Option<usize>,
+    ) -> Option<&QueueItem> {
+        self.items = items;
         self.reindex_all();
         let start_index = start_index.filter(|&index| index < self.items.len());
         let start_position = self.start_position_after_replacing(start_index);
@@ -29,23 +48,21 @@ impl Queue {
         self.current()
     }
 
-    pub fn add_next(&mut self, songs: Vec<Song>) {
-        if songs.is_empty() {
+    pub(super) fn insert_after_current(&mut self, new_items: Vec<QueueItem>) {
+        if new_items.is_empty() {
             return;
         }
-        let added_count = songs.len();
+        let added_count = new_items.len();
         let insert_index = self.current_index().map_or(0, |index| index + 1);
         let insert_position = self.current_position().map_or(0, |position| position + 1);
-        let new_items = self.create_items(&songs);
         self.items.splice(insert_index..insert_index, new_items);
         self.reindex_from(insert_index);
         self.insert_into_shuffled_order(insert_index, insert_position, added_count);
         self.bump_revision();
     }
 
-    pub fn add_last(&mut self, songs: Vec<Song>) {
+    pub(super) fn append_items(&mut self, new_items: Vec<QueueItem>) {
         let first_new_index = self.items.len();
-        let new_items = self.create_items(&songs);
         self.items.extend(new_items);
         self.reindex_from(first_new_index);
         self.append_to_shuffled_order(first_new_index);

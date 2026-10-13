@@ -1,5 +1,6 @@
 use std::cell::Cell;
 
+use feishin_core::queue::{QueueItem, QueueTrack};
 use slint::{Model, ModelNotify, ModelTracker};
 
 use crate::ui::QueueRow;
@@ -18,6 +19,20 @@ impl UpNextModel {
             offset: Cell::new(None),
             notify: ModelNotify::default(),
         }
+    }
+
+    pub(super) fn external_track(&self, song_id: &str) -> Option<QueueTrack> {
+        let view = self.queue.borrow();
+        let is_wanted =
+            |item: &&QueueItem| item.track.song_id == song_id && item.track.is_external();
+        view.current()
+            .filter(is_wanted)
+            .or_else(|| {
+                (0..view.len())
+                    .filter_map(|position| view.item_at(position))
+                    .find(is_wanted)
+            })
+            .map(|item| QueueTrack::clone(&item.track))
     }
 
     pub fn refresh(&self) -> Option<usize> {

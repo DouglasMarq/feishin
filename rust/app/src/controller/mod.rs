@@ -16,8 +16,10 @@ mod settings_changes;
 mod sleep;
 mod stream_pages;
 mod streaming;
+mod track_ops;
 mod ui_update;
 mod volume;
+mod youtube;
 
 use std::sync::Arc;
 
@@ -27,12 +29,13 @@ use feishin_storage::queue_store::StoredQueue;
 use feishin_storage::settings::Settings;
 use tokio::sync::mpsc;
 
-pub use command::{Command, SettingsSnapshot, forward_command};
+pub use command::{Command, SettingsSnapshot, TrackCommand, YouTubeCommand, forward_command};
 pub use persistence::{PersistenceEvent, load_saved_queue};
 #[cfg(test)]
 pub use radio::RADIO_STREAM_UID;
 pub use radio::{RadioCommand, RadioNowPlaying};
 pub use ui_update::{UiSink, UiUpdate, artist_names};
+pub use youtube::YouTubeResolution;
 
 use crate::audio::AudioOutput;
 use crate::media::MediaSession;
@@ -43,6 +46,7 @@ use crate::sleep_timer::SleepTimer;
 use crate::store::Store;
 use list_streams::ListStreams;
 use persistence::{QueuePersistence, ShutdownState};
+use youtube::YouTubeStreams;
 
 pub struct Deps {
     pub audio: Box<dyn AudioOutput>,
@@ -72,6 +76,7 @@ pub struct Controller {
     list_streams: ListStreams,
     shutdown: ShutdownState,
     radio: Option<radio::RadioPlayback>,
+    youtube: YouTubeStreams,
 }
 
 fn initial_queue(stored: Option<StoredQueue>, seed: Option<u64>) -> (Queue, u64) {
@@ -110,6 +115,7 @@ impl Controller {
             list_streams: ListStreams::default(),
             shutdown: ShutdownState::default(),
             radio: None,
+            youtube: YouTubeStreams::default(),
         };
         controller.publish_all();
         controller.update_media_volume();
@@ -132,6 +138,11 @@ impl Controller {
     #[cfg(test)]
     pub fn is_playing(&self) -> bool {
         self.playing
+    }
+
+    #[cfg(test)]
+    pub fn is_resolving(&self) -> bool {
+        self.youtube.is_loading()
     }
 
     #[cfg(test)]

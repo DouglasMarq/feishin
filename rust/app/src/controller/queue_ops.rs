@@ -54,7 +54,8 @@ impl Controller {
     }
 
     pub(super) fn remove(&mut self, uids: &[Uid]) {
-        let loaded_removed = self.loaded.is_some_and(|uid| uids.contains(&uid));
+        let active = self.loaded.or_else(|| self.youtube.loading_uid());
+        let loaded_removed = active.is_some_and(|uid| uids.contains(&uid));
         self.queue.remove(uids);
         match (
             self.is_radio_playing(),
@@ -69,7 +70,7 @@ impl Controller {
     }
 
     fn move_past_removed_track(&mut self) {
-        if self.playing {
+        if self.playing || self.youtube.is_loading() {
             self.load_current(0);
             return;
         }

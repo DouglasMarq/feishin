@@ -2,7 +2,7 @@ use std::collections::HashSet;
 use std::hash::Hash;
 use std::sync::Arc;
 
-use super::QueueTrack;
+use super::{QueueTrack, TrackSource};
 use crate::model::{ArtistRef, Song, SongId};
 
 #[derive(Debug, Clone, Default)]
@@ -46,6 +46,7 @@ impl TrackInterner {
             album_id: self.optional_string(song.album_id.as_deref()),
             cover_art_id: self.optional_string(song.cover_art_id.as_deref()),
             duration_ms: song.duration_ms,
+            source: TrackSource::Server,
         }
     }
 

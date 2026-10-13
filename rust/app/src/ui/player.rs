@@ -1,4 +1,4 @@
-use feishin_core::queue::{QueueTrack, RepeatMode};
+use feishin_core::queue::{QueueTrack, RepeatMode, YouTubeVideo};
 use feishin_storage::cover_cache::DecodedImage;
 use slint::{ComponentHandle, Image, Rgba8Pixel, SharedPixelBuffer};
 
@@ -42,6 +42,29 @@ impl SlintSink {
     }
 
     fn load_cover(&self, track: &QueueTrack) {
+        match track.youtube_video() {
+            Some(video) => self.load_thumbnail(track, video),
+            None => self.load_server_cover(track),
+        }
+    }
+
+    fn load_thumbnail(&self, track: &QueueTrack, video: &YouTubeVideo) {
+        let Some(url) = video.thumbnail_url.as_deref().map(str::to_owned) else {
+            return;
+        };
+        let cache_key = thumbnail_cache_key(video);
+        let song_id = track.song_id.to_string();
+        let covers = self.ctx.covers.clone();
+        let window = self.window.clone();
+        self.ctx.rt.spawn(async move {
+            match covers.cover_from_url(&cache_key, &url, COVER_SIZE).await {
+                Ok(cover) => on_ui(&window, move |window| show_cover(window, &song_id, &cover)),
+                Err(error) => tracing::debug!("thumbnail {url}: {error:#}"),
+            }
+        });
+    }
+
+    fn load_server_cover(&self, track: &QueueTrack) {
         let (Some(cover_id), Some(server)) = (track.cover_art_id.clone(), self.ctx.session.get())
         else {
             return;
@@ -56,6 +79,10 @@ impl SlintSink {
             }
         });
     }
+}
+
+pub fn thumbnail_cache_key(video: &YouTubeVideo) -> String {
+    format!("youtube:{}", video.video_id)
 }
 
 fn show_cover(window: &AppWindow, song_id: &str, cover: &DecodedImage) {

@@ -5,6 +5,7 @@ use slint::{ComponentHandle, ModelRc};
 use super::{AppWindow, Context, NowPlayingState, queue};
 use crate::controller::Command;
 
+mod external;
 mod fetching;
 mod loading;
 mod lyrics_cache;

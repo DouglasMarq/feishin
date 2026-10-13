@@ -2,7 +2,8 @@ use std::sync::Arc;
 use std::time::Duration;
 
 use feishin_core::model::Song;
-use feishin_core::queue::Queue;
+use feishin_core::queue::{Queue, QueueTrack, YouTubeTrack};
+use feishin_storage::settings::Settings;
 use slint::platform::software_renderer::{MinimalSoftwareWindow, RepaintBufferType};
 use slint::{ComponentHandle, Model, SharedString};
 use tokio::sync::mpsc::UnboundedReceiver;
@@ -12,7 +13,7 @@ use crate::controller::Command;
 use crate::covers::DemoCovers;
 use crate::demo::{FakeServer, test_song};
 use crate::session::Session;
-use crate::store::JsonStore;
+use crate::store::{JsonStore, Store};
 use crate::ui::test_window::{Jobs, SIZE, claim_routed_platform, pump_until, routed_runtime};
 use crate::ui::{
     AppState, AppWindow, Context, LyricsStatus, NowPlayingState, Page, PlayerState, Route, queue,
@@ -42,12 +43,16 @@ impl Screen {
     }
 
     fn wait_until_loaded(&self, window: &AppWindow) {
+        self.wait_until(window, is_fully_loaded);
+    }
+
+    fn wait_until(&self, window: &AppWindow, is_ready: fn(&NowPlayingState) -> bool) {
         let state = window.global::<NowPlayingState>();
         pump_until(
             &self.software_window,
             &self.jobs,
             Duration::from_secs(10),
-            || is_fully_loaded(&state),
+            || is_ready(&state),
         );
     }
 
@@ -67,11 +72,15 @@ fn open_now_playing_page(screen: Screen) -> NowPlayingPage {
     let session = Session::default();
     session.set(Some(Arc::new(FakeServer::new(100))));
     let (sender, commands) = tokio::sync::mpsc::unbounded_channel();
+    let store = JsonStore::new(dir.path());
+    let mut settings = Settings::default();
+    settings.integrations.lyrics_sources = vec!["server".into()];
+    store.save_settings(&settings).unwrap();
     let ctx = Context {
         rt: runtime.handle().clone(),
         commands: sender,
         session,
-        store: Arc::new(JsonStore::new(dir.path())),
+        store: Arc::new(store),
         connector: Arc::new(DemoConnector::default()),
         covers: Arc::new(DemoCovers),
     };
@@ -150,6 +159,37 @@ fn played_songs(commands: &mut UnboundedReceiver<Command>) -> Option<(Vec<Song>,
     })
 }
 
+fn is_youtube_track_loaded(state: &NowPlayingState) -> bool {
+    state.get_external()
+        && state.get_loaded()
+        && state.get_has_cover()
+        && state.get_lyrics_status() == LyricsStatus::Missing
+}
+
+fn assert_youtube_track_details(page: &NowPlayingPage, state: &NowPlayingState) {
+    let window = &page.window;
+    let mut queue = Queue::with_seed(2);
+    let track = QueueTrack::from(&YouTubeTrack {
+        video_id: "abc".into(),
+        title: "Video".into(),
+        artists: vec!["Singer".into()],
+        thumbnail_url: Some("https://i.ytimg.com/vi/abc/hqdefault.jpg".into()),
+        ..YouTubeTrack::default()
+    });
+    queue.play_tracks_now(vec![track], Some(0));
+    queue::set_view(window, queue.view());
+    window.global::<PlayerState>().set_song_id("yt:abc".into());
+    page.screen.wait_until(window, is_youtube_track_loaded);
+    assert!(is_youtube_track_loaded(state));
+    let artists: Vec<_> = state.get_artists().iter().collect();
+    assert_eq!(artists.len(), 1);
+    assert_eq!(artists[0].name, "Singer");
+    assert_eq!(artists[0].id, "");
+    assert_eq!(state.get_album_id(), "");
+    assert_eq!(state.get_similar().row_count(), 0);
+    assert!(!state.get_similar_loading());
+}
+
 #[test]
 fn view_shows_demo_lyrics_and_similar_songs() {
     let Some(screen) = Screen::claim() else {
@@ -175,4 +215,6 @@ fn view_shows_demo_lyrics_and_similar_songs() {
     };
     assert_eq!(songs.len(), state.get_similar().row_count());
     assert_eq!(song_id.as_deref(), Some(similar.id.as_str()));
+
+    assert_youtube_track_details(&page, &state);
 }

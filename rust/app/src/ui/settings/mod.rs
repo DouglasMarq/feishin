@@ -9,6 +9,8 @@ mod loading;
 mod lyrics_sources;
 mod servers;
 mod view;
+mod youtube;
+mod youtube_link;
 
 #[cfg(test)]
 mod controller_tests;
