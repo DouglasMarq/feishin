@@ -1,8 +1,8 @@
-//! Persists the play queue between runs (`queue.json` in the data dir).
+use std::fmt::Display;
 
 use feishin_core::queue::QueueSnapshot;
 
-use crate::{Paths, Result, StorageError, write_atomic};
+use crate::{Paths, Result, StorageError, none_when_missing, write_atomic};
 
 pub const QUEUE_FILE: &str = "queue.json";
 
@@ -13,29 +13,26 @@ pub struct StoredQueue {
 }
 
 pub fn save(paths: &Paths, queue: &StoredQueue) -> Result<()> {
-    let json = serde_json::to_vec(queue)
-        .map_err(|e| StorageError::Invalid(format!("{QUEUE_FILE}: {e}")))?;
+    let json = serde_json::to_vec(queue).map_err(invalid_queue_file)?;
     write_atomic(&paths.data_dir.join(QUEUE_FILE), &json)
 }
 
-/// `Ok(None)` when no queue was saved yet.
 pub fn load(paths: &Paths) -> Result<Option<StoredQueue>> {
-    let bytes = match std::fs::read(paths.data_dir.join(QUEUE_FILE)) {
-        Ok(bytes) => bytes,
-        Err(e) if e.kind() == std::io::ErrorKind::NotFound => return Ok(None),
-        Err(e) => return Err(e.into()),
+    let Some(bytes) = none_when_missing(std::fs::read(paths.data_dir.join(QUEUE_FILE)))? else {
+        return Ok(None);
     };
     serde_json::from_slice(&bytes)
         .map(Some)
-        .map_err(|e| StorageError::Invalid(format!("{QUEUE_FILE}: {e}")))
+        .map_err(invalid_queue_file)
 }
 
-/// Removes the saved queue; succeeds when there is none.
 pub fn clear(paths: &Paths) -> Result<()> {
-    match std::fs::remove_file(paths.data_dir.join(QUEUE_FILE)) {
-        Err(e) if e.kind() != std::io::ErrorKind::NotFound => Err(e.into()),
-        _ => Ok(()),
-    }
+    none_when_missing(std::fs::remove_file(paths.data_dir.join(QUEUE_FILE)))?;
+    Ok(())
+}
+
+fn invalid_queue_file(error: impl Display) -> StorageError {
+    StorageError::Invalid(format!("{QUEUE_FILE}: {error}"))
 }
 
 #[cfg(test)]
@@ -100,14 +97,14 @@ mod tests {
 
     #[test]
     fn load_without_file_is_none() {
-        let dir = tempfile::tempdir().unwrap();
-        assert_eq!(load(&Paths::under(dir.path())).unwrap(), None);
+        let directory = tempfile::tempdir().unwrap();
+        assert_eq!(load(&Paths::under(directory.path())).unwrap(), None);
     }
 
     #[test]
     fn round_trip_and_clear() {
-        let dir = tempfile::tempdir().unwrap();
-        let paths = Paths::under(dir.path());
+        let directory = tempfile::tempdir().unwrap();
+        let paths = Paths::under(directory.path());
         let queue = sample();
         save(&paths, &queue).unwrap();
         assert_eq!(load(&paths).unwrap(), Some(queue));
@@ -118,8 +115,8 @@ mod tests {
 
     #[test]
     fn save_replaces_previous_queue() {
-        let dir = tempfile::tempdir().unwrap();
-        let paths = Paths::under(dir.path());
+        let directory = tempfile::tempdir().unwrap();
+        let paths = Paths::under(directory.path());
         save(&paths, &sample()).unwrap();
         let mut other = sample();
         other.snapshot.items.truncate(1);
@@ -132,8 +129,8 @@ mod tests {
 
     #[test]
     fn corrupt_file_is_invalid() {
-        let dir = tempfile::tempdir().unwrap();
-        let paths = Paths::under(dir.path());
+        let directory = tempfile::tempdir().unwrap();
+        let paths = Paths::under(directory.path());
         std::fs::create_dir_all(&paths.data_dir).unwrap();
         std::fs::write(paths.data_dir.join(QUEUE_FILE), b"{not json").unwrap();
         assert!(matches!(load(&paths), Err(StorageError::Invalid(_))));
