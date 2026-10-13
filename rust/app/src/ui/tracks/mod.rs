@@ -15,6 +15,8 @@ use feishin_storage::settings::UiSettings;
 use slint::{ComponentHandle, Model, ModelRc, SharedString, VecModel};
 
 pub use columns::columns;
+#[cfg(test)]
+pub use model::CACHED_PAGES;
 pub use model::{PAGE_SIZE, Request, TracksModel};
 pub use query::refresh;
 pub use row::track_row;

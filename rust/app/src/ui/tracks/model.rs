@@ -10,7 +10,7 @@ use crate::ui::page_cache::{PageCache, PageShape};
 use crate::ui::{TrackRow, clamp_i32};
 
 pub const PAGE_SIZE: usize = 100;
-const CACHED_PAGES: usize = 24;
+pub const CACHED_PAGES: usize = 24;
 const TRACK_PAGES: PageShape = PageShape {
     page_size: PAGE_SIZE,
     capacity: CACHED_PAGES,

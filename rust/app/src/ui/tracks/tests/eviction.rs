@@ -1,11 +1,10 @@
 use feishin_core::model::{Paging, SongListQuery};
 use slint::Model;
 
-use super::super::model::{PAGE_SIZE, TracksModel, paging_for_page};
+use super::super::model::{CACHED_PAGES, PAGE_SIZE, TracksModel, paging_for_page};
 use super::{RequestLog, drain, logging_model, page_of, songs_in};
 use crate::demo::FakeServer;
 
-const CACHED_PAGES: usize = 24;
 const PAGES: usize = 40;
 const TOTAL: usize = PAGES * PAGE_SIZE;
 

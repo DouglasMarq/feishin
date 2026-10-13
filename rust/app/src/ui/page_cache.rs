@@ -55,7 +55,7 @@ impl<Row> PageCache<Row> {
         self.pages.iter().flat_map(move |(page, rows)| {
             rows.iter()
                 .enumerate()
-                .map(move |(position, row)| (page * page_size + position, row))
+                .map(move |(position, row)| (global_index(*page, page_size, position), row))
         })
     }
 
@@ -64,7 +64,7 @@ impl<Row> PageCache<Row> {
         self.pages.iter_mut().flat_map(move |(page, rows)| {
             rows.iter_mut()
                 .enumerate()
-                .map(move |(position, row)| (page * page_size + position, row))
+                .map(move |(position, row)| (global_index(*page, page_size, position), row))
         })
     }
 
@@ -124,6 +124,10 @@ impl<Row> PageCache<Row> {
             .copied()
             .max_by_key(|page| (page.abs_diff(anchor), *page))
     }
+}
+
+fn global_index(page: usize, page_size: usize, position: usize) -> usize {
+    page.saturating_mul(page_size).saturating_add(position)
 }
 
 #[cfg(test)]

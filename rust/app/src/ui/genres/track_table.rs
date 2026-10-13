@@ -107,8 +107,11 @@ impl Model for TrackTable {
 
 #[cfg(test)]
 mod tests {
+    use std::rc::Rc;
+
     use super::*;
     use crate::demo::test_song;
+    use crate::ui::tracks::CACHED_PAGES;
 
     #[test]
     fn track_table_favorites_flip_and_reset() {
@@ -125,5 +128,50 @@ mod tests {
         assert!(table.apply_count(2, 2));
         table.apply_page(2, 0, songs.to_vec());
         assert_eq!(table.favorite_at(1), Some(("b".to_owned(), true)));
+    }
+
+    type PageLog = Rc<RefCell<Vec<usize>>>;
+
+    fn logging_table(log: &PageLog) -> TrackTable {
+        let sink = Rc::clone(log);
+        TrackTable::new(true, move |request| {
+            if let Request::Page { page, .. } = request {
+                sink.borrow_mut().push(page);
+            }
+        })
+    }
+
+    fn songs_of_page(page: usize) -> Vec<Song> {
+        (page * PAGE_SIZE..(page + 1) * PAGE_SIZE)
+            .map(|index| test_song(&format!("s{index}"), 1000))
+            .collect()
+    }
+
+    fn show_row(table: &TrackTable, log: &PageLog, row: usize) {
+        table.row_data(row);
+        let pages: Vec<usize> = log.borrow_mut().drain(..).collect();
+        for page in pages {
+            table.apply_page(1, page, songs_of_page(page));
+        }
+    }
+
+    #[test]
+    fn favorite_overrides_survive_eviction_and_refetch() {
+        let log = PageLog::default();
+        let table = logging_table(&log);
+        let pages = CACHED_PAGES + 6;
+        table.reset(SongListQuery::default());
+        assert!(table.apply_count(1, pages * PAGE_SIZE));
+        show_row(&table, &log, 5);
+        table.set_favorite(5, "s5", false);
+        for row in (0..pages * PAGE_SIZE).step_by(PAGE_SIZE) {
+            show_row(&table, &log, row);
+        }
+        assert_eq!(table.favorite_at(5), None);
+        assert!(table.row_data(5).is_some_and(|item| !item.track.loaded));
+        assert_eq!(log.borrow_mut().drain(..).collect::<Vec<_>>(), [0]);
+        table.apply_page(1, 0, songs_of_page(0));
+        assert_eq!(table.favorite_at(5), Some(("s5".to_owned(), false)));
+        assert!(table.row_data(6).is_some_and(|item| item.favorite));
     }
 }
