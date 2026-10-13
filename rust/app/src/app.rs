@@ -272,6 +272,7 @@ pub fn run(mode: Mode) -> Result<()> {
     let (commands, receiver) = mpsc::unbounded_channel();
     let context = app_context(&runtime, backends, &commands);
     ui::install(&window, &context, &settings);
+    ui::appearance::watch_system_scheme(&window, &context);
     sleep_timer::install(&window, &context);
 
     let deps = controller_deps(mode, &settings, &window, &context)?;

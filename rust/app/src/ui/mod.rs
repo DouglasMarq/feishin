@@ -20,6 +20,7 @@ pub use generated::*;
 pub mod album_detail;
 pub mod album_grid;
 pub mod albums;
+pub mod appearance;
 pub mod artist_detail;
 pub mod artists;
 pub mod favorites;
@@ -89,6 +90,7 @@ pub fn install(window: &AppWindow, ctx: &Context, settings: &Settings) {
     search::install(window, ctx);
     settings::install(window, ctx);
     now_playing::install(window, ctx);
+    appearance::install(window, ctx, &settings.appearance);
     window
         .global::<AppState>()
         .set_queue_open(settings.ui.queue_panel_open);
