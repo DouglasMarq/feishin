@@ -168,6 +168,9 @@ impl Player {
             options.push(("ao", ao));
         }
 
+        // SAFETY: libmpv refuses to initialize unless LC_NUMERIC is "C"; the argument is a valid C string.
+        unsafe { libc::setlocale(libc::LC_NUMERIC, c"C".as_ptr()) };
+
         let mpv = Mpv::with_initializer(|init| {
             for (name, value) in &options {
                 init.set_property(name, *value)?;

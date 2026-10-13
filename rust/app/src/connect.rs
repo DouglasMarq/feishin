@@ -25,7 +25,6 @@ pub trait Connector: Send + Sync {
 
 pub struct ServerConnector;
 
-#[cfg(feature = "real-servers")]
 #[async_trait]
 impl Connector for ServerConnector {
     async fn login(
@@ -71,26 +70,6 @@ impl Connector for ServerConnector {
                 feishin_api_jellyfin::JellyfinServer::with_credential(config, credential)?,
             ),
         })
-    }
-}
-
-#[cfg(not(feature = "real-servers"))]
-#[async_trait]
-impl Connector for ServerConnector {
-    async fn login(
-        &self,
-        _config: ServerConfig,
-        _password: &str,
-    ) -> Result<(Arc<dyn MusicServer>, Credential)> {
-        anyhow::bail!("this build has no server backends; rebuild with --features real-servers")
-    }
-
-    fn restore(
-        &self,
-        _config: &ServerConfig,
-        _credential: &Credential,
-    ) -> Result<Arc<dyn MusicServer>> {
-        anyhow::bail!("this build has no server backends; rebuild with --features real-servers")
     }
 }
 

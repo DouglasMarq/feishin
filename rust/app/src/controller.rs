@@ -4,7 +4,7 @@ use std::sync::Arc;
 
 use feishin_api::StreamOptions;
 use feishin_core::model::{ServerConfig, Song, SongListQuery};
-use feishin_core::queue::{Advance, QueueItem, RepeatMode, Uid};
+use feishin_core::queue::{Advance, Queue, QueueItem, RepeatMode, Uid};
 use feishin_platform::{MediaControlEvent, NowPlaying, PlaybackStatus};
 use feishin_player::PlayerEvent;
 use feishin_storage::queue_store::StoredQueue;
@@ -14,7 +14,6 @@ use tokio::sync::{mpsc, oneshot};
 use crate::audio::{AudioOutput, Track};
 use crate::library::fetch_all_songs;
 use crate::media::MediaSession;
-use crate::queue::{PlayQueue, new_queue, restore_queue};
 use crate::scrobble::ScrobbleTracker;
 use crate::session::Session;
 use crate::store::Store;
@@ -109,7 +108,7 @@ pub struct Deps {
 
 pub struct Controller {
     deps: Deps,
-    queue: Box<dyn PlayQueue>,
+    queue: Queue,
     settings: Settings,
     scrobble: ScrobbleTracker,
     loaded: Option<Uid>,
@@ -144,8 +143,8 @@ impl Controller {
         seed: Option<u64>,
     ) -> Self {
         let (queue, position_ms) = match stored {
-            Some(stored) => (restore_queue(stored.snapshot), stored.position_ms),
-            None => (new_queue(seed), 0),
+            Some(stored) => (Queue::from_snapshot(stored.snapshot), stored.position_ms),
+            None => (seed.map_or_else(Queue::new, Queue::with_seed), 0),
         };
         let duration_ms = queue.current().map_or(0, |item| item.song.duration_ms);
         let controller = Self {
@@ -174,8 +173,8 @@ impl Controller {
     }
 
     #[cfg(test)]
-    pub fn queue(&self) -> &dyn PlayQueue {
-        self.queue.as_ref()
+    pub fn queue(&self) -> &Queue {
+        &self.queue
     }
 
     #[cfg(test)]
@@ -543,7 +542,7 @@ impl Controller {
     fn remove(&mut self, uids: &[Uid]) {
         let loaded_removed = self.loaded.is_some_and(|uid| uids.contains(&uid));
         self.queue.remove(uids);
-        if self.queue.len() == 0 {
+        if self.queue.is_empty() {
             self.stop();
             self.deps.ui.send(UiUpdate::NowPlaying(None));
         } else if loaded_removed {

@@ -6,7 +6,6 @@ mod covers;
 mod demo;
 mod library;
 mod media;
-mod queue;
 mod scrobble;
 mod session;
 mod store;
