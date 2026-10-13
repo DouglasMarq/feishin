@@ -3,6 +3,7 @@ use std::sync::{Arc, Mutex};
 use anyhow::Result;
 use feishin_core::queue::Uid;
 use feishin_player::{AudioDevice, PlayerEvent};
+use feishin_storage::appearance::{AccentColor, AppearanceSettings, ThemeId};
 use feishin_storage::settings::{
     IntegrationSettings, PlaybackSettings, ReplayGainSetting, Settings, UiSettings,
 };
@@ -243,4 +244,25 @@ async fn interface_and_integrations_are_saved_and_survive_shutdown() {
     assert!(saved.ui.follow_current_song);
     assert!(!saved.ui.queue_panel_open);
     assert_eq!(saved.integrations, integrations);
+}
+
+#[tokio::test]
+async fn appearance_is_saved_and_survives_shutdown() {
+    let mut harness = harness(Settings::default());
+    let appearance = AppearanceSettings {
+        theme: ThemeId::new("nord"),
+        use_theme_accent: false,
+        accent: AccentColor::new(0xaa, 0x6e, 0xd8),
+        ..AppearanceSettings::default()
+    };
+    harness
+        .controller
+        .handle(Command::SaveAppearance(appearance.clone()));
+    assert_eq!(harness.saved().appearance, appearance);
+    let (done, _finished) = oneshot::channel();
+    harness.controller.handle(Command::Shutdown {
+        ui: UiSettings::default(),
+        done,
+    });
+    assert_eq!(harness.saved().appearance, appearance);
 }
