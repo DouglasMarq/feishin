@@ -42,6 +42,8 @@ impl Controller {
                 follow_current_song,
             } => self.save_interface(queue_panel_open, follow_current_song),
             Command::RemoveServer(server_id) => self.remove_server(&server_id),
+            Command::Tracks(command) => self.on_track_command(command),
+            Command::YouTube(command) => self.on_youtube_command(command),
         }
     }
 }

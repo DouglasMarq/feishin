@@ -44,7 +44,11 @@ impl SongIdCache {
 }
 
 fn song_ids_on(queue: &Queue, server_id: &str) -> Option<Arc<[String]>> {
-    let items = queue.display_order();
+    let items: Vec<_> = queue
+        .display_order()
+        .into_iter()
+        .filter(|item| !item.track.is_external())
+        .collect();
     if items.iter().any(|item| &*item.track.server_id != server_id) {
         return None;
     }

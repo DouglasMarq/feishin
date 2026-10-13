@@ -15,8 +15,10 @@ mod settings_changes;
 mod sleep;
 mod stream_pages;
 mod streaming;
+mod track_ops;
 mod ui_update;
 mod volume;
+mod youtube;
 
 use std::sync::Arc;
 
@@ -26,9 +28,10 @@ use feishin_storage::queue_store::StoredQueue;
 use feishin_storage::settings::Settings;
 use tokio::sync::mpsc;
 
-pub use command::{Command, SettingsSnapshot, forward_command};
+pub use command::{Command, SettingsSnapshot, TrackCommand, YouTubeCommand, forward_command};
 pub use persistence::{PersistenceEvent, load_saved_queue};
 pub use ui_update::{UiSink, UiUpdate, artist_names};
+pub use youtube::YouTubeResolution;
 
 use crate::audio::AudioOutput;
 use crate::media::MediaSession;
@@ -39,6 +42,7 @@ use crate::sleep_timer::SleepTimer;
 use crate::store::Store;
 use list_streams::ListStreams;
 use persistence::QueuePersistence;
+use youtube::YouTubeStreams;
 
 pub struct Deps {
     pub audio: Box<dyn AudioOutput>,
@@ -66,6 +70,7 @@ pub struct Controller {
     sleep_timer: SleepTimer,
     saved_credential: Option<Credential>,
     list_streams: ListStreams,
+    youtube: YouTubeStreams,
 }
 
 fn initial_queue(stored: Option<StoredQueue>, seed: Option<u64>) -> (Queue, u64) {
@@ -102,6 +107,7 @@ impl Controller {
             sleep_timer: SleepTimer::default(),
             saved_credential: None,
             list_streams: ListStreams::default(),
+            youtube: YouTubeStreams::default(),
         };
         controller.publish_all();
         controller.update_media_volume();

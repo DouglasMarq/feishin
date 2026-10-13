@@ -185,7 +185,8 @@ fn cached_streams_expire_before_their_deadline() {
     cache.insert("video", stream, 1_000);
     assert!(cache.get("video", 9_000).is_some());
     assert_eq!(cache.get("video", 9_500), None);
-    assert!(cache.is_empty());
+    cache.insert("other", StreamUrl::new("https://host/b".into()), 9_500);
+    assert_eq!(cache.len(), 1);
 }
 
 #[test]
@@ -256,4 +257,60 @@ fn video_ids_and_links() {
         thumbnail_url("abc"),
         "https://i.ytimg.com/vi/abc/hqdefault.jpg"
     );
+}
+
+#[test]
+fn links_are_turned_into_video_ids() {
+    let expected = Some("dQw4w9WgXcQ".to_owned());
+    for link in [
+        "dQw4w9WgXcQ",
+        "https://music.youtube.com/watch?v=dQw4w9WgXcQ&list=RDAMVM",
+        " https://www.youtube.com/watch?feature=share&v=dQw4w9WgXcQ ",
+        "youtube.com/watch?v=dQw4w9WgXcQ#t=10",
+        "https://youtu.be/dQw4w9WgXcQ?si=abc",
+    ] {
+        assert_eq!(video_id_from_link(link), expected, "{link}");
+    }
+    for link in [
+        "https://example.com/watch?v=dQw4w9WgXcQ",
+        "https://music.youtube.com/playlist?list=abc",
+        "not a link",
+        "",
+    ] {
+        assert_eq!(video_id_from_link(link), None, "{link}");
+    }
+}
+
+#[tokio::test]
+async fn video_details_come_from_one_printed_object() {
+    let _spawning = SPAWNING.lock().await;
+    let fake = FakeYtDlp::printing(
+        r#"{"id": "abc", "title": "One More Time", "artists": ["Daft Punk"], "album": "Discovery", "duration": 320, "thumbnail": "https://i.ytimg.com/vi/abc/maxresdefault.jpg"}"#,
+    );
+    let video = fake.yt_dlp().video("abc").await.unwrap();
+    assert_eq!(
+        video,
+        YouTubeHit {
+            video_id: "abc".into(),
+            title: "One More Time".into(),
+            artist: Some("Daft Punk".into()),
+            album: Some("Discovery".into()),
+            thumbnail_url: Some("https://i.ytimg.com/vi/abc/maxresdefault.jpg".into()),
+            duration_ms: Some(320_000),
+        }
+    );
+    let arguments = fake.arguments();
+    assert!(arguments.contains(&"--skip-download".to_owned()));
+    assert_eq!(
+        arguments.last().unwrap(),
+        "https://music.youtube.com/watch?v=abc"
+    );
+}
+
+#[tokio::test]
+async fn empty_video_output_is_an_error() {
+    let _spawning = SPAWNING.lock().await;
+    let fake = FakeYtDlp::printing("");
+    let error = fake.yt_dlp().video("abc").await.unwrap_err();
+    assert_eq!(error, YouTubeError::NoVideoDetails);
 }

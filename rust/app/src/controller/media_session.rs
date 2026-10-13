@@ -54,13 +54,20 @@ impl Controller {
         self.seek(target.min(self.duration_ms));
     }
 
-    pub(super) fn update_media_metadata(&mut self, track: &QueueTrack) {
-        let cover_url = self.deps.session.get().and_then(|server| {
+    fn media_cover_url(&self, track: &QueueTrack) -> Option<String> {
+        if track.is_external() {
+            return track.thumbnail_url().map(str::to_owned);
+        }
+        self.deps.session.get().and_then(|server| {
             track
                 .cover_art_id
                 .as_deref()
                 .map(|cover_art_id| server.cover_art_url(cover_art_id, Some(MEDIA_COVER_SIZE)))
-        });
+        })
+    }
+
+    pub(super) fn update_media_metadata(&mut self, track: &QueueTrack) {
+        let cover_url = self.media_cover_url(track);
         if let Err(error) = self
             .deps
             .media

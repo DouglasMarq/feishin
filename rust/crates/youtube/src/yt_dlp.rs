@@ -2,12 +2,13 @@ use std::path::PathBuf;
 use std::time::Duration;
 
 use crate::links::songs_search_url;
-use crate::search::parse_search_output;
+use crate::search::{parse_search_output, parse_video_output};
 use crate::{CookieBrowser, StreamUrl, YouTubeError, YouTubeHit, is_video_id, process, watch_url};
 
 pub const DEFAULT_PROGRAM: &str = "yt-dlp";
 const DEFAULT_TIMEOUT: Duration = Duration::from_secs(30);
 const MAX_SEARCH_RESULTS: usize = 50;
+const VIDEO_FIELDS: &str = "%(.{id,title,artists,channel,uploader,album,duration,thumbnail})j";
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct YtDlp {
@@ -56,6 +57,19 @@ impl YtDlp {
             .find(|line| line.starts_with("https://") || line.starts_with("http://"))
             .map(|line| StreamUrl::new(line.to_owned()))
             .ok_or(YouTubeError::NoAudioUrl)
+    }
+
+    pub async fn video(&self, video_id: &str) -> Result<YouTubeHit, YouTubeError> {
+        if !is_video_id(video_id) {
+            return Err(YouTubeError::InvalidVideoId(video_id.to_owned()));
+        }
+        let mut arguments = self.common_arguments();
+        arguments.extend(
+            ["--no-playlist", "--skip-download", "-O", VIDEO_FIELDS, "--"].map(str::to_owned),
+        );
+        arguments.push(watch_url(video_id));
+        let stdout = process::run(&self.program, &arguments, self.timeout).await?;
+        parse_video_output(&stdout).ok_or(YouTubeError::NoVideoDetails)
     }
 
     pub async fn search_songs(

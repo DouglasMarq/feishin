@@ -16,6 +16,7 @@ mod sleep_timer;
 mod store;
 mod termination;
 mod ui;
+mod youtube;
 
 #[cfg(test)]
 mod tests;

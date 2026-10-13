@@ -2,7 +2,6 @@ use feishin_core::queue::{Advance, Uid};
 use feishin_player::PlayerEvent;
 
 use super::{Controller, UiUpdate};
-use crate::controller::scrobbling::now_ms;
 
 enum StartedTrack {
     Loading,
@@ -58,6 +57,7 @@ impl Controller {
         if uid.is_none() || uid == self.loaded {
             self.set_playing(false);
         }
+        self.forget_failed_stream(uid);
         self.deps.ui.send(UiUpdate::Error(message));
     }
 
@@ -100,10 +100,9 @@ impl Controller {
 
     fn begin_playing_current(&mut self) {
         self.playing = true;
+        self.youtube.reset_failures();
         if let Some(track) = self.current_track() {
-            self.scrobble_tracker
-                .start(track.song_id.as_str(), track.duration_ms, now_ms());
-            self.send_scrobble(track.song_id.to_string(), false, None);
+            self.start_scrobbling(&track);
             self.update_media_metadata(&track);
         }
         self.update_media_status();

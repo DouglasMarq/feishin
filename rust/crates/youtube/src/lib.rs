@@ -12,7 +12,7 @@ mod tests;
 
 pub use browser::CookieBrowser;
 pub use error::YouTubeError;
-pub use links::{is_video_id, thumbnail_url, watch_url};
+pub use links::{is_video_id, thumbnail_url, video_id_from_link, watch_url};
 pub use search::YouTubeHit;
 pub use stream_cache::StreamCache;
 pub use stream_url::{StreamUrl, unix_now};

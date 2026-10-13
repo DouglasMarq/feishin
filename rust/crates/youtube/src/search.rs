@@ -7,6 +7,8 @@ pub struct YouTubeHit {
     pub video_id: String,
     pub title: String,
     pub artist: Option<String>,
+    pub album: Option<String>,
+    pub thumbnail_url: Option<String>,
     pub duration_ms: Option<u64>,
 }
 
@@ -24,6 +26,10 @@ struct SearchEntry {
     channel: Option<String>,
     #[serde(default)]
     uploader: Option<String>,
+    #[serde(default)]
+    album: Option<String>,
+    #[serde(default)]
+    thumbnail: Option<String>,
 }
 
 impl SearchEntry {
@@ -41,6 +47,8 @@ impl SearchEntry {
             video_id: self.id,
             title: self.title,
             artist,
+            album: self.album.filter(|album| !album.trim().is_empty()),
+            thumbnail_url: self.thumbnail.filter(|url| url.starts_with("https://")),
             duration_ms: self.duration.and_then(seconds_to_ms),
         })
     }
@@ -48,6 +56,10 @@ impl SearchEntry {
 
 fn seconds_to_ms(seconds: f64) -> Option<u64> {
     (seconds.is_finite() && seconds > 0.0).then(|| (seconds * 1000.0).round() as u64)
+}
+
+pub(crate) fn parse_video_output(stdout: &str) -> Option<YouTubeHit> {
+    parse_search_output(stdout).into_iter().next()
 }
 
 pub(crate) fn parse_search_output(stdout: &str) -> Vec<YouTubeHit> {

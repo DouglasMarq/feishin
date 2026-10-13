@@ -71,7 +71,7 @@ impl PlayQueueSync {
         position_ms: u64,
         server_id: &str,
     ) -> Option<PlayQueueState> {
-        let current = queue.current();
+        let current = queue.current().filter(|item| !item.track.is_external());
         Some(PlayQueueState {
             song_ids: self.song_ids.song_ids(queue, server_id)?,
             current: current.map(|item| item.track.song_id.to_string()),

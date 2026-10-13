@@ -10,6 +10,8 @@ pub enum YouTubeError {
     Failed(String),
     #[error("yt-dlp printed no audio address")]
     NoAudioUrl,
+    #[error("yt-dlp printed no video details")]
+    NoVideoDetails,
     #[error("\"{0}\" is not a YouTube video id")]
     InvalidVideoId(String),
 }

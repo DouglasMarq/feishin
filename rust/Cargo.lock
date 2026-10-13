@@ -1467,6 +1467,7 @@ dependencies = [
  "feishin-platform",
  "feishin-player",
  "feishin-storage",
+ "feishin-youtube",
  "i-slint-backend-testing",
  "reqwest",
  "serde",

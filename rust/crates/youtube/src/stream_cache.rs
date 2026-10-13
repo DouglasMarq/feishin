@@ -26,16 +26,16 @@ impl StreamCache {
         }
     }
 
-    pub fn get(&mut self, video_id: &str, now: u64) -> Option<String> {
-        self.entries.retain(|entry| entry.usable_until > now);
+    pub fn get(&self, video_id: &str, now: u64) -> Option<String> {
         self.entries
             .iter()
-            .find(|entry| &*entry.video_id == video_id)
+            .find(|entry| &*entry.video_id == video_id && entry.usable_until > now)
             .map(|entry| entry.url.clone())
     }
 
     pub fn insert(&mut self, video_id: &str, stream: StreamUrl, now: u64) {
-        self.remove(video_id);
+        self.entries
+            .retain(|entry| &*entry.video_id != video_id && entry.usable_until > now);
         let usable_until = usable_until(&stream, now);
         if usable_until <= now || self.capacity == 0 {
             return;
