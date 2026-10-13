@@ -4,7 +4,7 @@ use feishin_api::StreamOptions;
 use feishin_core::model::{Song, SongListQuery};
 use feishin_core::queue::{Advance, QueueItem};
 
-use super::{Command, Controller, UiUpdate};
+use super::{Command, Controller, UiUpdate, forward_command};
 use crate::audio::Track;
 use crate::library::fetch_all_songs;
 
@@ -21,16 +21,24 @@ impl Controller {
         let ui = Arc::clone(&self.deps.ui);
         tokio::spawn(async move {
             match fetch_all_songs(server.as_ref(), &query).await {
-                Ok(songs) => {
-                    let _ = commands.send(Command::PlayNow {
+                Ok(songs) => forward_command(
+                    &commands,
+                    Command::PlayNow {
                         request,
                         songs,
                         song_id,
-                    });
-                }
+                    },
+                ),
                 Err(error) => ui.send(UiUpdate::Error(format!("Could not load the list: {error}"))),
             }
         });
+    }
+
+    pub(super) fn play_requested(&mut self, request: u64, songs: Vec<Song>, song_id: &str) {
+        if request != self.play_request {
+            return;
+        }
+        self.play_now(songs, song_id);
     }
 
     pub fn play_now(&mut self, songs: Vec<Song>, song_id: &str) {

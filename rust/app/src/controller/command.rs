@@ -3,7 +3,7 @@ use feishin_core::queue::Uid;
 use feishin_platform::MediaControlEvent;
 use feishin_player::{AudioDevice, PlayerEvent};
 use feishin_storage::settings::{IntegrationSettings, PlaybackSettings, Settings, UiSettings};
-use tokio::sync::oneshot;
+use tokio::sync::{mpsc, oneshot};
 
 use crate::sleep_timer::SleepMode;
 
@@ -63,6 +63,12 @@ pub enum Command {
         follow_current_song: bool,
     },
     RemoveServer(String),
+}
+
+pub fn forward_command(commands: &mpsc::UnboundedSender<Command>, command: Command) {
+    if commands.send(command).is_err() {
+        tracing::debug!("the controller has stopped, dropping a command");
+    }
 }
 
 #[derive(Debug, Clone, PartialEq)]

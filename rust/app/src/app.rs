@@ -12,7 +12,7 @@ use tokio::sync::{mpsc, oneshot};
 
 use crate::audio::{AudioOutput, FakeAudio, MpvOutput};
 use crate::connect::{Connector, DemoConnector, ServerConnector};
-use crate::controller::{Command, Controller, Deps};
+use crate::controller::{Command, Controller, Deps, forward_command};
 use crate::covers::{CachedCovers, CoverProvider, DemoCovers};
 use crate::demo::{FakeServer, demo_credential};
 use crate::discord::DiscordSession;
@@ -71,7 +71,7 @@ fn audio_output(
 ) -> Result<Box<dyn AudioOutput>> {
     let commands = commands.clone();
     let on_event = Box::new(move |event| {
-        let _ = commands.send(Command::Player(event));
+        forward_command(&commands, Command::Player(event));
     });
     Ok(match mode {
         Mode::Demo => Box::new(FakeAudio::new(on_event)),
@@ -82,7 +82,7 @@ fn audio_output(
 fn mpris_session(commands: &mpsc::UnboundedSender<Command>) -> Option<Box<dyn MediaSession>> {
     let commands = commands.clone();
     let on_event = Box::new(move |event| {
-        let _ = commands.send(Command::Media(event));
+        forward_command(&commands, Command::Media(event));
     });
     Mpris::new(on_event)
         .inspect_err(|error| tracing::warn!("MPRIS unavailable: {error:#}"))

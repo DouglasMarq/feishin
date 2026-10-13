@@ -24,7 +24,7 @@ use feishin_storage::queue_store::StoredQueue;
 use feishin_storage::settings::Settings;
 use tokio::sync::mpsc;
 
-pub use command::{Command, SettingsSnapshot};
+pub use command::{Command, SettingsSnapshot, forward_command};
 pub use ui_update::{QueueEntry, UiSink, UiUpdate, artist_names};
 
 use crate::audio::AudioOutput;

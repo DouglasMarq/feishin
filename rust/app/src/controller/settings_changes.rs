@@ -15,10 +15,13 @@ impl Controller {
             tracing::warn!("listing audio devices failed: {error:#}");
             Vec::new()
         });
-        let _ = reply.send(SettingsSnapshot {
+        let snapshot = SettingsSnapshot {
             settings: self.settings.clone(),
             devices,
-        });
+        };
+        if reply.send(snapshot).is_err() {
+            tracing::debug!("the settings request was dropped before the reply");
+        }
     }
 
     pub(super) fn apply_playback(&mut self, playback: PlaybackSettings) {

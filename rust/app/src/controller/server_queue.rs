@@ -3,7 +3,7 @@ use std::sync::Arc;
 use feishin_api::MusicServer;
 use feishin_core::model::ServerPlayQueue;
 
-use super::{Command, Controller};
+use super::{Command, Controller, forward_command};
 use crate::play_queue_sync::PlayQueueState;
 
 impl Controller {
@@ -16,7 +16,7 @@ impl Controller {
         tokio::spawn(async move {
             match server.play_queue().await {
                 Ok(Some(queue)) if !queue.songs.is_empty() => {
-                    let _ = commands.send(Command::RestoreQueue { request, queue });
+                    forward_command(&commands, Command::RestoreQueue { request, queue });
                 }
                 Ok(_) => {}
                 Err(error) => tracing::debug!("server play queue: {error}"),

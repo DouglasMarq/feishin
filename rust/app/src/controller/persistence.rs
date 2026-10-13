@@ -5,7 +5,9 @@ use tokio::sync::oneshot;
 use super::Controller;
 
 fn signal_shutdown_finished(done: oneshot::Sender<()>) {
-    let _ = done.send(());
+    if done.send(()).is_err() {
+        tracing::debug!("nobody is waiting for the shutdown to finish");
+    }
 }
 
 impl Controller {
