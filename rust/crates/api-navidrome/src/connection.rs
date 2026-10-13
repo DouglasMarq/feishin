@@ -1,6 +1,7 @@
 use std::sync::RwLock;
+use std::time::Duration;
 
-use feishin_api::{ApiError, Credential, Result};
+use feishin_api::{ApiError, Credential, LatestCache, Result};
 use feishin_core::model::ServerConfig;
 use reqwest::StatusCode;
 use tokio::sync::OnceCell;
@@ -9,6 +10,8 @@ use crate::NavidromeServer;
 use crate::catalog::FallbackLists;
 use crate::http::{decode_error, network_error, query_string};
 use crate::native::{LoginRequest, NativeAuth};
+
+const FOLDER_TIME_TO_LIVE: Duration = Duration::from_secs(30);
 
 impl NavidromeServer {
     pub async fn login(config: ServerConfig, password: &str) -> Result<(Self, Credential)> {
@@ -55,6 +58,7 @@ impl NavidromeServer {
             session_token: RwLock::new(nd_token.clone().filter(|token| !token.is_empty())),
             detected_features: OnceCell::new(),
             fallback_lists: FallbackLists::new(),
+            latest_folder: LatestCache::new(FOLDER_TIME_TO_LIVE),
         })
     }
 

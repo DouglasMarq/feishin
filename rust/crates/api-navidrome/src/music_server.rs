@@ -1,9 +1,9 @@
 use async_trait::async_trait;
 use feishin_api::{Credential, MusicServer, Result, StreamOptions};
 use feishin_core::model::{
-    Album, AlbumDetail, AlbumListQuery, Artist, ArtistDetail, ArtistListQuery, Genre, ItemKind,
-    LibraryScan, MusicFolder, Page, Paging, Playlist, SearchResults, ServerConfig, ServerPlayQueue,
-    Song, SongListQuery,
+    Album, AlbumDetail, AlbumListQuery, Artist, ArtistDetail, ArtistListQuery, Folder, FolderId,
+    Genre, ItemKind, LibraryScan, MusicFolder, Page, Paging, Playlist, SearchResults, ServerConfig,
+    ServerPlayQueue, Share, Song, SongListQuery,
 };
 use serde::de::IgnoredAny;
 
@@ -160,6 +160,22 @@ impl MusicServer for NavidromeServer {
 
     async fn library_scan(&self) -> Result<LibraryScan> {
         self.fetch_library_scan().await
+    }
+
+    async fn subfolders(&self, folder: &FolderId) -> Result<Vec<Folder>> {
+        self.list_subfolders(folder).await
+    }
+
+    async fn folder_song_page(&self, folder: &FolderId, paging: Paging) -> Result<Page<Song>> {
+        self.list_folder_songs(folder, paging).await
+    }
+
+    fn can_share(&self) -> bool {
+        true
+    }
+
+    async fn create_share(&self, item_ids: &[String], description: Option<&str>) -> Result<Share> {
+        self.share_items(item_ids, description).await
     }
 
     fn stream_url(&self, song_id: &str, options: &StreamOptions) -> String {

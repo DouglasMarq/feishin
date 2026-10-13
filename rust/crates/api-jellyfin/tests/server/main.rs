@@ -3,6 +3,8 @@ mod albums_and_artists;
 #[cfg(test)]
 mod authentication;
 #[cfg(test)]
+mod folders;
+#[cfg(test)]
 mod library;
 #[cfg(test)]
 mod playback;

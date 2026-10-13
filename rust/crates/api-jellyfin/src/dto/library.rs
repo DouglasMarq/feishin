@@ -100,3 +100,13 @@ pub struct MusicFolder {
     pub name: String,
     pub collection_type: Option<String>,
 }
+
+#[derive(Debug, Default, Deserialize)]
+#[serde(rename_all = "PascalCase", default)]
+pub struct FolderItem {
+    #[serde(deserialize_with = "null_as_default")]
+    pub id: String,
+    #[serde(deserialize_with = "null_as_default")]
+    pub name: String,
+    pub image_tags: Option<ImageTags>,
+}

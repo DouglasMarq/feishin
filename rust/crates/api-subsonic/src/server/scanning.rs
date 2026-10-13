@@ -30,6 +30,7 @@ impl SubsonicServer {
         if !scan.scanning {
             self.list_caches.forget_annotations();
             self.list_caches.forget_playlists();
+            self.latest_folder.invalidate();
         }
         Ok(scan)
     }

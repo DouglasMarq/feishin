@@ -11,7 +11,7 @@ use crate::dto;
 
 pub use album::album;
 pub use artist::artist;
-pub use library::{genre, music_folder};
+pub use library::{folder, genre, library_folder, music_folder};
 pub use lyrics::lyrics;
 pub use playlist::playlist;
 pub use song::song;

@@ -1,9 +1,9 @@
 use async_trait::async_trait;
 use feishin_api::{ApiError, MusicServer, Result, StreamOptions};
 use feishin_core::model::{
-    Album, AlbumDetail, AlbumListQuery, Artist, ArtistDetail, ArtistListQuery, Genre, ItemKind,
-    LibraryScan, MusicFolder, Page, Paging, Playlist, SearchResults, ServerConfig, ServerPlayQueue,
-    Song, SongListQuery,
+    Album, AlbumDetail, AlbumListQuery, Artist, ArtistDetail, ArtistListQuery, Folder, FolderId,
+    Genre, ItemKind, LibraryScan, MusicFolder, Page, Paging, Playlist, SearchResults, ServerConfig,
+    ServerPlayQueue, Share, Song, SongListQuery,
 };
 
 use super::JellyfinServer;
@@ -150,6 +150,26 @@ impl MusicServer for JellyfinServer {
 
     async fn library_scan(&self) -> Result<LibraryScan> {
         self.fetch_library_scan().await
+    }
+
+    async fn subfolders(&self, folder: &FolderId) -> Result<Vec<Folder>> {
+        self.fetch_subfolders(folder).await
+    }
+
+    async fn folder_song_page(&self, folder: &FolderId, paging: Paging) -> Result<Page<Song>> {
+        self.fetch_folder_song_page(folder, paging).await
+    }
+
+    fn can_share(&self) -> bool {
+        false
+    }
+
+    async fn create_share(
+        &self,
+        _item_ids: &[String],
+        _description: Option<&str>,
+    ) -> Result<Share> {
+        Err(ApiError::Unsupported("public share links"))
     }
 
     fn stream_url(&self, song_id: &str, options: &StreamOptions) -> String {

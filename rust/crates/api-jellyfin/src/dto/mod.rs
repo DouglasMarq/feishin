@@ -9,7 +9,8 @@ use serde::{Deserialize, Deserializer};
 
 pub use authentication::AuthResponse;
 pub use library::{
-    Album, AlbumArtist, CreatedPlaylist, Genre, ItemList, MusicFolder, NamedItem, Playlist,
+    Album, AlbumArtist, CreatedPlaylist, FolderItem, Genre, ItemList, MusicFolder, NamedItem,
+    Playlist,
 };
 pub use lyrics::{LyricLine, Lyrics};
 pub use media::{ImageTags, MediaSource, Song};

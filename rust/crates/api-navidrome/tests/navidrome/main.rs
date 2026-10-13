@@ -5,6 +5,8 @@ mod annotations;
 #[cfg(test)]
 mod fallback_caching;
 #[cfg(test)]
+mod folders;
+#[cfg(test)]
 mod library;
 #[cfg(test)]
 mod play_queue;
@@ -16,6 +18,8 @@ mod playlists;
 mod scanning;
 #[cfg(test)]
 mod session;
+#[cfg(test)]
+mod sharing;
 #[cfg(test)]
 mod songs;
 #[cfg(test)]
