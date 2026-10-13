@@ -14,6 +14,10 @@ navidrome_port="${FEISHIN_LIVE_NAVIDROME_PORT:-14533}"
 gonic_port="${FEISHIN_LIVE_GONIC_PORT:-14747}"
 jellyfin_port="${FEISHIN_LIVE_JELLYFIN_PORT:-18096}"
 navidrome_image="${FEISHIN_LIVE_NAVIDROME_IMAGE:-docker.io/deluan/navidrome:latest}"
+navidrome_054_port="${FEISHIN_LIVE_NAVIDROME_054_PORT:-14534}"
+navidrome_054_image="${FEISHIN_LIVE_NAVIDROME_054_IMAGE:-docker.io/deluan/navidrome:0.54.5}"
+navidrome_056_port="${FEISHIN_LIVE_NAVIDROME_056_PORT:-14535}"
+navidrome_056_image="${FEISHIN_LIVE_NAVIDROME_056_IMAGE:-docker.io/deluan/navidrome:0.56.1}"
 gonic_image="${FEISHIN_LIVE_GONIC_IMAGE:-docker.io/sentriz/gonic:latest}"
 jellyfin_image="${FEISHIN_LIVE_JELLYFIN_IMAGE:-docker.io/jellyfin/jellyfin:latest}"
 
@@ -134,17 +138,18 @@ scan_settled() {
 }
 
 navidrome_up() {
-    log "starting Navidrome on port $navidrome_port"
-    start_container navidrome -p "127.0.0.1:$navidrome_port:4533" \
-        -v "$library_dir:/music:ro,z" -v "$(volume navidrome-data):/data" \
+    local name="$1" port="$2" image="$3"
+    log "starting $name ($image) on port $port"
+    start_container "$name" -p "127.0.0.1:$port:4533" \
+        -v "$library_dir:/music:ro,z" -v "$(volume "$name-data"):/data" \
         -e ND_LOGLEVEL=warn -e ND_AUTHREQUESTLIMIT=0 -e ND_ENABLEINSIGHTSCOLLECTOR=false -e ND_LASTFM_ENABLED=false \
         -e ND_LISTENBRAINZ_ENABLED=false -e ND_ENABLEEXTERNALSERVICES=false \
-        "$navidrome_image"
-    local base="http://127.0.0.1:$navidrome_port"
-    wait_until "Navidrome HTTP" 90 curl -fsS "$base/app/"
+        "$image"
+    local base="http://127.0.0.1:$port"
+    wait_until "$name HTTP" 90 curl -fsS "$base/app/"
     curl -fs -X POST "$base/auth/createAdmin" -H 'Content-Type: application/json' \
-        -d "{\"username\":\"$test_user\",\"password\":\"$test_password\"}" >/dev/null || log "Navidrome admin already exists"
-    wait_until "Navidrome scan" 120 scan_settled "$base" "$test_user" "$test_password"
+        -d "{\"username\":\"$test_user\",\"password\":\"$test_password\"}" >/dev/null || log "$name admin already exists"
+    wait_until "$name scan" 120 scan_settled "$base" "$test_user" "$test_password"
 }
 
 gonic_up() {
@@ -229,6 +234,12 @@ write_env() {
 export FEISHIN_LIVE_NAVIDROME_URL=http://127.0.0.1:$navidrome_port
 export FEISHIN_LIVE_NAVIDROME_USER=$test_user
 export FEISHIN_LIVE_NAVIDROME_PASSWORD=$test_password
+export FEISHIN_LIVE_NAVIDROME_054_URL=http://127.0.0.1:$navidrome_054_port
+export FEISHIN_LIVE_NAVIDROME_054_USER=$test_user
+export FEISHIN_LIVE_NAVIDROME_054_PASSWORD=$test_password
+export FEISHIN_LIVE_NAVIDROME_056_URL=http://127.0.0.1:$navidrome_056_port
+export FEISHIN_LIVE_NAVIDROME_056_USER=$test_user
+export FEISHIN_LIVE_NAVIDROME_056_PASSWORD=$test_password
 export FEISHIN_LIVE_GONIC_URL=http://127.0.0.1:$gonic_port
 export FEISHIN_LIVE_GONIC_USER=$gonic_user
 export FEISHIN_LIVE_GONIC_PASSWORD=$gonic_password
@@ -243,7 +254,9 @@ up() {
     require_tools
     mkdir -p "$state_dir"
     generate_library
-    navidrome_up
+    navidrome_up navidrome "$navidrome_port" "$navidrome_image"
+    navidrome_up navidrome-054 "$navidrome_054_port" "$navidrome_054_image"
+    navidrome_up navidrome-056 "$navidrome_056_port" "$navidrome_056_image"
     gonic_up
     jellyfin_up
     write_env

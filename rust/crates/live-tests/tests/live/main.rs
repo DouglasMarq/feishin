@@ -66,6 +66,8 @@ macro_rules! live_backend {
                 counts_follow_filters => filters::counts_follow_filters,
                 favorite_filters => filters::favorite_filters_list_only_favorites,
                 missing_items_are_not_found => edges::missing_items_are_not_found,
+                special_characters_round_trip => edges::special_characters_round_trip,
+                a_stale_session_token_falls_back => edges::a_stale_session_token_falls_back,
                 long_playlists_with_repeats => edges::long_playlists_with_repeats_are_edited,
                 opus_streams => edges::streams_transcode_to_opus,
                 songs_without_lyrics => edges::songs_without_lyrics_have_none,
@@ -82,6 +84,10 @@ macro_rules! live_backend {
 
 #[cfg(test)]
 live_backend!(navidrome, Backend::Navidrome);
+#[cfg(test)]
+live_backend!(navidrome_0_54, Backend::Navidrome054);
+#[cfg(test)]
+live_backend!(navidrome_0_56, Backend::Navidrome056);
 #[cfg(test)]
 mod navidrome_subsonic {
     use crate::checks::{
@@ -115,6 +121,7 @@ mod navidrome_subsonic {
         cover_art => playback::cover_art_downloads,
         lyrics => playback::lyrics_are_found,
         missing_items_are_not_found => edges::missing_items_are_not_found,
+        special_characters_round_trip => edges::special_characters_round_trip,
         long_playlists_with_repeats => edges::long_playlists_with_repeats_are_edited,
         opus_streams => edges::streams_transcode_to_opus,
         songs_without_lyrics => edges::songs_without_lyrics_have_none,

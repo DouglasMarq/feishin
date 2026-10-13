@@ -1,4 +1,5 @@
 mod backend;
+mod connection;
 mod download;
 mod library;
 

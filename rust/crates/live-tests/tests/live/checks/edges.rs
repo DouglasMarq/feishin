@@ -224,3 +224,51 @@ pub async fn streams_transcode_to_opus(backend: Backend) {
         stream.content_type
     );
 }
+
+pub async fn special_characters_round_trip(backend: Backend) {
+    let server = backend.connect().await;
+    let spaced = server
+        .search("Tidal Pull", 10)
+        .await
+        .expect("search with a space");
+    assert_eq!(titles(&spaced.songs), ["Tidal Pull"]);
+    server
+        .search("a&b=c+d#e%f", 10)
+        .await
+        .expect("search with reserved characters");
+    let name = format!("Rock & Roll #1 + 50% üñí {backend:?}");
+    let song = song_titled(&*server, "Undertow").await;
+    let created = server
+        .create_playlist(&name, std::slice::from_ref(&song.id))
+        .await
+        .expect("create playlist");
+    let fetched = server.playlist(&created.id).await.expect("playlist");
+    server.delete_playlist(&created.id).await.expect("delete");
+    assert_eq!(created.name, name);
+    assert_eq!(fetched.name, name);
+}
+
+pub async fn a_stale_session_token_falls_back(backend: Backend) {
+    if !backend.has_native_navidrome_session() {
+        return;
+    }
+    let password = backend.target().password;
+    let (_, credential) = backend.login_with(&password).await.expect("login");
+    let feishin_api::Credential::Navidrome { subsonic, .. } = credential else {
+        panic!("not a Navidrome credential");
+    };
+    let stale = feishin_api::Credential::Navidrome {
+        subsonic,
+        nd_token: Some("stale.session.token".into()),
+    };
+    let server = backend
+        .reconnect(backend.login_test_config(), &stale)
+        .expect("reconnect");
+    let page = server
+        .song_list(&Default::default(), everything())
+        .await
+        .expect("songs after a stale token");
+    assert_eq!(page.items.len(), crate::support::SONG_COUNT);
+    let count = server.song_count(&Default::default()).await.expect("count");
+    assert_eq!(count, crate::support::SONG_COUNT);
+}
