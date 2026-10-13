@@ -8,6 +8,23 @@ publish.workspace = true
 [dependencies]
 feishin-api.workspace = true
 feishin-core.workspace = true
+image = { version = "0.25.10", default-features = false, features = ["jpeg", "png", "webp", "gif", "bmp"] }
+keyring-core = "1.0.1"
+lru = "0.18.5"
 reqwest.workspace = true
+rusty-leveldb = "4.0.1"
 serde.workspace = true
+serde_json.workspace = true
+sha2 = "0.11.1"
+tempfile = "3.27.0"
 thiserror.workspace = true
+tokio.workspace = true
+toml = "1.1.8"
+tracing.workspace = true
+
+[target.'cfg(all(unix, not(any(target_os = "macos", target_os = "ios", target_os = "android"))))'.dependencies]
+zbus-secret-service-keyring-store = { version = "1.0.1", features = ["crypto-rust"] }
+
+[dev-dependencies]
+tokio = { workspace = true, features = ["rt-multi-thread", "macros", "test-util"] }
+wiremock = "0.6.5"
