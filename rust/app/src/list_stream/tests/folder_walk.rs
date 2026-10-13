@@ -1,13 +1,60 @@
 use std::collections::HashSet;
 use std::sync::Arc;
+use std::sync::atomic::{AtomicUsize, Ordering};
 
-use feishin_api::MusicServer;
-use feishin_core::model::{FolderId, Paging, Song};
+use async_trait::async_trait;
+use feishin_api::{ApiError, MusicServer};
+use feishin_core::model::{Folder, FolderId, Page, Paging, Song};
 
 use crate::demo::FakeServer;
 use crate::list_stream::folder_pages::FolderPages;
-use crate::list_stream::folder_walk::FolderWalk;
+use crate::list_stream::folder_walk::{FolderSource, FolderWalk};
 use crate::list_stream::source::PageFetcher;
+
+struct FlakyFolders {
+    server: FakeServer,
+    calls: AtomicUsize,
+    failing_calls: Vec<usize>,
+}
+
+impl FlakyFolders {
+    fn new(song_count: usize, failing_calls: Vec<usize>) -> Self {
+        Self {
+            server: FakeServer::new(song_count),
+            calls: AtomicUsize::new(0),
+            failing_calls,
+        }
+    }
+
+    fn call(&self) -> feishin_api::Result<()> {
+        let call = self.calls.fetch_add(1, Ordering::SeqCst) + 1;
+        match self.failing_calls.contains(&call) {
+            true => Err(ApiError::Network(format!("call {call} dropped"))),
+            false => Ok(()),
+        }
+    }
+
+    fn call_count(&self) -> usize {
+        self.calls.load(Ordering::SeqCst)
+    }
+}
+
+#[async_trait]
+impl FolderSource for FlakyFolders {
+    async fn child_folders(&self, folder: &FolderId) -> feishin_api::Result<Vec<Folder>> {
+        self.call()?;
+        self.server.subfolders(folder).await
+    }
+
+    async fn song_page(
+        &self,
+        folder: &FolderId,
+        paging: Paging,
+    ) -> feishin_api::Result<Page<Song>> {
+        self.call()?;
+        self.server.folder_song_page(folder, paging).await
+    }
+}
 
 fn ids(songs: &[Song]) -> Vec<String> {
     songs.iter().map(|song| song.id.clone()).collect()
@@ -111,4 +158,91 @@ async fn songs_directly_in_a_folder_page_without_walking_subfolders() {
     .await
     .unwrap();
     assert!(page.items.is_empty());
+}
+
+#[tokio::test]
+async fn a_failed_request_resumes_the_walk_without_losing_or_repeating_songs() {
+    let reliable = FakeServer::new(1_300);
+    let expected = FolderWalk::new(FolderId::Root)
+        .next_songs(&reliable, 1_300)
+        .await
+        .unwrap();
+    let flaky = FlakyFolders::new(1_300, vec![2, 5, 9, 40, 41, 300]);
+    let mut walk = FolderWalk::new(FolderId::Root);
+
+    let mut walked = Vec::new();
+    let mut failures = 0;
+    loop {
+        let before = walk.walked();
+        match walk.next_songs(&flaky, 50).await {
+            Ok(chunk) if chunk.is_empty() => break,
+            Ok(chunk) => walked.extend(chunk),
+            Err(_) => {
+                failures += 1;
+                assert_eq!(walk.walked(), before);
+            }
+        }
+    }
+
+    assert_eq!(failures, 6);
+    assert_eq!(ids(&walked), ids(&expected));
+}
+
+#[tokio::test]
+async fn asking_for_the_same_page_again_does_not_walk_again() {
+    let source = Arc::new(FlakyFolders::new(1_300, Vec::new()));
+    let pages = FolderPages::new(source.clone(), FolderId::Root);
+
+    let first = pages.fetch(paging(0, 500)).await.unwrap();
+    let calls_after_first = source.call_count();
+    let again = pages.fetch(paging(0, 500)).await.unwrap();
+    let next = pages.fetch(paging(500, 500)).await.unwrap();
+
+    assert_eq!(ids(&again.items), ids(&first.items));
+    assert!(calls_after_first > 0);
+    assert!(source.call_count() > calls_after_first);
+    assert_eq!(next.items.len(), 500);
+    assert!(
+        ids(&next.items)
+            .iter()
+            .all(|id| !ids(&first.items).contains(id))
+    );
+}
+
+async fn fetch_retrying_once(
+    pages: &FolderPages<FlakyFolders>,
+    wanted: Paging,
+) -> (Vec<String>, bool) {
+    match pages.fetch(wanted).await {
+        Ok(page) => (ids(&page.items), false),
+        Err(_) => (ids(&pages.fetch(wanted).await.unwrap().items), true),
+    }
+}
+
+#[tokio::test]
+async fn failed_pages_are_fetched_again_from_where_the_walk_stopped() {
+    let counting = Arc::new(FlakyFolders::new(1_300, Vec::new()));
+    FolderPages::new(counting.clone(), FolderId::Root)
+        .fetch(paging(0, 500))
+        .await
+        .unwrap();
+    let first_page_calls = counting.call_count();
+    let source = Arc::new(FlakyFolders::new(1_300, vec![10, first_page_calls + 10]));
+    let pages = FolderPages::new(source, FolderId::Root);
+    let reliable = FakeServer::new(1_300);
+    let expected = FolderWalk::new(FolderId::Root)
+        .next_songs(&reliable, 1_300)
+        .await
+        .unwrap();
+
+    let mut walked = Vec::new();
+    let mut failures = 0;
+    for start_index in [0, 500, 1_000] {
+        let (songs, failed) = fetch_retrying_once(&pages, paging(start_index, 500)).await;
+        walked.extend(songs);
+        failures += usize::from(failed);
+    }
+
+    assert_eq!(failures, 2);
+    assert_eq!(walked, ids(&expected));
 }

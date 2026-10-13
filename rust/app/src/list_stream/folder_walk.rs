@@ -1,9 +1,27 @@
 use std::collections::HashSet;
 
+use async_trait::async_trait;
 use feishin_api::{MusicServer, Result};
-use feishin_core::model::{Folder, FolderId, Paging, Song};
+use feishin_core::model::{Folder, FolderId, Page, Paging, Song};
 
 const SKIP_CHUNK: usize = 500;
+
+#[async_trait]
+pub trait FolderSource: Send + Sync {
+    async fn child_folders(&self, folder: &FolderId) -> Result<Vec<Folder>>;
+    async fn song_page(&self, folder: &FolderId, paging: Paging) -> Result<Page<Song>>;
+}
+
+#[async_trait]
+impl<Server: MusicServer + ?Sized> FolderSource for Server {
+    async fn child_folders(&self, folder: &FolderId) -> Result<Vec<Folder>> {
+        self.subfolders(folder).await
+    }
+
+    async fn song_page(&self, folder: &FolderId, paging: Paging) -> Result<Page<Song>> {
+        self.folder_song_page(folder, paging).await
+    }
+}
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 struct OpenFolder {
@@ -11,11 +29,12 @@ struct OpenFolder {
     next_song: usize,
 }
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug)]
 pub struct FolderWalk {
     pending: Vec<FolderId>,
     visited: HashSet<FolderId>,
     current: Option<OpenFolder>,
+    gathered: Vec<Song>,
     walked: usize,
 }
 
@@ -25,6 +44,7 @@ impl FolderWalk {
             pending: vec![root],
             visited: HashSet::new(),
             current: None,
+            gathered: Vec::new(),
             walked: 0,
         }
     }
@@ -33,59 +53,72 @@ impl FolderWalk {
         self.walked
     }
 
-    pub async fn skip(&mut self, server: &dyn MusicServer, count: usize) -> Result<()> {
+    pub async fn skip<Source: FolderSource + ?Sized>(
+        &mut self,
+        source: &Source,
+        count: usize,
+    ) -> Result<()> {
         while self.walked < count {
             let wanted = (count - self.walked).min(SKIP_CHUNK);
-            if self.next_songs(server, wanted).await?.is_empty() {
+            if self.next_songs(source, wanted).await?.is_empty() {
                 return Ok(());
             }
         }
         Ok(())
     }
 
-    pub async fn next_songs(
+    pub async fn next_songs<Source: FolderSource + ?Sized>(
         &mut self,
-        server: &dyn MusicServer,
+        source: &Source,
         wanted: usize,
     ) -> Result<Vec<Song>> {
-        let mut songs = Vec::new();
-        while songs.len() < wanted {
-            let Some(open) = self.open_folder(server).await? else {
+        while self.gathered.len() < wanted {
+            let Some(open) = self.open_folder(source).await? else {
                 break;
             };
             let paging = Paging {
                 start_index: open.next_song,
-                limit: wanted - songs.len(),
+                limit: wanted - self.gathered.len(),
             };
-            let page = server.folder_song_page(&open.folder, paging).await?;
+            let page = source.song_page(&open.folder, paging).await?;
             self.advance(open, page.items.len(), page.total_count, paging.limit);
-            songs.extend(page.items);
+            self.gathered.extend(page.items);
         }
+        let handed_out = self.gathered.len().min(wanted);
+        let songs: Vec<Song> = self.gathered.drain(..handed_out).collect();
+        self.walked += songs.len();
         Ok(songs)
     }
 
     fn advance(&mut self, open: OpenFolder, received: usize, total: Option<usize>, asked: usize) {
         let next_song = open.next_song + received;
         let finished = received == 0 || total.map_or(received < asked, |total| next_song >= total);
-        self.walked += received;
         self.current = (!finished).then_some(OpenFolder { next_song, ..open });
     }
 
-    async fn open_folder(&mut self, server: &dyn MusicServer) -> Result<Option<OpenFolder>> {
-        if let Some(open) = self.current.take() {
-            return Ok(Some(open));
+    async fn open_folder<Source: FolderSource + ?Sized>(
+        &mut self,
+        source: &Source,
+    ) -> Result<Option<OpenFolder>> {
+        if let Some(open) = &self.current {
+            return Ok(Some(open.clone()));
         }
-        while let Some(folder) = self.pending.pop() {
-            if !self.visited.insert(folder.clone()) {
+        while let Some(folder) = self.pending.last().cloned() {
+            if self.visited.contains(&folder) {
+                self.pending.pop();
                 continue;
             }
-            let subfolders = server.subfolders(&folder).await?;
+            let subfolders = source.child_folders(&folder).await?;
+            self.pending.pop();
+            self.visited.insert(folder.clone());
             self.pending
                 .extend(subfolders.iter().rev().map(Folder::folder_id));
-            return Ok(Some(OpenFolder {
+            let open = OpenFolder {
                 folder,
                 next_song: 0,
-            }));
+            };
+            self.current = Some(open.clone());
+            return Ok(Some(open));
         }
         Ok(None)
     }
