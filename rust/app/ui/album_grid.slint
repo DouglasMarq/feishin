@@ -2,6 +2,7 @@ import { ListView } from "std-widgets.slint";
 import { Theme, Icons } from "theme.slint";
 import { Icon, TooltipAnchor } from "widgets.slint";
 import { Skeleton } from "tracks.slint";
+import { ShareKind, ShareState } from "share.slint";
 
 export struct AlbumGridCard {
     id: string,
@@ -59,6 +60,14 @@ export component AlbumGridCardView inherits Rectangle {
                 title: "Add to playlist";
                 activated => {
                     root.add-to-playlist();
+                }
+            }
+
+            MenuItem {
+                title: ShareState.menu-title;
+                enabled: ShareState.available && !ShareState.busy;
+                activated => {
+                    ShareState.share(ShareKind.album, root.card.id, root.card.name);
                 }
             }
 

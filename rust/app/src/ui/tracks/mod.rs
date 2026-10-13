@@ -41,6 +41,15 @@ fn string_model(items: Vec<SharedString>) -> ModelRc<SharedString> {
     ModelRc::new(VecModel::from(items))
 }
 
+pub fn selected_song_ids(window: &AppWindow) -> Option<Vec<String>> {
+    match with_model(window, TracksModel::selected_songs)? {
+        selection::SelectedSongs::Loaded(songs) => {
+            Some(songs.into_iter().map(|song| song.id).collect())
+        }
+        selection::SelectedSongs::Listed(_) => None,
+    }
+}
+
 pub fn set_current(window: &AppWindow, song_id: Option<&str>) {
     with_model(window, |model| model.set_current(song_id));
 }

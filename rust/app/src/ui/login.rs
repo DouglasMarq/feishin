@@ -6,7 +6,7 @@ use feishin_core::model::{ServerConfig, ServerType};
 use feishin_storage::feishin_import::ImportedServer;
 use slint::ComponentHandle;
 
-use super::{AppState, AppWindow, Context, LoginState, Page, on_ui, tracks};
+use super::{AppState, AppWindow, Context, LoginState, Page, on_ui, sharing, tracks};
 use crate::controller::Command;
 
 fn server_type(index: i32) -> ServerType {
@@ -42,6 +42,7 @@ fn host_of(url: &str) -> String {
 pub fn enter_main(window: &AppWindow, server: &Arc<dyn MusicServer>) {
     let app = window.global::<AppState>();
     app.set_server_name(server.config().name.as_str().into());
+    sharing::show_availability(window, server.as_ref());
     app.set_page(Page::Main);
     tracks::refresh(window);
 }

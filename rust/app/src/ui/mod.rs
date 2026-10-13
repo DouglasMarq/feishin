@@ -37,7 +37,13 @@ pub mod playlists;
 pub mod queue;
 pub mod search;
 pub mod settings;
+pub mod sharing;
 pub mod tracks;
+
+#[cfg(test)]
+mod sharing_view_tests;
+#[cfg(test)]
+pub mod test_window;
 
 #[derive(Clone)]
 pub struct Context {
@@ -88,6 +94,7 @@ pub fn install(window: &AppWindow, ctx: &Context, settings: &Settings) {
     favorites::install(window, ctx);
     search::install(window, ctx);
     settings::install(window, ctx);
+    sharing::install(window, ctx);
     now_playing::install(window, ctx);
     window
         .global::<AppState>()

@@ -4,6 +4,7 @@ import { AppState, Route } from "globals.slint";
 import { Icon, IconButton } from "widgets.slint";
 import { Cell, Skeleton } from "tracks.slint";
 import { DialogButtons, Modal, NameDialog } from "playlist_picker.slint";
+import { ShareKind, ShareState } from "share.slint";
 
 export struct PlaylistRow {
     id: string,
@@ -77,6 +78,14 @@ component PlaylistRowView inherits Rectangle {
                     title: "Add to queue";
                     activated => {
                         PlaylistsState.play(root.item.id, PlaylistPlayMode.last);
+                    }
+                }
+
+                MenuItem {
+                    title: ShareState.menu-title;
+                    enabled: ShareState.available && !ShareState.busy;
+                    activated => {
+                        ShareState.share(ShareKind.playlist, root.item.id, root.item.name);
                     }
                 }
 
