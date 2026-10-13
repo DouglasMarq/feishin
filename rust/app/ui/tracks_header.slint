@@ -1,0 +1,156 @@
+import { Theme, Icons } from "theme.slint";
+import { TracksState } from "globals.slint";
+import { HeaderCell } from "track_cells.slint";
+
+export component TracksHeader inherits Rectangle {
+    in property <length> content-x;
+    height: 33px;
+    min-width: 0px;
+    clip: true;
+
+    function show-column-menu(window-x: length, window-y: length) {
+        header-menu.show({ x: window-x - root.absolute-position.x, y: window-y - root.absolute-position.y });
+    }
+
+    header-menu := ContextMenuArea {
+        Menu {
+            MenuItem {
+                title: "Artist";
+                checkable: true;
+                checked <=> TracksState.show-artist;
+            }
+
+            MenuItem {
+                title: "Album";
+                checkable: true;
+                checked <=> TracksState.show-album;
+            }
+
+            MenuItem {
+                title: "Year";
+                checkable: true;
+                checked <=> TracksState.show-year;
+            }
+
+            MenuItem {
+                title: "Plays";
+                checkable: true;
+                checked <=> TracksState.show-plays;
+            }
+
+            MenuItem {
+                title: "Time";
+                checkable: true;
+                checked <=> TracksState.show-duration;
+            }
+
+            MenuItem {
+                title: "Favorite";
+                checkable: true;
+                checked <=> TracksState.show-favorite;
+            }
+
+            MenuItem {
+                title: "Rating";
+                checkable: true;
+                checked <=> TracksState.show-rating;
+            }
+        }
+
+        HorizontalLayout {
+            x: root.content-x;
+
+            HeaderCell {
+                text: "#";
+                column: "index";
+                sortable: false;
+                align: right;
+                column-width <=> TracksState.w-index;
+                context-menu(window-x, window-y) => {
+                    root.show-column-menu(window-x, window-y);
+                }
+            }
+
+            HeaderCell {
+                text: "Title";
+                column: "title";
+                column-width <=> TracksState.w-title;
+                context-menu(window-x, window-y) => {
+                    root.show-column-menu(window-x, window-y);
+                }
+            }
+
+            if TracksState.show-artist: HeaderCell {
+                text: "Artist";
+                column: "artist";
+                column-width <=> TracksState.w-artist;
+                context-menu(window-x, window-y) => {
+                    root.show-column-menu(window-x, window-y);
+                }
+            }
+
+            if TracksState.show-album: HeaderCell {
+                text: "Album";
+                column: "album";
+                column-width <=> TracksState.w-album;
+                context-menu(window-x, window-y) => {
+                    root.show-column-menu(window-x, window-y);
+                }
+            }
+
+            if TracksState.show-year: HeaderCell {
+                text: "Year";
+                column: "year";
+                column-width <=> TracksState.w-year;
+                context-menu(window-x, window-y) => {
+                    root.show-column-menu(window-x, window-y);
+                }
+            }
+
+            if TracksState.show-plays: HeaderCell {
+                text: "Plays";
+                column: "plays";
+                column-width <=> TracksState.w-plays;
+                context-menu(window-x, window-y) => {
+                    root.show-column-menu(window-x, window-y);
+                }
+            }
+
+            if TracksState.show-duration: HeaderCell {
+                text: "Time";
+                column: "duration";
+                column-width <=> TracksState.w-duration;
+                context-menu(window-x, window-y) => {
+                    root.show-column-menu(window-x, window-y);
+                }
+            }
+
+            if TracksState.show-favorite: HeaderCell {
+                text: "Favorite";
+                icon: Icons.heart;
+                column: "favorite";
+                column-width <=> TracksState.w-favorite;
+                context-menu(window-x, window-y) => {
+                    root.show-column-menu(window-x, window-y);
+                }
+            }
+
+            if TracksState.show-rating: HeaderCell {
+                text: "Rating";
+                column: "rating";
+                column-width <=> TracksState.w-rating;
+                context-menu(window-x, window-y) => {
+                    root.show-column-menu(window-x, window-y);
+                }
+            }
+
+            Rectangle { }
+        }
+    }
+
+    Rectangle {
+        y: parent.height - 1px;
+        height: 1px;
+        background: Theme.border;
+    }
+}

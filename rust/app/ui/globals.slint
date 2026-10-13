@@ -34,17 +34,14 @@ export global AppState {
     in-out property <string> status;
     in property <string> server-name;
     in property <Route> route: Route.tracks;
-    /// Id of the item shown by a detail route (album, artist, playlist, genre).
     in property <string> detail-id;
     in property <bool> can-go-back;
-    callback navigate(Route, string);
+    callback navigate(route: Route, detail-id: string);
     callback back();
 }
 
-/// Actions shared across views.
 export global Actions {
-    /// Opens the "add to playlist" picker for these song ids.
-    callback add-to-playlist([string]);
+    callback add-to-playlist(song-ids: [string]);
 }
 
 export global LoginState {
@@ -71,9 +68,9 @@ export global TracksState {
     in-out property <length> w-year: 64px;
     in-out property <length> w-plays: 64px;
     in-out property <length> w-duration: 72px;
-    callback search-edited(string);
-    callback sort-by(string);
-    callback play-row(int);
+    callback search-edited(text: string);
+    callback sort-by(column: string);
+    callback play-row(row-index: int);
     in-out property <bool> show-artist: true;
     in-out property <bool> show-album: true;
     in-out property <bool> show-year: true;
@@ -91,23 +88,19 @@ export global TracksState {
     in-out property <string> year-from;
     in-out property <string> year-to;
     in property <int> selected-count;
-    /// `true` debounces (typing), `false` applies at once.
-    callback filters-changed(bool);
+    callback filters-changed(debounced: bool);
     callback load-genres();
-    /// Row index, Ctrl held, Shift held.
-    callback select-row(int, bool, bool);
-    /// Right click on a row: selects it unless it is already part of the selection.
-    callback context-row(int);
+    callback select-row(row-index: int, ctrl-held: bool, shift-held: bool);
+    callback context-row(row-index: int);
     callback play-selected();
-    /// `true` plays next, `false` appends to the queue.
-    callback queue-selected(bool);
+    callback queue-selected(play-next: bool);
     callback add-selected-to-playlist();
-    callback favorite-selected(bool);
-    callback rate-selected(int);
+    callback favorite-selected(favorite: bool);
+    callback rate-selected(rating: int);
     callback go-to-album();
     callback go-to-artist();
-    callback toggle-favorite(int);
-    callback rate-row(int, int);
+    callback toggle-favorite(row-index: int);
+    callback rate-row(row-index: int, rating: int);
 }
 
 export global PlayerState {
@@ -124,19 +117,16 @@ export global PlayerState {
     in property <int> volume: 70;
     in property <bool> muted;
     in property <bool> shuffle;
-    /// 0 off, 1 all, 2 one.
     in property <int> repeat;
     in property <bool> sleep-active;
-    /// Remaining sleep timer time, or "End of track".
     in property <string> sleep-label;
-    /// Minutes; 0 pauses at the end of the current track.
-    callback start-sleep-timer(int);
+    callback start-sleep-timer(minutes: int);
     callback cancel-sleep-timer();
     callback toggle-pause();
     callback next();
     callback previous();
-    callback seek(int);
-    callback set-volume(int);
+    callback seek(position-ms: int);
+    callback set-volume(volume: int);
     callback toggle-mute();
     callback toggle-shuffle();
     callback cycle-repeat();
@@ -144,7 +134,7 @@ export global PlayerState {
 
 export global QueueState {
     in property <[QueueRow]> rows;
-    callback play(string);
-    callback remove(string);
-    callback move(int, int);
+    callback play(uid: string);
+    callback remove(uid: string);
+    callback move(from-index: int, to-index: int);
 }

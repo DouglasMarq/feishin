@@ -1,4 +1,5 @@
 use std::cell::{Cell, RefCell};
+use std::cmp::Ordering;
 use std::rc::Rc;
 
 use feishin_core::queue::Uid;
@@ -7,7 +8,6 @@ use slint::{ComponentHandle, Model, ModelNotify, ModelRc, ModelTracker};
 use super::{AppWindow, Context, QueueRow, QueueState, format_duration};
 use crate::controller::{Command, QueueEntry};
 
-/// Queue rows in play order; `QueueRow`s are built only for visible rows.
 #[derive(Default)]
 pub struct QueueModel {
     entries: RefCell<Vec<QueueEntry>>,
@@ -18,23 +18,24 @@ pub struct QueueModel {
 impl QueueModel {
     fn position(&self, uid: Option<Uid>) -> Option<usize> {
         let uid = uid?;
-        self.entries.borrow().iter().position(|e| e.uid == uid)
+        self.entries
+            .borrow()
+            .iter()
+            .position(|entry| entry.uid == uid)
     }
 
     fn uid_at(&self, index: usize) -> Option<Uid> {
-        self.entries.borrow().get(index).map(|e| e.uid)
+        self.entries.borrow().get(index).map(|entry| entry.uid)
     }
 
-    /// The `move_items` arguments that drag row `from` onto row `to`.
     pub fn move_target(&self, from: usize, to: usize) -> Option<(Uid, Option<Uid>)> {
         let uid = self.uid_at(from)?;
         if from == to || self.uid_at(to).is_none() {
             return None;
         }
-        let before = if to < from {
-            self.uid_at(to)
-        } else {
-            self.uid_at(to + 1)
+        let before = match to.cmp(&from) {
+            Ordering::Less => self.uid_at(to),
+            Ordering::Equal | Ordering::Greater => self.uid_at(to + 1),
         };
         Some((uid, before))
     }
@@ -81,10 +82,10 @@ impl Model for QueueModel {
     }
 }
 
-fn with_model(window: &AppWindow, f: impl FnOnce(&QueueModel)) {
+fn with_model(window: &AppWindow, action: impl FnOnce(&QueueModel)) {
     let rows = window.global::<QueueState>().get_rows();
     if let Some(model) = rows.as_any().downcast_ref::<QueueModel>() {
-        f(model);
+        action(model);
     }
 }
 

@@ -1,0 +1,121 @@
+import { ComboBox, LineEdit } from "std-widgets.slint";
+import { Theme, Icons } from "theme.slint";
+import { TracksState } from "globals.slint";
+import { Icon, TooltipAnchor } from "widgets.slint";
+
+component FilterChip inherits Rectangle {
+    in property <string> text;
+    in property <string> icon;
+    in property <bool> active;
+    in property <string> tooltip;
+    callback clicked();
+    height: 30px;
+    border-radius: 15px;
+    border-width: 1px;
+    border-color: root.active ? Theme.primary : Theme.border;
+    background: root.active ? Theme.selected : (touch.has-hover ? Theme.hover : transparent);
+
+    HorizontalLayout {
+        padding-left: 12px;
+        padding-right: 12px;
+        spacing: 6px;
+
+        if root.icon != "": Icon {
+            y: (parent.height - self.height) / 2;
+            path: root.icon;
+            color: root.active ? Theme.danger : Theme.muted;
+            width: 14px;
+            height: 14px;
+        }
+
+        Text {
+            text: root.text;
+            color: root.active ? Theme.foreground : Theme.muted;
+            vertical-alignment: center;
+        }
+    }
+
+    TooltipAnchor {
+        text: root.tooltip;
+        hovered: touch.has-hover;
+    }
+
+    touch := TouchArea {
+        mouse-cursor: pointer;
+        clicked => {
+            root.clicked();
+        }
+    }
+}
+
+export component TracksToolbar inherits HorizontalLayout {
+    property <bool> filtered: TracksState.filter-favorite || TracksState.genre-index > 0;
+    padding: 20px;
+    padding-bottom: 12px;
+    spacing: 12px;
+    height: 76px;
+
+    Text {
+        text: "Tracks";
+        font-size: 24px;
+        font-weight: 700;
+        color: Theme.foreground;
+        vertical-alignment: center;
+    }
+
+    Text {
+        text: TracksState.loading ? "" : TracksState.total;
+        color: Theme.muted;
+        vertical-alignment: center;
+    }
+
+    Rectangle {
+        width: 8px;
+    }
+
+    FilterChip {
+        y: (parent.height - self.height) / 2;
+        text: "Favorites";
+        icon: Icons.heart;
+        active: TracksState.filter-favorite;
+        tooltip: TracksState.filter-favorite ? "Favorites only: on" : "Favorites only: off";
+        clicked => {
+            TracksState.filter-favorite = !TracksState.filter-favorite;
+            TracksState.filters-changed(false);
+        }
+    }
+
+    ComboBox {
+        y: (parent.height - self.height) / 2;
+        width: 180px;
+        model: TracksState.genres;
+        current-index <=> TracksState.genre-index;
+        selected => {
+            TracksState.filters-changed(false);
+        }
+    }
+
+    if root.filtered: FilterChip {
+        y: (parent.height - self.height) / 2;
+        text: "Clear filters";
+        clicked => {
+            TracksState.filter-favorite = false;
+            TracksState.genre-index = 0;
+            TracksState.filters-changed(false);
+        }
+    }
+
+    Rectangle {
+        horizontal-stretch: 1;
+    }
+
+    LineEdit {
+        y: (parent.height - self.height) / 2;
+        width: 280px;
+        placeholder-text: "Search";
+        text <=> TracksState.search-text;
+        edited(text) => {
+            TracksState.search-edited(text);
+        }
+    }
+}
