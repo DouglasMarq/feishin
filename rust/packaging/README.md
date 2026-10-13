@@ -77,15 +77,17 @@ rust/packaging/appimage/build-appimage.sh ~/out      # another output directory
 
 The script builds the release binary, installs it and the desktop integration into an
 AppDir, lets `linuxdeploy` bundle `libmpv` and every library it links (ffmpeg, libass,
-libplacebo, PipeWire, PulseAudio, ...) and packs the result with `appimagetool`. Both tools are
-taken from `PATH` or downloaded into a temporary directory that is removed afterwards; they run
-with `APPIMAGE_EXTRACT_AND_RUN=1`, so FUSE is not needed while building.
+libplacebo, PipeWire, PulseAudio, ...) and packs the result with `appimagetool` and the AppImage
+type 2 runtime. Pinned releases of the three are downloaded into a temporary directory that is
+removed afterwards, and the build stops if a download does not match its SHA-256 checksum. The
+tools run with `APPIMAGE_EXTRACT_AND_RUN=1`, so FUSE is not needed while building.
 
 | Variable | Effect |
 | --- | --- |
 | `FEISHIN_BINARY` | Package this binary instead of running `cargo build` |
 | `LINUXDEPLOY` | Path to a linuxdeploy executable |
 | `APPIMAGETOOL` | Path to an appimagetool executable |
+| `APPIMAGE_RUNTIME` | Path to an AppImage type 2 runtime file |
 
 What is bundled and what is not:
 
