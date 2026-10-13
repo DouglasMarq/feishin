@@ -1,17 +1,286 @@
-import { Theme } from "theme.slint";
-import { AppState } from "globals.slint";
+import { Theme, Icons } from "theme.slint";
+import { AppState, Route } from "globals.slint";
+import { Icon, IconButton } from "widgets.slint";
+
+export struct HomeAlbum {
+    id: string,
+    name: string,
+    artist: string,
+    artist-id: string,
+    cover-id: string,
+    cover: image,
+    has-cover: bool,
+}
+
+export struct HomeShelf {
+    title: string,
+    albums: [HomeAlbum],
+    loading: bool,
+    refreshable: bool,
+}
 
 export global HomeState {
+    in property <[HomeShelf]> shelves;
     callback load(string);
+    callback refresh(int);
+    callback play(string);
+    /// A card scrolled into view without its cover: (shelf index, card index).
+    callback cover-needed(int, int);
+}
+
+global HomeIcons {
+    out property <string> refresh: "M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z";
+    out property <string> left: "M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z";
+    out property <string> right: "M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z";
+}
+
+component AlbumCard inherits Rectangle {
+    in property <HomeAlbum> album;
+    in property <bool> on-screen;
+    property <bool> wants-cover: root.on-screen && !root.album.has-cover && root.album.cover-id != "";
+    callback cover-needed();
+    width: 160px;
+    height: 214px;
+
+    init => {
+        if (root.wants-cover) {
+            root.cover-needed();
+        }
+    }
+    changed wants-cover => {
+        if (self.wants-cover) {
+            root.cover-needed();
+        }
+    }
+
+    card-touch := TouchArea {
+        mouse-cursor: pointer;
+        clicked => {
+            AppState.navigate(Route.album-detail, root.album.id);
+        }
+    }
+
+    Rectangle {
+        y: 0;
+        width: root.width;
+        height: root.width;
+        border-radius: Theme.radius;
+        background: Theme.surface-raised;
+        clip: true;
+
+        if !root.album.has-cover: Icon {
+            path: Icons.album;
+            color: Theme.border;
+            width: 56px;
+            height: 56px;
+        }
+
+        if root.album.has-cover: Image {
+            width: parent.width;
+            height: parent.height;
+            source: root.album.cover;
+            image-fit: cover;
+        }
+
+        if card-touch.has-hover || play-touch.has-hover: Rectangle {
+            background: #00000040;
+        }
+
+        Rectangle {
+            x: parent.width - self.width - 10px;
+            y: parent.height - self.height - 10px;
+            width: 40px;
+            height: 40px;
+            border-radius: self.height / 2;
+            background: play-touch.has-hover ? Theme.primary.brighter(15%) : Theme.primary;
+            opacity: card-touch.has-hover || play-touch.has-hover ? 1 : 0;
+
+            Icon {
+                path: Icons.play;
+                color: white;
+                width: 22px;
+                height: 22px;
+            }
+
+            play-touch := TouchArea {
+                enabled: card-touch.has-hover || self.has-hover;
+                mouse-cursor: pointer;
+                clicked => {
+                    HomeState.play(root.album.id);
+                }
+            }
+        }
+    }
+
+    Text {
+        y: root.width + 8px;
+        width: root.width;
+        text: root.album.name;
+        color: Theme.foreground;
+        font-weight: 600;
+        overflow: elide;
+    }
+
+    Text {
+        y: root.width + 28px;
+        width: min(self.preferred-width, root.width);
+        text: root.album.artist;
+        color: artist-touch.has-hover && root.album.artist-id != "" ? Theme.foreground : Theme.muted;
+        font-size: 12px;
+        overflow: elide;
+
+        artist-touch := TouchArea {
+            enabled: root.album.artist-id != "";
+            mouse-cursor: pointer;
+            clicked => {
+                AppState.navigate(Route.artist-detail, root.album.artist-id);
+            }
+        }
+    }
+}
+
+component SkeletonCard inherits Rectangle {
+    width: 160px;
+    height: 214px;
+
+    Rectangle {
+        y: 0;
+        height: root.width;
+        border-radius: Theme.radius;
+        background: Theme.surface;
+    }
+
+    Rectangle {
+        y: root.width + 12px;
+        width: 70%;
+        x: 0;
+        height: 10px;
+        border-radius: 5px;
+        background: Theme.surface-raised;
+    }
+
+    Rectangle {
+        y: root.width + 32px;
+        width: 45%;
+        x: 0;
+        height: 8px;
+        border-radius: 4px;
+        background: Theme.surface;
+    }
+}
+
+component ShelfView inherits VerticalLayout {
+    in property <HomeShelf> shelf;
+    in property <int> index;
+    in property <bool> on-screen;
+    property <length> stride: 176px;
+    property <length> max-scroll: max(0px, strip.content-width - strip.width);
+    spacing: 10px;
+
+    HorizontalLayout {
+        spacing: 4px;
+        height: 32px;
+
+        Text {
+            text: root.shelf.title;
+            font-size: 18px;
+            font-weight: 700;
+            color: Theme.foreground;
+            vertical-alignment: center;
+            horizontal-stretch: 1;
+            overflow: elide;
+        }
+
+        if root.shelf.refreshable: IconButton {
+            icon: HomeIcons.refresh;
+            enabled: !root.shelf.loading;
+            clicked => {
+                HomeState.refresh(root.index);
+            }
+        }
+
+        IconButton {
+            icon: HomeIcons.left;
+            enabled: strip.content-x < 0;
+            clicked => {
+                strip.content-x = min(0px, strip.content-x + strip.width * 0.8);
+            }
+        }
+
+        IconButton {
+            icon: HomeIcons.right;
+            enabled: -strip.content-x < root.max-scroll;
+            clicked => {
+                strip.content-x = max(-root.max-scroll, strip.content-x - strip.width * 0.8);
+            }
+        }
+    }
+
+    Rectangle {
+        height: 214px;
+        min-width: 0px;
+        clip: true;
+
+        strip := Flickable {
+            content-width: root.shelf.albums.length * root.stride - (root.stride - 160px);
+            content-height: self.height;
+
+            for album[i] in root.shelf.albums: AlbumCard {
+                x: i * root.stride;
+                album: album;
+                on-screen: root.on-screen && self.x + strip.content-x + self.width > 0 && self.x + strip.content-x < strip.width;
+                cover-needed => {
+                    HomeState.cover-needed(root.index, i);
+                }
+            }
+        }
+
+        if root.shelf.loading && root.shelf.albums.length == 0: HorizontalLayout {
+            alignment: start;
+            spacing: root.stride - 160px;
+
+            for _ in 8: SkeletonCard { }
+        }
+
+        if !root.shelf.loading && root.shelf.albums.length == 0: Text {
+            x: 0;
+            text: "No albums";
+            color: Theme.muted;
+            vertical-alignment: center;
+        }
+    }
 }
 
 export component HomeView inherits Rectangle {
+    min-width: 320px;
+    background: Theme.background;
+
     init => {
         HomeState.load(AppState.detail-id);
     }
 
-    Text {
-        text: "Home";
-        color: Theme.muted;
+    page := Flickable {
+        content-width: self.width;
+        content-height: content.preferred-height;
+
+        content := VerticalLayout {
+            width: page.width;
+            padding: 20px;
+            padding-bottom: 32px;
+            spacing: 28px;
+
+            Text {
+                text: "Home";
+                font-size: 24px;
+                font-weight: 700;
+                color: Theme.foreground;
+            }
+
+            for shelf[si] in HomeState.shelves: ShelfView {
+                shelf: shelf;
+                index: si;
+                on-screen: self.y + page.content-y + self.height > 0 && self.y + page.content-y < page.height;
+            }
+        }
     }
 }

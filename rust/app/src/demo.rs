@@ -6,9 +6,9 @@ use std::sync::{Arc, Mutex};
 use async_trait::async_trait;
 use feishin_api::{ApiError, Credential, MusicServer, Result, StreamOptions};
 use feishin_core::model::{
-    Album, AlbumDetail, AlbumListQuery, Artist, ArtistDetail, ArtistListQuery, ArtistRef, Genre,
-    ItemKind, MusicFolder, Page, Paging, Playlist, SearchResults, ServerConfig, ServerPlayQueue,
-    ServerType, Song, SongListQuery, SongSort, SortOrder,
+    Album, AlbumDetail, AlbumListQuery, AlbumSort, Artist, ArtistDetail, ArtistListQuery,
+    ArtistRef, Genre, ItemKind, MusicFolder, Page, Paging, Playlist, SearchResults, ServerConfig,
+    ServerPlayQueue, ServerType, Song, SongListQuery, SongSort, SortOrder,
 };
 
 pub const DEMO_SONG_COUNT: usize = 20_000;
@@ -377,6 +377,28 @@ impl FakeServer {
         order
     }
 
+    fn album_order(&self, query: &AlbumListQuery) -> Vec<usize> {
+        let mut order: Vec<usize> = (0..self.album_count()).collect();
+        let seed = match query.sort {
+            AlbumSort::RecentlyPlayed => Some(0x91a),
+            AlbumSort::PlayCount => Some(0xc0),
+            AlbumSort::Random => Some(u64::from(
+                std::time::SystemTime::now()
+                    .duration_since(std::time::UNIX_EPOCH)
+                    .unwrap_or_default()
+                    .subsec_nanos(),
+            )),
+            _ => None,
+        };
+        if let Some(seed) = seed {
+            order.sort_by_key(|&a| mix(a as u64 ^ seed) % 10_000);
+        }
+        if query.order == SortOrder::Desc && query.sort != AlbumSort::Random {
+            order.reverse();
+        }
+        order
+    }
+
     fn page<T>(items: impl ExactSizeIterator<Item = T>, paging: Paging) -> Page<T> {
         let total = items.len();
         Page {
@@ -424,11 +446,9 @@ impl MusicServer for FakeServer {
         Ok(Vec::new())
     }
 
-    async fn album_list(&self, _query: &AlbumListQuery, paging: Paging) -> Result<Page<Album>> {
-        Ok(Self::page(
-            (0..self.album_count()).map(|a| self.album_at(a)),
-            paging,
-        ))
+    async fn album_list(&self, query: &AlbumListQuery, paging: Paging) -> Result<Page<Album>> {
+        let order = self.album_order(query);
+        Ok(Self::page(order.iter().map(|&a| self.album_at(a)), paging))
     }
 
     async fn album_count(&self, _query: &AlbumListQuery) -> Result<usize> {
