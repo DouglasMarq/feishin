@@ -1,23 +1,348 @@
-import { Theme } from "theme.slint";
-import { AppState } from "globals.slint";
+import { ScrollView } from "std-widgets.slint";
+import { Theme, Icons } from "theme.slint";
+import { AppState, Route, TrackRow } from "globals.slint";
+import { Icon, IconButton } from "widgets.slint";
+import { Skeleton, TrackRowView } from "tracks.slint";
+import { ArtistIcons, ArtistImage, PlayOverlay } from "artists.slint";
+
+export struct ArtistAlbumCard {
+    id: string,
+    name: string,
+    year: string,
+    image: image,
+    has-image: bool,
+}
 
 export global ArtistDetailState {
+    in property <bool> loading;
+    in property <string> error;
+    in property <string> name;
+    in property <string> info;
+    in property <image> image;
+    in property <bool> has-image;
+    in property <bool> favorite;
+    in property <string> biography;
+    in-out property <bool> bio-expanded;
+    in property <[TrackRow]> top-songs;
+    in-out property <bool> top-expanded;
+    in property <[ArtistAlbumCard]> albums;
     callback load(string);
+    callback play(bool);
+    callback toggle-favorite();
+    callback play-top(string);
+    callback play-album(string);
+    callback album-shown(int);
+}
+
+component SectionTitle inherits Text {
+    color: Theme.foreground;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+component LinkText inherits Text {
+    callback clicked();
+    color: touch.has-hover ? Theme.foreground : Theme.muted;
+    font-size: 12px;
+    font-weight: 600;
+
+    touch := TouchArea {
+        mouse-cursor: pointer;
+        clicked => {
+            root.clicked();
+        }
+    }
+}
+
+component AlbumTile inherits Rectangle {
+    in property <ArtistAlbumCard> album;
+    border-radius: Theme.radius;
+    background: touch.has-hover ? Theme.hover : transparent;
+
+    touch := TouchArea {
+        mouse-cursor: pointer;
+        clicked => {
+            AppState.navigate(Route.album-detail, root.album.id);
+        }
+    }
+
+    art := Rectangle {
+        x: 10px;
+        y: 10px;
+        width: parent.width - 20px;
+        height: self.width;
+        border-radius: Theme.radius;
+        clip: true;
+        background: Theme.surface-raised;
+
+        if root.album.has-image: Image {
+            width: parent.width;
+            height: parent.height;
+            source: root.album.image;
+            image-fit: cover;
+        }
+
+        if !root.album.has-image: Icon {
+            path: Icons.album;
+            color: Theme.muted;
+            width: parent.width * 0.35;
+            height: parent.width * 0.35;
+        }
+    }
+
+    if touch.has-hover: PlayOverlay {
+        x: art.x + art.width - self.width - 8px;
+        y: art.y + art.height - self.height - 8px;
+        clicked => {
+            ArtistDetailState.play-album(root.album.id);
+        }
+    }
+
+    Text {
+        x: 10px;
+        y: art.y + art.height + 8px;
+        width: parent.width - 20px;
+        text: root.album.name;
+        color: Theme.foreground;
+        font-weight: 600;
+        overflow: elide;
+    }
+
+    Text {
+        x: 10px;
+        y: art.y + art.height + 28px;
+        width: parent.width - 20px;
+        text: root.album.year;
+        color: Theme.muted;
+        font-size: 12px;
+        overflow: elide;
+    }
 }
 
 export component ArtistDetailView inherits Rectangle {
     property <string> id: AppState.detail-id;
+    property <length> gap: 8px;
+    property <length> min-tile: 170px;
+    property <length> grid-width: page.visible-width - 48px;
+    property <int> columns: max(1, floor((root.grid-width + root.gap) / (root.min-tile + root.gap)));
+    property <length> tile-width: (root.grid-width - root.gap * (root.columns - 1)) / root.columns;
+    property <length> tile-height: root.tile-width + 34px;
+    property <length> bio-collapsed: 66px;
+    property <int> top-shown: ArtistDetailState.top-expanded ? ArtistDetailState.top-songs.length : min(5, ArtistDetailState.top-songs.length);
+    background: Theme.background;
+    min-width: 320px;
 
     init => {
         ArtistDetailState.load(root.id);
     }
 
     changed id => {
+        page.content-y = 0;
         ArtistDetailState.load(root.id);
     }
 
-    Text {
-        text: "Artist";
-        color: Theme.muted;
+    page := ScrollView {
+        content-width: self.visible-width;
+        content-height: content.preferred-height;
+
+        content := VerticalLayout {
+            width: page.visible-width;
+            padding-bottom: 24px;
+            spacing: 24px;
+
+            HorizontalLayout {
+                padding: 24px;
+                padding-bottom: 0px;
+                spacing: 24px;
+
+                ArtistImage {
+                    width: 180px;
+                    height: 180px;
+                    image: ArtistDetailState.image;
+                    has-image: ArtistDetailState.has-image;
+                }
+
+                VerticalLayout {
+                    alignment: end;
+                    spacing: 8px;
+
+                    Text {
+                        text: "ARTIST";
+                        color: Theme.muted;
+                        font-size: 12px;
+                        font-weight: 700;
+                    }
+
+                    if ArtistDetailState.loading && ArtistDetailState.name == "": Skeleton {
+                        width: 260px;
+                        height: 36px;
+                        border-radius: Theme.radius;
+                    }
+
+                    Text {
+                        text: ArtistDetailState.error != "" ? ArtistDetailState.error : ArtistDetailState.name;
+                        color: ArtistDetailState.error != "" ? Theme.danger : Theme.foreground;
+                        font-size: ArtistDetailState.error != "" ? 16px : 40px;
+                        font-weight: 800;
+                        overflow: elide;
+                    }
+
+                    Text {
+                        text: ArtistDetailState.info;
+                        color: Theme.muted;
+                    }
+
+                    HorizontalLayout {
+                        padding-top: 8px;
+                        spacing: 12px;
+                        alignment: start;
+
+                        PlayOverlay {
+                            width: 48px;
+                            height: 48px;
+                            clicked => {
+                                ArtistDetailState.play(false);
+                            }
+                        }
+
+                        IconButton {
+                            y: (parent.height - self.height) / 2;
+                            width: 40px;
+                            height: 40px;
+                            icon: Icons.shuffle;
+                            icon-size: 22px;
+                            clicked => {
+                                ArtistDetailState.play(true);
+                            }
+                        }
+
+                        IconButton {
+                            y: (parent.height - self.height) / 2;
+                            width: 40px;
+                            height: 40px;
+                            icon: ArtistDetailState.favorite ? Icons.heart : ArtistIcons.heart-outline;
+                            icon-color: ArtistDetailState.favorite ? Theme.danger : Theme.muted;
+                            icon-size: 22px;
+                            enabled: ArtistDetailState.name != "";
+                            clicked => {
+                                ArtistDetailState.toggle-favorite();
+                            }
+                        }
+                    }
+                }
+            }
+
+            if ArtistDetailState.biography != "": VerticalLayout {
+                padding-left: 24px;
+                padding-right: 24px;
+                spacing: 8px;
+
+                SectionTitle {
+                    text: "About " + ArtistDetailState.name;
+                }
+
+                Rectangle {
+                    height: ArtistDetailState.bio-expanded ? bio.preferred-height : min(bio.preferred-height, root.bio-collapsed);
+                    clip: true;
+
+                    bio := Text {
+                        y: 0;
+                        height: self.preferred-height;
+                        text: ArtistDetailState.biography;
+                        color: Theme.muted;
+                        wrap: word-wrap;
+                    }
+                }
+
+                if bio.preferred-height > root.bio-collapsed: LinkText {
+                    text: ArtistDetailState.bio-expanded ? "SHOW LESS" : "SHOW MORE";
+                    clicked => {
+                        ArtistDetailState.bio-expanded = !ArtistDetailState.bio-expanded;
+                    }
+                }
+            }
+
+            if ArtistDetailState.top-songs.length > 0: VerticalLayout {
+                spacing: 8px;
+
+                HorizontalLayout {
+                    padding-left: 24px;
+                    padding-right: 24px;
+                    spacing: 12px;
+
+                    SectionTitle {
+                        text: "Top songs";
+                    }
+
+                    Rectangle {
+                        horizontal-stretch: 1;
+                    }
+
+                    if ArtistDetailState.top-songs.length > 5: LinkText {
+                        text: ArtistDetailState.top-expanded ? "SHOW LESS" : "SHOW MORE";
+                        vertical-alignment: center;
+                        clicked => {
+                            ArtistDetailState.top-expanded = !ArtistDetailState.top-expanded;
+                        }
+                    }
+                }
+
+                Rectangle {
+                    height: root.top-shown * 36px;
+                    clip: true;
+
+                    for song[i] in ArtistDetailState.top-songs: TrackRowView {
+                        x: 8px;
+                        y: i * 36px;
+                        width: parent.width - 16px;
+                        track: song;
+                        play => {
+                            ArtistDetailState.play-top(song.id);
+                        }
+                    }
+                }
+            }
+
+            if ArtistDetailState.albums.length > 0: HorizontalLayout {
+                padding-left: 24px;
+                padding-right: 24px;
+                spacing: 12px;
+
+                SectionTitle {
+                    text: "Albums";
+                }
+
+                Text {
+                    text: ArtistDetailState.albums.length;
+                    color: Theme.muted;
+                    vertical-alignment: center;
+                    horizontal-stretch: 1;
+                }
+            }
+
+            grid := Rectangle {
+                height: Math.ceil(ArtistDetailState.albums.length / root.columns) * (root.tile-height + root.gap);
+
+                for album[i] in ArtistDetailState.albums: AlbumTile {
+                    property <length> top: page.content-y + grid.y + self.y;
+                    property <bool> shown: self.top + self.height > 0 && self.top < page.visible-height;
+                    x: 24px + Math.mod(i, root.columns) * (root.tile-width + root.gap);
+                    y: Math.floor(i / root.columns) * (root.tile-height + root.gap);
+                    width: root.tile-width;
+                    height: root.tile-height;
+                    album: album;
+                    init => {
+                        if (self.shown) {
+                            ArtistDetailState.album-shown(i);
+                        }
+                    }
+                    changed shown => {
+                        if (self.shown) {
+                            ArtistDetailState.album-shown(i);
+                        }
+                    }
+                }
+            }
+        }
     }
 }

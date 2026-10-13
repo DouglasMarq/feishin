@@ -1,17 +1,396 @@
-import { Theme } from "theme.slint";
-import { AppState } from "globals.slint";
+import { ComboBox, LineEdit, ListView } from "std-widgets.slint";
+import { Theme, Icons } from "theme.slint";
+import { AppState, Route } from "globals.slint";
+import { Icon, IconButton } from "widgets.slint";
+import { Cell, Skeleton } from "tracks.slint";
 
-export global ArtistsState {
-    callback load(string);
+export struct ArtistCard {
+    id: string,
+    name: string,
+    albums: string,
+    songs: string,
+    favorite: bool,
+    image: image,
+    has-image: bool,
 }
 
-export component ArtistsView inherits Rectangle {
-    init => {
-        ArtistsState.load(AppState.detail-id);
+export struct ArtistGridRow {
+    cards: [ArtistCard],
+}
+
+/// Icon paths used by the artist views and missing from `Icons`.
+export global ArtistIcons {
+    out property <string> grid: "M4 11h5V5H4v6zm0 7h5v-6H4v6zm6 0h5v-6h-5v6zm6 0h5v-6h-5v6zm-6-7h5V5h-5v6zm6-6v6h5V5h-5z";
+    out property <string> list: "M3 14h4v-4H3v4zm0 5h4v-4H3v4zM3 9h4V5H3v4zm5 5h13v-4H8v4zm0 5h13v-4H8v4zM8 5v4h13V5H8z";
+    out property <string> heart-outline: "M16.5 3c-1.74 0-3.41.81-4.5 2.09C10.91 3.81 9.24 3 7.5 3 4.42 3 2 5.42 2 8.5c0 3.78 3.4 6.86 8.55 11.54L12 21.35l1.45-1.32C18.6 15.36 22 12.28 22 8.5 22 5.42 19.58 3 16.5 3zm-4.4 15.55l-.1.1-.1-.1C7.14 14.24 4 11.39 4 8.5 4 6.5 5.5 5 7.5 5c1.54 0 3.04.99 3.57 2.36h1.87C13.46 5.99 14.96 5 16.5 5c2 0 3.5 1.5 3.5 3.5 0 2.89-3.14 5.74-7.9 10.05z";
+}
+
+export global ArtistsState {
+    in property <[ArtistCard]> items;
+    in property <[ArtistGridRow]> grid-rows;
+    in property <[string]> sort-options;
+    in property <bool> loading;
+    in property <bool> complete;
+    in-out property <int> sort-index;
+    in-out property <bool> descending;
+    in-out property <bool> favorites-only;
+    in-out property <bool> grid: true;
+    callback load(string);
+    callback query-changed();
+    callback search-edited(string);
+    callback set-columns(int);
+    callback play(string);
+}
+
+/// Round artist image with a placeholder icon.
+export component ArtistImage inherits Rectangle {
+    in property <image> image;
+    in property <bool> has-image;
+    border-radius: self.width / 2;
+    clip: true;
+    background: Theme.surface-raised;
+
+    if root.has-image: Image {
+        width: parent.width;
+        height: parent.height;
+        source: root.image;
+        image-fit: cover;
+    }
+
+    if !root.has-image: Icon {
+        path: Icons.artist;
+        color: Theme.muted;
+        width: parent.width * 0.4;
+        height: parent.width * 0.4;
+    }
+}
+
+/// Round primary play button shown over covers.
+export component PlayOverlay inherits Rectangle {
+    callback clicked();
+    width: 40px;
+    height: 40px;
+    border-radius: self.width / 2;
+    background: touch.has-hover ? Theme.primary.brighter(20%) : Theme.primary;
+    drop-shadow-blur: 8px;
+    drop-shadow-color: #00000080;
+
+    Icon {
+        path: Icons.play;
+        color: white;
+        width: parent.width * 0.55;
+        height: parent.width * 0.55;
+    }
+
+    touch := TouchArea {
+        mouse-cursor: pointer;
+        clicked => {
+            root.clicked();
+        }
+    }
+}
+
+component ArtistCardView inherits Rectangle {
+    in property <ArtistCard> card;
+    border-radius: Theme.radius;
+    background: touch.has-hover ? Theme.hover : transparent;
+
+    touch := TouchArea {
+        mouse-cursor: pointer;
+        clicked => {
+            AppState.navigate(Route.artist-detail, root.card.id);
+        }
+    }
+
+    image := ArtistImage {
+        x: 12px;
+        y: 12px;
+        width: parent.width - 24px;
+        height: self.width;
+        image: root.card.image;
+        has-image: root.card.has-image;
+    }
+
+    if touch.has-hover: PlayOverlay {
+        x: image.x + image.width - self.width - 4px;
+        y: image.y + image.height - self.height - 4px;
+        clicked => {
+            ArtistsState.play(root.card.id);
+        }
     }
 
     Text {
-        text: "Artists";
+        x: 12px;
+        y: image.y + image.height + 10px;
+        width: parent.width - 24px;
+        text: root.card.name;
+        color: Theme.foreground;
+        font-weight: 600;
+        horizontal-alignment: center;
+        overflow: elide;
+    }
+
+    Text {
+        x: 12px;
+        y: image.y + image.height + 30px;
+        width: parent.width - 24px;
+        text: root.card.albums;
         color: Theme.muted;
+        font-size: 12px;
+        horizontal-alignment: center;
+        overflow: elide;
+    }
+}
+
+component ArtistRowView inherits Rectangle {
+    in property <ArtistCard> card;
+    in property <int> index;
+    height: 48px;
+    background: touch.has-hover ? Theme.hover : transparent;
+
+    touch := TouchArea {
+        mouse-cursor: pointer;
+        clicked => {
+            AppState.navigate(Route.artist-detail, root.card.id);
+        }
+
+        HorizontalLayout {
+            padding-left: 20px;
+            padding-right: 20px;
+            spacing: 12px;
+
+            Rectangle {
+                width: 32px;
+
+                if !touch.has-hover: Text {
+                    width: parent.width;
+                    text: root.index + 1;
+                    color: Theme.muted;
+                    horizontal-alignment: right;
+                    vertical-alignment: center;
+                }
+
+                if touch.has-hover: IconButton {
+                    x: parent.width - self.width;
+                    icon: Icons.play;
+                    icon-color: Theme.foreground;
+                    clicked => {
+                        ArtistsState.play(root.card.id);
+                    }
+                }
+            }
+
+            ArtistImage {
+                y: (parent.height - self.height) / 2;
+                width: 36px;
+                height: 36px;
+                image: root.card.image;
+                has-image: root.card.has-image;
+            }
+
+            Cell {
+                horizontal-stretch: 1;
+                text: root.card.name;
+                text-color: Theme.foreground;
+            }
+
+            Cell {
+                width: 120px;
+                text: root.card.albums;
+            }
+
+            Cell {
+                width: 120px;
+                text: root.card.songs;
+            }
+
+            Rectangle {
+                width: 32px;
+
+                if root.card.favorite: Icon {
+                    path: Icons.heart;
+                    color: Theme.danger;
+                    width: 18px;
+                    height: 18px;
+                }
+            }
+        }
+    }
+}
+
+export component ArtistsView inherits Rectangle {
+    property <length> gap: 8px;
+    property <length> min-card: 170px;
+    property <length> grid-width: body.width - 44px;
+    property <int> columns: max(1, floor((root.grid-width + root.gap) / (root.min-card + root.gap)));
+    property <length> card-width: (root.grid-width - root.gap * (root.columns - 1)) / root.columns;
+    background: Theme.background;
+    min-width: 320px;
+
+    init => {
+        ArtistsState.set-columns(root.columns);
+        ArtistsState.load(AppState.detail-id);
+    }
+
+    changed columns => {
+        ArtistsState.set-columns(root.columns);
+    }
+
+    VerticalLayout {
+        HorizontalLayout {
+            padding: 20px;
+            padding-bottom: 12px;
+            spacing: 8px;
+
+            Text {
+                text: "Artists";
+                font-size: 24px;
+                font-weight: 700;
+                color: Theme.foreground;
+                vertical-alignment: center;
+            }
+
+            Text {
+                text: ArtistsState.complete ? ArtistsState.items.length : "";
+                color: Theme.muted;
+                vertical-alignment: center;
+            }
+
+            Rectangle {
+                horizontal-stretch: 1;
+            }
+
+            ComboBox {
+                width: 150px;
+                model: ArtistsState.sort-options;
+                current-index <=> ArtistsState.sort-index;
+                selected => {
+                    ArtistsState.query-changed();
+                }
+            }
+
+            IconButton {
+                y: (parent.height - self.height) / 2;
+                icon: ArtistsState.descending ? Icons.arrow-down : Icons.arrow-up;
+                clicked => {
+                    ArtistsState.descending = !ArtistsState.descending;
+                    ArtistsState.query-changed();
+                }
+            }
+
+            IconButton {
+                y: (parent.height - self.height) / 2;
+                icon: ArtistsState.favorites-only ? Icons.heart : ArtistIcons.heart-outline;
+                active: ArtistsState.favorites-only;
+                clicked => {
+                    ArtistsState.favorites-only = !ArtistsState.favorites-only;
+                    ArtistsState.query-changed();
+                }
+            }
+
+            IconButton {
+                y: (parent.height - self.height) / 2;
+                icon: ArtistsState.grid ? ArtistIcons.list : ArtistIcons.grid;
+                clicked => {
+                    ArtistsState.grid = !ArtistsState.grid;
+                }
+            }
+
+            LineEdit {
+                width: 240px;
+                placeholder-text: "Search";
+                edited(text) => {
+                    ArtistsState.search-edited(text);
+                }
+            }
+        }
+
+        body := Rectangle {
+            vertical-stretch: 1;
+            min-width: 0px;
+            clip: true;
+
+            if ArtistsState.grid: ListView {
+                for row in ArtistsState.grid-rows: HorizontalLayout {
+                    padding-left: 16px;
+                    padding-right: 16px;
+                    padding-bottom: root.gap;
+                    spacing: root.gap;
+                    alignment: start;
+
+                    for card in row.cards: ArtistCardView {
+                        width: root.card-width;
+                        height: root.card-width + 40px;
+                        card: card;
+                    }
+                }
+            }
+
+            if !ArtistsState.grid: VerticalLayout {
+                Rectangle {
+                    height: 33px;
+
+                    HorizontalLayout {
+                        padding-left: 20px;
+                        padding-right: 20px;
+                        spacing: 12px;
+
+                        Cell {
+                            width: 32px + 12px + 36px;
+                            text: "#";
+                        }
+
+                        Cell {
+                            horizontal-stretch: 1;
+                            text: "Name";
+                        }
+
+                        Cell {
+                            width: 120px;
+                            text: "Albums";
+                        }
+
+                        Cell {
+                            width: 120px;
+                            text: "Songs";
+                        }
+
+                        Rectangle {
+                            width: 32px;
+                        }
+                    }
+
+                    Rectangle {
+                        y: parent.height - 1px;
+                        height: 1px;
+                        background: Theme.border;
+                    }
+                }
+
+                ListView {
+                    for card[i] in ArtistsState.items: ArtistRowView {
+                        card: card;
+                        index: i;
+                    }
+                }
+            }
+
+            if ArtistsState.loading && ArtistsState.items.length == 0: VerticalLayout {
+                padding: 24px;
+                spacing: 16px;
+                alignment: start;
+
+                for i in 4: Skeleton {
+                    width: 240px - i * 30px;
+                }
+            }
+
+            if !ArtistsState.loading && ArtistsState.complete && ArtistsState.items.length == 0: Text {
+                text: "No artists found";
+                color: Theme.muted;
+                horizontal-alignment: center;
+                vertical-alignment: center;
+            }
+        }
     }
 }
