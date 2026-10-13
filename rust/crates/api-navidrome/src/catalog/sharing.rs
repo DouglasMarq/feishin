@@ -37,8 +37,9 @@ impl NavidromeServer {
         let mut params: Vec<(&str, String)> =
             item_ids.iter().map(|id| ("id", id.clone())).collect();
         params.extend(description.map(|text| ("description", text.to_owned())));
+        let features = self.features().await;
         let response: SharesResponse = self
-            .subsonic("createShare", &params)
+            .subsonic_large("createShare", &params, &features)
             .await
             .map_err(sharing_error)?;
         created_share(response)
