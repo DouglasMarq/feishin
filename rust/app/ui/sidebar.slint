@@ -1,12 +1,14 @@
 import { Theme, Icons } from "theme.slint";
 import { AppState, Route } from "globals.slint";
-import { Icon, IconButton } from "widgets.slint";
+import { Icon, IconButton, TooltipAnchor } from "widgets.slint";
+import { DiscoverIcons } from "discover.slint";
 
 component NavEntry inherits Rectangle {
     in property <string> icon;
     in property <string> label;
     in property <bool> active;
     in property <bool> enabled: true;
+    in property <string> tooltip;
     callback clicked();
     height: 36px;
     border-radius: Theme.radius;
@@ -30,6 +32,11 @@ component NavEntry inherits Rectangle {
             font-weight: root.active ? 600 : 400;
             vertical-alignment: center;
         }
+    }
+
+    TooltipAnchor {
+        text: root.tooltip;
+        hovered: touch.has-hover;
     }
 
     touch := TouchArea {
@@ -85,6 +92,16 @@ export component Sidebar inherits Rectangle {
             active: AppState.route == Route.home;
             clicked => {
                 AppState.navigate(Route.home, "");
+            }
+        }
+
+        NavEntry {
+            icon: DiscoverIcons.explore;
+            label: "Discover";
+            tooltip: AppState.route == Route.discover ? "Discover is open" : "Discover new music on YouTube Music";
+            active: AppState.route == Route.discover;
+            clicked => {
+                AppState.navigate(Route.discover, "");
             }
         }
 

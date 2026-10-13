@@ -1,0 +1,393 @@
+import { ScrollView } from "std-widgets.slint";
+import { Theme, Icons } from "theme.slint";
+import { AppState, PlayerState } from "globals.slint";
+import { Icon, IconButton, TooltipAnchor } from "widgets.slint";
+import { Cell, Skeleton } from "tracks.slint";
+import { DiscoverIcons, DiscoverSong, DiscoverState } from "discover_state.slint";
+
+component SongRowView inherits Rectangle {
+    in property <DiscoverSong> song;
+    property <bool> playing: root.song.id == PlayerState.song-id;
+    property <int> position: root.song.index - 1;
+    property <bool> wants-cover: !root.song.has-cover && root.song.can-load-cover;
+    background: touch.has-hover ? Theme.hover : transparent;
+
+    init => {
+        if (root.wants-cover) {
+            DiscoverState.song-cover-needed(root.position);
+        }
+    }
+    changed wants-cover => {
+        if (self.wants-cover) {
+            DiscoverState.song-cover-needed(root.position);
+        }
+    }
+    changed position => {
+        if (root.wants-cover) {
+            DiscoverState.song-cover-needed(root.position);
+        }
+    }
+
+    menu := ContextMenuArea {
+        Menu {
+            MenuItem {
+                title: "Play";
+                activated => {
+                    DiscoverState.play-song(root.position);
+                }
+            }
+
+            MenuItem {
+                title: "Play next";
+                activated => {
+                    DiscoverState.play-song-next(root.position);
+                }
+            }
+
+            MenuItem {
+                title: "Add to queue";
+                activated => {
+                    DiscoverState.queue-song(root.position);
+                }
+            }
+
+            MenuSeparator { }
+
+            MenuItem {
+                title: "Open in YouTube Music";
+                activated => {
+                    DiscoverState.open-song-in-browser(root.position);
+                }
+            }
+        }
+
+        touch := TouchArea {
+            double-clicked => {
+                DiscoverState.play-song(root.position);
+            }
+            pointer-event(event) => {
+                if (event.kind == PointerEventKind.down && event.button == PointerEventButton.right) {
+                    menu.show({ x: self.mouse-x, y: self.mouse-y });
+                }
+            }
+
+            HorizontalLayout {
+                padding-left: 24px;
+                padding-right: 24px;
+                spacing: 4px;
+
+                Rectangle {
+                    width: 40px;
+
+                    if !touch.has-hover && !root.playing: Text {
+                        x: 0;
+                        width: parent.width - 12px;
+                        text: root.song.index;
+                        color: Theme.muted;
+                        horizontal-alignment: right;
+                        vertical-alignment: center;
+                    }
+
+                    if !touch.has-hover && root.playing: Icon {
+                        x: parent.width - 12px - self.width;
+                        path: Icons.note;
+                        color: Theme.primary;
+                        width: 16px;
+                        height: 16px;
+                    }
+
+                    if touch.has-hover: Rectangle {
+                        x: parent.width - 12px - self.width;
+                        width: 24px;
+                        height: 24px;
+                        border-radius: 12px;
+                        background: play-touch.has-hover ? Theme.primary : transparent;
+
+                        Icon {
+                            path: Icons.play;
+                            width: 18px;
+                            height: 18px;
+                        }
+
+                        TooltipAnchor {
+                            text: "Play from this song";
+                            hovered: play-touch.has-hover;
+                        }
+
+                        play-touch := TouchArea {
+                            mouse-cursor: pointer;
+                            clicked => {
+                                DiscoverState.play-song(root.position);
+                            }
+                        }
+                    }
+                }
+
+                Rectangle {
+                    width: 36px;
+
+                    Rectangle {
+                        width: 28px;
+                        height: 28px;
+                        border-radius: 4px;
+                        background: Theme.surface-raised;
+                        clip: true;
+
+                        if root.song.has-cover: Image {
+                            width: parent.width;
+                            height: parent.height;
+                            source: root.song.cover;
+                            image-fit: cover;
+                        }
+                    }
+                }
+
+                Cell {
+                    horizontal-stretch: 2;
+                    text: root.song.title;
+                    text-color: root.playing ? Theme.primary : Theme.foreground;
+                }
+
+                Cell {
+                    horizontal-stretch: 1;
+                    text: root.song.artists;
+                }
+
+                Cell {
+                    horizontal-stretch: 1;
+                    text: root.song.album;
+                }
+
+                Cell {
+                    width: 64px;
+                    text: root.song.duration;
+                }
+            }
+        }
+    }
+}
+
+component SongRows inherits Rectangle {
+    in property <length> viewport-top;
+    in property <length> viewport-height;
+    property <length> row-height: 44px;
+    property <int> row-count: DiscoverState.songs.length;
+    property <int> slot-count: min(root.row-count, ceil(max(0px, root.viewport-height) / root.row-height) + 2);
+    property <int> wanted-first-row: max(0, min(root.row-count - root.slot-count, floor(max(0px, root.viewport-top) / root.row-height)));
+    property <int> first-row;
+    height: root.row-count * root.row-height;
+
+    init => {
+        root.first-row = root.wanted-first-row;
+    }
+
+    changed wanted-first-row => {
+        root.first-row = root.wanted-first-row;
+    }
+
+    for slot in root.slot-count: SongRowView {
+        property <int> wanted-row-index: root.first-row + mod(slot + root.slot-count - mod(root.first-row, root.slot-count), root.slot-count);
+        property <int> row-index;
+        x: 0;
+        y: self.row-index * root.row-height;
+        width: parent.width;
+        height: root.row-height;
+        song: DiscoverState.songs[self.row-index];
+
+        init => {
+            self.row-index = self.wanted-row-index;
+        }
+
+        changed wanted-row-index => {
+            self.row-index = self.wanted-row-index;
+        }
+    }
+}
+
+component PageHeader inherits HorizontalLayout {
+    padding: 24px;
+    spacing: 24px;
+    alignment: start;
+
+    Rectangle {
+        width: 200px;
+        height: 200px;
+        border-radius: Theme.radius;
+        background: Theme.surface-raised;
+        clip: true;
+
+        if DiscoverState.page-has-cover: Image {
+            source: DiscoverState.page-cover;
+            width: parent.width;
+            height: parent.height;
+            image-fit: cover;
+        }
+
+        if !DiscoverState.page-has-cover: Icon {
+            path: DiscoverState.page-kind == "SEARCH RESULTS" ? Icons.search : (DiscoverState.page-kind == "ALBUM" ? Icons.album : Icons.playlist);
+            color: Theme.border;
+            width: 80px;
+            height: 80px;
+        }
+    }
+
+    VerticalLayout {
+        alignment: end;
+        spacing: 8px;
+        horizontal-stretch: 1;
+
+        Text {
+            text: DiscoverState.page-kind;
+            color: Theme.muted;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        if DiscoverState.page-loading && DiscoverState.page-title == "": Skeleton {
+            width: 280px;
+            height: 28px;
+            border-radius: 8px;
+        }
+
+        if !(DiscoverState.page-loading && DiscoverState.page-title == ""): Text {
+            text: DiscoverState.page-title;
+            color: Theme.foreground;
+            font-size: 30px;
+            font-weight: 800;
+            wrap: word-wrap;
+        }
+
+        Text {
+            text: DiscoverState.page-subtitle;
+            color: Theme.muted;
+            wrap: word-wrap;
+        }
+    }
+}
+
+component PageActions inherits HorizontalLayout {
+    property <bool> has-songs: DiscoverState.songs.length > 0;
+    padding-left: 24px;
+    padding-right: 24px;
+    spacing: 12px;
+    alignment: start;
+    height: 56px;
+
+    Rectangle {
+        y: (parent.height - self.height) / 2;
+        width: 52px;
+        height: 52px;
+        border-radius: 26px;
+        background: play-touch.has-hover && root.has-songs ? Theme.primary.brighter(20%) : Theme.primary;
+        opacity: root.has-songs ? 1 : 0.5;
+
+        Icon {
+            path: Icons.play;
+            color: white;
+            width: 28px;
+            height: 28px;
+        }
+
+        TooltipAnchor {
+            text: root.has-songs ? "Play all " + DiscoverState.songs.length + " songs" : "Nothing to play yet";
+            hovered: play-touch.has-hover;
+        }
+
+        play-touch := TouchArea {
+            enabled: root.has-songs;
+            mouse-cursor: pointer;
+            clicked => {
+                DiscoverState.play-page();
+            }
+        }
+    }
+
+    IconButton {
+        y: (parent.height - self.height) / 2;
+        width: 40px;
+        height: 40px;
+        icon: Icons.queue;
+        icon-size: 24px;
+        enabled: root.has-songs;
+        tooltip: root.has-songs ? "Add all songs to the queue" : "Nothing to add yet";
+        clicked => {
+            DiscoverState.queue-page();
+        }
+    }
+
+    if DiscoverState.page-has-link: IconButton {
+        y: (parent.height - self.height) / 2;
+        width: 40px;
+        height: 40px;
+        icon: DiscoverIcons.open-external;
+        icon-size: 22px;
+        tooltip: "Open in YouTube Music";
+        clicked => {
+            DiscoverState.open-page-in-browser();
+        }
+    }
+}
+
+export component DiscoverCollectionPage inherits Rectangle {
+    scroll := ScrollView {
+        content-width: self.visible-width;
+        content-height: content.preferred-height;
+
+        content := VerticalLayout {
+            width: scroll.visible-width;
+            alignment: start;
+
+            HorizontalLayout {
+                padding-left: 16px;
+                padding-top: 12px;
+                alignment: start;
+
+                IconButton {
+                    icon: DiscoverIcons.back;
+                    enabled: AppState.can-go-back;
+                    tooltip: AppState.can-go-back ? "Back" : "Nothing to go back to";
+                    clicked => {
+                        AppState.back();
+                    }
+                }
+            }
+
+            PageHeader { }
+
+            PageActions { }
+
+            if DiscoverState.page-error != "": HorizontalLayout {
+                padding-left: 24px;
+                padding-right: 24px;
+
+                Text {
+                    text: DiscoverState.page-error;
+                    color: Theme.danger;
+                    wrap: word-wrap;
+                }
+            }
+
+            if !DiscoverState.page-loading && DiscoverState.page-error == "" && DiscoverState.songs.length == 0: HorizontalLayout {
+                padding-left: 24px;
+
+                Text {
+                    text: "No songs here";
+                    color: Theme.muted;
+                }
+            }
+
+            Rectangle {
+                height: 12px;
+            }
+
+            SongRows {
+                viewport-top: -scroll.content-y - self.y;
+                viewport-height: scroll.visible-height;
+            }
+
+            Rectangle {
+                height: 32px;
+            }
+        }
+    }
+}

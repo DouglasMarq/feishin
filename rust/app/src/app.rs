@@ -15,6 +15,7 @@ use crate::controller::{Command, Controller, Deps, forward_command, load_saved_q
 use crate::covers::{CachedCovers, CoverProvider, DemoCovers};
 use crate::demo::{DemoLibrary, FakeServer, demo_credential};
 use crate::discord::DiscordSession;
+use crate::discover::{DemoDiscover, DiscoverSource, YouTubeMusicSource};
 use crate::media::{MediaSession, MediaSessions, Mpris, NoMediaSession};
 use crate::session::Session;
 use crate::sleep_timer::{self, SleepTimerUi};
@@ -35,6 +36,7 @@ struct Backends {
     store: Arc<dyn Store>,
     connector: Arc<dyn Connector>,
     covers: Arc<dyn CoverProvider>,
+    discover: Arc<dyn DiscoverSource>,
 }
 
 type SavedLogin = (ServerConfig, Result<Option<Credential>>);
@@ -51,6 +53,7 @@ fn demo_backends(library: DemoLibrary) -> Backends {
         store: Arc::new(JsonStore::new(std::env::temp_dir().join("feishin-rs-demo"))),
         connector: Arc::new(DemoConnector::new(library)),
         covers: Arc::new(DemoCovers),
+        discover: Arc::new(DemoDiscover::new(library)),
     }
 }
 
@@ -61,6 +64,7 @@ fn real_backends() -> Result<Backends> {
         store: Arc::new(store),
         connector: Arc::new(ServerConnector),
         covers: Arc::new(covers),
+        discover: Arc::new(YouTubeMusicSource::default()),
     })
 }
 
@@ -270,8 +274,10 @@ pub fn run(mode: Mode) -> Result<()> {
 
     let window = AppWindow::new().context("creating the window")?;
     let (commands, receiver) = mpsc::unbounded_channel();
+    let discover = Arc::clone(&backends.discover);
     let context = app_context(&runtime, backends, &commands);
     ui::install(&window, &context, &settings);
+    ui::discover::install(&window, &context, discover);
     sleep_timer::install(&window, &context);
 
     let deps = controller_deps(mode, &settings, &window, &context)?;

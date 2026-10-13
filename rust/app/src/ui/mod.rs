@@ -22,6 +22,7 @@ pub mod album_grid;
 pub mod albums;
 pub mod artist_detail;
 pub mod artists;
+pub mod discover;
 pub mod favorites;
 pub mod genres;
 pub mod home;

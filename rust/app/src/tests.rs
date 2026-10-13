@@ -1,3 +1,4 @@
+mod discover_sign_in;
 mod harness;
 mod list_streaming;
 mod media_session;

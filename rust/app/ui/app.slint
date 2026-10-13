@@ -18,6 +18,7 @@ import { FavoritesView } from "favorites.slint";
 import { SearchView } from "search.slint";
 import { SettingsView } from "settings.slint";
 import { NowPlayingView } from "now_playing.slint";
+import { DiscoverView } from "discover.slint";
 import { PlaylistPicker, PlaylistPickerState } from "playlist_picker.slint";
 
 export { Actions, AppState, LoginState, Page, PlayerState, QueueRow, QueueState, Route, TrackRow, TracksState } from "globals.slint";
@@ -33,6 +34,7 @@ export { FavoritesState } from "favorites.slint";
 export { SearchState } from "search.slint";
 export { SettingsState } from "settings.slint";
 export { NowPlayingState } from "now_playing.slint";
+export { DiscoverState } from "discover.slint";
 export { PlaylistPickerState } from "playlist_picker.slint";
 
 
@@ -120,6 +122,7 @@ export component AppWindow inherits Window {
                     if AppState.route == Route.search: SearchView { }
                     if AppState.route == Route.settings: SettingsView { }
                     if AppState.route == Route.now-playing: NowPlayingView { }
+                    if AppState.route == Route.discover: DiscoverView { }
                 }
 
                 if AppState.queue-open: QueuePanel { }

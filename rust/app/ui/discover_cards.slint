@@ -1,0 +1,346 @@
+import { Theme, Icons } from "theme.slint";
+import { AppState, Route } from "globals.slint";
+import { Icon, IconButton, TooltipAnchor } from "widgets.slint";
+import { DiscoverCard, DiscoverCardKind, DiscoverIcons, DiscoverShelf, DiscoverState } from "discover_state.slint";
+
+component CardPlayButton inherits Rectangle {
+    in property <bool> shown;
+    in property <string> tooltip;
+    out property <bool> hovered: touch.has-hover;
+    callback clicked();
+    width: 40px;
+    height: 40px;
+    border-radius: self.height / 2;
+    background: touch.has-hover ? Theme.primary.brighter(15%) : Theme.primary;
+    opacity: root.shown || touch.has-hover ? 1 : 0;
+
+    Icon {
+        path: Icons.play;
+        color: white;
+        width: 22px;
+        height: 22px;
+    }
+
+    TooltipAnchor {
+        text: root.tooltip;
+        hovered: touch.has-hover;
+    }
+
+    touch := TouchArea {
+        enabled: root.shown || self.has-hover;
+        mouse-cursor: pointer;
+        clicked => {
+            root.clicked();
+        }
+    }
+}
+
+export component DiscoverCardView inherits Rectangle {
+    in property <DiscoverCard> card;
+    in property <int> shelf-index;
+    in property <int> card-index;
+    in property <bool> on-screen;
+    property <bool> is-song: root.card.kind == DiscoverCardKind.song;
+    property <bool> wants-cover: root.on-screen && !root.card.has-cover && root.card.can-load-cover;
+    property <string> kind-name: root.card.kind == DiscoverCardKind.album ? "album" : "playlist";
+    width: 160px;
+    height: 214px;
+
+    init => {
+        if (root.wants-cover) {
+            DiscoverState.cover-needed(root.shelf-index, root.card-index);
+        }
+    }
+    changed wants-cover => {
+        if (self.wants-cover) {
+            DiscoverState.cover-needed(root.shelf-index, root.card-index);
+        }
+    }
+
+    function activate() {
+        if (root.is-song) {
+            DiscoverState.play-from-card(root.shelf-index, root.card-index);
+        } else {
+            AppState.navigate(Route.discover, root.card.id);
+        }
+    }
+
+    menu := ContextMenuArea {
+        Menu {
+            if !root.is-song: MenuItem {
+                title: "Open";
+                activated => {
+                    AppState.navigate(Route.discover, root.card.id);
+                }
+            }
+
+            MenuItem {
+                title: "Play";
+                activated => {
+                    DiscoverState.play-card(root.shelf-index, root.card-index);
+                }
+            }
+
+            MenuItem {
+                title: "Play next";
+                activated => {
+                    DiscoverState.play-card-next(root.shelf-index, root.card-index);
+                }
+            }
+
+            MenuItem {
+                title: "Add to queue";
+                activated => {
+                    DiscoverState.queue-card(root.shelf-index, root.card-index);
+                }
+            }
+
+            MenuSeparator { }
+
+            MenuItem {
+                title: "Open in YouTube Music";
+                activated => {
+                    DiscoverState.open-card-in-browser(root.shelf-index, root.card-index);
+                }
+            }
+        }
+
+        card-touch := TouchArea {
+            mouse-cursor: pointer;
+            clicked => {
+                root.activate();
+            }
+            pointer-event(event) => {
+                if (event.kind == PointerEventKind.down && event.button == PointerEventButton.right) {
+                    menu.show({ x: self.mouse-x, y: self.mouse-y });
+                }
+            }
+        }
+    }
+
+    TooltipAnchor {
+        text: root.is-song ? "Play \"" + root.card.title + "\" and the rest of this shelf" : "Open the " + root.kind-name + " \"" + root.card.title + "\"";
+        hovered: card-touch.has-hover && !play-button.hovered;
+    }
+
+    Rectangle {
+        y: 0;
+        width: root.width;
+        height: root.width;
+        border-radius: Theme.radius;
+        background: Theme.surface-raised;
+        clip: true;
+
+        if !root.card.has-cover: Icon {
+            path: root.is-song ? Icons.note : (root.card.kind == DiscoverCardKind.album ? Icons.album : Icons.playlist);
+            color: Theme.border;
+            width: 56px;
+            height: 56px;
+        }
+
+        if root.card.has-cover: Image {
+            width: parent.width;
+            height: parent.height;
+            source: root.card.cover;
+            image-fit: cover;
+        }
+
+        if card-touch.has-hover || play-button.hovered: Rectangle {
+            background: #00000040;
+        }
+
+        play-button := CardPlayButton {
+            x: parent.width - self.width - 10px;
+            y: parent.height - self.height - 10px;
+            shown: card-touch.has-hover;
+            tooltip: root.is-song ? "Play from here" : "Play the " + root.kind-name;
+            clicked => {
+                if (root.is-song) {
+                    DiscoverState.play-from-card(root.shelf-index, root.card-index);
+                } else {
+                    DiscoverState.play-card(root.shelf-index, root.card-index);
+                }
+            }
+        }
+    }
+
+    Text {
+        y: root.width + 8px;
+        width: root.width;
+        text: root.card.title;
+        color: Theme.foreground;
+        font-weight: 600;
+        overflow: elide;
+    }
+
+    Text {
+        y: root.width + 28px;
+        width: root.width;
+        text: root.card.subtitle;
+        color: Theme.muted;
+        font-size: 12px;
+        overflow: elide;
+    }
+}
+
+component SkeletonCard inherits Rectangle {
+    width: 160px;
+    height: 214px;
+
+    Rectangle {
+        y: 0;
+        height: root.width;
+        border-radius: Theme.radius;
+        background: Theme.surface;
+    }
+
+    Rectangle {
+        y: root.width + 12px;
+        x: 0;
+        width: 70%;
+        height: 10px;
+        border-radius: 5px;
+        background: Theme.surface-raised;
+    }
+
+    Rectangle {
+        y: root.width + 32px;
+        x: 0;
+        width: 45%;
+        height: 8px;
+        border-radius: 4px;
+        background: Theme.surface;
+    }
+}
+
+export component SkeletonShelf inherits VerticalLayout {
+    spacing: 10px;
+
+    Rectangle {
+        height: 32px;
+
+        Rectangle {
+            x: 0;
+            width: 180px;
+            height: 14px;
+            border-radius: 7px;
+            background: Theme.surface-raised;
+        }
+    }
+
+    Rectangle {
+        height: 214px;
+        clip: true;
+
+        HorizontalLayout {
+            alignment: start;
+            spacing: 16px;
+
+            for _ in 8: SkeletonCard { }
+        }
+    }
+}
+
+export component DiscoverShelfView inherits VerticalLayout {
+    in property <DiscoverShelf> shelf;
+    in property <int> index;
+    in property <bool> on-screen;
+    property <length> stride: 176px;
+    property <length> max-scroll: max(0px, strip.content-width - strip.width);
+    spacing: 10px;
+
+    HorizontalLayout {
+        spacing: 4px;
+        height: 32px;
+
+        Text {
+            text: root.shelf.title;
+            font-size: 18px;
+            font-weight: 700;
+            color: Theme.foreground;
+            vertical-alignment: center;
+            horizontal-stretch: 1;
+            overflow: elide;
+        }
+
+        IconButton {
+            icon: DiscoverIcons.left;
+            enabled: strip.content-x < 0;
+            tooltip: self.enabled ? "Scroll left" : "Already at the start";
+            clicked => {
+                strip.content-x = min(0px, strip.content-x + strip.width * 0.8);
+            }
+        }
+
+        IconButton {
+            icon: DiscoverIcons.right;
+            enabled: -strip.content-x < root.max-scroll;
+            tooltip: self.enabled ? "Scroll right" : "Already at the end";
+            clicked => {
+                strip.content-x = max(-root.max-scroll, strip.content-x - strip.width * 0.8);
+            }
+        }
+    }
+
+    Rectangle {
+        height: 214px;
+        min-width: 0px;
+        clip: true;
+
+        strip := Flickable {
+            content-width: root.shelf.cards.length * root.stride - (root.stride - 160px);
+            content-height: self.height;
+
+            for card[card-index] in root.shelf.cards: DiscoverCardView {
+                x: card-index * root.stride;
+                card: card;
+                shelf-index: root.index;
+                card-index: card-index;
+                on-screen: root.on-screen && self.x + strip.content-x + self.width > 0 && self.x + strip.content-x < strip.width;
+            }
+        }
+    }
+}
+
+export component MoodGrid inherits Rectangle {
+    in property <[string]> moods;
+    in property <int> selected;
+    property <length> chip-width: 176px;
+    property <length> chip-height: 40px;
+    property <length> gap: 8px;
+    property <int> columns: max(1, floor((root.width + root.gap) / (root.chip-width + root.gap)));
+    height: ceil(root.moods.length / root.columns) * (root.chip-height + root.gap);
+
+    for mood[mood-index] in root.moods: Rectangle {
+        x: mod(mood-index, root.columns) * (root.chip-width + root.gap);
+        y: floor(mood-index / root.columns) * (root.chip-height + root.gap);
+        width: root.chip-width;
+        height: root.chip-height;
+        border-radius: Theme.radius;
+        background: mood-index == root.selected ? Theme.selected : (mood-touch.has-hover ? Theme.hover : Theme.surface);
+        border-width: 1px;
+        border-color: mood-index == root.selected ? Theme.primary : Theme.border;
+
+        Text {
+            x: 12px;
+            width: parent.width - 24px;
+            text: mood;
+            color: mood-index == root.selected ? Theme.foreground : Theme.muted;
+            font-weight: 600;
+            vertical-alignment: center;
+            overflow: elide;
+        }
+
+        TooltipAnchor {
+            text: mood-index == root.selected ? "Showing playlists for " + mood : "Show playlists for " + mood;
+            hovered: mood-touch.has-hover;
+        }
+
+        mood-touch := TouchArea {
+            mouse-cursor: pointer;
+            clicked => {
+                DiscoverState.select-mood(mood-index);
+            }
+        }
+    }
+}
