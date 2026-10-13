@@ -14,6 +14,19 @@ Goal: replace the Electron app with a native Rust app that uses a fraction of th
 - Wave 4: Subsonic and Jellyfin backends implemented and unit tested, not yet tested against real servers.
 - Wave 5: lyrics (server, lrclib, NetEase, Genius) and Discord done; radio, i18n, themes not started.
 - Demo mode RSS/PSS with all views: 135 / 91 MB.
+- Huge libraries (measured with `--demo --demo-songs 100000`, release build):
+  - Idle RssAnon about 46 MB at both 20k and 100k songs; total RSS about 141 MB.
+  - Lists, albums, search and playlists page from the server with a bounded page cache (1.6 MB retained after scrolling 100k rows).
+  - Queue items are compact and shared (`Arc<QueueTrack>` with interned strings): 23.5 MiB per 100k songs. The queue panel and Up Next build rows on demand from a shared `QueueView`.
+  - Play from a list starts after the first page (about 1-5 ms from click to playback, previously 100-425 ms at row 50000) and streams the rest in; peak RssAnon about 95-105 MB, previously 160 MB.
+  - Track selection is stored as row ranges; bulk actions and add-to-playlist stream in 500-song chunks.
+  - The queue is saved off the UI thread in a compact binary file (`queue.bin`, 5.6 MB per 100k songs, previously 24 MB of JSON), debounced, and also on SIGTERM. It loads after the window opens. Server queue sync is keyed on the queue revision.
+- Known gaps:
+  - With page eviction, changes made on the server while scrolling can shift rows.
+  - A page that keeps failing is requested again whenever its rows come back into view.
+  - Quitting while a play-from-list stream is still loading saves only the part loaded so far.
+  - Two streamed adds to the same playlist running at once can add the same songs twice.
+  - Background bulk edits are not cancelled on logout or shutdown.
 
 ## Scope decisions
 
