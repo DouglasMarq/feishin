@@ -1,3 +1,5 @@
+use std::sync::OnceLock;
+
 use async_trait::async_trait;
 use feishin_api::MusicServer;
 use feishin_core::model::Song;
@@ -38,27 +40,34 @@ const PLAYLISTS: [&str; 6] = [
 ];
 
 pub struct DemoDiscover {
-    catalog: FakeServer,
+    library: DemoLibrary,
+    catalog: OnceLock<FakeServer>,
     song_count: usize,
 }
 
 impl DemoDiscover {
     pub fn new(library: DemoLibrary) -> Self {
         Self {
-            catalog: FakeServer::with_config(FakeServer::config_for_demo(), library),
+            library,
+            catalog: OnceLock::new(),
             song_count: library.song_count().max(1),
         }
     }
 
+    fn catalog(&self) -> &FakeServer {
+        self.catalog
+            .get_or_init(|| FakeServer::with_config(FakeServer::config_for_demo(), self.library))
+    }
+
     fn song(&self, index: usize) -> MusicSong {
-        music_song_of(&self.catalog.song_at(index % self.song_count))
+        music_song_of(&self.catalog().song_at(index % self.song_count))
     }
 
     fn picked_songs(&self, seed: u64, count: usize) -> Vec<MusicSong> {
         let start = usize::try_from(seed % 9_973).unwrap_or_default();
         (0..count * 40)
             .map(|step| (start + step * 7_919) % self.song_count)
-            .map(|index| self.catalog.song_at(index))
+            .map(|index| self.catalog().song_at(index))
             .filter(|song| song.title.contains(" of the "))
             .take(count)
             .map(|song| music_song_of(&song))
@@ -74,7 +83,7 @@ impl DemoDiscover {
 
     fn album_card(&self, number: usize) -> ShelfItem {
         let first_index = (number * 97 % (self.song_count / ALBUM_SONGS).max(1)) * ALBUM_SONGS;
-        let song = self.catalog.song_at(first_index % self.song_count);
+        let song = self.catalog().song_at(first_index % self.song_count);
         ShelfItem::Collection(MusicCollection {
             browse_id: format!("{ALBUM_PREFIX}{first_index}"),
             kind: CollectionKind::Album,
@@ -303,7 +312,7 @@ impl DiscoverSource for DemoDiscover {
         _settings: YouTubeSettings,
     ) -> Result<Vec<MusicSong>, MusicError> {
         let results = self
-            .catalog
+            .catalog()
             .search(&query, COLLECTION_SONGS)
             .await
             .map_err(|error| MusicError::Network(error.to_string()))?;
