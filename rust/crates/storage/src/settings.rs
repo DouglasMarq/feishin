@@ -1,6 +1,6 @@
 use std::fmt::Display;
 
-use feishin_core::model::ServerConfig;
+use feishin_core::model::{RadioStation, ServerConfig};
 use serde::{Deserialize, Serialize};
 
 use crate::{Paths, Result, StorageError, none_when_missing, write_atomic};
@@ -89,6 +89,12 @@ impl Default for IntegrationSettings {
     }
 }
 
+#[derive(Debug, Clone, PartialEq, Eq, Default, Serialize, Deserialize)]
+#[serde(default)]
+pub struct RadioSettings {
+    pub favorites: Vec<RadioStation>,
+}
+
 #[derive(Debug, Clone, PartialEq, Default, Serialize, Deserialize)]
 #[serde(default)]
 pub struct Settings {
@@ -97,6 +103,7 @@ pub struct Settings {
     pub playback: PlaybackSettings,
     pub ui: UiSettings,
     pub integrations: IntegrationSettings,
+    pub radio: RadioSettings,
 }
 
 impl Settings {
@@ -160,6 +167,14 @@ mod tests {
             integrations: IntegrationSettings {
                 discord_rich_presence: true,
                 ..Default::default()
+            },
+            radio: RadioSettings {
+                favorites: vec![RadioStation {
+                    id: "9617a958".into(),
+                    name: "Smooth Jazz".into(),
+                    stream_url: "https://jazz.example.com/stream".into(),
+                    homepage_url: None,
+                }],
             },
         }
     }
@@ -227,6 +242,7 @@ a = 1
             }]
         );
         assert_eq!(settings.integrations, IntegrationSettings::default());
+        assert_eq!(settings.radio, RadioSettings::default());
     }
 
     #[test]
