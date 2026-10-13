@@ -1,0 +1,12 @@
+[package]
+name = "feishin-storage"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[dependencies]
+feishin-core.workspace = true
+reqwest.workspace = true
+serde.workspace = true
+thiserror.workspace = true

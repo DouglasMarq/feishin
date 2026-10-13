@@ -1,0 +1,145 @@
+import { ListView, TabWidget } from "std-widgets.slint";
+
+export struct Track {
+    title: string,
+    artist: string,
+    album: string,
+    duration: string,
+}
+
+export struct AlbumCard {
+    name: string,
+    artist: string,
+    cover: image,
+}
+
+export struct AlbumRow {
+    cards: [AlbumCard],
+}
+
+component HeaderCell inherits Rectangle {
+    in property <string> text;
+    in-out property <length> column-width;
+    width: column-width;
+    height: 28px;
+
+    Text {
+        x: 8px;
+        text: root.text;
+        vertical-alignment: center;
+        font-weight: 700;
+        overflow: elide;
+        width: parent.width - 16px;
+    }
+
+    handle := TouchArea {
+        x: parent.width - 4px;
+        width: 8px;
+        mouse-cursor: col-resize;
+        moved => {
+            if (self.pressed) {
+                root.column-width = max(60px, root.column-width + self.mouse-x - self.pressed-x);
+            }
+        }
+    }
+}
+
+component Cell inherits Text {
+    vertical-alignment: center;
+    overflow: elide;
+}
+
+export component AppWindow inherits Window {
+    title: "Feishin Rust spike";
+    preferred-width: 1200px;
+    preferred-height: 800px;
+
+    in property <[Track]> tracks;
+    in property <[AlbumRow]> album-rows;
+    in property <string> autoscroll;
+    in property <int> initial-tab;
+
+    property <length> w-index: 70px;
+    property <length> w-title: 360px;
+    property <length> w-artist: 240px;
+    property <length> w-album: 300px;
+    property <length> w-duration: 90px;
+
+    Timer {
+        interval: 16ms;
+        running: root.autoscroll == "tracks";
+        triggered => {
+            track-list.content-y = track-list.content-y - 30px < -(track-list.content-height - track-list.visible-height) ? 0 : track-list.content-y - 30px;
+        }
+    }
+
+    Timer {
+        interval: 16ms;
+        running: root.autoscroll == "albums";
+        triggered => {
+            album-list.content-y = album-list.content-y - 30px < -(album-list.content-height - album-list.visible-height) ? 0 : album-list.content-y - 30px;
+        }
+    }
+
+    TabWidget {
+        current-index: root.initial-tab;
+
+        Tab {
+            title: "Tracks (" + root.tracks.length + ")";
+            VerticalLayout {
+                HorizontalLayout {
+                    HeaderCell { text: "#"; column-width <=> root.w-index; }
+                    HeaderCell { text: "Title"; column-width <=> root.w-title; }
+                    HeaderCell { text: "Artist"; column-width <=> root.w-artist; }
+                    HeaderCell { text: "Album"; column-width <=> root.w-album; }
+                    HeaderCell { text: "Duration"; column-width <=> root.w-duration; }
+                    Rectangle { }
+                }
+
+                track-list := ListView {
+                    for track[i] in root.tracks: Rectangle {
+                        height: 32px;
+                        background: touch.has-hover ? #ffffff14 : (Math.mod(i, 2) == 0 ? transparent : #ffffff08);
+
+                        HorizontalLayout {
+                            Cell { width: root.w-index; text: i + 1; horizontal-alignment: right; }
+                            Rectangle { width: 8px; }
+                            Cell { width: root.w-title - 8px; text: track.title; }
+                            Cell { width: root.w-artist; text: track.artist; }
+                            Cell { width: root.w-album; text: track.album; }
+                            Cell { width: root.w-duration; text: track.duration; }
+                            Rectangle { }
+                        }
+
+                        touch := TouchArea { }
+                    }
+                }
+            }
+        }
+
+        Tab {
+            title: "Albums";
+            album-list := ListView {
+                for row in root.album-rows: HorizontalLayout {
+                    padding: 8px;
+                    spacing: 12px;
+                    height: 240px;
+
+                    for card in row.cards: VerticalLayout {
+                        width: 180px;
+                        spacing: 4px;
+
+                        Image {
+                            source: card.cover;
+                            width: 180px;
+                            height: 180px;
+                        }
+
+                        Text { text: card.name; overflow: elide; font-weight: 700; }
+                        Text { text: card.artist; overflow: elide; }
+                    }
+                }
+            }
+        }
+    }
+}
