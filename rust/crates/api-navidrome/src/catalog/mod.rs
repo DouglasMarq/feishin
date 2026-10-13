@@ -11,6 +11,7 @@ mod scanning;
 mod song_years;
 mod songs;
 mod urls;
+mod year_counts;
 
 pub(crate) use fallback_lists::FallbackLists;
 

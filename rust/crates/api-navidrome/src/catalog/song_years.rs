@@ -1,20 +1,9 @@
 use feishin_api::Result;
-use feishin_core::model::{Page, Paging, Song, SongListQuery, SongSort, SortOrder};
+use feishin_core::model::{Page, Paging, Song, SongListQuery};
 
 use crate::NavidromeServer;
+use crate::catalog::year_counts::{YearCount, in_year};
 use crate::features::Features;
-
-const UNKNOWN_YEAR: i32 = 0;
-const SINGLE_SONG: Paging = Paging {
-    start_index: 0,
-    limit: 1,
-};
-
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-struct YearCount {
-    year: i32,
-    songs: usize,
-}
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 struct YearWindow {
@@ -28,39 +17,6 @@ pub(crate) fn spans_several_years(query: &SongListQuery) -> bool {
         (Some(from), Some(to)) => from != to,
         _ => true,
     }
-}
-
-fn in_year(query: &SongListQuery, year: i32) -> SongListQuery {
-    SongListQuery {
-        year_from: Some(year),
-        year_to: Some(year),
-        ..query.clone()
-    }
-}
-
-fn by_year(query: &SongListQuery, order: SortOrder) -> SongListQuery {
-    SongListQuery {
-        sort: SongSort::Year,
-        order,
-        year_from: None,
-        year_to: None,
-        ..query.clone()
-    }
-}
-
-fn ordered_years(first: i32, last: i32, order: SortOrder) -> Vec<i32> {
-    let years = first..=last;
-    match order {
-        SortOrder::Asc => years.collect(),
-        SortOrder::Desc => years.rev().collect(),
-    }
-}
-
-fn first_song_year(page: &Page<Song>) -> i32 {
-    page.items
-        .first()
-        .and_then(|song| song.year)
-        .unwrap_or(UNKNOWN_YEAR)
 }
 
 fn total_songs(counts: &[YearCount]) -> usize {
@@ -122,62 +78,6 @@ impl NavidromeServer {
     ) -> Result<usize> {
         let counts = self.song_counts_per_year(query, features).await?;
         Ok(total_songs(&counts))
-    }
-
-    async fn song_counts_per_year(
-        &self,
-        query: &SongListQuery,
-        features: &Features,
-    ) -> Result<Vec<YearCount>> {
-        let first = match query.year_from {
-            Some(year) => year,
-            None => self.earliest_song_year(query, features).await?,
-        };
-        let last = match query.year_to {
-            Some(year) => year,
-            None => self.latest_song_year(query, features).await?,
-        };
-        let mut counts = Vec::new();
-        for year in ordered_years(first, last, query.order) {
-            let songs = self.songs_in_year(query, year, features).await?;
-            if songs > 0 {
-                counts.push(YearCount { year, songs });
-            }
-        }
-        Ok(counts)
-    }
-
-    async fn songs_in_year(
-        &self,
-        query: &SongListQuery,
-        year: i32,
-        features: &Features,
-    ) -> Result<usize> {
-        let page = self
-            .native_song_page(&in_year(query, year), SINGLE_SONG, features)
-            .await?;
-        Ok(page.total_count.unwrap_or(0))
-    }
-
-    async fn latest_song_year(&self, query: &SongListQuery, features: &Features) -> Result<i32> {
-        let newest_first = by_year(query, SortOrder::Desc);
-        let page = self
-            .native_song_page(&newest_first, SINGLE_SONG, features)
-            .await?;
-        Ok(first_song_year(&page))
-    }
-
-    async fn earliest_song_year(&self, query: &SongListQuery, features: &Features) -> Result<i32> {
-        let undated = self.songs_in_year(query, UNKNOWN_YEAR, features).await?;
-        let oldest_first = by_year(query, SortOrder::Asc);
-        let first_dated = Paging {
-            start_index: undated,
-            limit: 1,
-        };
-        let page = self
-            .native_song_page(&oldest_first, first_dated, features)
-            .await?;
-        Ok(first_song_year(&page))
     }
 }
 
@@ -247,14 +147,5 @@ mod tests {
         assert!(spans_several_years(&range(None, Some(2021))));
         assert!(!spans_several_years(&range(Some(2021), Some(2021))));
         assert!(!spans_several_years(&range(None, None)));
-    }
-
-    #[test]
-    fn descending_order_walks_years_backwards() {
-        assert_eq!(
-            ordered_years(2020, 2022, SortOrder::Desc),
-            [2022, 2021, 2020]
-        );
-        assert!(ordered_years(2022, 2020, SortOrder::Asc).is_empty());
     }
 }

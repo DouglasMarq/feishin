@@ -26,3 +26,5 @@ mod support;
 mod urls;
 #[cfg(test)]
 mod year_ranges;
+#[cfg(test)]
+mod year_walks;
