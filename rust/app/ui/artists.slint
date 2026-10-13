@@ -18,7 +18,6 @@ export struct ArtistGridRow {
     cards: [ArtistCard],
 }
 
-/// Icon paths used by the artist views and missing from `Icons`.
 export global ArtistIcons {
     out property <string> grid: "M4 11h5V5H4v6zm0 7h5v-6H4v6zm6 0h5v-6h-5v6zm6 0h5v-6h-5v6zm-6-7h5V5h-5v6zm6-6v6h5V5h-5z";
     out property <string> list: "M3 14h4v-4H3v4zm0 5h4v-4H3v4zM3 9h4V5H3v4zm5 5h13v-4H8v4zm0 5h13v-4H8v4zM8 5v4h13V5H8z";
@@ -42,7 +41,6 @@ export global ArtistsState {
     callback play(string);
 }
 
-/// Round artist image with a placeholder icon.
 export component ArtistImage inherits Rectangle {
     in property <image> image;
     in property <bool> has-image;
@@ -65,7 +63,6 @@ export component ArtistImage inherits Rectangle {
     }
 }
 
-/// Round primary play button shown over covers.
 export component PlayOverlay inherits Rectangle {
     in property <string> tooltip: "Play";
     callback clicked();
@@ -378,9 +375,9 @@ export component ArtistsView inherits Rectangle {
                 }
 
                 ListView {
-                    for card[i] in ArtistsState.items: ArtistRowView {
+                    for card[card-index] in ArtistsState.items: ArtistRowView {
                         card: card;
-                        index: i;
+                        index: card-index;
                     }
                 }
             }
@@ -390,8 +387,8 @@ export component ArtistsView inherits Rectangle {
                 spacing: 16px;
                 alignment: start;
 
-                for i in 4: Skeleton {
-                    width: 240px - i * 30px;
+                for skeleton-index in 4: Skeleton {
+                    width: 240px - skeleton-index * 30px;
                 }
             }
 

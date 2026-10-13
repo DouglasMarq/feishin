@@ -295,9 +295,9 @@ export component ArtistDetailView inherits Rectangle {
                     height: root.top-shown * 36px;
                     clip: true;
 
-                    for song[i] in ArtistDetailState.top-songs: TrackRowView {
+                    for song[song-index] in ArtistDetailState.top-songs: TrackRowView {
                         x: 8px;
-                        y: i * 36px;
+                        y: song-index * 36px;
                         width: parent.width - 16px;
                         track: song;
                         play => {
@@ -327,22 +327,22 @@ export component ArtistDetailView inherits Rectangle {
             grid := Rectangle {
                 height: Math.ceil(ArtistDetailState.albums.length / root.columns) * (root.tile-height + root.gap);
 
-                for album[i] in ArtistDetailState.albums: AlbumTile {
+                for album[album-index] in ArtistDetailState.albums: AlbumTile {
                     property <length> top: page.content-y + grid.y + self.y;
                     property <bool> shown: self.top + self.height > 0 && self.top < page.visible-height;
-                    x: 24px + Math.mod(i, root.columns) * (root.tile-width + root.gap);
-                    y: Math.floor(i / root.columns) * (root.tile-height + root.gap);
+                    x: 24px + Math.mod(album-index, root.columns) * (root.tile-width + root.gap);
+                    y: Math.floor(album-index / root.columns) * (root.tile-height + root.gap);
                     width: root.tile-width;
                     height: root.tile-height;
                     album: album;
                     init => {
                         if (self.shown) {
-                            ArtistDetailState.album-shown(i);
+                            ArtistDetailState.album-shown(album-index);
                         }
                     }
                     changed shown => {
                         if (self.shown) {
-                            ArtistDetailState.album-shown(i);
+                            ArtistDetailState.album-shown(album-index);
                         }
                     }
                 }
