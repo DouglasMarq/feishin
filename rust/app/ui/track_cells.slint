@@ -189,7 +189,7 @@ export component RatingCell inherits Rectangle {
 
             Icon {
                 path: Glyphs.star;
-                color: (root.hovered >= 0 ? star-index <= root.hovered : star-index < root.rating) ? (root.hovered >= 0 ? Theme.foreground : Theme.muted) : #ffffff1a;
+                color: (root.hovered >= 0 ? star-index <= root.hovered : star-index < root.rating) ? (root.hovered >= 0 ? Theme.foreground : Theme.muted) : Theme.tint.with-alpha(26 / 255);
                 width: 15px;
                 height: 15px;
             }

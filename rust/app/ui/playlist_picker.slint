@@ -86,7 +86,7 @@ export component DialogButtons inherits HorizontalLayout {
 
         confirm-text := Text {
             text: root.confirm-text;
-            color: white;
+            color: root.danger ? #ffffff : Theme.on-primary;
             font-weight: 600;
         }
 

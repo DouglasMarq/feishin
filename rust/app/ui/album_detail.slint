@@ -50,7 +50,7 @@ export global AlbumDetailState {
 component Star inherits Path {
     in property <bool> filled;
     commands: "M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z";
-    fill: root.filled ? #f5c518 : #3a3a3a;
+    fill: root.filled ? #f5c518 : Theme.foreground.mix(Theme.background, 0.216);
     viewbox-width: 24;
     viewbox-height: 24;
     width: 18px;
@@ -442,7 +442,7 @@ export component AlbumDetailView inherits Rectangle {
 
                     Icon {
                         path: Icons.play;
-                        color: white;
+                        color: Theme.on-primary;
                         width: 28px;
                         height: 28px;
                     }

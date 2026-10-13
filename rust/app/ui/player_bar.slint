@@ -99,7 +99,7 @@ export component PlayerBar inherits Rectangle {
                     width: 38px;
                     height: 38px;
                     border-radius: 19px;
-                    background: play-touch.has-hover ? #ffffff : Theme.foreground;
+                    background: play-touch.has-hover ? (Theme.dark ? #ffffff : Theme.foreground.mix(Theme.background, 0.8)) : Theme.foreground;
                     opacity: PlayerState.has-song ? 1 : 0.4;
 
                     Icon {

@@ -1,16 +1,35 @@
+import { Palette } from "std-widgets.slint";
+import { Palettes, ThemePalette } from "theme_palettes.slint";
+
+export { Palettes, ThemePalette }
+
 export global Theme {
-    out property <color> background: #0c0c0c;
-    out property <color> background-alt: #080808;
-    out property <color> surface: #141414;
-    out property <color> surface-raised: #1d1d1d;
-    out property <color> border: #232323;
-    out property <color> foreground: #e1e1e1;
-    out property <color> muted: #969696;
-    out property <color> primary: #3574fc;
-    out property <color> danger: #f25757;
-    out property <color> hover: #ffffff0f;
-    out property <color> selected: #3574fc29;
+    in-out property <int> palette-index: 0;
+    in-out property <bool> custom-accent;
+    in-out property <color> accent: #3574fc;
+    property <ThemePalette> palette: Palettes.all[palette-index];
+    out property <bool> dark: palette.dark;
+    out property <color> background: palette.background;
+    out property <color> background-alt: palette.background-alt;
+    out property <color> surface: palette.surface;
+    out property <color> surface-raised: palette.surface-raised;
+    out property <color> border: palette.border;
+    out property <color> foreground: palette.foreground;
+    out property <color> muted: palette.muted;
+    out property <color> primary: custom-accent ? accent : palette.primary;
+    out property <color> on-primary: primary.to-oklch().lightness > 0.65 ? #141414 : #ffffff;
+    out property <color> danger: palette.danger;
+    out property <color> tint: dark ? #ffffff : #000000;
+    out property <color> hover: tint.with-alpha(15 / 255);
+    out property <color> selected: primary.with-alpha(41 / 255);
     out property <length> radius: 6px;
+
+    public function apply(index: int, use-custom-accent: bool, accent-color: color) {
+        self.palette-index = index;
+        self.custom-accent = use-custom-accent;
+        self.accent = accent-color;
+        Palette.color-scheme = Palettes.all[index].dark ? ColorScheme.dark : ColorScheme.light;
+    }
 }
 
 export global Icons {
