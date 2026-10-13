@@ -3,6 +3,8 @@ mod media_session;
 mod persistence;
 mod playback;
 mod queue_panel;
+mod queue_restore;
+mod queue_saves;
 mod scrobbling;
 mod server_queue;
 mod sleep_timer;

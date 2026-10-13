@@ -1,41 +1,34 @@
+mod song_ids;
+
 use std::sync::{Arc, Mutex};
 use std::time::Duration;
 
 use feishin_api::{ApiError, MusicServer};
 use feishin_core::queue::Queue;
 
+use song_ids::SongIdCache;
+
 #[cfg(not(test))]
-const DEBOUNCE: Duration = Duration::from_secs(5);
+pub const DEBOUNCE: Duration = Duration::from_secs(5);
 #[cfg(test)]
-const DEBOUNCE: Duration = Duration::ZERO;
+pub const DEBOUNCE: Duration = Duration::ZERO;
 const SHUTDOWN_TIMEOUT: Duration = Duration::from_secs(2);
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct PlayQueueState {
-    pub song_ids: Vec<String>,
+    pub song_ids: Arc<[String]>,
     pub current: Option<String>,
     pub position_ms: u64,
 }
 
-impl PlayQueueState {
-    pub fn of(queue: &Queue, position_ms: u64, server_id: &str) -> Option<Self> {
-        let items = queue.display_order();
-        if items.iter().any(|item| &*item.track.server_id != server_id) {
-            return None;
-        }
-        Some(Self {
-            song_ids: items
-                .iter()
-                .map(|item| item.track.song_id.to_string())
-                .collect(),
-            current: queue.current().map(|item| item.track.song_id.to_string()),
-            position_ms: queue.current().map_or(0, |_| position_ms),
-        })
-    }
+#[derive(Default)]
+pub struct PlayQueueSync {
+    uploader: PlayQueueUploader,
+    song_ids: SongIdCache,
 }
 
 #[derive(Clone, Default)]
-pub struct PlayQueueSync {
+pub struct PlayQueueUploader {
     shared: Arc<Mutex<Shared>>,
 }
 
@@ -60,18 +53,39 @@ impl Shared {
 }
 
 impl PlayQueueSync {
-    pub fn schedule(&self, server: Arc<dyn MusicServer>, state: PlayQueueState) {
-        let Ok(mut shared) = self.shared.lock() else {
-            return;
-        };
-        shared.generation += 1;
-        let generation = shared.generation;
-        drop(shared);
-        let shared = Arc::clone(&self.shared);
+    pub fn next_generation(&self) -> u64 {
+        self.uploader.with_shared(|shared| {
+            shared.generation += 1;
+            shared.generation
+        })
+    }
+
+    pub fn is_current(&self, generation: u64) -> bool {
+        self.uploader
+            .with_shared(|shared| shared.generation == generation)
+    }
+
+    pub fn state_of(
+        &mut self,
+        queue: &Queue,
+        position_ms: u64,
+        server_id: &str,
+    ) -> Option<PlayQueueState> {
+        let current = queue.current();
+        Some(PlayQueueState {
+            song_ids: self.song_ids.song_ids(queue, server_id)?,
+            current: current.map(|item| item.track.song_id.to_string()),
+            position_ms: current.map_or(0, |_| position_ms),
+        })
+    }
+
+    pub fn forget_song_ids(&mut self) {
+        self.song_ids = SongIdCache::default();
+    }
+
+    pub fn upload(&self, server: Arc<dyn MusicServer>, generation: u64, state: PlayQueueState) {
+        let shared = Arc::clone(&self.uploader.shared);
         tokio::spawn(async move {
-            if !DEBOUNCE.is_zero() {
-                tokio::time::sleep(DEBOUNCE).await;
-            }
             let due = shared
                 .lock()
                 .ok()
@@ -82,22 +96,34 @@ impl PlayQueueSync {
         });
     }
 
+    pub fn uploader(&self) -> PlayQueueUploader {
+        self.uploader.clone()
+    }
+
+    pub fn mark_saved(&self, state: PlayQueueState) {
+        self.uploader
+            .with_shared(|shared| shared.saved = Some(state));
+    }
+}
+
+impl PlayQueueUploader {
+    fn with_shared<Output: Default>(&self, action: impl FnOnce(&mut Shared) -> Output) -> Output {
+        self.shared
+            .lock()
+            .map(|mut shared| action(&mut shared))
+            .unwrap_or_default()
+    }
+
     pub async fn flush(&self, server: Arc<dyn MusicServer>, state: PlayQueueState) {
-        if let Ok(mut shared) = self.shared.lock() {
+        self.with_shared(|shared| {
             shared.generation += 1;
             shared.saved = Some(state.clone());
-        }
+        });
         if tokio::time::timeout(SHUTDOWN_TIMEOUT, save_to_server(server.as_ref(), &state))
             .await
             .is_err()
         {
             tracing::warn!("saving the play queue to the server timed out");
-        }
-    }
-
-    pub fn mark_saved(&self, state: PlayQueueState) {
-        if let Ok(mut shared) = self.shared.lock() {
-            shared.saved = Some(state);
         }
     }
 }
@@ -116,56 +142,4 @@ async fn save_to_server(server: &dyn MusicServer, state: &PlayQueueState) {
 }
 
 #[cfg(test)]
-mod tests {
-    use super::*;
-    use crate::demo::test_song;
-
-    fn state(ids: &[&str], position_ms: u64) -> PlayQueueState {
-        PlayQueueState {
-            song_ids: ids.iter().map(|id| (*id).to_owned()).collect(),
-            current: ids.first().map(|id| (*id).to_owned()),
-            position_ms,
-        }
-    }
-
-    #[test]
-    fn only_the_latest_changed_state_is_saved() {
-        let mut shared = Shared {
-            generation: 2,
-            saved: None,
-        };
-        assert_eq!(shared.take_if_current(1, state(&["a"], 0)), None);
-        assert_eq!(
-            shared.take_if_current(2, state(&["a"], 0)),
-            Some(state(&["a"], 0))
-        );
-        assert_eq!(shared.take_if_current(2, state(&["a"], 0)), None);
-        assert!(shared.take_if_current(2, state(&["a"], 5)).is_some());
-    }
-
-    #[test]
-    fn state_follows_play_order_and_rejects_foreign_songs() {
-        let mut queue = Queue::with_seed(1);
-        let songs: Vec<_> = (0..3)
-            .map(|index| test_song(&format!("s{index}"), 1000))
-            .collect();
-        queue.play_now(songs, Some("s1"));
-        assert_eq!(
-            PlayQueueState::of(&queue, 700, "demo"),
-            Some(PlayQueueState {
-                song_ids: vec!["s0".into(), "s1".into(), "s2".into()],
-                current: Some("s1".into()),
-                position_ms: 700,
-            })
-        );
-        assert_eq!(PlayQueueState::of(&queue, 0, "other"), None);
-        assert_eq!(
-            PlayQueueState::of(&Queue::with_seed(1), 900, "demo"),
-            Some(PlayQueueState {
-                song_ids: Vec::new(),
-                current: None,
-                position_ms: 0,
-            })
-        );
-    }
-}
+mod tests;

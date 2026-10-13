@@ -4,7 +4,6 @@ use std::time::Duration;
 use anyhow::{Context as _, Result};
 use feishin_api::{Credential, MusicServer};
 use feishin_core::model::ServerConfig;
-use feishin_storage::queue_store::StoredQueue;
 use feishin_storage::settings::Settings;
 use slint::ComponentHandle;
 use tokio::runtime::Runtime;
@@ -12,7 +11,7 @@ use tokio::sync::{mpsc, oneshot};
 
 use crate::audio::{AudioOutput, FakeAudio, MpvOutput};
 use crate::connect::{Connector, DemoConnector, ServerConnector};
-use crate::controller::{Command, Controller, Deps, forward_command};
+use crate::controller::{Command, Controller, Deps, forward_command, load_saved_queue};
 use crate::covers::{CachedCovers, CoverProvider, DemoCovers};
 use crate::demo::{DemoLibrary, FakeServer, demo_credential};
 use crate::discord::DiscordSession;
@@ -20,6 +19,7 @@ use crate::media::{MediaSession, MediaSessions, Mpris, NoMediaSession};
 use crate::session::Session;
 use crate::sleep_timer::{self, SleepTimerUi};
 use crate::store::{JsonStore, Store, SystemStore};
+use crate::termination;
 use crate::ui::{self, AppWindow, Context, login};
 
 const SHUTDOWN_SAVE_TIMEOUT: Duration = Duration::from_secs(3);
@@ -199,11 +199,13 @@ fn load_settings_or_default(store: &dyn Store) -> Settings {
     })
 }
 
-fn load_stored_queue(store: &dyn Store) -> Option<StoredQueue> {
-    store.load_queue().unwrap_or_else(|error| {
-        tracing::warn!("loading the saved queue failed: {error:#}");
-        None
-    })
+fn restore_saved_queue_once_shown(context: &Context) {
+    let runtime = context.rt.clone();
+    let store = Arc::clone(&context.store);
+    let commands = context.commands.clone();
+    slint::Timer::single_shot(Duration::ZERO, move || {
+        runtime.spawn(load_saved_queue(store, commands));
+    });
 }
 
 fn app_context(
@@ -265,7 +267,6 @@ pub fn run(mode: Mode) -> Result<()> {
     let runtime = build_runtime()?;
     let backends = backends(mode)?;
     let settings = load_settings_or_default(backends.store.as_ref());
-    let stored_queue = load_stored_queue(backends.store.as_ref());
 
     let window = AppWindow::new().context("creating the window")?;
     let (commands, receiver) = mpsc::unbounded_channel();
@@ -274,10 +275,13 @@ pub fn run(mode: Mode) -> Result<()> {
     sleep_timer::install(&window, &context);
 
     let deps = controller_deps(mode, &settings, &window, &context)?;
-    let controller = Controller::new(deps, settings.clone(), stored_queue, None);
+    let mut controller = Controller::new(deps, settings.clone(), None, None);
+    controller.expect_saved_queue();
     runtime.spawn(controller.run(receiver));
 
     restore_session(&window, &context, &settings, mode);
+    restore_saved_queue_once_shown(&context);
+    termination::quit_on_termination_signals(runtime.handle());
     window.run().context("running the window")?;
 
     save_state_on_exit(&runtime, &window, &context, &settings);

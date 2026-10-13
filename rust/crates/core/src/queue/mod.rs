@@ -17,7 +17,7 @@ mod tests;
 use std::collections::HashMap;
 
 pub use item::{Advance, QueueItem, RepeatMode, Uid};
-pub use snapshot::QueueSnapshot;
+pub use snapshot::{QueueSnapshot, QueueView};
 pub use track::QueueTrack;
 
 use interner::TrackInterner;

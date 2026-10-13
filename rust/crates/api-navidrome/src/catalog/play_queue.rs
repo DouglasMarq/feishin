@@ -9,6 +9,9 @@ use crate::native::{NativeQueue, SaveQueueRequest};
 use crate::query::QueryParams;
 use crate::subsonic::{self, PlayQueueBody};
 
+const MAX_QUERY_STRING_BYTES: usize = 8_000;
+const ID_PARAMETER_BYTES: usize = "&id=".len();
+
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 enum QueueCursor {
     ByIndex,
@@ -91,6 +94,13 @@ impl NavidromeServer {
         snapshot: &QueueSnapshot<'_>,
         features: &Features,
     ) -> Result<()> {
+        if too_long_for_a_query_string(features, snapshot.song_ids) {
+            tracing::debug!(
+                songs = snapshot.song_ids.len(),
+                "play queue not saved: too long for a GET request and the server lacks formPost"
+            );
+            return Ok(());
+        }
         let cursor = QueueCursor::for_features(features);
         let mut params: QueryParams = snapshot
             .song_ids
@@ -154,6 +164,14 @@ impl NavidromeServer {
             Err(error) => Err(error),
         }
     }
+}
+
+fn too_long_for_a_query_string(features: &Features, song_ids: &[String]) -> bool {
+    let id_bytes: usize = song_ids
+        .iter()
+        .map(|song_id| song_id.len() + ID_PARAMETER_BYTES)
+        .sum();
+    !features.has_extension(OpenSubsonicExtension::FormPost) && id_bytes > MAX_QUERY_STRING_BYTES
 }
 
 fn song_id_at(songs: &[Song], index: u32) -> Option<String> {

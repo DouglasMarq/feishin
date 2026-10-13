@@ -5,6 +5,7 @@ use feishin_player::{AudioDevice, PlayerEvent};
 use feishin_storage::settings::{IntegrationSettings, PlaybackSettings, Settings, UiSettings};
 use tokio::sync::{mpsc, oneshot};
 
+use super::PersistenceEvent;
 use crate::sleep_timer::SleepMode;
 
 pub enum Command {
@@ -51,6 +52,7 @@ pub enum Command {
         request: u64,
         queue: ServerPlayQueue,
     },
+    Persistence(PersistenceEvent),
     Shutdown {
         ui: UiSettings,
         done: oneshot::Sender<()>,

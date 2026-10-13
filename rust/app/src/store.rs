@@ -7,7 +7,7 @@ use feishin_api::Credential;
 use feishin_storage::Paths;
 use feishin_storage::credentials;
 use feishin_storage::feishin_import::{self, ImportedServer};
-use feishin_storage::queue_store::{self, StoredQueue};
+use feishin_storage::queue_store::{self, EncodedQueue, PlaybackState, StoredQueue};
 use feishin_storage::settings::Settings;
 use serde::Serialize;
 use serde::de::DeserializeOwned;
@@ -16,7 +16,8 @@ pub trait Store: Send + Sync {
     fn load_settings(&self) -> Result<Settings>;
     fn save_settings(&self, settings: &Settings) -> Result<()>;
     fn load_queue(&self) -> Result<Option<StoredQueue>>;
-    fn save_queue(&self, queue: &StoredQueue) -> Result<()>;
+    fn save_queue(&self, queue: &EncodedQueue) -> Result<()>;
+    fn save_playback(&self, playback: &PlaybackState) -> Result<()>;
     fn credential(&self, server_id: &str) -> Result<Option<Credential>>;
     fn set_credential(&self, server_id: &str, credential: &Credential) -> Result<()>;
     fn delete_credential(&self, server_id: &str) -> Result<()>;
@@ -55,10 +56,13 @@ impl Store for SystemStore {
         Ok(settings.save(&self.paths)?)
     }
     fn load_queue(&self) -> Result<Option<StoredQueue>> {
-        Ok(queue_store::load(&self.paths)?)
+        Ok(queue_store::load(&self.paths.data_dir)?)
     }
-    fn save_queue(&self, queue: &StoredQueue) -> Result<()> {
-        Ok(queue_store::save(&self.paths, queue)?)
+    fn save_queue(&self, queue: &EncodedQueue) -> Result<()> {
+        Ok(queue_store::save(&self.paths.data_dir, queue)?)
+    }
+    fn save_playback(&self, playback: &PlaybackState) -> Result<()> {
+        Ok(queue_store::save_playback(&self.paths.data_dir, playback)?)
     }
     fn credential(&self, server_id: &str) -> Result<Option<Credential>> {
         Ok(credentials::get(server_id)?
@@ -118,10 +122,13 @@ impl Store for JsonStore {
         self.write("settings.json", settings)
     }
     fn load_queue(&self) -> Result<Option<StoredQueue>> {
-        self.read("queue.json")
+        Ok(queue_store::load(&self.dir)?)
     }
-    fn save_queue(&self, queue: &StoredQueue) -> Result<()> {
-        self.write("queue.json", queue)
+    fn save_queue(&self, queue: &EncodedQueue) -> Result<()> {
+        Ok(queue_store::save(&self.dir, queue)?)
+    }
+    fn save_playback(&self, playback: &PlaybackState) -> Result<()> {
+        Ok(queue_store::save_playback(&self.dir, playback)?)
     }
     fn credential(&self, server_id: &str) -> Result<Option<Credential>> {
         let credentials = self

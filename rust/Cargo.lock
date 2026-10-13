@@ -1594,6 +1594,7 @@ dependencies = [
 name = "feishin-storage"
 version = "0.1.0"
 dependencies = [
+ "bincode",
  "feishin-api",
  "feishin-core",
  "image",

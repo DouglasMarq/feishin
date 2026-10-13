@@ -35,6 +35,7 @@ impl Controller {
             Command::SleepTimer(mode) => self.set_sleep_timer(mode),
             Command::SleepTick { elapsed_ms } => self.sleep_tick(elapsed_ms),
             Command::RestoreQueue { request, queue } => self.restore_queue(request, queue),
+            Command::Persistence(event) => self.on_persistence_event(event),
             Command::Shutdown { ui, done } => self.shut_down(ui, done),
             Command::GetSettings(reply) => self.reply_with_settings(reply),
             Command::ApplyPlayback(playback) => self.apply_playback(playback),

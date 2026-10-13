@@ -24,6 +24,7 @@ use feishin_storage::settings::Settings;
 use tokio::sync::mpsc;
 
 pub use command::{Command, SettingsSnapshot, forward_command};
+pub use persistence::{PersistenceEvent, load_saved_queue};
 pub use ui_update::{QueueEntry, UiSink, UiUpdate, artist_names};
 
 use crate::audio::AudioOutput;
@@ -33,6 +34,7 @@ use crate::scrobble::ScrobbleTracker;
 use crate::session::Session;
 use crate::sleep_timer::SleepTimer;
 use crate::store::Store;
+use persistence::QueuePersistence;
 
 pub struct Deps {
     pub audio: Box<dyn AudioOutput>,
@@ -56,6 +58,7 @@ pub struct Controller {
     duration_ms: u64,
     play_request: u64,
     queue_sync: PlayQueueSync,
+    persistence: QueuePersistence,
     sleep_timer: SleepTimer,
     saved_credential: Option<Credential>,
 }
@@ -76,6 +79,7 @@ impl Controller {
     ) -> Self {
         let (queue, position_ms) = initial_queue(stored, seed);
         let duration_ms = queue.current().map_or(0, |item| item.track.duration_ms);
+        let persistence = QueuePersistence::new(Arc::clone(&deps.store));
         let mut controller = Self {
             deps,
             queue,
@@ -89,6 +93,7 @@ impl Controller {
             duration_ms,
             play_request: 0,
             queue_sync: PlayQueueSync::default(),
+            persistence,
             sleep_timer: SleepTimer::default(),
             saved_credential: None,
         };

@@ -13,6 +13,7 @@ mod scrobble;
 mod session;
 mod sleep_timer;
 mod store;
+mod termination;
 mod ui;
 
 #[cfg(test)]
