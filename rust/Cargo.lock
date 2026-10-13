@@ -1583,6 +1583,7 @@ name = "feishin-platform"
 version = "0.1.0"
 dependencies = [
  "discord-rich-presence",
+ "futures-util",
  "mpris-server",
  "serde_json",
  "tempfile",

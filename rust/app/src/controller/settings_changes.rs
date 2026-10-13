@@ -1,3 +1,4 @@
+use feishin_storage::appearance::AppearanceSettings;
 use feishin_storage::settings::{IntegrationSettings, PlaybackSettings};
 use tokio::sync::oneshot;
 
@@ -63,6 +64,11 @@ impl Controller {
     pub(super) fn save_interface(&mut self, queue_panel_open: bool, follow_current_song: bool) {
         self.settings.ui.queue_panel_open = queue_panel_open;
         self.settings.ui.follow_current_song = follow_current_song;
+        self.save_settings();
+    }
+
+    pub(super) fn save_appearance(&mut self, appearance: AppearanceSettings) {
+        self.settings.appearance = appearance;
         self.save_settings();
     }
 }

@@ -2,6 +2,7 @@ import { Button, ComboBox, ScrollView, Switch } from "std-widgets.slint";
 import { Theme, Icons } from "theme.slint";
 import { AppState, PlayerState } from "globals.slint";
 import { Bar, IconButton } from "widgets.slint";
+import { AppearanceOptions } from "appearance_settings.slint";
 
 export struct ServerRow {
     id: string,
@@ -223,7 +224,7 @@ component ServerItem inherits Rectangle {
 
                     current-text := Text {
                         text: "Current";
-                        color: white;
+                        color: Theme.on-primary;
                         font-size: 11px;
                         font-weight: 600;
                     }
@@ -524,6 +525,12 @@ export component SettingsView inherits Rectangle {
                         }
                     }
                 }
+            }
+
+            Section {
+                title: "Appearance";
+
+                AppearanceOptions { }
             }
 
             Section {

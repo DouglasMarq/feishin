@@ -2,6 +2,7 @@ mod error;
 mod file_io;
 mod paths;
 
+pub mod appearance;
 pub mod cover_cache;
 pub mod credentials;
 pub mod feishin_import;

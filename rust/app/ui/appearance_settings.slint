@@ -1,0 +1,384 @@
+import { LineEdit, ScrollView, Switch } from "std-widgets.slint";
+import { Theme, Icons, Palettes, ThemePalette } from "theme.slint";
+import { Icon, TooltipAnchor } from "widgets.slint";
+
+export enum SystemScheme { no-preference, dark, light }
+
+export struct AccentPreset {
+    swatch: color,
+    name: string,
+}
+
+export global AppearanceState {
+    in-out property <bool> follow-system;
+    in-out property <int> theme-index;
+    in-out property <int> dark-theme-index;
+    in-out property <int> light-theme-index;
+    in-out property <bool> use-theme-accent: true;
+    in-out property <color> accent: #3574fc;
+    in-out property <string> accent-text: "#3574fc";
+    in property <SystemScheme> system-scheme;
+    out property <[AccentPreset]> accent-presets: [
+        { swatch: #3574fc, name: "Blue" },
+        { swatch: #f0aa16, name: "Amber" },
+        { swatch: #1db954, name: "Green" },
+        { swatch: #d6513f, name: "Red" },
+        { swatch: #aa6ed8, name: "Purple" },
+    ];
+    callback changed();
+    callback accent-entered(text: string);
+}
+
+component PaletteSwatches inherits VerticalLayout {
+    in property <ThemePalette> palette;
+    alignment: center;
+
+    HorizontalLayout {
+        spacing: 3px;
+
+        for swatch in [root.palette.background, root.palette.surface, root.palette.foreground, root.palette.primary]: Rectangle {
+            width: 14px;
+            height: 14px;
+            border-radius: 3px;
+            border-width: 1px;
+            border-color: #80808066;
+            background: swatch;
+        }
+    }
+}
+
+component ThemeListItem inherits Rectangle {
+    in property <ThemePalette> palette;
+    in property <bool> current;
+    callback clicked();
+    height: 32px;
+    border-radius: 4px;
+    background: root.current ? Theme.selected : (touch.has-hover ? Theme.hover : transparent);
+
+    HorizontalLayout {
+        padding-left: 10px;
+        padding-right: 10px;
+        spacing: 10px;
+
+        PaletteSwatches {
+            palette: root.palette;
+            horizontal-stretch: 0;
+        }
+
+        Text {
+            text: root.palette.name;
+            color: Theme.foreground;
+            vertical-alignment: center;
+            overflow: elide;
+            horizontal-stretch: 1;
+        }
+    }
+
+    TooltipAnchor {
+        text: root.current ? root.palette.name + " (current theme)" : "Use " + root.palette.name;
+        hovered: touch.has-hover;
+    }
+
+    touch := TouchArea {
+        mouse-cursor: pointer;
+        clicked => {
+            root.clicked();
+        }
+    }
+}
+
+component GroupHeading inherits Text {
+    color: Theme.muted;
+    font-size: 11px;
+    font-weight: 600;
+    height: 24px;
+    vertical-alignment: center;
+}
+
+export component ThemePicker inherits Rectangle {
+    in property <string> label;
+    in-out property <int> selected;
+    property <ThemePalette> palette: Palettes.all[root.selected];
+    property <length> list-height: 360px;
+    callback chosen();
+    width: 260px;
+    height: 34px;
+    border-radius: Theme.radius;
+    border-width: 1px;
+    border-color: Theme.border;
+    background: touch.has-hover ? Theme.surface-raised : Theme.background;
+
+    HorizontalLayout {
+        padding-left: 10px;
+        padding-right: 10px;
+        spacing: 10px;
+
+        PaletteSwatches {
+            palette: root.palette;
+            horizontal-stretch: 0;
+        }
+
+        Text {
+            text: root.palette.name;
+            color: Theme.foreground;
+            vertical-alignment: center;
+            overflow: elide;
+            horizontal-stretch: 1;
+        }
+
+        Icon {
+            y: (parent.height - self.height) / 2;
+            path: Icons.arrow-down;
+            color: Theme.muted;
+        }
+    }
+
+    TooltipAnchor {
+        text: root.label + ": " + root.palette.name + (root.palette.dark ? " (dark)" : " (light)");
+        hovered: touch.has-hover;
+    }
+
+    touch := TouchArea {
+        mouse-cursor: pointer;
+        clicked => {
+            menu.show();
+        }
+    }
+
+    menu := PopupWindow {
+        y: root.height + 4px;
+        width: root.width;
+        height: root.list-height;
+
+        Rectangle {
+            background: Theme.surface-raised;
+            border-radius: Theme.radius;
+            border-width: 1px;
+            border-color: Theme.border;
+        }
+
+        ScrollView {
+            width: parent.width;
+            height: parent.height;
+
+            VerticalLayout {
+                padding: 6px;
+
+                GroupHeading {
+                    text: "DARK THEMES";
+                }
+
+                for entry[index] in Palettes.all: VerticalLayout {
+                    if index > 0 && !entry.dark && Palettes.all[index - 1].dark: GroupHeading {
+                        text: "LIGHT THEMES";
+                    }
+
+                    ThemeListItem {
+                        palette: entry;
+                        current: index == root.selected;
+                        clicked => {
+                            root.selected = index;
+                            root.chosen();
+                            menu.close();
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+export component ToggleSwitch inherits Rectangle {
+    in property <string> label;
+    in-out property <bool> checked;
+    callback toggled();
+    width: toggle.preferred-width;
+    height: toggle.preferred-height;
+
+    hover := TouchArea {
+        toggle := Switch {
+            checked <=> root.checked;
+            toggled => {
+                root.toggled();
+            }
+        }
+    }
+
+    TooltipAnchor {
+        text: root.label + ": " + (root.checked ? "on" : "off");
+        hovered: hover.has-hover;
+    }
+}
+
+component AccentSwatch inherits Rectangle {
+    in property <AccentPreset> preset;
+    in property <bool> current;
+    in property <bool> enabled;
+    callback clicked();
+    width: 24px;
+    height: 24px;
+    border-radius: 12px;
+    background: root.preset.swatch;
+    border-width: root.current ? 2px : 0px;
+    border-color: Theme.foreground;
+    opacity: root.enabled ? 1 : 0.4;
+
+    TooltipAnchor {
+        text: "Accent color " + root.preset.name + (root.current ? " (selected)" : (root.enabled ? "" : " (theme accent in use)"));
+        hovered: touch.has-hover;
+    }
+
+    touch := TouchArea {
+        enabled: root.enabled;
+        mouse-cursor: pointer;
+        clicked => {
+            root.clicked();
+        }
+    }
+}
+
+component AccentInput inherits Rectangle {
+    width: 110px;
+    height: input.preferred-height;
+
+    hover := TouchArea {
+        input := LineEdit {
+            width: parent.width;
+            enabled: !AppearanceState.use-theme-accent;
+            placeholder-text: "#3574fc";
+            text <=> AppearanceState.accent-text;
+            accepted(text) => {
+                AppearanceState.accent-entered(text);
+            }
+        }
+    }
+
+    TooltipAnchor {
+        text: AppearanceState.use-theme-accent ? "Custom accent color: " + AppearanceState.accent-text + " (theme accent in use)" : "Custom accent color: " + AppearanceState.accent-text + ", press Enter to apply";
+        hovered: hover.has-hover;
+    }
+}
+
+component SettingRow inherits HorizontalLayout {
+    in property <string> title;
+    in property <string> description;
+    spacing: 24px;
+
+    VerticalLayout {
+        alignment: center;
+        spacing: 3px;
+        horizontal-stretch: 1;
+
+        Text {
+            text: root.title;
+            color: Theme.foreground;
+        }
+
+        if root.description != "": Text {
+            text: root.description;
+            color: Theme.muted;
+            font-size: 12px;
+            wrap: word-wrap;
+        }
+    }
+
+    VerticalLayout {
+        alignment: center;
+        horizontal-stretch: 0;
+
+        HorizontalLayout {
+            spacing: 8px;
+            alignment: end;
+
+            @children
+        }
+    }
+}
+
+export component AppearanceOptions inherits VerticalLayout {
+    property <string> system-description: AppearanceState.system-scheme == SystemScheme.light ? "The desktop currently prefers light." : (AppearanceState.system-scheme == SystemScheme.dark ? "The desktop currently prefers dark." : "The desktop has no preference, so the dark theme is used.");
+    spacing: 18px;
+
+    SettingRow {
+        title: "Follow system color scheme";
+        description: "Switch between a dark and a light theme with the desktop. " + root.system-description;
+
+        ToggleSwitch {
+            label: "Follow system color scheme";
+            checked <=> AppearanceState.follow-system;
+            toggled => {
+                AppearanceState.changed();
+            }
+        }
+    }
+
+    if !AppearanceState.follow-system: SettingRow {
+        title: "Theme";
+        description: "Colors used across the whole app.";
+
+        ThemePicker {
+            label: "Theme";
+            selected <=> AppearanceState.theme-index;
+            chosen => {
+                AppearanceState.changed();
+            }
+        }
+    }
+
+    if AppearanceState.follow-system: SettingRow {
+        title: "Dark theme";
+        description: "Used while the desktop prefers dark.";
+
+        ThemePicker {
+            label: "Dark theme";
+            selected <=> AppearanceState.dark-theme-index;
+            chosen => {
+                AppearanceState.changed();
+            }
+        }
+    }
+
+    if AppearanceState.follow-system: SettingRow {
+        title: "Light theme";
+        description: "Used while the desktop prefers light.";
+
+        ThemePicker {
+            label: "Light theme";
+            selected <=> AppearanceState.light-theme-index;
+            chosen => {
+                AppearanceState.changed();
+            }
+        }
+    }
+
+    SettingRow {
+        title: "Use the theme accent color";
+        description: "Highlight with the color that comes with the theme.";
+
+        ToggleSwitch {
+            label: "Use the theme accent color";
+            checked <=> AppearanceState.use-theme-accent;
+            toggled => {
+                AppearanceState.changed();
+            }
+        }
+    }
+
+    SettingRow {
+        title: "Accent color";
+        description: AppearanceState.use-theme-accent ? "Turn off the theme accent color to pick your own." : "Pick a color, or type one as #rrggbb and press Enter.";
+
+        for preset in AppearanceState.accent-presets: AccentSwatch {
+            y: (parent.height - self.height) / 2;
+            preset: preset;
+            enabled: !AppearanceState.use-theme-accent;
+            current: !AppearanceState.use-theme-accent && AppearanceState.accent == preset.swatch;
+            clicked => {
+                AppearanceState.accent = preset.swatch;
+                AppearanceState.changed();
+            }
+        }
+
+        AccentInput { }
+    }
+}

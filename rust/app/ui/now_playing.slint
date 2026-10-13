@@ -174,7 +174,7 @@ component LyricsPanel inherits Rectangle {
                     horizontal-alignment: NowPlayingState.lyrics-synced ? center : left;
                     font-size: NowPlayingState.lyrics-synced ? 24px : 16px;
                     font-weight: NowPlayingState.lyrics-synced ? 700 : 400;
-                    color: !NowPlayingState.lyrics-synced ? Theme.foreground : (line-view.active ? Theme.foreground : (touch.has-hover ? #c8c8c8 : #5e5e5e));
+                    color: !NowPlayingState.lyrics-synced ? Theme.foreground : (line-view.active ? Theme.foreground : (touch.has-hover ? Theme.foreground.mix(Theme.background, 0.8826) : Theme.foreground.mix(Theme.background, 0.385)));
                     animate color { duration: 200ms; }
                 }
 
@@ -375,7 +375,7 @@ export component NowPlayingView inherits Rectangle {
     }
 
     Rectangle {
-        background: @linear-gradient(180deg, #0c0c0c66 0%, Theme.background 85%);
+        background: @linear-gradient(180deg, Theme.background.with-alpha(0.4) 0%, Theme.background 85%);
     }
 
     if !PlayerState.has-song: Placeholder {

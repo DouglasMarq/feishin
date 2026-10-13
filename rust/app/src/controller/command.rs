@@ -4,6 +4,7 @@ use feishin_core::model::{ServerConfig, ServerPlayQueue, Song};
 use feishin_core::queue::Uid;
 use feishin_platform::MediaControlEvent;
 use feishin_player::{AudioDevice, PlayerEvent};
+use feishin_storage::appearance::AppearanceSettings;
 use feishin_storage::settings::{IntegrationSettings, PlaybackSettings, Settings, UiSettings};
 use tokio::sync::{mpsc, oneshot};
 
@@ -69,6 +70,7 @@ pub enum Command {
         queue_panel_open: bool,
         follow_current_song: bool,
     },
+    SaveAppearance(AppearanceSettings),
     RemoveServer(String),
 }
 
