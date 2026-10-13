@@ -22,3 +22,5 @@ mod songs;
 mod support;
 #[cfg(test)]
 mod urls;
+#[cfg(test)]
+mod year_ranges;

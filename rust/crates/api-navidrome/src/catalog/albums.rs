@@ -3,6 +3,7 @@ use feishin_core::model::{Album, AlbumDetail, AlbumListQuery, Page, Paging, Sort
 
 use crate::NavidromeServer;
 use crate::catalog::SUBSONIC_MAX_ITEMS;
+use crate::catalog::album_years::YearRange;
 use crate::catalog::paging::subsonic_page;
 use crate::features::Features;
 use crate::http::missing_session_error;
@@ -19,6 +20,9 @@ impl NavidromeServer {
         query: &AlbumListQuery,
         paging: Paging,
     ) -> Result<Page<Album>> {
+        if let Some(range) = YearRange::of(query) {
+            return self.album_page_in_year_range(query, range, paging).await;
+        }
         let features = self.features().await;
         let start = paging.start_index;
         self.native_or_subsonic(
@@ -29,6 +33,9 @@ impl NavidromeServer {
     }
 
     pub(crate) async fn count_albums(&self, query: &AlbumListQuery) -> Result<usize> {
+        if let Some(range) = YearRange::of(query) {
+            return self.count_albums_in_year_range(query, range).await;
+        }
         let features = self.features().await;
         let page = self.native_album_page(query, 0, 1, &features).await?;
         Ok(page.total_count.unwrap_or(0))

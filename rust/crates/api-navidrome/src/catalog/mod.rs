@@ -1,3 +1,4 @@
+mod album_years;
 mod albums;
 mod annotations;
 mod artists;
@@ -7,6 +8,7 @@ mod paging;
 mod play_queue;
 mod playlists;
 mod scanning;
+mod song_years;
 mod songs;
 mod urls;
 
