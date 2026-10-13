@@ -47,6 +47,7 @@ built_binary() {
 assemble_app_dir() {
     install -Dm755 "$(built_binary)" "$app_dir/usr/bin/feishin"
     bash "$packaging_dir/install-desktop-integration.sh" "$app_dir/usr"
+    mv "$app_dir/usr/share/metainfo/$app_id.metainfo.xml" "$app_dir/usr/share/metainfo/$app_id.appdata.xml"
 }
 
 bundle_libraries() {
@@ -56,8 +57,8 @@ bundle_libraries() {
         --executable "$app_dir/usr/bin/feishin" \
         --desktop-file "$app_dir/usr/share/applications/$app_id.desktop" \
         --icon-file "$app_dir/usr/share/icons/hicolor/256x256/apps/$app_id.png" \
-        --exclude-library 'libstdc++.so*' \
-        --exclude-library 'libgcc_s.so*'
+        --exclude-library 'libxkbcommon*' \
+        --exclude-library 'libwayland-*'
 }
 
 pack_app_image() {

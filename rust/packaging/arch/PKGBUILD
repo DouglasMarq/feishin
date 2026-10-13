@@ -31,6 +31,7 @@ build() {
     cd feishin/rust
     export RUSTUP_TOOLCHAIN=stable
     export CARGO_TARGET_DIR=target
+    export RUSTFLAGS="${RUSTFLAGS:-} --remap-path-prefix=$srcdir=/usr/src/debug/$pkgname"
     cargo build --frozen --release -p feishin
 }
 
