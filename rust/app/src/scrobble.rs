@@ -1,5 +1,3 @@
-//! Listen-time based scrobbling, ported from `src/renderer/features/player/hooks/use-scrobble.ts`.
-
 const SUBMIT_PERCENT: u64 = 50;
 const SUBMIT_AFTER_MS: u64 = 4 * 60 * 1000;
 const TRACK_BEGIN_MS: u64 = 5_000;
@@ -8,7 +6,6 @@ const MAX_LISTEN_DELTA_MS: u64 = 5_000;
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Submission {
     pub song_id: String,
-    /// Unix ms when the play started.
     pub timestamp_ms: i64,
 }
 
@@ -23,7 +20,6 @@ pub struct ScrobbleTracker {
 }
 
 impl ScrobbleTracker {
-    /// A new play-through began.
     pub fn start(&mut self, song_id: &str, duration_ms: u64, now_ms: i64) {
         *self = Self {
             song_id: Some(song_id.to_owned()),
@@ -37,21 +33,15 @@ impl ScrobbleTracker {
         *self = Self::default();
     }
 
-    /// Feeds a position sample; returns a submission once enough of the track was listened to.
     pub fn position(&mut self, position_ms: u64, playing: bool) -> Option<Submission> {
         let song_id = self.song_id.clone()?;
-        let last = self.last_sample_ms;
+        let previous_sample_ms = self.last_sample_ms;
         self.last_sample_ms = Some(position_ms);
         if !playing {
             return None;
         }
-        if let Some(last) = last {
-            if position_ms < last && position_ms < TRACK_BEGIN_MS && last >= TRACK_BEGIN_MS {
-                self.listened_ms = 0;
-                self.submitted = false;
-            } else if position_ms > last && position_ms - last <= MAX_LISTEN_DELTA_MS {
-                self.listened_ms += position_ms - last;
-            }
+        if let Some(previous_sample_ms) = previous_sample_ms {
+            self.account_listening(previous_sample_ms, position_ms);
         }
         if self.submitted || !self.eligible() {
             return None;
@@ -61,6 +51,21 @@ impl ScrobbleTracker {
             song_id,
             timestamp_ms: self.started_at_ms,
         })
+    }
+
+    fn account_listening(&mut self, previous_sample_ms: u64, position_ms: u64) {
+        let restarted = position_ms < previous_sample_ms
+            && position_ms < TRACK_BEGIN_MS
+            && previous_sample_ms >= TRACK_BEGIN_MS;
+        if restarted {
+            self.listened_ms = 0;
+            self.submitted = false;
+            return;
+        }
+        let advanced_ms = position_ms.saturating_sub(previous_sample_ms);
+        if advanced_ms > 0 && advanced_ms <= MAX_LISTEN_DELTA_MS {
+            self.listened_ms += advanced_ms;
+        }
     }
 
     fn eligible(&self) -> bool {
@@ -76,7 +81,7 @@ mod tests {
 
     fn feed(tracker: &mut ScrobbleTracker, until_ms: u64) -> Vec<Submission> {
         (0..=until_ms / 250)
-            .filter_map(|i| tracker.position(i * 250, true))
+            .filter_map(|sample| tracker.position(sample * 250, true))
             .collect()
     }
 

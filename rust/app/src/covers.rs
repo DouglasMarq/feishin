@@ -8,7 +8,9 @@ use feishin_storage::cover_cache::{CoverCache, CoverCacheConfig, DecodedImage};
 
 use crate::demo::render_cover;
 
-/// Cover art source (`feishin_storage::cover_cache::CoverCache` in real mode).
+const COVER_DISK_CACHE_BYTES: u64 = 512 * 1024 * 1024;
+const COVER_MEMORY_CACHE_ITEMS: usize = 64;
+
 #[async_trait]
 pub trait CoverProvider: Send + Sync {
     async fn cover(
@@ -25,8 +27,8 @@ impl CachedCovers {
     pub fn new(paths: &Paths) -> Result<Self> {
         let config = CoverCacheConfig {
             dir: paths.cache_dir.join("covers"),
-            max_disk_bytes: 512 * 1024 * 1024,
-            max_memory_items: 64,
+            max_disk_bytes: COVER_DISK_CACHE_BYTES,
+            max_memory_items: COVER_MEMORY_CACHE_ITEMS,
         };
         Ok(Self(CoverCache::new(config, reqwest::Client::new())?))
     }
@@ -40,9 +42,9 @@ impl CoverProvider for CachedCovers {
         cover_art_id: &str,
         size: u32,
     ) -> Result<Arc<DecodedImage>> {
-        let key = format!("{}:{cover_art_id}", server.config().id);
+        let cache_key = format!("{}:{cover_art_id}", server.config().id);
         let url = server.cover_art_url(cover_art_id, Some(size));
-        Ok(self.0.get(&key, &url, size).await?)
+        Ok(self.0.get(&cache_key, &url, size).await?)
     }
 }
 

@@ -1,8 +1,3 @@
-//! Discord Rich Presence as a media session: mirrors the now playing metadata and status.
-//!
-//! Connecting blocks, so a background thread owns the connection, retries with backoff while Discord
-//! is not running and always delivers the latest state.
-
 use std::sync::mpsc::{self, Receiver, RecvTimeoutError, Sender};
 use std::time::{Duration, Instant};
 
@@ -24,7 +19,6 @@ pub struct DiscordSession {
 }
 
 impl DiscordSession {
-    /// An empty `client_id` uses Feishin's application.
     pub fn new(client_id: String) -> Result<Self> {
         let (updates, receiver) = mpsc::channel();
         std::thread::Builder::new()
@@ -52,7 +46,6 @@ impl MediaSession for DiscordSession {
     }
 }
 
-/// Doubling retry delay, capped.
 #[derive(Debug)]
 struct Backoff {
     delay: Duration,
@@ -77,6 +70,13 @@ impl Backoff {
     }
 }
 
+#[derive(Debug, PartialEq)]
+struct Activity<'desired> {
+    now_playing: &'desired NowPlaying,
+    position_ms: u64,
+    paused: bool,
+}
+
 #[derive(Default)]
 struct Desired {
     now_playing: Option<NowPlaying>,
@@ -87,81 +87,129 @@ impl Desired {
     fn apply(&mut self, update: Update) {
         match update {
             Update::Metadata(now_playing) => self.now_playing = Some(now_playing),
-            Update::Status(status, at) => self.status = Some((status, at)),
+            Update::Status(status, received_at) => self.status = Some((status, received_at)),
         }
     }
 
-    /// What to show at `now`: the song, its position and whether it is paused; `None` clears it.
-    fn activity(&self, now: Instant) -> Option<(&NowPlaying, u64, bool)> {
+    fn activity(&self, now: Instant) -> Option<Activity<'_>> {
         let now_playing = self.now_playing.as_ref()?;
         match self.status? {
-            (PlaybackStatus::Playing { position_ms }, at) => {
-                let elapsed = now.saturating_duration_since(at).as_millis() as u64;
-                Some((now_playing, position_ms.saturating_add(elapsed), false))
+            (PlaybackStatus::Playing { position_ms }, received_at) => {
+                let elapsed_ms = now.saturating_duration_since(received_at).as_millis() as u64;
+                Some(Activity {
+                    now_playing,
+                    position_ms: position_ms.saturating_add(elapsed_ms),
+                    paused: false,
+                })
             }
-            (PlaybackStatus::Paused { position_ms }, _) => Some((now_playing, position_ms, true)),
+            (PlaybackStatus::Paused { position_ms }, _) => Some(Activity {
+                now_playing,
+                position_ms,
+                paused: true,
+            }),
             (PlaybackStatus::Stopped, _) => None,
         }
     }
 }
 
 fn run(client_id: &str, updates: &Receiver<Update>) {
-    let mut desired = Desired::default();
-    let mut presence: Option<DiscordPresence> = None;
-    let mut backoff = Backoff::new(Instant::now());
-    let mut dirty = false;
-    loop {
-        let wants_connection = presence.is_none() && desired.activity(Instant::now()).is_some();
-        let received = if wants_connection {
-            let wait = backoff
-                .next_attempt
-                .saturating_duration_since(Instant::now());
-            updates.recv_timeout(wait)
-        } else {
-            updates.recv().map_err(|_| RecvTimeoutError::Disconnected)
-        };
-        match received {
-            Ok(update) => {
-                desired.apply(update);
-                updates.try_iter().for_each(|update| desired.apply(update));
-                dirty = true;
-            }
-            Err(RecvTimeoutError::Timeout) => {}
-            Err(RecvTimeoutError::Disconnected) => return,
-        }
+    let mut worker = PresenceWorker::new(client_id);
+    while worker.receive(updates) {
+        worker.sync();
+    }
+}
 
-        let now = Instant::now();
-        if presence.is_none() {
-            if desired.activity(now).is_none() || now < backoff.next_attempt {
-                continue;
+struct PresenceWorker<'client> {
+    client_id: &'client str,
+    desired: Desired,
+    presence: Option<DiscordPresence>,
+    backoff: Backoff,
+    dirty: bool,
+}
+
+impl<'client> PresenceWorker<'client> {
+    fn new(client_id: &'client str) -> Self {
+        Self {
+            client_id,
+            desired: Desired::default(),
+            presence: None,
+            backoff: Backoff::new(Instant::now()),
+            dirty: false,
+        }
+    }
+
+    fn receive(&mut self, updates: &Receiver<Update>) -> bool {
+        match self.wait_for_update(updates) {
+            Ok(update) => {
+                self.desired.apply(update);
+                updates
+                    .try_iter()
+                    .for_each(|update| self.desired.apply(update));
+                self.dirty = true;
+                true
             }
-            match DiscordPresence::connect(client_id) {
-                Ok(connected) => {
-                    presence = Some(connected);
-                    backoff.reset(now);
-                    dirty = true;
-                }
-                Err(e) => {
-                    tracing::debug!("Discord presence: {e}");
-                    backoff.failed(Instant::now());
-                    continue;
-                }
+            Err(RecvTimeoutError::Timeout) => true,
+            Err(RecvTimeoutError::Disconnected) => false,
+        }
+    }
+
+    fn wait_for_update(&self, updates: &Receiver<Update>) -> Result<Update, RecvTimeoutError> {
+        let wants_connection =
+            self.presence.is_none() && self.desired.activity(Instant::now()).is_some();
+        if !wants_connection {
+            return updates.recv().map_err(|_| RecvTimeoutError::Disconnected);
+        }
+        let wait = self
+            .backoff
+            .next_attempt
+            .saturating_duration_since(Instant::now());
+        updates.recv_timeout(wait)
+    }
+
+    fn sync(&mut self) {
+        if self.presence.is_none() && !self.try_connect() {
+            return;
+        }
+        self.push_activity();
+    }
+
+    fn try_connect(&mut self) -> bool {
+        let now = Instant::now();
+        if self.desired.activity(now).is_none() || now < self.backoff.next_attempt {
+            return false;
+        }
+        match DiscordPresence::connect(self.client_id) {
+            Ok(connected) => {
+                self.presence = Some(connected);
+                self.backoff.reset(now);
+                self.dirty = true;
+                true
+            }
+            Err(error) => {
+                tracing::debug!("Discord presence: {error}");
+                self.backoff.failed(Instant::now());
+                false
             }
         }
-        let Some(client) = presence.as_mut().filter(|_| dirty) else {
-            continue;
+    }
+
+    fn push_activity(&mut self) {
+        let Some(client) = self.presence.as_mut().filter(|_| self.dirty) else {
+            return;
         };
-        dirty = false;
-        let result = match desired.activity(Instant::now()) {
-            Some((now_playing, position_ms, paused)) => {
-                client.set_activity(now_playing, Some(position_ms), paused)
-            }
+        self.dirty = false;
+        let result = match self.desired.activity(Instant::now()) {
+            Some(activity) => client.set_activity(
+                activity.now_playing,
+                Some(activity.position_ms),
+                activity.paused,
+            ),
             None => client.clear(),
         };
-        if let Err(e) = result {
-            tracing::debug!("Discord presence: {e}");
-            presence = None;
-            backoff.failed(Instant::now());
+        if let Err(error) = result {
+            tracing::debug!("Discord presence: {error}");
+            self.presence = None;
+            self.backoff.failed(Instant::now());
         }
     }
 }
@@ -203,7 +251,11 @@ mod tests {
         desired.apply(Update::Metadata(song.clone()));
         assert_eq!(
             desired.activity(start + Duration::from_secs(2)),
-            Some((&song, 3_000, false))
+            Some(Activity {
+                now_playing: &song,
+                position_ms: 3_000,
+                paused: false,
+            })
         );
 
         desired.apply(Update::Status(
@@ -212,7 +264,11 @@ mod tests {
         ));
         assert_eq!(
             desired.activity(start + Duration::from_secs(9)),
-            Some((&song, 4_000, true))
+            Some(Activity {
+                now_playing: &song,
+                position_ms: 4_000,
+                paused: true,
+            })
         );
 
         desired.apply(Update::Status(PlaybackStatus::Stopped, start));

@@ -3,7 +3,6 @@ use feishin_core::model::{Paging, Song, SongListQuery};
 
 const FETCH_ALL_PAGE_SIZE: usize = 500;
 
-/// Every song matching `query`, in the server's order (what "play from list" queues).
 pub async fn fetch_all_songs(server: &dyn MusicServer, query: &SongListQuery) -> Result<Vec<Song>> {
     let mut songs = Vec::new();
     loop {

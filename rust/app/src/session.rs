@@ -2,7 +2,6 @@ use std::sync::{Arc, RwLock};
 
 use feishin_api::MusicServer;
 
-/// The connected server, shared by the controller and the views.
 #[derive(Clone, Default)]
 pub struct Session(Arc<RwLock<Option<Arc<dyn MusicServer>>>>);
 
