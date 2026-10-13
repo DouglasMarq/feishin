@@ -1,10 +1,11 @@
-use feishin_core::model::{Paging, SongListQuery};
+use feishin_core::model::{Page, Paging, Song, SongListQuery};
 use slint::Model;
 
 use super::super::model::{CACHED_PAGES, PAGE_SIZE, TracksModel, paging_for_page};
 use super::super::selection::SelectedSongs;
 use super::{RequestLog, drain, listed_songs, logging_model, page_of, songs_in};
 use crate::demo::FakeServer;
+use crate::ui::page_cache::PageApplied;
 
 const PAGES: usize = 40;
 const TOTAL: usize = PAGES * PAGE_SIZE;
@@ -155,4 +156,54 @@ async fn selections_spanning_evicted_pages_resolve_through_the_server() {
     let first_song = listed_songs(&server, first.listed).await;
     assert_eq!(first_song.first(), expected.first());
     assert_eq!(first_song.len(), 1);
+}
+
+fn listed_page(page: usize, total: usize) -> Page<Song> {
+    Page {
+        items: page_of(page, PAGE_SIZE),
+        start_index: page * PAGE_SIZE,
+        total_count: Some(total),
+    }
+}
+
+#[test]
+fn a_changed_server_total_drops_the_cached_pages_and_requests_them_again() {
+    let (model, log) = counted_model();
+    for row in (0..5 * PAGE_SIZE).step_by(PAGE_SIZE) {
+        scroll_to(&model, &log, row);
+    }
+    model.row_data(10 * PAGE_SIZE);
+    assert_eq!(requested_pages(&log), [10, 11]);
+    assert_eq!(
+        model.apply_listed_page(1, 10, listed_page(10, TOTAL)),
+        PageApplied::Applied
+    );
+    assert_eq!(
+        model.apply_listed_page(1, 11, listed_page(11, TOTAL + 1)),
+        PageApplied::TotalChanged(TOTAL + 1)
+    );
+    assert_eq!(model.row_count(), TOTAL + 1);
+    assert_eq!(model.song_id_at(0), None);
+    assert_eq!(model.song_id_at(10 * PAGE_SIZE), None);
+    assert_eq!(model.song_id_at(11 * PAGE_SIZE).as_deref(), Some("s1100"));
+
+    assert_eq!(
+        model.apply_listed_page(1, 12, listed_page(12, TOTAL)),
+        PageApplied::Stale
+    );
+    model.row_data(0);
+    assert_eq!(drain(&log), [(2, Some(0))]);
+}
+
+#[test]
+fn a_failing_page_is_not_requested_again_while_it_backs_off() {
+    let (model, log) = counted_model();
+    model.row_data(5 * PAGE_SIZE);
+    assert_eq!(requested_pages(&log), [5, 6]);
+    model.page_failed(1, 5);
+    for _ in 0..3 {
+        model.row_data(20 * PAGE_SIZE);
+        model.row_data(5 * PAGE_SIZE);
+    }
+    assert!(!requested_pages(&log).contains(&5));
 }

@@ -6,7 +6,7 @@ use slint::Image;
 use super::card::{CardData, CardSource};
 use super::cover_cache::cached_cover;
 use crate::ui::Card;
-use crate::ui::page_cache::{PageCache, PageShape};
+use crate::ui::page_cache::{PageCache, PageShape, changed_total};
 
 pub const GRID_PAGE: usize = 60;
 const CACHED_PAGES: usize = 16;
@@ -26,6 +26,11 @@ pub enum GridRequest {
     },
 }
 
+pub enum StoredPage {
+    Rows(RowChange),
+    Relaid,
+}
+
 pub struct RowChange {
     pub old_rows: usize,
     pub new_rows: usize,
@@ -37,6 +42,7 @@ pub struct GridState {
     pub source: Option<CardSource>,
     pub columns: usize,
     total: usize,
+    reported_total: Option<usize>,
     pages: PageCache<CardData>,
     covers_requested: HashSet<String>,
     overrides: HashMap<String, bool>,
@@ -49,6 +55,7 @@ impl Default for GridState {
             source: None,
             columns: 0,
             total: 0,
+            reported_total: None,
             pages: PageCache::new(GRID_PAGES),
             covers_requested: HashSet::new(),
             overrides: HashMap::new(),
@@ -97,6 +104,23 @@ impl GridState {
         page: usize,
         cards: Vec<CardData>,
         total: Option<usize>,
+    ) -> StoredPage {
+        let changed_total = self
+            .reported_total
+            .and_then(|known| changed_total(known, total));
+        if let Some(total) = changed_total {
+            self.relay_cards(page, cards, total);
+            return StoredPage::Relaid;
+        }
+        self.reported_total = total.or(self.reported_total);
+        StoredPage::Rows(self.insert_cards(page, cards, total))
+    }
+
+    fn insert_cards(
+        &mut self,
+        page: usize,
+        cards: Vec<CardData>,
+        total: Option<usize>,
     ) -> RowChange {
         let start = self.pages.first_index_of(page);
         let end = start + cards.len();
@@ -111,6 +135,18 @@ impl GridState {
         }
     }
 
+    fn relay_cards(&mut self, page: usize, cards: Vec<CardData>, total: usize) {
+        tracing::debug!(
+            total,
+            "the server card list changed size, reloading the cached pages"
+        );
+        self.generation += 1;
+        self.total = total;
+        self.reported_total = Some(total);
+        self.pages.invalidate();
+        self.pages.insert(page, cards);
+    }
+
     fn total_after_page(&self, total: Option<usize>, card_count: usize, end: usize) -> usize {
         match total {
             Some(total) => total,
@@ -120,7 +156,7 @@ impl GridState {
     }
 
     pub fn forget_page_request(&mut self, generation: u64, page: usize) -> bool {
-        self.generation == generation && self.pages.forget_request(page)
+        self.generation == generation && self.pages.request_failed(page)
     }
 
     pub fn cover_loaded(&mut self, cover_id: &str) -> HashSet<usize> {

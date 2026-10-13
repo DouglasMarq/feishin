@@ -45,9 +45,7 @@ fn show_page(window: &AppWindow, request: &PageRequest, result: feishin_api::Res
     let (generation, page) = (request.generation, request.page);
     match result {
         Ok(songs) => {
-            with_model(window, |model| {
-                model.apply_page(generation, page, songs.items);
-            });
+            with_model(window, |model| model.apply_requested_page(request, songs));
         }
         Err(error) => {
             let current = with_model(window, |model| model.page_failed(generation, page));

@@ -1,6 +1,6 @@
 use std::cell::RefCell;
 
-use feishin_core::model::Song;
+use feishin_core::model::{Page, Song};
 use slint::{Model, ModelNotify, ModelTracker};
 
 use super::pages::{PAGE_SIZE, PageStore, page_of};
@@ -8,9 +8,11 @@ use super::rows::{placeholder_row, song_row};
 use super::selection::{ClickMode, Selection};
 use super::targets::TargetSnapshot;
 use crate::ui::PlaylistSongRow;
+use crate::ui::page_cache::{PageApplied, changed_total};
 
 pub struct PageRequest {
     pub generation: u64,
+    pub revision: u64,
     pub playlist_id: String,
     pub page: usize,
 }
@@ -18,6 +20,7 @@ pub struct PageRequest {
 #[derive(Default)]
 struct ModelState {
     generation: u64,
+    revision: u64,
     playlist_id: String,
     total: usize,
     pages: PageStore,
@@ -29,6 +32,7 @@ impl ModelState {
         let page = page_of(row);
         self.pages.request_once(page).then(|| PageRequest {
             generation: self.generation,
+            revision: self.revision,
             playlist_id: self.playlist_id.clone(),
             page,
         })
@@ -86,6 +90,37 @@ impl PlaylistSongsModel {
             }
         };
         self.notify_rows(rows);
+    }
+
+    pub fn apply_requested_page(&self, request: &PageRequest, listed: Page<Song>) -> PageApplied {
+        let new_total = {
+            let state = self.state.borrow();
+            if (state.generation, state.revision) != (request.generation, request.revision) {
+                return PageApplied::Stale;
+            }
+            changed_total(state.total, listed.total_count)
+        };
+        let Some(total) = new_total else {
+            self.apply_page(request.generation, request.page, listed.items);
+            return PageApplied::Applied;
+        };
+        self.relay_rows(request.page, total, listed.items);
+        PageApplied::TotalChanged(total)
+    }
+
+    fn relay_rows(&self, page: usize, total: usize, songs: Vec<Song>) {
+        tracing::debug!(
+            total,
+            "the playlist changed size on the server, reloading its pages"
+        );
+        {
+            let mut state = self.state.borrow_mut();
+            state.revision += 1;
+            state.total = total;
+            state.pages.invalidate();
+            state.pages.insert(page, songs);
+        }
+        self.notify.reset();
     }
 
     pub fn page_failed(&self, generation: u64, page: usize) -> bool {

@@ -1,10 +1,11 @@
 use std::cell::RefCell;
 use std::collections::HashMap;
 
-use feishin_core::model::{Song, SongListQuery};
+use feishin_core::model::{Page, Song, SongListQuery};
 use slint::{Model, ModelNotify, ModelTracker};
 
 use crate::ui::TrackItem;
+use crate::ui::page_cache::PageApplied;
 use crate::ui::tracks::{PAGE_SIZE, Request, TracksModel};
 
 pub struct TrackTable {
@@ -42,12 +43,27 @@ impl TrackTable {
         applied
     }
 
+    #[cfg(test)]
     pub fn apply_page(&self, generation: u64, page: usize, songs: Vec<Song>) {
+        let listed = Page {
+            items: songs,
+            start_index: page * PAGE_SIZE,
+            total_count: None,
+        };
+        self.apply_listed_page(generation, page, listed);
+    }
+
+    pub fn apply_listed_page(&self, generation: u64, page: usize, listed: Page<Song>) {
         let start = page * PAGE_SIZE;
-        let end = (start + songs.len()).min(self.inner.row_count());
-        self.inner.apply_page(generation, page, songs);
-        for row in start..end {
-            self.notify.row_changed(row);
+        let end = (start + listed.items.len()).min(self.inner.row_count());
+        match self.inner.apply_listed_page(generation, page, listed) {
+            PageApplied::Stale => {}
+            PageApplied::Applied => {
+                for row in start..end {
+                    self.notify.row_changed(row);
+                }
+            }
+            PageApplied::TotalChanged(_) => self.notify.reset(),
         }
     }
 

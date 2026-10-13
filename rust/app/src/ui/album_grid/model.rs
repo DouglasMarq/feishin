@@ -4,7 +4,7 @@ use std::collections::BTreeSet;
 use feishin_core::model::AlbumListQuery;
 use slint::{Image, Model, ModelNotify, ModelRc, ModelTracker, VecModel};
 
-use super::super::page_cache::{PageCache, PageShape};
+use super::super::page_cache::{PageApplied, PageCache, PageShape, changed_total};
 use super::super::{AlbumGridCard, AlbumGridRow};
 use super::card::CardData;
 use super::cover_cache::CoverLru;
@@ -205,10 +205,47 @@ impl AlbumGridModel {
         self.notify_rows_changed(rows);
     }
 
+    pub fn apply_counted_page(
+        &self,
+        generation: u64,
+        page: usize,
+        cards: Vec<CardData>,
+        reported_total: Option<usize>,
+    ) -> PageApplied {
+        let new_total = {
+            let state = self.state.borrow();
+            if state.generation != generation {
+                return PageApplied::Stale;
+            }
+            changed_total(state.total, reported_total)
+        };
+        let Some(total) = new_total else {
+            self.apply_page(generation, page, cards);
+            return PageApplied::Applied;
+        };
+        self.relay_cards(page, total, cards);
+        PageApplied::TotalChanged(total)
+    }
+
+    fn relay_cards(&self, page: usize, total: usize, cards: Vec<CardData>) {
+        tracing::debug!(
+            total,
+            "the server album list changed size, reloading the cached pages"
+        );
+        {
+            let mut state = self.state.borrow_mut();
+            state.generation += 1;
+            state.total = total;
+            state.pages.invalidate();
+            state.pages.insert(page, cards);
+        }
+        self.notify.reset();
+    }
+
     pub fn page_failed(&self, generation: u64, page: usize) {
         let mut state = self.state.borrow_mut();
         if state.generation == generation {
-            state.pages.forget_request(page);
+            state.pages.request_failed(page);
         }
     }
 
@@ -386,5 +423,46 @@ mod tests {
         assert!(kept.cards.iter().all(|card| card.loaded));
         let evicted = model.row_data(39 - CACHED_PAGES).expect("row");
         assert!(evicted.cards.iter().all(|card| !card.loaded));
+    }
+
+    #[test]
+    fn a_changed_server_total_reloads_the_cached_albums() {
+        let (log, model) = recording();
+        model.set_columns(PAGE_SIZE);
+        model.reset(AlbumListQuery::default());
+        assert!(model.apply_count(1, PAGE_SIZE * 10));
+        drain(&log);
+        model.row_data(0);
+        assert_eq!(requested_pages(&log), [0, 1]);
+        let same = model.apply_counted_page(1, 0, album_page(0), Some(PAGE_SIZE * 10));
+        assert_eq!(same, PageApplied::Applied);
+        let grown = model.apply_counted_page(1, 1, album_page(1), Some(PAGE_SIZE * 10 - 1));
+        assert_eq!(grown, PageApplied::TotalChanged(PAGE_SIZE * 10 - 1));
+        assert_eq!(model.row_count(), 10);
+        let first = model.row_data(0).expect("row");
+        assert!(first.cards.iter().all(|card| !card.loaded));
+        assert!(matches!(
+            drain(&log).as_slice(),
+            [GridRequest::Page {
+                generation: 2,
+                page: 0,
+                ..
+            }]
+        ));
+    }
+
+    #[test]
+    fn a_failing_album_page_waits_before_it_is_asked_for_again() {
+        let (log, model) = recording();
+        model.set_columns(PAGE_SIZE);
+        model.reset(AlbumListQuery::default());
+        assert!(model.apply_count(1, PAGE_SIZE * 10));
+        drain(&log);
+        model.row_data(4);
+        assert_eq!(requested_pages(&log), [4, 5]);
+        model.page_failed(1, 4);
+        model.row_data(8);
+        model.row_data(4);
+        assert!(!requested_pages(&log).contains(&4));
     }
 }

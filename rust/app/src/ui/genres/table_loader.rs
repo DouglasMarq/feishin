@@ -1,5 +1,5 @@
 use feishin_api::MusicServer;
-use feishin_core::model::{Paging, Song, SongListQuery};
+use feishin_core::model::{Page, Paging, Song, SongListQuery};
 use slint::{ComponentHandle, ModelRc};
 
 use super::binding::{Binding, with_table};
@@ -55,15 +55,12 @@ async fn fetch_track_page(
     server: &dyn MusicServer,
     query: &SongListQuery,
     page: usize,
-) -> feishin_api::Result<Vec<Song>> {
+) -> feishin_api::Result<Page<Song>> {
     let paging = Paging {
         start_index: page * PAGE_SIZE,
         limit: PAGE_SIZE,
     };
-    server
-        .song_list(query, paging)
-        .await
-        .map(|songs| songs.items)
+    server.song_list(query, paging).await
 }
 
 fn apply_track_count(
@@ -90,12 +87,12 @@ fn apply_track_page(
     binding: Binding<TrackItem>,
     generation: u64,
     page: usize,
-    result: feishin_api::Result<Vec<Song>>,
+    result: feishin_api::Result<Page<Song>>,
 ) {
     match result {
         Ok(songs) => {
             with_table(window, binding, |table| {
-                table.apply_page(generation, page, songs);
+                table.apply_listed_page(generation, page, songs);
             });
         }
         Err(error) => {

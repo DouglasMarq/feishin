@@ -1,10 +1,24 @@
 use std::collections::{HashMap, HashSet};
+use std::time::Instant;
+
+use super::page_backoff::PageBackoff;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
 enum ScrollDirection {
     #[default]
     Forward,
     Backward,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum PageApplied {
+    Stale,
+    Applied,
+    TotalChanged(usize),
+}
+
+pub fn changed_total(known: usize, reported: Option<usize>) -> Option<usize> {
+    reported.filter(|total| *total != known)
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -18,6 +32,7 @@ pub struct PageCache<Row> {
     shape: PageShape,
     pages: HashMap<usize, Vec<Row>>,
     requested: HashSet<usize>,
+    backoff: PageBackoff,
     anchor: usize,
     direction: ScrollDirection,
 }
@@ -31,6 +46,7 @@ impl<Row> PageCache<Row> {
             },
             pages: HashMap::new(),
             requested: HashSet::new(),
+            backoff: PageBackoff::default(),
             anchor: 0,
             direction: ScrollDirection::default(),
         }
@@ -72,11 +88,34 @@ impl<Row> PageCache<Row> {
         self.requested.insert(page)
     }
 
-    pub fn forget_request(&mut self, page: usize) -> bool {
-        self.requested.remove(&page)
+    pub fn request_failed(&mut self, page: usize) -> bool {
+        self.request_failed_at(page, Instant::now())
+    }
+
+    pub fn request_failed_at(&mut self, page: usize, now: Instant) -> bool {
+        let was_requested = self.requested.remove(&page);
+        if was_requested {
+            let delay = self.backoff.record_failure(page, now);
+            tracing::debug!(
+                page,
+                ?delay,
+                "a list page failed, waiting before asking again"
+            );
+        }
+        was_requested
+    }
+
+    pub fn invalidate(&mut self) {
+        self.pages.clear();
+        self.requested.clear();
+        self.backoff.clear();
     }
 
     pub fn pages_to_fetch(&mut self, index: usize, total: usize) -> Vec<usize> {
+        self.pages_to_fetch_at(index, total, Instant::now())
+    }
+
+    pub fn pages_to_fetch_at(&mut self, index: usize, total: usize, now: Instant) -> Vec<usize> {
         let page = self.page_of(index);
         self.move_anchor(page);
         let neighbour = match self.direction {
@@ -92,6 +131,7 @@ impl<Row> PageCache<Row> {
                     .checked_mul(page_size)
                     .is_some_and(|start| start < total)
             })
+            .filter(|candidate| self.backoff.allows(*candidate, now))
             .filter(|candidate| self.requested.insert(*candidate))
             .collect()
     }
@@ -107,6 +147,7 @@ impl<Row> PageCache<Row> {
 
     pub fn insert(&mut self, page: usize, rows: Vec<Row>) {
         self.requested.insert(page);
+        self.backoff.succeeded(page);
         self.pages.insert(page, rows);
         while self.pages.len() > self.shape.capacity {
             let Some(farthest) = self.farthest_page() else {
@@ -212,8 +253,42 @@ mod tests {
         }
         assert_eq!(loaded(&cache), [5, 6, 7]);
         assert!(!cache.requested.contains(&0));
-        assert!(cache.forget_request(7));
+        assert!(cache.request_failed(7));
+        assert!(!cache.request_failed(7));
         assert!(cache.mark_requested(7));
+    }
+
+    #[test]
+    fn a_failing_page_is_not_requested_again_until_its_backoff_passes() {
+        let mut cache = PageCache::<usize>::new(SHAPE);
+        let failed_at = Instant::now();
+        assert_eq!(cache.pages_to_fetch_at(5, 100, failed_at), [0, 1]);
+        assert!(cache.request_failed_at(0, failed_at));
+        cache.insert(1, rows_for(&cache, 1));
+        for _ in 0..5 {
+            cache.pages_to_fetch_at(95, 100, failed_at);
+            assert!(!cache.pages_to_fetch_at(5, 100, failed_at).contains(&0));
+        }
+        let first_retry = failed_at + std::time::Duration::from_secs(2);
+        assert_eq!(cache.pages_to_fetch_at(5, 100, first_retry), [0]);
+        assert!(cache.request_failed_at(0, first_retry));
+        let too_soon = first_retry + std::time::Duration::from_secs(3);
+        assert!(cache.pages_to_fetch_at(5, 100, too_soon).is_empty());
+        let second_retry = first_retry + std::time::Duration::from_secs(4);
+        assert_eq!(cache.pages_to_fetch_at(5, 100, second_retry), [0]);
+        cache.insert(0, rows_for(&cache, 0));
+        assert_eq!(cache.get(5), Some(&5));
+    }
+
+    #[test]
+    fn invalidating_drops_every_page_and_request() {
+        let mut cache = PageCache::<usize>::new(SHAPE);
+        load(&mut cache, 15, 1000);
+        assert!(cache.pages_to_fetch(45, 1000).contains(&4));
+        cache.invalidate();
+        assert_eq!(cache.get(15), None);
+        assert!(loaded(&cache).is_empty());
+        assert_eq!(cache.pages_to_fetch(45, 1000), [4, 5]);
     }
 
     #[test]

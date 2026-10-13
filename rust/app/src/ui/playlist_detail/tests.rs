@@ -3,13 +3,14 @@ use std::rc::Rc;
 use std::time::Instant;
 
 use feishin_api::MusicServer;
-use feishin_core::model::Song;
+use feishin_core::model::{Page, Song};
 use slint::Model;
 
 use super::model::{PageRequest, PlaylistSongsModel};
 use super::pages::{MAX_CACHED_PAGES, PAGE_SIZE, paging_for_page};
 use super::selection::ClickMode;
 use crate::demo::{FakeServer, test_song};
+use crate::ui::page_cache::PageApplied;
 
 type RequestLog = Rc<RefCell<Vec<PageRequest>>>;
 
@@ -54,7 +55,7 @@ fn rows_load_on_demand_page_by_page() {
 }
 
 #[test]
-fn stale_generations_are_ignored_and_failures_retry() {
+fn stale_generations_are_ignored_and_failures_back_off() {
     let (model, log) = logging_model();
     model.reset(1, "playlist-1");
     model.reset(2, "playlist-2");
@@ -68,7 +69,53 @@ fn stale_generations_are_ignored_and_failures_retry() {
     assert!(requested_pages(&log).is_empty());
     assert!(model.page_failed(2, 2));
     model.row_data(220);
-    assert_eq!(requested_pages(&log), [(2, 2)]);
+    assert!(requested_pages(&log).is_empty());
+}
+
+fn take_requests(log: &RequestLog) -> Vec<PageRequest> {
+    log.borrow_mut().drain(..).collect()
+}
+
+fn listed(page: usize, total: usize) -> Page<Song> {
+    Page {
+        items: page_of_songs(page, PAGE_SIZE),
+        start_index: page * PAGE_SIZE,
+        total_count: Some(total),
+    }
+}
+
+#[test]
+fn a_playlist_that_changed_size_on_the_server_reloads_its_pages() {
+    let (model, log) = logging_model();
+    model.reset(1, "playlist-1");
+    model.apply_first_page(1, 10 * PAGE_SIZE, page_of_songs(0, PAGE_SIZE));
+    model.row_data(3 * PAGE_SIZE);
+    model.row_data(4 * PAGE_SIZE);
+    let requests = take_requests(&log);
+    let [third, fourth] = requests.as_slice() else {
+        panic!("expected two page requests, got {}", requests.len());
+    };
+    let unchanged = model.apply_requested_page(third, listed(3, 10 * PAGE_SIZE));
+    assert_eq!(unchanged, PageApplied::Applied);
+    let shrunk = model.apply_requested_page(fourth, listed(4, 10 * PAGE_SIZE - 1));
+    assert_eq!(shrunk, PageApplied::TotalChanged(10 * PAGE_SIZE - 1));
+    assert_eq!(model.row_count(), 10 * PAGE_SIZE - 1);
+    assert!(model.song_id_at(0).is_none());
+    assert!(model.song_id_at(3 * PAGE_SIZE).is_none());
+    assert_eq!(model.song_id_at(4 * PAGE_SIZE).as_deref(), Some("s400"));
+    assert_eq!(
+        model.apply_requested_page(third, listed(3, 10 * PAGE_SIZE)),
+        PageApplied::Stale
+    );
+    model.row_data(5);
+    let refetched = take_requests(&log);
+    assert_eq!(
+        refetched
+            .iter()
+            .map(|request| (request.revision, request.page))
+            .collect::<Vec<_>>(),
+        [(1, 0)]
+    );
 }
 
 #[test]

@@ -29,6 +29,7 @@ pub mod library_scan;
 pub mod login;
 pub mod nav;
 pub mod now_playing;
+pub mod page_backoff;
 pub mod page_cache;
 pub mod player;
 pub mod playlist_detail;

@@ -4,6 +4,7 @@ use feishin_api::MusicServer;
 use feishin_core::model::{AlbumListQuery, Paging};
 use slint::{Model, ModelRc, Weak};
 
+use super::super::page_cache::PageApplied;
 use super::super::player::to_image;
 use super::super::{AlbumGridRow, AppWindow, Context, on_ui, show_status};
 use super::card::CardData;
@@ -52,6 +53,7 @@ async fn fetch_count(
 async fn fetch_page(
     server: Arc<dyn MusicServer>,
     target: GridTarget,
+    on_count: OnCount,
     generation: u64,
     query: AlbumListQuery,
     page: usize,
@@ -60,16 +62,19 @@ async fn fetch_page(
         start_index: page * PAGE_SIZE,
         limit: PAGE_SIZE,
     };
-    let result = server
-        .album_list(&query, paging)
-        .await
-        .map(|albums| albums.items.iter().map(CardData::from_album).collect());
+    let result = server.album_list(&query, paging).await.map(|albums| {
+        let cards = albums.items.iter().map(CardData::from_album).collect();
+        (cards, albums.total_count)
+    });
     let locate = target.locate;
     on_ui(&target.window, move |window| match result {
-        Ok(cards) => {
-            with_model(window, locate, |model| {
-                model.apply_page(generation, page, cards)
+        Ok((cards, total)) => {
+            let applied = with_model(window, locate, |model| {
+                model.apply_counted_page(generation, page, cards, total)
             });
+            if let Some(PageApplied::TotalChanged(total)) = applied {
+                on_count(window, Ok(total));
+            }
         }
         Err(error) => {
             with_model(window, locate, |model| model.page_failed(generation, page));
@@ -120,7 +125,7 @@ pub fn spawn_request(
                 generation,
                 query,
                 page,
-            } => fetch_page(server, target, generation, query, page).await,
+            } => fetch_page(server, target, on_count, generation, query, page).await,
             GridRequest::Cover { cover_art_id } => {
                 fetch_cover(server, covers, target, cover_art_id).await;
             }
