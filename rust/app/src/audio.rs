@@ -3,7 +3,7 @@ use std::time::Duration;
 
 use anyhow::Result;
 use feishin_core::queue::Uid;
-use feishin_player::{Player, PlayerConfig, PlayerEvent, ReplayGainMode};
+use feishin_player::{AudioDevice, Player, PlayerConfig, PlayerEvent, ReplayGainMode};
 use feishin_storage::settings::{PlaybackSettings, ReplayGainSetting};
 
 pub type EventCallback = Box<dyn Fn(PlayerEvent) + Send + Sync>;
@@ -26,6 +26,24 @@ pub trait AudioOutput: Send {
     fn seek(&self, position_ms: u64) -> Result<()>;
     fn set_volume(&self, volume: u8) -> Result<()>;
     fn set_muted(&self, muted: bool) -> Result<()>;
+    fn set_replay_gain(&self, _mode: ReplayGainSetting) -> Result<()> {
+        Ok(())
+    }
+    /// `None` selects the system default output.
+    fn set_audio_device(&self, _device: Option<&str>) -> Result<()> {
+        Ok(())
+    }
+    fn audio_devices(&self) -> Result<Vec<AudioDevice>> {
+        Ok(Vec::new())
+    }
+}
+
+fn replay_gain_mode(setting: ReplayGainSetting) -> ReplayGainMode {
+    match setting {
+        ReplayGainSetting::Off => ReplayGainMode::Off,
+        ReplayGainSetting::Track => ReplayGainMode::Track,
+        ReplayGainSetting::Album => ReplayGainMode::Album,
+    }
 }
 
 pub struct MpvOutput(Player);
@@ -34,11 +52,7 @@ impl MpvOutput {
     pub fn new(settings: &PlaybackSettings, on_event: EventCallback) -> Result<Self> {
         let config = PlayerConfig {
             audio_device: settings.audio_device.clone(),
-            replay_gain: match settings.replay_gain {
-                ReplayGainSetting::Off => ReplayGainMode::Off,
-                ReplayGainSetting::Track => ReplayGainMode::Track,
-                ReplayGainSetting::Album => ReplayGainMode::Album,
-            },
+            replay_gain: replay_gain_mode(settings.replay_gain),
             gapless: settings.gapless,
             volume: settings.volume,
         };
@@ -75,6 +89,15 @@ impl AudioOutput for MpvOutput {
     }
     fn set_muted(&self, muted: bool) -> Result<()> {
         Ok(self.0.set_muted(muted)?)
+    }
+    fn set_replay_gain(&self, mode: ReplayGainSetting) -> Result<()> {
+        Ok(self.0.set_replay_gain(replay_gain_mode(mode))?)
+    }
+    fn set_audio_device(&self, device: Option<&str>) -> Result<()> {
+        Ok(self.0.set_audio_device(device)?)
+    }
+    fn audio_devices(&self) -> Result<Vec<AudioDevice>> {
+        Ok(self.0.audio_devices()?)
     }
 }
 
@@ -225,6 +248,18 @@ impl AudioOutput for FakeAudio {
 
     fn set_muted(&self, _muted: bool) -> Result<()> {
         Ok(())
+    }
+
+    fn audio_devices(&self) -> Result<Vec<AudioDevice>> {
+        let device = |name: &str, description: &str| AudioDevice {
+            name: name.into(),
+            description: description.into(),
+        };
+        Ok(vec![
+            device("auto", "Autoselect device"),
+            device("pipewire/demo-speakers", "Demo speakers"),
+            device("pipewire/demo-headphones", "Demo headphones"),
+        ])
     }
 }
 

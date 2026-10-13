@@ -1,17 +1,556 @@
-import { Theme } from "theme.slint";
-import { AppState } from "globals.slint";
+import { Button, ComboBox, ScrollView, Switch } from "std-widgets.slint";
+import { Theme, Icons } from "theme.slint";
+import { AppState, PlayerState } from "globals.slint";
+import { Bar, IconButton } from "widgets.slint";
+
+export struct ServerRow {
+    id: string,
+    name: string,
+    kind: string,
+    detail: string,
+    current: bool,
+}
+
+export struct LyricsSourceRow {
+    id: string,
+    name: string,
+    enabled: bool,
+}
 
 export global SettingsState {
+    in property <bool> loaded;
+    in-out property <int> replay-gain;
+    in-out property <bool> gapless: true;
+    in property <[string]> devices;
+    in-out property <int> device-index;
+    in property <[string]> bitrates;
+    in-out property <int> bitrate-index;
+    in property <[string]> formats;
+    in-out property <int> format-index;
+    in-out property <bool> scrobble: true;
+    in-out property <bool> mpris: true;
+    in-out property <bool> discord;
+    in property <[LyricsSourceRow]> lyrics-sources;
+    in property <[ServerRow]> servers;
+    /// Id of the server being connected to, while a switch is in progress.
+    in property <string> switching;
+    /// Loaded at startup so other views can follow the playing song.
+    in-out property <bool> follow-current-song;
     callback load(string);
+    callback playback-changed();
+    callback integrations-changed();
+    callback interface-changed();
+    callback toggle-lyrics-source(int);
+    callback move-lyrics-source(int, int);
+    callback switch-server(string);
+    callback remove-server(string);
+    callback add-server();
+    callback log-out();
+}
+
+component Section inherits Rectangle {
+    in property <string> title;
+    background: Theme.surface;
+    border-radius: 10px;
+    border-width: 1px;
+    border-color: Theme.border;
+
+    VerticalLayout {
+        padding: 20px;
+        spacing: 18px;
+
+        Text {
+            text: root.title;
+            color: Theme.foreground;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        @children
+    }
+}
+
+component Option inherits HorizontalLayout {
+    in property <string> title;
+    in property <string> description;
+    spacing: 24px;
+
+    VerticalLayout {
+        alignment: center;
+        spacing: 3px;
+        horizontal-stretch: 1;
+
+        Text {
+            text: root.title;
+            color: Theme.foreground;
+        }
+
+        if root.description != "": Text {
+            text: root.description;
+            color: Theme.muted;
+            font-size: 12px;
+            wrap: word-wrap;
+        }
+    }
+
+    VerticalLayout {
+        alignment: center;
+        horizontal-stretch: 0;
+
+        HorizontalLayout {
+            spacing: 8px;
+
+            @children
+        }
+    }
+}
+
+component Picker inherits ComboBox {
+    width: 220px;
+}
+
+component Divider inherits Rectangle {
+    height: 1px;
+    background: Theme.border;
+}
+
+component LyricsSourceItem inherits Rectangle {
+    in property <LyricsSourceRow> source;
+    in property <int> index;
+    in property <int> count;
+    height: 40px;
+    border-radius: Theme.radius;
+    background: touch.has-hover ? Theme.hover : transparent;
+
+    touch := TouchArea { }
+
+    HorizontalLayout {
+        padding-left: 10px;
+        padding-right: 4px;
+        spacing: 8px;
+
+        Text {
+            text: (root.index + 1) + ".";
+            width: 20px;
+            color: Theme.muted;
+            vertical-alignment: center;
+        }
+
+        Text {
+            text: root.source.name;
+            color: root.source.enabled ? Theme.foreground : Theme.muted;
+            vertical-alignment: center;
+            horizontal-stretch: 1;
+        }
+
+        IconButton {
+            y: (parent.height - self.height) / 2;
+            icon: Icons.arrow-up;
+            enabled: root.index > 0;
+            clicked => {
+                SettingsState.move-lyrics-source(root.index, -1);
+            }
+        }
+
+        IconButton {
+            y: (parent.height - self.height) / 2;
+            icon: Icons.arrow-down;
+            enabled: root.index < root.count - 1;
+            clicked => {
+                SettingsState.move-lyrics-source(root.index, 1);
+            }
+        }
+
+        Switch {
+            checked: root.source.enabled;
+            toggled => {
+                SettingsState.toggle-lyrics-source(root.index);
+            }
+        }
+    }
+}
+
+component ServerItem inherits Rectangle {
+    in property <ServerRow> server;
+    in-out property <string> confirming;
+    property <bool> confirm: root.confirming == root.server.id;
+    property <bool> busy: SettingsState.switching != "";
+    min-height: 56px;
+    border-radius: Theme.radius;
+    background: root.server.current ? Theme.selected : (touch.has-hover ? Theme.hover : transparent);
+
+    touch := TouchArea { }
+
+    HorizontalLayout {
+        padding: 10px;
+        padding-left: 14px;
+        spacing: 10px;
+
+        VerticalLayout {
+            alignment: center;
+            spacing: 3px;
+            horizontal-stretch: 1;
+
+            HorizontalLayout {
+                spacing: 8px;
+                alignment: start;
+
+                Text {
+                    text: root.server.name;
+                    color: Theme.foreground;
+                    font-weight: 600;
+                    overflow: elide;
+                }
+
+                Rectangle {
+                    width: kind-text.preferred-width + 12px;
+                    height: 18px;
+                    border-radius: 9px;
+                    background: Theme.surface-raised;
+
+                    kind-text := Text {
+                        text: root.server.kind;
+                        color: Theme.muted;
+                        font-size: 11px;
+                    }
+                }
+
+                if root.server.current: Rectangle {
+                    width: current-text.preferred-width + 12px;
+                    height: 18px;
+                    border-radius: 9px;
+                    background: Theme.primary;
+
+                    current-text := Text {
+                        text: "Current";
+                        color: white;
+                        font-size: 11px;
+                        font-weight: 600;
+                    }
+                }
+            }
+
+            Text {
+                text: root.server.detail;
+                color: Theme.muted;
+                font-size: 12px;
+                overflow: elide;
+            }
+        }
+
+        if !root.server.current && !root.confirm: Button {
+            text: SettingsState.switching == root.server.id ? "Connecting..." : "Switch";
+            enabled: !root.busy;
+            clicked => {
+                SettingsState.switch-server(root.server.id);
+            }
+        }
+
+        if !root.confirm: Button {
+            text: "Remove";
+            enabled: !root.busy;
+            clicked => {
+                root.confirming = root.server.id;
+            }
+        }
+
+        if root.confirm: Text {
+            text: root.server.current ? "Sign out and forget this server?" : "Forget this server?";
+            color: Theme.danger;
+            vertical-alignment: center;
+        }
+
+        if root.confirm: Button {
+            text: "Cancel";
+            clicked => {
+                root.confirming = "";
+            }
+        }
+
+        if root.confirm: Button {
+            text: "Remove";
+            primary: true;
+            clicked => {
+                root.confirming = "";
+                SettingsState.remove-server(root.server.id);
+            }
+        }
+    }
 }
 
 export component SettingsView inherits Rectangle {
+    property <string> confirming;
+    property <bool> confirm-logout;
+    background: Theme.background;
+
     init => {
         SettingsState.load(AppState.detail-id);
     }
 
-    Text {
-        text: "Settings";
-        color: Theme.muted;
+    scroll := ScrollView {
+        VerticalLayout {
+            width: scroll.visible-width;
+            padding: 28px;
+            padding-top: 24px;
+            spacing: 20px;
+            alignment: start;
+
+            Text {
+                text: "Settings";
+                color: Theme.foreground;
+                font-size: 24px;
+                font-weight: 700;
+            }
+
+            Section {
+                title: "Playback";
+
+                Option {
+                    title: "Volume";
+                    description: "Starting volume, shared with the player bar.";
+
+                    VerticalLayout {
+                        alignment: center;
+
+                        Bar {
+                            width: 160px;
+                            value: PlayerState.volume / 100;
+                            changed(value) => {
+                                PlayerState.set-volume(Math.round(value * 100));
+                            }
+                        }
+                    }
+
+                    Text {
+                        text: PlayerState.volume + "%";
+                        width: 40px;
+                        color: Theme.muted;
+                        vertical-alignment: center;
+                        horizontal-alignment: right;
+                    }
+                }
+
+                Option {
+                    title: "ReplayGain";
+                    description: "Normalize loudness using the track or album gain tags.";
+
+                    Picker {
+                        model: ["Off", "Track", "Album"];
+                        current-index <=> SettingsState.replay-gain;
+                        selected => {
+                            SettingsState.playback-changed();
+                        }
+                    }
+                }
+
+                Option {
+                    title: "Gapless playback";
+                    description: "Preload the next song so it starts without a pause.";
+
+                    Switch {
+                        checked <=> SettingsState.gapless;
+                        toggled => {
+                            SettingsState.playback-changed();
+                        }
+                    }
+                }
+
+                Option {
+                    title: "Audio device";
+                    description: "Output used by the player.";
+
+                    Picker {
+                        model: SettingsState.devices;
+                        current-index <=> SettingsState.device-index;
+                        selected => {
+                            SettingsState.playback-changed();
+                        }
+                    }
+                }
+
+                Option {
+                    title: "Maximum bitrate";
+                    description: "Ask the server to transcode down to this bitrate. Applies from the next song.";
+
+                    Picker {
+                        model: SettingsState.bitrates;
+                        current-index <=> SettingsState.bitrate-index;
+                        selected => {
+                            SettingsState.playback-changed();
+                        }
+                    }
+                }
+
+                Option {
+                    title: "Transcode format";
+                    description: "Format the server should transcode to. Applies from the next song.";
+
+                    Picker {
+                        model: SettingsState.formats;
+                        current-index <=> SettingsState.format-index;
+                        selected => {
+                            SettingsState.playback-changed();
+                        }
+                    }
+                }
+
+                Option {
+                    title: "Scrobble";
+                    description: "Report what you play to the server.";
+
+                    Switch {
+                        checked <=> SettingsState.scrobble;
+                        toggled => {
+                            SettingsState.playback-changed();
+                        }
+                    }
+                }
+            }
+
+            Section {
+                title: "Integrations";
+
+                Option {
+                    title: "MPRIS";
+                    description: "Media keys and desktop media controls. Takes effect after a restart.";
+
+                    Switch {
+                        checked <=> SettingsState.mpris;
+                        toggled => {
+                            SettingsState.integrations-changed();
+                        }
+                    }
+                }
+
+                Option {
+                    title: "Discord Rich Presence";
+                    description: "Show the current song on your Discord profile.";
+
+                    Switch {
+                        checked <=> SettingsState.discord;
+                        toggled => {
+                            SettingsState.integrations-changed();
+                        }
+                    }
+                }
+
+                Divider { }
+
+                VerticalLayout {
+                    spacing: 6px;
+
+                    Text {
+                        text: "Lyrics sources";
+                        color: Theme.foreground;
+                    }
+
+                    Text {
+                        text: "Searched from top to bottom until one has lyrics.";
+                        color: Theme.muted;
+                        font-size: 12px;
+                    }
+
+                    VerticalLayout {
+                        padding-top: 4px;
+                        spacing: 2px;
+
+                        for row[index] in SettingsState.lyrics-sources: LyricsSourceItem {
+                            source: row;
+                            index: index;
+                            count: SettingsState.lyrics-sources.length;
+                        }
+                    }
+                }
+            }
+
+            Section {
+                title: "Servers";
+
+                VerticalLayout {
+                    spacing: 4px;
+
+                    for row in SettingsState.servers: ServerItem {
+                        server: row;
+                        confirming <=> root.confirming;
+                    }
+
+                    if SettingsState.loaded && SettingsState.servers.length == 0: Text {
+                        text: "No saved servers.";
+                        color: Theme.muted;
+                    }
+                }
+
+                HorizontalLayout {
+                    spacing: 8px;
+                    alignment: start;
+
+                    Button {
+                        text: "Add server";
+                        enabled: SettingsState.switching == "";
+                        clicked => {
+                            SettingsState.add-server();
+                        }
+                    }
+
+                    if !root.confirm-logout: Button {
+                        text: "Log out";
+                        enabled: SettingsState.switching == "" && AppState.server-name != "";
+                        clicked => {
+                            root.confirm-logout = true;
+                        }
+                    }
+
+                    if root.confirm-logout: Text {
+                        text: "Sign out and forget this server's saved login?";
+                        color: Theme.danger;
+                        vertical-alignment: center;
+                    }
+
+                    if root.confirm-logout: Button {
+                        text: "Cancel";
+                        clicked => {
+                            root.confirm-logout = false;
+                        }
+                    }
+
+                    if root.confirm-logout: Button {
+                        text: "Log out";
+                        primary: true;
+                        clicked => {
+                            root.confirm-logout = false;
+                            SettingsState.log-out();
+                        }
+                    }
+                }
+            }
+
+            Section {
+                title: "Interface";
+
+                Option {
+                    title: "Open the queue panel";
+                    description: "Show the queue next to the library; remembered on the next start.";
+
+                    Switch {
+                        checked <=> AppState.queue-open;
+                        toggled => {
+                            SettingsState.interface-changed();
+                        }
+                    }
+                }
+
+                Option {
+                    title: "Follow current song";
+                    description: "Scroll lists and the queue to the song that is playing.";
+
+                    Switch {
+                        checked <=> SettingsState.follow-current-song;
+                        toggled => {
+                            SettingsState.interface-changed();
+                        }
+                    }
+                }
+            }
+        }
     }
 }

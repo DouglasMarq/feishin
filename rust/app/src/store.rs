@@ -20,6 +20,7 @@ pub trait Store: Send + Sync {
     fn save_queue(&self, queue: &StoredQueue) -> Result<()>;
     fn credential(&self, server_id: &str) -> Result<Option<Credential>>;
     fn set_credential(&self, server_id: &str, credential: &Credential) -> Result<()>;
+    fn delete_credential(&self, server_id: &str) -> Result<()>;
     fn import_feishin(&self) -> Result<Vec<ImportedServer>>;
 }
 
@@ -68,6 +69,9 @@ impl Store for SystemStore {
     }
     fn set_credential(&self, server_id: &str, credential: &Credential) -> Result<()> {
         Ok(credentials::set(server_id, &credential.to_json())?)
+    }
+    fn delete_credential(&self, server_id: &str) -> Result<()> {
+        Ok(credentials::delete(server_id)?)
     }
     fn import_feishin(&self) -> Result<Vec<ImportedServer>> {
         let dir = feishin_config_dir().ok_or_else(|| anyhow!("cannot locate ~/.config"))?;
@@ -134,6 +138,13 @@ impl Store for JsonStore {
             .lock()
             .map_err(|_| anyhow!("credential store poisoned"))?
             .insert(server_id.to_owned(), credential.clone());
+        Ok(())
+    }
+    fn delete_credential(&self, server_id: &str) -> Result<()> {
+        self.credentials
+            .lock()
+            .map_err(|_| anyhow!("credential store poisoned"))?
+            .remove(server_id);
         Ok(())
     }
     fn import_feishin(&self) -> Result<Vec<ImportedServer>> {
