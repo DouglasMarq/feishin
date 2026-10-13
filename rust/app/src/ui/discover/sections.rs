@@ -60,8 +60,16 @@ impl Sections {
         if self.settings.as_ref() == Some(&settings) {
             return false;
         }
+        let country_changed = self
+            .settings
+            .as_ref()
+            .is_some_and(|previous| previous.country != settings.country);
+        if country_changed {
+            self.chart_country = None;
+        }
         self.feeds.clear();
         self.errors.clear();
+        self.mood = None;
         self.settings = Some(settings);
         true
     }
@@ -225,6 +233,27 @@ mod tests {
         };
         assert!(sections.use_settings(signed_in));
         assert!(sections.feed(&FeedRequest::NewReleases).is_none());
+    }
+
+    #[test]
+    fn a_new_chart_country_in_settings_replaces_the_one_shown() {
+        let mut sections = Sections::default();
+        sections.use_settings(YouTubeSettings::default());
+        sections.chart_country = Some("BR".into());
+        sections.mood = Some(0);
+        let signed_in = YouTubeSettings {
+            cookies_from_browser: Some(feishin_youtube::CookieBrowser::Brave),
+            ..YouTubeSettings::default()
+        };
+        assert!(sections.use_settings(signed_in.clone()));
+        assert_eq!(sections.chart_country.as_deref(), Some("BR"));
+        assert_eq!(sections.mood, None, "the mood list is reloaded");
+        let american = YouTubeSettings {
+            country: Some("US".into()),
+            ..signed_in
+        };
+        assert!(sections.use_settings(american));
+        assert_eq!(sections.chart_country, None);
     }
 
     #[test]
