@@ -9,7 +9,7 @@ use super::display::show;
 use super::test_support::{device, two_servers};
 use super::view::Shared;
 use crate::connect::DemoConnector;
-use crate::controller::{Command, SettingsSnapshot};
+use crate::controller::{Command, SettingsSnapshot, YouTubeCommand};
 use crate::covers::DemoCovers;
 use crate::session::Session;
 use crate::store::JsonStore;
@@ -123,4 +123,44 @@ fn settings_view_renders_and_saves_changes() {
     state.invoke_log_out();
     assert!(matches!(received.try_recv(), Ok(Command::RemoveServer(id)) if id == "demo"));
     assert_eq!(window.global::<AppState>().get_page(), Page::Login);
+}
+
+#[test]
+fn youtube_settings_are_saved_from_the_form() {
+    let mut page = open_settings_page();
+    let received = &mut page.received;
+    while received.try_recv().is_ok() {}
+    let state = page.window.global::<SettingsState>();
+    let browsers: Vec<_> = state.get_cookie_browsers().iter().collect();
+    assert_eq!(browsers.first().map(|label| label.as_str()), Some("None"));
+    assert_eq!(state.get_cookie_browser_index(), 0);
+
+    state.invoke_youtube_changed();
+    assert!(received.try_recv().is_err());
+
+    state.set_yt_dlp_path(" /opt/yt-dlp ".into());
+    state.set_cookie_browser_index(1);
+    state.invoke_youtube_changed();
+    match received.try_recv() {
+        Ok(Command::YouTube(YouTubeCommand::SaveSettings(saved))) => {
+            assert_eq!(saved.yt_dlp_path.as_deref(), Some("/opt/yt-dlp"));
+            assert_eq!(
+                saved.cookies_from_browser,
+                Some(feishin_youtube::CookieBrowser::Firefox)
+            );
+        }
+        _ => panic!("expected SaveSettings"),
+    }
+}
+
+#[test]
+fn a_link_that_is_not_youtube_is_refused() {
+    let page = open_settings_page();
+    let state = page.window.global::<SettingsState>();
+    state.set_youtube_link("https://example.com/song".into());
+    state.invoke_play_youtube_link();
+    assert_eq!(
+        page.window.global::<AppState>().get_status(),
+        "Paste a YouTube or YouTube Music link first"
+    );
 }

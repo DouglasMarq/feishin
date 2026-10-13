@@ -133,6 +133,11 @@ impl Controller {
     }
 
     #[cfg(test)]
+    pub fn is_resolving(&self) -> bool {
+        self.youtube.is_loading()
+    }
+
+    #[cfg(test)]
     pub fn sleep_status(&self) -> Option<crate::sleep_timer::SleepStatus> {
         self.sleep_timer.status()
     }

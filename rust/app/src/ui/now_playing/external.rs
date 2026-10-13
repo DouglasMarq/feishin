@@ -1,5 +1,5 @@
 use feishin_core::queue::{QueueTrack, YouTubeVideo};
-use feishin_lyrics::LyricsQuery;
+use feishin_lyrics::{LyricsQuery, LyricsSource};
 use slint::{ComponentHandle, ModelRc, VecModel};
 
 use super::fetching::{apply_lyrics_result, configured_lyrics_sources};
@@ -41,11 +41,21 @@ pub(super) fn load_external(window: &AppWindow, ctx: &Context, view: &View, trac
     if let Some(video) = track.youtube_video() {
         fetch_thumbnail(window, ctx, &song_id, video);
     }
+    let sources = remote_sources(&configured_lyrics_sources(ctx));
     match view.cached_lyrics(&song_id) {
         Some(lyrics) => view.show_lyrics(window, lyrics.as_deref()),
+        None if sources.is_empty() => view.show_lyrics(window, None),
         None => {
             state.set_lyrics_status(LyricsStatus::Loading);
-            fetch_lyrics(window, ctx, song_id, lyrics_query(track));
+            fetch_lyrics(
+                window,
+                ctx,
+                LyricsRequest {
+                    song_id,
+                    query: lyrics_query(track),
+                    sources,
+                },
+            );
         }
     }
 }
@@ -76,10 +86,20 @@ fn fetch_thumbnail(window: &AppWindow, ctx: &Context, song_id: &str, video: &You
     });
 }
 
-fn fetch_lyrics(window: &AppWindow, ctx: &Context, song_id: String, query: LyricsQuery) {
-    let sources = remote_sources(&configured_lyrics_sources(ctx));
+struct LyricsRequest {
+    song_id: String,
+    query: LyricsQuery,
+    sources: Vec<LyricsSource>,
+}
+
+fn fetch_lyrics(window: &AppWindow, ctx: &Context, request: LyricsRequest) {
     let weak_window = window.as_weak();
     ctx.rt.spawn(async move {
+        let LyricsRequest {
+            song_id,
+            query,
+            sources,
+        } = request;
         let result = remote_lyrics_for(&query, &sources).await;
         on_ui(&weak_window, move |window| {
             with_view(|view| apply_lyrics_result(window, view, &song_id, result));

@@ -112,7 +112,7 @@ async fn a_missing_binary_asks_to_install_yt_dlp() {
 #[tokio::test]
 async fn a_hanging_yt_dlp_times_out() {
     let _spawning = SPAWNING.lock().await;
-    let fake = FakeYtDlp::with_body("sleep 5");
+    let fake = FakeYtDlp::with_body("exec sleep 5");
     let yt_dlp = fake.yt_dlp().with_timeout(Duration::from_millis(200));
     let error = yt_dlp.audio_stream("abc").await.unwrap_err();
     assert_eq!(error, YouTubeError::TimedOut(0));

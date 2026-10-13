@@ -10,3 +10,6 @@ mod queue_scale;
 mod scrobbling;
 mod server_queue;
 mod sleep_timer;
+mod youtube_playback;
+mod youtube_side_effects;
+mod youtube_support;

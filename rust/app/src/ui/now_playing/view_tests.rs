@@ -2,7 +2,8 @@ use std::sync::Arc;
 use std::time::{Duration, Instant};
 
 use feishin_core::model::Song;
-use feishin_core::queue::Queue;
+use feishin_core::queue::{Queue, QueueTrack, YouTubeTrack};
+use feishin_storage::settings::Settings;
 use i_slint_backend_testing::{TestingBackend, TestingBackendOptions};
 use slint::{ComponentHandle, Model, SharedString};
 use tokio::sync::mpsc::UnboundedReceiver;
@@ -12,7 +13,7 @@ use crate::controller::Command;
 use crate::covers::DemoCovers;
 use crate::demo::{FakeServer, test_song};
 use crate::session::Session;
-use crate::store::JsonStore;
+use crate::store::{JsonStore, Store};
 use crate::ui::{
     AppState, AppWindow, Context, LyricsStatus, NowPlayingState, Page, PlayerState, Route, queue,
 };
@@ -42,11 +43,15 @@ fn open_now_playing_page() -> NowPlayingPage {
     let session = Session::default();
     session.set(Some(Arc::new(FakeServer::new(100))));
     let (sender, commands) = tokio::sync::mpsc::unbounded_channel();
+    let store = JsonStore::new(dir.path());
+    let mut settings = Settings::default();
+    settings.integrations.lyrics_sources = vec!["server".into()];
+    store.save_settings(&settings).unwrap();
     let ctx = Context {
         rt: runtime.handle().clone(),
         commands: sender,
         session,
-        store: Arc::new(JsonStore::new(dir.path())),
+        store: Arc::new(store),
         connector: Arc::new(DemoConnector::default()),
         covers: Arc::new(DemoCovers),
     };
@@ -77,6 +82,10 @@ fn is_fully_loaded(state: &NowPlayingState) -> bool {
 }
 
 fn wait_until_loaded(window: &AppWindow) {
+    wait_until(window, is_fully_loaded);
+}
+
+fn wait_until(window: &AppWindow, is_ready: fn(&NowPlayingState) -> bool) {
     let deadline = Instant::now() + Duration::from_secs(10);
     let weak_window = window.as_weak();
     let timer = slint::Timer::default();
@@ -87,7 +96,7 @@ fn wait_until_loaded(window: &AppWindow) {
             let Some(window) = weak_window.upgrade() else {
                 return;
             };
-            if is_fully_loaded(&window.global::<NowPlayingState>()) || Instant::now() > deadline {
+            if is_ready(&window.global::<NowPlayingState>()) || Instant::now() > deadline {
                 let _ = slint::quit_event_loop();
             }
         },
@@ -142,6 +151,36 @@ fn assert_up_next_follows_queue(window: &AppWindow, state: &NowPlayingState) {
     assert_eq!(state.get_up_next().row_count(), 1);
 }
 
+fn is_youtube_track_loaded(state: &NowPlayingState) -> bool {
+    state.get_external()
+        && state.get_loaded()
+        && state.get_has_cover()
+        && state.get_lyrics_status() == LyricsStatus::Missing
+}
+
+fn assert_youtube_track_details(window: &AppWindow, state: &NowPlayingState) {
+    let mut queue = Queue::with_seed(2);
+    let track = QueueTrack::from(&YouTubeTrack {
+        video_id: "abc".into(),
+        title: "Video".into(),
+        artists: vec!["Singer".into()],
+        thumbnail_url: Some("https://i.ytimg.com/vi/abc/hqdefault.jpg".into()),
+        ..YouTubeTrack::default()
+    });
+    queue.play_tracks_now(vec![track], Some(0));
+    queue::set_view(window, queue.view());
+    window.global::<PlayerState>().set_song_id("yt:abc".into());
+    wait_until(window, is_youtube_track_loaded);
+    assert!(is_youtube_track_loaded(state));
+    let artists: Vec<_> = state.get_artists().iter().collect();
+    assert_eq!(artists.len(), 1);
+    assert_eq!(artists[0].name, "Singer");
+    assert_eq!(artists[0].id, "");
+    assert_eq!(state.get_album_id(), "");
+    assert_eq!(state.get_similar().row_count(), 0);
+    assert!(!state.get_similar_loading());
+}
+
 fn played_songs(commands: &mut UnboundedReceiver<Command>) -> Option<(Vec<Song>, Option<String>)> {
     std::iter::from_fn(|| commands.try_recv().ok()).find_map(|command| match command {
         Command::PlaySongs { songs, song_id } => Some((songs, song_id)),
@@ -174,4 +213,6 @@ fn view_shows_demo_lyrics_and_similar_songs() {
     };
     assert_eq!(songs.len(), state.get_similar().row_count());
     assert_eq!(song_id.as_deref(), Some(similar.id.as_str()));
+
+    assert_youtube_track_details(window, &state);
 }
