@@ -22,6 +22,8 @@ export global SettingsState {
     in property <bool> loaded;
     in-out property <int> replay-gain;
     in-out property <bool> gapless: true;
+    in-out property <int> crossfade-seconds;
+    in property <int> max-crossfade-seconds: 12;
     in property <[string]> devices;
     in-out property <int> device-index;
     in property <[string]> bitrates;
@@ -355,6 +357,36 @@ export component SettingsView inherits Rectangle {
                         toggled => {
                             SettingsState.playback-changed();
                         }
+                    }
+                }
+
+                crossfade-option := Option {
+                    title: "Crossfade";
+                    description: "Fade the end of each song into the next one. Off keeps gapless playback.";
+                    property <int> shown-seconds: crossfade-bar.adjusting ? Math.round(crossfade-bar.drag-preview * SettingsState.max-crossfade-seconds) : SettingsState.crossfade-seconds;
+                    property <string> shown-label: self.shown-seconds == 0 ? "Off" : self.shown-seconds + " s";
+
+                    VerticalLayout {
+                        alignment: center;
+
+                        crossfade-bar := Bar {
+                            width: 160px;
+                            value: SettingsState.crossfade-seconds / SettingsState.max-crossfade-seconds;
+                            scroll-step: 1 / SettingsState.max-crossfade-seconds;
+                            tooltip: "Crossfade: " + crossfade-option.shown-label;
+                            committed(value) => {
+                                SettingsState.crossfade-seconds = Math.round(value * SettingsState.max-crossfade-seconds);
+                                SettingsState.playback-changed();
+                            }
+                        }
+                    }
+
+                    Text {
+                        text: crossfade-option.shown-label;
+                        width: 40px;
+                        color: Theme.muted;
+                        vertical-alignment: center;
+                        horizontal-alignment: right;
                     }
                 }
 

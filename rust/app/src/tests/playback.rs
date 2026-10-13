@@ -1,6 +1,7 @@
 use feishin_core::model::{Paging, SongListQuery, SongSort};
 use feishin_core::queue::{RepeatMode, Uid};
 use feishin_player::PlayerEvent;
+use feishin_storage::settings::PlaybackSettings;
 
 use super::harness::{AudioCall, start_harness, start_harness_with, test_settings, test_songs};
 use crate::controller::Command;
@@ -89,6 +90,44 @@ async fn gapless_preloads_on_start_and_follows_the_takeover() {
 
     harness.controller.handle(Command::Remove(vec![third]));
     assert_eq!(harness.audio.take(), [AudioCall::ClearNext]);
+}
+
+#[tokio::test]
+async fn crossfade_preloads_without_gapless_and_follows_the_early_start() {
+    let mut settings = test_settings(false, false);
+    settings.playback.crossfade_seconds = 5;
+    let mut harness = start_harness(settings);
+    harness.controller.play_now(test_songs(3, 1000), "s0");
+    let first = harness.start_current();
+    let second = harness.uid_of("s1").unwrap_or(Uid::MAX);
+    let third = harness.uid_of("s2").unwrap_or(Uid::MAX);
+    assert_eq!(
+        harness.audio.take(),
+        [AudioCall::Load(first, 0), AudioCall::Preload(second)]
+    );
+
+    harness.player(PlayerEvent::Started { uid: second });
+    assert_eq!(harness.current_uid(), Some(second));
+    assert_eq!(harness.audio.take(), [AudioCall::Preload(third)]);
+    harness.player(PlayerEvent::TrackEnded { uid: first });
+    assert_eq!(harness.current_uid(), Some(second));
+    assert_eq!(harness.audio.take(), []);
+}
+
+#[tokio::test]
+async fn failed_crossfade_change_is_shown_to_the_user() {
+    let settings = test_settings(true, false);
+    let playback = PlaybackSettings {
+        crossfade_seconds: 4,
+        ..settings.playback.clone()
+    };
+    let mut harness = start_harness(settings);
+    harness.audio.fail_crossfade_changes();
+    harness.controller.handle(Command::ApplyPlayback(playback));
+    assert_eq!(
+        harness.ui.errors(),
+        ["Crossfade could not be changed: no second audio output"]
+    );
 }
 
 #[tokio::test]

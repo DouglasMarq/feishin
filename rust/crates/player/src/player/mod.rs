@@ -1,95 +1,108 @@
-mod playlist;
 mod startup;
 
 use std::sync::Arc;
-use std::sync::atomic::Ordering;
 use std::thread::{self, JoinHandle};
+use std::time::Duration;
 
-use libmpv2::SetData;
+use feishin_core::queue::Uid;
 
-use crate::audio_device::audio_devices_from_mpv_list;
-use crate::error::{Result, error_from_mpv, error_from_mpv_code};
-use crate::ffi::{self, Node};
-use crate::shared::Shared;
-use crate::time::{mpv_seconds_from_milliseconds, seconds_to_milliseconds};
-use crate::{AudioDevice, ReplayGainMode};
-
-const MAX_VOLUME: u8 = 100;
-const AUTOMATIC_AUDIO_DEVICE: &str = "auto";
+use crate::error::Result;
+use crate::mixer::Mixer;
+use crate::{AudioDevice, MediaSource, ReplayGainMode};
 
 pub struct Player {
-    shared: Arc<Shared>,
-    event_thread: Option<JoinHandle<()>>,
+    mixer: Arc<Mixer>,
+    fader_thread: Option<JoinHandle<()>>,
 }
 
 impl Player {
+    pub fn load(&self, uid: Uid, url: &str, start_ms: u64) -> Result<()> {
+        self.load_source(MediaSource::new(uid, url), start_ms)
+    }
+
+    pub fn load_source(&self, source: MediaSource<'_>, start_ms: u64) -> Result<()> {
+        self.mixer.update(|state| state.load(source, start_ms))
+    }
+
+    pub fn preload_next(&self, uid: Uid, url: &str) -> Result<()> {
+        self.preload_source(MediaSource::new(uid, url))
+    }
+
+    pub fn preload_source(&self, source: MediaSource<'_>) -> Result<()> {
+        self.mixer.update(|state| state.preload_next(source))
+    }
+
+    pub fn clear_next(&self) -> Result<()> {
+        self.mixer.update(|state| state.clear_next())
+    }
+
+    pub fn stop(&self) -> Result<()> {
+        self.mixer.update(|state| state.stop())
+    }
+
     pub fn play(&self) -> Result<()> {
-        self.set("pause", false)
+        self.mixer.update(|state| state.set_paused(false))
     }
 
     pub fn pause(&self) -> Result<()> {
-        self.set("pause", true)
+        self.mixer.update(|state| state.set_paused(true))
     }
 
     pub fn toggle_pause(&self) -> Result<()> {
-        self.command(&["cycle", "pause"]).map(drop)
+        self.mixer.update(|state| state.toggle_pause())
     }
 
     pub fn seek(&self, position_ms: u64) -> Result<()> {
-        let target = mpv_seconds_from_milliseconds(position_ms);
-        self.command(&["seek", &target, "absolute"]).map(drop)
+        self.mixer.update(|state| state.seek(position_ms))
     }
 
     pub fn set_volume(&self, volume: u8) -> Result<()> {
-        self.set("volume", i64::from(volume.min(MAX_VOLUME)))
+        self.mixer.update(|state| state.set_volume(volume))
     }
 
     pub fn set_muted(&self, muted: bool) -> Result<()> {
-        self.set("mute", muted)
+        self.mixer.update(|state| state.set_muted(muted))
     }
 
     pub fn set_replay_gain(&self, mode: ReplayGainMode) -> Result<()> {
-        self.set("replaygain", mode.mpv_value())
+        self.mixer.update(|state| state.set_replay_gain(mode))
     }
 
     pub fn set_audio_device(&self, device: Option<&str>) -> Result<()> {
-        self.set("audio-device", device.unwrap_or(AUTOMATIC_AUDIO_DEVICE))
+        self.mixer.update(|state| state.set_audio_device(device))
+    }
+
+    pub fn set_crossfade(&self, crossfade: Duration) -> Result<()> {
+        self.mixer.set_crossfade(crossfade)
     }
 
     pub fn audio_devices(&self) -> Result<Vec<AudioDevice>> {
-        ffi::get_property_node(self.shared.mpv.ctx, "audio-device-list")
-            .map(|list| audio_devices_from_mpv_list(&list))
-            .map_err(error_from_mpv_code)
+        self.mixer.read(|state| state.audio_devices())
     }
 
     pub fn position_ms(&self) -> Option<u64> {
-        self.shared
-            .mpv
-            .get_property::<f64>("time-pos")
-            .ok()
-            .map(seconds_to_milliseconds)
+        self.mixer.read(|state| state.position_ms())
     }
 
-    fn command(&self, arguments: &[&str]) -> Result<Node> {
-        ffi::command_with_reply(self.shared.mpv.ctx, arguments).map_err(error_from_mpv_code)
+    #[doc(hidden)]
+    pub fn is_crossfading(&self) -> bool {
+        self.mixer.read(|state| state.is_crossfading())
     }
 
-    fn set<Value: SetData>(&self, name: &str, value: Value) -> Result<()> {
-        self.shared
-            .mpv
-            .set_property(name, value)
-            .map_err(error_from_mpv)
+    #[doc(hidden)]
+    pub fn holds_next_track(&self) -> bool {
+        self.mixer.read(|state| state.holds_next_track())
     }
 }
 
 impl Drop for Player {
     fn drop(&mut self) {
-        self.shared.stop_requested.store(true, Ordering::Release);
-        ffi::wake_up_event_thread(self.shared.mpv.ctx);
-        if let Some(event_thread) = self.event_thread.take()
-            && event_thread.thread().id() != thread::current().id()
+        let decks = self.mixer.shut_down();
+        if let Some(fader_thread) = self.fader_thread.take()
+            && fader_thread.thread().id() != thread::current().id()
         {
-            event_thread.join().ok();
+            fader_thread.join().ok();
         }
+        drop(decks);
     }
 }

@@ -1,4 +1,5 @@
 use std::fmt::Display;
+use std::time::Duration;
 
 use feishin_core::model::ServerConfig;
 use serde::{Deserialize, Serialize};
@@ -7,6 +8,7 @@ use crate::appearance::AppearanceSettings;
 use crate::{Paths, Result, StorageError, none_when_missing, write_atomic};
 
 pub const SETTINGS_FILE: &str = "settings.toml";
+pub const MAX_CROSSFADE_SECONDS: u8 = 12;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default, Serialize, Deserialize)]
 pub enum ReplayGainSetting {
@@ -27,6 +29,13 @@ pub struct PlaybackSettings {
     pub max_bitrate_kbps: Option<u32>,
     pub transcode_format: Option<String>,
     pub scrobble: bool,
+    pub crossfade_seconds: u8,
+}
+
+impl PlaybackSettings {
+    pub fn crossfade(&self) -> Duration {
+        Duration::from_secs(u64::from(self.crossfade_seconds.min(MAX_CROSSFADE_SECONDS)))
+    }
 }
 
 impl Default for PlaybackSettings {
@@ -40,6 +49,7 @@ impl Default for PlaybackSettings {
             max_bitrate_kbps: None,
             transcode_format: None,
             scrobble: true,
+            crossfade_seconds: 0,
         }
     }
 }
@@ -147,6 +157,7 @@ mod tests {
                 replay_gain: ReplayGainSetting::Album,
                 audio_device: Some("pulse/sink".into()),
                 max_bitrate_kbps: Some(320),
+                crossfade_seconds: 5,
                 ..Default::default()
             },
             ui: UiSettings {
@@ -221,6 +232,7 @@ a = 1
         assert_eq!(settings.playback.volume, 10);
         assert!(settings.playback.gapless);
         assert!(settings.playback.scrobble);
+        assert_eq!(settings.playback.crossfade(), Duration::ZERO);
         assert_eq!(
             settings.ui.track_columns,
             vec![ColumnSetting {
@@ -230,6 +242,17 @@ a = 1
             }]
         );
         assert_eq!(settings.integrations, IntegrationSettings::default());
+    }
+
+    #[test]
+    fn crossfade_is_capped_at_twelve_seconds() {
+        let playback = |crossfade_seconds| PlaybackSettings {
+            crossfade_seconds,
+            ..PlaybackSettings::default()
+        };
+        assert_eq!(playback(0).crossfade(), Duration::ZERO);
+        assert_eq!(playback(7).crossfade(), Duration::from_secs(7));
+        assert_eq!(playback(200).crossfade(), Duration::from_secs(12));
     }
 
     #[test]

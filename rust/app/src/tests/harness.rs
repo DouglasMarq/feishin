@@ -1,7 +1,8 @@
+use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::{Arc, Mutex};
 use std::time::Duration;
 
-use anyhow::Result;
+use anyhow::{Result, anyhow};
 use feishin_core::model::{Song, SongListQuery};
 use feishin_core::queue::{QueueView, Uid};
 use feishin_player::PlayerEvent;
@@ -31,18 +32,25 @@ pub(super) enum AudioCall {
 }
 
 #[derive(Clone, Default)]
-pub(super) struct RecordingAudio(Arc<Mutex<Vec<AudioCall>>>);
+pub(super) struct RecordingAudio {
+    calls: Arc<Mutex<Vec<AudioCall>>>,
+    crossfade_fails: Arc<AtomicBool>,
+}
 
 impl RecordingAudio {
+    pub(super) fn fail_crossfade_changes(&self) {
+        self.crossfade_fails.store(true, Ordering::Relaxed);
+    }
+
     pub(super) fn take(&self) -> Vec<AudioCall> {
-        self.0
+        self.calls
             .lock()
             .map(|mut calls| calls.drain(..).collect())
             .unwrap_or_default()
     }
 
     fn record(&self, call: AudioCall) -> Result<()> {
-        if let Ok(mut calls) = self.0.lock() {
+        if let Ok(mut calls) = self.calls.lock() {
             calls.push(call);
         }
         Ok(())
@@ -76,6 +84,12 @@ impl AudioOutput for RecordingAudio {
     }
     fn set_muted(&self, muted: bool) -> Result<()> {
         self.record(AudioCall::Mute(muted))
+    }
+    fn set_crossfade(&self, _crossfade: Duration) -> Result<()> {
+        match self.crossfade_fails.load(Ordering::Relaxed) {
+            true => Err(anyhow!("no second audio output")),
+            false => Ok(()),
+        }
     }
 }
 

@@ -1,3 +1,5 @@
+use std::time::Duration;
+
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
 pub enum ReplayGainMode {
     #[default]
@@ -22,6 +24,14 @@ pub struct PlayerConfig {
     pub replay_gain: ReplayGainMode,
     pub gapless: bool,
     pub volume: u8,
+    pub muted: bool,
+    pub crossfade: Duration,
+}
+
+impl PlayerConfig {
+    pub(crate) fn crossfade_enabled(&self) -> bool {
+        !self.crossfade.is_zero()
+    }
 }
 
 impl Default for PlayerConfig {
@@ -31,6 +41,8 @@ impl Default for PlayerConfig {
             replay_gain: ReplayGainMode::Off,
             gapless: true,
             volume: 70,
+            muted: false,
+            crossfade: Duration::ZERO,
         }
     }
 }
