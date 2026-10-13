@@ -93,6 +93,7 @@ component AlbumTile inherits Rectangle {
     if touch.has-hover: PlayOverlay {
         x: art.x + art.width - self.width - 8px;
         y: art.y + art.height - self.height - 8px;
+        tooltip: "Play album";
         clicked => {
             ArtistDetailState.play-album(root.album.id);
         }
@@ -200,6 +201,7 @@ export component ArtistDetailView inherits Rectangle {
                         PlayOverlay {
                             width: 48px;
                             height: 48px;
+                            tooltip: "Play all";
                             clicked => {
                                 ArtistDetailState.play(false);
                             }
@@ -210,6 +212,7 @@ export component ArtistDetailView inherits Rectangle {
                             width: 40px;
                             height: 40px;
                             icon: Icons.shuffle;
+                            tooltip: "Shuffle play";
                             icon-size: 22px;
                             clicked => {
                                 ArtistDetailState.play(true);
@@ -224,6 +227,7 @@ export component ArtistDetailView inherits Rectangle {
                             icon-color: ArtistDetailState.favorite ? Theme.danger : Theme.muted;
                             icon-size: 22px;
                             enabled: ArtistDetailState.name != "";
+                            tooltip: ArtistDetailState.favorite ? "Remove from favorites" : "Add to favorites";
                             clicked => {
                                 ArtistDetailState.toggle-favorite();
                             }

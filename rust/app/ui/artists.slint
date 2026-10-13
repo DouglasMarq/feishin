@@ -1,7 +1,7 @@
 import { ComboBox, LineEdit, ListView } from "std-widgets.slint";
 import { Theme, Icons } from "theme.slint";
 import { AppState, Route } from "globals.slint";
-import { Icon, IconButton } from "widgets.slint";
+import { Icon, IconButton, TooltipAnchor } from "widgets.slint";
 import { Cell, Skeleton } from "tracks.slint";
 
 export struct ArtistCard {
@@ -67,6 +67,7 @@ export component ArtistImage inherits Rectangle {
 
 /// Round primary play button shown over covers.
 export component PlayOverlay inherits Rectangle {
+    in property <string> tooltip: "Play";
     callback clicked();
     width: 40px;
     height: 40px;
@@ -80,6 +81,11 @@ export component PlayOverlay inherits Rectangle {
         color: white;
         width: parent.width * 0.55;
         height: parent.width * 0.55;
+    }
+
+    TooltipAnchor {
+        text: root.tooltip;
+        hovered: touch.has-hover;
     }
 
     touch := TouchArea {
@@ -174,6 +180,7 @@ component ArtistRowView inherits Rectangle {
                     x: parent.width - self.width;
                     icon: Icons.play;
                     icon-color: Theme.foreground;
+                    tooltip: "Play";
                     clicked => {
                         ArtistsState.play(root.card.id);
                     }
@@ -272,6 +279,7 @@ export component ArtistsView inherits Rectangle {
             IconButton {
                 y: (parent.height - self.height) / 2;
                 icon: ArtistsState.descending ? Icons.arrow-down : Icons.arrow-up;
+                tooltip: ArtistsState.descending ? "Sort: descending" : "Sort: ascending";
                 clicked => {
                     ArtistsState.descending = !ArtistsState.descending;
                     ArtistsState.query-changed();
@@ -282,6 +290,7 @@ export component ArtistsView inherits Rectangle {
                 y: (parent.height - self.height) / 2;
                 icon: ArtistsState.favorites-only ? Icons.heart : ArtistIcons.heart-outline;
                 active: ArtistsState.favorites-only;
+                tooltip: ArtistsState.favorites-only ? "Favorites only: on" : "Favorites only: off";
                 clicked => {
                     ArtistsState.favorites-only = !ArtistsState.favorites-only;
                     ArtistsState.query-changed();
@@ -291,6 +300,7 @@ export component ArtistsView inherits Rectangle {
             IconButton {
                 y: (parent.height - self.height) / 2;
                 icon: ArtistsState.grid ? ArtistIcons.list : ArtistIcons.grid;
+                tooltip: ArtistsState.grid ? "Switch to list view" : "Switch to grid view";
                 clicked => {
                     ArtistsState.grid = !ArtistsState.grid;
                 }
