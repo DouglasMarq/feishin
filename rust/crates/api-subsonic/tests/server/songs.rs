@@ -284,3 +284,22 @@ async fn a_year_filter_on_songs_is_reported_as_unsupported_instead_of_ignored() 
         Err(feishin_api::ApiError::Unsupported(_))
     ));
 }
+
+#[tokio::test]
+async fn random_lists_filtered_by_year_can_still_be_counted() {
+    let mock = MockServer::start().await;
+    Mock::given(path("/rest/getSongsByGenre.view"))
+        .respond_with(ok(
+            json!({ "songsByGenre": { "song": [song("s1", "One")] } }),
+        ))
+        .mount(&mock)
+        .await;
+
+    let query = SongListQuery {
+        sort: SongSort::Random,
+        genre_ids: vec!["Jazz".into()],
+        year_from: Some(1990),
+        ..Default::default()
+    };
+    assert!(server(&mock).song_count(&query).await.is_ok());
+}

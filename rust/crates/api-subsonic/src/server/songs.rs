@@ -137,9 +137,8 @@ impl SubsonicServer {
 
     pub(super) async fn count_songs(&self, query: &SongListQuery) -> Result<usize> {
         let folder = query.music_folder_id.as_deref();
-        let source = SongSource::for_count(query);
-        ensure_year_filter_applies(query, &source)?;
-        match source {
+        ensure_year_filter_applies(query, &SongSource::for_list(query))?;
+        match SongSource::for_count(query) {
             SongSource::Search(term) => {
                 count_by_probing(|offset, count| async move {
                     let window = SearchWindow { offset, count };
