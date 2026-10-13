@@ -1,7 +1,7 @@
 import { ComboBox, LineEdit, ListView } from "std-widgets.slint";
 import { Theme, Icons } from "theme.slint";
 import { AppState, Route, TracksState, TrackRow } from "globals.slint";
-import { Icon } from "widgets.slint";
+import { Icon, TooltipAnchor } from "widgets.slint";
 
 global Glyphs {
     out property <string> star: "M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z";
@@ -22,7 +22,12 @@ export component HeaderCell inherits Rectangle {
     width: root.column-width;
     height: 32px;
 
-    TouchArea {
+    TooltipAnchor {
+        text: root.sortable ? "Sort by " + root.text + (root.sorted ? (TracksState.sort-desc ? ": descending" : ": ascending") : "") : "";
+        hovered: sort-touch.has-hover;
+    }
+
+    sort-touch := TouchArea {
         mouse-cursor: root.sortable ? pointer : default;
         clicked => {
             if (root.sortable) {
@@ -73,10 +78,16 @@ export component HeaderCell inherits Rectangle {
         }
     }
 
-    TouchArea {
+    resize-touch := TouchArea {
         x: parent.width - 5px;
         width: 8px;
         mouse-cursor: col-resize;
+
+        TooltipAnchor {
+            text: "Resize column";
+            hovered: resize-touch.has-hover;
+        }
+
         moved => {
             if (self.pressed) {
                 root.column-width = max(40px, root.column-width + self.mouse-x - self.pressed-x);
@@ -144,6 +155,13 @@ component FavoriteCell inherits Rectangle {
         height: 16px;
     }
 
+    TooltipAnchor {
+        x: 4px;
+        width: 24px;
+        text: root.favorite ? "Remove from favorites" : "Add to favorites";
+        hovered: touch.has-hover;
+    }
+
     touch := TouchArea {
         x: 4px;
         width: 24px;
@@ -179,7 +197,12 @@ component RatingCell inherits Rectangle {
                 height: 15px;
             }
 
-            TouchArea {
+            TooltipAnchor {
+                text: i + 1 == root.rating ? "Clear rating" : (i == 0 ? "Rate 1 star" : "Rate \{i + 1} stars");
+                hovered: star-touch.has-hover;
+            }
+
+            star-touch := TouchArea {
                 mouse-cursor: pointer;
                 changed has-hover => {
                     if (self.has-hover) {
@@ -272,6 +295,11 @@ export component TrackRowView inherits Rectangle {
                         path: Icons.play;
                         width: 18px;
                         height: 18px;
+                    }
+
+                    TooltipAnchor {
+                        text: "Play";
+                        hovered: play-touch.has-hover;
                     }
 
                     play-touch := TouchArea {
@@ -385,6 +413,7 @@ component FilterChip inherits Rectangle {
     in property <string> text;
     in property <string> icon;
     in property <bool> active;
+    in property <string> tooltip;
     callback clicked();
     height: 30px;
     border-radius: 15px;
@@ -410,6 +439,11 @@ component FilterChip inherits Rectangle {
             color: root.active ? Theme.foreground : Theme.muted;
             vertical-alignment: center;
         }
+    }
+
+    TooltipAnchor {
+        text: root.tooltip;
+        hovered: touch.has-hover;
     }
 
     touch := TouchArea {
@@ -476,6 +510,7 @@ export component TracksView inherits Rectangle {
                 text: "Favorites";
                 icon: Icons.heart;
                 active: TracksState.filter-favorite;
+                tooltip: TracksState.filter-favorite ? "Favorites only: on" : "Favorites only: off";
                 clicked => {
                     TracksState.filter-favorite = !TracksState.filter-favorite;
                     TracksState.filters-changed(false);
@@ -649,6 +684,7 @@ export component TracksView inherits Rectangle {
                     }
 
                     if TracksState.show-favorite: HeaderCell {
+                        text: "Favorite";
                         icon: Icons.heart;
                         column: "favorite";
                         column-width <=> TracksState.w-favorite;

@@ -1,7 +1,7 @@
 import { LineEdit, ScrollView } from "std-widgets.slint";
 import { Theme, Icons } from "theme.slint";
 import { Actions, AppState, PlayerState, Route, TrackRow } from "globals.slint";
-import { Icon } from "widgets.slint";
+import { Icon, TooltipAnchor } from "widgets.slint";
 import { Cell, HeaderCell } from "tracks.slint";
 
 export enum SearchKind { songs, albums, artists }
@@ -179,6 +179,11 @@ component SongRow inherits Rectangle {
                             path: Icons.play;
                             width: 18px;
                             height: 18px;
+                        }
+
+                        TooltipAnchor {
+                            text: "Play";
+                            hovered: play-touch.has-hover;
                         }
 
                         play-touch := TouchArea {
