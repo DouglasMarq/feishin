@@ -8,7 +8,7 @@ use super::super::album_grid::credited_artists;
 use super::super::player::to_image;
 use super::super::{AlbumDetailArtist, AlbumDetailState, AppWindow, Context, on_ui, show_status};
 use super::info::album_info;
-use super::tracks::{ordered, track_rows, with_tracks};
+use super::tracks::show_tracks;
 use crate::covers::CoverProvider;
 
 const COVER_SIZE: u32 = 440;
@@ -17,7 +17,7 @@ fn is_shown(window: &AppWindow, album_id: &SharedString) -> bool {
     window.global::<AlbumDetailState>().get_album_id() == *album_id
 }
 
-fn show(window: &AppWindow, detail: AlbumDetail) {
+pub(super) fn show(window: &AppWindow, detail: AlbumDetail) {
     let state = window.global::<AlbumDetailState>();
     let album = &detail.album;
     let artists: Vec<AlbumDetailArtist> = credited_artists(album)
@@ -32,12 +32,7 @@ fn show(window: &AppWindow, detail: AlbumDetail) {
     state.set_info(album_info(&detail).into());
     state.set_favorite(album.favorite);
     state.set_rating(i32::from(album.user_rating.unwrap_or(0)));
-    let songs = ordered(detail.songs);
-    let rows = track_rows(&songs);
-    with_tracks(window, |tracks| {
-        tracks.rows.set_vec(rows);
-        *tracks.songs.borrow_mut() = songs;
-    });
+    show_tracks(window, detail.songs);
     state.set_loading(false);
 }
 
@@ -60,10 +55,7 @@ fn clear(window: &AppWindow, album_id: &SharedString) {
     state.set_cover(slint::Image::default());
     state.set_favorite(false);
     state.set_rating(0);
-    with_tracks(window, |tracks| {
-        tracks.rows.clear();
-        tracks.songs.borrow_mut().clear();
-    });
+    show_tracks(window, Vec::new());
 }
 
 async fn load_cover(

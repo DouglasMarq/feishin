@@ -18,6 +18,8 @@ export struct AlbumDetailTrack {
     plays: string,
     duration: string,
     disc-header: string,
+    top: length,
+    height: length,
 }
 
 export global AlbumDetailState {
@@ -32,6 +34,9 @@ export global AlbumDetailState {
     in-out property <bool> favorite;
     in-out property <int> rating;
     in property <[AlbumDetailTrack]> tracks;
+    in property <length> tracks-height;
+    pure callback visible-slots(length, int) -> int;
+    pure callback first-visible-row(length, int) -> int;
     callback load(string);
     callback play();
     callback shuffle();
@@ -145,7 +150,6 @@ component TrackHeader inherits Rectangle {
 component AlbumTrackRowView inherits Rectangle {
     in property <AlbumDetailTrack> track;
     property <bool> playing: PlayerState.song-id == root.track.id;
-    height: root.track.disc-header != "" ? 44px : 36px;
 
     if root.track.disc-header != "": Text {
         x: 32px;
@@ -279,6 +283,42 @@ component AlbumTrackRowView inherits Rectangle {
                     }
                 }
             }
+        }
+    }
+}
+
+component AlbumTrackRows inherits Rectangle {
+    in property <length> viewport-top;
+    in property <length> viewport-height;
+    property <int> row-count: AlbumDetailState.tracks.length;
+    property <int> slot-count: AlbumDetailState.visible-slots(root.viewport-height, root.row-count);
+    property <int> wanted-first-row: AlbumDetailState.first-visible-row(root.viewport-top, root.slot-count);
+    property <int> first-row;
+    height: AlbumDetailState.tracks-height;
+
+    init => {
+        root.first-row = root.wanted-first-row;
+    }
+
+    changed wanted-first-row => {
+        root.first-row = root.wanted-first-row;
+    }
+
+    for slot in root.slot-count: AlbumTrackRowView {
+        property <int> wanted-row-index: root.first-row + mod(slot + root.slot-count - mod(root.first-row, root.slot-count), root.slot-count);
+        property <int> row-index;
+        x: 0;
+        y: self.track.top;
+        width: parent.width;
+        height: self.track.height;
+        track: AlbumDetailState.tracks[self.row-index];
+
+        init => {
+            self.row-index = self.wanted-row-index;
+        }
+
+        changed wanted-row-index => {
+            self.row-index = self.wanted-row-index;
         }
     }
 }
@@ -465,8 +505,9 @@ export component AlbumDetailView inherits Rectangle {
 
             TrackHeader { }
 
-            for track in AlbumDetailState.tracks: AlbumTrackRowView {
-                track: track;
+            AlbumTrackRows {
+                viewport-top: -scroll.content-y - self.y;
+                viewport-height: scroll.visible-height;
             }
 
             Rectangle {

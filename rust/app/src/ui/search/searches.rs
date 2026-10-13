@@ -105,14 +105,11 @@ impl Searches {
         self.songs.items.get(usize::try_from(index).ok()?)
     }
 
-    pub fn song_rows_from(&self, start: usize) -> Vec<TrackRow> {
+    pub fn song_row(&self, index: usize) -> Option<TrackRow> {
         self.songs
             .items
-            .iter()
-            .enumerate()
-            .skip(start)
-            .map(|(index, song)| track_row(song, index))
-            .collect()
+            .get(index)
+            .map(|song| track_row(song, index))
     }
 
     pub fn cards_from(&self, kind: CardKind, start: usize) -> Vec<SearchCard> {
