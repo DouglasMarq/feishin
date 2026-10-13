@@ -16,6 +16,19 @@ impl NavidromeServer {
             .await
     }
 
+    pub(crate) async fn genre_name(&self, genre_id: &str) -> String {
+        match self.list_genres().await {
+            Ok(genres) => genres
+                .into_iter()
+                .find(|genre| genre.id == genre_id)
+                .map_or_else(|| genre_id.to_owned(), |genre| genre.name),
+            Err(error) => {
+                tracing::debug!(%error, genre_id, "genre lookup failed, sending the id as the name");
+                genre_id.to_owned()
+            }
+        }
+    }
+
     pub(crate) async fn list_music_folders(&self) -> Result<Vec<MusicFolder>> {
         let response: subsonic::MusicFolders = self.subsonic("getMusicFolders", &[]).await?;
         Ok(response

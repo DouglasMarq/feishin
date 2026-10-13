@@ -60,10 +60,12 @@ impl NavidromeServer {
     pub(crate) async fn fetch_random_songs(
         &self,
         count: usize,
-        genre: Option<&str>,
+        genre_id: Option<&str>,
     ) -> Result<Vec<Song>> {
         let mut params: QueryParams = vec![("size", count.to_string())];
-        params.extend(genre.map(|genre| ("genre", genre.to_owned())));
+        if let Some(genre_id) = genre_id {
+            params.push(("genre", self.genre_name(genre_id).await));
+        }
         let response: subsonic::RandomSongs = self.subsonic("getRandomSongs", &params).await?;
         Ok(self.songs_from_subsonic(response.random_songs.unwrap_or_default().song))
     }
