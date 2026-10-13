@@ -62,7 +62,7 @@ pub async fn sorts_by_name_and_year(backend: Backend) {
         assert_eq!(descending, reversed);
     }
     let mut by_year = listed_names(&*server, &sorted(AlbumSort::Year, SortOrder::Asc)).await;
-    if !backend.sorts_any_list() {
+    if backend.lists_years_newest_first() {
         by_year.reverse();
     }
     assert_eq!(

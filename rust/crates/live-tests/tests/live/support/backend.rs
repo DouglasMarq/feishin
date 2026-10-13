@@ -2,7 +2,7 @@ use feishin_api::{Credential, MusicServer, Result};
 use feishin_api_jellyfin::JellyfinServer;
 use feishin_api_navidrome::NavidromeServer;
 use feishin_api_subsonic::SubsonicServer;
-use feishin_core::model::{ServerConfig, ServerType};
+use feishin_core::model::{ItemKind, ServerConfig, ServerType};
 use tokio::sync::OnceCell;
 
 static NAVIDROME_CREDENTIAL: OnceCell<Credential> = OnceCell::const_new();
@@ -12,6 +12,7 @@ static JELLYFIN_CREDENTIAL: OnceCell<Credential> = OnceCell::const_new();
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Backend {
     Navidrome,
+    NavidromeSubsonic,
     Gonic,
     Jellyfin,
 }
@@ -31,7 +32,7 @@ fn required_variable(name: &str) -> String {
 impl Backend {
     fn environment_prefix(self) -> &'static str {
         match self {
-            Self::Navidrome => "FEISHIN_LIVE_NAVIDROME",
+            Self::Navidrome | Self::NavidromeSubsonic => "FEISHIN_LIVE_NAVIDROME",
             Self::Gonic => "FEISHIN_LIVE_GONIC",
             Self::Jellyfin => "FEISHIN_LIVE_JELLYFIN",
         }
@@ -39,7 +40,7 @@ impl Backend {
 
     fn server_type(self) -> ServerType {
         match self {
-            Self::Navidrome => ServerType::Navidrome,
+            Self::Navidrome | Self::NavidromeSubsonic => ServerType::Navidrome,
             Self::Gonic => ServerType::Subsonic,
             Self::Jellyfin => ServerType::Jellyfin,
         }
@@ -47,14 +48,18 @@ impl Backend {
 
     fn cached_credential(self) -> &'static OnceCell<Credential> {
         match self {
-            Self::Navidrome => &NAVIDROME_CREDENTIAL,
+            Self::Navidrome | Self::NavidromeSubsonic => &NAVIDROME_CREDENTIAL,
             Self::Gonic => &GONIC_CREDENTIAL,
             Self::Jellyfin => &JELLYFIN_CREDENTIAL,
         }
     }
 
     pub fn sorts_any_list(self) -> bool {
-        self != Self::Gonic
+        matches!(self, Self::Navidrome | Self::Jellyfin)
+    }
+
+    pub fn lists_years_newest_first(self) -> bool {
+        self == Self::Gonic
     }
 
     pub fn filters_songs_by_year(self) -> bool {
@@ -63,6 +68,21 @@ impl Backend {
 
     pub fn sorts_by_counts(self) -> bool {
         self != Self::Jellyfin
+    }
+
+    pub fn clears_play_queue(self) -> bool {
+        self != Self::Gonic
+    }
+
+    pub fn missing_id(self, kind: ItemKind) -> &'static str {
+        match (self, kind) {
+            (Self::Jellyfin, _) => "ffffffffffffffffffffffffffffffff",
+            (Self::Gonic, ItemKind::Song) => "tr-99999",
+            (Self::Gonic, ItemKind::Album) => "al-99999",
+            (Self::Gonic, ItemKind::Artist) => "ar-99999",
+            (Self::Gonic, ItemKind::Playlist) => "pl-MS9taXNzaW5nLm0zdQ==",
+            (Self::Navidrome | Self::NavidromeSubsonic, _) => "feishin-missing-item",
+        }
     }
 
     pub fn supports_ratings(self) -> bool {
@@ -111,7 +131,9 @@ impl Backend {
         password: &str,
     ) -> Result<(Box<dyn MusicServer>, Credential)> {
         match self {
-            Self::Navidrome => boxed(NavidromeServer::login(config, password).await),
+            Self::Navidrome | Self::NavidromeSubsonic => {
+                boxed(NavidromeServer::login(config, password).await)
+            }
             Self::Gonic => boxed(SubsonicServer::login(config, password).await),
             Self::Jellyfin => boxed(JellyfinServer::login(config, password).await),
         }
@@ -139,6 +161,10 @@ impl Backend {
             Self::Navidrome => Ok(Box::new(NavidromeServer::with_credential(
                 config, credential,
             )?)),
+            Self::NavidromeSubsonic => Ok(Box::new(NavidromeServer::with_credential(
+                config,
+                &without_session(credential),
+            )?)),
             Self::Gonic => Ok(Box::new(SubsonicServer::with_credential(
                 config, credential,
             )?)),
@@ -146,6 +172,16 @@ impl Backend {
                 config, credential,
             )?)),
         }
+    }
+}
+
+fn without_session(credential: &Credential) -> Credential {
+    match credential {
+        Credential::Navidrome { subsonic, .. } => Credential::Navidrome {
+            subsonic: subsonic.clone(),
+            nd_token: None,
+        },
+        other => other.clone(),
     }
 }
 
