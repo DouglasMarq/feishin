@@ -1,15 +1,31 @@
+use std::fmt::{self, Display};
 use std::sync::LazyLock;
 
-use feishin_api::MusicServer;
+use feishin_api::{ApiError, MusicServer};
 use feishin_core::model::Song;
-use feishin_lyrics::{LyricLine, LyricsQuery, LyricsSource};
+use feishin_lyrics::{LyricLine, LyricsError, LyricsQuery, LyricsSource};
 
 use super::lyrics_plan::LyricsStep;
 use crate::controller::artist_names;
 
-static HTTP: LazyLock<reqwest::Client> = LazyLock::new(reqwest::Client::new);
+static LYRICS_HTTP_CLIENT: LazyLock<reqwest::Client> = LazyLock::new(reqwest::Client::new);
 
 const SERVER_SOURCE_LABEL: &str = "Server";
+
+#[derive(Debug)]
+pub(super) enum LyricsLookupError {
+    Server(ApiError),
+    Remote(LyricsError),
+}
+
+impl Display for LyricsLookupError {
+    fn fmt(&self, formatter: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            Self::Server(error) => Display::fmt(error, formatter),
+            Self::Remote(error) => Display::fmt(error, formatter),
+        }
+    }
+}
 
 fn source_label(source: LyricsSource) -> &'static str {
     match source {
@@ -63,10 +79,10 @@ fn lyrics_query(song: &Song) -> LyricsQuery {
 async fn server_lyrics(
     server: &dyn MusicServer,
     song: &Song,
-) -> Result<Option<SongLyrics>, String> {
+) -> Result<Option<SongLyrics>, LyricsLookupError> {
     let text = server.lyrics(song).await.map_err(|error| {
         tracing::debug!("server lyrics for {}: {error}", song.id);
-        error.to_string()
+        LyricsLookupError::Server(error)
     })?;
     Ok(text.and_then(|text| SongLyrics::from_text(SERVER_SOURCE_LABEL, &text)))
 }
@@ -74,10 +90,10 @@ async fn server_lyrics(
 async fn remote_lyrics(
     song: &Song,
     sources: &[LyricsSource],
-) -> Result<Option<SongLyrics>, String> {
-    let found = feishin_lyrics::fetch(&HTTP, &lyrics_query(song), sources)
+) -> Result<Option<SongLyrics>, LyricsLookupError> {
+    let found = feishin_lyrics::fetch(&LYRICS_HTTP_CLIENT, &lyrics_query(song), sources)
         .await
-        .map_err(|error| error.to_string())?;
+        .map_err(LyricsLookupError::Remote)?;
     Ok(found.map(|found| SongLyrics {
         source: source_label(found.source),
         synced: found.synced,
@@ -89,7 +105,7 @@ async fn resolve_step(
     server: &dyn MusicServer,
     song: &Song,
     step: &LyricsStep,
-) -> Result<Option<SongLyrics>, String> {
+) -> Result<Option<SongLyrics>, LyricsLookupError> {
     match step {
         LyricsStep::Server => server_lyrics(server, song).await,
         LyricsStep::Remote(sources) => remote_lyrics(song, sources).await,
@@ -100,7 +116,7 @@ pub(super) async fn resolve_lyrics(
     server: &dyn MusicServer,
     song: &Song,
     plan: &[LyricsStep],
-) -> Result<Option<SongLyrics>, String> {
+) -> Result<Option<SongLyrics>, LyricsLookupError> {
     let mut first_error = None;
     for step in plan {
         match resolve_step(server, song, step).await {

@@ -17,18 +17,20 @@ use crate::session::Session;
 use crate::store::{JsonStore, Store};
 
 #[derive(Clone, Default)]
-struct RecordingAudio(Arc<Mutex<Vec<String>>>);
+struct RecordingAudio {
+    calls: Arc<Mutex<Vec<String>>>,
+}
 
 impl RecordingAudio {
     fn log(&self, call: String) -> Result<()> {
-        if let Ok(mut calls) = self.0.lock() {
+        if let Ok(mut calls) = self.calls.lock() {
             calls.push(call);
         }
         Ok(())
     }
 
     fn take(&self) -> Vec<String> {
-        self.0
+        self.calls
             .lock()
             .map(|mut calls| calls.drain(..).collect())
             .unwrap_or_default()

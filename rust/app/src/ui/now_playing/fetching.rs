@@ -7,7 +7,7 @@ use slint::{ComponentHandle, ModelRc, VecModel};
 
 use super::loading::is_current;
 use super::lyrics_plan::lyrics_plan;
-use super::song_lyrics::{SongLyrics, resolve_lyrics};
+use super::song_lyrics::{LyricsLookupError, SongLyrics, resolve_lyrics};
 use super::view::{View, with_view};
 use crate::ui::{
     AppWindow, Context, LyricsStatus, NowPlayingState, TrackRow, on_ui, player, tracks,
@@ -101,7 +101,7 @@ fn apply_lyrics_result(
     window: &AppWindow,
     view: &View,
     song_id: &str,
-    result: Result<Option<SongLyrics>, String>,
+    result: Result<Option<SongLyrics>, LyricsLookupError>,
 ) {
     let lyrics = match result {
         Ok(lyrics) => lyrics.map(Rc::new),

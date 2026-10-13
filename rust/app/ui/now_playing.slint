@@ -114,7 +114,7 @@ component LyricsPanel inherits Rectangle {
     }
 
     function follow-active-line() {
-        flick.content-y = min(0px, max(flick.height - flick.content-height, flick.height / 2 - self.active-y - self.active-height / 2));
+        lyrics-scroller.content-y = min(0px, max(lyrics-scroller.height - lyrics-scroller.content-height, lyrics-scroller.height / 2 - self.active-y - self.active-height / 2));
     }
 
     if NowPlayingState.lyrics-status == LyricsStatus.loading: Placeholder {
@@ -127,7 +127,7 @@ component LyricsPanel inherits Rectangle {
         text: "Could not load lyrics";
     }
 
-    flick := Flickable {
+    lyrics-scroller := Flickable {
         visible: NowPlayingState.lyrics-status == LyricsStatus.found;
         height: parent.height - footer.height;
         y: 0;
@@ -138,8 +138,8 @@ component LyricsPanel inherits Rectangle {
 
         VerticalLayout {
             width: parent.width;
-            padding-top: NowPlayingState.lyrics-synced ? flick.height / 3 : 8px;
-            padding-bottom: NowPlayingState.lyrics-synced ? flick.height / 2 : 8px;
+            padding-top: NowPlayingState.lyrics-synced ? lyrics-scroller.height / 3 : 8px;
+            padding-bottom: NowPlayingState.lyrics-synced ? lyrics-scroller.height / 2 : 8px;
             padding-left: 8px;
             padding-right: 8px;
             spacing: NowPlayingState.lyrics-synced ? 18px : 4px;
