@@ -86,6 +86,34 @@ async fn cookies_are_exported_to_a_private_file_and_deleted_after_reading() {
 }
 
 #[tokio::test]
+async fn cookie_files_left_by_a_crash_are_deleted_on_the_next_sign_in() {
+    let _spawning = SPAWNING.lock().await;
+    let fake = FakeExporter::with_body(COOKIE_SCRIPT);
+    std::fs::create_dir_all(fake.private_dir()).unwrap();
+    let stale = fake.private_dir().join("youtube-music-cookies-1-0.txt");
+    let recent = fake.private_dir().join("youtube-music-cookies-2-0.txt");
+    let unrelated = fake.private_dir().join("other.txt");
+    for path in [&stale, &recent, &unrelated] {
+        std::fs::write(path, "# Netscape HTTP Cookie File\n").unwrap();
+    }
+    let an_hour_ago = std::time::SystemTime::now() - std::time::Duration::from_secs(3600);
+    for path in [&stale, &unrelated] {
+        std::fs::File::options()
+            .write(true)
+            .open(path)
+            .unwrap()
+            .set_modified(an_hour_ago)
+            .unwrap();
+    }
+    sign_in_with_browser(&fake.yt_dlp(), &fake.private_dir())
+        .await
+        .unwrap();
+    assert!(!stale.exists());
+    assert!(recent.exists(), "it may belong to a sign-in in progress");
+    assert!(unrelated.exists());
+}
+
+#[tokio::test]
 async fn yt_dlp_failures_without_cookies_explain_why() {
     let _spawning = SPAWNING.lock().await;
     let fake = FakeExporter::with_body(
