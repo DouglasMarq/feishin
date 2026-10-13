@@ -1,7 +1,7 @@
 use feishin_storage::settings::{IntegrationSettings, PlaybackSettings};
 use tokio::sync::oneshot;
 
-use super::{Controller, SettingsSnapshot};
+use super::{Controller, SettingsSnapshot, UiUpdate};
 
 fn preload_depends_on_changes(current: &PlaybackSettings, next: &PlaybackSettings) -> bool {
     next.gapless != current.gapless
@@ -58,6 +58,9 @@ impl Controller {
             && let Err(error) = audio.set_crossfade(next.crossfade())
         {
             tracing::warn!("changing the crossfade failed: {error:#}");
+            self.deps.ui.send(UiUpdate::Error(format!(
+                "Crossfade could not be changed: {error:#}"
+            )));
         }
     }
 
