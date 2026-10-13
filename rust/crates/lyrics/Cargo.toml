@@ -7,6 +7,12 @@ publish.workspace = true
 
 [dependencies]
 reqwest.workspace = true
+scraper = { version = "0.27", default-features = false }
 serde.workspace = true
 serde_json.workspace = true
 thiserror.workspace = true
+tracing.workspace = true
+
+[dev-dependencies]
+tokio.workspace = true
+wiremock = "0.6"
