@@ -1,21 +1,17 @@
 use feishin_api::{MusicServer, Result};
-use feishin_core::model::{Paging, Song, SongListQuery};
+use feishin_core::model::{Page, Paging, Song};
 
-const FETCH_ALL_PAGE_SIZE: usize = 500;
+use crate::list_stream::SongSource;
 
-pub async fn fetch_all_songs(server: &dyn MusicServer, query: &SongListQuery) -> Result<Vec<Song>> {
-    let mut songs = Vec::new();
-    loop {
-        let paging = Paging {
-            start_index: songs.len(),
-            limit: FETCH_ALL_PAGE_SIZE,
-        };
-        let page = server.song_list(query, paging).await?;
-        let received = page.items.len();
-        songs.extend(page.items);
-        let reached_total = page.total_count.is_some_and(|total| songs.len() >= total);
-        if received < FETCH_ALL_PAGE_SIZE || reached_total {
-            return Ok(songs);
+pub async fn song_page(
+    server: &dyn MusicServer,
+    source: &SongSource,
+    paging: Paging,
+) -> Result<Page<Song>> {
+    match source {
+        SongSource::Library(query) => server.song_list(query, paging).await,
+        SongSource::Playlist(playlist_id) => {
+            server.playlist_song_page(&playlist_id.0, paging).await
         }
     }
 }

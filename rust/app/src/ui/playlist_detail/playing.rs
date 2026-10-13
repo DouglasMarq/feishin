@@ -1,12 +1,10 @@
-use std::sync::Arc;
-
-use feishin_core::model::Song;
 use slint::ComponentHandle;
 
-use super::detail::{PlayTarget, SharedDetail, lock};
-use super::fetch_all::fetch_all_playlist_songs;
+use super::binding::with_model;
+use super::detail::{SharedDetail, lock};
 use crate::controller::Command;
-use crate::ui::{AppWindow, Context, PlayerState, on_ui, show_status};
+use crate::list_stream::{ListRow, Placement, PlaylistId, SongSource};
+use crate::ui::{AppWindow, Context, PlayerState};
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum PlayStart {
@@ -20,78 +18,68 @@ pub enum PlayStart {
 }
 
 impl PlayStart {
-    fn song_id_in(self, songs: &[Song]) -> Option<String> {
+    fn shuffles(&self) -> bool {
+        matches!(self, Self::FromTop { shuffle: true })
+    }
+
+    fn command(self, playlist_id: PlaylistId, song_count: usize) -> Command {
+        let source = SongSource::Playlist(playlist_id);
+        let every_row = 0..song_count;
         match self {
-            Self::FromTop { .. } => None,
-            Self::AtRow { index, song_id } => {
-                song_id.or_else(|| songs.get(index).map(|song| song.id.clone()))
-            }
+            Self::FromTop { .. } => Command::EnqueueFromList {
+                source,
+                ranges: vec![every_row],
+                placement: Placement::Now,
+            },
+            Self::AtRow { index, song_id } => Command::PlayFromList {
+                source,
+                song_id,
+                row_index: ListRow(index),
+            },
         }
     }
 }
 
 pub fn play_playlist(window: &AppWindow, ctx: &Context, shared: &SharedDetail, start: PlayStart) {
-    let Some(server) = ctx.session.get() else {
-        return;
-    };
-    let Some(target) = lock(shared).start_play() else {
-        return;
-    };
-    let (weak, play_ctx, shared) = (window.as_weak(), ctx.clone(), Arc::clone(shared));
-    ctx.rt.spawn(async move {
-        let result = fetch_all_playlist_songs(server.as_ref(), &target.playlist_id).await;
-        on_ui(&weak, move |window| {
-            finish_play(window, &play_ctx, &shared, &target, start, result);
-        });
-    });
-}
-
-fn finish_play(
-    window: &AppWindow,
-    ctx: &Context,
-    shared: &SharedDetail,
-    target: &PlayTarget,
-    start: PlayStart,
-    result: feishin_api::Result<Vec<Song>>,
-) {
-    if !lock(shared).is_latest_play(target.request) {
+    let playlist_id = lock(shared).id.clone();
+    if playlist_id.is_empty() {
         return;
     }
-    match result {
-        Ok(songs) if songs.is_empty() => {}
-        Ok(songs) => send_play(window, ctx, songs, start),
-        Err(error) => show_status(window, &format!("Could not load the playlist: {error}")),
-    }
-}
-
-fn send_play(window: &AppWindow, ctx: &Context, songs: Vec<Song>, start: PlayStart) {
-    let shuffle_requested = matches!(start, PlayStart::FromTop { shuffle: true });
-    if shuffle_requested && !window.global::<PlayerState>().get_shuffle() {
+    if start.shuffles() && !window.global::<PlayerState>().get_shuffle() {
         ctx.send(Command::ToggleShuffle);
     }
-    let song_id = start.song_id_in(&songs);
-    ctx.send(Command::PlaySongs { songs, song_id });
+    let song_count = with_model(window, |model| model.total()).unwrap_or_default();
+    ctx.send(start.command(PlaylistId(playlist_id), song_count));
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::demo::test_song;
 
     #[test]
-    fn rows_start_at_their_song_even_before_their_page_loaded() {
-        let songs = vec![test_song("first", 1000), test_song("second", 1000)];
-        let unloaded = PlayStart::AtRow {
-            index: 1,
+    fn playing_from_the_top_streams_every_row_and_rows_start_at_their_song() {
+        let top = PlayStart::FromTop { shuffle: true };
+        assert!(top.shuffles());
+        assert!(matches!(
+            top.command(PlaylistId("playlist-1".into()), 1200),
+            Command::EnqueueFromList {
+                source: SongSource::Playlist(PlaylistId(id)),
+                ranges,
+                placement: Placement::Now,
+            } if id == "playlist-1" && ranges.len() == 1 && ranges.first() == Some(&(0..1200))
+        ));
+        let row = PlayStart::AtRow {
+            index: 700,
             song_id: None,
         };
-        assert_eq!(unloaded.song_id_in(&songs).as_deref(), Some("second"));
-        let loaded = PlayStart::AtRow {
-            index: 1,
-            song_id: Some("chosen".into()),
-        };
-        assert_eq!(loaded.song_id_in(&songs).as_deref(), Some("chosen"));
-        let top = PlayStart::FromTop { shuffle: true };
-        assert_eq!(top.song_id_in(&songs), None);
+        assert!(!row.shuffles());
+        assert!(matches!(
+            row.command(PlaylistId("playlist-1".into()), 1200),
+            Command::PlayFromList {
+                song_id: None,
+                row_index: ListRow(700),
+                ..
+            }
+        ));
     }
 }

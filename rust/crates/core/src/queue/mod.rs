@@ -1,5 +1,7 @@
+mod anchored;
 mod indexing;
 mod insertion;
+mod interleaving;
 mod interner;
 mod item;
 mod lookup;
@@ -16,6 +18,7 @@ mod tests;
 
 use std::collections::HashMap;
 
+pub use anchored::InsertAnchor;
 pub use item::{Advance, QueueItem, RepeatMode, Uid};
 pub use snapshot::QueueSnapshot;
 pub use track::QueueTrack;

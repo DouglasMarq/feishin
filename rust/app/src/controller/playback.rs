@@ -1,47 +1,14 @@
-use std::sync::Arc;
-
 use feishin_api::StreamOptions;
-use feishin_core::model::{Song, SongListQuery};
 use feishin_core::queue::{Advance, QueueItem};
 
-use super::{Command, Controller, UiUpdate, forward_command};
+use super::{Controller, UiUpdate};
 use crate::audio::Track;
-use crate::library::fetch_all_songs;
 
 const PREVIOUS_RESTARTS_AFTER_MS: u64 = 10_000;
 
 impl Controller {
-    pub(super) fn play_from_list(&mut self, query: SongListQuery, song_id: String) {
-        self.play_request += 1;
-        let request = self.play_request;
-        let Some(server) = self.deps.session.get() else {
-            return;
-        };
-        let commands = self.deps.commands.clone();
-        let ui = Arc::clone(&self.deps.ui);
-        tokio::spawn(async move {
-            match fetch_all_songs(server.as_ref(), &query).await {
-                Ok(songs) => forward_command(
-                    &commands,
-                    Command::PlayNow {
-                        request,
-                        songs,
-                        song_id,
-                    },
-                ),
-                Err(error) => ui.send(UiUpdate::Error(format!("Could not load the list: {error}"))),
-            }
-        });
-    }
-
-    pub(super) fn play_requested(&mut self, request: u64, songs: Vec<Song>, song_id: &str) {
-        if request != self.play_request {
-            return;
-        }
-        self.play_now(songs, song_id);
-    }
-
-    pub fn play_now(&mut self, songs: Vec<Song>, song_id: &str) {
+    #[cfg(test)]
+    pub fn play_now(&mut self, songs: Vec<feishin_core::model::Song>, song_id: &str) {
         self.queue.play_now(songs, Some(song_id));
         self.publish_queue();
         self.load_current(0);

@@ -3,7 +3,9 @@ use slint::ComponentHandle;
 
 use super::binding::with_model;
 use super::editing::add_to_playlist;
-use crate::ui::playlists::PlayMode;
+use super::model::PlaylistSongsModel;
+use crate::controller::Command;
+use crate::list_stream::{Placement, PlaylistId, RowRanges, SongSource};
 use crate::ui::{AppWindow, Context, PlaylistSongAction, on_ui, show_status};
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -26,36 +28,62 @@ impl SongAction {
     }
 }
 
+impl SongAction {
+    fn placement(self) -> Option<Placement> {
+        match self {
+            Self::Play => Some(Placement::Now),
+            Self::PlayNext => Some(Placement::Next),
+            Self::AddToQueue => Some(Placement::Last),
+            Self::AddToPlaylist => None,
+        }
+    }
+}
+
 pub fn act_on_rows(window: &AppWindow, ctx: &Context, indexes: &[usize], action: SongAction) {
+    match action.placement() {
+        Some(placement) => enqueue_rows(window, ctx, indexes, placement),
+        None => add_rows_to_playlist(window, ctx, indexes),
+    }
+}
+
+fn enqueue_rows(window: &AppWindow, ctx: &Context, indexes: &[usize], placement: Placement) {
+    let Some(playlist_id) = with_model(window, PlaylistSongsModel::playlist_id) else {
+        return;
+    };
+    if playlist_id.is_empty() || indexes.is_empty() {
+        return;
+    }
+    ctx.send(Command::EnqueueFromList {
+        source: SongSource::Playlist(PlaylistId(playlist_id)),
+        ranges: RowRanges::covering(indexes),
+        placement,
+    });
+}
+
+fn add_rows_to_playlist(window: &AppWindow, ctx: &Context, indexes: &[usize]) {
     let Some(snapshot) = with_model(window, |model| model.snapshot(indexes)) else {
         return;
     };
     if snapshot.is_loaded() {
-        perform(window, ctx, action, snapshot.into_loaded());
+        add_songs_to_playlist(window, &snapshot.into_loaded());
         return;
     }
     let Some(server) = ctx.session.get() else {
         return;
     };
-    let (weak, action_ctx) = (window.as_weak(), ctx.clone());
+    let weak = window.as_weak();
     ctx.rt.spawn(async move {
         let result = snapshot.resolve(server.as_ref()).await;
         on_ui(&weak, move |window| match result {
-            Ok(songs) => perform(window, &action_ctx, action, songs),
+            Ok(songs) => add_songs_to_playlist(window, &songs),
             Err(error) => show_status(window, &format!("Could not load the selection: {error}")),
         });
     });
 }
 
-fn perform(window: &AppWindow, ctx: &Context, action: SongAction, songs: Vec<Song>) {
-    if songs.is_empty() {
-        return;
-    }
-    match action {
-        SongAction::AddToPlaylist => add_to_playlist(window, &songs),
-        SongAction::Play => ctx.send(PlayMode::Now.command(songs)),
-        SongAction::PlayNext => ctx.send(PlayMode::Next.command(songs)),
-        SongAction::AddToQueue => ctx.send(PlayMode::Last.command(songs)),
+fn add_songs_to_playlist(window: &AppWindow, songs: &[Song]) {
+    if !songs.is_empty() {
+        add_to_playlist(window, songs);
     }
 }
 

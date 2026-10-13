@@ -16,6 +16,7 @@ use crate::connect::DemoConnector;
 use crate::controller::Command;
 use crate::covers::DemoCovers;
 use crate::demo::FakeServer;
+use crate::list_stream::{ListRow, SongSource};
 use crate::session::Session;
 use crate::store::JsonStore;
 use crate::ui::{AppState, AppWindow, Context, Page, Route, TrackRow, TracksState, nav};
@@ -219,10 +220,15 @@ fn assert_play_row_uses_filtered_query(
 ) {
     harness.tracks().invoke_play_row(0);
     match received.try_recv() {
-        Ok(Command::PlayFromList { query, song_id }) => {
+        Ok(Command::PlayFromList {
+            source: SongSource::Library(query),
+            song_id,
+            row_index,
+        }) => {
             assert_eq!(query.favorite, Some(true));
             assert_eq!(query.genre_ids.len(), 1);
-            assert_eq!(song_id, harness.row(0).id.as_str());
+            assert_eq!(song_id.as_deref(), Some(harness.row(0).id.as_str()));
+            assert_eq!(row_index, ListRow(0));
         }
         _ => panic!("expected PlayFromList"),
     }

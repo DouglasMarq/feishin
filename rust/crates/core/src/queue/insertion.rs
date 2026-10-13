@@ -7,11 +7,21 @@ impl Queue {
         songs: Vec<Song>,
         start_song_id: Option<&str>,
     ) -> Option<&QueueItem> {
+        let start_index =
+            start_song_id.and_then(|song_id| songs.iter().position(|song| song.id == song_id));
+        self.play_now_at(songs, start_index)
+    }
+
+    pub fn play_now_at(
+        &mut self,
+        songs: Vec<Song>,
+        start_index: Option<usize>,
+    ) -> Option<&QueueItem> {
         self.interner.clear();
         self.items = self.create_items(&songs);
         self.reindex_all();
         self.bump_revision();
-        let start_index = start_song_id.and_then(|song_id| self.index_of_song(song_id));
+        let start_index = start_index.filter(|&index| index < self.items.len());
         let start_position = self.start_position_after_replacing(start_index);
         self.current_uid = self.uid_at_position(start_position);
         self.current()
@@ -52,7 +62,7 @@ impl Queue {
         uid
     }
 
-    fn create_items(&mut self, songs: &[Song]) -> Vec<QueueItem> {
+    pub(super) fn create_items(&mut self, songs: &[Song]) -> Vec<QueueItem> {
         songs
             .iter()
             .map(|song| QueueItem {
@@ -60,12 +70,6 @@ impl Queue {
                 track: self.interner.track_of(song),
             })
             .collect()
-    }
-
-    fn index_of_song(&self, song_id: &str) -> Option<usize> {
-        self.items
-            .iter()
-            .position(|item| item.track.song_id == song_id)
     }
 
     fn start_position_after_replacing(&mut self, start_index: Option<usize>) -> usize {
@@ -76,7 +80,7 @@ impl Queue {
         FIRST_POSITION
     }
 
-    fn insert_into_shuffled_order(
+    pub(super) fn insert_into_shuffled_order(
         &mut self,
         insert_index: usize,
         insert_position: usize,
@@ -93,7 +97,7 @@ impl Queue {
     }
 }
 
-fn shift_indexes_from(
+pub(super) fn shift_indexes_from(
     mut play_order: Vec<usize>,
     first_shifted: usize,
     shift: usize,

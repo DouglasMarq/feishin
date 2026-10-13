@@ -1,6 +1,7 @@
 mod command;
 mod connection;
 mod dispatch;
+mod list_streams;
 mod media_session;
 mod persistence;
 mod playback;
@@ -12,6 +13,8 @@ mod scrobbling;
 mod server_queue;
 mod settings_changes;
 mod sleep;
+mod stream_pages;
+mod streaming;
 mod ui_update;
 mod volume;
 
@@ -33,6 +36,7 @@ use crate::scrobble::ScrobbleTracker;
 use crate::session::Session;
 use crate::sleep_timer::SleepTimer;
 use crate::store::Store;
+use list_streams::ListStreams;
 
 pub struct Deps {
     pub audio: Box<dyn AudioOutput>,
@@ -58,6 +62,7 @@ pub struct Controller {
     queue_sync: PlayQueueSync,
     sleep_timer: SleepTimer,
     saved_credential: Option<Credential>,
+    list_streams: ListStreams,
 }
 
 fn initial_queue(stored: Option<StoredQueue>, seed: Option<u64>) -> (Queue, u64) {
@@ -91,6 +96,7 @@ impl Controller {
             queue_sync: PlayQueueSync::default(),
             sleep_timer: SleepTimer::default(),
             saved_credential: None,
+            list_streams: ListStreams::default(),
         };
         controller.publish_all();
         controller.update_media_volume();

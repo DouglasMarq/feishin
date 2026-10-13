@@ -3,6 +3,7 @@ use slint::ComponentHandle;
 
 use super::binding::{Binding, with_grid, with_table};
 use crate::controller::Command;
+use crate::list_stream::{ListRow, SongSource};
 use crate::ui::{AppWindow, CardRow, Context, TrackItem, on_ui, show_status};
 
 pub fn toggle_card(window: &AppWindow, ctx: &Context, binding: Binding<CardRow>, id: &str) {
@@ -67,12 +68,13 @@ pub fn play_track(window: &AppWindow, ctx: &Context, binding: Binding<TrackItem>
         return;
     };
     let target = with_table(window, binding, |table| {
-        table
-            .song_id_at(index)
-            .map(|song_id| (table.query(), song_id))
-    })
-    .flatten();
+        (table.query(), table.song_id_at(index))
+    });
     if let Some((query, song_id)) = target {
-        ctx.send(Command::PlayFromList { query, song_id });
+        ctx.send(Command::PlayFromList {
+            source: SongSource::Library(query),
+            song_id,
+            row_index: ListRow(index),
+        });
     }
 }

@@ -7,5 +7,6 @@ mod removal;
 mod reordering;
 mod shuffling;
 mod snapshot;
+mod streamed;
 mod support;
 mod tracks;

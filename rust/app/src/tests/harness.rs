@@ -1,4 +1,5 @@
 use std::sync::{Arc, Mutex};
+use std::time::Duration;
 
 use anyhow::Result;
 use feishin_core::model::{Song, SongListQuery};
@@ -10,9 +11,12 @@ use tokio::sync::{mpsc, oneshot};
 use crate::audio::{AudioOutput, Track};
 use crate::controller::{Command, Controller, Deps, UiSink, UiUpdate};
 use crate::demo::{FakeServer, test_song};
+use crate::list_stream::{ListRow, SongSource};
 use crate::media::NoMediaSession;
 use crate::session::Session;
 use crate::store::{JsonStore, Store};
+
+const COMMAND_WAIT: Duration = Duration::from_secs(10);
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub(super) enum AudioCall {
@@ -94,6 +98,17 @@ impl RecordingUi {
             }
             _ => None,
         })
+    }
+
+    pub(super) fn errors(&self) -> Vec<String> {
+        let updates = self.0.lock().unwrap();
+        updates
+            .iter()
+            .filter_map(|update| match update {
+                UiUpdate::Error(message) => Some(message.clone()),
+                _ => None,
+            })
+            .collect()
     }
 
     pub(super) fn clear(&self) {
@@ -217,23 +232,32 @@ impl Harness {
         uid
     }
 
-    pub(super) async fn play_from_list(&mut self, query: SongListQuery, song_id: &str) {
+    pub(super) fn request_from_list(&mut self, query: SongListQuery, row: usize, song_id: &str) {
         self.controller.handle(Command::PlayFromList {
-            query,
-            song_id: song_id.to_owned(),
+            source: SongSource::Library(query),
+            song_id: Some(song_id.to_owned()),
+            row_index: ListRow(row),
         });
-        let follow_up = self.commands.recv().await;
-        assert!(matches!(follow_up, Some(Command::PlayNow { .. })));
-        if let Some(command) = follow_up {
-            self.controller.handle(command);
+    }
+
+    pub(super) async fn play_from_list(&mut self, query: SongListQuery, row: usize, song_id: &str) {
+        self.request_from_list(query, row, song_id);
+        self.finish_streams().await;
+    }
+
+    pub(super) async fn handle_next_command(&mut self) {
+        let next = tokio::time::timeout(COMMAND_WAIT, self.commands.recv()).await;
+        match next {
+            Ok(Some(command)) => {
+                self.controller.handle(command);
+            }
+            _ => panic!("no follow-up command arrived"),
         }
     }
 
-    pub(super) async fn handle_follow_ups(&mut self, count: usize) {
-        for _ in 0..count {
-            if let Some(command) = self.commands.recv().await {
-                self.controller.handle(command);
-            }
+    pub(super) async fn finish_streams(&mut self) {
+        while self.controller.is_streaming() {
+            self.handle_next_command().await;
         }
     }
 

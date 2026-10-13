@@ -1,10 +1,13 @@
-use feishin_core::model::{ServerConfig, ServerPlayQueue, Song, SongListQuery};
+use std::ops::Range;
+
+use feishin_core::model::{ServerConfig, ServerPlayQueue, Song};
 use feishin_core::queue::Uid;
 use feishin_platform::MediaControlEvent;
 use feishin_player::{AudioDevice, PlayerEvent};
 use feishin_storage::settings::{IntegrationSettings, PlaybackSettings, Settings, UiSettings};
 use tokio::sync::{mpsc, oneshot};
 
+use crate::list_stream::{ListRow, Placement, SongSource, StreamMessage};
 use crate::sleep_timer::SleepMode;
 
 pub enum Command {
@@ -15,14 +18,16 @@ pub enum Command {
         others: Vec<ServerConfig>,
     },
     PlayFromList {
-        query: SongListQuery,
-        song_id: String,
+        source: SongSource,
+        song_id: Option<String>,
+        row_index: ListRow,
     },
-    PlayNow {
-        request: u64,
-        songs: Vec<Song>,
-        song_id: String,
+    EnqueueFromList {
+        source: SongSource,
+        ranges: Vec<Range<usize>>,
+        placement: Placement,
     },
+    ListStream(StreamMessage),
     TogglePause,
     Next,
     Previous,

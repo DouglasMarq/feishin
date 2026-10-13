@@ -7,6 +7,7 @@ mod covers;
 mod demo;
 mod discord;
 mod library;
+mod list_stream;
 mod media;
 mod play_queue_sync;
 mod scrobble;

@@ -85,11 +85,8 @@ async fn server_queue_does_not_replace_a_local_queue_or_a_newer_play() {
     assert!(seeded.is_ok());
 
     harness.connect();
-    harness.controller.handle(Command::PlayFromList {
-        query: SongListQuery::default(),
-        song_id: "song-2".into(),
-    });
-    harness.handle_follow_ups(2).await;
+    harness.request_from_list(SongListQuery::default(), 0, "song-2");
+    harness.finish_streams().await;
     assert_eq!(harness.current_id().as_deref(), Some("song-2"));
     assert!(harness.controller.queue().len() > 1);
 

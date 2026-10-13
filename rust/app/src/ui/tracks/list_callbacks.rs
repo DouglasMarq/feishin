@@ -8,6 +8,7 @@ use super::model::TracksModel;
 use super::query::{current_query, reload, sort_for, sort_order};
 use super::with_model;
 use crate::controller::Command;
+use crate::list_stream::{ListRow, SongSource};
 use crate::ui::{AppWindow, Context, TracksState};
 
 const SEARCH_DEBOUNCE: Duration = Duration::from_millis(300);
@@ -105,14 +106,13 @@ pub(super) fn install_play_row(window: &AppWindow, ctx: &Context) {
         let (Some(window), Ok(index)) = (weak.upgrade(), usize::try_from(index)) else {
             return;
         };
-        let target = with_model(&window, |model| {
-            model
-                .song_id_at(index)
-                .map(|song_id| (model.query(), song_id))
-        })
-        .flatten();
+        let target = with_model(&window, |model| (model.query(), model.song_id_at(index)));
         if let Some((query, song_id)) = target {
-            play_ctx.send(Command::PlayFromList { query, song_id });
+            play_ctx.send(Command::PlayFromList {
+                source: SongSource::Library(query),
+                song_id,
+                row_index: ListRow(index),
+            });
         }
     });
 }

@@ -2,7 +2,6 @@ mod actions;
 mod binding;
 mod detail;
 mod editing;
-mod fetch_all;
 mod loading;
 mod model;
 mod pages;
