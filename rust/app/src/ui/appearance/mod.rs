@@ -1,20 +1,21 @@
-use feishin_platform::SystemColorScheme;
 use feishin_storage::appearance::{AccentColor, AppearanceSettings};
 use slint::{ComponentHandle, SharedString};
 
-use super::{AppWindow, AppearanceState, Context, on_ui, show_status};
+use super::{AppWindow, AppearanceState, Context, show_status};
 use crate::controller::Command;
 
 mod apply;
 mod catalog;
 mod form;
 mod resolve;
+mod system;
 
 #[cfg(test)]
 mod tests;
 
 use apply::apply_theme;
 use catalog::PaletteCatalog;
+pub use system::watch_system_scheme;
 
 pub fn install(window: &AppWindow, ctx: &Context, settings: &AppearanceSettings) {
     let catalog = PaletteCatalog::from_window(window);
@@ -67,27 +68,4 @@ fn enter_accent(window: &AppWindow, ctx: &Context, text: &SharedString) {
             show_status(window, &format!("Accent color not changed: {error}."));
         }
     }
-}
-
-fn system_scheme_changed(window: &AppWindow, scheme: SystemColorScheme) {
-    window
-        .global::<AppearanceState>()
-        .set_system_scheme(form::slint_system_scheme(scheme));
-    let (catalog, settings) = current_settings(window);
-    apply_theme(window, &catalog, &settings);
-}
-
-pub fn watch_system_scheme(window: &AppWindow, ctx: &Context) {
-    let weak_window = window.as_weak();
-    ctx.rt.spawn(async move {
-        let watched = feishin_platform::watch_color_scheme(|scheme| {
-            on_ui(&weak_window, move |window| {
-                system_scheme_changed(window, scheme);
-            });
-        })
-        .await;
-        if let Err(error) = watched {
-            tracing::debug!("not following the desktop color scheme: {error}");
-        }
-    });
 }

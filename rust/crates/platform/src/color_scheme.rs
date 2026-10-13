@@ -60,6 +60,13 @@ fn color_scheme_change(message: &zbus::Message) -> Option<SystemColorScheme> {
         .then(|| SystemColorScheme::from_portal_value(&value))
 }
 
+pub async fn current_color_scheme() -> Result<SystemColorScheme> {
+    let connection = Connection::session().await.map_err(desktop_error)?;
+    let proxy = settings_proxy(&connection).await.map_err(desktop_error)?;
+    let current = read_color_scheme(&proxy).await.map_err(desktop_error)?;
+    Ok(SystemColorScheme::from_portal_value(&current))
+}
+
 pub async fn watch_color_scheme(mut on_change: impl FnMut(SystemColorScheme)) -> Result<()> {
     let connection = Connection::session().await.map_err(desktop_error)?;
     let proxy = settings_proxy(&connection).await.map_err(desktop_error)?;

@@ -2,7 +2,7 @@ mod color_scheme;
 mod discord;
 mod mpris;
 
-pub use color_scheme::{SystemColorScheme, watch_color_scheme};
+pub use color_scheme::{SystemColorScheme, current_color_scheme, watch_color_scheme};
 pub use discord::{DEFAULT_DISCORD_CLIENT_ID, DiscordDisplayType, DiscordOptions, DiscordPresence};
 pub use mpris::MediaControls;
 

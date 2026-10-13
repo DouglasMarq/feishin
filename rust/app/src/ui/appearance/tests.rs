@@ -6,7 +6,8 @@ use slint::{Color, ComponentHandle};
 use tokio::sync::mpsc::UnboundedReceiver;
 
 use super::catalog::PaletteCatalog;
-use super::{install, system_scheme_changed};
+use super::install;
+use super::system::system_scheme_changed;
 use crate::connect::DemoConnector;
 use crate::controller::Command;
 use crate::covers::DemoCovers;
