@@ -11,7 +11,10 @@ pub struct Mpris(MediaControls);
 
 impl Mpris {
     pub fn new(on_event: Box<dyn Fn(MediaControlEvent) + Send + Sync>) -> Result<Self> {
-        Ok(Self(MediaControls::new("Feishin", on_event)?))
+        Ok(Self(MediaControls::new(
+            crate::identity::MEDIA_IDENTITY,
+            on_event,
+        )?))
     }
 }
 

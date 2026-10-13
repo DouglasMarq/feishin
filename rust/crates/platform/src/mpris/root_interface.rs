@@ -45,7 +45,7 @@ impl RootInterface for MprisPlayer {
     }
 
     async fn desktop_entry(&self) -> fdo::Result<String> {
-        Ok(self.core.bus_suffix.clone())
+        Ok(self.core.desktop_entry.clone())
     }
 
     async fn supported_uri_schemes(&self) -> fdo::Result<Vec<String>> {
