@@ -118,8 +118,9 @@ pub struct Player {
     events: Option<JoinHandle<()>>,
 }
 
-const STREAM_LAVF_OPTIONS: &str =
-    "reconnect=1,reconnect_streamed=1,reconnect_at_eof=1,reconnect_delay_max=5";
+/// No `reconnect_at_eof`: FLAC seeking probes the end of the stream, and reconnecting on every
+/// probe made starting mid-track take 10-30 s instead of under 1 s.
+const STREAM_LAVF_OPTIONS: &str = "reconnect=1,reconnect_streamed=1,reconnect_delay_max=5";
 
 impl Player {
     pub fn new(
