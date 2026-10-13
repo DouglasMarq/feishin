@@ -101,7 +101,6 @@ component SongRow inherits Rectangle {
     in property <length> album-width;
     property <bool> playing: root.track.id == PlayerState.song-id;
     property <int> position: root.track.index - 1;
-    height: 36px;
     background: touch.has-hover ? Theme.hover : transparent;
 
     menu := ContextMenuArea {
@@ -215,6 +214,49 @@ component SongRow inherits Rectangle {
                     text: root.track.duration;
                 }
             }
+        }
+    }
+}
+
+component SongRows inherits Rectangle {
+    in property <length> viewport-top;
+    in property <length> viewport-height;
+    in property <length> title-width;
+    in property <length> artist-width;
+    in property <length> album-width;
+    property <length> row-height: 36px;
+    property <int> row-count: SearchState.songs.length;
+    property <int> slot-count: min(root.row-count, ceil(max(0px, root.viewport-height) / root.row-height) + 2);
+    property <int> wanted-first-row: max(0, min(root.row-count - root.slot-count, floor(root.viewport-top / root.row-height)));
+    property <int> first-row;
+    height: root.row-count * root.row-height;
+
+    init => {
+        root.first-row = root.wanted-first-row;
+    }
+
+    changed wanted-first-row => {
+        root.first-row = root.wanted-first-row;
+    }
+
+    for slot in root.slot-count: SongRow {
+        property <int> wanted-row-index: root.first-row + mod(slot + root.slot-count - mod(root.first-row, root.slot-count), root.slot-count);
+        property <int> row-index;
+        x: 0;
+        y: self.row-index * root.row-height;
+        width: parent.width;
+        height: root.row-height;
+        track: SearchState.songs[self.row-index];
+        title-width: root.title-width;
+        artist-width: root.artist-width;
+        album-width: root.album-width;
+
+        init => {
+            self.row-index = self.wanted-row-index;
+        }
+
+        changed wanted-row-index => {
+            self.row-index = self.wanted-row-index;
         }
     }
 }
@@ -432,8 +474,9 @@ export component SearchView inherits Rectangle {
                             }
                         }
 
-                        for row in SearchState.songs: SongRow {
-                            track: row;
+                        SongRows {
+                            viewport-top: scroll.absolute-position.y - self.absolute-position.y;
+                            viewport-height: scroll.visible-height;
                             title-width: root.title-width;
                             artist-width: root.artist-width;
                             album-width: root.album-width;

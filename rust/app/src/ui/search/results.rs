@@ -1,7 +1,7 @@
-use std::cell::RefCell;
+use std::cell::{Cell, RefCell};
 use std::rc::Rc;
 
-use slint::{ComponentHandle, Image, Model, ModelTracker, VecModel};
+use slint::{ComponentHandle, Image, Model, ModelNotify, ModelTracker, VecModel};
 
 use super::cards::CardKind;
 use super::covers::{CoverKey, Covers};
@@ -13,7 +13,8 @@ use crate::ui::{AppWindow, SearchCard, SearchKind, SearchState, TrackRow};
 pub struct Results {
     pub searches: RefCell<Searches>,
     pub covers: RefCell<Covers>,
-    songs: VecModel<TrackRow>,
+    shown_songs: Cell<usize>,
+    songs_notify: ModelNotify,
     pub albums: Rc<VecModel<SearchCard>>,
     pub artists: Rc<VecModel<SearchCard>>,
 }
@@ -22,15 +23,17 @@ impl Model for Results {
     type Data = TrackRow;
 
     fn row_count(&self) -> usize {
-        self.songs.row_count()
+        self.shown_songs.get()
     }
 
     fn row_data(&self, row: usize) -> Option<TrackRow> {
-        self.songs.row_data(row)
+        (row < self.shown_songs.get())
+            .then(|| self.searches.borrow().song_row(row))
+            .flatten()
     }
 
     fn model_tracker(&self) -> &dyn ModelTracker {
-        self.songs.model_tracker()
+        &self.songs_notify
     }
 
     fn as_any(&self) -> &dyn std::any::Any {
@@ -85,11 +88,14 @@ impl Results {
         }
     }
 
-    fn show_songs(&self, start: usize) {
-        let rows = self.searches.borrow().song_rows_from(start);
+    pub(super) fn show_songs(&self, start: usize) {
+        let total = self.searches.borrow().songs.items.len();
+        let shown = self.shown_songs.replace(total);
         match start {
-            0 => self.songs.set_vec(rows),
-            _ => self.songs.extend(rows),
+            0 => self.songs_notify.reset(),
+            _ => self
+                .songs_notify
+                .row_added(shown, total.saturating_sub(shown)),
         }
     }
 

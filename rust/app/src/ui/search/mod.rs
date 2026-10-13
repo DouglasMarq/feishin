@@ -4,6 +4,8 @@ mod covers;
 mod fetch;
 mod query;
 mod results;
+#[cfg(test)]
+mod results_tests;
 mod searches;
 mod searching;
 mod section;

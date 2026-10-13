@@ -1,7 +1,11 @@
 mod edits;
 mod info;
+mod layout;
 mod loading;
 mod tracks;
+#[cfg(test)]
+mod view_tests;
+mod viewport;
 
 use slint::{ComponentHandle, ModelRc};
 
@@ -10,6 +14,7 @@ use crate::controller::Command;
 use edits::{set_rating, toggle_favorite};
 use loading::load;
 use tracks::{AlbumTracks, loaded_song, loaded_songs};
+use viewport::install_viewport;
 
 fn play_all(window: &AppWindow, ctx: &Context) {
     let songs = loaded_songs(window);
@@ -132,6 +137,7 @@ pub fn install(window: &AppWindow, ctx: &Context) {
     window
         .global::<AlbumDetailState>()
         .set_tracks(ModelRc::new(AlbumTracks::default()));
+    install_viewport(window);
     install_load(window, ctx);
     install_playback(window, ctx);
     install_queueing(window, ctx);
