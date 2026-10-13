@@ -2,6 +2,7 @@ use std::sync::Arc;
 
 use serde::{Deserialize, Serialize};
 
+use super::TrackSource;
 use crate::model::{ArtistRef, Song, SongId};
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -20,6 +21,8 @@ pub struct QueueTrack {
     pub cover_art_id: Option<Arc<str>>,
     #[serde(default)]
     pub duration_ms: u64,
+    #[serde(default, skip_serializing_if = "TrackSource::is_server")]
+    pub source: TrackSource,
 }
 
 impl QueueTrack {
@@ -43,6 +46,7 @@ impl From<&Song> for QueueTrack {
             album_id: song.album_id.as_deref().map(Arc::from),
             cover_art_id: song.cover_art_id.as_deref().map(Arc::from),
             duration_ms: song.duration_ms,
+            source: TrackSource::Server,
         }
     }
 }

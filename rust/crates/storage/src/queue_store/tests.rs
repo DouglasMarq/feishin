@@ -1,9 +1,9 @@
 use std::path::{Path, PathBuf};
 
 use feishin_core::model::{ArtistRef, Song};
-use feishin_core::queue::{QueueItem, QueueSnapshot, QueueTrack, RepeatMode};
+use feishin_core::queue::{QueueItem, QueueSnapshot, QueueTrack, RepeatMode, YouTubeTrack};
 
-use super::compact::{CompactQueue, CompactTrack, QUEUE_FORMAT};
+use super::compact::{CompactQueue, CompactSource, CompactTrack, QUEUE_FORMAT};
 use super::*;
 use crate::StorageError;
 
@@ -144,7 +144,7 @@ fn shared_values_are_written_once() {
     many.snapshot.next_uid = 201;
     save_stored(&data_dir, &many);
     let bytes = std::fs::read(data_dir.join(QUEUE_FILE)).unwrap();
-    assert!(bytes.starts_with(b"FSQ1"));
+    assert!(bytes.starts_with(b"FSQ2"));
     let artist_mentions = bytes
         .windows(6)
         .filter(|window| window == b"Artist")
@@ -223,7 +223,7 @@ fn corrupt_files_are_invalid() {
     let (_directory, data_dir) = data_dir();
     std::fs::write(data_dir.join(LEGACY_QUEUE_FILE), b"{not json").unwrap();
     assert!(matches!(load(&data_dir), Err(StorageError::Invalid(_))));
-    for garbage in [&b"{not json"[..], b"FSQ1\x05\x01", b"FSQ9"] {
+    for garbage in [&b"{not json"[..], b"FSQ1\x05\x01", b"FSQ2\x05\x01", b"FSQ9"] {
         std::fs::write(data_dir.join(QUEUE_FILE), garbage).unwrap();
         assert!(matches!(load(&data_dir), Err(StorageError::Invalid(_))));
     }
@@ -255,6 +255,7 @@ fn dangling_shared_value_is_invalid() {
             album_id: None,
             cover_art_id: None,
             duration_ms: 1,
+            source: CompactSource::Server,
         }],
         shuffled: None::<Vec<usize>>,
         current_uid: None,
@@ -265,4 +266,88 @@ fn dangling_shared_value_is_invalid() {
     let bytes = QUEUE_FORMAT.encode(&dangling).unwrap();
     std::fs::write(data_dir.join(QUEUE_FILE), bytes).unwrap();
     assert!(matches!(load(&data_dir), Err(StorageError::Invalid(_))));
+}
+
+const FIRST_FORMAT_SAMPLE: &[u8] = &[
+    70, 83, 81, 49, 4, 3, 115, 114, 118, 5, 65, 108, 98, 117, 109, 2, 97, 108, 3, 99, 111, 118, 1,
+    1, 2, 97, 114, 6, 65, 114, 116, 105, 115, 116, 2, 1, 1, 97, 6, 83, 111, 110, 103, 32, 97, 0, 0,
+    1, 1, 1, 2, 1, 3, 252, 32, 191, 2, 0, 2, 1, 98, 6, 83, 111, 110, 103, 32, 98, 0, 0, 1, 1, 1, 2,
+    1, 3, 252, 32, 191, 2, 0, 1, 2, 1, 0, 1, 2, 1, 3, 251, 57, 48,
+];
+
+fn with_youtube_tracks(mut stored: StoredQueue) -> StoredQueue {
+    let video = |video_id: &str, thumbnail_url: Option<String>| YouTubeTrack {
+        video_id: video_id.into(),
+        title: format!("Video {video_id}"),
+        artists: vec!["Singer".into()],
+        album: None,
+        thumbnail_url,
+        duration_ms: 1_000,
+    };
+    let tracks = [
+        video(
+            "abc",
+            Some("https://i.ytimg.com/vi/abc/hqdefault.jpg".into()),
+        ),
+        video("def", None),
+    ];
+    for (offset, track) in tracks.iter().enumerate() {
+        stored.snapshot.items.push(QueueItem {
+            uid: 3 + offset as u64,
+            track: QueueTrack::from(track).into(),
+        });
+    }
+    stored.snapshot.shuffled = None;
+    stored.snapshot.next_uid = 5;
+    stored
+}
+
+#[test]
+fn queue_saved_in_the_first_compact_format_still_loads() {
+    let (_directory, data_dir) = data_dir();
+    std::fs::write(data_dir.join(QUEUE_FILE), FIRST_FORMAT_SAMPLE).unwrap();
+    let loaded = load(&data_dir).unwrap().unwrap();
+    assert_eq!(loaded, sample());
+    assert!(
+        loaded
+            .snapshot
+            .items
+            .iter()
+            .all(|item| !item.track.is_external())
+    );
+    save_stored(&data_dir, &loaded);
+    let bytes = std::fs::read(data_dir.join(QUEUE_FILE)).unwrap();
+    assert!(bytes.starts_with(b"FSQ2"));
+    assert_eq!(load(&data_dir).unwrap(), Some(sample()));
+}
+
+#[test]
+fn youtube_tracks_round_trip_with_their_video() {
+    let (_directory, data_dir) = data_dir();
+    let queue = with_youtube_tracks(sample());
+    save_stored(&data_dir, &queue);
+    let loaded = load(&data_dir).unwrap().unwrap();
+    assert_eq!(loaded, queue);
+    let videos: Vec<_> = loaded
+        .snapshot
+        .items
+        .iter()
+        .filter_map(|item| {
+            item.track
+                .youtube_video()
+                .map(|video| video.video_id.to_string())
+        })
+        .collect();
+    assert_eq!(videos, ["abc", "def"]);
+}
+
+#[test]
+fn youtube_tracks_in_a_json_queue_still_load() {
+    let (_directory, data_dir) = data_dir();
+    let queue = with_youtube_tracks(sample());
+    let json = serde_json::to_vec(&queue).unwrap();
+    std::fs::write(data_dir.join(LEGACY_QUEUE_FILE), json).unwrap();
+    assert_eq!(load(&data_dir).unwrap(), Some(queue));
+    let bytes = std::fs::read(data_dir.join(QUEUE_FILE)).unwrap();
+    assert!(bytes.starts_with(b"FSQ2"));
 }

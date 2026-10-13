@@ -38,6 +38,13 @@ impl CookieBrowser {
         }
     }
 
+    pub fn from_yt_dlp_name(name: &str) -> Option<Self> {
+        let name = name.trim();
+        Self::ALL
+            .into_iter()
+            .find(|browser| browser.yt_dlp_name().eq_ignore_ascii_case(name))
+    }
+
     pub fn label(self) -> &'static str {
         match self {
             Self::Firefox => "Firefox",

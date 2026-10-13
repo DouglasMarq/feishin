@@ -1,9 +1,9 @@
 use feishin_core::model::ArtistRef;
-use feishin_core::queue::{QueueItem, QueueSnapshotRef};
+use feishin_core::queue::{QueueItem, QueueSnapshotRef, TrackSource};
 use serde::ser::{Error as _, SerializeSeq};
 use serde::{Serialize, Serializer};
 
-use super::compact::{CompactQueue, CompactTrack, QUEUE_FORMAT};
+use super::compact::{CompactQueue, CompactSource, CompactTrack, QUEUE_FORMAT};
 use super::shared_table::{MissingSharedValue, SharedTable};
 
 #[derive(Default)]
@@ -75,7 +75,18 @@ impl<'queue> SharedTables<'queue> {
                 .strings
                 .optional_index_of(track.cover_art_id.as_ref())?,
             duration_ms: track.duration_ms,
+            source: compact_source(&track.source),
         })
+    }
+}
+
+fn compact_source(source: &TrackSource) -> CompactSource<&str> {
+    match source {
+        TrackSource::Server => CompactSource::Server,
+        TrackSource::YouTube(video) => CompactSource::YouTube {
+            video_id: &video.video_id,
+            thumbnail_url: video.thumbnail_url.as_deref(),
+        },
     }
 }
 

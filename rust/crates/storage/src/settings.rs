@@ -1,9 +1,13 @@
+mod youtube;
+
 use std::fmt::Display;
 
 use feishin_core::model::ServerConfig;
 use serde::{Deserialize, Serialize};
 
 use crate::{Paths, Result, StorageError, none_when_missing, write_atomic};
+
+pub use youtube::YouTubeSettings;
 
 pub const SETTINGS_FILE: &str = "settings.toml";
 
@@ -97,6 +101,7 @@ pub struct Settings {
     pub playback: PlaybackSettings,
     pub ui: UiSettings,
     pub integrations: IntegrationSettings,
+    pub youtube: YouTubeSettings,
 }
 
 impl Settings {
@@ -160,6 +165,10 @@ mod tests {
             integrations: IntegrationSettings {
                 discord_rich_presence: true,
                 ..Default::default()
+            },
+            youtube: YouTubeSettings {
+                yt_dlp_path: Some("/opt/yt-dlp".into()),
+                cookies_from_browser: Some(feishin_youtube::CookieBrowser::Firefox),
             },
         }
     }
@@ -227,6 +236,7 @@ a = 1
             }]
         );
         assert_eq!(settings.integrations, IntegrationSettings::default());
+        assert_eq!(settings.youtube, YouTubeSettings::default());
     }
 
     #[test]

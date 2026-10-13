@@ -1,9 +1,9 @@
 use std::sync::Arc;
 
 use feishin_core::model::{ArtistRef, SongId};
-use feishin_core::queue::{QueueItem, QueueTrack};
+use feishin_core::queue::{QueueItem, QueueTrack, TrackSource, YouTubeVideo};
 
-use super::compact::CompactTrack;
+use super::compact::{CompactSource, CompactTrack};
 
 #[derive(Debug, thiserror::Error)]
 #[error("a track refers to a missing shared value")]
@@ -37,6 +37,7 @@ impl DecodedTables {
                 album_id: self.optional_string(row.album_id)?,
                 cover_art_id: self.optional_string(row.cover_art_id)?,
                 duration_ms: row.duration_ms,
+                source: track_source(row.source),
             }),
         })
     }
@@ -57,5 +58,18 @@ impl DecodedTables {
             .get(index)
             .map(Arc::clone)
             .ok_or(DanglingReference)
+    }
+}
+
+fn track_source(source: CompactSource<String>) -> TrackSource {
+    match source {
+        CompactSource::Server => TrackSource::Server,
+        CompactSource::YouTube {
+            video_id,
+            thumbnail_url,
+        } => TrackSource::YouTube(Arc::new(YouTubeVideo {
+            video_id: video_id.into_boxed_str(),
+            thumbnail_url: thumbnail_url.map(String::into_boxed_str),
+        })),
     }
 }

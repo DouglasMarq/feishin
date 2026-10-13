@@ -11,8 +11,11 @@ mod removal;
 mod reordering;
 mod shuffling;
 mod snapshot;
+mod source;
 mod track;
+mod track_insertion;
 mod view;
+mod youtube_track;
 
 #[cfg(test)]
 mod tests;
@@ -23,8 +26,10 @@ use std::sync::{Arc, OnceLock};
 pub use anchored::InsertAnchor;
 pub use item::{Advance, QueueItem, RepeatMode, Uid};
 pub use snapshot::{QueueSnapshot, QueueSnapshotRef};
+pub use source::{TrackSource, YouTubeVideo};
 pub use track::QueueTrack;
 pub use view::QueueView;
+pub use youtube_track::{YOUTUBE_SERVER_ID, YOUTUBE_SONG_ID_PREFIX, YouTubeTrack, youtube_song_id};
 
 use interner::TrackInterner;
 use random::SplitMix64;

@@ -239,6 +239,15 @@ fn every_browser_has_a_yt_dlp_name() {
 }
 
 #[test]
+fn browsers_are_found_by_their_yt_dlp_name() {
+    assert_eq!(
+        CookieBrowser::from_yt_dlp_name(" Brave "),
+        Some(CookieBrowser::Brave)
+    );
+    assert_eq!(CookieBrowser::from_yt_dlp_name("safari"), None);
+}
+
+#[test]
 fn video_ids_and_links() {
     assert!(is_video_id("dQw4w9WgXcQ"));
     assert!(!is_video_id(""));
