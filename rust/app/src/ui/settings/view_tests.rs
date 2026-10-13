@@ -75,6 +75,8 @@ fn assert_rendered(state: &SettingsState) {
     assert_eq!(sources, ["Server", "LRCLIB", "NetEase", "Genius"]);
     let devices: Vec<_> = state.get_devices().iter().collect();
     assert_eq!(devices, ["Autoselect device", "Speakers"]);
+    assert_eq!(state.get_crossfade_seconds(), 0);
+    assert_eq!(state.get_max_crossfade_seconds(), 12);
     assert!(state.get_loaded());
 }
 
@@ -95,11 +97,13 @@ fn assert_saves_lyrics_and_playback(
 
     state.set_replay_gain(1);
     state.set_device_index(1);
+    state.set_crossfade_seconds(6);
     state.invoke_playback_changed();
     match received.try_recv() {
         Ok(Command::ApplyPlayback(playback)) => {
             assert_eq!(playback.replay_gain, ReplayGainSetting::Track);
             assert_eq!(playback.audio_device.as_deref(), Some("x"));
+            assert_eq!(playback.crossfade_seconds, 6);
         }
         _ => panic!("expected ApplyPlayback"),
     }
