@@ -4,11 +4,11 @@ use std::rc::Rc;
 
 use feishin_api::MusicServer;
 use feishin_core::model::{Paging, Playlist, Song};
-use slint::{ComponentHandle, Image, Model, ModelNotify, ModelRc, ModelTracker};
+use slint::{ComponentHandle, Image, Model, ModelNotify, ModelRc, ModelTracker, SharedString};
 
 use super::{
-    AppState, AppWindow, Context, PlaylistRow, PlaylistsState, Route, format_duration, on_ui,
-    show_status,
+    AppState, AppWindow, Context, PlaylistPlayMode, PlaylistRow, PlaylistsState, Route,
+    format_duration, on_ui, show_status,
 };
 use crate::controller::Command;
 
@@ -16,7 +16,6 @@ const PAGE_SIZE: usize = 500;
 const COVER_SIZE: u32 = 96;
 const COVER_CAPACITY: usize = 48;
 
-/// Fetches every playlist, following pages.
 pub async fn fetch_all(server: &dyn MusicServer) -> feishin_api::Result<Vec<Playlist>> {
     let mut all = Vec::new();
     loop {
@@ -36,11 +35,10 @@ pub async fn fetch_all(server: &dyn MusicServer) -> feishin_api::Result<Vec<Play
 pub fn song_count_label(count: usize) -> String {
     match count {
         1 => "1 song".to_owned(),
-        n => format!("{n} songs"),
+        count => format!("{count} songs"),
     }
 }
 
-/// Where a played playlist goes in the queue.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum PlayMode {
     Now,
@@ -48,15 +46,17 @@ pub enum PlayMode {
     Last,
 }
 
-impl PlayMode {
-    pub fn parse(how: &str) -> Self {
-        match how {
-            "next" => Self::Next,
-            "last" => Self::Last,
-            _ => Self::Now,
+impl From<PlaylistPlayMode> for PlayMode {
+    fn from(mode: PlaylistPlayMode) -> Self {
+        match mode {
+            PlaylistPlayMode::Now => Self::Now,
+            PlaylistPlayMode::Next => Self::Next,
+            PlaylistPlayMode::Last => Self::Last,
         }
     }
+}
 
+impl PlayMode {
     pub fn command(self, songs: Vec<Song>) -> Command {
         match self {
             Self::Now => Command::PlaySongs {
@@ -81,7 +81,6 @@ fn playlist_row(playlist: &Playlist) -> PlaylistRow {
     }
 }
 
-/// Bounded cache of decoded covers keyed by cover art id.
 #[derive(Default)]
 struct CoverLru {
     images: HashMap<String, Image>,
@@ -90,10 +89,10 @@ struct CoverLru {
 }
 
 impl CoverLru {
-    fn insert(&mut self, id: String, image: Image) {
-        self.requested.remove(&id);
-        if self.images.insert(id.clone(), image).is_none() {
-            self.order.push_back(id);
+    fn insert(&mut self, cover_id: String, image: Image) {
+        self.requested.remove(&cover_id);
+        if self.images.insert(cover_id.clone(), image).is_none() {
+            self.order.push_back(cover_id);
         }
         while self.order.len() > COVER_CAPACITY {
             if let Some(evicted) = self.order.pop_front() {
@@ -103,9 +102,14 @@ impl CoverLru {
     }
 }
 
-/// Playlist rows whose covers are fetched lazily when a row becomes visible.
+#[derive(Clone)]
+struct PlaylistEntry {
+    row: PlaylistRow,
+    cover_id: Option<String>,
+}
+
 pub struct PlaylistsModel {
-    rows: RefCell<Vec<(PlaylistRow, Option<String>)>>,
+    entries: RefCell<Vec<PlaylistEntry>>,
     covers: RefCell<CoverLru>,
     generation: Cell<u64>,
     notify: ModelNotify,
@@ -115,7 +119,7 @@ pub struct PlaylistsModel {
 impl PlaylistsModel {
     pub fn new(fetch_cover: impl Fn(String) + 'static) -> Self {
         Self {
-            rows: RefCell::default(),
+            entries: RefCell::default(),
             covers: RefCell::default(),
             generation: Cell::new(0),
             notify: ModelNotify::default(),
@@ -123,7 +127,6 @@ impl PlaylistsModel {
         }
     }
 
-    /// Starts a new load and returns its generation.
     pub fn begin(&self) -> u64 {
         self.generation.set(self.generation.get() + 1);
         self.generation.get()
@@ -133,9 +136,12 @@ impl PlaylistsModel {
         if generation != self.generation.get() {
             return false;
         }
-        *self.rows.borrow_mut() = playlists
+        *self.entries.borrow_mut() = playlists
             .iter()
-            .map(|p| (playlist_row(p), p.cover_art_id.clone()))
+            .map(|playlist| PlaylistEntry {
+                row: playlist_row(playlist),
+                cover_id: playlist.cover_art_id.clone(),
+            })
             .collect();
         self.notify.reset();
         true
@@ -146,16 +152,35 @@ impl PlaylistsModel {
             return;
         };
         let changed: Vec<usize> = self
-            .rows
+            .entries
             .borrow()
             .iter()
             .enumerate()
-            .filter(|(_, (_, id))| id.as_deref() == Some(cover_id.as_str()))
-            .map(|(i, _)| i)
+            .filter(|(_, entry)| entry.cover_id.as_deref() == Some(cover_id.as_str()))
+            .map(|(index, _)| index)
             .collect();
         self.covers.borrow_mut().insert(cover_id, image);
         for row in changed {
             self.notify.row_changed(row);
+        }
+    }
+
+    fn with_cover(&self, mut row: PlaylistRow, cover_id: String) -> PlaylistRow {
+        let cached = self.covers.borrow().images.get(&cover_id).cloned();
+        match cached {
+            Some(image) => {
+                row.cover = image;
+                row.has_cover = true;
+            }
+            None => self.request_cover(cover_id),
+        }
+        row
+    }
+
+    fn request_cover(&self, cover_id: String) {
+        let first_request = self.covers.borrow_mut().requested.insert(cover_id.clone());
+        if first_request {
+            (self.fetch_cover)(cover_id);
         }
     }
 }
@@ -164,23 +189,15 @@ impl Model for PlaylistsModel {
     type Data = PlaylistRow;
 
     fn row_count(&self) -> usize {
-        self.rows.borrow().len()
+        self.entries.borrow().len()
     }
 
     fn row_data(&self, row: usize) -> Option<PlaylistRow> {
-        let (mut data, cover_id) = self.rows.borrow().get(row).cloned()?;
-        let Some(cover_id) = cover_id else {
-            return Some(data);
+        let entry = self.entries.borrow().get(row).cloned()?;
+        let Some(cover_id) = entry.cover_id else {
+            return Some(entry.row);
         };
-        let mut covers = self.covers.borrow_mut();
-        if let Some(image) = covers.images.get(&cover_id) {
-            data.cover = image.clone();
-            data.has_cover = true;
-        } else if covers.requested.insert(cover_id.clone()) {
-            drop(covers);
-            (self.fetch_cover)(cover_id);
-        }
-        Some(data)
+        Some(self.with_cover(entry.row, cover_id))
     }
 
     fn model_tracker(&self) -> &dyn ModelTracker {
@@ -192,9 +209,12 @@ impl Model for PlaylistsModel {
     }
 }
 
-fn with_model<R>(window: &AppWindow, f: impl FnOnce(&PlaylistsModel) -> R) -> Option<R> {
+fn with_model<Output>(
+    window: &AppWindow,
+    action: impl FnOnce(&PlaylistsModel) -> Output,
+) -> Option<Output> {
     let rows = window.global::<PlaylistsState>().get_rows();
-    rows.as_any().downcast_ref::<PlaylistsModel>().map(f)
+    rows.as_any().downcast_ref::<PlaylistsModel>().map(action)
 }
 
 fn load(window: &AppWindow, ctx: &Context) {
@@ -209,22 +229,20 @@ fn load(window: &AppWindow, ctx: &Context) {
     ctx.rt.spawn(async move {
         let result = fetch_all(server.as_ref()).await;
         on_ui(&weak, move |window| {
-            let playlists = match result {
-                Ok(playlists) => playlists,
-                Err(e) => {
-                    show_status(window, &format!("Could not load playlists: {e}"));
-                    Vec::new()
-                }
-            };
-            if with_model(window, |model| model.set_playlists(generation, &playlists)) == Some(true)
-            {
-                window.global::<PlaylistsState>().set_loading(false);
-            }
+            apply_loaded(window, generation, result)
         });
     });
 }
 
-/// Reloads the list if it is on screen, e.g. after a playlist was created elsewhere.
+fn apply_loaded(window: &AppWindow, generation: u64, result: feishin_api::Result<Vec<Playlist>>) {
+    let playlists = result
+        .inspect_err(|error| show_status(window, &format!("Could not load playlists: {error}")))
+        .unwrap_or_default();
+    if with_model(window, |model| model.set_playlists(generation, &playlists)) == Some(true) {
+        window.global::<PlaylistsState>().set_loading(false);
+    }
+}
+
 pub fn refresh(window: &AppWindow) {
     if window.global::<AppState>().get_route() == Route::Playlists {
         window.global::<PlaylistsState>().invoke_load("".into());
@@ -242,27 +260,82 @@ fn fetch_cover(weak: slint::Weak<AppWindow>, ctx: &Context, cover_id: String) {
                 let image = super::player::to_image(&cover);
                 with_model(window, |model| model.apply_cover(cover_id, image));
             }),
-            Err(e) => tracing::debug!("playlist cover {cover_id}: {e:#}"),
+            Err(error) => tracing::debug!("playlist cover {cover_id}: {error:#}"),
         }
     });
 }
 
-/// Fetches a playlist's songs and sends them to the queue.
 pub fn play(ctx: &Context, window: &AppWindow, id: &str, mode: PlayMode) {
     let Some(server) = ctx.session.get() else {
         return;
     };
-    let (id, ctx_task, weak) = (id.to_owned(), ctx.clone(), window.as_weak());
+    let (id, task_ctx, weak) = (id.to_owned(), ctx.clone(), window.as_weak());
     ctx.rt.spawn(async move {
         match server.playlist_songs(&id).await {
             Ok(songs) if songs.is_empty() => on_ui(&weak, |window| {
                 show_status(window, "This playlist is empty");
             }),
-            Ok(songs) => ctx_task.send(mode.command(songs)),
-            Err(e) => on_ui(&weak, move |window| {
-                show_status(window, &format!("Could not load the playlist: {e}"));
+            Ok(songs) => task_ctx.send(mode.command(songs)),
+            Err(error) => on_ui(&weak, move |window| {
+                show_status(window, &format!("Could not load the playlist: {error}"));
             }),
         }
+    });
+}
+
+fn create_playlist(window: &AppWindow, ctx: &Context, name: &SharedString) {
+    let name = name.trim().to_owned();
+    let Some(server) = ctx.session.get() else {
+        return;
+    };
+    if name.is_empty() {
+        return;
+    }
+    window.global::<PlaylistsState>().set_busy(true);
+    let weak = window.as_weak();
+    ctx.rt.spawn(async move {
+        let result = server.create_playlist(&name, &[]).await;
+        on_ui(&weak, move |window| {
+            let state = window.global::<PlaylistsState>();
+            state.set_busy(false);
+            match result {
+                Ok(playlist) => {
+                    state.set_creating(false);
+                    show_status(window, &format!("Created playlist \"{}\"", playlist.name));
+                    refresh(window);
+                }
+                Err(error) => {
+                    show_status(window, &format!("Could not create the playlist: {error}"));
+                }
+            }
+        });
+    });
+}
+
+fn delete_playlist(window: &AppWindow, ctx: &Context, id: SharedString) {
+    let Some(server) = ctx.session.get() else {
+        return;
+    };
+    let state = window.global::<PlaylistsState>();
+    let name = state.get_delete_name().to_string();
+    state.set_busy(true);
+    let weak = window.as_weak();
+    ctx.rt.spawn(async move {
+        let result = server.delete_playlist(&id).await;
+        on_ui(&weak, move |window| {
+            let state = window.global::<PlaylistsState>();
+            state.set_busy(false);
+            state.set_delete_id("".into());
+            match result {
+                Ok(()) => {
+                    show_status(window, &format!("Deleted playlist \"{name}\""));
+                    refresh(window);
+                }
+                Err(error) => {
+                    show_status(window, &format!("Could not delete the playlist: {error}"));
+                }
+            }
+        });
     });
 }
 
@@ -275,77 +348,49 @@ pub fn install(window: &AppWindow, ctx: &Context) {
             fetch_cover(weak.clone(), &cover_ctx, cover_id);
         },
     ))));
+    install_load(window, ctx);
+    install_play(window, ctx);
+    install_create(window, ctx);
+    install_delete(window, ctx);
+}
 
+fn install_load(window: &AppWindow, ctx: &Context) {
     let weak = window.as_weak();
     let load_ctx = ctx.clone();
-    state.on_load(move |_| {
+    window.global::<PlaylistsState>().on_load(move |_| {
         if let Some(window) = weak.upgrade() {
             load(&window, &load_ctx);
         }
     });
+}
 
+fn install_play(window: &AppWindow, ctx: &Context) {
     let weak = window.as_weak();
     let play_ctx = ctx.clone();
-    state.on_play(move |id, how| {
+    window.global::<PlaylistsState>().on_play(move |id, mode| {
         if let Some(window) = weak.upgrade() {
-            play(&play_ctx, &window, &id, PlayMode::parse(&how));
+            play(&play_ctx, &window, &id, PlayMode::from(mode));
         }
     });
+}
 
+fn install_create(window: &AppWindow, ctx: &Context) {
     let weak = window.as_weak();
     let create_ctx = ctx.clone();
-    state.on_create(move |name| {
-        let name = name.trim().to_owned();
-        let (Some(window), Some(server)) = (weak.upgrade(), create_ctx.session.get()) else {
-            return;
-        };
-        if name.is_empty() {
-            return;
+    window.global::<PlaylistsState>().on_create(move |name| {
+        if let Some(window) = weak.upgrade() {
+            create_playlist(&window, &create_ctx, &name);
         }
-        window.global::<PlaylistsState>().set_busy(true);
-        let weak = weak.clone();
-        create_ctx.rt.spawn(async move {
-            let result = server.create_playlist(&name, &[]).await;
-            on_ui(&weak, move |window| {
-                let state = window.global::<PlaylistsState>();
-                state.set_busy(false);
-                match result {
-                    Ok(playlist) => {
-                        state.set_creating(false);
-                        show_status(window, &format!("Created playlist \"{}\"", playlist.name));
-                        refresh(window);
-                    }
-                    Err(e) => show_status(window, &format!("Could not create the playlist: {e}")),
-                }
-            });
-        });
     });
+}
 
+fn install_delete(window: &AppWindow, ctx: &Context) {
     let weak = window.as_weak();
     let delete_ctx = ctx.clone();
-    state.on_delete(move |id| {
-        let (Some(window), Some(server)) = (weak.upgrade(), delete_ctx.session.get()) else {
-            return;
-        };
-        let state = window.global::<PlaylistsState>();
-        let name = state.get_delete_name().to_string();
-        state.set_busy(true);
-        let weak = weak.clone();
-        delete_ctx.rt.spawn(async move {
-            let result = server.delete_playlist(&id).await;
-            on_ui(&weak, move |window| {
-                let state = window.global::<PlaylistsState>();
-                state.set_busy(false);
-                state.set_delete_id("".into());
-                match result {
-                    Ok(()) => {
-                        show_status(window, &format!("Deleted playlist \"{name}\""));
-                        refresh(window);
-                    }
-                    Err(e) => show_status(window, &format!("Could not delete the playlist: {e}")),
-                }
-            });
-        });
+    window.global::<PlaylistsState>().on_delete(move |id| {
+        if let Some(window) = weak.upgrade() {
+            delete_playlist(&window, &delete_ctx, id);
+        }
     });
 }
 
@@ -386,7 +431,7 @@ mod tests {
     fn covers_are_requested_once_and_stale_loads_ignored() {
         let requested = Rc::new(RefCell::new(Vec::new()));
         let sink = Rc::clone(&requested);
-        let model = PlaylistsModel::new(move |id| sink.borrow_mut().push(id));
+        let model = PlaylistsModel::new(move |cover_id| sink.borrow_mut().push(cover_id));
         let stale = model.begin();
         let current = model.begin();
         assert!(!model.set_playlists(stale, &[playlist("old", None)]));
@@ -405,9 +450,9 @@ mod tests {
 
     #[test]
     fn play_modes_map_to_commands() {
-        assert_eq!(PlayMode::parse("next"), PlayMode::Next);
-        assert_eq!(PlayMode::parse("last"), PlayMode::Last);
-        assert_eq!(PlayMode::parse("now"), PlayMode::Now);
+        assert_eq!(PlayMode::from(PlaylistPlayMode::Next), PlayMode::Next);
+        assert_eq!(PlayMode::from(PlaylistPlayMode::Last), PlayMode::Last);
+        assert_eq!(PlayMode::from(PlaylistPlayMode::Now), PlayMode::Now);
         assert!(matches!(
             PlayMode::Now.command(Vec::new()),
             Command::PlaySongs { song_id: None, .. }
@@ -423,6 +468,6 @@ mod tests {
         let server: Arc<dyn MusicServer> = Arc::new(FakeServer::new(500));
         let playlists = fetch_all(server.as_ref()).await.unwrap_or_default();
         assert!(!playlists.is_empty());
-        assert!(playlists.iter().all(|p| p.song_count > 0));
+        assert!(playlists.iter().all(|playlist| playlist.song_count > 0));
     }
 }

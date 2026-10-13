@@ -208,7 +208,6 @@ export component CardView inherits Rectangle {
     }
 }
 
-/// Virtualized grid of cards; `columns-changed` reports how many cards each row must hold.
 export component CardGrid inherits Rectangle {
     in property <[CardRow]> rows;
     in property <bool> round;
@@ -262,7 +261,6 @@ export component CardGrid inherits Rectangle {
     }
 }
 
-/// Virtualized track table sharing the Tracks view columns; rows highlight the playing song.
 export component TrackTable inherits Rectangle {
     in property <[TrackItem]> rows;
     in property <bool> loading;

@@ -15,6 +15,8 @@ export struct PlaylistRow {
     has-cover: bool,
 }
 
+export enum PlaylistPlayMode { now, next, last }
+
 export global PlaylistsState {
     in property <[PlaylistRow]> rows;
     in property <bool> loading;
@@ -23,8 +25,7 @@ export global PlaylistsState {
     in-out property <string> delete-id;
     in-out property <string> delete-name;
     callback load(string);
-    /// Plays a playlist: `how` is "now", "next" or "last".
-    callback play(string, string);
+    callback play(string, PlaylistPlayMode);
     callback create(string);
     callback delete(string);
 }
@@ -61,21 +62,21 @@ component PlaylistRowView inherits Rectangle {
                 MenuItem {
                     title: "Play";
                     activated => {
-                        PlaylistsState.play(root.item.id, "now");
+                        PlaylistsState.play(root.item.id, PlaylistPlayMode.now);
                     }
                 }
 
                 MenuItem {
                     title: "Play next";
                     activated => {
-                        PlaylistsState.play(root.item.id, "next");
+                        PlaylistsState.play(root.item.id, PlaylistPlayMode.next);
                     }
                 }
 
                 MenuItem {
                     title: "Add to queue";
                     activated => {
-                        PlaylistsState.play(root.item.id, "last");
+                        PlaylistsState.play(root.item.id, PlaylistPlayMode.last);
                     }
                 }
 
@@ -149,7 +150,7 @@ component PlaylistRowView inherits Rectangle {
                         icon: Icons.play;
                         tooltip: "Play";
                         clicked => {
-                            PlaylistsState.play(root.item.id, "now");
+                            PlaylistsState.play(root.item.id, PlaylistPlayMode.now);
                         }
                     }
 
@@ -284,7 +285,7 @@ export component PlaylistsView inherits Rectangle {
             if PlaylistsState.loading && PlaylistsState.rows.length == 0: VerticalLayout {
                 alignment: start;
 
-                for i in 6: SkeletonRow { }
+                for placeholder in 6: SkeletonRow { }
             }
 
             ListView {

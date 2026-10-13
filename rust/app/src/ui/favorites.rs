@@ -2,8 +2,8 @@ use feishin_core::model::{AlbumListQuery, ArtistListQuery, SongListQuery};
 use slint::ComponentHandle;
 
 use super::genres::{
-    Binding, CardSource, card_grid, play_track, toggle_card, toggle_track, track_table, with_grid,
-    with_table,
+    Binding, CardSource, card_grid, play_track, set_grid_columns, toggle_card, toggle_track,
+    track_table, with_grid, with_table,
 };
 use super::{AppWindow, CardRow, Context, FavoritesState, TrackItem};
 
@@ -55,43 +55,54 @@ const ARTISTS: Binding<CardRow> = Binding {
     },
 };
 
-fn columns(window: &AppWindow, binding: Binding<CardRow>, columns: i32) {
-    with_grid(window, binding, |grid| {
-        grid.set_columns(usize::try_from(columns).unwrap_or(1))
-    });
-}
-
 pub fn install(window: &AppWindow, ctx: &Context) {
     let state = window.global::<FavoritesState>();
     state.set_tracks(track_table(window, ctx, true, TRACKS));
     state.set_albums(card_grid(window, ctx, ALBUMS));
     state.set_artists(card_grid(window, ctx, ARTISTS));
+    install_load(window);
+    install_play_track(window, ctx);
+    install_toggles(window, ctx);
+    install_columns(window);
+}
 
+fn install_load(window: &AppWindow) {
     let weak = window.as_weak();
-    state.on_load(move |_| {
-        let Some(window) = weak.upgrade() else {
-            return;
-        };
-        let state = window.global::<FavoritesState>();
-        state.set_tracks_loading(true);
-        state.set_albums_loading(true);
-        state.set_artists_loading(true);
-        with_table(&window, TRACKS, |table| table.reset(favorite_song_query()));
-        with_grid(&window, ALBUMS, |grid| {
-            grid.reset(Some(CardSource::Albums(favorite_album_query())))
-        });
-        with_grid(&window, ARTISTS, |grid| {
-            grid.reset(Some(CardSource::Artists(favorite_artist_query())))
-        });
-    });
-
-    let weak = window.as_weak();
-    let play_ctx = ctx.clone();
-    state.on_play_track(move |index| {
+    window.global::<FavoritesState>().on_load(move |_| {
         if let Some(window) = weak.upgrade() {
-            play_track(&window, &play_ctx, TRACKS, index);
+            load_favorites(&window);
         }
     });
+}
+
+fn load_favorites(window: &AppWindow) {
+    let state = window.global::<FavoritesState>();
+    state.set_tracks_loading(true);
+    state.set_albums_loading(true);
+    state.set_artists_loading(true);
+    with_table(window, TRACKS, |table| table.reset(favorite_song_query()));
+    with_grid(window, ALBUMS, |grid| {
+        grid.reset(Some(CardSource::Albums(favorite_album_query())));
+    });
+    with_grid(window, ARTISTS, |grid| {
+        grid.reset(Some(CardSource::Artists(favorite_artist_query())));
+    });
+}
+
+fn install_play_track(window: &AppWindow, ctx: &Context) {
+    let weak = window.as_weak();
+    let play_ctx = ctx.clone();
+    window
+        .global::<FavoritesState>()
+        .on_play_track(move |index| {
+            if let Some(window) = weak.upgrade() {
+                play_track(&window, &play_ctx, TRACKS, index);
+            }
+        });
+}
+
+fn install_toggles(window: &AppWindow, ctx: &Context) {
+    let state = window.global::<FavoritesState>();
 
     let weak = window.as_weak();
     let toggle_ctx = ctx.clone();
@@ -116,18 +127,22 @@ pub fn install(window: &AppWindow, ctx: &Context) {
             toggle_card(&window, &toggle_ctx, ARTISTS, &id);
         }
     });
+}
+
+fn install_columns(window: &AppWindow) {
+    let state = window.global::<FavoritesState>();
 
     let weak = window.as_weak();
-    state.on_album_columns(move |n| {
+    state.on_album_columns(move |columns| {
         if let Some(window) = weak.upgrade() {
-            columns(&window, ALBUMS, n);
+            set_grid_columns(&window, ALBUMS, columns);
         }
     });
 
     let weak = window.as_weak();
-    state.on_artist_columns(move |n| {
+    state.on_artist_columns(move |columns| {
         if let Some(window) = weak.upgrade() {
-            columns(&window, ARTISTS, n);
+            set_grid_columns(&window, ARTISTS, columns);
         }
     });
 }
@@ -139,7 +154,7 @@ mod tests {
     use feishin_api::MusicServer;
     use feishin_core::model::Paging;
 
-    const ALL: Paging = Paging {
+    const EVERYTHING: Paging = Paging {
         start_index: 0,
         limit: usize::MAX,
     };
@@ -155,20 +170,20 @@ mod tests {
     async fn demo_server_lists_favorites() {
         let server = FakeServer::new(1200);
         let songs = server
-            .song_list(&favorite_song_query(), ALL)
+            .song_list(&favorite_song_query(), EVERYTHING)
             .await
             .map(|page| page.items)
             .unwrap_or_default();
         assert!(!songs.is_empty() && songs.iter().all(|song| song.favorite));
         let albums = server
-            .album_list(&favorite_album_query(), ALL)
+            .album_list(&favorite_album_query(), EVERYTHING)
             .await
             .map(|page| page.items)
             .unwrap_or_default();
         assert!(!albums.is_empty() && albums.len() < 100);
         assert!(albums.iter().all(|album| album.favorite));
         let artists = server
-            .artist_list(&favorite_artist_query(), ALL)
+            .artist_list(&favorite_artist_query(), EVERYTHING)
             .await
             .map(|page| page.items)
             .unwrap_or_default();
