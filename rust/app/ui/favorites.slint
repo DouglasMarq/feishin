@@ -1,0 +1,17 @@
+import { Theme } from "theme.slint";
+import { AppState } from "globals.slint";
+
+export global FavoritesState {
+    callback load(string);
+}
+
+export component FavoritesView inherits Rectangle {
+    init => {
+        FavoritesState.load(AppState.detail-id);
+    }
+
+    Text {
+        text: "Favorites";
+        color: Theme.muted;
+    }
+}

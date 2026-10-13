@@ -1,0 +1,17 @@
+import { Theme } from "theme.slint";
+import { AppState } from "globals.slint";
+
+export global NowPlayingState {
+    callback load(string);
+}
+
+export component NowPlayingView inherits Rectangle {
+    init => {
+        NowPlayingState.load(AppState.detail-id);
+    }
+
+    Text {
+        text: "Now playing";
+        color: Theme.muted;
+    }
+}

@@ -3,7 +3,7 @@ import { Theme, Icons } from "theme.slint";
 import { TracksState, TrackRow } from "globals.slint";
 import { Icon } from "widgets.slint";
 
-component HeaderCell inherits Rectangle {
+export component HeaderCell inherits Rectangle {
     in property <string> text;
     in property <string> column;
     in property <bool> sortable: true;
@@ -58,7 +58,7 @@ component HeaderCell inherits Rectangle {
     }
 }
 
-component Cell inherits Rectangle {
+export component Cell inherits Rectangle {
     in property <string> text;
     in property <color> text-color: Theme.muted;
 
@@ -72,13 +72,13 @@ component Cell inherits Rectangle {
     }
 }
 
-component Skeleton inherits Rectangle {
+export component Skeleton inherits Rectangle {
     height: 10px;
     border-radius: 5px;
     background: Theme.surface-raised;
 }
 
-component TrackRowView inherits Rectangle {
+export component TrackRowView inherits Rectangle {
     in property <TrackRow> track;
     callback play();
     callback clicked();

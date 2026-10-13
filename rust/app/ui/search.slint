@@ -1,0 +1,17 @@
+import { Theme } from "theme.slint";
+import { AppState } from "globals.slint";
+
+export global SearchState {
+    callback load(string);
+}
+
+export component SearchView inherits Rectangle {
+    init => {
+        SearchState.load(AppState.detail-id);
+    }
+
+    Text {
+        text: "Search";
+        color: Theme.muted;
+    }
+}

@@ -1,0 +1,23 @@
+import { Theme } from "theme.slint";
+import { AppState } from "globals.slint";
+
+export global ArtistDetailState {
+    callback load(string);
+}
+
+export component ArtistDetailView inherits Rectangle {
+    property <string> id: AppState.detail-id;
+
+    init => {
+        ArtistDetailState.load(root.id);
+    }
+
+    changed id => {
+        ArtistDetailState.load(root.id);
+    }
+
+    Text {
+        text: "Artist";
+        color: Theme.muted;
+    }
+}

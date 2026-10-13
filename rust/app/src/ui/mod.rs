@@ -14,9 +14,22 @@ use crate::store::Store;
 
 slint::include_modules!();
 
+pub mod album_detail;
+pub mod albums;
+pub mod artist_detail;
+pub mod artists;
+pub mod favorites;
+pub mod genres;
+pub mod home;
 pub mod login;
+pub mod nav;
+pub mod now_playing;
 pub mod player;
+pub mod playlist_detail;
+pub mod playlists;
 pub mod queue;
+pub mod search;
+pub mod settings;
 pub mod tracks;
 
 /// Everything the views need to reach the I/O side. Cheap to clone and `Send`.
@@ -56,6 +69,19 @@ pub fn install(window: &AppWindow, ctx: &Context, settings: &Settings) {
     queue::install(window, ctx);
     player::install(window, ctx);
     login::install(window, ctx);
+    nav::install(window);
+    home::install(window, ctx);
+    albums::install(window, ctx);
+    album_detail::install(window, ctx);
+    artists::install(window, ctx);
+    artist_detail::install(window, ctx);
+    genres::install(window, ctx);
+    playlists::install(window, ctx);
+    playlist_detail::install(window, ctx);
+    favorites::install(window, ctx);
+    search::install(window, ctx);
+    settings::install(window, ctx);
+    now_playing::install(window, ctx);
     window
         .global::<AppState>()
         .set_queue_open(settings.ui.queue_panel_open);

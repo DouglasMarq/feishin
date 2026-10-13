@@ -1,0 +1,23 @@
+import { Theme } from "theme.slint";
+import { AppState } from "globals.slint";
+
+export global PlaylistDetailState {
+    callback load(string);
+}
+
+export component PlaylistDetailView inherits Rectangle {
+    property <string> id: AppState.detail-id;
+
+    init => {
+        PlaylistDetailState.load(root.id);
+    }
+
+    changed id => {
+        PlaylistDetailState.load(root.id);
+    }
+
+    Text {
+        text: "Playlist";
+        color: Theme.muted;
+    }
+}

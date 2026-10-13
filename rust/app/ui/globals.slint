@@ -21,11 +21,25 @@ export struct QueueRow {
 
 export enum Page { loading, login, main }
 
+export enum Route { home, tracks, albums, album-detail, artists, artist-detail, genres, playlists, playlist-detail, favorites, search, settings, now-playing }
+
 export global AppState {
     in-out property <Page> page: Page.loading;
     in-out property <bool> queue-open: true;
     in-out property <string> status;
     in property <string> server-name;
+    in property <Route> route: Route.tracks;
+    /// Id of the item shown by a detail route (album, artist, playlist, genre).
+    in property <string> detail-id;
+    in property <bool> can-go-back;
+    callback navigate(Route, string);
+    callback back();
+}
+
+/// Actions shared across views.
+export global Actions {
+    /// Opens the "add to playlist" picker for these song ids.
+    callback add-to-playlist([string]);
 }
 
 export global LoginState {

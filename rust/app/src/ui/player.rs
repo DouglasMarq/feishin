@@ -64,7 +64,7 @@ impl SlintSink {
     }
 }
 
-fn to_image(cover: &DecodedImage) -> Option<Image> {
+pub fn to_image(cover: &DecodedImage) -> Option<Image> {
     let expected = cover.width as usize * cover.height as usize * 4;
     if cover.rgba.len() != expected || expected == 0 {
         return None;

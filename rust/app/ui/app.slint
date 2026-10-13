@@ -1,12 +1,37 @@
 import { Theme } from "theme.slint";
-import { AppState, Page, PlayerState } from "globals.slint";
+import { AppState, Page, PlayerState, Route } from "globals.slint";
 import { LoginView } from "login.slint";
 import { Sidebar } from "sidebar.slint";
 import { TracksView } from "tracks.slint";
 import { QueuePanel } from "queue_panel.slint";
 import { PlayerBar } from "player_bar.slint";
+import { HomeView } from "home.slint";
+import { AlbumsView } from "albums.slint";
+import { AlbumDetailView } from "album_detail.slint";
+import { ArtistsView } from "artists.slint";
+import { ArtistDetailView } from "artist_detail.slint";
+import { GenresView } from "genres.slint";
+import { PlaylistsView } from "playlists.slint";
+import { PlaylistDetailView } from "playlist_detail.slint";
+import { FavoritesView } from "favorites.slint";
+import { SearchView } from "search.slint";
+import { SettingsView } from "settings.slint";
+import { NowPlayingView } from "now_playing.slint";
 
-export { AppState, LoginState, Page, PlayerState, QueueRow, QueueState, TrackRow, TracksState } from "globals.slint";
+export { Actions, AppState, LoginState, Page, PlayerState, QueueRow, QueueState, Route, TrackRow, TracksState } from "globals.slint";
+export { HomeState } from "home.slint";
+export { AlbumsState } from "albums.slint";
+export { AlbumDetailState } from "album_detail.slint";
+export { ArtistsState } from "artists.slint";
+export { ArtistDetailState } from "artist_detail.slint";
+export { GenresState } from "genres.slint";
+export { PlaylistsState } from "playlists.slint";
+export { PlaylistDetailState } from "playlist_detail.slint";
+export { FavoritesState } from "favorites.slint";
+export { SearchState } from "search.slint";
+export { SettingsState } from "settings.slint";
+export { NowPlayingState } from "now_playing.slint";
+
 
 export component AppWindow inherits Window {
     title: "Feishin";
@@ -42,11 +67,26 @@ export component AppWindow inherits Window {
             HorizontalLayout {
                 Sidebar { }
 
-                TracksView {
+                Rectangle {
                     horizontal-stretch: 1;
-                    row-clicked => {
-                        key-scope.focus();
+
+                    if AppState.route == Route.tracks: TracksView {
+                        row-clicked => {
+                            key-scope.focus();
+                        }
                     }
+                    if AppState.route == Route.home: HomeView { }
+                    if AppState.route == Route.albums: AlbumsView { }
+                    if AppState.route == Route.album-detail: AlbumDetailView { }
+                    if AppState.route == Route.artists: ArtistsView { }
+                    if AppState.route == Route.artist-detail: ArtistDetailView { }
+                    if AppState.route == Route.genres: GenresView { }
+                    if AppState.route == Route.playlists: PlaylistsView { }
+                    if AppState.route == Route.playlist-detail: PlaylistDetailView { }
+                    if AppState.route == Route.favorites: FavoritesView { }
+                    if AppState.route == Route.search: SearchView { }
+                    if AppState.route == Route.settings: SettingsView { }
+                    if AppState.route == Route.now-playing: NowPlayingView { }
                 }
 
                 if AppState.queue-open: QueuePanel { }

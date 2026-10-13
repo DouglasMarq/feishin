@@ -1,0 +1,17 @@
+import { Theme } from "theme.slint";
+import { AppState } from "globals.slint";
+
+export global SettingsState {
+    callback load(string);
+}
+
+export component SettingsView inherits Rectangle {
+    init => {
+        SettingsState.load(AppState.detail-id);
+    }
+
+    Text {
+        text: "Settings";
+        color: Theme.muted;
+    }
+}

@@ -47,6 +47,16 @@ pub enum Command {
     ToggleShuffle,
     CycleRepeat,
     PlayUid(Uid),
+    /// Replace the queue with `songs` already in hand (album, playlist, search results), starting at `song_id`.
+    #[expect(dead_code, reason = "used by the wave 2 views")]
+    PlaySongs {
+        songs: Vec<Song>,
+        song_id: Option<String>,
+    },
+    #[expect(dead_code, reason = "used by the wave 2 views")]
+    AddNext(Vec<Song>),
+    #[expect(dead_code, reason = "used by the wave 2 views")]
+    AddLast(Vec<Song>),
     Remove(Vec<Uid>),
     Move {
         uids: Vec<Uid>,
@@ -219,6 +229,20 @@ impl Controller {
                 if self.queue.play_uid(uid).is_some() {
                     self.load_current(0);
                 }
+            }
+            Command::PlaySongs { songs, song_id } => {
+                self.play_request += 1;
+                self.queue.play_now(songs, song_id.as_deref());
+                self.publish_queue();
+                self.load_current(0);
+            }
+            Command::AddNext(songs) => {
+                self.queue.add_next(songs);
+                self.queue_changed();
+            }
+            Command::AddLast(songs) => {
+                self.queue.add_last(songs);
+                self.queue_changed();
             }
             Command::Remove(uids) => self.remove(&uids),
             Command::Move { uids, before } => {

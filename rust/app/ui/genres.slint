@@ -1,0 +1,17 @@
+import { Theme } from "theme.slint";
+import { AppState } from "globals.slint";
+
+export global GenresState {
+    callback load(string);
+}
+
+export component GenresView inherits Rectangle {
+    init => {
+        GenresState.load(AppState.detail-id);
+    }
+
+    Text {
+        text: "Genres";
+        color: Theme.muted;
+    }
+}

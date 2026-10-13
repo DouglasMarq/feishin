@@ -1,0 +1,17 @@
+import { Theme } from "theme.slint";
+import { AppState } from "globals.slint";
+
+export global ArtistsState {
+    callback load(string);
+}
+
+export component ArtistsView inherits Rectangle {
+    init => {
+        ArtistsState.load(AppState.detail-id);
+    }
+
+    Text {
+        text: "Artists";
+        color: Theme.muted;
+    }
+}

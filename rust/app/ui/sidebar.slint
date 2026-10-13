@@ -1,5 +1,5 @@
 import { Theme, Icons } from "theme.slint";
-import { AppState } from "globals.slint";
+import { AppState, Route } from "globals.slint";
 import { Icon } from "widgets.slint";
 
 component NavEntry inherits Rectangle {
@@ -82,37 +82,55 @@ export component Sidebar inherits Rectangle {
         NavEntry {
             icon: Icons.home;
             label: "Home";
-            enabled: false;
+            active: AppState.route == Route.home;
+            clicked => {
+                AppState.navigate(Route.home, "");
+            }
         }
 
         NavEntry {
             icon: Icons.note;
             label: "Tracks";
-            active: true;
+            active: AppState.route == Route.tracks;
+            clicked => {
+                AppState.navigate(Route.tracks, "");
+            }
         }
 
         NavEntry {
             icon: Icons.album;
             label: "Albums";
-            enabled: false;
+            active: AppState.route == Route.albums || AppState.route == Route.album-detail;
+            clicked => {
+                AppState.navigate(Route.albums, "");
+            }
         }
 
         NavEntry {
             icon: Icons.artist;
             label: "Artists";
-            enabled: false;
+            active: AppState.route == Route.artists || AppState.route == Route.artist-detail;
+            clicked => {
+                AppState.navigate(Route.artists, "");
+            }
         }
 
         NavEntry {
             icon: Icons.genre;
             label: "Genres";
-            enabled: false;
+            active: AppState.route == Route.genres;
+            clicked => {
+                AppState.navigate(Route.genres, "");
+            }
         }
 
         NavEntry {
             icon: Icons.playlist;
             label: "Playlists";
-            enabled: false;
+            active: AppState.route == Route.playlists || AppState.route == Route.playlist-detail;
+            clicked => {
+                AppState.navigate(Route.playlists, "");
+            }
         }
 
         NavEntry {
@@ -124,11 +142,32 @@ export component Sidebar inherits Rectangle {
         NavEntry {
             icon: Icons.heart;
             label: "Favorites";
-            enabled: false;
+            active: AppState.route == Route.favorites;
+            clicked => {
+                AppState.navigate(Route.favorites, "");
+            }
+        }
+
+        NavEntry {
+            icon: Icons.search;
+            label: "Search";
+            active: AppState.route == Route.search;
+            clicked => {
+                AppState.navigate(Route.search, "");
+            }
         }
 
         Rectangle {
             vertical-stretch: 1;
+        }
+
+        NavEntry {
+            icon: Icons.settings;
+            label: "Settings";
+            active: AppState.route == Route.settings;
+            clicked => {
+                AppState.navigate(Route.settings, "");
+            }
         }
 
         Text {

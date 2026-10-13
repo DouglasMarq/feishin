@@ -1,0 +1,17 @@
+import { Theme } from "theme.slint";
+import { AppState } from "globals.slint";
+
+export global HomeState {
+    callback load(string);
+}
+
+export component HomeView inherits Rectangle {
+    init => {
+        HomeState.load(AppState.detail-id);
+    }
+
+    Text {
+        text: "Home";
+        color: Theme.muted;
+    }
+}

@@ -1,0 +1,17 @@
+import { Theme } from "theme.slint";
+import { AppState } from "globals.slint";
+
+export global AlbumsState {
+    callback load(string);
+}
+
+export component AlbumsView inherits Rectangle {
+    init => {
+        AlbumsState.load(AppState.detail-id);
+    }
+
+    Text {
+        text: "Albums";
+        color: Theme.muted;
+    }
+}

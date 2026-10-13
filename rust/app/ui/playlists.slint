@@ -1,0 +1,17 @@
+import { Theme } from "theme.slint";
+import { AppState } from "globals.slint";
+
+export global PlaylistsState {
+    callback load(string);
+}
+
+export component PlaylistsView inherits Rectangle {
+    init => {
+        PlaylistsState.load(AppState.detail-id);
+    }
+
+    Text {
+        text: "Playlists";
+        color: Theme.muted;
+    }
+}
