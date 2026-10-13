@@ -5,7 +5,8 @@ use slint::ComponentHandle;
 use super::{AppWindow, Context, ShareKind, ShareState, on_ui, show_status, tracks};
 
 const NOT_AUTHORIZED_CODE: i32 = 50;
-const SELECTION_NOT_LOADED: &str = "Scroll through the selected tracks first, then share them";
+pub const SELECTION_NOT_LOADED: &str =
+    "Only loaded tracks can be shared: select fewer tracks or scroll through them first";
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 struct ShareRequest {

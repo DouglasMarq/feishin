@@ -4,6 +4,7 @@ use feishin_core::model::{ServerConfig, ServerType};
 use slint::ComponentHandle;
 
 use crate::demo::{DemoLibrary, FakeServer};
+use crate::ui::sharing::SELECTION_NOT_LOADED;
 use crate::ui::test_window::TestWindow;
 use crate::ui::{ShareKind, ShareState, TracksState};
 
@@ -61,6 +62,26 @@ fn selected_tracks_are_shared_together() {
     let shared = server.shared_items();
     assert_eq!(shared.len(), 1);
     assert_eq!(shared[0].len(), 3);
+}
+
+#[test]
+fn a_selection_that_is_not_loaded_explains_how_to_share_it() {
+    let server = Arc::new(FakeServer::new(600));
+    let Some(view) = TestWindow::open(server.clone()) else {
+        return;
+    };
+    let tracks = view.app.global::<TracksState>();
+    assert!(view.pump(|| tracks.get_total() == 600));
+    tracks.invoke_select_all();
+    assert!(view.pump(|| tracks.get_selected_count() == 600));
+
+    view.app
+        .global::<ShareState>()
+        .invoke_share_selected_tracks();
+
+    assert!(view.pump(|| true));
+    assert_eq!(view.status(), SELECTION_NOT_LOADED);
+    assert!(server.shared_items().is_empty());
 }
 
 #[test]
