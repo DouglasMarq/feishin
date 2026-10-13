@@ -9,6 +9,11 @@ export struct TrackRow {
     plays: string,
     loaded: bool,
     playing: bool,
+    album-id: string,
+    artist-id: string,
+    favorite: bool,
+    rating: int,
+    selected: bool,
 }
 
 export struct QueueRow {
@@ -69,6 +74,40 @@ export global TracksState {
     callback search-edited(string);
     callback sort-by(string);
     callback play-row(int);
+    in-out property <bool> show-artist: true;
+    in-out property <bool> show-album: true;
+    in-out property <bool> show-year: true;
+    in-out property <bool> show-plays: true;
+    in-out property <bool> show-duration: true;
+    in-out property <bool> show-favorite: true;
+    in-out property <bool> show-rating: true;
+    in-out property <length> w-favorite: 44px;
+    in-out property <length> w-rating: 104px;
+    in-out property <string> search-text;
+    in-out property <bool> filter-favorite;
+    in property <[string]> genres: ["All genres"];
+    in property <[string]> genre-ids;
+    in-out property <int> genre-index;
+    in-out property <string> year-from;
+    in-out property <string> year-to;
+    in property <int> selected-count;
+    /// `true` debounces (typing), `false` applies at once.
+    callback filters-changed(bool);
+    callback load-genres();
+    /// Row index, Ctrl held, Shift held.
+    callback select-row(int, bool, bool);
+    /// Right click on a row: selects it unless it is already part of the selection.
+    callback context-row(int);
+    callback play-selected();
+    /// `true` plays next, `false` appends to the queue.
+    callback queue-selected(bool);
+    callback add-selected-to-playlist();
+    callback favorite-selected(bool);
+    callback rate-selected(int);
+    callback go-to-album();
+    callback go-to-artist();
+    callback toggle-favorite(int);
+    callback rate-row(int, int);
 }
 
 export global PlayerState {
