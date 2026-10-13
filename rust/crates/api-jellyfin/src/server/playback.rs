@@ -17,13 +17,9 @@ impl JellyfinServer {
         position_ms: u64,
         paused: bool,
     ) -> Result<()> {
-        let event_name = match paused {
-            true => "pause",
-            false => "unpause",
-        };
         let report = dto::PlaybackReport {
             item_id: song_id,
-            event_name: Some(event_name),
+            event_name: Some(dto::PlaybackEvent::for_paused_state(paused)),
             is_paused: Some(paused),
             position_ticks: Some(position_ms * TICKS_PER_MS),
         };

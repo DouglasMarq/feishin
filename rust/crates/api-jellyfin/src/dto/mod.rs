@@ -12,7 +12,7 @@ pub use library::{
 };
 pub use lyrics::{LyricLine, Lyrics};
 pub use media::{ImageTags, MediaSource, Song};
-pub use requests::{AuthenticateByName, EmptyBody, NewPlaylist, PlaybackReport};
+pub use requests::{AuthenticateByName, EmptyBody, NewPlaylist, PlaybackEvent, PlaybackReport};
 
 fn null_as_default<'de, Source, Field>(deserializer: Source) -> Result<Field, Source::Error>
 where
