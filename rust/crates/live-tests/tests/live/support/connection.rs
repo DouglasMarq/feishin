@@ -12,6 +12,7 @@ static NAVIDROME_054_CREDENTIAL: OnceCell<Credential> = OnceCell::const_new();
 static NAVIDROME_056_CREDENTIAL: OnceCell<Credential> = OnceCell::const_new();
 static GONIC_CREDENTIAL: OnceCell<Credential> = OnceCell::const_new();
 static JELLYFIN_CREDENTIAL: OnceCell<Credential> = OnceCell::const_new();
+static JELLYFIN_10_CREDENTIAL: OnceCell<Credential> = OnceCell::const_new();
 
 type LoggedIn = (Box<dyn MusicServer>, Credential);
 
@@ -22,6 +23,7 @@ fn cached_credential(backend: Backend) -> &'static OnceCell<Credential> {
         Backend::Navidrome056 => &NAVIDROME_056_CREDENTIAL,
         Backend::Gonic => &GONIC_CREDENTIAL,
         Backend::Jellyfin => &JELLYFIN_CREDENTIAL,
+        Backend::Jellyfin10 => &JELLYFIN_10_CREDENTIAL,
     }
 }
 

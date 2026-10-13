@@ -201,10 +201,13 @@ pub async fn long_playlists_with_repeats_are_edited(backend: Backend) {
         .await
         .expect("create long playlist")
         .id;
-    assert_eq!(
-        server.playlist_songs(&playlist).await.expect("songs").len(),
-        64
-    );
+    let stored = server.playlist_songs(&playlist).await.expect("songs").len();
+    if !backend.keeps_repeated_playlist_songs() {
+        server.delete_playlist(&playlist).await.expect("delete");
+        assert_eq!(stored, library.len());
+        return;
+    }
+    assert_eq!(stored, 64);
     remove_every_copy_of_the_first_song(&*server, &playlist).await;
     remove_leading_entries(backend, &*server, &playlist).await;
     server.delete_playlist(&playlist).await.expect("delete");

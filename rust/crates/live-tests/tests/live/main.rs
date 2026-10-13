@@ -137,3 +137,5 @@ mod navidrome_subsonic {
 live_backend!(gonic, Backend::Gonic);
 #[cfg(test)]
 live_backend!(jellyfin, Backend::Jellyfin);
+#[cfg(test)]
+live_backend!(jellyfin_10, Backend::Jellyfin10);

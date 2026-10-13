@@ -20,6 +20,8 @@ navidrome_056_port="${FEISHIN_LIVE_NAVIDROME_056_PORT:-14535}"
 navidrome_056_image="${FEISHIN_LIVE_NAVIDROME_056_IMAGE:-docker.io/deluan/navidrome:0.56.1}"
 gonic_image="${FEISHIN_LIVE_GONIC_IMAGE:-docker.io/sentriz/gonic:latest}"
 jellyfin_image="${FEISHIN_LIVE_JELLYFIN_IMAGE:-docker.io/jellyfin/jellyfin:latest}"
+jellyfin_10_port="${FEISHIN_LIVE_JELLYFIN_10_PORT:-18097}"
+jellyfin_10_image="${FEISHIN_LIVE_JELLYFIN_10_IMAGE:-docker.io/jellyfin/jellyfin:10.10.7}"
 
 test_user="feishin"
 test_password="feishin-live-test"
@@ -204,10 +206,19 @@ jellyfin_library() {
         '{"LibraryOptions":{"PathInfos":[{"Path":"/music"}],"EnableRealtimeMonitor":false,"EnableInternetProviders":false,"SaveLocalMetadata":false}}' "$token" >/dev/null
 }
 
+jellyfin_get() {
+    local base="$1" path="$2" token="$3"
+    curl -fsS "$base$path" -H "Authorization: $(jellyfin_auth_header "$token")"
+}
+
 jellyfin_scanned() {
     local base="$1" token="$2"
-    curl -fsS "$base/Items?IncludeItemTypes=Audio&Recursive=true&Limit=0" -H "Authorization: $(jellyfin_auth_header "$token")" \
-        | jq -e --argjson expected "$expected_tracks" '.TotalRecordCount >= $expected'
+    jellyfin_get "$base" "/Items?IncludeItemTypes=Audio&Recursive=true&Limit=0" "$token" \
+        | jq -e --argjson expected "$expected_tracks" '.TotalRecordCount >= $expected' \
+        && jellyfin_get "$base" "/Artists/AlbumArtists?Limit=0" "$token" | jq -e '.TotalRecordCount >= 3' \
+        && jellyfin_get "$base" "/MusicGenres?Limit=0" "$token" | jq -e '.TotalRecordCount >= 3' \
+        && jellyfin_get "$base" "/Items?IncludeItemTypes=MusicAlbum&Recursive=true&Fields=ProductionYear" "$token" \
+        | jq -e '(.Items | length) >= 4 and all(.Items[]; .ProductionYear != null) and any(.Items[]; .ImageTags.Primary != null)'
 }
 
 jellyfin_ready() {
@@ -215,18 +226,19 @@ jellyfin_ready() {
 }
 
 jellyfin_up() {
-    log "starting Jellyfin on port $jellyfin_port"
-    start_container jellyfin -p "127.0.0.1:$jellyfin_port:8096" \
-        -v "$library_dir:/music:ro,z" -v "$(volume jellyfin-config):/config" -v "$(volume jellyfin-cache):/cache" \
-        "$jellyfin_image"
-    local base="http://127.0.0.1:$jellyfin_port"
-    wait_until "Jellyfin HTTP" 180 jellyfin_ready "$base"
+    local name="$1" port="$2" image="$3"
+    log "starting $name ($image) on port $port"
+    start_container "$name" -p "127.0.0.1:$port:8096" \
+        -v "$library_dir:/music:ro,z" -v "$(volume "$name-config"):/config" -v "$(volume "$name-cache"):/cache" \
+        "$image"
+    local base="http://127.0.0.1:$port"
+    wait_until "$name HTTP" 180 jellyfin_ready "$base"
     jellyfin_wizard "$base"
     local token
     token="$(jellyfin_token "$base")"
     jellyfin_library "$base" "$token"
     jellyfin_post "$base" "/Library/Refresh" '{}' "$token" >/dev/null
-    wait_until "Jellyfin scan" 300 jellyfin_scanned "$base" "$token"
+    wait_until "$name scan" 300 jellyfin_scanned "$base" "$token"
 }
 
 write_env() {
@@ -246,6 +258,9 @@ export FEISHIN_LIVE_GONIC_PASSWORD=$gonic_password
 export FEISHIN_LIVE_JELLYFIN_URL=http://127.0.0.1:$jellyfin_port
 export FEISHIN_LIVE_JELLYFIN_USER=$test_user
 export FEISHIN_LIVE_JELLYFIN_PASSWORD=$test_password
+export FEISHIN_LIVE_JELLYFIN_10_URL=http://127.0.0.1:$jellyfin_10_port
+export FEISHIN_LIVE_JELLYFIN_10_USER=$test_user
+export FEISHIN_LIVE_JELLYFIN_10_PASSWORD=$test_password
 EOF
     log "server environment written to $env_file"
 }
@@ -258,7 +273,8 @@ up() {
     navidrome_up navidrome-054 "$navidrome_054_port" "$navidrome_054_image"
     navidrome_up navidrome-056 "$navidrome_056_port" "$navidrome_056_image"
     gonic_up
-    jellyfin_up
+    jellyfin_up jellyfin "$jellyfin_port" "$jellyfin_image"
+    jellyfin_up jellyfin-10 "$jellyfin_10_port" "$jellyfin_10_image"
     write_env
 }
 

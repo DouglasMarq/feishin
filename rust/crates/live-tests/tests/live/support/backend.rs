@@ -8,6 +8,7 @@ pub enum Backend {
     NavidromeSubsonic,
     Gonic,
     Jellyfin,
+    Jellyfin10,
 }
 
 pub struct LiveTarget {
@@ -30,15 +31,20 @@ impl Backend {
             Self::Navidrome056 => "FEISHIN_LIVE_NAVIDROME_056",
             Self::Gonic => "FEISHIN_LIVE_GONIC",
             Self::Jellyfin => "FEISHIN_LIVE_JELLYFIN",
+            Self::Jellyfin10 => "FEISHIN_LIVE_JELLYFIN_10",
         }
     }
 
     pub fn server_type(self) -> ServerType {
         match self {
             Self::Gonic => ServerType::Subsonic,
-            Self::Jellyfin => ServerType::Jellyfin,
+            Self::Jellyfin | Self::Jellyfin10 => ServerType::Jellyfin,
             _ => ServerType::Navidrome,
         }
+    }
+
+    fn is_jellyfin(self) -> bool {
+        self.server_type() == ServerType::Jellyfin
     }
 
     pub fn has_native_navidrome_session(self) -> bool {
@@ -61,7 +67,7 @@ impl Backend {
     }
 
     pub fn sorts_by_counts(self) -> bool {
-        self != Self::Jellyfin
+        !self.is_jellyfin()
     }
 
     pub fn clears_play_queue(self) -> bool {
@@ -69,15 +75,23 @@ impl Backend {
     }
 
     pub fn has_an_entry_id_per_playlist_position(self) -> bool {
-        self != Self::Jellyfin
+        !self.is_jellyfin()
+    }
+
+    pub fn keeps_repeated_playlist_songs(self) -> bool {
+        self != Self::Jellyfin10
+    }
+
+    pub fn counts_albums_in_artist_lists(self) -> bool {
+        self != Self::Jellyfin10
     }
 
     pub fn supports_ratings(self) -> bool {
-        self != Self::Jellyfin
+        !self.is_jellyfin()
     }
 
     pub fn supports_play_queue(self) -> bool {
-        self != Self::Jellyfin
+        !self.is_jellyfin()
     }
 
     pub fn missing_id(self, kind: ItemKind) -> &'static str {
