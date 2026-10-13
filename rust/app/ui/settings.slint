@@ -146,6 +146,7 @@ component LyricsSourceItem inherits Rectangle {
         IconButton {
             y: (parent.height - self.height) / 2;
             icon: Icons.arrow-up;
+            tooltip: "Move up";
             enabled: root.index > 0;
             clicked => {
                 SettingsState.move-lyrics-source(root.index, -1);
@@ -155,6 +156,7 @@ component LyricsSourceItem inherits Rectangle {
         IconButton {
             y: (parent.height - self.height) / 2;
             icon: Icons.arrow-down;
+            tooltip: "Move down";
             enabled: root.index < root.count - 1;
             clicked => {
                 SettingsState.move-lyrics-source(root.index, 1);
@@ -312,9 +314,11 @@ export component SettingsView inherits Rectangle {
                     VerticalLayout {
                         alignment: center;
 
-                        Bar {
+                        volume-bar := Bar {
                             width: 160px;
                             value: PlayerState.volume / 100;
+                            scroll-step: 0.05;
+                            tooltip: "Volume " + (self.adjusting ? Math.round(self.drag-preview * 100) : PlayerState.volume) + "%";
                             changed(value) => {
                                 PlayerState.set-volume(Math.round(value * 100));
                             }
@@ -322,7 +326,7 @@ export component SettingsView inherits Rectangle {
                     }
 
                     Text {
-                        text: PlayerState.volume + "%";
+                        text: (volume-bar.adjusting ? Math.round(volume-bar.drag-preview * 100) : PlayerState.volume) + "%";
                         width: 40px;
                         color: Theme.muted;
                         vertical-alignment: center;

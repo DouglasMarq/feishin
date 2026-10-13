@@ -313,6 +313,7 @@ component SimilarPanel inherits Rectangle {
                         icon-size: 18px;
                         width: 24px;
                         height: 24px;
+                        tooltip: "Play";
                         clicked => {
                             NowPlayingState.play-similar(track.id);
                         }
@@ -390,6 +391,7 @@ export component NowPlayingView inherits Rectangle {
         x: parent.width - self.width - 16px;
         y: 16px;
         icon: Icons.close;
+        tooltip: "Close";
         clicked => {
             if (AppState.can-go-back) {
                 AppState.back();
