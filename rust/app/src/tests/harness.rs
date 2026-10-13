@@ -129,6 +129,7 @@ pub(super) struct Harness {
     pub(super) server: Arc<FakeServer>,
     pub(super) commands: mpsc::UnboundedReceiver<Command>,
     pub(super) store: Arc<JsonStore>,
+    pub(super) session: Session,
     pub(super) temp_dir: tempfile::TempDir,
 }
 
@@ -152,7 +153,7 @@ pub(super) fn start_harness_with(
         audio: Box::new(audio.clone()),
         media: Box::new(NoMediaSession),
         store: store.clone(),
-        session,
+        session: session.clone(),
         ui: ui.clone(),
         commands: sender,
     };
@@ -163,6 +164,7 @@ pub(super) fn start_harness_with(
         server,
         commands,
         store,
+        session,
         temp_dir,
     }
 }

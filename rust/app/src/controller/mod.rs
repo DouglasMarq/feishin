@@ -38,7 +38,7 @@ use crate::session::Session;
 use crate::sleep_timer::SleepTimer;
 use crate::store::Store;
 use list_streams::ListStreams;
-use persistence::QueuePersistence;
+use persistence::{QueuePersistence, ShutdownState};
 
 pub struct Deps {
     pub audio: Box<dyn AudioOutput>,
@@ -66,6 +66,7 @@ pub struct Controller {
     sleep_timer: SleepTimer,
     saved_credential: Option<Credential>,
     list_streams: ListStreams,
+    shutdown: ShutdownState,
 }
 
 fn initial_queue(stored: Option<StoredQueue>, seed: Option<u64>) -> (Queue, u64) {
@@ -102,6 +103,7 @@ impl Controller {
             sleep_timer: SleepTimer::default(),
             saved_credential: None,
             list_streams: ListStreams::default(),
+            shutdown: ShutdownState::default(),
         };
         controller.publish_all();
         controller.update_media_volume();
