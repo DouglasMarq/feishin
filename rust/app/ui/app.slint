@@ -5,6 +5,7 @@ import { Sidebar } from "sidebar.slint";
 import { TracksView } from "tracks.slint";
 import { QueuePanel } from "queue_panel.slint";
 import { PlayerBar } from "player_bar.slint";
+import { TooltipOverlay } from "widgets.slint";
 import { HomeView } from "home.slint";
 import { AlbumsView } from "albums.slint";
 import { AlbumDetailView } from "album_detail.slint";
@@ -126,5 +127,10 @@ export component AppWindow inherits Window {
                 }
             }
         }
+    }
+
+    TooltipOverlay {
+        width: parent.width;
+        height: parent.height;
     }
 }

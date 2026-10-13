@@ -1,5 +1,119 @@
 import { Theme } from "theme.slint";
 
+/// One tooltip for the whole window, drawn by `TooltipOverlay` in app.slint.
+export global Tooltip {
+    out property <string> text;
+    out property <length> anchor-x;
+    out property <length> anchor-y;
+    out property <length> anchor-width;
+    out property <length> anchor-height;
+    out property <bool> visible;
+    property <int> serial;
+
+    public function show(text: string, x: length, y: length, width: length, height: length) -> int {
+        self.serial += 1;
+        self.text = text;
+        self.anchor-x = x;
+        self.anchor-y = y;
+        self.anchor-width = width;
+        self.anchor-height = height;
+        self.visible = text != "";
+        self.serial
+    }
+
+    public function update(token: int, text: string, x: length, width: length) {
+        if (token == self.serial && self.visible) {
+            self.text = text;
+            self.anchor-x = x;
+            self.anchor-width = width;
+        }
+    }
+
+    public function hide(token: int) {
+        if (token == self.serial) {
+            self.visible = false;
+        }
+    }
+}
+
+export component TooltipOverlay inherits Rectangle {
+    property <length> gap: 6px;
+    property <length> above-y: Tooltip.anchor-y - bubble.height - root.gap;
+
+    bubble := Rectangle {
+        visible: Tooltip.visible;
+        width: label.preferred-width + 16px;
+        height: label.preferred-height + 10px;
+        x: max(4px, min(root.width - self.width - 4px, Tooltip.anchor-x + Tooltip.anchor-width / 2 - self.width / 2));
+        y: root.above-y >= 4px ? root.above-y : Tooltip.anchor-y + Tooltip.anchor-height + root.gap;
+        border-radius: 4px;
+        background: Theme.surface-raised;
+        border-width: 1px;
+        border-color: Theme.border;
+
+        label := Text {
+            text: Tooltip.text;
+            color: Theme.foreground;
+            font-size: 12px;
+        }
+    }
+}
+
+/// Shows `text` in the window tooltip while `hovered` (after a short delay) or immediately while `active`.
+/// Place it inside the element the tooltip describes, sized to it.
+export component TooltipAnchor {
+    in property <string> text;
+    in property <bool> hovered;
+    in property <bool> active;
+    /// When >= 0, the tooltip is centered on this x (relative to the anchor) instead of the anchor's center.
+    in property <length> follow-x: -1px;
+    property <int> token: -1;
+    property <bool> shown;
+    property <bool> wanted: (root.hovered || root.active) && root.text != "";
+    property <length> tip-x: root.follow-x >= 0 ? root.absolute-position.x + root.follow-x : root.absolute-position.x;
+    property <length> tip-width: root.follow-x >= 0 ? 0px : root.width;
+    width: 100%;
+    height: 100%;
+
+    function open() {
+        root.token = Tooltip.show(root.text, root.tip-x, root.absolute-position.y, root.tip-width, root.height);
+        root.shown = true;
+    }
+
+    Timer {
+        interval: 450ms;
+        running: root.wanted && !root.shown && !root.active;
+        triggered => {
+            root.open();
+        }
+    }
+
+    changed active => {
+        if (root.active && root.text != "" && !root.shown) {
+            root.open();
+        }
+    }
+
+    changed wanted => {
+        if (!root.wanted && root.shown) {
+            Tooltip.hide(root.token);
+            root.shown = false;
+        }
+    }
+
+    changed text => {
+        if (root.shown) {
+            Tooltip.update(root.token, root.text, root.tip-x, root.tip-width);
+        }
+    }
+
+    changed tip-x => {
+        if (root.shown) {
+            Tooltip.update(root.token, root.text, root.tip-x, root.tip-width);
+        }
+    }
+}
+
 export component Icon inherits Path {
     in property <string> path;
     in property <color> color: Theme.foreground;
@@ -13,6 +127,7 @@ export component Icon inherits Path {
 
 export component IconButton inherits Rectangle {
     in property <string> icon;
+    in property <string> tooltip;
     in property <bool> active;
     in property <bool> enabled: true;
     in property <length> icon-size: 20px;
@@ -31,6 +146,11 @@ export component IconButton inherits Rectangle {
         height: root.icon-size;
     }
 
+    TooltipAnchor {
+        text: root.tooltip;
+        hovered: touch.has-hover;
+    }
+
     touch := TouchArea {
         enabled: root.enabled;
         mouse-cursor: pointer;
@@ -41,9 +161,20 @@ export component IconButton inherits Rectangle {
 }
 
 /// Horizontal slider for 0..1 values. `changed` fires while dragging, `committed` on release.
+/// With `scroll-step` > 0 the mouse wheel moves the value by that step (firing both callbacks).
 export component Bar inherits Rectangle {
     in property <float> value;
+    in property <float> scroll-step;
+    /// Shown while hovering (after a delay) and immediately while dragging or scrolling.
+    in property <string> tooltip;
+    /// Center the tooltip on the pointer instead of the bar (e.g. a seek bar showing the time under the cursor).
+    in property <bool> tooltip-follows-pointer;
     out property <bool> dragging: touch.pressed;
+    out property <float> hover-value: max(0, min(1, touch.mouse-x / root.width));
+    out property <float> drag-preview: root.drag-value;
+    /// True while the user is dragging or wheel-scrolling, i.e. `drag-preview` is ahead of `value`.
+    out property <bool> adjusting: root.dragging || root.scrolling;
+    property <bool> scrolling;
     property <float> drag-value;
     property <float> shown: root.dragging ? root.drag-value : root.value;
     callback changed(float);
@@ -73,8 +204,34 @@ export component Bar inherits Rectangle {
         background: Theme.foreground;
     }
 
+    TooltipAnchor {
+        text: root.tooltip;
+        hovered: touch.has-hover;
+        active: root.dragging || root.scrolling;
+        follow-x: root.tooltip-follows-pointer ? (root.dragging ? root.width * root.drag-value : touch.mouse-x) : -1px;
+    }
+
+    scroll-timer := Timer {
+        interval: 800ms;
+        running: root.scrolling;
+        triggered => {
+            root.scrolling = false;
+        }
+    }
+
     touch := TouchArea {
         mouse-cursor: pointer;
+        scroll-event(event) => {
+            if (root.scroll-step <= 0 || event.delta-y == 0) {
+                return reject;
+            }
+            root.drag-value = max(0, min(1, root.value + (event.delta-y > 0 ? root.scroll-step : -root.scroll-step)));
+            root.changed(root.drag-value);
+            root.committed(root.drag-value);
+            root.scrolling = true;
+            scroll-timer.restart();
+            accept
+        }
         pointer-event(event) => {
             if (event.kind == PointerEventKind.down && event.button == PointerEventButton.left) {
                 root.drag-value = max(0, min(1, self.mouse-x / root.width));
