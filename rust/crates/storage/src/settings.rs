@@ -3,6 +3,7 @@ use std::fmt::Display;
 use feishin_core::model::ServerConfig;
 use serde::{Deserialize, Serialize};
 
+use crate::appearance::AppearanceSettings;
 use crate::{Paths, Result, StorageError, none_when_missing, write_atomic};
 
 pub const SETTINGS_FILE: &str = "settings.toml";
@@ -97,6 +98,7 @@ pub struct Settings {
     pub playback: PlaybackSettings,
     pub ui: UiSettings,
     pub integrations: IntegrationSettings,
+    pub appearance: AppearanceSettings,
 }
 
 impl Settings {
@@ -161,6 +163,7 @@ mod tests {
                 discord_rich_presence: true,
                 ..Default::default()
             },
+            appearance: AppearanceSettings::default(),
         }
     }
 
