@@ -289,7 +289,11 @@ down() {
     log "removing containers and volumes"
     podman ps -a --filter label=feishin-live=1 --format '{{.Names}}' | xargs -r podman rm -f >/dev/null
     podman volume ls --filter label=feishin-live=1 --format '{{.Name}}' | xargs -r podman volume rm -f >/dev/null
-    rm -rf "$state_dir"
+    rm -rf "$library_dir"
+    rm -f "$env_file"
+    if [[ -d "$state_dir" ]]; then
+        rmdir "$state_dir" 2>/dev/null || log "kept $state_dir because it holds other files"
+    fi
 }
 
 command="${1:-}"
