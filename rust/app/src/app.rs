@@ -88,7 +88,13 @@ fn media_session(
 /// Reconnects to the last used server, or shows the login screen.
 fn restore_session(window: &AppWindow, ctx: &Context, settings: &Settings, mode: Mode) {
     let saved = match mode {
-        Mode::Demo => Some((FakeServer::config_for_demo(), Ok(Some(demo_credential())))),
+        Mode::Demo => {
+            let config = FakeServer::config_for_demo();
+            if let Err(e) = ctx.store.set_credential(&config.id, &demo_credential()) {
+                tracing::warn!("saving the demo credential failed: {e:#}");
+            }
+            Some((config, Ok(Some(demo_credential()))))
+        }
         Mode::Real => settings
             .current_server_id
             .as_deref()

@@ -6,9 +6,9 @@ use feishin_api::StreamOptions;
 use feishin_core::model::{ServerConfig, Song, SongListQuery};
 use feishin_core::queue::{Advance, Queue, QueueItem, RepeatMode, Uid};
 use feishin_platform::{MediaControlEvent, NowPlaying, PlaybackStatus};
-use feishin_player::PlayerEvent;
+use feishin_player::{AudioDevice, PlayerEvent};
 use feishin_storage::queue_store::StoredQueue;
-use feishin_storage::settings::{Settings, UiSettings};
+use feishin_storage::settings::{IntegrationSettings, PlaybackSettings, Settings, UiSettings};
 use tokio::sync::{mpsc, oneshot};
 
 use crate::audio::{AudioOutput, Track};
@@ -66,6 +66,22 @@ pub enum Command {
         ui: UiSettings,
         done: oneshot::Sender<()>,
     },
+    GetSettings(oneshot::Sender<SettingsSnapshot>),
+    /// Applies and saves playback settings; volume and mute keep the player's current values.
+    ApplyPlayback(PlaybackSettings),
+    SaveIntegrations(IntegrationSettings),
+    SaveInterface {
+        queue_panel_open: bool,
+        follow_current_song: bool,
+    },
+    /// Forgets a saved server and its credential; removing the current one disconnects.
+    RemoveServer(String),
+}
+
+#[derive(Debug, Clone, PartialEq)]
+pub struct SettingsSnapshot {
+    pub settings: Settings,
+    pub devices: Vec<AudioDevice>,
 }
 
 #[derive(Debug, Clone, PartialEq)]
@@ -250,13 +266,98 @@ impl Controller {
                 self.queue_changed();
             }
             Command::Shutdown { ui, done } => {
-                self.settings.ui = ui;
+                self.settings.ui = UiSettings {
+                    follow_current_song: self.settings.ui.follow_current_song,
+                    ..ui
+                };
                 self.persist();
                 let _ = done.send(());
                 return false;
             }
+            Command::GetSettings(reply) => {
+                let devices = self.deps.audio.audio_devices().unwrap_or_else(|e| {
+                    tracing::warn!("listing audio devices failed: {e:#}");
+                    Vec::new()
+                });
+                let _ = reply.send(SettingsSnapshot {
+                    settings: self.settings.clone(),
+                    devices,
+                });
+            }
+            Command::ApplyPlayback(playback) => self.apply_playback(playback),
+            Command::SaveIntegrations(integrations) => {
+                self.settings.integrations = integrations;
+                self.save_settings();
+            }
+            Command::SaveInterface {
+                queue_panel_open,
+                follow_current_song,
+            } => {
+                self.settings.ui.queue_panel_open = queue_panel_open;
+                self.settings.ui.follow_current_song = follow_current_song;
+                self.save_settings();
+            }
+            Command::RemoveServer(id) => self.remove_server(&id),
         }
         true
+    }
+
+    fn save_settings(&self) {
+        if let Err(e) = self.deps.store.save_settings(&self.settings) {
+            tracing::warn!("saving settings failed: {e:#}");
+        }
+    }
+
+    fn apply_playback(&mut self, playback: PlaybackSettings) {
+        let current = &self.settings.playback;
+        let next = PlaybackSettings {
+            volume: current.volume,
+            muted: current.muted,
+            ..playback
+        };
+        let audio = &self.deps.audio;
+        if next.replay_gain != current.replay_gain
+            && let Err(e) = audio.set_replay_gain(next.replay_gain)
+        {
+            tracing::warn!("setting ReplayGain failed: {e:#}");
+        }
+        if next.audio_device != current.audio_device
+            && let Err(e) = audio.set_audio_device(next.audio_device.as_deref())
+        {
+            tracing::warn!("switching audio device failed: {e:#}");
+        }
+        let stale_preload = next.gapless != current.gapless
+            || next.max_bitrate_kbps != current.max_bitrate_kbps
+            || next.transcode_format != current.transcode_format;
+        self.settings.playback = next;
+        if stale_preload
+            && self.preloaded.take().is_some()
+            && let Err(e) = self.deps.audio.clear_next()
+        {
+            tracing::warn!("clearing the preload failed: {e:#}");
+        }
+        self.refresh_preload();
+        self.save_settings();
+    }
+
+    fn remove_server(&mut self, id: &str) {
+        if let Err(e) = self.deps.store.delete_credential(id) {
+            tracing::warn!("deleting the saved login failed: {e:#}");
+        }
+        self.settings.servers.retain(|server| server.id != id);
+        if self.settings.current_server_id.as_deref() == Some(id) {
+            self.settings.current_server_id = None;
+            self.deps.session.set(None);
+            self.clear_queue();
+        }
+        self.save_settings();
+    }
+
+    fn clear_queue(&mut self) {
+        self.queue.clear();
+        self.stop();
+        self.deps.ui.send(UiUpdate::NowPlaying(None));
+        self.queue_changed();
     }
 
     pub fn persist(&self) {
@@ -273,6 +374,14 @@ impl Controller {
     }
 
     fn connected(&mut self, config: ServerConfig, others: Vec<ServerConfig>) {
+        if self
+            .settings
+            .current_server_id
+            .as_ref()
+            .is_some_and(|id| *id != config.id)
+        {
+            self.clear_queue();
+        }
         let servers = &mut self.settings.servers;
         for server in others.into_iter().chain(std::iter::once(config.clone())) {
             servers.retain(|s| s.id != server.id);
