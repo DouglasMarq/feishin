@@ -3,17 +3,19 @@ use std::sync::Arc;
 use slint::{ComponentHandle, Model};
 
 use super::dialog::{close, open, show_rows};
-use super::picker::SharedPicker;
+use super::handle::PlaylistPicker;
+use super::picker::{PickedSongs, SharedPicker};
 use super::requests::{create, pick};
 use crate::ui::{Actions, AppWindow, Context, PlaylistPickerState};
 
-pub fn install(window: &AppWindow, ctx: &Context) {
+pub fn install(window: &AppWindow, ctx: &Context) -> PlaylistPicker {
     let shared: SharedPicker = Arc::default();
     install_open(window, ctx, &shared);
     install_filter(window, &shared);
     install_pick(window, ctx, &shared);
     install_create(window, ctx, &shared);
     install_cancel(window, &shared);
+    PlaylistPicker::new(shared, ctx.clone())
 }
 
 fn install_open(window: &AppWindow, ctx: &Context, shared: &SharedPicker) {
@@ -23,7 +25,7 @@ fn install_open(window: &AppWindow, ctx: &Context, shared: &SharedPicker) {
         .on_add_to_playlist(move |song_ids| {
             if let Some(window) = weak.upgrade() {
                 let song_ids = song_ids.iter().map(|song_id| song_id.to_string()).collect();
-                open(&window, &open_ctx, &open_shared, song_ids);
+                open(&window, &open_ctx, &open_shared, PickedSongs::Ids(song_ids));
             }
         });
 }

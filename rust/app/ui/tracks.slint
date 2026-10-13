@@ -17,170 +17,185 @@ export component TracksView inherits Rectangle {
         TracksState.load-genres();
     }
 
-    VerticalLayout {
-        TracksToolbar { }
-
-        TracksHeader {
-            content-x: list.content-x;
+    keys := FocusScope {
+        key-pressed(event) => {
+            if ((event.modifiers.control || event.modifiers.meta) && (event.text == "a" || event.text == "A")) {
+                TracksState.select-all();
+                return accept;
+            }
+            if (event.text == Key.Escape && TracksState.selected-count > 0) {
+                TracksState.clear-selection();
+                return accept;
+            }
+            return reject;
         }
 
-        list-area := Rectangle {
-            min-width: 0px;
-            vertical-stretch: 1;
-            clip: true;
+        VerticalLayout {
+            TracksToolbar { }
 
-            row-menu := ContextMenuArea {
-                Menu {
-                    MenuItem {
-                        title: "Play";
-                        enabled: TracksState.selected-count > 0;
-                        activated => {
-                            TracksState.play-selected();
-                        }
-                    }
-
-                    MenuItem {
-                        title: "Play next";
-                        enabled: TracksState.selected-count > 0;
-                        activated => {
-                            TracksState.queue-selected(true);
-                        }
-                    }
-
-                    MenuItem {
-                        title: "Add to queue";
-                        enabled: TracksState.selected-count > 0;
-                        activated => {
-                            TracksState.queue-selected(false);
-                        }
-                    }
-
-                    MenuSeparator { }
-
-                    MenuItem {
-                        title: "Add to playlist";
-                        enabled: TracksState.selected-count > 0;
-                        activated => {
-                            TracksState.add-selected-to-playlist();
-                        }
-                    }
-
-                    MenuSeparator { }
-
-                    MenuItem {
-                        title: "Add to favorites";
-                        enabled: TracksState.selected-count > 0;
-                        activated => {
-                            TracksState.favorite-selected(true);
-                        }
-                    }
-
-                    MenuItem {
-                        title: "Remove from favorites";
-                        enabled: TracksState.selected-count > 0;
-                        activated => {
-                            TracksState.favorite-selected(false);
-                        }
-                    }
-
-                    Menu {
-                        title: "Set rating";
-                        enabled: TracksState.selected-count > 0;
-
-                        MenuItem {
-                            title: "No rating";
-                            activated => {
-                                TracksState.rate-selected(0);
-                            }
-                        }
-
-                        MenuItem {
-                            title: "1 star";
-                            activated => {
-                                TracksState.rate-selected(1);
-                            }
-                        }
-
-                        MenuItem {
-                            title: "2 stars";
-                            activated => {
-                                TracksState.rate-selected(2);
-                            }
-                        }
-
-                        MenuItem {
-                            title: "3 stars";
-                            activated => {
-                                TracksState.rate-selected(3);
-                            }
-                        }
-
-                        MenuItem {
-                            title: "4 stars";
-                            activated => {
-                                TracksState.rate-selected(4);
-                            }
-                        }
-
-                        MenuItem {
-                            title: "5 stars";
-                            activated => {
-                                TracksState.rate-selected(5);
-                            }
-                        }
-                    }
-
-                    MenuSeparator { }
-
-                    MenuItem {
-                        title: "Go to album";
-                        enabled: TracksState.selected-count == 1;
-                        activated => {
-                            TracksState.go-to-album();
-                        }
-                    }
-
-                    MenuItem {
-                        title: "Go to artist";
-                        enabled: TracksState.selected-count == 1;
-                        activated => {
-                            TracksState.go-to-artist();
-                        }
-                    }
-                }
-
-                list := ListView {
-                    for row in TracksState.rows: TrackRowView {
-                        track: row;
-                        clicked => {
-                            root.row-clicked();
-                        }
-                        play => {
-                            root.row-clicked();
-                            TracksState.play-row(row.index - 1);
-                        }
-                        select(toggle, extend) => {
-                            TracksState.select-row(row.index - 1, toggle, extend);
-                        }
-                        context-menu(pointer-x, pointer-y) => {
-                            TracksState.context-row(row.index - 1);
-                            row-menu.show({ x: pointer-x - list-area.absolute-position.x, y: pointer-y - list-area.absolute-position.y });
-                        }
-                        toggle-favorite => {
-                            TracksState.toggle-favorite(row.index - 1);
-                        }
-                        rate(value) => {
-                            TracksState.rate-row(row.index - 1, value);
-                        }
-                    }
-                }
+            TracksHeader {
+                content-x: list.content-x;
             }
 
-            if !TracksState.loading && TracksState.total == 0: Text {
-                text: "No tracks found";
-                color: Theme.muted;
-                horizontal-alignment: center;
-                vertical-alignment: center;
+            list-area := Rectangle {
+                min-width: 0px;
+                vertical-stretch: 1;
+                clip: true;
+
+                row-menu := ContextMenuArea {
+                    Menu {
+                        MenuItem {
+                            title: "Play";
+                            enabled: TracksState.selected-count > 0;
+                            activated => {
+                                TracksState.play-selected();
+                            }
+                        }
+
+                        MenuItem {
+                            title: "Play next";
+                            enabled: TracksState.selected-count > 0;
+                            activated => {
+                                TracksState.queue-selected(true);
+                            }
+                        }
+
+                        MenuItem {
+                            title: "Add to queue";
+                            enabled: TracksState.selected-count > 0;
+                            activated => {
+                                TracksState.queue-selected(false);
+                            }
+                        }
+
+                        MenuSeparator { }
+
+                        MenuItem {
+                            title: "Add to playlist";
+                            enabled: TracksState.selected-count > 0;
+                            activated => {
+                                TracksState.add-selected-to-playlist();
+                            }
+                        }
+
+                        MenuSeparator { }
+
+                        MenuItem {
+                            title: "Add to favorites";
+                            enabled: TracksState.selected-count > 0;
+                            activated => {
+                                TracksState.favorite-selected(true);
+                            }
+                        }
+
+                        MenuItem {
+                            title: "Remove from favorites";
+                            enabled: TracksState.selected-count > 0;
+                            activated => {
+                                TracksState.favorite-selected(false);
+                            }
+                        }
+
+                        Menu {
+                            title: "Set rating";
+                            enabled: TracksState.selected-count > 0;
+
+                            MenuItem {
+                                title: "No rating";
+                                activated => {
+                                    TracksState.rate-selected(0);
+                                }
+                            }
+
+                            MenuItem {
+                                title: "1 star";
+                                activated => {
+                                    TracksState.rate-selected(1);
+                                }
+                            }
+
+                            MenuItem {
+                                title: "2 stars";
+                                activated => {
+                                    TracksState.rate-selected(2);
+                                }
+                            }
+
+                            MenuItem {
+                                title: "3 stars";
+                                activated => {
+                                    TracksState.rate-selected(3);
+                                }
+                            }
+
+                            MenuItem {
+                                title: "4 stars";
+                                activated => {
+                                    TracksState.rate-selected(4);
+                                }
+                            }
+
+                            MenuItem {
+                                title: "5 stars";
+                                activated => {
+                                    TracksState.rate-selected(5);
+                                }
+                            }
+                        }
+
+                        MenuSeparator { }
+
+                        MenuItem {
+                            title: "Go to album";
+                            enabled: TracksState.selected-count == 1;
+                            activated => {
+                                TracksState.go-to-album();
+                            }
+                        }
+
+                        MenuItem {
+                            title: "Go to artist";
+                            enabled: TracksState.selected-count == 1;
+                            activated => {
+                                TracksState.go-to-artist();
+                            }
+                        }
+                    }
+
+                    list := ListView {
+                        for row in TracksState.rows: TrackRowView {
+                            track: row;
+                            clicked => {
+                                root.row-clicked();
+                                keys.focus();
+                            }
+                            play => {
+                                root.row-clicked();
+                                TracksState.play-row(row.index - 1);
+                            }
+                            select(toggle, extend) => {
+                                TracksState.select-row(row.index - 1, toggle, extend);
+                            }
+                            context-menu(pointer-x, pointer-y) => {
+                                TracksState.context-row(row.index - 1);
+                                row-menu.show({ x: pointer-x - list-area.absolute-position.x, y: pointer-y - list-area.absolute-position.y });
+                            }
+                            toggle-favorite => {
+                                TracksState.toggle-favorite(row.index - 1);
+                            }
+                            rate(value) => {
+                                TracksState.rate-row(row.index - 1, value);
+                            }
+                        }
+                    }
+                }
+
+                if !TracksState.loading && TracksState.total == 0: Text {
+                    text: "No tracks found";
+                    color: Theme.muted;
+                    horizontal-alignment: center;
+                    vertical-alignment: center;
+                }
             }
         }
     }

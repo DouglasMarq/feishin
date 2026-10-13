@@ -2,10 +2,33 @@ use std::sync::{Arc, Mutex, MutexGuard, PoisonError};
 
 use feishin_core::model::Playlist;
 
+use crate::ui::tracks::ListedSongs;
+
+#[derive(Debug, Clone, PartialEq)]
+pub enum PickedSongs {
+    Ids(Vec<String>),
+    Listed(ListedSongs),
+}
+
+impl Default for PickedSongs {
+    fn default() -> Self {
+        Self::Ids(Vec::new())
+    }
+}
+
+impl PickedSongs {
+    pub fn song_count(&self) -> usize {
+        match self {
+            Self::Ids(song_ids) => song_ids.len(),
+            Self::Listed(listed) => listed.song_count(),
+        }
+    }
+}
+
 #[derive(Default)]
 pub struct Picker {
     pub generation: u64,
-    song_ids: Vec<String>,
+    songs: PickedSongs,
     pub playlists: Vec<Playlist>,
     busy: bool,
 }
@@ -18,14 +41,14 @@ pub fn lock(shared: &SharedPicker) -> MutexGuard<'_, Picker> {
 
 pub struct PendingRequest {
     pub generation: u64,
-    pub song_ids: Vec<String>,
+    pub songs: PickedSongs,
 }
 
 impl Picker {
-    pub fn restart(&mut self, song_ids: Vec<String>) -> u64 {
+    pub fn restart(&mut self, songs: PickedSongs) -> u64 {
         *self = Self {
             generation: self.generation + 1,
-            song_ids,
+            songs,
             ..Self::default()
         };
         self.generation
@@ -52,13 +75,13 @@ impl Picker {
     }
 
     pub fn start_request(&mut self) -> Option<PendingRequest> {
-        if self.busy || self.song_ids.is_empty() {
+        if self.busy || self.songs.song_count() == 0 {
             return None;
         }
         self.busy = true;
         Some(PendingRequest {
             generation: self.generation,
-            song_ids: self.song_ids.clone(),
+            songs: self.songs.clone(),
         })
     }
 

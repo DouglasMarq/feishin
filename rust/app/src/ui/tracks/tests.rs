@@ -1,5 +1,7 @@
 mod eviction;
 mod headless;
+mod listed;
+mod ranges;
 
 use std::cell::RefCell;
 use std::rc::Rc;
@@ -8,10 +10,12 @@ use feishin_api::MusicServer;
 use feishin_core::model::{Paging, Song, SongListQuery, SongSort};
 use slint::Model;
 
+use super::listed::{LISTED_CHUNK_SIZE, ListedSongs};
 use super::model::{PAGE_SIZE, Request, TracksModel};
 use super::query::{Filters, parse_year, sort_for};
 use super::row::track_row;
-use super::selection::{Selection, SelectionSnapshot};
+use super::selection::{SelectedSongs, Selection};
+use super::selection_ranges::SelectionRanges;
 use crate::demo::{FakeServer, test_song};
 
 type RequestLog = Rc<RefCell<Vec<(u64, Option<usize>)>>>;
@@ -66,29 +70,53 @@ fn pages_are_requested_once_and_stale_generations_ignored() {
     assert_eq!(model.row_count(), 0);
 }
 
+fn rows_of(ranges: &SelectionRanges) -> Vec<usize> {
+    ranges.rows().collect()
+}
+
 #[test]
 fn clicks_follow_desktop_selection_rules() {
     let mut selection = Selection::default();
-    assert_eq!(selection.click(3, false, false), [3]);
-    assert_eq!(selection.click(5, false, true), [4, 5]);
-    assert_eq!(selection.rows().collect::<Vec<_>>(), [3, 4, 5]);
+    assert_eq!(rows_of(&selection.click(3, false, false)), [3]);
+    assert_eq!(rows_of(&selection.click(5, false, true)), [4, 5]);
+    assert_eq!(rows_of(selection.ranges()), [3, 4, 5]);
 
-    assert_eq!(selection.click(1, false, true), [1, 2, 4, 5]);
-    assert_eq!(selection.rows().collect::<Vec<_>>(), [1, 2, 3]);
+    assert_eq!(rows_of(&selection.click(1, false, true)), [1, 2, 4, 5]);
+    assert_eq!(rows_of(selection.ranges()), [1, 2, 3]);
 
-    assert_eq!(selection.click(8, true, false), [8]);
-    assert_eq!(selection.click(2, true, false), [2]);
-    assert_eq!(selection.rows().collect::<Vec<_>>(), [1, 3, 8]);
+    assert_eq!(rows_of(&selection.click(8, true, false)), [8]);
+    assert_eq!(rows_of(&selection.click(2, true, false)), [2]);
+    assert_eq!(rows_of(selection.ranges()), [1, 3, 8]);
 
-    assert_eq!(selection.click(4, true, true), [2, 4]);
-    assert_eq!(selection.rows().collect::<Vec<_>>(), [1, 2, 3, 4, 8]);
+    assert_eq!(rows_of(&selection.click(4, true, true)), [2, 4]);
+    assert_eq!(rows_of(selection.ranges()), [1, 2, 3, 4, 8]);
 
-    assert!(selection.focus(3).is_empty());
-    assert_eq!(selection.focus(9), [1, 2, 3, 4, 8, 9]);
+    assert!(rows_of(&selection.focus(3)).is_empty());
+    assert_eq!(rows_of(&selection.focus(9)), [1, 2, 3, 4, 8, 9]);
     assert_eq!(selection.len(), 1);
 
     let mut fresh = Selection::default();
-    assert_eq!(fresh.click(6, false, true), [6]);
+    assert_eq!(rows_of(&fresh.click(6, false, true)), [6]);
+}
+
+#[test]
+fn select_all_and_clear_span_every_row_without_moving_the_anchor() {
+    let mut selection = Selection::default();
+    selection.click(2, true, false);
+    assert_eq!(rows_of(&selection.select_all(5)), [0, 1, 3, 4]);
+    assert_eq!(selection.len(), 5);
+    assert_eq!(rows_of(&selection.click(4, false, true)), [0, 1]);
+    assert_eq!(rows_of(selection.ranges()), [2, 3, 4]);
+    assert_eq!(rows_of(&selection.clear()), [2, 3, 4]);
+    assert_eq!(selection.len(), 0);
+    assert_eq!(rows_of(&selection.click(1, false, true)), [1]);
+
+    let mut library = Selection::default();
+    let changed = library.select_all(100_000);
+    assert_eq!(changed, SelectionRanges::spanning(0..100_000));
+    assert_eq!(library.ranges(), &SelectionRanges::spanning(0..100_000));
+    assert_eq!(library.len(), 100_000);
+    assert_eq!(library.select_all(0).row_count(), 100_000);
 }
 
 #[test]
@@ -109,21 +137,32 @@ fn selection_marks_rows_and_resets_with_the_query() {
     assert!(model.row_data(1).is_some_and(|row| !row.selected));
     assert_eq!(model.select(400, false, false), 149);
 
-    let snapshot = model.selection();
+    let SelectedSongs::Listed(listed) = model.selected_songs() else {
+        panic!("a selection over unloaded rows is listed");
+    };
+    assert_eq!(listed.ranges, SelectionRanges::spanning(2..151));
+    let first = model.first_selected();
     assert_eq!(
-        snapshot.missing_pages().into_iter().collect::<Vec<_>>(),
-        [1]
-    );
-    assert!(!snapshot.is_loaded());
-    let first = model.selection().first_only();
-    assert!(first.is_loaded());
-    assert_eq!(
-        first.into_loaded().first().map(|song| song.id.clone()),
+        first.and_then(|first| first.song).map(|song| song.id),
         Some("s2".into())
     );
 
+    assert_eq!(model.select(5, false, true), 4);
+    let SelectedSongs::Loaded(songs) = model.selected_songs() else {
+        panic!("a selection over cached rows is loaded");
+    };
+    let ids: Vec<String> = songs.into_iter().map(|song| song.id).collect();
+    assert_eq!(ids, ["s2", "s3", "s4", "s5"]);
+
+    assert_eq!(model.select_all(), 250);
+    assert!(model.row_data(249).is_some_and(|row| row.selected));
+    assert_eq!(model.clear_selection(), 0);
+    assert!(model.row_data(2).is_some_and(|row| !row.selected));
+
+    model.select(1, false, false);
     model.reset(SongListQuery::default());
-    assert_eq!(model.selection().rows.len(), 0);
+    assert!(matches!(model.selected_songs(), SelectedSongs::Loaded(songs) if songs.is_empty()));
+    assert!(model.first_selected().is_none());
 }
 
 #[test]
@@ -150,28 +189,13 @@ async fn songs_in(server: &FakeServer, query: &SongListQuery, paging: Paging) ->
         .unwrap_or_default()
 }
 
-#[tokio::test]
-async fn selections_over_unloaded_pages_are_fetched() {
-    let server = FakeServer::new(500);
-    let query = SongListQuery::default();
-    let first_page = Paging {
-        start_index: 0,
-        limit: PAGE_SIZE,
-    };
-    let first = songs_in(&server, &query, first_page).await;
-    let snapshot = SelectionSnapshot {
-        query: query.clone(),
-        rows: vec![(5, first.get(5).cloned()), (230, None), (231, None)],
-    };
-    let songs = snapshot.resolve(&server).await.unwrap_or_default();
-    let unloaded_rows = Paging {
-        start_index: 230,
-        limit: 2,
-    };
-    let expected = songs_in(&server, &query, unloaded_rows).await;
-    assert_eq!(songs.len(), 3);
-    assert_eq!(songs[0].id, first[5].id);
-    assert_eq!(songs[1..], expected[..]);
+async fn listed_songs(server: &FakeServer, listed: ListedSongs) -> Vec<Song> {
+    let mut chunks = listed.into_chunks(LISTED_CHUNK_SIZE);
+    let mut songs = Vec::new();
+    while let Ok(Some(chunk)) = chunks.next_songs(server).await {
+        songs.extend(chunk);
+    }
+    songs
 }
 
 #[test]

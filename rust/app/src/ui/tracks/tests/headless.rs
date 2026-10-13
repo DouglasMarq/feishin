@@ -6,20 +6,29 @@ use feishin_storage::settings::UiSettings;
 use slint::platform::software_renderer::{
     MinimalSoftwareWindow, PremultipliedRgbaColor, RepaintBufferType,
 };
-use slint::platform::{EventLoopProxy, Platform, PointerEventButton, WindowAdapter, WindowEvent};
-use slint::{ComponentHandle, EventLoopError, LogicalPosition, Model, PhysicalSize, PlatformError};
+use slint::platform::{
+    EventLoopProxy, Key, Platform, PointerEventButton, WindowAdapter, WindowEvent,
+};
+use slint::{
+    ComponentHandle, EventLoopError, LogicalPosition, Model, PhysicalSize, PlatformError,
+    SharedString,
+};
 use tokio::runtime::Runtime;
 use tokio::sync::mpsc::{self, UnboundedReceiver};
 
+use super::super::selection_ranges::SelectionRanges;
 use super::super::{install, refresh};
 use crate::connect::DemoConnector;
 use crate::controller::Command;
 use crate::covers::DemoCovers;
 use crate::demo::FakeServer;
-use crate::list_stream::{ListRow, SongSource};
+use crate::list_stream::{ListRow, Placement, SongSource};
 use crate::session::Session;
 use crate::store::JsonStore;
-use crate::ui::{AppState, AppWindow, Context, Page, Route, TrackRow, TracksState, nav};
+use crate::ui::{
+    AppState, AppWindow, Context, Page, PlayerState, Route, TrackRow, TracksState, nav,
+    playlist_picker,
+};
 
 type Jobs = Arc<Mutex<Vec<Box<dyn FnOnce() + Send>>>>;
 
@@ -119,6 +128,21 @@ impl Harness {
             .window()
             .dispatch_event(WindowEvent::PointerReleased { position, button });
     }
+
+    fn press_keys(&self, keys: &[SharedString]) {
+        for key in keys {
+            let text = key.clone();
+            self.app
+                .window()
+                .dispatch_event(WindowEvent::KeyPressed { text });
+        }
+        for key in keys.iter().rev() {
+            let text = key.clone();
+            self.app
+                .window()
+                .dispatch_event(WindowEvent::KeyReleased { text });
+        }
+    }
 }
 
 fn install_test_platform() -> Option<(Rc<MinimalSoftwareWindow>, Jobs)> {
@@ -150,7 +174,8 @@ fn demo_context(runtime: &Runtime) -> (Context, UnboundedReceiver<Command>) {
 
 fn start_tracks_view(window: Rc<MinimalSoftwareWindow>, jobs: Jobs, ctx: &Context) -> Harness {
     let app = AppWindow::new().expect("window");
-    install(&app, ctx, &UiSettings::default());
+    let picker = playlist_picker::install(&app, ctx);
+    install(&app, ctx, &UiSettings::default(), &picker);
     nav::install(&app);
     app.show().expect("show");
     window.set_size(SIZE);
@@ -171,6 +196,56 @@ fn assert_pointer_selection(harness: &Harness) {
     assert_eq!(harness.tracks().get_selected_count(), 1);
     assert!(harness.row(4).selected && !harness.row(0).selected);
     assert!(harness.pump(|| true));
+}
+
+fn assert_enqueued(
+    received: &mut UnboundedReceiver<Command>,
+    expected_ranges: &SelectionRanges,
+    expected_placement: Placement,
+) {
+    match received.try_recv() {
+        Ok(Command::EnqueueFromList {
+            source: SongSource::Library(_),
+            ranges,
+            placement,
+        }) => {
+            assert_eq!(&SelectionRanges::from_ranges(ranges), expected_ranges);
+            assert_eq!(placement, expected_placement);
+        }
+        _ => panic!("expected EnqueueFromList"),
+    }
+}
+
+fn assert_select_all_streams_actions(harness: &Harness, received: &mut UnboundedReceiver<Command>) {
+    let state = harness.tracks();
+    harness.press_keys(&[Key::Escape.into()]);
+    harness.click(PointerEventButton::Left, vertical_center_of_row(0));
+    assert!(harness.pump(|| true));
+    harness.press_keys(&[Key::Control.into(), "a".into()]);
+    assert_eq!(state.get_selected_count(), 600);
+    assert!(harness.row(599).selected);
+    state.invoke_play_selected();
+    assert_enqueued(received, &SelectionRanges::spanning(0..600), Placement::Now);
+    state.invoke_queue_selected(true);
+    assert_enqueued(
+        received,
+        &SelectionRanges::spanning(0..600),
+        Placement::Next,
+    );
+    harness.press_keys(&[Key::Escape.into()]);
+    assert_eq!(state.get_selected_count(), 0);
+    assert!(!harness.row(0).selected);
+}
+
+fn assert_app_shortcuts_still_reach_the_player(harness: &Harness) {
+    let toggled = Rc::new(std::cell::Cell::new(false));
+    let toggled_by_key = Rc::clone(&toggled);
+    harness
+        .app
+        .global::<PlayerState>()
+        .on_toggle_pause(move || toggled_by_key.set(true));
+    harness.press_keys(&[" ".into()]);
+    assert!(toggled.get());
 }
 
 fn assert_selection_is_queued(harness: &Harness, received: &mut UnboundedReceiver<Command>) {
@@ -249,6 +324,8 @@ fn tracks_view_lists_selects_filters_and_acts_on_demo_songs() {
 
     assert_songs_and_genres_load(&harness);
     assert_pointer_selection(&harness);
+    assert_select_all_streams_actions(&harness, &mut received);
+    assert_app_shortcuts_still_reach_the_player(&harness);
     assert_selection_is_queued(&harness, &mut received);
     assert_go_to_album_navigates(&harness);
     assert_favorite_toggles(&harness);

@@ -1,9 +1,10 @@
 use slint::ComponentHandle;
 
-use super::actions::{SongAction, act_on_selection, go_to, set_favorite, set_rating};
+use super::actions::{ActionTarget, SongAction, act_on_selection, go_to, set_favorite, set_rating};
 use super::model::TracksModel;
 use super::row::primary_artist_id;
 use super::with_model;
+use crate::ui::playlist_picker::PlaylistPicker;
 use crate::ui::{AppWindow, Context, Route, TracksState, clamp_i32};
 
 const MAX_RATING: i32 = 5;
@@ -38,42 +39,60 @@ fn install_row_selection(window: &AppWindow) {
         };
         update_selected_count(&window, |model| model.focus(index));
     });
+
+    let weak = window.as_weak();
+    state.on_select_all(move || {
+        if let Some(window) = weak.upgrade() {
+            update_selected_count(&window, TracksModel::select_all);
+        }
+    });
+
+    let weak = window.as_weak();
+    state.on_clear_selection(move || {
+        if let Some(window) = weak.upgrade() {
+            update_selected_count(&window, TracksModel::clear_selection);
+        }
+    });
 }
 
-fn action_callback(window: &AppWindow, ctx: &Context, action: SongAction) -> impl Fn() + 'static {
+fn action_callback(
+    window: &AppWindow,
+    target: &ActionTarget,
+    action: SongAction,
+) -> impl Fn() + 'static {
     let weak = window.as_weak();
-    let ctx = ctx.clone();
+    let target = target.clone();
     move || {
         if let Some(window) = weak.upgrade() {
-            act_on_selection(&window, &ctx, action);
+            act_on_selection(&window, &target, action);
         }
     }
 }
 
-fn install_selection_actions(window: &AppWindow, ctx: &Context) {
+fn install_selection_actions(window: &AppWindow, target: &ActionTarget) {
     let state = window.global::<TracksState>();
-    state.on_play_selected(action_callback(window, ctx, SongAction::Play));
-    state.on_add_selected_to_playlist(action_callback(window, ctx, SongAction::AddToPlaylist));
+    state.on_play_selected(action_callback(window, target, SongAction::Play));
+    state.on_add_selected_to_playlist(action_callback(window, target, SongAction::AddToPlaylist));
 
-    let play_next = action_callback(window, ctx, SongAction::PlayNext);
-    let add_last = action_callback(window, ctx, SongAction::AddLast);
+    let play_next = action_callback(window, target, SongAction::PlayNext);
+    let add_last = action_callback(window, target, SongAction::AddLast);
     state.on_queue_selected(move |next| match next {
         true => play_next(),
         false => add_last(),
     });
 
-    let add_favorite = action_callback(window, ctx, SongAction::Favorite(true));
-    let remove_favorite = action_callback(window, ctx, SongAction::Favorite(false));
+    let add_favorite = action_callback(window, target, SongAction::Favorite(true));
+    let remove_favorite = action_callback(window, target, SongAction::Favorite(false));
     state.on_favorite_selected(move |favorite| match favorite {
         true => add_favorite(),
         false => remove_favorite(),
     });
 
     let weak = window.as_weak();
-    let rate_ctx = ctx.clone();
+    let rate_target = target.clone();
     state.on_rate_selected(move |rating| {
         if let (Some(window), Some(rating)) = (weak.upgrade(), rating_from(rating)) {
-            act_on_selection(&window, &rate_ctx, SongAction::Rate(rating));
+            act_on_selection(&window, &rate_target, SongAction::Rate(rating));
         }
     });
 }
@@ -130,9 +149,13 @@ fn install_row_edits(window: &AppWindow, ctx: &Context) {
     });
 }
 
-pub(super) fn install(window: &AppWindow, ctx: &Context) {
+pub(super) fn install(window: &AppWindow, ctx: &Context, picker: &PlaylistPicker) {
+    let target = ActionTarget {
+        ctx: ctx.clone(),
+        picker: picker.clone(),
+    };
     install_row_selection(window);
-    install_selection_actions(window, ctx);
+    install_selection_actions(window, &target);
     install_navigation(window, ctx);
     install_row_edits(window, ctx);
 }

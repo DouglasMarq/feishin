@@ -92,6 +92,8 @@ export global TracksState {
     callback load-genres();
     callback select-row(row-index: int, ctrl-held: bool, shift-held: bool);
     callback context-row(row-index: int);
+    callback select-all();
+    callback clear-selection();
     callback play-selected();
     callback queue-selected(play-next: bool);
     callback add-selected-to-playlist();

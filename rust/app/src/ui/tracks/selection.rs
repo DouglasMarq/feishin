@@ -1,118 +1,85 @@
-use std::collections::{BTreeSet, HashMap};
+use feishin_core::model::Song;
 
-use feishin_api::MusicServer;
-use feishin_core::model::{Song, SongListQuery};
-
-use super::model::{PAGE_SIZE, paging_for_page};
+use super::listed::ListedSongs;
+use super::selection_ranges::SelectionRanges;
 
 #[derive(Debug, Default, Clone)]
 pub struct Selection {
-    rows: BTreeSet<usize>,
+    ranges: SelectionRanges,
     anchor: Option<usize>,
 }
 
 impl Selection {
     pub fn contains(&self, index: usize) -> bool {
-        self.rows.contains(&index)
+        self.ranges.contains(index)
     }
 
     pub fn len(&self) -> usize {
-        self.rows.len()
+        self.ranges.row_count()
     }
 
-    pub fn rows(&self) -> impl Iterator<Item = usize> + '_ {
-        self.rows.iter().copied()
+    pub fn ranges(&self) -> &SelectionRanges {
+        &self.ranges
     }
 
-    pub fn click(&mut self, index: usize, toggle: bool, extend: bool) -> Vec<usize> {
-        let before = self.rows.clone();
-        match self.anchor.filter(|_| extend) {
-            Some(anchor) => self.extend_from_anchor(anchor, index, toggle),
-            None if toggle => self.toggle_row(index),
-            None => self.select_only(index),
-        }
-        before.symmetric_difference(&self.rows).copied().collect()
+    pub fn click(&mut self, index: usize, toggle: bool, extend: bool) -> SelectionRanges {
+        self.changing(|selection| match selection.anchor.filter(|_| extend) {
+            Some(anchor) => selection.extend_from_anchor(anchor, index, toggle),
+            None if toggle => selection.toggle_row(index),
+            None => selection.select_only(index),
+        })
     }
 
-    pub fn focus(&mut self, index: usize) -> Vec<usize> {
+    pub fn focus(&mut self, index: usize) -> SelectionRanges {
         if self.contains(index) {
-            return Vec::new();
+            return SelectionRanges::default();
         }
         self.click(index, false, false)
     }
 
+    pub fn select_all(&mut self, row_count: usize) -> SelectionRanges {
+        self.changing(|selection| {
+            selection.ranges = SelectionRanges::spanning(0..row_count);
+        })
+    }
+
+    pub fn clear(&mut self) -> SelectionRanges {
+        self.changing(|selection| *selection = Self::default())
+    }
+
+    fn changing(&mut self, change: impl FnOnce(&mut Self)) -> SelectionRanges {
+        let before = self.ranges.clone();
+        change(self);
+        before.symmetric_difference(&self.ranges)
+    }
+
     fn extend_from_anchor(&mut self, anchor: usize, index: usize, keep_existing: bool) {
         if !keep_existing {
-            self.rows.clear();
+            self.ranges = SelectionRanges::default();
         }
-        self.rows.extend(anchor.min(index)..=anchor.max(index));
+        self.ranges
+            .insert(anchor.min(index)..anchor.max(index).saturating_add(1));
     }
 
     fn toggle_row(&mut self, index: usize) {
-        if !self.rows.remove(&index) {
-            self.rows.insert(index);
-        }
+        self.ranges.toggle(index);
         self.anchor = Some(index);
     }
 
     fn select_only(&mut self, index: usize) {
-        self.rows = BTreeSet::from([index]);
+        self.ranges = SelectionRanges::spanning(index..index.saturating_add(1));
         self.anchor = Some(index);
     }
 }
 
-pub struct SelectionSnapshot {
-    pub(super) query: SongListQuery,
-    pub(super) rows: Vec<(usize, Option<Song>)>,
+#[derive(Debug, Clone)]
+pub enum SelectedSongs {
+    Loaded(Vec<Song>),
+    Listed(ListedSongs),
 }
 
-impl SelectionSnapshot {
-    pub fn missing_pages(&self) -> BTreeSet<usize> {
-        self.rows
-            .iter()
-            .filter(|(_, song)| song.is_none())
-            .map(|(index, _)| index / PAGE_SIZE)
-            .collect()
-    }
-
-    pub fn is_loaded(&self) -> bool {
-        self.rows.iter().all(|(_, song)| song.is_some())
-    }
-
-    pub fn first_only(mut self) -> Self {
-        self.rows.truncate(1);
-        self
-    }
-
-    pub fn into_loaded(self) -> Vec<Song> {
-        self.rows.into_iter().filter_map(|(_, song)| song).collect()
-    }
-
-    pub async fn resolve(self, server: &dyn MusicServer) -> feishin_api::Result<Vec<Song>> {
-        let pages = self.fetch_missing_pages(server).await?;
-        Ok(self
-            .rows
-            .into_iter()
-            .filter_map(|(index, song)| song.or_else(|| song_from_pages(&pages, index)))
-            .collect())
-    }
-
-    async fn fetch_missing_pages(
-        &self,
-        server: &dyn MusicServer,
-    ) -> feishin_api::Result<HashMap<usize, Vec<Song>>> {
-        let mut pages = HashMap::new();
-        for page in self.missing_pages() {
-            let songs = server.song_list(&self.query, paging_for_page(page)).await?;
-            pages.insert(page, songs.items);
-        }
-        Ok(pages)
-    }
-}
-
-fn song_from_pages(pages: &HashMap<usize, Vec<Song>>, index: usize) -> Option<Song> {
-    pages
-        .get(&(index / PAGE_SIZE))?
-        .get(index % PAGE_SIZE)
-        .cloned()
+#[derive(Debug, Clone)]
+pub struct FirstSelected {
+    pub listed: ListedSongs,
+    pub song: Option<Song>,
 }

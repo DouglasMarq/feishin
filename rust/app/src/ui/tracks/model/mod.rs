@@ -4,13 +4,16 @@ use std::collections::HashSet;
 use feishin_core::model::{Paging, Song, SongListQuery};
 use slint::{Model, ModelNotify, ModelTracker};
 
+mod selecting;
+
 use super::row::track_row;
-use super::selection::{Selection, SelectionSnapshot};
+use super::selection::Selection;
 use crate::ui::page_cache::{PageCache, PageShape};
 use crate::ui::{TrackRow, clamp_i32};
 
 pub const PAGE_SIZE: usize = 100;
 pub const CACHED_PAGES: usize = 24;
+const LOADED_SELECTION_LIMIT: usize = PAGE_SIZE * CACHED_PAGES;
 const TRACK_PAGES: PageShape = PageShape {
     page_size: PAGE_SIZE,
     capacity: CACHED_PAGES,
@@ -199,43 +202,6 @@ impl TracksModel {
             [previous, state.index_of(song_id)]
         };
         self.notify_rows(changed.into_iter().flatten());
-    }
-
-    pub fn select(&self, index: usize, toggle: bool, extend: bool) -> usize {
-        self.change_selection(index, |selection| selection.click(index, toggle, extend))
-    }
-
-    pub fn focus(&self, index: usize) -> usize {
-        self.change_selection(index, |selection| selection.focus(index))
-    }
-
-    fn change_selection(
-        &self,
-        index: usize,
-        change: impl FnOnce(&mut Selection) -> Vec<usize>,
-    ) -> usize {
-        let (changed, count) = {
-            let mut state = self.state.borrow_mut();
-            if index >= state.total {
-                return state.selection.len();
-            }
-            let changed = change(&mut state.selection);
-            (changed, state.selection.len())
-        };
-        self.notify_rows(changed);
-        count
-    }
-
-    pub fn selection(&self) -> SelectionSnapshot {
-        let state = self.state.borrow();
-        SelectionSnapshot {
-            query: state.query.clone(),
-            rows: state
-                .selection
-                .rows()
-                .map(|index| (index, state.song(index).cloned()))
-                .collect(),
-        }
     }
 
     pub fn update_songs(&self, ids: &[String], update: impl Fn(&mut Song)) {

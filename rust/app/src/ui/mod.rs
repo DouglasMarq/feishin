@@ -69,7 +69,8 @@ pub fn on_ui(window: &slint::Weak<AppWindow>, update: impl FnOnce(&AppWindow) + 
 }
 
 pub fn install(window: &AppWindow, ctx: &Context, settings: &Settings) {
-    tracks::install(window, ctx, &settings.ui);
+    let picker = playlist_picker::install(window, ctx);
+    tracks::install(window, ctx, &settings.ui, &picker);
     queue::install(window, ctx);
     player::install(window, ctx);
     login::install(window, ctx);
@@ -82,7 +83,6 @@ pub fn install(window: &AppWindow, ctx: &Context, settings: &Settings) {
     genres::install(window, ctx);
     playlists::install(window, ctx);
     playlist_detail::install(window, ctx);
-    playlist_picker::install(window, ctx);
     favorites::install(window, ctx);
     search::install(window, ctx);
     settings::install(window, ctx);
