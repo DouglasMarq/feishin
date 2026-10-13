@@ -58,6 +58,17 @@ pub async fn songs_filter_by_years(backend: Backend) {
         to_only.expect("to"),
         ["Dawn Chorus", "Morning Haze", "Noon Glare"]
     );
+    wide_year_ranges_cover_the_library(&*server).await;
+}
+
+async fn wide_year_ranges_cover_the_library(server: &dyn MusicServer) {
+    let every_year = titles_in_years(server, Some(1), Some(9999)).await;
+    assert_eq!(every_year.expect("every year").len(), SONG_COUNT);
+    let up_to_2020 = titles_in_years(server, Some(1900), Some(2020)).await;
+    assert_eq!(
+        up_to_2020.expect("1900 to 2020"),
+        ["Dawn Chorus", "Morning Haze", "Noon Glare"]
+    );
 }
 
 pub async fn songs_filter_by_folder(backend: Backend) {
