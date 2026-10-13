@@ -1,0 +1,168 @@
+import { Theme, Icons } from "theme.slint";
+import { IconButton } from "widgets.slint";
+import { RadioIcons } from "radio_widgets.slint";
+
+export enum RadioSource { server, favorite, directory }
+
+export enum RadioTab { stations, directory }
+
+export struct RadioRow {
+    id: string,
+    name: string,
+    details: string,
+    source: RadioSource,
+    favorite: bool,
+    on-server: bool,
+}
+
+export global RadioState {
+    in property <bool> active;
+    in property <string> playing-id;
+    in property <string> station-name;
+    in property <string> stream-title;
+    in-out property <RadioTab> tab;
+    in property <[RadioRow]> stations;
+    in property <bool> stations-loading;
+    in property <bool> can-manage;
+    in property <bool> server-has-radio: true;
+    in property <[RadioRow]> results;
+    in property <bool> searching;
+    in property <bool> has-more;
+    in property <string> results-message: "Find stations by name, country or tag";
+    in-out property <string> search-name;
+    in-out property <string> search-country;
+    in-out property <string> search-tag;
+    in property <bool> busy;
+    in-out property <bool> editing;
+    in-out property <string> edit-id;
+    in-out property <RadioSource> edit-source;
+    in-out property <string> edit-name;
+    in-out property <string> edit-url;
+    in-out property <string> edit-homepage;
+    in-out property <string> edit-error;
+    in-out property <string> delete-id;
+    in-out property <string> delete-name;
+    callback load();
+    callback play(RadioSource, string);
+    callback stop();
+    callback toggle-favorite(RadioSource, string);
+    callback save-to-server(RadioSource, string);
+    callback edit(RadioSource, string);
+    callback delete(string);
+    callback search();
+    callback load-more();
+    callback save-edit(RadioSource);
+}
+
+component PlayStationButton inherits IconButton {
+    in property <RadioRow> item;
+    property <bool> playing: RadioState.active && RadioState.playing-id == root.item.id;
+    icon: root.playing ? RadioIcons.stop : Icons.play;
+    active: root.playing;
+    tooltip: root.playing ? "Stop " + root.item.name : "Play " + root.item.name;
+    clicked => {
+        if (root.playing) {
+            RadioState.stop();
+        } else {
+            RadioState.play(root.item.source, root.item.id);
+        }
+    }
+}
+
+component StationActions inherits HorizontalLayout {
+    in property <RadioRow> item;
+    property <bool> local: root.item.source != RadioSource.server;
+    spacing: 2px;
+    alignment: end;
+
+    PlayStationButton {
+        y: (parent.height - self.height) / 2;
+        item: root.item;
+    }
+
+    if root.local: IconButton {
+        y: (parent.height - self.height) / 2;
+        icon: root.item.favorite ? Icons.heart : RadioIcons.heart-outline;
+        icon-size: 18px;
+        active: root.item.favorite;
+        tooltip: root.item.favorite ? "Saved on this device, click to remove" : "Save to favorites on this device";
+        clicked => {
+            RadioState.toggle-favorite(root.item.source, root.item.id);
+        }
+    }
+
+    if root.local && RadioState.can-manage: IconButton {
+        y: (parent.height - self.height) / 2;
+        icon: RadioIcons.upload;
+        icon-size: 18px;
+        enabled: !root.item.on-server && !RadioState.busy;
+        tooltip: root.item.on-server ? "Already on the server" : RadioState.busy ? "Saving to the server..." : "Add to the server's stations";
+        clicked => {
+            RadioState.save-to-server(root.item.source, root.item.id);
+        }
+    }
+
+    if root.item.source == RadioSource.favorite || (root.item.source == RadioSource.server && RadioState.can-manage): IconButton {
+        y: (parent.height - self.height) / 2;
+        icon: RadioIcons.edit;
+        icon-size: 18px;
+        tooltip: "Edit " + root.item.name;
+        clicked => {
+            RadioState.edit(root.item.source, root.item.id);
+        }
+    }
+
+    if root.item.source == RadioSource.server && RadioState.can-manage: IconButton {
+        y: (parent.height - self.height) / 2;
+        icon: Icons.close;
+        icon-size: 18px;
+        tooltip: "Delete " + root.item.name + " from the server";
+        clicked => {
+            RadioState.delete-name = root.item.name;
+            RadioState.delete-id = root.item.id;
+        }
+    }
+}
+
+export component RadioRowView inherits Rectangle {
+    in property <RadioRow> item;
+    property <bool> playing: RadioState.active && RadioState.playing-id == root.item.id;
+    height: 56px;
+    background: touch.has-hover ? Theme.hover : transparent;
+
+    touch := TouchArea {
+        double-clicked => {
+            RadioState.play(root.item.source, root.item.id);
+        }
+    }
+
+    HorizontalLayout {
+        padding-left: 20px;
+        padding-right: 12px;
+        spacing: 12px;
+
+        VerticalLayout {
+            horizontal-stretch: 1;
+            alignment: center;
+            spacing: 2px;
+
+            Text {
+                text: root.item.name;
+                color: root.playing ? Theme.primary : Theme.foreground;
+                font-weight: 600;
+                overflow: elide;
+            }
+
+            Text {
+                text: root.item.details;
+                color: Theme.muted;
+                font-size: 12px;
+                overflow: elide;
+            }
+        }
+
+        StationActions {
+            item: root.item;
+        }
+    }
+}

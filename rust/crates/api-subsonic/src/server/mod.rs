@@ -12,6 +12,7 @@ mod pages;
 mod play_queue;
 mod playlist_cache;
 mod playlists;
+mod radio;
 mod requests;
 mod scanning;
 mod sharing;

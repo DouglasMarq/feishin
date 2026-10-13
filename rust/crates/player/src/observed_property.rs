@@ -6,14 +6,16 @@ pub(crate) enum ObservedProperty {
     TimePosition,
     Duration,
     IdleActive,
+    StreamTitle,
 }
 
 impl ObservedProperty {
-    pub(crate) const ALL: [ObservedProperty; 4] = [
+    pub(crate) const ALL: [ObservedProperty; 5] = [
         ObservedProperty::Pause,
         ObservedProperty::TimePosition,
         ObservedProperty::Duration,
         ObservedProperty::IdleActive,
+        ObservedProperty::StreamTitle,
     ];
 
     pub(crate) fn reply_id(self) -> u64 {
@@ -22,6 +24,7 @@ impl ObservedProperty {
             ObservedProperty::TimePosition => 2,
             ObservedProperty::Duration => 3,
             ObservedProperty::IdleActive => 4,
+            ObservedProperty::StreamTitle => 5,
         }
     }
 
@@ -37,6 +40,7 @@ impl ObservedProperty {
             ObservedProperty::TimePosition => "time-pos",
             ObservedProperty::Duration => "duration",
             ObservedProperty::IdleActive => "idle-active",
+            ObservedProperty::StreamTitle => "metadata/by-key/icy-title",
         }
     }
 
@@ -44,6 +48,7 @@ impl ObservedProperty {
         match self {
             ObservedProperty::Pause | ObservedProperty::IdleActive => Format::Flag,
             ObservedProperty::TimePosition | ObservedProperty::Duration => Format::Double,
+            ObservedProperty::StreamTitle => Format::String,
         }
     }
 }

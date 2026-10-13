@@ -23,6 +23,8 @@ mod playlist_paging;
 #[cfg(test)]
 mod playlists;
 #[cfg(test)]
+mod radio;
+#[cfg(test)]
 mod sharing;
 #[cfg(test)]
 mod songs;

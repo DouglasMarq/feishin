@@ -30,6 +30,7 @@ impl Controller {
 
     pub(super) fn load_current(&mut self, start_ms: u64) {
         let Some(item) = self.queue.current() else {
+            self.leave_radio();
             self.stop();
             return;
         };
@@ -40,6 +41,7 @@ impl Controller {
             return;
         };
         let now_playing = QueueTrack::clone(&item.track);
+        self.leave_radio();
         self.scrobble_tracker.stop();
         self.preloaded = None;
         self.position_ms = start_ms;
@@ -53,7 +55,7 @@ impl Controller {
         self.schedule_queue_sync();
     }
 
-    fn start_audio(&mut self, track: &Track, start_ms: u64) {
+    pub(super) fn start_audio(&mut self, track: &Track, start_ms: u64) {
         match self.deps.audio.load(track, start_ms) {
             Ok(()) => {
                 self.loaded = Some(track.uid);
@@ -90,6 +92,10 @@ impl Controller {
             self.resume_from_saved_position();
             return;
         }
+        if self.playing && self.is_radio_playing() {
+            self.pause_station();
+            return;
+        }
         let result = match self.playing {
             true => self.deps.audio.pause(),
             false => self.deps.audio.play(),
@@ -101,7 +107,9 @@ impl Controller {
     }
 
     fn resume_from_saved_position(&mut self) {
-        if self.queue.current().is_some() {
+        if self.is_radio_playing() {
+            self.reload_station();
+        } else if self.queue.current().is_some() {
             self.load_current(self.position_ms);
         }
     }
@@ -119,12 +127,18 @@ impl Controller {
     }
 
     pub(super) fn next(&mut self) {
+        if self.is_radio_playing() {
+            return;
+        }
         if self.queue.next(Advance::Manual).is_some() {
             self.load_current(0);
         }
     }
 
     pub(super) fn previous(&mut self) {
+        if self.is_radio_playing() {
+            return;
+        }
         if self.position_ms > PREVIOUS_RESTARTS_AFTER_MS {
             self.seek(0);
             return;
@@ -137,6 +151,9 @@ impl Controller {
     }
 
     pub(super) fn seek(&mut self, position_ms: u64) {
+        if self.is_radio_playing() {
+            return;
+        }
         if self.loaded.is_some()
             && let Err(error) = self.deps.audio.seek(position_ms)
         {

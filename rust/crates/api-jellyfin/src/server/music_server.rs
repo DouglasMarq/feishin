@@ -2,8 +2,8 @@ use async_trait::async_trait;
 use feishin_api::{ApiError, MusicServer, Result, StreamOptions};
 use feishin_core::model::{
     Album, AlbumDetail, AlbumListQuery, Artist, ArtistDetail, ArtistListQuery, Folder, FolderId,
-    Genre, ItemKind, LibraryScan, MusicFolder, Page, Paging, Playlist, SearchResults, ServerConfig,
-    ServerPlayQueue, Share, Song, SongListQuery,
+    Genre, ItemKind, LibraryScan, MusicFolder, Page, Paging, Playlist, RadioStation,
+    RadioStationDraft, SearchResults, ServerConfig, ServerPlayQueue, Share, Song, SongListQuery,
 };
 
 use super::JellyfinServer;
@@ -170,6 +170,26 @@ impl MusicServer for JellyfinServer {
         _description: Option<&str>,
     ) -> Result<Share> {
         Err(ApiError::Unsupported("public share links"))
+    }
+
+    async fn radio_stations(&self) -> Result<Vec<RadioStation>> {
+        Ok(Vec::new())
+    }
+
+    async fn can_manage_radio_stations(&self) -> Result<bool> {
+        Ok(false)
+    }
+
+    async fn create_radio_station(&self, _station: &RadioStationDraft) -> Result<()> {
+        Err(ApiError::Unsupported("internet radio stations"))
+    }
+
+    async fn update_radio_station(&self, _id: &str, _station: &RadioStationDraft) -> Result<()> {
+        Err(ApiError::Unsupported("internet radio stations"))
+    }
+
+    async fn delete_radio_station(&self, _id: &str) -> Result<()> {
+        Err(ApiError::Unsupported("internet radio stations"))
     }
 
     fn stream_url(&self, song_id: &str, options: &StreamOptions) -> String {

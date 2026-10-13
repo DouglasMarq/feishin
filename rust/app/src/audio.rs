@@ -8,6 +8,8 @@ use feishin_storage::settings::{PlaybackSettings, ReplayGainSetting};
 
 pub type EventCallback = Box<dyn Fn(PlayerEvent) + Send + Sync>;
 
+const DEMO_STREAM_TITLE: &str = "Demo Artist - Live on the demo radio";
+
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Track {
     pub uid: Uid,
@@ -16,6 +18,10 @@ pub struct Track {
 }
 
 impl Track {
+    pub fn is_live_stream(&self) -> bool {
+        self.duration_ms == 0
+    }
+
     fn media_source(&self) -> MediaSource<'_> {
         let source = MediaSource::new(self.uid, &self.url);
         match self.duration_ms {
@@ -168,14 +174,17 @@ impl FakeAudio {
     }
 
     fn tick(state: &mut FakeState, elapsed_ms: u64) -> Vec<PlayerEvent> {
-        let Some(duration_ms) = state
-            .current
-            .as_ref()
-            .filter(|_| state.playing)
-            .map(|current| current.duration_ms)
-        else {
+        let Some(current) = state.current.as_ref().filter(|_| state.playing) else {
             return Vec::new();
         };
+        if current.is_live_stream() {
+            state.position_ms += elapsed_ms;
+            return vec![PlayerEvent::Position {
+                position_ms: state.position_ms,
+                duration_ms: None,
+            }];
+        }
+        let duration_ms = current.duration_ms;
         state.position_ms = (state.position_ms + elapsed_ms).min(duration_ms);
         let mut events = vec![PlayerEvent::Position {
             position_ms: state.position_ms,
@@ -233,7 +242,11 @@ impl AudioOutput for FakeAudio {
             state.position_ms = start_ms;
             state.playing = true;
             Some(PlayerEvent::Started { uid: track.uid })
-        })
+        })?;
+        if track.is_live_stream() {
+            (self.on_event)(PlayerEvent::StreamTitle(Some(DEMO_STREAM_TITLE.into())));
+        }
+        Ok(())
     }
 
     fn preload_next(&self, track: &Track) -> Result<()> {
@@ -367,5 +380,24 @@ mod tests {
     fn media_source_carries_the_known_duration() {
         assert_eq!(track(3, 0).media_source().duration_ms, None);
         assert_eq!(track(3, 1_500).media_source().duration_ms, Some(1_500));
+    }
+
+    #[test]
+    fn fake_live_streams_never_end() {
+        let mut state = FakeState {
+            current: Some(track(1, 0)),
+            playing: true,
+            ..FakeState::default()
+        };
+        for _ in 0..10 {
+            FakeAudio::tick(&mut state, 250);
+        }
+        assert_eq!(
+            FakeAudio::tick(&mut state, 250),
+            [PlayerEvent::Position {
+                position_ms: 2750,
+                duration_ms: None
+            }]
+        );
     }
 }

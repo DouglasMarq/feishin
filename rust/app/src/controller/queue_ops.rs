@@ -56,10 +56,14 @@ impl Controller {
     pub(super) fn remove(&mut self, uids: &[Uid]) {
         let loaded_removed = self.loaded.is_some_and(|uid| uids.contains(&uid));
         self.queue.remove(uids);
-        match (self.queue.is_empty(), loaded_removed) {
-            (true, _) => self.stop_with_empty_queue(),
-            (false, true) => self.move_past_removed_track(),
-            (false, false) => {}
+        match (
+            self.is_radio_playing(),
+            self.queue.is_empty(),
+            loaded_removed,
+        ) {
+            (true, _, _) | (false, false, false) => {}
+            (false, true, _) => self.stop_with_empty_queue(),
+            (false, false, true) => self.move_past_removed_track(),
         }
         self.queue_changed();
     }
@@ -80,6 +84,7 @@ impl Controller {
 
     pub(super) fn clear_queue(&mut self) {
         self.list_streams.cancel_all();
+        self.leave_radio();
         self.queue.clear();
         self.stop_with_empty_queue();
         self.queue_changed();

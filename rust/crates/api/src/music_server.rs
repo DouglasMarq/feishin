@@ -1,8 +1,8 @@
 use async_trait::async_trait;
 use feishin_core::model::{
     Album, AlbumDetail, AlbumListQuery, Artist, ArtistDetail, ArtistListQuery, Folder, FolderId,
-    Genre, ItemKind, LibraryScan, MusicFolder, Page, Paging, Playlist, SearchResults, ServerConfig,
-    ServerPlayQueue, Share, Song, SongListQuery,
+    Genre, ItemKind, LibraryScan, MusicFolder, Page, Paging, Playlist, RadioStation,
+    RadioStationDraft, SearchResults, ServerConfig, ServerPlayQueue, Share, Song, SongListQuery,
 };
 
 use crate::credential::Credential;
@@ -78,6 +78,12 @@ pub trait MusicServer: Send + Sync {
 
     fn can_share(&self) -> bool;
     async fn create_share(&self, item_ids: &[String], description: Option<&str>) -> Result<Share>;
+
+    async fn radio_stations(&self) -> Result<Vec<RadioStation>>;
+    async fn can_manage_radio_stations(&self) -> Result<bool>;
+    async fn create_radio_station(&self, station: &RadioStationDraft) -> Result<()>;
+    async fn update_radio_station(&self, id: &str, station: &RadioStationDraft) -> Result<()>;
+    async fn delete_radio_station(&self, id: &str) -> Result<()>;
 
     fn stream_url(&self, song_id: &str, options: &StreamOptions) -> String;
     fn cover_art_url(&self, cover_art_id: &str, edge_pixels: Option<u32>) -> String;

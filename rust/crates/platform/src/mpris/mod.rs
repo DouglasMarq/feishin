@@ -29,6 +29,7 @@ enum Update {
     Metadata(NowPlaying),
     Status(PlaybackStatus),
     Volume(f64),
+    LiveStream(bool),
     Emit(Vec<Property>),
 }
 
@@ -86,6 +87,10 @@ impl MediaControls {
 
     pub fn set_volume(&mut self, volume: f64) -> Result<()> {
         self.send(Update::Volume(volume))
+    }
+
+    pub fn set_live_stream(&mut self, live: bool) -> Result<()> {
+        self.send(Update::LiveStream(live))
     }
 
     fn send(&self, update: Update) -> Result<()> {

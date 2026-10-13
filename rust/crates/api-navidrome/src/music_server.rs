@@ -2,8 +2,8 @@ use async_trait::async_trait;
 use feishin_api::{Credential, MusicServer, Result, StreamOptions};
 use feishin_core::model::{
     Album, AlbumDetail, AlbumListQuery, Artist, ArtistDetail, ArtistListQuery, Folder, FolderId,
-    Genre, ItemKind, LibraryScan, MusicFolder, Page, Paging, Playlist, SearchResults, ServerConfig,
-    ServerPlayQueue, Share, Song, SongListQuery,
+    Genre, ItemKind, LibraryScan, MusicFolder, Page, Paging, Playlist, RadioStation,
+    RadioStationDraft, SearchResults, ServerConfig, ServerPlayQueue, Share, Song, SongListQuery,
 };
 use serde::de::IgnoredAny;
 
@@ -176,6 +176,26 @@ impl MusicServer for NavidromeServer {
 
     async fn create_share(&self, item_ids: &[String], description: Option<&str>) -> Result<Share> {
         self.share_items(item_ids, description).await
+    }
+
+    async fn radio_stations(&self) -> Result<Vec<RadioStation>> {
+        self.fetch_radio_stations().await
+    }
+
+    async fn can_manage_radio_stations(&self) -> Result<bool> {
+        self.is_admin().await
+    }
+
+    async fn create_radio_station(&self, station: &RadioStationDraft) -> Result<()> {
+        self.add_radio_station(station).await
+    }
+
+    async fn update_radio_station(&self, id: &str, station: &RadioStationDraft) -> Result<()> {
+        self.change_radio_station(id, station).await
+    }
+
+    async fn delete_radio_station(&self, id: &str) -> Result<()> {
+        self.remove_radio_station(id).await
     }
 
     fn stream_url(&self, song_id: &str, options: &StreamOptions) -> String {

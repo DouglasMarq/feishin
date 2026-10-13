@@ -1,14 +1,16 @@
-use std::ffi::c_int;
+use std::ffi::{c_char, c_int};
 
 use libmpv2_sys as sys;
 
 use super::Handle;
+use super::node::string_from_nullable_c_string;
 use crate::shared::PlaylistEntryId;
 
-#[derive(Debug, Clone, Copy, PartialEq)]
+#[derive(Debug, Clone, PartialEq)]
 pub(crate) enum PropertyValue {
     Flag(bool),
     Double(f64),
+    Text(String),
     Unavailable,
 }
 
@@ -22,7 +24,7 @@ pub(crate) enum EndReason {
     Unknown,
 }
 
-#[derive(Debug, Clone, Copy, PartialEq)]
+#[derive(Debug, Clone, PartialEq)]
 pub(crate) enum RawEvent {
     Shutdown,
     StartFile {
@@ -118,6 +120,12 @@ unsafe fn property_value_from(property: &sys::mpv_event_property) -> PropertyVal
             .map_or(PropertyValue::Unavailable, |value| {
                 PropertyValue::Double(*value)
             }),
+        sys::mpv_format_MPV_FORMAT_STRING => {
+            unsafe { property.data.cast::<*const c_char>().as_ref() }
+                .map_or(PropertyValue::Unavailable, |text| {
+                    PropertyValue::Text(unsafe { string_from_nullable_c_string(*text) })
+                })
+        }
         _ => PropertyValue::Unavailable,
     }
 }

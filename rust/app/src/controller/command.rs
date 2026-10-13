@@ -8,7 +8,7 @@ use feishin_storage::appearance::AppearanceSettings;
 use feishin_storage::settings::{IntegrationSettings, PlaybackSettings, Settings, UiSettings};
 use tokio::sync::{mpsc, oneshot};
 
-use super::PersistenceEvent;
+use super::{PersistenceEvent, RadioCommand};
 use crate::list_stream::{ListRow, Placement, SongSource, StreamMessage};
 use crate::sleep_timer::SleepMode;
 
@@ -72,6 +72,7 @@ pub enum Command {
     },
     SaveAppearance(AppearanceSettings),
     RemoveServer(String),
+    Radio(RadioCommand),
 }
 
 pub fn forward_command(commands: &mpsc::UnboundedSender<Command>, command: Command) {

@@ -1,6 +1,7 @@
 import { Theme, Icons } from "theme.slint";
 import { AppState, Route } from "globals.slint";
 import { Icon, IconButton } from "widgets.slint";
+import { RadioIcons } from "radio_widgets.slint";
 
 component NavEntry inherits Rectangle {
     in property <string> icon;
@@ -130,6 +131,15 @@ export component Sidebar inherits Rectangle {
             active: AppState.route == Route.playlists || AppState.route == Route.playlist-detail;
             clicked => {
                 AppState.navigate(Route.playlists, "");
+            }
+        }
+
+        NavEntry {
+            icon: RadioIcons.radio;
+            label: "Radio";
+            active: AppState.route == Route.radio;
+            clicked => {
+                AppState.navigate(Route.radio, "");
             }
         }
 

@@ -3,8 +3,11 @@ import { AppState, PlayerState, Route } from "globals.slint";
 import { NowPlayingState, NowPlayingTab } from "now_playing.slint";
 import { Bar, Icon, IconButton, TooltipAnchor } from "widgets.slint";
 import { SleepTimerButton } from "sleep_timer.slint";
+import { RadioIcons, RadioState } from "radio.slint";
 
 export component PlayerBar inherits Rectangle {
+    property <bool> radio: RadioState.active;
+    property <bool> can-play: PlayerState.has-song || root.radio;
     height: 88px;
     background: Theme.background-alt;
 
@@ -32,15 +35,15 @@ export component PlayerBar inherits Rectangle {
                 background: Theme.surface-raised;
                 clip: true;
 
-                if PlayerState.has-cover: Image {
+                if PlayerState.has-cover && !root.radio: Image {
                     source: PlayerState.cover;
                     width: parent.width;
                     height: parent.height;
                     image-fit: cover;
                 }
 
-                if !PlayerState.has-cover: Icon {
-                    path: Icons.note;
+                if !PlayerState.has-cover || root.radio: Icon {
+                    path: root.radio ? RadioIcons.radio : Icons.note;
                     color: Theme.muted;
                     width: 28px;
                     height: 28px;
@@ -52,14 +55,14 @@ export component PlayerBar inherits Rectangle {
                 spacing: 4px;
 
                 Text {
-                    text: PlayerState.title;
+                    text: !root.radio ? PlayerState.title : (RadioState.stream-title != "" ? RadioState.stream-title : RadioState.station-name);
                     color: Theme.foreground;
                     font-weight: 600;
                     overflow: elide;
                 }
 
                 Text {
-                    text: PlayerState.artists;
+                    text: !root.radio ? PlayerState.artists : (RadioState.stream-title != "" ? RadioState.station-name : "Internet radio");
                     color: Theme.muted;
                     font-size: 12px;
                     overflow: elide;
@@ -88,8 +91,8 @@ export component PlayerBar inherits Rectangle {
                 IconButton {
                     icon: Icons.previous;
                     icon-size: 24px;
-                    tooltip: "Previous";
-                    enabled: PlayerState.has-song;
+                    tooltip: root.radio ? "Previous is unavailable while a radio station plays" : "Previous";
+                    enabled: PlayerState.has-song && !root.radio;
                     clicked => {
                         PlayerState.previous();
                     }
@@ -100,7 +103,7 @@ export component PlayerBar inherits Rectangle {
                     height: 38px;
                     border-radius: 19px;
                     background: play-touch.has-hover ? (Theme.dark ? #ffffff : Theme.foreground.mix(Theme.background, 0.8)) : Theme.foreground;
-                    opacity: PlayerState.has-song ? 1 : 0.4;
+                    opacity: root.can-play ? 1 : 0.4;
 
                     Icon {
                         path: PlayerState.playing ? Icons.pause : Icons.play;
@@ -110,12 +113,12 @@ export component PlayerBar inherits Rectangle {
                     }
 
                     TooltipAnchor {
-                        text: PlayerState.playing ? "Pause" : "Play";
+                        text: PlayerState.playing ? (root.radio ? "Pause the radio station" : "Pause") : (root.radio ? "Play the radio station" : "Play");
                         hovered: play-touch.has-hover;
                     }
 
                     play-touch := TouchArea {
-                        enabled: PlayerState.has-song;
+                        enabled: root.can-play;
                         mouse-cursor: pointer;
                         clicked => {
                             PlayerState.toggle-pause();
@@ -126,8 +129,8 @@ export component PlayerBar inherits Rectangle {
                 IconButton {
                     icon: Icons.next;
                     icon-size: 24px;
-                    tooltip: "Next";
-                    enabled: PlayerState.has-song;
+                    tooltip: root.radio ? "Next is unavailable while a radio station plays" : "Next";
+                    enabled: PlayerState.has-song && !root.radio;
                     clicked => {
                         PlayerState.next();
                     }
@@ -157,7 +160,8 @@ export component PlayerBar inherits Rectangle {
 
                 seek := Bar {
                     property <int> preview-ms;
-                    tooltip: PlayerState.duration-ms > 0 ? Format.time((self.dragging ? self.drag-preview : self.hover-value) * PlayerState.duration-ms) : "";
+                    enabled: !root.radio;
+                    tooltip: root.radio ? "Seeking is unavailable for live radio" : PlayerState.duration-ms > 0 ? Format.time((self.dragging ? self.drag-preview : self.hover-value) * PlayerState.duration-ms) : "";
                     tooltip-follows-pointer: true;
                     value: PlayerState.duration-ms > 0 ? PlayerState.position-ms / PlayerState.duration-ms : 0;
                     changed(value) => {
@@ -170,7 +174,7 @@ export component PlayerBar inherits Rectangle {
 
                 Text {
                     width: 44px;
-                    text: Format.time(PlayerState.duration-ms);
+                    text: root.radio ? "LIVE" : Format.time(PlayerState.duration-ms);
                     color: Theme.muted;
                     font-size: 11px;
                     vertical-alignment: center;
@@ -237,17 +241,19 @@ export component PlayerBar inherits Rectangle {
     TooltipAnchor {
         x: song-info.x;
         width: song-info.width;
-        text: AppState.route == Route.now-playing ? "Close now playing" : "Open now playing";
+        text: root.radio ? (AppState.route == Route.radio ? "Listening to " + RadioState.station-name : "Open radio") : AppState.route == Route.now-playing ? "Close now playing" : "Open now playing";
         hovered: info-touch.has-hover;
     }
 
     info-touch := TouchArea {
         x: song-info.x;
         width: song-info.width;
-        enabled: PlayerState.has-song;
+        enabled: root.can-play;
         mouse-cursor: pointer;
         clicked => {
-            if (AppState.route == Route.now-playing) {
+            if (root.radio) {
+                AppState.navigate(Route.radio, "");
+            } else if (AppState.route == Route.now-playing) {
                 AppState.back();
             } else {
                 AppState.navigate(Route.now-playing, "");

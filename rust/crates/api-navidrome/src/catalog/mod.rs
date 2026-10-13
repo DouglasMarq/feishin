@@ -8,6 +8,7 @@ mod library;
 mod paging;
 mod play_queue;
 mod playlists;
+mod radio;
 mod scanning;
 mod sharing;
 mod song_years;

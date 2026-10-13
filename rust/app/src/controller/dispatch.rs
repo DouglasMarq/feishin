@@ -43,6 +43,7 @@ impl Controller {
             } => self.save_interface(queue_panel_open, follow_current_song),
             Command::SaveAppearance(appearance) => self.save_appearance(appearance),
             Command::RemoveServer(server_id) => self.remove_server(&server_id),
+            Command::Radio(command) => self.on_radio_command(command),
         }
     }
 }

@@ -19,6 +19,7 @@ pub(super) struct PlaybackTracker {
     duration: Option<f64>,
     last_position_emitted_at: Option<Instant>,
     position_update_forced: bool,
+    stream_title: Option<String>,
 }
 
 impl PlaybackTracker {
@@ -32,6 +33,7 @@ impl PlaybackTracker {
             duration: None,
             last_position_emitted_at: None,
             position_update_forced: false,
+            stream_title: None,
         }
     }
 
@@ -143,8 +145,27 @@ impl PlaybackTracker {
                 self.duration = Some(duration);
             }
             (ObservedProperty::Duration, _) => self.duration = None,
+            (ObservedProperty::StreamTitle, PropertyValue::Text(title)) => {
+                self.stream_title_changed(
+                    Some(title).filter(|title| !title.trim().is_empty()),
+                    pending_events,
+                );
+            }
+            (ObservedProperty::StreamTitle, _) => self.stream_title_changed(None, pending_events),
             (ObservedProperty::Pause | ObservedProperty::IdleActive, _) => {}
         }
+    }
+
+    fn stream_title_changed(
+        &mut self,
+        title: Option<String>,
+        pending_events: &mut Vec<PlayerEvent>,
+    ) {
+        if self.stream_title == title {
+            return;
+        }
+        self.stream_title.clone_from(&title);
+        pending_events.push(PlayerEvent::StreamTitle(title));
     }
 
     fn pause_changed(&mut self, paused: bool, pending_events: &mut Vec<PlayerEvent>) {
@@ -186,5 +207,40 @@ fn pause_transition_event(paused: bool) -> PlayerEvent {
     match paused {
         true => PlayerEvent::Paused,
         false => PlayerEvent::Resumed,
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    fn title_change(tracker: &mut PlaybackTracker, value: PropertyValue) -> Vec<PlayerEvent> {
+        let mut pending_events = Vec::new();
+        tracker.property_changed(
+            ObservedProperty::StreamTitle.reply_id(),
+            value,
+            &mut pending_events,
+        );
+        pending_events
+    }
+
+    #[test]
+    fn stream_titles_are_reported_once_per_change() {
+        let mut tracker = PlaybackTracker::new();
+        let song = PropertyValue::Text("Artist - Song".into());
+
+        assert_eq!(
+            title_change(&mut tracker, song.clone()),
+            [PlayerEvent::StreamTitle(Some("Artist - Song".into()))]
+        );
+        assert_eq!(title_change(&mut tracker, song), []);
+        assert_eq!(
+            title_change(&mut tracker, PropertyValue::Unavailable),
+            [PlayerEvent::StreamTitle(None)]
+        );
+        assert_eq!(
+            title_change(&mut tracker, PropertyValue::Text("  ".into())),
+            []
+        );
     }
 }

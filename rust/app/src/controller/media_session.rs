@@ -43,6 +43,10 @@ impl Controller {
     }
 
     fn stop_from_media_session(&mut self) {
+        if self.is_radio_playing() {
+            self.stop_radio();
+            return;
+        }
         if self.playing {
             self.toggle_pause();
         }
@@ -74,10 +78,10 @@ impl Controller {
         match (self.loaded, self.playing) {
             (None, _) => PlaybackStatus::Stopped,
             (Some(_), true) => PlaybackStatus::Playing {
-                position_ms: self.position_ms,
+                position_ms: self.shown_position_ms(),
             },
             (Some(_), false) => PlaybackStatus::Paused {
-                position_ms: self.position_ms,
+                position_ms: self.shown_position_ms(),
             },
         }
     }

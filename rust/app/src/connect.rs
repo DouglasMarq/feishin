@@ -6,6 +6,7 @@ use feishin_api::{Credential, MusicServer};
 use feishin_core::model::{ServerConfig, ServerType};
 
 use crate::demo::{DemoLibrary, FakeServer, demo_credential};
+use crate::radio_directory::{DemoDirectory, StationDirectory, public_directory};
 
 #[async_trait]
 pub trait Connector: Send + Sync {
@@ -20,6 +21,10 @@ pub trait Connector: Send + Sync {
         config: &ServerConfig,
         credential: &Credential,
     ) -> Result<Arc<dyn MusicServer>>;
+
+    fn station_directory(&self) -> Arc<dyn StationDirectory> {
+        public_directory()
+    }
 }
 
 pub struct ServerConnector;
@@ -101,5 +106,9 @@ impl Connector for DemoConnector {
             config.clone(),
             self.library,
         )))
+    }
+
+    fn station_directory(&self) -> Arc<dyn StationDirectory> {
+        Arc::new(DemoDirectory)
     }
 }

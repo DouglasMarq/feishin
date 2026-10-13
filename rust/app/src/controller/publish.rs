@@ -22,9 +22,22 @@ impl Controller {
     pub(super) fn publish_playback(&self) {
         self.deps.ui.send(UiUpdate::Playback {
             playing: self.playing,
-            position_ms: self.position_ms,
-            duration_ms: self.duration_ms,
+            position_ms: self.shown_position_ms(),
+            duration_ms: self.shown_duration_ms(),
         });
+    }
+
+    pub(super) fn shown_position_ms(&self) -> u64 {
+        self.radio
+            .as_ref()
+            .map_or(self.position_ms, |radio| radio.elapsed_ms())
+    }
+
+    fn shown_duration_ms(&self) -> u64 {
+        match self.radio {
+            Some(_) => 0,
+            None => self.duration_ms,
+        }
     }
 
     pub(super) fn publish_volume(&self) {

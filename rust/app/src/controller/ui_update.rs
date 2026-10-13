@@ -1,6 +1,7 @@
 use feishin_core::model::Song;
 use feishin_core::queue::{QueueTrack, QueueView, RepeatMode};
 
+use super::RadioNowPlaying;
 use crate::sleep_timer::SleepStatus;
 
 #[derive(Debug, Clone, PartialEq)]
@@ -20,6 +21,7 @@ pub enum UiUpdate {
         repeat: RepeatMode,
     },
     Queue(QueueView),
+    Radio(Option<RadioNowPlaying>),
     Error(String),
     Raise,
     Quit,

@@ -12,6 +12,13 @@ enum StartedTrack {
 
 impl Controller {
     pub(super) fn on_player_event(&mut self, event: PlayerEvent) {
+        match self.is_radio_playing() {
+            true => self.on_radio_player_event(event),
+            false => self.on_queue_player_event(event),
+        }
+    }
+
+    fn on_queue_player_event(&mut self, event: PlayerEvent) {
         match event {
             PlayerEvent::Started { uid } => self.on_started(uid),
             PlayerEvent::Position {
@@ -23,6 +30,7 @@ impl Controller {
             PlayerEvent::TrackEnded { uid } => self.on_track_ended(uid),
             PlayerEvent::Error { uid, message } => self.on_player_error(uid, message),
             PlayerEvent::Idle => self.on_idle(),
+            PlayerEvent::StreamTitle(_) => {}
         }
     }
 

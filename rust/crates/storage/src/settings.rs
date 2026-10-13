@@ -1,7 +1,7 @@
 use std::fmt::Display;
 use std::time::Duration;
 
-use feishin_core::model::ServerConfig;
+use feishin_core::model::{RadioStation, ServerConfig};
 use serde::{Deserialize, Serialize};
 
 use crate::appearance::AppearanceSettings;
@@ -100,6 +100,12 @@ impl Default for IntegrationSettings {
     }
 }
 
+#[derive(Debug, Clone, PartialEq, Eq, Default, Serialize, Deserialize)]
+#[serde(default)]
+pub struct RadioSettings {
+    pub favorites: Vec<RadioStation>,
+}
+
 #[derive(Debug, Clone, PartialEq, Default, Serialize, Deserialize)]
 #[serde(default)]
 pub struct Settings {
@@ -109,6 +115,7 @@ pub struct Settings {
     pub ui: UiSettings,
     pub integrations: IntegrationSettings,
     pub appearance: AppearanceSettings,
+    pub radio: RadioSettings,
 }
 
 impl Settings {
@@ -175,6 +182,18 @@ mod tests {
                 ..Default::default()
             },
             appearance: AppearanceSettings::default(),
+            radio: sample_radio(),
+        }
+    }
+
+    fn sample_radio() -> RadioSettings {
+        RadioSettings {
+            favorites: vec![RadioStation {
+                id: "9617a958".into(),
+                name: "Smooth Jazz".into(),
+                stream_url: "https://jazz.example.com/stream".into(),
+                homepage_url: None,
+            }],
         }
     }
 
@@ -242,6 +261,7 @@ a = 1
             }]
         );
         assert_eq!(settings.integrations, IntegrationSettings::default());
+        assert_eq!(settings.radio, RadioSettings::default());
     }
 
     #[test]

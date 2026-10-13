@@ -7,6 +7,7 @@ use super::artist_albums::ArtistAlbums;
 use super::library::DemoLibrary;
 use super::play_queue::DemoPlayQueue;
 use super::playlists::DemoPlaylists;
+use super::radio::DemoRadio;
 use super::scanning::DemoScan;
 use super::scrobbles::ScrobbleCall;
 use super::sharing::DemoShares;
@@ -24,6 +25,7 @@ pub struct FakeServer {
     pub(super) credential: Mutex<Option<Credential>>,
     pub(super) scan: DemoScan,
     pub(super) shares: DemoShares,
+    pub(super) radio: Mutex<DemoRadio>,
 }
 
 impl FakeServer {
@@ -40,6 +42,7 @@ impl FakeServer {
             credential: Mutex::default(),
             scan: DemoScan::default(),
             shares: DemoShares::default(),
+            radio: Mutex::default(),
         }
     }
 

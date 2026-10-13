@@ -2,7 +2,7 @@ use super::Controller;
 
 impl Controller {
     pub(super) fn refresh_preload(&mut self) {
-        if !self.preloads_next_track() || self.loaded.is_none() {
+        if !self.preloads_next_track() || self.loaded.is_none() || self.is_radio_playing() {
             return;
         }
         let next = self

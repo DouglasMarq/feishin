@@ -19,4 +19,5 @@ pub enum PlayerEvent {
         message: String,
     },
     Idle,
+    StreamTitle(Option<String>),
 }

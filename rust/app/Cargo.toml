@@ -16,6 +16,7 @@ feishin-core.workspace = true
 feishin-lyrics.workspace = true
 feishin-platform.workspace = true
 feishin-player.workspace = true
+feishin-radio-browser.workspace = true
 feishin-storage.workspace = true
 reqwest.workspace = true
 serde.workspace = true

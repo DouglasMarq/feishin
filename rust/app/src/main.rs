@@ -11,6 +11,7 @@ mod library;
 mod list_stream;
 mod media;
 mod play_queue_sync;
+mod radio_directory;
 mod scrobble;
 mod session;
 mod sleep_timer;

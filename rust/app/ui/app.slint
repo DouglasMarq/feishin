@@ -21,6 +21,7 @@ import { NowPlayingView } from "now_playing.slint";
 import { PlaylistPicker, PlaylistPickerState } from "playlist_picker.slint";
 import { FoldersView } from "folders.slint";
 import { ShareClipboard } from "share.slint";
+import { RadioView } from "radio.slint";
 
 export { Actions, AppState, LoginState, Page, PlayerState, QueueRow, QueueState, Route, TrackRow, TracksState } from "globals.slint";
 export { HomeState } from "home.slint";
@@ -40,6 +41,7 @@ export { Palettes, Theme, ThemePalette } from "theme.slint";
 export { AppearanceState, SystemScheme } from "appearance_settings.slint";
 export { FoldersState } from "folders.slint";
 export { ShareState } from "share.slint";
+export { RadioRow, RadioSource, RadioState, RadioTab } from "radio.slint";
 
 
 export component AppWindow inherits Window {
@@ -127,6 +129,7 @@ export component AppWindow inherits Window {
                     if AppState.route == Route.settings: SettingsView { }
                     if AppState.route == Route.now-playing: NowPlayingView { }
                     if AppState.route == Route.folders: FoldersView { }
+                    if AppState.route == Route.radio: RadioView { }
                 }
 
                 if AppState.queue-open: QueuePanel { }

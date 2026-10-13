@@ -5,6 +5,9 @@ pub trait MediaSession: Send {
     fn set_metadata(&mut self, now_playing: &NowPlaying) -> Result<()>;
     fn set_status(&mut self, status: PlaybackStatus) -> Result<()>;
     fn set_volume(&mut self, volume: f64) -> Result<()>;
+    fn set_live_stream(&mut self, _live: bool) -> Result<()> {
+        Ok(())
+    }
 }
 
 pub struct Mpris(MediaControls);
@@ -27,6 +30,9 @@ impl MediaSession for Mpris {
     }
     fn set_volume(&mut self, volume: f64) -> Result<()> {
         Ok(self.0.set_volume(volume)?)
+    }
+    fn set_live_stream(&mut self, live: bool) -> Result<()> {
+        Ok(self.0.set_live_stream(live)?)
     }
 }
 
@@ -70,5 +76,8 @@ impl MediaSession for MediaSessions {
     }
     fn set_volume(&mut self, volume: f64) -> Result<()> {
         self.update_each(|session| session.set_volume(volume))
+    }
+    fn set_live_stream(&mut self, live: bool) -> Result<()> {
+        self.update_each(|session| session.set_live_stream(live))
     }
 }

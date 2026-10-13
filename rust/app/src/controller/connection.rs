@@ -38,7 +38,9 @@ impl Controller {
         let Some(track) = self.current_track() else {
             return;
         };
-        self.update_media_metadata(&track);
+        if !self.is_radio_playing() {
+            self.update_media_metadata(&track);
+        }
         self.deps
             .ui
             .send(UiUpdate::NowPlaying(Some(Box::new(track))));

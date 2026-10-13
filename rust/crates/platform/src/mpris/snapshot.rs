@@ -6,6 +6,7 @@ pub(super) struct PlaybackSnapshot {
     pub(super) metadata: Metadata,
     pub(super) status: MprisStatus,
     pub(super) volume: f64,
+    pub(super) live_stream: bool,
     position_ms: u64,
     position_at: Instant,
 }
@@ -18,6 +19,7 @@ impl PlaybackSnapshot {
             position_ms: 0,
             position_at: Instant::now(),
             volume: 1.0,
+            live_stream: false,
         }
     }
 
