@@ -21,7 +21,6 @@ tracing.workspace = true
 
 [dev-dependencies]
 tokio.workspace = true
-tracing.workspace = true
 wiremock = "0.6.5"
 
 [lints]

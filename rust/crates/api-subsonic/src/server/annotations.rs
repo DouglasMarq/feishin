@@ -33,8 +33,11 @@ impl SubsonicServer {
         if ids.is_empty() {
             return Ok(());
         }
-        self.send(favorite_endpoint(favorite), Params::new().many(key, ids))
-            .await
+        self.send(
+            favorite_endpoint(favorite),
+            Params::new().add_each(key, ids),
+        )
+        .await
     }
 
     pub(super) async fn update_rating(&self, kind: ItemKind, id: &str, rating: u8) -> Result<()> {
@@ -56,7 +59,7 @@ impl SubsonicServer {
         let params = Params::new()
             .add("id", song_id)
             .add("submission", submission)
-            .opt("time", timestamp_ms.filter(|_| submission));
+            .add_optional("time", timestamp_ms.filter(|_| submission));
         self.send("scrobble.view", params).await
     }
 }

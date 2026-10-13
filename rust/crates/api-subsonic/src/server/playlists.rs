@@ -38,7 +38,7 @@ impl SubsonicServer {
         name: &str,
         song_ids: &[String],
     ) -> Result<Playlist> {
-        let params = Params::new().add("name", name).many("songId", song_ids);
+        let params = Params::new().add("name", name).add_each("songId", song_ids);
         let response: PlaylistResponse = self.fetch("createPlaylist.view", params).await?;
         response
             .playlist
@@ -53,7 +53,7 @@ impl SubsonicServer {
     ) -> Result<()> {
         let params = Params::new()
             .add("playlistId", playlist_id)
-            .many("songIdToAdd", song_ids);
+            .add_each("songIdToAdd", song_ids);
         self.send("updatePlaylist.view", params).await
     }
 
@@ -65,7 +65,7 @@ impl SubsonicServer {
         let indexes: Vec<String> = indexes.iter().map(ToString::to_string).collect();
         let params = Params::new()
             .add("playlistId", playlist_id)
-            .many("songIndexToRemove", &indexes);
+            .add_each("songIndexToRemove", &indexes);
         self.send("updatePlaylist.view", params).await
     }
 }

@@ -21,7 +21,9 @@ impl SubsonicServer {
         count: usize,
         genre: Option<&str>,
     ) -> Result<Vec<Song>> {
-        let params = Params::new().add("size", count).opt("genre", genre);
+        let params = Params::new()
+            .add("size", count)
+            .add_optional("genre", genre);
         let response: RandomSongs = self.fetch("getRandomSongs.view", params).await?;
         let songs = response
             .random_songs
@@ -99,7 +101,7 @@ impl SubsonicServer {
         if !extensions.supports_song_lyrics() {
             return Ok(None);
         }
-        let params = Params::new().add("id", &song.id).opt(
+        let params = Params::new().add("id", &song.id).add_optional(
             "enhanced",
             extensions.supports_enhanced_lyrics().then_some(true),
         );

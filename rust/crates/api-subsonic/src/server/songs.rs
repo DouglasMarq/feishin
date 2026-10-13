@@ -110,10 +110,10 @@ impl SubsonicServer {
     async fn random_song_page(&self, query: &SongListQuery, paging: Paging) -> Result<Page<Song>> {
         let params = Params::new()
             .add("size", paging.limit)
-            .opt("genre", query.genre_ids.first())
-            .opt("fromYear", nonzero_year_filter(query.year_from))
-            .opt("toYear", nonzero_year_filter(query.year_to))
-            .opt("musicFolderId", query.music_folder_id.as_deref());
+            .add_optional("genre", query.genre_ids.first())
+            .add_optional("fromYear", nonzero_year_filter(query.year_from))
+            .add_optional("toYear", nonzero_year_filter(query.year_to))
+            .add_optional("musicFolderId", query.music_folder_id.as_deref());
         let response: RandomSongs = self.fetch("getRandomSongs.view", params).await?;
         let songs = response
             .random_songs

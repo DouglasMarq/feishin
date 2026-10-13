@@ -35,7 +35,7 @@ fn search_params(request: &SearchRequest<'_>) -> Params {
         .add("albumOffset", request.albums.offset)
         .add("songCount", request.songs.count)
         .add("songOffset", request.songs.offset)
-        .opt("musicFolderId", request.music_folder_id)
+        .add_optional("musicFolderId", request.music_folder_id)
 }
 
 fn keep_unless_rejected<T>(endpoint: &str, result: Result<T>) -> Option<Result<T>> {
@@ -96,7 +96,7 @@ impl SubsonicServer {
             .add("genre", genre)
             .add("count", window.count)
             .add("offset", window.offset)
-            .opt("musicFolderId", music_folder_id);
+            .add_optional("musicFolderId", music_folder_id);
         let response: SongsByGenre = self.fetch("getSongsByGenre.view", params).await?;
         Ok(response
             .songs_by_genre
@@ -105,7 +105,7 @@ impl SubsonicServer {
     }
 
     pub(super) async fn starred(&self, music_folder_id: Option<&str>) -> Result<SearchResult> {
-        let params = Params::new().opt("musicFolderId", music_folder_id);
+        let params = Params::new().add_optional("musicFolderId", music_folder_id);
         let response: Starred2 = self.fetch("getStarred2.view", params).await?;
         Ok(response.starred2.unwrap_or_default())
     }
@@ -175,7 +175,7 @@ impl SubsonicServer {
         &self,
         music_folder_id: Option<&str>,
     ) -> Result<Vec<SubsonicArtist>> {
-        let params = Params::new().opt("musicFolderId", music_folder_id);
+        let params = Params::new().add_optional("musicFolderId", music_folder_id);
         let response: GetArtists = self.fetch("getArtists.view", params).await?;
         Ok(response
             .artists

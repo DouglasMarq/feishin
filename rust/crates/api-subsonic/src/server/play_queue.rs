@@ -29,17 +29,20 @@ impl SubsonicServer {
         let current_index =
             current_song_id.and_then(|id| song_ids.iter().position(|song_id| song_id == id));
         let params = Params::new()
-            .many("id", song_ids)
+            .add_each("id", song_ids)
             .add("position", position_ms);
         match self.extensions().await?.play_queue_mode() {
             PlayQueueMode::IndexBased => {
-                let params = params.opt("currentIndex", current_index);
+                let params = params.add_optional("currentIndex", current_index);
                 self.send("savePlayQueueByIndex.view", params).await
             }
             PlayQueueMode::CurrentSongId => {
                 let current = current_index.and_then(|index| song_ids.get(index));
-                self.send("savePlayQueue.view", params.opt("current", current))
-                    .await
+                self.send(
+                    "savePlayQueue.view",
+                    params.add_optional("current", current),
+                )
+                .await
             }
         }
     }

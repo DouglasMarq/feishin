@@ -93,10 +93,10 @@ pub fn album_list_params(query: &AlbumListQuery, base_type: AlbumListType) -> Pa
 
     Params::new()
         .add("type", list_type.as_param())
-        .opt("genre", query.genre_ids.first())
-        .opt("fromYear", from_year)
-        .opt("toYear", to_year)
-        .opt("musicFolderId", query.music_folder_id.as_deref())
+        .add_optional("genre", query.genre_ids.first())
+        .add_optional("fromYear", from_year)
+        .add_optional("toYear", to_year)
+        .add_optional("musicFolderId", query.music_folder_id.as_deref())
 }
 
 #[cfg(test)]

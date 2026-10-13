@@ -13,14 +13,14 @@ impl Params {
         self
     }
 
-    pub fn opt<V: ToString>(self, key: &'static str, value: Option<V>) -> Self {
+    pub fn add_optional(self, key: &'static str, value: Option<impl ToString>) -> Self {
         match value {
             Some(present) => self.add(key, present),
             None => self,
         }
     }
 
-    pub fn many(mut self, key: &'static str, values: &[String]) -> Self {
+    pub fn add_each(mut self, key: &'static str, values: &[String]) -> Self {
         self.0
             .extend(values.iter().map(|value| (key, value.clone())));
         self
