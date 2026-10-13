@@ -1,4 +1,4 @@
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 use std::time::Duration;
 
 use crate::links::songs_search_url;
@@ -8,6 +8,7 @@ use crate::{CookieBrowser, StreamUrl, YouTubeError, YouTubeHit, is_video_id, pro
 pub const DEFAULT_PROGRAM: &str = "yt-dlp";
 const DEFAULT_TIMEOUT: Duration = Duration::from_secs(30);
 const MAX_SEARCH_RESULTS: usize = 50;
+const COOKIE_CHECK_URL: &str = "https://music.youtube.com/playlist?list=LM";
 const VIDEO_FIELDS: &str = "%(.{id,title,artists,channel,uploader,album,duration,thumbnail})j";
 
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -85,6 +86,31 @@ impl YtDlp {
         arguments.push(songs_search_url(query));
         let stdout = process::run(&self.program, &arguments, self.timeout).await?;
         Ok(parse_search_output(&stdout))
+    }
+
+    pub fn cookie_browser(&self) -> Option<CookieBrowser> {
+        self.cookies_from_browser
+    }
+
+    pub async fn export_cookies(&self, cookie_file: &Path) -> Result<(), YouTubeError> {
+        let mut arguments = self.common_arguments();
+        arguments.push("--cookies".to_owned());
+        arguments.push(cookie_file.to_string_lossy().into_owned());
+        arguments.extend(
+            [
+                "--quiet",
+                "--skip-download",
+                "--flat-playlist",
+                "--playlist-items",
+                "1",
+                "--",
+                COOKIE_CHECK_URL,
+            ]
+            .map(str::to_owned),
+        );
+        process::run(&self.program, &arguments, self.timeout)
+            .await
+            .map(|_stdout| ())
     }
 
     fn common_arguments(&self) -> Vec<String> {

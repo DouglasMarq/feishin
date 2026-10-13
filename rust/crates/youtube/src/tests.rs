@@ -8,7 +8,7 @@ use crate::links::songs_search_url;
 use crate::search::parse_search_output;
 use crate::*;
 
-static SPAWNING: Mutex<()> = Mutex::const_new(());
+pub(crate) static SPAWNING: Mutex<()> = Mutex::const_new(());
 
 const FUTURE_EXPIRY: u64 = 4_102_444_800;
 const AUDIO_URL: &str = "https://rr1.googlevideo.example/videoplayback?expire=4102444800&id=7";

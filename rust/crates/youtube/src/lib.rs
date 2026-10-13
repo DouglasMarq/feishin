@@ -1,6 +1,7 @@
 mod browser;
 mod error;
 mod links;
+pub mod music;
 mod process;
 mod search;
 mod stream_cache;
