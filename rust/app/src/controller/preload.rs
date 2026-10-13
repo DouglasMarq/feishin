@@ -2,7 +2,7 @@ use super::Controller;
 
 impl Controller {
     pub(super) fn refresh_preload(&mut self) {
-        if !self.settings.playback.gapless || self.loaded.is_none() {
+        if !self.preloads_next_track() || self.loaded.is_none() {
             return;
         }
         let next = self
@@ -21,6 +21,11 @@ impl Controller {
             Ok(()) => self.preloaded = next.map(|track| track.uid),
             Err(error) => tracing::warn!("preloading failed: {error:#}"),
         }
+    }
+
+    fn preloads_next_track(&self) -> bool {
+        let playback = &self.settings.playback;
+        playback.gapless || !playback.crossfade().is_zero()
     }
 
     pub(super) fn discard_preload(&mut self) {

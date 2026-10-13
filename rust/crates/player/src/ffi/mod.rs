@@ -44,6 +44,29 @@ pub(crate) fn get_property_node(handle: Handle, name: &str) -> Result<Node, c_in
     })
 }
 
+pub(crate) fn set_property_in_background(
+    handle: Handle,
+    name: &str,
+    value: &str,
+) -> Result<(), c_int> {
+    let name = c_string(name)?;
+    let value = c_string(value)?;
+    let mut value_pointer = value.as_ptr();
+    let status = unsafe {
+        sys::mpv_set_property_async(
+            handle.as_ptr(),
+            0,
+            name.as_ptr(),
+            sys::mpv_format_MPV_FORMAT_STRING,
+            (&raw mut value_pointer).cast::<c_void>(),
+        )
+    };
+    match status {
+        error if error < 0 => Err(error),
+        _ => Ok(()),
+    }
+}
+
 pub(crate) fn wake_up_event_thread(handle: Handle) {
     unsafe { sys::mpv_wakeup(handle.as_ptr()) }
 }

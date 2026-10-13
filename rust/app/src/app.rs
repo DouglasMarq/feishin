@@ -74,7 +74,9 @@ fn audio_output(
         forward_command(&commands, Command::Player(event));
     });
     Ok(match mode {
-        Mode::Demo(_) => Box::new(FakeAudio::new(on_event)),
+        Mode::Demo(_) => {
+            Box::new(FakeAudio::new(on_event).with_crossfade(settings.playback.crossfade()))
+        }
         Mode::Real => Box::new(MpvOutput::new(&settings.playback, on_event)?),
     })
 }

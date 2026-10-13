@@ -4,45 +4,38 @@ use std::thread::{self, JoinHandle};
 
 use libmpv2::Mpv;
 
-use super::{AUTOMATIC_AUDIO_DEVICE, MAX_VOLUME, Player};
+use super::setting::mpv_flag;
+use super::{AUTOMATIC_AUDIO_DEVICE, Deck, MAX_VOLUME};
+use crate::PlayerConfig;
+use crate::crossfade::OUTPUT_BUFFER_SECONDS;
 use crate::error::{PlayerError, Result, error_from_mpv};
 use crate::event_loop::{self, EventCallback};
 use crate::observed_property::ObservedProperty;
 use crate::shared::{PlaylistEntries, Shared};
-use crate::{PlayerConfig, PlayerEvent};
 
 const STREAM_LAVF_OPTIONS_WITHOUT_RECONNECT_AT_EOF: &str =
     "reconnect=1,reconnect_streamed=1,reconnect_delay_max=5";
-const NULL_AUDIO_OUTPUT: &str = "null";
 const BEST_EFFORT_DISABLED_OPTIONS: [&str; 3] =
     ["osc", "input-default-bindings", "input-vo-keyboard"];
 const EVENT_THREAD_NAME: &str = "mpv-events";
 
 type MpvOption<'value> = (&'static str, &'value str);
 
-impl Player {
-    pub fn new(
-        config: PlayerConfig,
-        on_event: Box<dyn Fn(PlayerEvent) + Send + Sync>,
-    ) -> Result<Self> {
-        Self::create(config, None, on_event)
-    }
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub(crate) enum AudioOutputDriver {
+    System,
+    Null,
+}
 
-    #[doc(hidden)]
-    pub fn with_null_output(
-        config: PlayerConfig,
-        on_event: Box<dyn Fn(PlayerEvent) + Send + Sync>,
-    ) -> Result<Self> {
-        Self::create(config, Some(NULL_AUDIO_OUTPUT), on_event)
-    }
-
-    fn create(
-        config: PlayerConfig,
-        audio_output: Option<&str>,
+impl Deck {
+    pub(crate) fn create(
+        config: &PlayerConfig,
+        driver: AudioOutputDriver,
         on_event: EventCallback,
     ) -> Result<Self> {
         let volume = config.volume.min(MAX_VOLUME).to_string();
-        let options = initial_options(&config, &volume, audio_output);
+        let audio_buffer = OUTPUT_BUFFER_SECONDS.to_string();
+        let options = initial_options(config, &volume, &audio_buffer, driver);
         let mpv = initialize_mpv(&options)?;
         observe_properties(&mpv)?;
         let shared = Arc::new(Shared {
@@ -61,7 +54,8 @@ impl Player {
 fn initial_options<'value>(
     config: &'value PlayerConfig,
     volume: &'value str,
-    audio_output: Option<&'value str>,
+    audio_buffer: &'value str,
+    driver: AudioOutputDriver,
 ) -> Vec<MpvOption<'value>> {
     let mut options = vec![
         ("vo", "null"),
@@ -80,6 +74,8 @@ fn initial_options<'value>(
         ("replaygain", config.replay_gain.mpv_value()),
         ("replaygain-clip", "no"),
         ("volume", volume),
+        ("audio-buffer", audio_buffer),
+        ("mute", mpv_flag(config.muted)),
         (
             "audio-device",
             config
@@ -88,15 +84,10 @@ fn initial_options<'value>(
                 .unwrap_or(AUTOMATIC_AUDIO_DEVICE),
         ),
     ];
-    options.extend(audio_output.map(|output| ("ao", output)));
-    options
-}
-
-fn mpv_flag(enabled: bool) -> &'static str {
-    match enabled {
-        true => "yes",
-        false => "no",
+    if driver == AudioOutputDriver::Null {
+        options.push(("ao", "null"));
     }
+    options
 }
 
 fn gapless_audio_value(gapless: bool) -> &'static str {

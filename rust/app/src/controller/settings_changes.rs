@@ -5,6 +5,7 @@ use super::{Controller, SettingsSnapshot};
 
 fn preload_depends_on_changes(current: &PlaybackSettings, next: &PlaybackSettings) -> bool {
     next.gapless != current.gapless
+        || next.crossfade().is_zero() != current.crossfade().is_zero()
         || next.max_bitrate_kbps != current.max_bitrate_kbps
         || next.transcode_format != current.transcode_format
 }
@@ -52,6 +53,11 @@ impl Controller {
             && let Err(error) = audio.set_audio_device(next.audio_device.as_deref())
         {
             tracing::warn!("switching audio device failed: {error:#}");
+        }
+        if next.crossfade() != current.crossfade()
+            && let Err(error) = audio.set_crossfade(next.crossfade())
+        {
+            tracing::warn!("changing the crossfade failed: {error:#}");
         }
     }
 

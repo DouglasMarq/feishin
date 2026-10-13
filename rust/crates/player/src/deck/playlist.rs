@@ -1,6 +1,6 @@
 use feishin_core::queue::Uid;
 
-use super::Player;
+use super::Deck;
 use crate::error::{PlayerError, Result};
 use crate::ffi::{self, Node};
 use crate::shared::{PlaylistEntries, PlaylistEntryId};
@@ -21,19 +21,18 @@ impl LoadMode {
     }
 }
 
-impl Player {
-    pub fn load(&self, uid: Uid, url: &str, start_ms: u64) -> Result<()> {
+impl Deck {
+    pub(crate) fn replace(&self, uid: Uid, url: &str, start_ms: u64) -> Result<()> {
         let mut entries = self.shared.lock_entries();
         let start_option =
             (start_ms > 0).then(|| format!("start={}", mpv_seconds_from_milliseconds(start_ms)));
         let entry = self.loadfile(url, LoadMode::Replace, start_option.as_deref())?;
         entries.forget_all();
         entries.uids.insert(entry, uid);
-        drop(entries);
-        self.set("pause", false)
+        Ok(())
     }
 
-    pub fn preload_next(&self, uid: Uid, url: &str) -> Result<()> {
+    pub(crate) fn append_next(&self, uid: Uid, url: &str) -> Result<()> {
         let mut entries = self.shared.lock_entries();
         self.clear_next_while_locked(&mut entries)?;
         let entry = self.loadfile(url, LoadMode::Append, None)?;
@@ -42,12 +41,12 @@ impl Player {
         Ok(())
     }
 
-    pub fn clear_next(&self) -> Result<()> {
+    pub(crate) fn clear_next(&self) -> Result<()> {
         let mut entries = self.shared.lock_entries();
         self.clear_next_while_locked(&mut entries)
     }
 
-    pub fn stop(&self) -> Result<()> {
+    pub(crate) fn stop(&self) -> Result<()> {
         let mut entries = self.shared.lock_entries();
         self.command(&["stop"])?;
         entries.forget_all();

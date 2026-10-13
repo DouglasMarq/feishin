@@ -3,7 +3,7 @@ use std::time::Duration;
 
 use anyhow::Result;
 use feishin_core::queue::Uid;
-use feishin_player::{AudioDevice, Player, PlayerConfig, PlayerEvent, ReplayGainMode};
+use feishin_player::{AudioDevice, MediaSource, Player, PlayerConfig, PlayerEvent, ReplayGainMode};
 use feishin_storage::settings::{PlaybackSettings, ReplayGainSetting};
 
 pub type EventCallback = Box<dyn Fn(PlayerEvent) + Send + Sync>;
@@ -13,6 +13,16 @@ pub struct Track {
     pub uid: Uid,
     pub url: String,
     pub duration_ms: u64,
+}
+
+impl Track {
+    fn media_source(&self) -> MediaSource<'_> {
+        let source = MediaSource::new(self.uid, &self.url);
+        match self.duration_ms {
+            0 => source,
+            duration_ms => source.with_duration_ms(duration_ms),
+        }
+    }
 }
 
 pub trait AudioOutput: Send {
@@ -34,6 +44,9 @@ pub trait AudioOutput: Send {
     fn audio_devices(&self) -> Result<Vec<AudioDevice>> {
         Ok(Vec::new())
     }
+    fn set_crossfade(&self, _crossfade: Duration) -> Result<()> {
+        Ok(())
+    }
 }
 
 fn replay_gain_mode(setting: ReplayGainSetting) -> ReplayGainMode {
@@ -53,19 +66,19 @@ impl MpvOutput {
             replay_gain: replay_gain_mode(settings.replay_gain),
             gapless: settings.gapless,
             volume: settings.volume,
+            muted: settings.muted,
+            crossfade: settings.crossfade(),
         };
-        let player = Player::new(config, on_event)?;
-        player.set_muted(settings.muted)?;
-        Ok(Self(player))
+        Ok(Self(Player::new(config, on_event)?))
     }
 }
 
 impl AudioOutput for MpvOutput {
     fn load(&self, track: &Track, start_ms: u64) -> Result<()> {
-        Ok(self.0.load(track.uid, &track.url, start_ms)?)
+        Ok(self.0.load_source(track.media_source(), start_ms)?)
     }
     fn preload_next(&self, track: &Track) -> Result<()> {
-        Ok(self.0.preload_next(track.uid, &track.url)?)
+        Ok(self.0.preload_source(track.media_source())?)
     }
     fn clear_next(&self) -> Result<()> {
         Ok(self.0.clear_next()?)
@@ -97,6 +110,9 @@ impl AudioOutput for MpvOutput {
     fn audio_devices(&self) -> Result<Vec<AudioDevice>> {
         Ok(self.0.audio_devices()?)
     }
+    fn set_crossfade(&self, crossfade: Duration) -> Result<()> {
+        Ok(self.0.set_crossfade(crossfade)?)
+    }
 }
 
 #[derive(Default)]
@@ -105,6 +121,7 @@ struct FakeState {
     next: Option<Track>,
     position_ms: u64,
     playing: bool,
+    crossfade_ms: u64,
 }
 
 pub struct FakeAudio {
@@ -129,6 +146,13 @@ impl FakeAudio {
         Self { state, on_event }
     }
 
+    pub fn with_crossfade(self, crossfade: Duration) -> Self {
+        if let Err(error) = self.set_crossfade(crossfade) {
+            tracing::warn!("setting the demo crossfade failed: {error:#}");
+        }
+        self
+    }
+
     fn clock(state: Weak<Mutex<FakeState>>, on_event: Arc<EventCallback>) {
         while let Some(shared_state) = state.upgrade() {
             std::thread::sleep(Self::TICK);
@@ -144,26 +168,43 @@ impl FakeAudio {
     }
 
     fn tick(state: &mut FakeState, elapsed_ms: u64) -> Vec<PlayerEvent> {
-        let Some(current) = state.current.as_ref().filter(|_| state.playing) else {
+        let Some(duration_ms) = state
+            .current
+            .as_ref()
+            .filter(|_| state.playing)
+            .map(|current| current.duration_ms)
+        else {
             return Vec::new();
         };
-        let duration_ms = current.duration_ms;
-        let uid = current.uid;
         state.position_ms = (state.position_ms + elapsed_ms).min(duration_ms);
         let mut events = vec![PlayerEvent::Position {
             position_ms: state.position_ms,
             duration_ms: Some(duration_ms),
         }];
-        if state.position_ms >= duration_ms {
-            events.push(PlayerEvent::TrackEnded { uid });
-            state.position_ms = 0;
-            state.current = state.next.take();
-            match &state.current {
-                Some(next) => events.push(PlayerEvent::Started { uid: next.uid }),
-                None => {
-                    state.playing = false;
-                    events.push(PlayerEvent::Idle);
-                }
+        events.extend(Self::advance_when_due(state, duration_ms));
+        events
+    }
+
+    fn advance_when_due(state: &mut FakeState, duration_ms: u64) -> Vec<PlayerEvent> {
+        let overlap_ms = match state.next {
+            Some(_) => state.crossfade_ms.min(duration_ms / 2),
+            None => 0,
+        };
+        if state.position_ms + overlap_ms < duration_ms {
+            return Vec::new();
+        }
+        let ended = state.current.as_ref().filter(|_| overlap_ms == 0);
+        let mut events: Vec<PlayerEvent> = ended
+            .map(|track| PlayerEvent::TrackEnded { uid: track.uid })
+            .into_iter()
+            .collect();
+        state.position_ms = 0;
+        state.current = state.next.take();
+        match &state.current {
+            Some(next) => events.push(PlayerEvent::Started { uid: next.uid }),
+            None => {
+                state.playing = false;
+                events.push(PlayerEvent::Idle);
             }
         }
         events
@@ -227,7 +268,10 @@ impl AudioOutput for FakeAudio {
 
     fn stop(&self) -> Result<()> {
         self.update(|state| {
-            *state = FakeState::default();
+            *state = FakeState {
+                crossfade_ms: state.crossfade_ms,
+                ..FakeState::default()
+            };
             None
         })
     }
@@ -249,6 +293,13 @@ impl AudioOutput for FakeAudio {
 
     fn set_muted(&self, _muted: bool) -> Result<()> {
         Ok(())
+    }
+
+    fn set_crossfade(&self, crossfade: Duration) -> Result<()> {
+        self.update(|state| {
+            state.crossfade_ms = u64::try_from(crossfade.as_millis()).unwrap_or(u64::MAX);
+            None
+        })
     }
 
     fn audio_devices(&self) -> Result<Vec<AudioDevice>> {
@@ -290,5 +341,31 @@ mod tests {
         assert_eq!(events[2], PlayerEvent::Started { uid: 2 });
         FakeAudio::tick(&mut state, 500);
         assert_eq!(FakeAudio::tick(&mut state, 0), Vec::new());
+    }
+
+    #[test]
+    fn fake_clock_crossfades_into_the_preload_before_the_end() {
+        let mut state = FakeState {
+            current: Some(track(1, 10_000)),
+            next: Some(track(2, 10_000)),
+            playing: true,
+            crossfade_ms: 3_000,
+            ..FakeState::default()
+        };
+        assert_eq!(FakeAudio::tick(&mut state, 6_750).len(), 1);
+        let events = FakeAudio::tick(&mut state, 250);
+        assert_eq!(events[1..], [PlayerEvent::Started { uid: 2 }]);
+        assert_eq!(state.position_ms, 0);
+        let last = FakeAudio::tick(&mut state, 10_000);
+        assert_eq!(
+            last[1..],
+            [PlayerEvent::TrackEnded { uid: 2 }, PlayerEvent::Idle]
+        );
+    }
+
+    #[test]
+    fn media_source_carries_the_known_duration() {
+        assert_eq!(track(3, 0).media_source().duration_ms, None);
+        assert_eq!(track(3, 1_500).media_source().duration_ms, Some(1_500));
     }
 }

@@ -92,6 +92,28 @@ async fn gapless_preloads_on_start_and_follows_the_takeover() {
 }
 
 #[tokio::test]
+async fn crossfade_preloads_without_gapless_and_follows_the_early_start() {
+    let mut settings = test_settings(false, false);
+    settings.playback.crossfade_seconds = 5;
+    let mut harness = start_harness(settings);
+    harness.controller.play_now(test_songs(3, 1000), "s0");
+    let first = harness.start_current();
+    let second = harness.uid_of("s1").unwrap_or(Uid::MAX);
+    let third = harness.uid_of("s2").unwrap_or(Uid::MAX);
+    assert_eq!(
+        harness.audio.take(),
+        [AudioCall::Load(first, 0), AudioCall::Preload(second)]
+    );
+
+    harness.player(PlayerEvent::Started { uid: second });
+    assert_eq!(harness.current_uid(), Some(second));
+    assert_eq!(harness.audio.take(), [AudioCall::Preload(third)]);
+    harness.player(PlayerEvent::TrackEnded { uid: first });
+    assert_eq!(harness.current_uid(), Some(second));
+    assert_eq!(harness.audio.take(), []);
+}
+
+#[tokio::test]
 async fn repeat_one_preloads_the_same_song() {
     let mut harness = start_harness(test_settings(true, false));
     harness.controller.play_now(test_songs(2, 1000), "s0");

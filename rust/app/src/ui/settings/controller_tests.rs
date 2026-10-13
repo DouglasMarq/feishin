@@ -1,4 +1,5 @@
 use std::sync::{Arc, Mutex};
+use std::time::Duration;
 
 use anyhow::Result;
 use feishin_core::queue::Uid;
@@ -73,6 +74,9 @@ impl AudioOutput for RecordingAudio {
     }
     fn audio_devices(&self) -> Result<Vec<AudioDevice>> {
         Ok(vec![device("auto", "Autoselect device")])
+    }
+    fn set_crossfade(&self, crossfade: Duration) -> Result<()> {
+        self.log(format!("crossfade {}s", crossfade.as_secs()))
     }
 }
 
@@ -171,6 +175,44 @@ async fn applying_playback_reaches_the_player_and_is_saved() {
             ..saved
         }));
     assert_eq!(harness.audio.take(), ["clear"]);
+}
+
+#[tokio::test]
+async fn crossfade_changes_reach_the_player_and_toggles_refresh_the_preload() {
+    let mut harness = harness(Settings::default());
+    harness.start();
+    let next = harness
+        .controller
+        .queue()
+        .peek_next()
+        .map_or(Uid::MAX, |item| item.uid);
+    let apply_crossfade = |harness: &mut Harness, crossfade_seconds| {
+        let playback = PlaybackSettings {
+            crossfade_seconds,
+            ..harness.saved().playback
+        };
+        harness.controller.handle(Command::ApplyPlayback(playback));
+        harness.audio.take()
+    };
+
+    assert_eq!(
+        apply_crossfade(&mut harness, 4),
+        [
+            "crossfade 4s".to_owned(),
+            "clear".into(),
+            format!("preload {next}")
+        ]
+    );
+    assert_eq!(harness.saved().playback.crossfade_seconds, 4);
+    assert_eq!(apply_crossfade(&mut harness, 9), ["crossfade 9s"]);
+    assert_eq!(
+        apply_crossfade(&mut harness, 0),
+        [
+            "crossfade 0s".to_owned(),
+            "clear".into(),
+            format!("preload {next}")
+        ]
+    );
 }
 
 #[tokio::test]
