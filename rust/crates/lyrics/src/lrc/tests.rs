@@ -3,8 +3,8 @@ use super::*;
 fn synced(lines: &[(u64, &str)]) -> Vec<LyricLine> {
     lines
         .iter()
-        .map(|(ms, text)| LyricLine {
-            time_ms: Some(*ms),
+        .map(|(time_ms, text)| LyricLine {
+            time_ms: Some(*time_ms),
             text: (*text).to_owned(),
         })
         .collect()

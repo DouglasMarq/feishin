@@ -64,7 +64,7 @@ pub fn parse_auth_store(json: &str) -> Result<FeishinImport> {
         .state
         .current_server
         .and_then(|current| current.id)
-        .filter(|id| servers.iter().any(|server| &server.config.id == id));
+        .filter(|current_id| servers.iter().any(|server| &server.config.id == current_id));
     Ok(FeishinImport {
         servers,
         current_server_id,
