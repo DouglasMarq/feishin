@@ -20,10 +20,10 @@ use crate::session::Session;
 use crate::store::JsonStore;
 use crate::ui::{AppState, AppWindow, Context, Page, login};
 
-type Jobs = Arc<Mutex<Vec<Box<dyn FnOnce() + Send>>>>;
+pub type Jobs = Arc<Mutex<Vec<Box<dyn FnOnce() + Send>>>>;
 type CopiedText = Arc<Mutex<Option<String>>>;
 
-const SIZE: PhysicalSize = PhysicalSize::new(1280, 820);
+pub const SIZE: PhysicalSize = PhysicalSize::new(1280, 820);
 const WORKER_SEPARATOR: char = '#';
 
 static JOBS_BY_TEST: LazyLock<Mutex<HashMap<String, Jobs>>> = LazyLock::new(Mutex::default);
@@ -102,6 +102,44 @@ impl Platform for RecordingPlatform {
     }
 }
 
+pub fn claim_routed_platform(window: &Rc<MinimalSoftwareWindow>) -> Option<Jobs> {
+    claim_platform(window, &CopiedText::default()).then(jobs_of_this_test)
+}
+
+pub fn routed_runtime(worker_threads: usize) -> Runtime {
+    tokio::runtime::Builder::new_multi_thread()
+        .worker_threads(worker_threads)
+        .thread_name(format!("{}{WORKER_SEPARATOR}worker", test_name()))
+        .enable_all()
+        .build()
+        .unwrap()
+}
+
+pub fn pump_until(
+    window: &MinimalSoftwareWindow,
+    jobs: &Jobs,
+    timeout: Duration,
+    done: impl Fn() -> bool,
+) -> bool {
+    let mut buffer = vec![PremultipliedRgbaColor::default(); (SIZE.width * SIZE.height) as usize];
+    let deadline = Instant::now() + timeout;
+    while Instant::now() < deadline {
+        slint::platform::update_timers_and_animations();
+        let queued: Vec<_> = jobs.lock().unwrap().drain(..).collect();
+        for job in queued {
+            job();
+        }
+        window.draw_if_needed(|renderer| {
+            renderer.render(&mut buffer, SIZE.width as usize);
+        });
+        if done() {
+            return true;
+        }
+        std::thread::sleep(Duration::from_millis(5));
+    }
+    false
+}
+
 pub struct TestWindow {
     pub app: AppWindow,
     commands: RefCell<UnboundedReceiver<Command>>,
@@ -121,13 +159,7 @@ impl TestWindow {
             return None;
         }
         let jobs = jobs_of_this_test();
-        let worker_name = format!("{}{WORKER_SEPARATOR}worker", test_name());
-        let runtime = tokio::runtime::Builder::new_multi_thread()
-            .worker_threads(2)
-            .thread_name(worker_name)
-            .enable_all()
-            .build()
-            .unwrap();
+        let runtime = routed_runtime(2);
         let dir = tempfile::tempdir().unwrap();
         let (sender, commands) = mpsc::unbounded_channel();
         let ctx = Context {
@@ -157,24 +189,7 @@ impl TestWindow {
     }
 
     pub fn pump(&self, done: impl Fn() -> bool) -> bool {
-        let mut buffer =
-            vec![PremultipliedRgbaColor::default(); (SIZE.width * SIZE.height) as usize];
-        let deadline = Instant::now() + Duration::from_secs(10);
-        while Instant::now() < deadline {
-            slint::platform::update_timers_and_animations();
-            let queued: Vec<_> = self.jobs.lock().unwrap().drain(..).collect();
-            for job in queued {
-                job();
-            }
-            self.window.draw_if_needed(|renderer| {
-                renderer.render(&mut buffer, SIZE.width as usize);
-            });
-            if done() {
-                return true;
-            }
-            std::thread::sleep(Duration::from_millis(5));
-        }
-        false
+        pump_until(&self.window, &self.jobs, Duration::from_secs(10), done)
     }
 
     pub fn copied_text(&self) -> Option<String> {

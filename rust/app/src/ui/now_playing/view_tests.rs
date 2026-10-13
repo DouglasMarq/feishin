@@ -1,9 +1,9 @@
 use std::sync::Arc;
-use std::time::{Duration, Instant};
+use std::time::Duration;
 
 use feishin_core::model::Song;
 use feishin_core::queue::Queue;
-use i_slint_backend_testing::{TestingBackend, TestingBackendOptions};
+use slint::platform::software_renderer::{MinimalSoftwareWindow, RepaintBufferType};
 use slint::{ComponentHandle, Model, SharedString};
 use tokio::sync::mpsc::UnboundedReceiver;
 
@@ -13,6 +13,7 @@ use crate::covers::DemoCovers;
 use crate::demo::{FakeServer, test_song};
 use crate::session::Session;
 use crate::store::JsonStore;
+use crate::ui::test_window::{Jobs, SIZE, claim_routed_platform, pump_until, routed_runtime};
 use crate::ui::{
     AppState, AppWindow, Context, LyricsStatus, NowPlayingState, Page, PlayerState, Route, queue,
 };
@@ -20,24 +21,48 @@ use crate::ui::{
 struct NowPlayingPage {
     window: AppWindow,
     commands: UnboundedReceiver<Command>,
+    screen: Screen,
     _runtime: tokio::runtime::Runtime,
     _dir: tempfile::TempDir,
 }
 
-fn claim_testing_backend() -> bool {
-    let backend = TestingBackend::new(TestingBackendOptions {
-        threading: true,
-        ..TestingBackendOptions::default()
-    });
-    slint::platform::set_platform(Box::new(backend)).is_ok()
+struct Screen {
+    software_window: std::rc::Rc<MinimalSoftwareWindow>,
+    jobs: Jobs,
 }
 
-fn open_now_playing_page() -> NowPlayingPage {
-    let runtime = tokio::runtime::Builder::new_multi_thread()
-        .worker_threads(1)
-        .enable_all()
-        .build()
-        .unwrap();
+impl Screen {
+    fn claim() -> Option<Self> {
+        let software_window = MinimalSoftwareWindow::new(RepaintBufferType::NewBuffer);
+        let jobs = claim_routed_platform(&software_window)?;
+        Some(Self {
+            software_window,
+            jobs,
+        })
+    }
+
+    fn wait_until_loaded(&self, window: &AppWindow) {
+        let state = window.global::<NowPlayingState>();
+        pump_until(
+            &self.software_window,
+            &self.jobs,
+            Duration::from_secs(10),
+            || is_fully_loaded(&state),
+        );
+    }
+
+    fn settle(&self) {
+        pump_until(
+            &self.software_window,
+            &self.jobs,
+            Duration::from_millis(50),
+            || false,
+        );
+    }
+}
+
+fn open_now_playing_page(screen: Screen) -> NowPlayingPage {
+    let runtime = routed_runtime(1);
     let dir = tempfile::tempdir().unwrap();
     let session = Session::default();
     session.set(Some(Arc::new(FakeServer::new(100))));
@@ -61,9 +86,11 @@ fn open_now_playing_page() -> NowPlayingPage {
         .global::<AppState>()
         .invoke_navigate(Route::NowPlaying, SharedString::default());
     window.show().unwrap();
+    screen.software_window.set_size(SIZE);
     NowPlayingPage {
         window,
         commands,
+        screen,
         _runtime: runtime,
         _dir: dir,
     }
@@ -74,33 +101,6 @@ fn is_fully_loaded(state: &NowPlayingState) -> bool {
         && state.get_similar().row_count() > 0
         && state.get_loaded()
         && state.get_has_cover()
-}
-
-fn wait_until_loaded(window: &AppWindow) {
-    let deadline = Instant::now() + Duration::from_secs(10);
-    let weak_window = window.as_weak();
-    let timer = slint::Timer::default();
-    timer.start(
-        slint::TimerMode::Repeated,
-        Duration::from_millis(20),
-        move || {
-            let Some(window) = weak_window.upgrade() else {
-                return;
-            };
-            if is_fully_loaded(&window.global::<NowPlayingState>()) || Instant::now() > deadline {
-                let _ = slint::quit_event_loop();
-            }
-        },
-    );
-    slint::run_event_loop().unwrap();
-    timer.stop();
-}
-
-fn settle() {
-    slint::Timer::single_shot(Duration::from_millis(50), || {
-        let _ = slint::quit_event_loop();
-    });
-    slint::run_event_loop().unwrap();
 }
 
 fn assert_song_details(state: &NowPlayingState) {
@@ -123,14 +123,15 @@ fn queue_of_five(current: &str) -> Queue {
     queue
 }
 
-fn assert_up_next_follows_queue(window: &AppWindow, state: &NowPlayingState) {
+fn assert_up_next_follows_queue(page: &NowPlayingPage, state: &NowPlayingState) {
+    let window = &page.window;
     let mut queue = queue_of_five("song-2");
     queue::set_view(window, queue.view());
-    settle();
+    page.screen.settle();
     assert_eq!(state.get_up_next().row_count(), 4);
     queue.play_uid(4);
     queue::set_view(window, queue.view());
-    settle();
+    page.screen.settle();
     assert_eq!(state.get_up_next().row_count(), 2);
     assert_eq!(
         state.get_up_next().row_data(0).map(|row| row.uid),
@@ -138,7 +139,7 @@ fn assert_up_next_follows_queue(window: &AppWindow, state: &NowPlayingState) {
     );
     queue.remove(&[5]);
     queue::set_view(window, queue.view());
-    settle();
+    page.screen.settle();
     assert_eq!(state.get_up_next().row_count(), 1);
 }
 
@@ -151,21 +152,21 @@ fn played_songs(commands: &mut UnboundedReceiver<Command>) -> Option<(Vec<Song>,
 
 #[test]
 fn view_shows_demo_lyrics_and_similar_songs() {
-    if !claim_testing_backend() {
+    let Some(screen) = Screen::claim() else {
         eprintln!("skipped: another test owns the Slint event loop");
         return;
-    }
-    let mut page = open_now_playing_page();
+    };
+    let mut page = open_now_playing_page(screen);
     let window = &page.window;
-    wait_until_loaded(window);
+    page.screen.wait_until_loaded(window);
     let state = window.global::<NowPlayingState>();
     assert_song_details(&state);
 
     window.global::<PlayerState>().set_position_ms(6_500);
-    settle();
+    page.screen.settle();
     assert_eq!(state.get_active_line(), 1);
 
-    assert_up_next_follows_queue(window, &state);
+    assert_up_next_follows_queue(&page, &state);
 
     let similar = state.get_similar().row_data(0).unwrap();
     state.invoke_play_similar(similar.id.clone());
