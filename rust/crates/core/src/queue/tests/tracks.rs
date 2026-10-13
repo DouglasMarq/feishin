@@ -73,7 +73,7 @@ fn legacy_items_holding_full_songs_still_load() {
     let legacy_item = serde_json::json!({ "uid": 7, "song": album_song("old") });
     let item: QueueItem = serde_json::from_value(legacy_item).unwrap();
     assert_eq!(item.uid, 7);
-    assert_eq!(item.track, QueueTrack::from(&album_song("old")));
+    assert_eq!(*item.track, QueueTrack::from(&album_song("old")));
 }
 
 #[test]
@@ -152,6 +152,23 @@ fn removing_the_last_track_of_an_album_frees_its_shared_strings() {
     queue.remove(&[queue.items()[1].uid]);
     assert_eq!(dropped_album.strong_count(), 0);
     assert_eq!(kept_album.strong_count(), 2);
+    assert_invariants(&queue);
+}
+
+#[test]
+fn removing_a_track_frees_its_strings_even_after_a_view_was_published() {
+    let mut queue = Queue::with_seed(7);
+    queue.play_now(
+        vec![song_on_album("a", "Kept"), song_on_album("b", "Dropped")],
+        Some("a"),
+    );
+    let dropped_album = queue
+        .items()
+        .get(1)
+        .and_then(|item| item.track.album.as_ref().map(Arc::downgrade));
+    drop(queue.view());
+    queue.remove(&[queue.items()[1].uid]);
+    assert_eq!(dropped_album.map(|album| album.strong_count()), Some(0));
     assert_invariants(&queue);
 }
 

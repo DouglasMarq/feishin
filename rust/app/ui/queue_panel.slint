@@ -2,13 +2,33 @@ import { ListView } from "std-widgets.slint";
 import { Theme, Icons } from "theme.slint";
 import { QueueState } from "globals.slint";
 import { Icon, IconButton } from "widgets.slint";
+import { SettingsState } from "settings.slint";
 
 export component QueuePanel inherits Rectangle {
     property <length> row-height: 48px;
     property <int> drag-from: -1;
     property <int> drag-to: -1;
+    property <string> current-uid: QueueState.current-uid;
     width: 340px;
     background: Theme.background-alt;
+
+    init => {
+        self.reveal-current();
+    }
+    changed current-uid => {
+        self.reveal-current();
+    }
+
+    function reveal-current() {
+        if (!SettingsState.follow-current-song || QueueState.current-position < 0) {
+            return;
+        }
+        let row-top = QueueState.current-position * root.row-height;
+        if (row-top >= -list.content-y && row-top + root.row-height <= list.visible-height - list.content-y) {
+            return;
+        }
+        list.content-y = max(min(0px, list.visible-height - list.content-height), min(0px, (list.visible-height - root.row-height) / 2 - row-top));
+    }
 
     Rectangle {
         x: 0;
@@ -39,7 +59,7 @@ export component QueuePanel inherits Rectangle {
             }
         }
 
-        ListView {
+        list := ListView {
             for row[row-index] in QueueState.rows: Rectangle {
                 height: root.row-height;
                 background: row.current ? Theme.selected : (touch.has-hover ? Theme.hover : transparent);

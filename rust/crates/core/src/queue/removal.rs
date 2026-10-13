@@ -26,8 +26,8 @@ impl Queue {
             .retain(|uid, _item_index| !removed_uids.contains(uid));
         self.reindex_from(first_removed_index);
         self.release_spare_capacity();
-        self.interner.release_unused();
         self.bump_revision();
+        self.interner.release_unused();
     }
 
     pub fn clear(&mut self) {
@@ -35,10 +35,10 @@ impl Queue {
         self.uid_indexes = HashMap::new();
         self.interner.clear();
         self.current_uid = None;
-        self.bump_revision();
         if let Some(play_order) = &mut self.shuffled_play_order {
             play_order.clear();
         }
+        self.bump_revision();
     }
 
     fn release_spare_capacity(&mut self) {

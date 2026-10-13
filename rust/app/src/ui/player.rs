@@ -161,8 +161,7 @@ fn apply(window: &AppWindow, update: UiUpdate) {
             state.set_shuffle(shuffle);
             state.set_repeat(repeat_index(repeat));
         }
-        UiUpdate::Queue { entries, current } => queue::set_entries(window, entries, current),
-        UiUpdate::QueueCurrent(current) => queue::set_current(window, current),
+        UiUpdate::Queue(view) => queue::set_view(window, view),
         UiUpdate::Error(message) => show_status(window, &message),
         UiUpdate::Raise => raise(window),
         UiUpdate::Quit => quit(),

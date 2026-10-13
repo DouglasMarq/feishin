@@ -1,3 +1,5 @@
+use std::sync::Arc;
+
 use serde::{Deserialize, Serialize};
 
 use super::QueueTrack;
@@ -8,7 +10,7 @@ pub type Uid = u64;
 pub struct QueueItem {
     pub uid: Uid,
     #[serde(alias = "song")]
-    pub track: QueueTrack,
+    pub track: Arc<QueueTrack>,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default, Serialize, Deserialize)]

@@ -2,14 +2,15 @@ use std::sync::Arc;
 use std::time::{Duration, Instant};
 
 use feishin_core::model::Song;
+use feishin_core::queue::Queue;
 use i_slint_backend_testing::{TestingBackend, TestingBackendOptions};
 use slint::{ComponentHandle, Model, SharedString};
 use tokio::sync::mpsc::UnboundedReceiver;
 
 use crate::connect::DemoConnector;
-use crate::controller::{Command, QueueEntry};
+use crate::controller::Command;
 use crate::covers::DemoCovers;
-use crate::demo::FakeServer;
+use crate::demo::{FakeServer, test_song};
 use crate::session::Session;
 use crate::store::JsonStore;
 use crate::ui::{
@@ -113,27 +114,32 @@ fn assert_song_details(state: &NowPlayingState) {
     assert!(state.get_has_cover());
 }
 
-fn queue_entry(uid: u64) -> QueueEntry {
-    QueueEntry {
-        uid,
-        song_id: format!("song-{uid}"),
-        title: String::new(),
-        artists: String::new(),
-        duration_ms: 0,
-    }
+fn queue_of_five(current: &str) -> Queue {
+    let mut queue = Queue::with_seed(1);
+    let songs = (1..=5)
+        .map(|index| test_song(&format!("song-{index}"), 1_000))
+        .collect();
+    queue.play_now(songs, Some(current));
+    queue
 }
 
 fn assert_up_next_follows_queue(window: &AppWindow, state: &NowPlayingState) {
-    queue::set_entries(window, (1..=5).map(queue_entry).collect(), Some(2));
+    let mut queue = queue_of_five("song-2");
+    queue::set_view(window, queue.view());
     settle();
     assert_eq!(state.get_up_next().row_count(), 4);
-    queue::set_current(window, Some(4));
+    queue.play_uid(4);
+    queue::set_view(window, queue.view());
     settle();
     assert_eq!(state.get_up_next().row_count(), 2);
     assert_eq!(
         state.get_up_next().row_data(0).map(|row| row.uid),
         Some("4".into())
     );
+    queue.remove(&[5]);
+    queue::set_view(window, queue.view());
+    settle();
+    assert_eq!(state.get_up_next().row_count(), 1);
 }
 
 fn played_songs(commands: &mut UnboundedReceiver<Command>) -> Option<(Vec<Song>, Option<String>)> {

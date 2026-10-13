@@ -1,17 +1,18 @@
 use std::cell::Cell;
 
-use slint::{Model, ModelNotify, ModelRc, ModelTracker};
+use slint::{Model, ModelNotify, ModelTracker};
 
 use crate::ui::QueueRow;
+use crate::ui::queue::{SharedQueueView, row_at};
 
 pub struct UpNextModel {
-    queue: ModelRc<QueueRow>,
+    queue: SharedQueueView,
     offset: Cell<Option<usize>>,
     notify: ModelNotify,
 }
 
 impl UpNextModel {
-    pub(super) fn new(queue: ModelRc<QueueRow>) -> Self {
+    pub(super) fn new(queue: SharedQueueView) -> Self {
         Self {
             queue,
             offset: Cell::new(None),
@@ -19,21 +20,8 @@ impl UpNextModel {
         }
     }
 
-    fn is_current(&self, index: usize) -> bool {
-        self.queue.row_data(index).is_some_and(|row| row.current)
-    }
-
-    fn locate(&self) -> Option<usize> {
-        if let Some(offset) = self.offset.get()
-            && self.is_current(offset)
-        {
-            return Some(offset);
-        }
-        (0..self.queue.row_count()).find(|&index| self.is_current(index))
-    }
-
     pub fn refresh(&self) -> Option<usize> {
-        let offset = self.locate();
+        let offset = self.queue.borrow().current_position();
         self.offset.set(offset);
         self.notify.reset();
         offset
@@ -46,11 +34,12 @@ impl Model for UpNextModel {
     fn row_count(&self) -> usize {
         self.offset
             .get()
-            .map_or(0, |offset| self.queue.row_count().saturating_sub(offset))
+            .map_or(0, |offset| self.queue.borrow().len().saturating_sub(offset))
     }
 
     fn row_data(&self, row: usize) -> Option<QueueRow> {
-        self.queue.row_data(self.offset.get()?.checked_add(row)?)
+        let position = self.offset.get()?.checked_add(row)?;
+        row_at(&self.queue.borrow(), position)
     }
 
     fn model_tracker(&self) -> &dyn ModelTracker {
@@ -60,36 +49,37 @@ impl Model for UpNextModel {
 
 #[cfg(test)]
 mod tests {
-    use std::rc::Rc;
-
-    use slint::VecModel;
+    use feishin_core::queue::{Advance, Queue};
 
     use super::*;
+    use crate::demo::test_song;
+    use crate::ui::queue::QueueModel;
 
-    fn queue_row(uid: &str, current: bool) -> QueueRow {
-        QueueRow {
-            uid: uid.into(),
-            current,
-            ..QueueRow::default()
-        }
+    fn playing_queue() -> Queue {
+        let mut queue = Queue::with_seed(3);
+        let songs = (1..=3)
+            .map(|index| test_song(&index.to_string(), 1_000))
+            .collect();
+        queue.play_now(songs, Some("2"));
+        queue
     }
 
     #[test]
     fn up_next_starts_at_the_current_row() {
-        let queue = Rc::new(VecModel::from(vec![
-            queue_row("1", false),
-            queue_row("2", true),
-            queue_row("3", false),
-        ]));
-        let model = UpNextModel::new(ModelRc::from(Rc::clone(&queue)));
+        let queue_model = QueueModel::default();
+        let mut queue = playing_queue();
+        queue_model.set_view(queue.view());
+        let model = UpNextModel::new(queue_model.shared_view());
         assert_eq!(model.row_count(), 0);
-        model.refresh();
+        assert_eq!(model.refresh(), Some(1));
         assert_eq!(model.row_count(), 2);
-        assert_eq!(model.row_data(0).map(|row| row.uid), Some("2".into()));
-        queue.set_row_data(1, queue_row("2", false));
-        queue.set_row_data(2, queue_row("3", true));
-        model.refresh();
+        assert_eq!(model.row_data(0).map(|row| row.title), Some("2".into()));
+        assert!(model.row_data(0).is_some_and(|row| row.current));
+        queue.next(Advance::Manual);
+        queue_model.set_view(queue.view());
+        assert_eq!(model.refresh(), Some(2));
         assert_eq!(model.row_count(), 1);
-        assert_eq!(model.row_data(0).map(|row| row.uid), Some("3".into()));
+        assert_eq!(model.row_data(0).map(|row| row.title), Some("3".into()));
+        assert!(model.row_data(1).is_none());
     }
 }

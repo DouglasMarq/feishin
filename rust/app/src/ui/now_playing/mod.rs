@@ -2,7 +2,7 @@ use std::rc::Rc;
 
 use slint::{ComponentHandle, ModelRc};
 
-use super::{AppWindow, Context, NowPlayingState, QueueState};
+use super::{AppWindow, Context, NowPlayingState, queue};
 use crate::controller::Command;
 
 mod fetching;
@@ -66,8 +66,7 @@ fn install_play_similar(state: &NowPlayingState, ctx: &Context, view: Rc<View>) 
 
 pub fn install(window: &AppWindow, ctx: &Context) {
     let state = window.global::<NowPlayingState>();
-    let queue = window.global::<QueueState>().get_rows();
-    let up_next = Rc::new(UpNextModel::new(queue));
+    let up_next = Rc::new(UpNextModel::new(queue::shared_view(window)));
     let view = Rc::new(View::new(Rc::clone(&up_next)));
     register_view(&view);
     state.set_up_next(ModelRc::from(up_next));

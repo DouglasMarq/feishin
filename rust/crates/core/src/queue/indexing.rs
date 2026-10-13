@@ -1,3 +1,5 @@
+use std::sync::OnceLock;
+
 use super::Queue;
 
 impl Queue {
@@ -22,5 +24,6 @@ impl Queue {
 
     pub(super) fn bump_revision(&mut self) {
         self.revision = self.revision.wrapping_add(1);
+        self.layout = OnceLock::new();
     }
 }

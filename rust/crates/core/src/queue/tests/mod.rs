@@ -11,3 +11,4 @@ mod streamed;
 mod streamed_fallback;
 mod support;
 mod tracks;
+mod view;

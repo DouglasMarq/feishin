@@ -1,5 +1,5 @@
 use feishin_api::StreamOptions;
-use feishin_core::queue::{Advance, QueueItem};
+use feishin_core::queue::{Advance, QueueItem, QueueTrack};
 
 use super::{Controller, UiUpdate};
 use crate::audio::Track;
@@ -39,7 +39,7 @@ impl Controller {
                 .send(UiUpdate::Error("Not connected to a server".into()));
             return;
         };
-        let now_playing = item.track.clone();
+        let now_playing = QueueTrack::clone(&item.track);
         self.scrobble_tracker.stop();
         self.preloaded = None;
         self.position_ms = start_ms;
@@ -48,7 +48,7 @@ impl Controller {
         self.deps
             .ui
             .send(UiUpdate::NowPlaying(Some(Box::new(now_playing))));
-        self.deps.ui.send(UiUpdate::QueueCurrent(Some(track.uid)));
+        self.publish_queue_current();
         self.publish_playback();
         self.schedule_queue_sync();
     }

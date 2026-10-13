@@ -349,8 +349,7 @@ component SimilarPanel inherits Rectangle {
 export component NowPlayingView inherits Rectangle {
     property <string> current-song: PlayerState.song-id;
     property <int> position: PlayerState.position-ms;
-    property <int> up-next-head: NowPlayingState.up-next-offset;
-    property <string> queue-probe: QueueState.rows.length + ":" + (up-next-head >= 0 && up-next-head < QueueState.rows.length ? QueueState.rows[up-next-head].uid + (QueueState.rows[up-next-head].current ? "*" : "") : "") + ":" + (up-next-head >= 0 && up-next-head + 1 < QueueState.rows.length ? QueueState.rows[up-next-head + 1].uid : "");
+    property <string> queue-probe: QueueState.revision + ":" + QueueState.current-position;
     background: Theme.background;
     clip: true;
 

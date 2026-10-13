@@ -1,16 +1,7 @@
 use feishin_core::model::Song;
-use feishin_core::queue::{QueueTrack, RepeatMode, Uid};
+use feishin_core::queue::{QueueTrack, QueueView, RepeatMode};
 
 use crate::sleep_timer::SleepStatus;
-
-#[derive(Debug, Clone, PartialEq)]
-pub struct QueueEntry {
-    pub uid: Uid,
-    pub song_id: String,
-    pub title: String,
-    pub artists: String,
-    pub duration_ms: u64,
-}
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum UiUpdate {
@@ -28,11 +19,7 @@ pub enum UiUpdate {
         shuffle: bool,
         repeat: RepeatMode,
     },
-    Queue {
-        entries: Vec<QueueEntry>,
-        current: Option<Uid>,
-    },
-    QueueCurrent(Option<Uid>),
+    Queue(QueueView),
     Error(String),
     Raise,
     Quit,
