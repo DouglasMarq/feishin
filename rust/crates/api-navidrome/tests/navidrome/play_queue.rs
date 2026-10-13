@@ -72,6 +72,22 @@ async fn play_queue_uses_native_api_without_index_extension() {
         .expect("save");
 }
 
+#[tokio::test]
+async fn huge_index_queue_is_skipped_without_form_post() {
+    let mock = MockServer::start().await;
+    mount_ping(&mock, "0.58.0", &["indexBasedQueue"]).await;
+    Mock::given(path("/rest/savePlayQueueByIndex.view"))
+        .respond_with(subsonic_ok(json!({})))
+        .expect(0)
+        .mount(&mock)
+        .await;
+    let song_ids: Vec<String> = (0..2_000).map(|index| format!("song-{index}")).collect();
+    server(&mock, Some("jwt-1"))
+        .save_play_queue(&song_ids, Some("song-1"), 5)
+        .await
+        .expect("skipped");
+}
+
 async fn mount_legacy_queue(mock: &MockServer) {
     Mock::given(method("GET"))
         .and(path("/rest/getPlayQueue.view"))

@@ -22,7 +22,7 @@ use std::sync::{Arc, OnceLock};
 
 pub use anchored::InsertAnchor;
 pub use item::{Advance, QueueItem, RepeatMode, Uid};
-pub use snapshot::QueueSnapshot;
+pub use snapshot::{QueueSnapshot, QueueSnapshotRef};
 pub use track::QueueTrack;
 pub use view::QueueView;
 

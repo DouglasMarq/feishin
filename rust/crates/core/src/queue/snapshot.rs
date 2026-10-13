@@ -15,7 +15,38 @@ pub struct QueueSnapshot {
     pub next_uid: Uid,
 }
 
+#[derive(Debug, Clone, Copy, PartialEq)]
+pub struct QueueSnapshotRef<'queue> {
+    pub items: &'queue [QueueItem],
+    pub shuffled: Option<&'queue [usize]>,
+    pub current_uid: Option<Uid>,
+    pub repeat: RepeatMode,
+    pub next_uid: Uid,
+}
+
+impl QueueSnapshot {
+    pub fn snapshot_ref(&self) -> QueueSnapshotRef<'_> {
+        QueueSnapshotRef {
+            items: &self.items,
+            shuffled: self.shuffled.as_deref(),
+            current_uid: self.current_uid,
+            repeat: self.repeat,
+            next_uid: self.next_uid,
+        }
+    }
+}
+
 impl Queue {
+    pub fn snapshot_ref(&self) -> QueueSnapshotRef<'_> {
+        QueueSnapshotRef {
+            items: &self.items,
+            shuffled: self.shuffled_play_order.as_deref(),
+            current_uid: self.current_uid,
+            repeat: self.repeat,
+            next_uid: self.next_uid,
+        }
+    }
+
     pub fn snapshot(&self) -> QueueSnapshot {
         QueueSnapshot {
             items: self.items.clone(),

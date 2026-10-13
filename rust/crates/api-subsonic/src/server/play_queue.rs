@@ -2,9 +2,21 @@ use feishin_api::{ApiError, Result};
 use feishin_core::model::{ServerPlayQueue, Song};
 
 use super::SubsonicServer;
-use crate::client::Params;
-use crate::extensions::PlayQueueMode;
+use crate::client::{Params, RequestEncoding};
+use crate::extensions::{Extensions, PlayQueueMode};
 use crate::types::{GetPlayQueue, GetPlayQueueByIndex, PlayQueue};
+
+const MAX_QUERY_STRING_BYTES: usize = 8_000;
+const ID_PARAMETER_BYTES: usize = "&id=".len();
+
+fn too_long_for_a_query_string(extensions: &Extensions, song_ids: &[String]) -> bool {
+    let id_bytes: usize = song_ids
+        .iter()
+        .map(|song_id| song_id.len() + ID_PARAMETER_BYTES)
+        .sum();
+    extensions.request_encoding() == RequestEncoding::QueryString
+        && id_bytes > MAX_QUERY_STRING_BYTES
+}
 
 fn song_id_at_index(songs: &[Song], current_index: Option<f64>) -> Option<String> {
     current_index
@@ -26,12 +38,20 @@ impl SubsonicServer {
         current_song_id: Option<&str>,
         position_ms: u64,
     ) -> Result<()> {
+        let extensions = self.extensions().await?;
+        if too_long_for_a_query_string(extensions, song_ids) {
+            tracing::debug!(
+                songs = song_ids.len(),
+                "play queue not saved: too long for a GET request and the server lacks formPost"
+            );
+            return Ok(());
+        }
         let current_index =
             current_song_id.and_then(|id| song_ids.iter().position(|song_id| song_id == id));
         let params = Params::new()
             .add_each("id", song_ids)
             .add("position", position_ms);
-        match self.extensions().await?.play_queue_mode() {
+        match extensions.play_queue_mode() {
             PlayQueueMode::IndexBased => {
                 let params = params.add_optional("currentIndex", current_index);
                 self.send("savePlayQueueByIndex.view", params).await

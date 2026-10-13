@@ -56,6 +56,21 @@ fn items_with_duplicate_uids() -> Vec<QueueItem> {
 }
 
 #[test]
+fn view_borrows_the_same_state_as_the_snapshot() {
+    let mut queue = Queue::with_seed(3);
+    queue.set_shuffle(true);
+    queue.play_now(numbered_songs(5), Some("s2"));
+    let snapshot = queue.snapshot();
+    let view = queue.snapshot_ref();
+    assert_eq!(view.items, snapshot.items.as_slice());
+    assert_eq!(view.shuffled, snapshot.shuffled.as_deref());
+    assert_eq!(view.current_uid, snapshot.current_uid);
+    assert_eq!(view.repeat, snapshot.repeat);
+    assert_eq!(view.next_uid, snapshot.next_uid);
+    assert_eq!(snapshot.snapshot_ref(), view);
+}
+
+#[test]
 fn from_snapshot_repairs_inconsistent_state() {
     let queue = Queue::from_snapshot(QueueSnapshot {
         items: items_with_duplicate_uids(),

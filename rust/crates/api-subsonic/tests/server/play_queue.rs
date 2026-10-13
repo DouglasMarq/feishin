@@ -113,6 +113,44 @@ async fn play_queue_by_index_with_form_post() {
     assert_eq!(queue.position_ms, 1_500);
 }
 
+fn many_song_ids() -> Vec<String> {
+    (0..2_000).map(|index| format!("song-{index}")).collect()
+}
+
+#[tokio::test]
+async fn huge_play_queue_is_skipped_without_form_post() {
+    let mock = MockServer::start().await;
+    mount_plain_ping(&mock).await;
+    Mock::given(path("/rest/savePlayQueue.view"))
+        .respond_with(ok(json!({})))
+        .expect(0)
+        .mount(&mock)
+        .await;
+    let saved = server(&mock)
+        .save_play_queue(&many_song_ids(), Some("song-3"), 10)
+        .await;
+    assert!(saved.is_ok());
+}
+
+#[tokio::test]
+async fn huge_play_queue_is_posted_with_form_post() {
+    let mock = MockServer::start().await;
+    mount_extensions(&mock, json!([{ "name": "formPost", "versions": [1] }])).await;
+    Mock::given(method("POST"))
+        .and(path("/rest/savePlayQueue.view"))
+        .and(body_string_contains(
+            "&id=song-1999&position=10&current=song-3",
+        ))
+        .respond_with(ok(json!({})))
+        .expect(1)
+        .mount(&mock)
+        .await;
+    let saved = server(&mock)
+        .save_play_queue(&many_song_ids(), Some("song-3"), 10)
+        .await;
+    assert!(saved.is_ok());
+}
+
 #[tokio::test]
 async fn empty_play_queue_is_none() {
     let mock = MockServer::start().await;
