@@ -1,6 +1,6 @@
 import { Theme, Icons } from "theme.slint";
 import { AppState, Route } from "globals.slint";
-import { Icon, IconButton } from "widgets.slint";
+import { Icon, IconButton, TooltipAnchor } from "widgets.slint";
 
 export struct HomeAlbum {
     id: string,
@@ -102,6 +102,11 @@ component AlbumCard inherits Rectangle {
                 height: 22px;
             }
 
+            TooltipAnchor {
+                text: "Play";
+                hovered: play-touch.has-hover;
+            }
+
             play-touch := TouchArea {
                 enabled: card-touch.has-hover || self.has-hover;
                 mouse-cursor: pointer;
@@ -194,6 +199,7 @@ component ShelfView inherits VerticalLayout {
         if root.shelf.refreshable: IconButton {
             icon: HomeIcons.refresh;
             enabled: !root.shelf.loading;
+            tooltip: "Refresh";
             clicked => {
                 HomeState.refresh(root.index);
             }
@@ -202,6 +208,7 @@ component ShelfView inherits VerticalLayout {
         IconButton {
             icon: HomeIcons.left;
             enabled: strip.content-x < 0;
+            tooltip: "Scroll left";
             clicked => {
                 strip.content-x = min(0px, strip.content-x + strip.width * 0.8);
             }
@@ -210,6 +217,7 @@ component ShelfView inherits VerticalLayout {
         IconButton {
             icon: HomeIcons.right;
             enabled: -strip.content-x < root.max-scroll;
+            tooltip: "Scroll right";
             clicked => {
                 strip.content-x = max(-root.max-scroll, strip.content-x - strip.width * 0.8);
             }

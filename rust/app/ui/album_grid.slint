@@ -1,6 +1,6 @@
 import { ListView } from "std-widgets.slint";
 import { Theme, Icons } from "theme.slint";
-import { Icon } from "widgets.slint";
+import { Icon, TooltipAnchor } from "widgets.slint";
 import { Skeleton } from "tracks.slint";
 
 export struct AlbumGridCard {
@@ -119,6 +119,11 @@ export component AlbumGridCardView inherits Rectangle {
                                 color: white;
                                 width: 24px;
                                 height: 24px;
+                            }
+
+                            TooltipAnchor {
+                                text: "Play";
+                                hovered: play-touch.has-hover;
                             }
 
                             play-touch := TouchArea {
