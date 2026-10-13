@@ -184,6 +184,7 @@ impl Controller {
             return;
         }
         self.position_ms = position_ms;
+        self.youtube.move_load_start(position_ms);
         self.update_media_status();
         self.publish_playback();
         self.schedule_queue_sync();

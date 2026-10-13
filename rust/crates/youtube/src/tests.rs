@@ -314,3 +314,27 @@ async fn empty_video_output_is_an_error() {
     let error = fake.yt_dlp().video("abc").await.unwrap_err();
     assert_eq!(error, YouTubeError::NoVideoDetails);
 }
+
+#[tokio::test]
+#[ignore = "needs network and FEISHIN_REAL_YT_DLP pointing at yt-dlp"]
+async fn real_yt_dlp_finds_and_resolves_a_song() {
+    let Ok(program) = std::env::var("FEISHIN_REAL_YT_DLP") else {
+        eprintln!("skipping: FEISHIN_REAL_YT_DLP is not set");
+        return;
+    };
+    let yt_dlp = YtDlp::new(program);
+    let hits = yt_dlp
+        .search_songs("daft punk one more time", 3)
+        .await
+        .unwrap();
+    let first = hits.first().unwrap();
+    let video = yt_dlp.video(&first.video_id).await.unwrap();
+    assert!(!video.title.is_empty());
+    let stream = yt_dlp.audio_stream(&first.video_id).await.unwrap();
+    assert!(stream.url.starts_with("https://"));
+    assert!(
+        stream
+            .expires_at
+            .is_some_and(|expires_at| expires_at > unix_now())
+    );
+}

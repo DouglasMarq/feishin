@@ -6,7 +6,7 @@ const CACHED_STREAMS: usize = 8;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum ResolvePurpose {
-    Load { request: u64, start_ms: u64 },
+    Load { request: u64 },
     Preload,
 }
 
@@ -21,6 +21,7 @@ pub struct YouTubeResolution {
 struct PendingTask {
     uid: Uid,
     request: u64,
+    start_ms: u64,
     task: AbortHandle,
 }
 
@@ -70,8 +71,20 @@ impl YouTubeStreams {
         self.requests
     }
 
-    pub(super) fn track_load(&mut self, uid: Uid, request: u64, task: AbortHandle) {
-        abort(self.load.replace(PendingTask { uid, request, task }));
+    pub(super) fn track_load(&mut self, uid: Uid, request: u64, start_ms: u64, task: AbortHandle) {
+        let pending = PendingTask {
+            uid,
+            request,
+            start_ms,
+            task,
+        };
+        abort(self.load.replace(pending));
+    }
+
+    pub(in crate::controller) fn move_load_start(&mut self, start_ms: u64) {
+        if let Some(pending) = &mut self.load {
+            pending.start_ms = start_ms;
+        }
     }
 
     pub(in crate::controller) fn cancel_load(&mut self) {
@@ -82,15 +95,19 @@ impl YouTubeStreams {
         self.load.is_some()
     }
 
-    pub(super) fn finish_load(&mut self, uid: Uid, request: u64) -> bool {
+    pub(in crate::controller) fn loading_uid(&self) -> Option<Uid> {
+        self.load.as_ref().map(|pending| pending.uid)
+    }
+
+    pub(super) fn finish_load(&mut self, uid: Uid, request: u64) -> Option<u64> {
         let matches = self
             .load
             .as_ref()
             .is_some_and(|pending| pending.uid == uid && pending.request == request);
-        if matches {
-            self.load = None;
-        }
         matches
+            .then(|| self.load.take())
+            .flatten()
+            .map(|pending| pending.start_ms)
     }
 
     pub(super) fn wants_preload(&self, uid: Uid) -> bool {
@@ -103,7 +120,13 @@ impl YouTubeStreams {
 
     pub(super) fn track_preload(&mut self, uid: Uid, task: AbortHandle) {
         let request = self.next_request();
-        abort(self.preload.replace(PendingTask { uid, request, task }));
+        let pending = PendingTask {
+            uid,
+            request,
+            start_ms: 0,
+            task,
+        };
+        abort(self.preload.replace(pending));
     }
 
     pub(super) fn finish_preload(&mut self, uid: Uid) {

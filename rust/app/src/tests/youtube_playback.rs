@@ -133,3 +133,30 @@ async fn a_failed_preload_is_not_retried_until_the_track_plays() {
     assert_eq!(fake.calls(), 1);
     assert!(harness.ui.errors().is_empty());
 }
+
+#[tokio::test]
+async fn removing_a_track_that_is_still_resolving_plays_the_next_one() {
+    let fake = FakeYtDlp::with_body("exec sleep 30").await;
+    let mut harness = fake.harness(false, false);
+    let song = QueueTrack::from(&test_songs(1, 100_000)[0]);
+    play_tracks(&mut harness, vec![youtube_track("slow"), song]);
+    let resolving = uid_of_video(&harness, "slow");
+    harness.controller.handle(Command::Remove(vec![resolving]));
+    let song_uid = harness.uid_of("s0").unwrap();
+    assert_eq!(
+        harness.audio.take().last(),
+        Some(&AudioCall::Load(song_uid, 0))
+    );
+    assert!(!harness.controller.is_resolving());
+}
+
+#[tokio::test]
+async fn seeking_while_resolving_moves_the_start() {
+    let fake = FakeYtDlp::printing(FUTURE_URL).await;
+    let mut harness = fake.harness(false, false);
+    play_tracks(&mut harness, vec![youtube_track("abc")]);
+    harness.controller.handle(Command::Seek(42_000));
+    harness.handle_next_command().await;
+    let uid = uid_of_video(&harness, "abc");
+    assert_eq!(harness.audio.take(), [AudioCall::Load(uid, 42_000)]);
+}

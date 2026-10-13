@@ -23,9 +23,9 @@ impl Controller {
     ) {
         self.halt_for_resolution(start_ms);
         let request = self.youtube.next_request();
-        let purpose = ResolvePurpose::Load { request, start_ms };
+        let purpose = ResolvePurpose::Load { request };
         let task = self.spawn_resolution(uid, &video.video_id, purpose);
-        self.youtube.track_load(uid, request, task);
+        self.youtube.track_load(uid, request, start_ms, task);
         self.update_media_status();
         self.announce_current();
     }
@@ -49,11 +49,13 @@ impl Controller {
         &mut self,
         uid: Uid,
         request: u64,
-        start_ms: u64,
         result: Result<StreamUrl, YouTubeError>,
     ) {
         let still_current = self.queue.current().map(|item| item.uid) == Some(uid);
-        if !self.youtube.finish_load(uid, request) || !still_current {
+        let Some(start_ms) = self.youtube.finish_load(uid, request) else {
+            return;
+        };
+        if !still_current {
             return;
         }
         match result {

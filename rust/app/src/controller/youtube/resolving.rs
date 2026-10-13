@@ -50,9 +50,7 @@ impl Controller {
             self.youtube.remember(&video_id, stream.clone());
         }
         match purpose {
-            ResolvePurpose::Load { request, start_ms } => {
-                self.finish_load_resolution(uid, request, start_ms, result);
-            }
+            ResolvePurpose::Load { request } => self.finish_load_resolution(uid, request, result),
             ResolvePurpose::Preload => self.finish_preload_resolution(uid, result),
         }
     }
