@@ -12,11 +12,11 @@ pub(crate) enum StandbyLoad {
 }
 
 pub(crate) fn plan_standby_load(crossfade: Duration, lead: DeckClock) -> StandbyLoad {
-    let Some(window) = FadeWindow::planned(lead.duration, crossfade) else {
-        return StandbyLoad::Now;
-    };
     let Some(position) = lead.position else {
         return StandbyLoad::Later(LONGEST_RECHECK);
+    };
+    let Some(window) = FadeWindow::planned(lead.duration, crossfade) else {
+        return StandbyLoad::Now;
     };
     let load_at = window.starts_at() - STANDBY_LOAD_LEAD_SECONDS;
     match Duration::try_from_secs_f64(load_at - position) {
@@ -76,9 +76,11 @@ mod tests {
             plan_standby_load(FIVE_SECONDS, clock(Some(10.0), None)),
             StandbyLoad::Now
         );
-        assert_eq!(
-            plan_standby_load(FIVE_SECONDS, clock(None, Some(300.0))),
-            StandbyLoad::Later(LONGEST_RECHECK)
-        );
+        for duration in [Some(300.0), None] {
+            assert_eq!(
+                plan_standby_load(FIVE_SECONDS, clock(None, duration)),
+                StandbyLoad::Later(LONGEST_RECHECK)
+            );
+        }
     }
 }
