@@ -14,6 +14,8 @@ const LIST_THUMBNAIL: &str = "/thumbnail/musicThumbnailRenderer/thumbnail";
 const CARD_THUMBNAIL: &str = "/thumbnailRenderer/musicThumbnailRenderer/thumbnail";
 const TITLE_ENDPOINT: &str =
     "/flexColumns/0/musicResponsiveListItemFlexColumnRenderer/text/runs/0/navigationEndpoint";
+const WATCH_PLAYLIST_ID: &str = "/watchPlaylistEndpoint/playlistId";
+const PLAYLIST_BROWSE_PREFIX: &str = "VL";
 const OVERLAY_ENDPOINT: &str = "/overlay/musicItemThumbnailOverlayRenderer/content/musicPlayButtonRenderer/playNavigationEndpoint";
 
 #[derive(Debug, Clone, Default)]
@@ -121,19 +123,28 @@ fn card_item(renderer: &Value) -> Option<ShelfItem> {
             thumbnail_url,
         )));
     }
+    let (browse_id, kind) = card_target(endpoint)?;
+    Some(ShelfItem::Collection(MusicCollection {
+        browse_id,
+        kind,
+        title,
+        subtitle: text_of(renderer.get("subtitle")),
+        thumbnail_url,
+    }))
+}
+
+fn card_target(endpoint: &Value) -> Option<(String, CollectionKind)> {
+    if let Some(playlist_id) = string(endpoint, WATCH_PLAYLIST_ID) {
+        let browse_id = format!("{PLAYLIST_BROWSE_PREFIX}{playlist_id}");
+        return is_browse_id(&browse_id).then_some((browse_id, CollectionKind::Playlist));
+    }
     let kind = match page_type(endpoint)? {
         ALBUM_PAGE => CollectionKind::Album,
         PLAYLIST_PAGE => CollectionKind::Playlist,
         _ => return None,
     };
     let browse_id = browse_id(endpoint).filter(|browse_id| is_browse_id(browse_id))?;
-    Some(ShelfItem::Collection(MusicCollection {
-        browse_id: browse_id.to_owned(),
-        kind,
-        title,
-        subtitle: text_of(renderer.get("subtitle")),
-        thumbnail_url,
-    }))
+    Some((browse_id.to_owned(), kind))
 }
 
 fn card_song(
@@ -151,5 +162,34 @@ fn card_song(
         album: album_of(&subtitle_runs),
         duration_ms: groups_duration(&subtitle_groups),
         thumbnail_url,
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use serde_json::json;
+
+    use super::*;
+
+    #[test]
+    fn mix_cards_that_start_a_playlist_open_it() {
+        let card = json!({"musicTwoRowItemRenderer": {
+            "title": {"runs": [{"text": "My Supermix"}]},
+            "navigationEndpoint": {"watchPlaylistEndpoint": {"playlistId": "RDTMAK5uy_mix"}}
+        }});
+        let Some(ShelfItem::Collection(mix)) = shelf_item(&card) else {
+            panic!("expected a playlist");
+        };
+        assert_eq!(mix.browse_id, "VLRDTMAK5uy_mix");
+        assert_eq!(mix.kind, CollectionKind::Playlist);
+    }
+
+    #[test]
+    fn artist_cards_are_skipped() {
+        let card = json!({"musicTwoRowItemRenderer": {
+            "title": {"runs": [{"text": "Someone"}]},
+            "navigationEndpoint": {"browseEndpoint": {"browseId": "UCx", "browseEndpointContextSupportedConfigs": {"browseEndpointContextMusicConfig": {"pageType": "MUSIC_PAGE_TYPE_ARTIST"}}}}
+        }});
+        assert_eq!(shelf_item(&card), None);
     }
 }
