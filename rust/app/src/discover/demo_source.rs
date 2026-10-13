@@ -75,7 +75,7 @@ impl DemoDiscover {
     }
 
     fn album_songs(&self, first_index: usize) -> Vec<MusicSong> {
-        (first_index..first_index + ALBUM_SONGS)
+        (first_index..first_index.saturating_add(ALBUM_SONGS))
             .filter(|index| *index < self.song_count)
             .map(|index| self.song(index))
             .collect()

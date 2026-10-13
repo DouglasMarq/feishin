@@ -186,6 +186,11 @@ async fn demo_albums_playlists_and_search_come_from_the_demo_library() {
             .await
             .is_err()
     );
+    let beyond_the_library = demo
+        .collection(format!("MPREdemo{}", usize::MAX), settings())
+        .await
+        .unwrap();
+    assert!(beyond_the_library.songs.is_empty());
     let found = demo.search("river".into(), settings()).await.unwrap();
     assert!(!found.is_empty());
 }
