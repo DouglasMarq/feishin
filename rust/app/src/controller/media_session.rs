@@ -74,10 +74,10 @@ impl Controller {
         match (self.loaded, self.playing) {
             (None, _) => PlaybackStatus::Stopped,
             (Some(_), true) => PlaybackStatus::Playing {
-                position_ms: self.position_ms,
+                position_ms: self.shown_position_ms(),
             },
             (Some(_), false) => PlaybackStatus::Paused {
-                position_ms: self.position_ms,
+                position_ms: self.shown_position_ms(),
             },
         }
     }

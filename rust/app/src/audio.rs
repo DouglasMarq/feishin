@@ -8,11 +8,19 @@ use feishin_storage::settings::{PlaybackSettings, ReplayGainSetting};
 
 pub type EventCallback = Box<dyn Fn(PlayerEvent) + Send + Sync>;
 
+const DEMO_STREAM_TITLE: &str = "Demo Artist - Live on the demo radio";
+
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Track {
     pub uid: Uid,
     pub url: String,
     pub duration_ms: u64,
+}
+
+impl Track {
+    pub fn is_live_stream(&self) -> bool {
+        self.duration_ms == 0
+    }
 }
 
 pub trait AudioOutput: Send {
@@ -147,6 +155,13 @@ impl FakeAudio {
         let Some(current) = state.current.as_ref().filter(|_| state.playing) else {
             return Vec::new();
         };
+        if current.is_live_stream() {
+            state.position_ms += elapsed_ms;
+            return vec![PlayerEvent::Position {
+                position_ms: state.position_ms,
+                duration_ms: None,
+            }];
+        }
         let duration_ms = current.duration_ms;
         let uid = current.uid;
         state.position_ms = (state.position_ms + elapsed_ms).min(duration_ms);
@@ -192,7 +207,11 @@ impl AudioOutput for FakeAudio {
             state.position_ms = start_ms;
             state.playing = true;
             Some(PlayerEvent::Started { uid: track.uid })
-        })
+        })?;
+        if track.is_live_stream() {
+            (self.on_event)(PlayerEvent::StreamTitle(Some(DEMO_STREAM_TITLE.into())));
+        }
+        Ok(())
     }
 
     fn preload_next(&self, track: &Track) -> Result<()> {
@@ -290,5 +309,24 @@ mod tests {
         assert_eq!(events[2], PlayerEvent::Started { uid: 2 });
         FakeAudio::tick(&mut state, 500);
         assert_eq!(FakeAudio::tick(&mut state, 0), Vec::new());
+    }
+
+    #[test]
+    fn fake_live_streams_never_end() {
+        let mut state = FakeState {
+            current: Some(track(1, 0)),
+            playing: true,
+            ..FakeState::default()
+        };
+        for _ in 0..10 {
+            FakeAudio::tick(&mut state, 250);
+        }
+        assert_eq!(
+            FakeAudio::tick(&mut state, 250),
+            [PlayerEvent::Position {
+                position_ms: 2750,
+                duration_ms: None
+            }]
+        );
     }
 }

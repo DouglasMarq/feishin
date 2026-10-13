@@ -9,6 +9,7 @@ mod player_events;
 mod preload;
 mod publish;
 mod queue_ops;
+mod radio;
 mod scrobbling;
 mod server_queue;
 mod settings_changes;
@@ -28,6 +29,9 @@ use tokio::sync::mpsc;
 
 pub use command::{Command, SettingsSnapshot, forward_command};
 pub use persistence::{PersistenceEvent, load_saved_queue};
+#[cfg(test)]
+pub use radio::RADIO_STREAM_UID;
+pub use radio::{RadioCommand, RadioNowPlaying};
 pub use ui_update::{UiSink, UiUpdate, artist_names};
 
 use crate::audio::AudioOutput;
@@ -66,6 +70,7 @@ pub struct Controller {
     sleep_timer: SleepTimer,
     saved_credential: Option<Credential>,
     list_streams: ListStreams,
+    radio: Option<radio::RadioPlayback>,
 }
 
 fn initial_queue(stored: Option<StoredQueue>, seed: Option<u64>) -> (Queue, u64) {
@@ -102,6 +107,7 @@ impl Controller {
             sleep_timer: SleepTimer::default(),
             saved_credential: None,
             list_streams: ListStreams::default(),
+            radio: None,
         };
         controller.publish_all();
         controller.update_media_volume();

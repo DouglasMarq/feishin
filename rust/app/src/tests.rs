@@ -7,6 +7,8 @@ mod queue_panel;
 mod queue_restore;
 mod queue_saves;
 mod queue_scale;
+mod radio;
+mod radio_media;
 mod scrobbling;
 mod server_queue;
 mod sleep_timer;
