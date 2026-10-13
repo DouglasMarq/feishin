@@ -89,11 +89,17 @@ impl JellyfinServer {
         let similar_path = format!("items/{song_id}/similar");
         match self.mix(&similar_path, song_id, count).await {
             Ok(songs) if !songs.is_empty() => Ok(songs),
-            _ => {
-                let instant_mix_path = format!("items/{song_id}/InstantMix");
-                self.mix(&instant_mix_path, song_id, count).await
+            Ok(_no_similar_songs) => self.instant_mix(song_id, count).await,
+            Err(error) => {
+                tracing::debug!(%error, song_id, "similar songs unavailable, falling back to instant mix");
+                self.instant_mix(song_id, count).await
             }
         }
+    }
+
+    async fn instant_mix(&self, song_id: &str, count: usize) -> Result<Vec<Song>> {
+        let instant_mix_path = format!("items/{song_id}/InstantMix");
+        self.mix(&instant_mix_path, song_id, count).await
     }
 
     pub(super) async fn song_lyrics(&self, song: &Song) -> Result<Option<String>> {

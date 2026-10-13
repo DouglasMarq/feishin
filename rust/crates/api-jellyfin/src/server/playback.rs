@@ -72,6 +72,9 @@ impl JellyfinServer {
     async fn song_duration_ticks(&self, song_id: &str) -> Option<u64> {
         self.get::<dto::Song>(&self.item_path(song_id), &QueryParams::default())
             .await
+            .inspect_err(
+                |error| tracing::debug!(%error, song_id, "song duration unavailable for scrobble"),
+            )
             .ok()
             .and_then(|song| song.run_time_ticks)
     }
