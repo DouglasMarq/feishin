@@ -1,5 +1,90 @@
+import { Theme } from "theme.slint";
+import { AppState, Page, PlayerState } from "globals.slint";
+import { LoginView } from "login.slint";
+import { Sidebar } from "sidebar.slint";
+import { TracksView } from "tracks.slint";
+import { QueuePanel } from "queue_panel.slint";
+import { PlayerBar } from "player_bar.slint";
+
+export { AppState, LoginState, Page, PlayerState, QueueRow, QueueState, TrackRow, TracksState } from "globals.slint";
+
 export component AppWindow inherits Window {
     title: "Feishin";
-    preferred-width: 1200px;
-    preferred-height: 800px;
+    preferred-width: 1280px;
+    preferred-height: 820px;
+    min-width: 900px;
+    min-height: 560px;
+    background: Theme.background;
+    default-font-size: 13px;
+
+    init => {
+        key-scope.focus();
+    }
+
+    key-scope := FocusScope {
+        key-pressed(event) => {
+            if (event.text == " " && AppState.page == Page.main) {
+                PlayerState.toggle-pause();
+                return accept;
+            }
+            return reject;
+        }
+
+        if AppState.page == Page.login: LoginView {
+            width: parent.width;
+            height: parent.height;
+        }
+
+        if AppState.page == Page.main: VerticalLayout {
+            width: parent.width;
+            height: parent.height;
+
+            HorizontalLayout {
+                Sidebar { }
+
+                TracksView {
+                    horizontal-stretch: 1;
+                    row-clicked => {
+                        key-scope.focus();
+                    }
+                }
+
+                if AppState.queue-open: QueuePanel { }
+            }
+
+            PlayerBar { }
+        }
+
+        if AppState.status != "": Rectangle {
+            x: parent.width - self.width - 20px;
+            y: parent.height - self.height - 104px;
+            width: min(420px, parent.width - 40px);
+            height: status-text.preferred-height + 24px;
+            border-radius: Theme.radius;
+            background: Theme.surface-raised;
+            border-width: 1px;
+            border-color: Theme.border;
+
+            status-text := Text {
+                x: 12px;
+                width: parent.width - 24px;
+                text: AppState.status;
+                color: Theme.foreground;
+                wrap: word-wrap;
+            }
+
+            TouchArea {
+                clicked => {
+                    AppState.status = "";
+                }
+            }
+
+            Timer {
+                interval: 6s;
+                triggered => {
+                    AppState.status = "";
+                }
+            }
+        }
+    }
 }

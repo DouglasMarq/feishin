@@ -1,0 +1,93 @@
+import { Theme } from "theme.slint";
+
+export component Icon inherits Path {
+    in property <string> path;
+    in property <color> color: Theme.foreground;
+    commands: root.path;
+    fill: root.color;
+    viewbox-width: 24;
+    viewbox-height: 24;
+    width: 20px;
+    height: 20px;
+}
+
+export component IconButton inherits Rectangle {
+    in property <string> icon;
+    in property <bool> active;
+    in property <bool> enabled: true;
+    in property <length> icon-size: 20px;
+    in property <color> icon-color: root.active ? Theme.primary : (touch.has-hover ? Theme.foreground : Theme.muted);
+    callback clicked();
+    width: 32px;
+    height: 32px;
+    border-radius: self.height / 2;
+    background: touch.has-hover && root.enabled ? Theme.hover : transparent;
+    opacity: root.enabled ? 1 : 0.4;
+
+    Icon {
+        path: root.icon;
+        color: root.icon-color;
+        width: root.icon-size;
+        height: root.icon-size;
+    }
+
+    touch := TouchArea {
+        enabled: root.enabled;
+        mouse-cursor: pointer;
+        clicked => {
+            root.clicked();
+        }
+    }
+}
+
+/// Horizontal slider for 0..1 values. `changed` fires while dragging, `committed` on release.
+export component Bar inherits Rectangle {
+    in property <float> value;
+    out property <bool> dragging: touch.pressed;
+    property <float> drag-value;
+    property <float> shown: root.dragging ? root.drag-value : root.value;
+    callback changed(float);
+    callback committed(float);
+    height: 16px;
+
+    track := Rectangle {
+        y: (parent.height - self.height) / 2;
+        height: 4px;
+        border-radius: 2px;
+        background: Theme.surface-raised;
+
+        Rectangle {
+            x: 0;
+            width: parent.width * max(0, min(1, root.shown));
+            border-radius: 2px;
+            background: touch.has-hover || root.dragging ? Theme.primary : Theme.foreground;
+        }
+    }
+
+    if touch.has-hover || root.dragging: Rectangle {
+        x: root.width * max(0, min(1, root.shown)) - self.width / 2;
+        y: (parent.height - self.height) / 2;
+        width: 12px;
+        height: 12px;
+        border-radius: 6px;
+        background: Theme.foreground;
+    }
+
+    touch := TouchArea {
+        mouse-cursor: pointer;
+        pointer-event(event) => {
+            if (event.kind == PointerEventKind.down && event.button == PointerEventButton.left) {
+                root.drag-value = max(0, min(1, self.mouse-x / root.width));
+                root.changed(root.drag-value);
+            } else if (event.kind == PointerEventKind.up && event.button == PointerEventButton.left) {
+                root.committed(root.drag-value);
+            }
+        }
+        moved => {
+            if (self.pressed) {
+                root.drag-value = max(0, min(1, self.mouse-x / root.width));
+                root.changed(root.drag-value);
+            }
+        }
+    }
+}

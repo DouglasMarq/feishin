@@ -1,0 +1,200 @@
+import { Theme, Icons, Format } from "theme.slint";
+import { AppState, PlayerState } from "globals.slint";
+import { Bar, Icon, IconButton } from "widgets.slint";
+
+export component PlayerBar inherits Rectangle {
+    height: 88px;
+    background: Theme.background-alt;
+
+    Rectangle {
+        y: 0;
+        height: 1px;
+        background: Theme.border;
+    }
+
+    HorizontalLayout {
+        padding-left: 16px;
+        padding-right: 16px;
+        spacing: 16px;
+
+        HorizontalLayout {
+            width: 30%;
+            spacing: 12px;
+            alignment: start;
+
+            Rectangle {
+                y: (parent.height - self.height) / 2;
+                width: 60px;
+                height: 60px;
+                border-radius: Theme.radius;
+                background: Theme.surface-raised;
+                clip: true;
+
+                if PlayerState.has-cover: Image {
+                    source: PlayerState.cover;
+                    width: parent.width;
+                    height: parent.height;
+                    image-fit: cover;
+                }
+
+                if !PlayerState.has-cover: Icon {
+                    path: Icons.note;
+                    color: Theme.muted;
+                    width: 28px;
+                    height: 28px;
+                }
+            }
+
+            VerticalLayout {
+                alignment: center;
+                spacing: 4px;
+
+                Text {
+                    text: PlayerState.title;
+                    color: Theme.foreground;
+                    font-weight: 600;
+                    overflow: elide;
+                }
+
+                Text {
+                    text: PlayerState.artists;
+                    color: Theme.muted;
+                    font-size: 12px;
+                    overflow: elide;
+                }
+            }
+        }
+
+        VerticalLayout {
+            horizontal-stretch: 1;
+            alignment: center;
+            spacing: 6px;
+
+            HorizontalLayout {
+                alignment: center;
+                spacing: 14px;
+
+                IconButton {
+                    icon: Icons.shuffle;
+                    active: PlayerState.shuffle;
+                    clicked => {
+                        PlayerState.toggle-shuffle();
+                    }
+                }
+
+                IconButton {
+                    icon: Icons.previous;
+                    icon-size: 24px;
+                    enabled: PlayerState.has-song;
+                    clicked => {
+                        PlayerState.previous();
+                    }
+                }
+
+                Rectangle {
+                    width: 38px;
+                    height: 38px;
+                    border-radius: 19px;
+                    background: play-touch.has-hover ? #ffffff : Theme.foreground;
+                    opacity: PlayerState.has-song ? 1 : 0.4;
+
+                    Icon {
+                        path: PlayerState.playing ? Icons.pause : Icons.play;
+                        color: Theme.background;
+                        width: 24px;
+                        height: 24px;
+                    }
+
+                    play-touch := TouchArea {
+                        enabled: PlayerState.has-song;
+                        mouse-cursor: pointer;
+                        clicked => {
+                            PlayerState.toggle-pause();
+                        }
+                    }
+                }
+
+                IconButton {
+                    icon: Icons.next;
+                    icon-size: 24px;
+                    enabled: PlayerState.has-song;
+                    clicked => {
+                        PlayerState.next();
+                    }
+                }
+
+                IconButton {
+                    icon: PlayerState.repeat == 2 ? Icons.repeat-one : Icons.repeat;
+                    active: PlayerState.repeat != 0;
+                    clicked => {
+                        PlayerState.cycle-repeat();
+                    }
+                }
+            }
+
+            HorizontalLayout {
+                spacing: 10px;
+
+                Text {
+                    width: 44px;
+                    text: Format.time(seek.dragging ? seek.preview-ms : PlayerState.position-ms);
+                    color: Theme.muted;
+                    font-size: 11px;
+                    horizontal-alignment: right;
+                    vertical-alignment: center;
+                }
+
+                seek := Bar {
+                    property <int> preview-ms;
+                    value: PlayerState.duration-ms > 0 ? PlayerState.position-ms / PlayerState.duration-ms : 0;
+                    changed(value) => {
+                        self.preview-ms = value * PlayerState.duration-ms;
+                    }
+                    committed(value) => {
+                        PlayerState.seek(value * PlayerState.duration-ms);
+                    }
+                }
+
+                Text {
+                    width: 44px;
+                    text: Format.time(PlayerState.duration-ms);
+                    color: Theme.muted;
+                    font-size: 11px;
+                    vertical-alignment: center;
+                }
+            }
+        }
+
+        HorizontalLayout {
+            width: 30%;
+            alignment: end;
+            spacing: 8px;
+
+            IconButton {
+                y: (parent.height - self.height) / 2;
+                icon: Icons.queue;
+                active: AppState.queue-open;
+                clicked => {
+                    AppState.queue-open = !AppState.queue-open;
+                }
+            }
+
+            IconButton {
+                y: (parent.height - self.height) / 2;
+                icon: PlayerState.muted || PlayerState.volume == 0 ? Icons.volume-off : Icons.volume;
+                clicked => {
+                    PlayerState.toggle-mute();
+                }
+            }
+
+            Bar {
+                y: (parent.height - self.height) / 2;
+                width: 110px;
+                value: PlayerState.muted ? 0 : PlayerState.volume / 100;
+                changed(value) => {
+                    PlayerState.set-volume(value * 100);
+                }
+            }
+        }
+    }
+}

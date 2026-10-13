@@ -1,0 +1,91 @@
+export struct TrackRow {
+    id: string,
+    index: int,
+    title: string,
+    artists: string,
+    album: string,
+    duration: string,
+    year: string,
+    plays: string,
+    loaded: bool,
+    playing: bool,
+}
+
+export struct QueueRow {
+    uid: string,
+    title: string,
+    artists: string,
+    duration: string,
+    current: bool,
+}
+
+export enum Page { loading, login, main }
+
+export global AppState {
+    in-out property <Page> page: Page.loading;
+    in-out property <bool> queue-open: true;
+    in-out property <string> status;
+    in property <string> server-name;
+}
+
+export global LoginState {
+    in-out property <int> server-type;
+    in-out property <string> url;
+    in-out property <string> username;
+    in-out property <string> password;
+    in-out property <bool> busy;
+    in-out property <string> error;
+    callback login();
+    callback import-feishin();
+}
+
+export global TracksState {
+    in property <[TrackRow]> rows;
+    in property <int> total;
+    in property <bool> loading;
+    in-out property <string> sort-column: "title";
+    in-out property <bool> sort-desc;
+    in-out property <length> w-index: 56px;
+    in-out property <length> w-title: 320px;
+    in-out property <length> w-artist: 200px;
+    in-out property <length> w-album: 240px;
+    in-out property <length> w-year: 64px;
+    in-out property <length> w-plays: 64px;
+    in-out property <length> w-duration: 72px;
+    callback search-edited(string);
+    callback sort-by(string);
+    callback play-row(int);
+}
+
+export global PlayerState {
+    in property <bool> has-song;
+    in property <string> song-id;
+    in property <string> title;
+    in property <string> artists;
+    in property <string> album;
+    in property <image> cover;
+    in property <bool> has-cover;
+    in property <bool> playing;
+    in property <int> position-ms;
+    in property <int> duration-ms;
+    in property <int> volume: 70;
+    in property <bool> muted;
+    in property <bool> shuffle;
+    /// 0 off, 1 all, 2 one.
+    in property <int> repeat;
+    callback toggle-pause();
+    callback next();
+    callback previous();
+    callback seek(int);
+    callback set-volume(int);
+    callback toggle-mute();
+    callback toggle-shuffle();
+    callback cycle-repeat();
+}
+
+export global QueueState {
+    in property <[QueueRow]> rows;
+    callback play(string);
+    callback remove(string);
+    callback move(int, int);
+}
