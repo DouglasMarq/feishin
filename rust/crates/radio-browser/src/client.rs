@@ -7,7 +7,7 @@ use serde::de::{DeserializeOwned, IgnoredAny};
 use crate::error::{DirectoryError, Result, network_error};
 use crate::mirror::{ServerEntry, pick_mirror};
 use crate::query::StationQuery;
-use crate::station::{DirectoryStation, RawStation, playable_stations};
+use crate::station::{RawStation, StationPage, playable_stations};
 
 pub const PUBLIC_DIRECTORY_URL: &str = "https://all.api.radio-browser.info";
 pub const USER_AGENT: &str = concat!(
@@ -18,6 +18,7 @@ pub const USER_AGENT: &str = concat!(
 
 const CONNECT_TIMEOUT: Duration = Duration::from_secs(10);
 const REQUEST_TIMEOUT: Duration = Duration::from_secs(20);
+const MAX_RESPONSE_BYTES: usize = 4 * 1024 * 1024;
 
 pub struct RadioBrowser {
     http: reqwest::Client,
@@ -44,14 +45,21 @@ impl RadioBrowser {
         })
     }
 
-    pub async fn search(&self, query: &StationQuery) -> Result<Vec<DirectoryStation>> {
+    pub async fn search(&self, query: &StationQuery) -> Result<StationPage> {
         let raw_stations: Vec<RawStation> = self
             .get_json("json/stations/search", &query.parameters())
             .await?;
-        Ok(playable_stations(raw_stations))
+        let has_more = query.limit > 0 && raw_stations.len() >= query.limit;
+        Ok(StationPage {
+            stations: playable_stations(raw_stations),
+            has_more,
+        })
     }
 
     pub async fn count_click(&self, station_uuid: &str) -> Result<()> {
+        if !is_station_id(station_uuid) {
+            return Err(DirectoryError::InvalidStationId(station_uuid.to_owned()));
+        }
         self.get_json::<IgnoredAny>(&format!("json/url/{station_uuid}"), &[])
             .await
             .map(drop)
@@ -115,11 +123,20 @@ impl RadioBrowser {
     }
 }
 
+fn is_station_id(station_uuid: &str) -> bool {
+    !station_uuid.is_empty()
+        && station_uuid
+            .chars()
+            .all(|character| character.is_ascii_alphanumeric() || character == '-')
+}
+
 fn is_worth_retrying(error: &DirectoryError) -> bool {
     match error {
         DirectoryError::Network(_) => true,
         DirectoryError::Status(status) => *status >= 500,
-        DirectoryError::Decode(_) => false,
+        DirectoryError::Decode(_)
+        | DirectoryError::TooLarge(_)
+        | DirectoryError::InvalidStationId(_) => false,
     }
 }
 
@@ -131,10 +148,17 @@ async fn send_and_decode<Decoded: DeserializeOwned>(
     serde_json::from_slice(&body).map_err(|error| DirectoryError::Decode(error.to_string()))
 }
 
-async fn successful_body(response: Response) -> Result<Vec<u8>> {
+async fn successful_body(mut response: Response) -> Result<Vec<u8>> {
     let status = response.status();
     if status != StatusCode::OK {
         return Err(DirectoryError::Status(status.as_u16()));
     }
-    Ok(response.bytes().await.map_err(network_error)?.to_vec())
+    let mut body = Vec::new();
+    while let Some(chunk) = response.chunk().await.map_err(network_error)? {
+        if body.len().saturating_add(chunk.len()) > MAX_RESPONSE_BYTES {
+            return Err(DirectoryError::TooLarge(MAX_RESPONSE_BYTES));
+        }
+        body.extend_from_slice(&chunk);
+    }
+    Ok(body)
 }

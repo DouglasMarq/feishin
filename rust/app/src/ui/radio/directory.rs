@@ -1,5 +1,5 @@
 use anyhow::Result;
-use feishin_radio_browser::{DirectoryStation, StationQuery};
+use feishin_radio_browser::{StationPage, StationQuery};
 use slint::ComponentHandle;
 
 use super::view::RadioView;
@@ -61,7 +61,7 @@ impl RadioView {
         &self,
         window: &AppWindow,
         generation: u64,
-        found: Result<Vec<DirectoryStation>>,
+        found: Result<StationPage>,
     ) {
         let outcome = match found {
             Ok(page) => self.page_arrived(generation, page),
@@ -80,7 +80,7 @@ impl RadioView {
         self.render(window);
     }
 
-    fn page_arrived(&self, generation: u64, page: Vec<DirectoryStation>) -> SearchOutcome {
+    fn page_arrived(&self, generation: u64, page: StationPage) -> SearchOutcome {
         self.with_model(|model| {
             match (
                 model.apply_results(generation, page),

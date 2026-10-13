@@ -6,6 +6,10 @@ pub enum DirectoryError {
     Status(u16),
     #[error("unexpected radio directory response: {0}")]
     Decode(String),
+    #[error("the radio directory answer is larger than {0} bytes")]
+    TooLarge(usize),
+    #[error("not a radio directory station id: {0}")]
+    InvalidStationId(String),
 }
 
 pub type Result<T> = std::result::Result<T, DirectoryError>;

@@ -72,11 +72,24 @@ impl From<RawStation> for DirectoryStation {
     }
 }
 
+#[derive(Debug, Clone, PartialEq, Eq, Default)]
+pub struct StationPage {
+    pub stations: Vec<DirectoryStation>,
+    pub has_more: bool,
+}
+
+fn is_web_url(url: &str) -> bool {
+    let lowercase = url.to_ascii_lowercase();
+    ["http://", "https://"]
+        .iter()
+        .any(|scheme| lowercase.len() > scheme.len() && lowercase.starts_with(scheme))
+}
+
 pub(crate) fn playable_stations(raw_stations: Vec<RawStation>) -> Vec<DirectoryStation> {
     raw_stations
         .into_iter()
         .map(DirectoryStation::from)
-        .filter(|station| !station.stream_url.is_empty())
+        .filter(|station| is_web_url(&station.stream_url))
         .collect()
 }
 
@@ -105,13 +118,21 @@ mod tests {
     }
 
     #[test]
-    fn stations_without_any_url_are_dropped() {
+    fn stations_without_a_web_url_are_dropped() {
         let stations = playable_stations(vec![
             RawStation {
                 url: "http://example.com/a".into(),
                 ..RawStation::default()
             },
             RawStation::default(),
+            RawStation {
+                url: "file:///etc/passwd".into(),
+                ..RawStation::default()
+            },
+            RawStation {
+                url_resolved: "ytdl://example".into(),
+                ..RawStation::default()
+            },
         ]);
         assert_eq!(stations.len(), 1);
         assert_eq!(

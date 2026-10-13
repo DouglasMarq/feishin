@@ -79,14 +79,15 @@ async fn search_resolves_a_mirror_and_decodes_stations() {
         .await;
     let directory = RadioBrowser::with_discovery_url(&mock.uri()).expect("client");
 
-    let stations = directory.search(&jazz_in_germany()).await.expect("search");
+    let page = directory.search(&jazz_in_germany()).await.expect("search");
     directory
         .search(&jazz_in_germany())
         .await
         .expect("second search");
 
-    assert_eq!(stations.len(), 1);
-    let station = &stations[0];
+    assert_eq!(page.stations.len(), 1);
+    assert!(!page.has_more);
+    let station = &page.stations[0];
     assert_eq!(station.uuid, "9617a958-0601-11e8-ae97-52543be04c81");
     assert_eq!(station.name, "Smooth Jazz Radio");
     assert_eq!(station.stream_url, "http://jazz.example.com/stream.mp3");
@@ -122,7 +123,14 @@ async fn a_failed_mirror_lookup_falls_back_to_the_discovery_host() {
         ..StationQuery::default()
     };
 
-    assert!(directory.search(&query).await.expect("search").is_empty());
+    assert!(
+        directory
+            .search(&query)
+            .await
+            .expect("search")
+            .stations
+            .is_empty()
+    );
 }
 
 #[tokio::test]
@@ -151,9 +159,62 @@ async fn a_failing_mirror_is_resolved_again_and_retried_once() {
         .await;
     let directory = RadioBrowser::with_discovery_url(&mock.uri()).expect("client");
 
-    let stations = directory.search(&jazz_in_germany()).await.expect("search");
+    let page = directory.search(&jazz_in_germany()).await.expect("search");
 
-    assert_eq!(stations.len(), 1);
+    assert_eq!(page.stations.len(), 1);
+}
+
+#[tokio::test]
+async fn a_full_page_has_more_even_when_some_stations_are_dropped() {
+    let mock = MockServer::start().await;
+    mount_servers(&mock, json!([])).await;
+    Mock::given(method("GET"))
+        .and(path("/json/stations/search"))
+        .and(query_param("limit", "2"))
+        .respond_with(ResponseTemplate::new(200).set_body_json(station_fixture()))
+        .mount(&mock)
+        .await;
+    let directory = RadioBrowser::with_discovery_url(&mock.uri()).expect("client");
+    let query = StationQuery {
+        limit: 2,
+        ..jazz_in_germany()
+    };
+
+    let page = directory.search(&query).await.expect("search");
+
+    assert_eq!(page.stations.len(), 1);
+    assert!(page.has_more);
+}
+
+#[tokio::test]
+async fn oversized_answers_are_refused() {
+    let mock = MockServer::start().await;
+    mount_servers(&mock, json!([])).await;
+    Mock::given(method("GET"))
+        .and(path("/json/stations/search"))
+        .respond_with(ResponseTemplate::new(200).set_body_string(" ".repeat(5 * 1024 * 1024)))
+        .mount(&mock)
+        .await;
+    let directory = RadioBrowser::with_discovery_url(&mock.uri()).expect("client");
+
+    let failed = directory.search(&jazz_in_germany()).await;
+
+    assert!(matches!(failed, Err(DirectoryError::TooLarge(_))));
+}
+
+#[tokio::test]
+async fn clicks_for_ids_that_are_not_station_ids_are_not_sent() {
+    let mock = MockServer::start().await;
+    Mock::given(method("GET"))
+        .respond_with(ResponseTemplate::new(200).set_body_json(json!([])))
+        .expect(0)
+        .mount(&mock)
+        .await;
+    let directory = RadioBrowser::with_discovery_url(&mock.uri()).expect("client");
+
+    let refused = directory.count_click("../json/servers?x=1").await;
+
+    assert!(matches!(refused, Err(DirectoryError::InvalidStationId(_))));
 }
 
 #[tokio::test]

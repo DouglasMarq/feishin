@@ -1,5 +1,5 @@
 use feishin_core::model::RadioStation;
-use feishin_radio_browser::{DirectoryStation, StationQuery};
+use feishin_radio_browser::{DirectoryStation, StationPage, StationQuery};
 
 use crate::ui::{RadioRow, RadioSource};
 
@@ -139,17 +139,16 @@ impl RadioModel {
         self.search_generation
     }
 
-    pub(super) fn apply_results(&mut self, generation: u64, page: Vec<DirectoryStation>) -> bool {
+    pub(super) fn apply_results(&mut self, generation: u64, page: StationPage) -> bool {
         if generation != self.search_generation {
             return false;
         }
         if self.query.offset == 0 {
             self.results.clear();
         }
-        let full_page = page.len() >= self.query.limit;
         let room = MAX_DIRECTORY_RESULTS.saturating_sub(self.results.len());
-        self.results.extend(page.into_iter().take(room));
-        self.has_more = full_page && self.results.len() < MAX_DIRECTORY_RESULTS;
+        self.results.extend(page.stations.into_iter().take(room));
+        self.has_more = page.has_more && self.results.len() < MAX_DIRECTORY_RESULTS;
         true
     }
 
@@ -271,19 +270,35 @@ mod tests {
         assert_eq!(model.station(RadioSource::Favorite, "1"), None);
     }
 
+    fn page(stations: Vec<DirectoryStation>, has_more: bool) -> StationPage {
+        StationPage { stations, has_more }
+    }
+
     #[test]
-    fn pages_append_until_a_short_page_and_stale_pages_are_ignored() {
+    fn pages_append_until_the_directory_has_no_more_and_stale_pages_are_ignored() {
         let mut model = RadioModel::default();
         let first = model.begin_search(StationQuery {
             limit: 2,
             ..StationQuery::default()
         });
-        assert!(model.apply_results(first, vec![found("a", "x"), found("b", "y")]));
+        assert!(model.apply_results(first, page(vec![found("a", "x")], true)));
         assert!(model.has_more);
         let next = model.begin_search(model.query.next_page());
-        assert!(!model.apply_results(first, vec![found("stale", "z")]));
-        assert!(model.apply_results(next, vec![found("c", "z")]));
+        assert!(!model.apply_results(first, page(vec![found("stale", "z")], true)));
+        assert!(model.apply_results(next, page(vec![found("b", "y"), found("c", "z")], false)));
         assert_eq!(model.results.len(), 3);
+        assert!(!model.has_more);
+    }
+
+    #[test]
+    fn results_stop_at_the_cap() {
+        let mut model = RadioModel::default();
+        let generation = model.begin_search(StationQuery::default());
+        let many: Vec<DirectoryStation> = (0..MAX_DIRECTORY_RESULTS + 20)
+            .map(|index| found(&index.to_string(), "x"))
+            .collect();
+        assert!(model.apply_results(generation, page(many, true)));
+        assert_eq!(model.results.len(), MAX_DIRECTORY_RESULTS);
         assert!(!model.has_more);
     }
 

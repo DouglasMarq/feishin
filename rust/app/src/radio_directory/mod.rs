@@ -4,19 +4,19 @@ use std::sync::Arc;
 
 use anyhow::Result;
 use async_trait::async_trait;
-use feishin_radio_browser::{DirectoryStation, RadioBrowser, StationQuery};
+use feishin_radio_browser::{RadioBrowser, StationPage, StationQuery};
 
 pub use demo::DemoDirectory;
 
 #[async_trait]
 pub trait StationDirectory: Send + Sync {
-    async fn search(&self, query: &StationQuery) -> Result<Vec<DirectoryStation>>;
+    async fn search(&self, query: &StationQuery) -> Result<StationPage>;
     async fn count_click(&self, station_uuid: &str) -> Result<()>;
 }
 
 #[async_trait]
 impl StationDirectory for RadioBrowser {
-    async fn search(&self, query: &StationQuery) -> Result<Vec<DirectoryStation>> {
+    async fn search(&self, query: &StationQuery) -> Result<StationPage> {
         Ok(RadioBrowser::search(self, query).await?)
     }
 
@@ -29,7 +29,7 @@ pub struct UnavailableDirectory(String);
 
 #[async_trait]
 impl StationDirectory for UnavailableDirectory {
-    async fn search(&self, _query: &StationQuery) -> Result<Vec<DirectoryStation>> {
+    async fn search(&self, _query: &StationQuery) -> Result<StationPage> {
         Err(anyhow::anyhow!("{}", self.0))
     }
 
