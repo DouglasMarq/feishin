@@ -1,3 +1,4 @@
+mod draining;
 mod local_saves;
 mod restore;
 mod schedule;
@@ -9,6 +10,7 @@ use std::time::Duration;
 
 use tokio::sync::mpsc;
 
+pub(super) use draining::ShutdownState;
 pub use restore::{RestoredQueue, load_saved_queue};
 pub use schedule::SaveTimer;
 
@@ -22,6 +24,7 @@ pub enum PersistenceEvent {
     SaveDue(SaveTimer),
     SyncDue(u64),
     QueueSaveFailed(u64),
+    StreamDrainDeadline,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -84,6 +87,7 @@ impl Controller {
             PersistenceEvent::QueueSaveFailed(revision) => {
                 self.persistence.schedule.mark_failed(revision);
             }
+            PersistenceEvent::StreamDrainDeadline => self.stream_drain_deadline(),
         }
     }
 

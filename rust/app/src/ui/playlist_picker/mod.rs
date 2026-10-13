@@ -3,6 +3,7 @@ mod dialog;
 mod handle;
 mod listed_requests;
 mod picker;
+mod playlist_writes;
 mod requests;
 mod streamed;
 mod view;

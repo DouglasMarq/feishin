@@ -2,9 +2,10 @@ use std::collections::HashSet;
 use std::sync::Arc;
 
 use feishin_api::MusicServer;
+use feishin_core::model::Playlist;
 use slint::ComponentHandle;
 
-use super::streamed::{ListedAdd, add_listed_songs, existing_song_ids};
+use super::streamed::{ListedAdd, add_listed_songs, add_listed_to_existing};
 use crate::ui::playlists::song_count_label;
 use crate::ui::tracks::ListedSongs;
 use crate::ui::{AppWindow, Context, on_ui, playlist_detail, playlists, show_status};
@@ -36,14 +37,12 @@ pub fn add_listed(
     let report = progress_reporter(window, &picked.name, listed.song_count());
     report(0);
     let weak = window.as_weak();
+    let work = ctx.session.background_work();
     ctx.rt.spawn(async move {
-        let outcome = match existing_song_ids(server.as_ref(), &picked.id).await {
-            Ok(existing) => {
-                add_listed_songs(server.as_ref(), &picked.id, listed, existing, report).await
-            }
-            Err(error) => ListedAdd::failed(error),
-        };
-        on_ui(&weak, move |window| finish_add(window, &picked, outcome));
+        let adding = add_listed_to_existing(server.as_ref(), &picked.id, listed, report);
+        if let Some(outcome) = work.run(adding).await {
+            on_ui(&weak, move |window| finish_add(window, &picked, outcome));
+        }
     });
 }
 
@@ -73,25 +72,32 @@ pub fn create_listed(
     let report = progress_reporter(window, &name, listed.song_count());
     report(0);
     let weak = window.as_weak();
+    let work = ctx.session.background_work();
     ctx.rt.spawn(async move {
-        let created = server.create_playlist(&name, &[]).await;
-        let outcome = match &created {
-            Ok(playlist) => {
-                add_listed_songs(
-                    server.as_ref(),
-                    &playlist.id,
-                    listed,
-                    HashSet::new(),
-                    report,
-                )
-                .await
-            }
-            Err(_) => ListedAdd::default(),
+        let creating = create_and_fill(server.as_ref(), &name, listed, report);
+        let Some((created, outcome)) = work.run(creating).await else {
+            return;
         };
         on_ui(&weak, move |window| {
             finish_create(window, created.map(|playlist| playlist.name), outcome);
         });
     });
+}
+
+async fn create_and_fill(
+    server: &dyn MusicServer,
+    name: &str,
+    listed: ListedSongs,
+    report: impl Fn(usize),
+) -> (feishin_api::Result<Playlist>, ListedAdd) {
+    let created = server.create_playlist(name, &[]).await;
+    let outcome = match &created {
+        Ok(playlist) => {
+            add_listed_songs(server, &playlist.id, listed, HashSet::new(), report).await
+        }
+        Err(_) => ListedAdd::default(),
+    };
+    (created, outcome)
 }
 
 fn finish_create(window: &AppWindow, created: feishin_api::Result<String>, outcome: ListedAdd) {

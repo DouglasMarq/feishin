@@ -2,9 +2,9 @@ use super::{Command, Controller};
 
 impl Controller {
     pub fn handle(&mut self, command: Command) -> bool {
-        let keeps_running = !matches!(command, Command::Shutdown { .. });
         self.dispatch(command);
-        keeps_running
+        self.finish_shutdown_once_drained();
+        !self.shutdown.is_finished()
     }
 
     fn dispatch(&mut self, command: Command) {
@@ -33,7 +33,7 @@ impl Controller {
             Command::SleepTick { elapsed_ms } => self.sleep_tick(elapsed_ms),
             Command::RestoreQueue { request, queue } => self.restore_queue(request, queue),
             Command::Persistence(event) => self.on_persistence_event(event),
-            Command::Shutdown { ui, done } => self.shut_down(ui, done),
+            Command::Shutdown { ui, done } => self.request_shutdown(ui, done),
             Command::GetSettings(reply) => self.reply_with_settings(reply),
             Command::ApplyPlayback(playback) => self.apply_playback(playback),
             Command::SaveIntegrations(integrations) => self.save_integrations(integrations),

@@ -87,6 +87,7 @@ impl MusicServer for FakeServer {
     }
 
     async fn playlist_songs(&self, id: &str) -> Result<Vec<Song>> {
+        tokio::task::yield_now().await;
         self.songs_of_playlist(id)
     }
 
@@ -95,6 +96,7 @@ impl MusicServer for FakeServer {
     }
 
     async fn playlist_song_page(&self, id: &str, paging: Paging) -> Result<Page<Song>> {
+        tokio::task::yield_now().await;
         self.playlist_songs_page(id, paging)
     }
 
@@ -103,6 +105,7 @@ impl MusicServer for FakeServer {
     }
 
     async fn add_to_playlist(&self, playlist_id: &str, song_ids: &[String]) -> Result<()> {
+        tokio::task::yield_now().await;
         self.append_to_playlist(playlist_id, song_ids)
     }
 

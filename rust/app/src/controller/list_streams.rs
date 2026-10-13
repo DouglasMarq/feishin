@@ -149,7 +149,6 @@ impl ListStreams {
         self.active.retain(|stream, _| stream.0 >= newest.0);
     }
 
-    #[cfg(test)]
     pub(super) fn is_empty(&self) -> bool {
         self.active.is_empty()
     }

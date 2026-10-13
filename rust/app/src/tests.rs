@@ -9,4 +9,5 @@ mod queue_saves;
 mod queue_scale;
 mod scrobbling;
 mod server_queue;
+mod shutdown_streams;
 mod sleep_timer;

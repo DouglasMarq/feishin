@@ -1,14 +1,14 @@
 use std::cell::RefCell;
 use std::collections::HashSet;
 
-use feishin_core::model::{Paging, Song, SongListQuery};
+use feishin_core::model::{Page, Paging, Song, SongListQuery};
 use slint::{Model, ModelNotify, ModelTracker};
 
 mod selecting;
 
 use super::row::track_row;
 use super::selection::Selection;
-use crate::ui::page_cache::{PageCache, PageShape};
+use crate::ui::page_cache::{PageApplied, PageCache, PageShape, changed_total};
 use crate::ui::{TrackRow, clamp_i32};
 
 pub const PAGE_SIZE: usize = 100;
@@ -176,10 +176,47 @@ impl TracksModel {
         self.notify_rows(range);
     }
 
+    pub fn apply_listed_page(
+        &self,
+        generation: u64,
+        page: usize,
+        listed: Page<Song>,
+    ) -> PageApplied {
+        let new_total = {
+            let state = self.state.borrow();
+            if state.generation != generation {
+                return PageApplied::Stale;
+            }
+            changed_total(state.total, listed.total_count)
+        };
+        let Some(total) = new_total else {
+            self.apply_page(generation, page, listed.items);
+            return PageApplied::Applied;
+        };
+        self.relay_rows(page, total, listed.items);
+        PageApplied::TotalChanged(total)
+    }
+
+    fn relay_rows(&self, page: usize, total: usize, songs: Vec<Song>) {
+        tracing::debug!(
+            total,
+            "the server list changed size, reloading the cached pages"
+        );
+        {
+            let mut state = self.state.borrow_mut();
+            state.generation += 1;
+            state.total = total;
+            state.pages.invalidate();
+            state.pages.insert(page, songs);
+            state.selection = Selection::default();
+        }
+        self.notify.reset();
+    }
+
     pub fn page_failed(&self, generation: u64, page: usize) {
         let mut state = self.state.borrow_mut();
         if state.generation == generation {
-            state.pages.forget_request(page);
+            state.pages.request_failed(page);
         }
     }
 

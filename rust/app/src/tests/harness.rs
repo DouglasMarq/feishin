@@ -27,6 +27,7 @@ pub(super) enum AudioCall {
     Pause,
     Stop,
     Seek(u64),
+    Mute(bool),
 }
 
 #[derive(Clone, Default)]
@@ -73,8 +74,8 @@ impl AudioOutput for RecordingAudio {
     fn set_volume(&self, _volume: u8) -> Result<()> {
         Ok(())
     }
-    fn set_muted(&self, _muted: bool) -> Result<()> {
-        Ok(())
+    fn set_muted(&self, muted: bool) -> Result<()> {
+        self.record(AudioCall::Mute(muted))
     }
 }
 
@@ -129,6 +130,7 @@ pub(super) struct Harness {
     pub(super) server: Arc<FakeServer>,
     pub(super) commands: mpsc::UnboundedReceiver<Command>,
     pub(super) store: Arc<JsonStore>,
+    pub(super) session: Session,
     pub(super) temp_dir: tempfile::TempDir,
 }
 
@@ -152,7 +154,7 @@ pub(super) fn start_harness_with(
         audio: Box::new(audio.clone()),
         media: Box::new(NoMediaSession),
         store: store.clone(),
-        session,
+        session: session.clone(),
         ui: ui.clone(),
         commands: sender,
     };
@@ -163,6 +165,7 @@ pub(super) fn start_harness_with(
         server,
         commands,
         store,
+        session,
         temp_dir,
     }
 }

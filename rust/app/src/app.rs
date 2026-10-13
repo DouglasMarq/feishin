@@ -22,7 +22,7 @@ use crate::store::{JsonStore, Store, SystemStore};
 use crate::termination;
 use crate::ui::{self, AppWindow, Context, login};
 
-const SHUTDOWN_SAVE_TIMEOUT: Duration = Duration::from_secs(3);
+const SHUTDOWN_SAVE_TIMEOUT: Duration = Duration::from_secs(6);
 const RUNTIME_SHUTDOWN_TIMEOUT: Duration = Duration::from_secs(1);
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]

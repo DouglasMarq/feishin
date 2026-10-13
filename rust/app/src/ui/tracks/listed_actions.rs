@@ -85,8 +85,10 @@ fn spawn_edit(window: &AppWindow, ctx: &Context, listed: ListedSongs, edit: List
         return;
     };
     let weak = window.as_weak();
+    let work = ctx.session.background_work();
     ctx.rt.spawn(async move {
-        if let Some(message) = edit_listed(server, &weak, listed, edit).await {
+        let edited = work.run(edit_listed(server, &weak, listed, edit)).await;
+        if let Some(Some(message)) = edited {
             on_ui(&weak, move |window| show_status(window, &message));
         }
     });

@@ -8,6 +8,7 @@ use super::choices::new_song_ids;
 use super::dialog::close;
 use super::listed_requests::{PickedPlaylist, add_listed, create_listed};
 use super::picker::{PendingRequest, PickedSongs, SharedPicker, lock};
+use super::playlist_writes::exclusive_playlist_write;
 use crate::ui::playlists::song_count_label;
 use crate::ui::{
     AppWindow, Context, PlaylistPickerState, on_ui, playlist_detail, playlists, show_status,
@@ -96,6 +97,7 @@ async fn add_new_songs(
     playlist_id: &str,
     song_ids: &[String],
 ) -> feishin_api::Result<usize> {
+    let _exclusive = exclusive_playlist_write(playlist_id).await;
     let existing = server.playlist_songs(playlist_id).await?;
     let added_ids = new_song_ids(&existing, song_ids);
     if !added_ids.is_empty() {

@@ -1,6 +1,9 @@
 use std::collections::{HashMap, HashSet};
+use std::time::Instant;
 
 use feishin_core::model::{Paging, Song};
+
+use crate::ui::page_backoff::PageBackoff;
 
 pub const PAGE_SIZE: usize = 100;
 pub const MAX_CACHED_PAGES: usize = 8;
@@ -20,6 +23,7 @@ pub fn paging_for_page(page: usize) -> Paging {
 pub struct PageStore {
     pages: HashMap<usize, Vec<Song>>,
     requested: HashSet<usize>,
+    backoff: PageBackoff,
     focus_page: usize,
 }
 
@@ -33,15 +37,37 @@ impl PageStore {
     }
 
     pub fn request_once(&mut self, page: usize) -> bool {
-        self.requested.insert(page)
+        self.request_once_at(page, Instant::now())
+    }
+
+    pub fn request_once_at(&mut self, page: usize, now: Instant) -> bool {
+        self.backoff.allows(page, now) && self.requested.insert(page)
     }
 
     pub fn request_failed(&mut self, page: usize) {
-        self.requested.remove(&page);
+        self.request_failed_at(page, Instant::now());
+    }
+
+    pub fn request_failed_at(&mut self, page: usize, now: Instant) {
+        if self.requested.remove(&page) {
+            let delay = self.backoff.record_failure(page, now);
+            tracing::debug!(
+                page,
+                ?delay,
+                "a playlist page failed, waiting before asking again"
+            );
+        }
+    }
+
+    pub fn invalidate(&mut self) {
+        self.pages.clear();
+        self.requested.clear();
+        self.backoff.clear();
     }
 
     pub fn insert(&mut self, page: usize, songs: Vec<Song>) -> bool {
         self.requested.insert(page);
+        self.backoff.succeeded(page);
         self.pages.insert(page, songs);
         self.evict_distant_pages();
         self.pages.contains_key(&page)
@@ -106,11 +132,26 @@ mod tests {
     }
 
     #[test]
-    fn failed_requests_can_be_retried() {
+    fn failed_requests_are_retried_after_a_growing_wait() {
         let mut store = PageStore::default();
-        assert!(store.request_once(3));
-        assert!(!store.request_once(3));
-        store.request_failed(3);
-        assert!(store.request_once(3));
+        let now = Instant::now();
+        assert!(store.request_once_at(3, now));
+        assert!(!store.request_once_at(3, now));
+        store.request_failed_at(3, now);
+        assert!(!store.request_once_at(3, now));
+        let first_retry = now + std::time::Duration::from_secs(2);
+        assert!(store.request_once_at(3, first_retry));
+        store.request_failed_at(3, first_retry);
+        assert!(!store.request_once_at(3, first_retry + std::time::Duration::from_secs(3)));
+        assert!(store.request_once_at(3, first_retry + std::time::Duration::from_secs(4)));
+    }
+
+    #[test]
+    fn invalidating_forgets_every_page() {
+        let mut store = PageStore::default();
+        assert!(store.insert(2, songs_for(2)));
+        store.invalidate();
+        assert!(store.song(2 * PAGE_SIZE).is_none());
+        assert!(store.request_once(2));
     }
 }

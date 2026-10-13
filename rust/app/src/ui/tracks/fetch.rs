@@ -6,6 +6,7 @@ use slint::ComponentHandle;
 
 use super::model::{Request, paging_for_page};
 use super::with_model;
+use crate::ui::page_cache::PageApplied;
 use crate::ui::{AppWindow, Context, TracksState, clamp_i32, on_ui, show_status};
 
 pub(super) fn spawn_request(window: slint::Weak<AppWindow>, ctx: &Context, request: Request) {
@@ -73,9 +74,14 @@ fn show_page(
 ) {
     match result {
         Ok(songs) => {
-            with_model(window, |model| {
-                model.apply_page(generation, page, songs.items);
+            let applied = with_model(window, |model| {
+                model.apply_listed_page(generation, page, songs)
             });
+            if let Some(PageApplied::TotalChanged(total)) = applied {
+                let state = window.global::<TracksState>();
+                state.set_total(clamp_i32(total as u64));
+                state.set_selected_count(0);
+            }
         }
         Err(error) => {
             with_model(window, |model| model.page_failed(generation, page));

@@ -6,7 +6,7 @@ use slint::{Image, Model, ModelNotify, ModelRc, ModelTracker, VecModel};
 
 use super::card::{CardData, CardSource};
 use super::cover_cache::remember_cover;
-use super::grid_state::{GridRequest, GridState, RowChange};
+use super::grid_state::{GridRequest, GridState, RowChange, StoredPage};
 use crate::ui::CardRow;
 
 pub struct CardGrid {
@@ -59,14 +59,17 @@ impl CardGrid {
         cards: Vec<CardData>,
         total: Option<usize>,
     ) -> bool {
-        let change = {
+        let stored = {
             let mut state = self.state.borrow_mut();
             if state.generation != generation {
                 return false;
             }
             state.store_page(page, cards, total)
         };
-        self.notify_row_change(change);
+        match stored {
+            StoredPage::Rows(change) => self.notify_row_change(change),
+            StoredPage::Relaid => self.notify.reset(),
+        }
         true
     }
 
@@ -290,6 +293,26 @@ mod tests {
         assert!(grid.page_failed(1, 0));
         assert!(!grid.page_failed(0, 0));
         grid.row_data(0);
-        assert_eq!(requested_pages(&log), ["page 1:0"]);
+        assert!(requested_pages(&log).is_empty());
+    }
+
+    #[test]
+    fn a_changed_server_total_reloads_the_cached_cards() {
+        let log: RequestLog = Rc::default();
+        let grid = logging_grid(&log);
+        grid.set_columns(GRID_PAGE);
+        grid.reset(Some(CardSource::Albums(AlbumListQuery::default())));
+        let total = GRID_PAGE * 5;
+        assert!(grid.apply_page(1, 0, cards(0..GRID_PAGE), Some(total)));
+        drain(&log);
+        grid.row_data(1);
+        assert_eq!(requested_pages(&log), ["page 1:1", "page 1:2"]);
+        let changed = Some(total + 1);
+        assert!(grid.apply_page(1, 1, cards(GRID_PAGE..GRID_PAGE * 2), changed));
+        assert_eq!(grid.favorite("album-0"), None);
+        assert_eq!(grid.row_count(), 6);
+        assert!(!grid.apply_page(1, 2, cards(0..GRID_PAGE), Some(total)));
+        grid.row_data(0);
+        assert_eq!(requested_pages(&log), ["page 2:0"]);
     }
 }

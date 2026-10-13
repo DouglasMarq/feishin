@@ -5,7 +5,7 @@ use feishin_api::MusicServer;
 use feishin_core::model::{Paging, SongListQuery};
 
 use super::picker::{PickedSongs, Picker};
-use super::streamed::{add_listed_songs, existing_song_ids};
+use super::streamed::{add_listed_songs, add_listed_to_existing, existing_song_ids};
 use crate::demo::FakeServer;
 use crate::list_stream::{PlaylistId, SongSource};
 use crate::ui::tracks::{ListedSongs, SelectionRanges};
@@ -109,6 +109,25 @@ async fn songs_repeated_across_chunks_are_added_once() {
     expected.remove(699);
     expected.remove(650);
     assert_eq!(playlist_ids(&server, &target.id).await, expected);
+}
+
+#[tokio::test]
+async fn two_adds_to_one_playlist_at_once_add_each_song_once() {
+    let server = FakeServer::new(2000);
+    let Ok(target) = server.create_playlist("Target", &[]).await else {
+        panic!("create failed");
+    };
+    let (first, second) = tokio::join!(
+        add_listed_to_existing(&server, &target.id, library_rows(0..1200), |_| {}),
+        add_listed_to_existing(&server, &target.id, library_rows(600..1800), |_| {}),
+    );
+
+    assert!(first.failure.is_none() && second.failure.is_none());
+    assert_eq!(first.added + second.added, 1800);
+    let added = playlist_ids(&server, &target.id).await;
+    let unique: HashSet<&String> = added.iter().collect();
+    assert_eq!((added.len(), unique.len()), (1800, 1800));
+    assert_eq!(added, library_ids(&server, 0, 1800).await);
 }
 
 #[test]

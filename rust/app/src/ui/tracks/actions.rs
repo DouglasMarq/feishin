@@ -102,8 +102,11 @@ pub(super) fn set_rating(window: &AppWindow, ctx: &Context, ids: Vec<String>, ra
         return;
     };
     let weak = window.as_weak();
+    let work = ctx.session.background_work();
     ctx.rt.spawn(async move {
-        let (rated, failure) = rate_until_failure(server, ids, rating).await;
+        let Some((rated, failure)) = work.run(rate_until_failure(server, ids, rating)).await else {
+            return;
+        };
         on_ui(&weak, move |window| {
             let user_rating = (rating > 0).then_some(rating);
             with_model(window, |model| {
