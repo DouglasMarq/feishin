@@ -5,7 +5,7 @@ use feishin_core::model::{Album, AlbumDetail, Song};
 use slint::platform::software_renderer::{
     MinimalSoftwareWindow, PremultipliedRgbaColor, RepaintBufferType,
 };
-use slint::platform::{Platform, WindowAdapter, WindowEvent};
+use slint::platform::{Platform, PointerEventButton, WindowAdapter, WindowEvent};
 use slint::{ComponentHandle, LogicalPosition, Model, ModelRc, PhysicalSize, PlatformError};
 
 use super::loading::show;
@@ -18,6 +18,9 @@ const SIZE: PhysicalSize = PhysicalSize::new(1280, 820);
 const BOX_SET_TRACKS: u32 = 2_000;
 const TRACKS_PER_DISC: u32 = 500;
 const MOST_INSTANTIATED_ROWS: i32 = 26;
+const TRACK_HEIGHT: f32 = 36.0;
+const PROBED_ROWS: usize = 20;
+const FIRST_PROBE: f32 = 10.0;
 
 struct RenderOnlyPlatform {
     window: Rc<MinimalSoftwareWindow>,
@@ -39,6 +42,7 @@ struct AlbumPage {
     window: Rc<MinimalSoftwareWindow>,
     app: AppWindow,
     viewports: Rc<RefCell<Viewports>>,
+    played: Rc<RefCell<Vec<String>>>,
 }
 
 impl AlbumPage {
@@ -62,6 +66,25 @@ impl AlbumPage {
                 delta_y: -distance,
             });
         self.render();
+    }
+
+    fn double_click(&self, vertical_position: f32) -> Option<u32> {
+        let position = LogicalPosition::new(640.0, vertical_position);
+        let button = PointerEventButton::Left;
+        for _ in 0..2 {
+            let window = self.app.window();
+            window.dispatch_event(WindowEvent::PointerPressed { position, button });
+            window.dispatch_event(WindowEvent::PointerReleased { position, button });
+        }
+        self.render();
+        let played = self.played.borrow_mut().pop()?;
+        played.strip_prefix("box-track-")?.parse().ok()
+    }
+
+    fn probed_tracks(&self) -> Vec<Option<u32>> {
+        (0..PROBED_ROWS)
+            .map(|step| self.double_click(FIRST_PROBE + step as f32 * TRACK_HEIGHT))
+            .collect()
     }
 
     fn largest_slot_count(&self) -> i32 {
@@ -124,6 +147,14 @@ fn record_viewports(app: &AppWindow) -> Rc<RefCell<Viewports>> {
     viewports
 }
 
+fn record_plays(app: &AppWindow) -> Rc<RefCell<Vec<String>>> {
+    let played = Rc::new(RefCell::new(Vec::new()));
+    let recorded = Rc::clone(&played);
+    app.global::<AlbumDetailState>()
+        .on_play_track(move |track_id| recorded.borrow_mut().push(track_id.into()));
+    played
+}
+
 fn open_box_set() -> AlbumPage {
     let window = MinimalSoftwareWindow::new(RepaintBufferType::NewBuffer);
     let platform = RenderOnlyPlatform {
@@ -134,6 +165,7 @@ fn open_box_set() -> AlbumPage {
     let state = app.global::<AlbumDetailState>();
     state.set_tracks(ModelRc::new(AlbumTracks::default()));
     let viewports = record_viewports(&app);
+    let played = record_plays(&app);
     let navigation = app.global::<AppState>();
     navigation.set_page(Page::Main);
     navigation.set_route(Route::AlbumDetail);
@@ -145,6 +177,7 @@ fn open_box_set() -> AlbumPage {
         window,
         app,
         viewports,
+        played,
     };
     page.render();
     page
@@ -162,4 +195,31 @@ fn box_set_only_instantiates_the_visible_rows() {
     page.scroll_down(20_000.0);
     assert!(page.last_first_row() > 400, "{}", page.last_first_row());
     assert!(page.largest_slot_count() <= MOST_INSTANTIATED_ROWS);
+}
+
+fn assert_consecutive(tracks: &[Option<u32>]) {
+    let numbers: Vec<u32> = tracks.iter().flatten().copied().collect();
+    assert_eq!(numbers.len(), tracks.len(), "{tracks:?}");
+    let consecutive = numbers
+        .windows(2)
+        .all(|pair| pair.first().map(|first| first + 1) == pair.get(1).copied());
+    assert!(consecutive, "{tracks:?}");
+}
+
+#[test]
+fn reused_slots_show_the_tracks_under_the_pointer() {
+    let page = open_box_set();
+    for distance in [20_000.0, -517.0, 1_234.0, 7.0, 108.0, -11.0] {
+        page.scroll_down(distance);
+        let tracks = page.probed_tracks();
+        assert_consecutive(&tracks);
+        assert!(
+            tracks.first().copied().flatten() > Some(TRACKS_PER_DISC),
+            "{tracks:?}"
+        );
+    }
+
+    page.scroll_down(1_000_000.0);
+    let last_shown = page.probed_tracks().into_iter().flatten().max();
+    assert_eq!(last_shown, Some(BOX_SET_TRACKS - 1));
 }

@@ -11,6 +11,8 @@ mod searching;
 mod section;
 mod song_commands;
 mod view;
+#[cfg(test)]
+mod view_tests;
 
 pub use view::install;
 

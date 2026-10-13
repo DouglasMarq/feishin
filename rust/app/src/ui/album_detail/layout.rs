@@ -89,7 +89,7 @@ impl TrackLayout {
 
     pub fn visible_slots(&self, viewport_height: f32) -> usize {
         let rows_in_view = (viewport_height.max(0.0) / TRACK_ROW_HEIGHT).ceil() as usize;
-        (rows_in_view + OVERSCAN_SLOTS).min(self.len())
+        rows_in_view.saturating_add(OVERSCAN_SLOTS).min(self.len())
     }
 
     pub fn first_visible_row(&self, viewport_top: f32, slots: usize) -> usize {
@@ -148,6 +148,8 @@ mod tests {
         assert_eq!(box_set.len(), 2_000);
         assert_eq!(box_set.visible_slots(720.0), 22);
         assert_eq!(box_set.visible_slots(-5.0), 2);
+        assert_eq!(box_set.visible_slots(f32::INFINITY), 2_000);
+        assert_eq!(box_set.visible_slots(f32::NAN), 2);
         let single = TrackLayout::new(&songs_on_discs(&[1]));
         assert_eq!(single.visible_slots(720.0), 1);
         assert_eq!(TrackLayout::default().visible_slots(720.0), 0);
