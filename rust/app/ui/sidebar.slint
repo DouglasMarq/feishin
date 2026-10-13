@@ -136,7 +136,10 @@ export component Sidebar inherits Rectangle {
         NavEntry {
             icon: Icons.folder;
             label: "Folders";
-            enabled: false;
+            active: AppState.route == Route.folders;
+            clicked => {
+                AppState.navigate(Route.folders, "");
+            }
         }
 
         NavEntry {

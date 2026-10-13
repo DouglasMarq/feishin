@@ -1,5 +1,6 @@
 mod album;
 mod artist;
+mod directory;
 mod library;
 mod lyrics;
 mod playlist;
@@ -7,16 +8,21 @@ mod queue;
 mod references;
 mod scan_status;
 mod search;
+mod share;
 mod song;
 
 pub(crate) use album::{AlbumList2, AlbumResponse, normalize_album};
 pub(crate) use artist::{ArtistInfo2, ArtistResponse, Artists, normalize_artist};
+pub(crate) use directory::{
+    DirectoryResponse, FolderListing, IndexesResponse, folder_listing, indexed_folder,
+};
 pub(crate) use library::{Genres, MusicFolders, normalize_genre, normalize_music_folder};
 pub(crate) use lyrics::{LyricsList, lyrics_text};
 pub(crate) use playlist::{PlaylistResponse, Playlists, SubsonicPlaylist, normalize_playlist};
 pub(crate) use queue::{PlayQueue, PlayQueueBody, PlayQueueByIndex};
 pub(crate) use scan_status::ScanStatusResponse;
 pub(crate) use search::Search3;
+pub(crate) use share::{SharesResponse, normalize_share};
 pub(crate) use song::{
     RandomSongs, SimilarSongs, SongResponse, SubsonicSong, TopSongs, normalize_song,
 };

@@ -1,9 +1,9 @@
 use async_trait::async_trait;
 use feishin_api::{MusicServer, Result, StreamOptions};
 use feishin_core::model::{
-    Album, AlbumDetail, AlbumListQuery, Artist, ArtistDetail, ArtistListQuery, Genre, ItemKind,
-    LibraryScan, MusicFolder, Page, Paging, Playlist, SearchResults, ServerConfig, ServerPlayQueue,
-    Song, SongListQuery,
+    Album, AlbumDetail, AlbumListQuery, Artist, ArtistDetail, ArtistListQuery, Folder, FolderId,
+    Genre, ItemKind, LibraryScan, MusicFolder, Page, Paging, Playlist, SearchResults, ServerConfig,
+    ServerPlayQueue, Share, Song, SongListQuery,
 };
 
 use super::SubsonicServer;
@@ -145,6 +145,22 @@ impl MusicServer for SubsonicServer {
 
     async fn library_scan(&self) -> Result<LibraryScan> {
         self.fetch_library_scan().await
+    }
+
+    async fn subfolders(&self, folder: &FolderId) -> Result<Vec<Folder>> {
+        self.fetch_subfolders(folder).await
+    }
+
+    async fn folder_song_page(&self, folder: &FolderId, paging: Paging) -> Result<Page<Song>> {
+        self.fetch_folder_song_page(folder, paging).await
+    }
+
+    fn can_share(&self) -> bool {
+        true
+    }
+
+    async fn create_share(&self, item_ids: &[String], description: Option<&str>) -> Result<Share> {
+        self.share_items(item_ids, description).await
     }
 
     fn stream_url(&self, song_id: &str, options: &StreamOptions) -> String {

@@ -1,12 +1,11 @@
 use std::rc::Rc;
-use std::sync::{Arc, Mutex};
+use std::sync::Arc;
 use std::time::{Duration, Instant};
 
 use feishin_api::MusicServer;
 use feishin_core::model::Paging;
 use slint::platform::software_renderer::{MinimalSoftwareWindow, RepaintBufferType, Rgb565Pixel};
-use slint::platform::{EventLoopProxy, Platform, WindowAdapter};
-use slint::{ComponentHandle, EventLoopError, PhysicalSize, PlatformError, SharedString};
+use slint::{ComponentHandle, PhysicalSize, SharedString};
 use tokio::runtime::Runtime;
 use tokio::sync::mpsc::{self, UnboundedReceiver};
 
@@ -20,50 +19,11 @@ use crate::covers::DemoCovers;
 use crate::demo::FakeServer;
 use crate::session::Session;
 use crate::store::JsonStore;
-
-type EventQueue = Arc<Mutex<Vec<Box<dyn FnOnce() + Send>>>>;
-
-struct QueueingProxy {
-    queue: EventQueue,
-}
-
-impl EventLoopProxy for QueueingProxy {
-    fn quit_event_loop(&self) -> Result<(), EventLoopError> {
-        Ok(())
-    }
-
-    fn invoke_from_event_loop(
-        &self,
-        event: Box<dyn FnOnce() + Send>,
-    ) -> Result<(), EventLoopError> {
-        self.queue
-            .lock()
-            .map_err(|_| EventLoopError::EventLoopTerminated)?
-            .push(event);
-        Ok(())
-    }
-}
-
-struct HeadlessPlatform {
-    window: Rc<MinimalSoftwareWindow>,
-    queue: EventQueue,
-}
-
-impl Platform for HeadlessPlatform {
-    fn create_window_adapter(&self) -> Result<Rc<dyn WindowAdapter>, PlatformError> {
-        Ok(self.window.clone())
-    }
-
-    fn new_event_loop_proxy(&self) -> Option<Box<dyn EventLoopProxy>> {
-        Some(Box::new(QueueingProxy {
-            queue: Arc::clone(&self.queue),
-        }))
-    }
-}
+use crate::ui::test_window::{Jobs, claim_routed_platform, routed_runtime};
 
 struct Screen {
     software_window: Rc<MinimalSoftwareWindow>,
-    queue: EventQueue,
+    queue: Jobs,
     size: PhysicalSize,
 }
 
@@ -96,15 +56,10 @@ fn install_headless_platform() -> Option<Screen> {
     let size = PhysicalSize::new(1000, 700);
     let software_window = MinimalSoftwareWindow::new(RepaintBufferType::NewBuffer);
     software_window.set_size(size);
-    let queue = EventQueue::default();
-    let platform = HeadlessPlatform {
-        window: Rc::clone(&software_window),
-        queue: Arc::clone(&queue),
-    };
-    if let Err(error) = slint::platform::set_platform(Box::new(platform)) {
-        eprintln!("skipped: another headless test owns the Slint event loop proxy ({error})");
+    let Some(queue) = claim_routed_platform(&software_window) else {
+        eprintln!("skipped: another headless test owns the Slint event loop proxy");
         return None;
-    }
+    };
     Some(Screen {
         software_window,
         queue,
@@ -226,11 +181,7 @@ fn home_route_renders_shelves_with_lazy_covers_and_plays_albums() {
     let Some(screen) = install_headless_platform() else {
         return;
     };
-    let runtime = tokio::runtime::Builder::new_multi_thread()
-        .worker_threads(1)
-        .enable_all()
-        .build()
-        .unwrap_or_else(|error| panic!("runtime: {error}"));
+    let runtime = routed_runtime(1);
     let store_dir = tempfile::tempdir().unwrap_or_else(|error| panic!("temp dir: {error}"));
     let server = Arc::new(FakeServer::new(2_400));
     let (ctx, mut received) = demo_context(&runtime, &store_dir, &server);

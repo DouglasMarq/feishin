@@ -1,6 +1,7 @@
 import { ListView } from "std-widgets.slint";
 import { Theme } from "theme.slint";
 import { TracksState } from "globals.slint";
+import { ShareState } from "share.slint";
 import { TrackRowView } from "track_row.slint";
 import { TracksHeader } from "tracks_header.slint";
 import { TracksToolbar } from "tracks_toolbar.slint";
@@ -77,6 +78,14 @@ export component TracksView inherits Rectangle {
                             enabled: TracksState.selected-count > 0;
                             activated => {
                                 TracksState.add-selected-to-playlist();
+                            }
+                        }
+
+                        MenuItem {
+                            title: ShareState.menu-title;
+                            enabled: ShareState.available && !ShareState.busy && TracksState.selected-count > 0;
+                            activated => {
+                                ShareState.share-selected-tracks();
                             }
                         }
 

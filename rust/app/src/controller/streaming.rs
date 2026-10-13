@@ -3,8 +3,8 @@ use std::ops::Range;
 use super::list_streams::ActiveStream;
 use super::{Command, Controller, forward_command};
 use crate::list_stream::{
-    Deliver, Delivery, ListRow, Placement, RetryPolicy, RowRanges, ServerPages, SongSource,
-    StreamRunner, StreamStart,
+    Deliver, Delivery, ListRow, Placement, RetryPolicy, RowRanges, SongSource, StreamRunner,
+    StreamStart, page_fetcher,
 };
 
 impl Controller {
@@ -65,7 +65,7 @@ impl Controller {
         let deliver: Deliver = Box::new(move |message| {
             forward_command(&commands, Command::ListStream(message));
         });
-        let fetcher = Box::new(ServerPages { server, source });
+        let fetcher = page_fetcher(server, source);
         let delivery = Delivery::new(stream, deliver);
         let runner = StreamRunner::new(fetcher, listed, RetryPolicy::PATIENT, delivery);
         let task = tokio::spawn(runner.run(start)).abort_handle();

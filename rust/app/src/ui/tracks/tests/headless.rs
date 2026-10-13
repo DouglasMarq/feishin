@@ -1,18 +1,13 @@
 use std::rc::Rc;
-use std::sync::{Arc, Mutex};
+use std::sync::Arc;
 use std::time::{Duration, Instant};
 
 use feishin_storage::settings::UiSettings;
 use slint::platform::software_renderer::{
     MinimalSoftwareWindow, PremultipliedRgbaColor, RepaintBufferType,
 };
-use slint::platform::{
-    EventLoopProxy, Key, Platform, PointerEventButton, WindowAdapter, WindowEvent,
-};
-use slint::{
-    ComponentHandle, EventLoopError, LogicalPosition, Model, PhysicalSize, PlatformError,
-    SharedString,
-};
+use slint::platform::{Key, PointerEventButton, WindowEvent};
+use slint::{ComponentHandle, LogicalPosition, Model, PhysicalSize, SharedString};
 use tokio::runtime::Runtime;
 use tokio::sync::mpsc::{self, UnboundedReceiver};
 
@@ -25,12 +20,11 @@ use crate::demo::FakeServer;
 use crate::list_stream::{ListRow, Placement, SongSource};
 use crate::session::Session;
 use crate::store::JsonStore;
+use crate::ui::test_window::{Jobs, claim_routed_platform, routed_runtime};
 use crate::ui::{
     AppState, AppWindow, Context, Page, PlayerState, Route, TrackRow, TracksState, nav,
     playlist_picker,
 };
-
-type Jobs = Arc<Mutex<Vec<Box<dyn FnOnce() + Send>>>>;
 
 const SIZE: PhysicalSize = PhysicalSize::new(1280, 820);
 const TOOLBAR_HEIGHT: f32 = 76.0;
@@ -39,40 +33,6 @@ const TRACK_ROW_HEIGHT: f32 = 36.0;
 
 fn vertical_center_of_row(row_index: u8) -> f32 {
     TOOLBAR_HEIGHT + COLUMN_HEADER_HEIGHT + TRACK_ROW_HEIGHT * (f32::from(row_index) + 0.5)
-}
-
-struct TestPlatform {
-    window: Rc<MinimalSoftwareWindow>,
-    jobs: Jobs,
-}
-
-struct JobQueueProxy(Jobs);
-
-impl EventLoopProxy for JobQueueProxy {
-    fn quit_event_loop(&self) -> Result<(), EventLoopError> {
-        Ok(())
-    }
-
-    fn invoke_from_event_loop(
-        &self,
-        event: Box<dyn FnOnce() + Send>,
-    ) -> Result<(), EventLoopError> {
-        self.0
-            .lock()
-            .map_err(|_| EventLoopError::EventLoopTerminated)?
-            .push(event);
-        Ok(())
-    }
-}
-
-impl Platform for TestPlatform {
-    fn create_window_adapter(&self) -> Result<Rc<dyn WindowAdapter>, PlatformError> {
-        Ok(self.window.clone())
-    }
-
-    fn new_event_loop_proxy(&self) -> Option<Box<dyn EventLoopProxy>> {
-        Some(Box::new(JobQueueProxy(Arc::clone(&self.jobs))))
-    }
 }
 
 struct Harness {
@@ -147,12 +107,7 @@ impl Harness {
 
 fn install_test_platform() -> Option<(Rc<MinimalSoftwareWindow>, Jobs)> {
     let window = MinimalSoftwareWindow::new(RepaintBufferType::NewBuffer);
-    let jobs = Jobs::default();
-    slint::platform::set_platform(Box::new(TestPlatform {
-        window: Rc::clone(&window),
-        jobs: Arc::clone(&jobs),
-    }))
-    .ok()?;
+    let jobs = claim_routed_platform(&window)?;
     Some((window, jobs))
 }
 
@@ -314,11 +269,7 @@ fn tracks_view_lists_selects_filters_and_acts_on_demo_songs() {
     let Some((window, jobs)) = install_test_platform() else {
         return;
     };
-    let runtime = tokio::runtime::Builder::new_multi_thread()
-        .worker_threads(1)
-        .enable_all()
-        .build()
-        .expect("runtime");
+    let runtime = routed_runtime(1);
     let (ctx, mut received) = demo_context(&runtime);
     let harness = start_tracks_view(window, jobs, &ctx);
 

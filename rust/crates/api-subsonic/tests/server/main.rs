@@ -9,6 +9,8 @@ mod auth;
 #[cfg(test)]
 mod discography_caching;
 #[cfg(test)]
+mod folders;
+#[cfg(test)]
 mod library;
 #[cfg(test)]
 mod list_caching;
@@ -20,6 +22,8 @@ mod play_queue;
 mod playlist_paging;
 #[cfg(test)]
 mod playlists;
+#[cfg(test)]
+mod sharing;
 #[cfg(test)]
 mod songs;
 #[cfg(test)]

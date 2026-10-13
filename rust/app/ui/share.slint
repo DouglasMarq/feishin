@@ -1,0 +1,71 @@
+import { Theme } from "theme.slint";
+import { Icon, TooltipAnchor } from "widgets.slint";
+
+export enum ShareKind { song, album, playlist }
+
+export global ShareIcons {
+    out property <string> share: "M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z";
+}
+
+export global ShareState {
+    in property <bool> available: true;
+    in property <string> unavailable-reason;
+    in property <bool> busy;
+    in property <string> link;
+    in property <int> copy-request;
+    out property <string> menu-title: ShareState.available ? "Share" : "Share (" + ShareState.unavailable-reason + ")";
+    callback share(kind: ShareKind, id: string, name: string);
+    callback share-selected-tracks();
+}
+
+export component ShareButton inherits Rectangle {
+    in property <ShareKind> kind;
+    in property <string> item-id;
+    in property <string> item-name;
+    in property <string> noun: "item";
+    property <bool> usable: ShareState.available && !ShareState.busy && root.item-id != "";
+    width: 40px;
+    height: 40px;
+    border-radius: self.height / 2;
+    background: touch.has-hover && root.usable ? Theme.hover : transparent;
+    opacity: ShareState.available ? 1 : 0.4;
+
+    Icon {
+        path: ShareIcons.share;
+        color: touch.has-hover && root.usable ? Theme.foreground : Theme.muted;
+        width: 22px;
+        height: 22px;
+    }
+
+    TooltipAnchor {
+        text: !ShareState.available ? "Sharing is unavailable: " + ShareState.unavailable-reason : (ShareState.busy ? "Creating a share link..." : "Share this " + root.noun + ": copy a public link");
+        hovered: touch.has-hover;
+    }
+
+    touch := TouchArea {
+        mouse-cursor: root.usable ? pointer : default;
+        clicked => {
+            if (root.usable) {
+                ShareState.share(root.kind, root.item-id, root.item-name);
+            }
+        }
+    }
+}
+
+export component ShareClipboard {
+    property <int> request: ShareState.copy-request;
+    width: 0px;
+    height: 0px;
+
+    changed request => {
+        field.text = ShareState.link;
+        field.select-all();
+        field.copy();
+        field.clear-selection();
+    }
+
+    field := TextInput {
+        visible: false;
+        read-only: true;
+    }
+}

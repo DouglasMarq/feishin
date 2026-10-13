@@ -18,6 +18,7 @@ impl NavidromeServer {
         let scan = LibraryScan::from(response.scan_status.unwrap_or_default());
         if !scan.scanning {
             self.forget_fallback_lists();
+            self.forget_folder_listing();
         }
         Ok(scan)
     }

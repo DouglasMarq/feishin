@@ -1,8 +1,8 @@
 use async_trait::async_trait;
 use feishin_core::model::{
-    Album, AlbumDetail, AlbumListQuery, Artist, ArtistDetail, ArtistListQuery, Genre, ItemKind,
-    LibraryScan, MusicFolder, Page, Paging, Playlist, SearchResults, ServerConfig, ServerPlayQueue,
-    Song, SongListQuery,
+    Album, AlbumDetail, AlbumListQuery, Artist, ArtistDetail, ArtistListQuery, Folder, FolderId,
+    Genre, ItemKind, LibraryScan, MusicFolder, Page, Paging, Playlist, SearchResults, ServerConfig,
+    ServerPlayQueue, Share, Song, SongListQuery,
 };
 
 use crate::credential::Credential;
@@ -72,6 +72,12 @@ pub trait MusicServer: Send + Sync {
 
     async fn start_library_scan(&self) -> Result<LibraryScan>;
     async fn library_scan(&self) -> Result<LibraryScan>;
+
+    async fn subfolders(&self, folder: &FolderId) -> Result<Vec<Folder>>;
+    async fn folder_song_page(&self, folder: &FolderId, paging: Paging) -> Result<Page<Song>>;
+
+    fn can_share(&self) -> bool;
+    async fn create_share(&self, item_ids: &[String], description: Option<&str>) -> Result<Share>;
 
     fn stream_url(&self, song_id: &str, options: &StreamOptions) -> String;
     fn cover_art_url(&self, cover_art_id: &str, edge_pixels: Option<u32>) -> String;

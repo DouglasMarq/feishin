@@ -1,3 +1,4 @@
+mod folder_streaming;
 mod harness;
 mod list_streaming;
 mod media_session;

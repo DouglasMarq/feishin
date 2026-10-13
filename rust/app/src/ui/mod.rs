@@ -24,6 +24,7 @@ pub mod appearance;
 pub mod artist_detail;
 pub mod artists;
 pub mod favorites;
+pub mod folders;
 pub mod genres;
 pub mod home;
 pub mod library_scan;
@@ -39,7 +40,13 @@ pub mod playlists;
 pub mod queue;
 pub mod search;
 pub mod settings;
+pub mod sharing;
 pub mod tracks;
+
+#[cfg(test)]
+mod sharing_view_tests;
+#[cfg(test)]
+pub mod test_window;
 
 #[derive(Clone)]
 pub struct Context {
@@ -88,8 +95,10 @@ pub fn install(window: &AppWindow, ctx: &Context, settings: &Settings) {
     playlists::install(window, ctx);
     playlist_detail::install(window, ctx);
     favorites::install(window, ctx);
+    folders::install(window, ctx);
     search::install(window, ctx);
     settings::install(window, ctx);
+    sharing::install(window, ctx);
     now_playing::install(window, ctx);
     appearance::install(window, ctx, &settings.appearance);
     window

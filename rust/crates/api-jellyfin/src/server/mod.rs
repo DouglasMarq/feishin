@@ -1,5 +1,6 @@
 mod albums;
 mod artists;
+mod folders;
 mod library;
 mod music_server;
 mod playback;
