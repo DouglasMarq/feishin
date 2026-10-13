@@ -1,3 +1,5 @@
+use std::borrow::Borrow;
+
 use feishin_core::model::{Album, AlbumSort, SortOrder};
 
 use super::key::{SortValue, number, order_by, text};
@@ -31,16 +33,22 @@ fn album_sort_value(album: &Album, sort: AlbumSort) -> SortValue {
     }
 }
 
-pub fn sort_albums(items: &mut [Album], sort: AlbumSort, order: SortOrder) {
+fn album_of<Entry: Borrow<Album>>(entry: &Entry) -> &Album {
+    <Entry as Borrow<Album>>::borrow(entry)
+}
+
+pub fn sort_albums<Entry: Borrow<Album>>(items: &mut [Entry], sort: AlbumSort, order: SortOrder) {
     let descending = order == SortOrder::Desc;
     match sort {
         AlbumSort::Random => shuffle(items),
         AlbumSort::AlbumArtist => {
-            order_by(items, false, |album| vec![album_name(album)]);
-            order_by(items, descending, |album| vec![first_album_artist(album)]);
+            order_by(items, false, |entry| vec![album_name(album_of(entry))]);
+            order_by(items, descending, |entry| {
+                vec![first_album_artist(album_of(entry))]
+            });
         }
-        ordered => order_by(items, descending, |album| {
-            vec![album_sort_value(album, ordered)]
+        ordered => order_by(items, descending, |entry| {
+            vec![album_sort_value(album_of(entry), ordered)]
         }),
     }
 }

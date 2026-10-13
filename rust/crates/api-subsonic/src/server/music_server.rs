@@ -88,8 +88,7 @@ impl MusicServer for SubsonicServer {
     }
 
     async fn delete_playlist(&self, id: &str) -> Result<()> {
-        self.send("deletePlaylist.view", Params::new().add("id", id))
-            .await
+        self.delete_playlist_by_id(id).await
     }
 
     async fn search(&self, query: &str, limit: usize) -> Result<SearchResults> {

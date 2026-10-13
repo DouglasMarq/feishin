@@ -3,6 +3,8 @@ mod albums_and_artists;
 #[cfg(test)]
 mod annotations;
 #[cfg(test)]
+mod fallback_caching;
+#[cfg(test)]
 mod library;
 #[cfg(test)]
 mod play_queue;

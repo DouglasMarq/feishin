@@ -2,22 +2,21 @@ use feishin_api::{ApiError, Result};
 use feishin_core::model::{Page, Paging, Playlist, Song};
 
 use super::SubsonicServer;
-use super::pages::client_page;
+use super::pages::{client_page, cloned_page};
 use crate::client::Params;
 use crate::normalize;
-use crate::types::{PlaylistResponse, Playlists, SubsonicSong};
+use crate::types::{PlaylistResponse, SubsonicSong};
 
 impl SubsonicServer {
     pub(super) async fn fetch_playlist_page(&self, paging: Paging) -> Result<Page<Playlist>> {
-        let response: Playlists = self.fetch("getPlaylists.view", Params::new()).await?;
-        let playlists: Vec<Playlist> = response
-            .playlists
-            .and_then(|container| container.playlist)
-            .unwrap_or_default()
-            .into_iter()
-            .map(|playlist| normalize::playlist(playlist, self.server_id()))
-            .collect();
-        Ok(client_page(playlists, paging))
+        let playlists = self.all_playlists().await?;
+        Ok(cloned_page(client_page(playlists.iter().collect(), paging)))
+    }
+
+    async fn send_playlist_change(&self, endpoint: &str, params: Params) -> Result<()> {
+        let outcome = self.send(endpoint, params).await;
+        self.list_caches.forget_playlists();
+        outcome
     }
 
     async fn playlist_entries(&self, id: &str) -> Result<Vec<SubsonicSong>> {
@@ -39,8 +38,9 @@ impl SubsonicServer {
         song_ids: &[String],
     ) -> Result<Playlist> {
         let params = Params::new().add("name", name).add_each("songId", song_ids);
-        let response: PlaylistResponse = self.fetch("createPlaylist.view", params).await?;
-        response
+        let created: Result<PlaylistResponse> = self.fetch("createPlaylist.view", params).await;
+        self.list_caches.forget_playlists();
+        created?
             .playlist
             .map(|playlist| normalize::playlist(playlist, self.server_id()))
             .ok_or_else(|| ApiError::Decode("createPlaylist returned no playlist".into()))
@@ -54,7 +54,8 @@ impl SubsonicServer {
         let params = Params::new()
             .add("playlistId", playlist_id)
             .add_each("songIdToAdd", song_ids);
-        self.send("updatePlaylist.view", params).await
+        self.send_playlist_change("updatePlaylist.view", params)
+            .await
     }
 
     pub(super) async fn remove_playlist_indexes(
@@ -66,6 +67,12 @@ impl SubsonicServer {
         let params = Params::new()
             .add("playlistId", playlist_id)
             .add_each("songIndexToRemove", &indexes);
-        self.send("updatePlaylist.view", params).await
+        self.send_playlist_change("updatePlaylist.view", params)
+            .await
+    }
+
+    pub(super) async fn delete_playlist_by_id(&self, id: &str) -> Result<()> {
+        self.send_playlist_change("deletePlaylist.view", Params::new().add("id", id))
+            .await
     }
 }

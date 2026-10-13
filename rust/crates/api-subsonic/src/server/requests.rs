@@ -1,13 +1,11 @@
 use feishin_api::{ApiError, Result};
-use feishin_core::model::{Song, SongListQuery};
 use futures_util::stream::{self, StreamExt};
 use serde::de::DeserializeOwned;
 
 use super::SubsonicServer;
 use crate::client::Params;
 use crate::types::{
-    GetAlbum, GetArtist, GetArtists, Search3, SearchResult, SongsByGenre, Starred2, SubsonicAlbum,
-    SubsonicArtist, SubsonicSong,
+    GetAlbum, GetArtist, Search3, SearchResult, SongsByGenre, SubsonicAlbum, SubsonicSong,
 };
 
 const CONCURRENT_REQUESTS: usize = 8;
@@ -104,25 +102,6 @@ impl SubsonicServer {
             .unwrap_or_default())
     }
 
-    pub(super) async fn starred(&self, music_folder_id: Option<&str>) -> Result<SearchResult> {
-        let params = Params::new().add_optional("musicFolderId", music_folder_id);
-        let response: Starred2 = self.fetch("getStarred2.view", params).await?;
-        Ok(response.starred2.unwrap_or_default())
-    }
-
-    pub(super) async fn starred_songs(&self, query: &SongListQuery) -> Result<Vec<Song>> {
-        let starred = self.starred(query.music_folder_id.as_deref()).await?;
-        let mut songs = self.normalize_songs(starred.song.unwrap_or_default());
-        if !query.artist_ids.is_empty() {
-            songs.retain(|song| {
-                song.album_artists
-                    .iter()
-                    .any(|artist| query.artist_ids.contains(&artist.id))
-            });
-        }
-        Ok(songs)
-    }
-
     async fn fetch_each_skipping_rejected<T: DeserializeOwned>(
         &self,
         endpoint: &'static str,
@@ -168,21 +147,6 @@ impl SubsonicServer {
         Ok(albums
             .into_iter()
             .flat_map(|response| response.album.song.unwrap_or_default())
-            .collect())
-    }
-
-    pub(super) async fn artist_index(
-        &self,
-        music_folder_id: Option<&str>,
-    ) -> Result<Vec<SubsonicArtist>> {
-        let params = Params::new().add_optional("musicFolderId", music_folder_id);
-        let response: GetArtists = self.fetch("getArtists.view", params).await?;
-        Ok(response
-            .artists
-            .and_then(|indexes| indexes.index)
-            .unwrap_or_default()
-            .into_iter()
-            .flat_map(|index| index.artist.unwrap_or_default())
             .collect())
     }
 }

@@ -141,7 +141,7 @@ async fn song_list_favorites_are_filtered_sorted_and_paged() {
                 "album": [], "artist": []
             }
         })))
-        .expect(2)
+        .expect(1)
         .mount(&mock)
         .await;
     let server = server(&mock);
@@ -170,7 +170,7 @@ async fn mount_albums_and_artist(mock: &MockServer) {
         .respond_with(ok(json!({
             "artist": { "id": "ar-1", "name": "Artist", "albumCount": 1, "album": [album("al-2", "Second")] }
         })))
-        .expect(2)
+        .expect(1)
         .mount(mock)
         .await;
     let mut first = album("al-1", "First");
@@ -217,7 +217,7 @@ async fn mount_counted_song_sources(mock: &MockServer) {
             let songs = offset_response(request, 12_345, "songOffset", "songCount");
             ok(json!({ "searchResult3": { "song": songs } }))
         })
-        .expect(3 + 6)
+        .expect(6 + 4 + 1)
         .mount(mock)
         .await;
     Mock::given(path("/rest/getSongsByGenre.view"))

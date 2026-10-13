@@ -2,8 +2,9 @@ use feishin_api::Result;
 use feishin_core::model::{Page, Paging, Song, SongListQuery, SongSort};
 
 use super::SubsonicServer;
-use super::counting::{count_by_paging, count_by_probing_then_paging};
-use super::pages::{client_page, non_empty_search, server_page, wants_favorites_only};
+use super::cached_lists::starred_songs_matching;
+use super::counting::count_by_probing;
+use super::pages::{client_page, cloned_page, non_empty_search, server_page, wants_favorites_only};
 use super::requests::SearchWindow;
 use crate::album_list::nonzero_year_filter;
 use crate::client::Params;
@@ -80,15 +81,14 @@ impl SubsonicServer {
                 Ok(server_page(self.normalize_songs(songs), paging, None))
             }
             SongSource::Favorites => {
-                let mut songs = self.starred_songs(query).await?;
+                let starred = self.starred(folder).await?;
+                let mut songs = starred_songs_matching(&starred, query);
                 sort_songs(&mut songs, query.sort, query.order);
-                Ok(client_page(songs, paging))
+                Ok(cloned_page(client_page(songs, paging)))
             }
             SongSource::AlbumsAndArtists => {
-                let songs = self
-                    .songs_of_albums_and_artists(&query.album_ids, &query.artist_ids)
-                    .await?;
-                Ok(client_page(self.normalize_songs(songs), paging))
+                let songs = self.album_and_artist_songs(query).await?;
+                Ok(cloned_page(client_page(songs.iter().collect(), paging)))
             }
             SongSource::All => {
                 self.searched_song_page(LIST_ALL_SONGS_QUERY, paging, folder)
@@ -126,26 +126,25 @@ impl SubsonicServer {
         let folder = query.music_folder_id.as_deref();
         match SongSource::for_count(query) {
             SongSource::Search(term) => {
-                count_by_paging(0, |offset, count| async move {
+                count_by_probing(|offset, count| async move {
                     let window = SearchWindow { offset, count };
                     Ok(self.search_songs(term, window, folder).await?.len())
                 })
                 .await
             }
             SongSource::Genre(genre) => {
-                count_by_probing_then_paging(|offset, count| async move {
+                count_by_probing(|offset, count| async move {
                     let window = SearchWindow { offset, count };
                     Ok(self.songs_by_genre(genre, window, folder).await?.len())
                 })
                 .await
             }
-            SongSource::Favorites => Ok(self.starred_songs(query).await?.len()),
-            SongSource::AlbumsAndArtists => Ok(self
-                .songs_of_albums_and_artists(&query.album_ids, &query.artist_ids)
-                .await?
-                .len()),
+            SongSource::Favorites => {
+                Ok(starred_songs_matching(&*self.starred(folder).await?, query).len())
+            }
+            SongSource::AlbumsAndArtists => Ok(self.album_and_artist_songs(query).await?.len()),
             SongSource::All | SongSource::Random => {
-                count_by_probing_then_paging(|offset, count| async move {
+                count_by_probing(|offset, count| async move {
                     let window = SearchWindow { offset, count };
                     Ok(self
                         .search_songs(LIST_ALL_SONGS_QUERY, window, folder)

@@ -6,6 +6,7 @@ use reqwest::StatusCode;
 use tokio::sync::OnceCell;
 
 use crate::NavidromeServer;
+use crate::catalog::FallbackLists;
 use crate::http::{decode_error, network_error, query_string};
 use crate::native::{LoginRequest, NativeAuth};
 
@@ -53,6 +54,7 @@ impl NavidromeServer {
             subsonic_auth: subsonic.trim_start_matches(['?', '&']).to_owned(),
             session_token: RwLock::new(nd_token.clone().filter(|token| !token.is_empty())),
             detected_features: OnceCell::new(),
+            fallback_lists: FallbackLists::new(),
         })
     }
 

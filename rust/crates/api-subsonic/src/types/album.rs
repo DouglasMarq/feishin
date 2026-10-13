@@ -4,7 +4,7 @@ use super::lenient::{lenient_id, lenient_number, lenient_optional_id};
 use super::song::{GenreItem, SimpleArtist, SubsonicSong};
 use super::starred::Starred;
 
-#[derive(Debug, Default, Deserialize)]
+#[derive(Debug, Default, Clone, Deserialize)]
 #[serde(default)]
 pub struct ReleaseDate {
     #[serde(deserialize_with = "lenient_number")]
@@ -15,7 +15,7 @@ pub struct ReleaseDate {
     pub day: Option<f64>,
 }
 
-#[derive(Debug, Default, Deserialize)]
+#[derive(Debug, Default, Clone, Deserialize)]
 #[serde(rename_all = "camelCase", default)]
 pub struct SubsonicAlbum {
     #[serde(deserialize_with = "lenient_id")]

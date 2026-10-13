@@ -19,6 +19,14 @@ pub fn client_page<T>(items: Vec<T>, paging: Paging) -> Page<T> {
     }
 }
 
+pub fn cloned_page<T: Clone>(page: Page<&T>) -> Page<T> {
+    Page {
+        items: page.items.into_iter().cloned().collect(),
+        start_index: page.start_index,
+        total_count: page.total_count,
+    }
+}
+
 pub fn wants_favorites_only(favorite: Option<bool>) -> bool {
     favorite == Some(true)
 }

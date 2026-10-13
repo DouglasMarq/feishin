@@ -33,11 +33,17 @@ impl SubsonicServer {
         if ids.is_empty() {
             return Ok(());
         }
-        self.send(
+        self.send_annotation(
             favorite_endpoint(favorite),
             Params::new().add_each(key, ids),
         )
         .await
+    }
+
+    async fn send_annotation(&self, endpoint: &str, params: Params) -> Result<()> {
+        let outcome = self.send(endpoint, params).await;
+        self.list_caches.forget_annotations();
+        outcome
     }
 
     pub(super) async fn update_rating(&self, kind: ItemKind, id: &str, rating: u8) -> Result<()> {
@@ -47,7 +53,7 @@ impl SubsonicServer {
         let params = Params::new()
             .add("id", id)
             .add("rating", rating.min(MAX_RATING));
-        self.send("setRating.view", params).await
+        self.send_annotation("setRating.view", params).await
     }
 
     pub(super) async fn submit_scrobble(
