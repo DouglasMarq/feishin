@@ -1,5 +1,7 @@
 //! Controller tests driven by the fake server and a recording audio output.
 
+mod integrations;
+
 use std::sync::{Arc, Mutex};
 
 use anyhow::Result;

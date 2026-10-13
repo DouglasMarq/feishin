@@ -605,6 +605,10 @@ impl MusicServer for NavidromeServer {
         &self.config
     }
 
+    fn credential(&self) -> Option<Credential> {
+        Some(NavidromeServer::credential(self))
+    }
+
     async fn ping(&self) -> Result<()> {
         self.subsonic::<IgnoredAny>("ping", &[]).await.map(|_| ())
     }

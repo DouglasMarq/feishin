@@ -13,8 +13,10 @@ use crate::connect::{Connector, DemoConnector, ServerConnector};
 use crate::controller::{Command, Controller, Deps};
 use crate::covers::{CachedCovers, CoverProvider, DemoCovers};
 use crate::demo::{FakeServer, demo_credential};
-use crate::media::{MediaSession, Mpris, NoMediaSession};
+use crate::discord::DiscordSession;
+use crate::media::{MediaSession, MediaSessions, Mpris, NoMediaSession};
 use crate::session::Session;
+use crate::sleep_timer::{self, SleepTimerUi};
 use crate::store::{JsonStore, Store, SystemStore};
 use crate::ui::{self, AppWindow, Context, login};
 
@@ -69,19 +71,32 @@ fn media_session(
     settings: &Settings,
     commands: &mpsc::UnboundedSender<Command>,
 ) -> Box<dyn MediaSession> {
-    if mode == Mode::Demo || !settings.integrations.mpris {
-        return Box::new(NoMediaSession);
-    }
-    let commands = commands.clone();
-    let on_event = Box::new(move |event| {
-        let _ = commands.send(Command::Media(event));
-    });
-    match Mpris::new(on_event) {
-        Ok(mpris) => Box::new(mpris),
-        Err(e) => {
-            tracing::warn!("MPRIS unavailable: {e:#}");
-            Box::new(NoMediaSession)
+    let mut sessions: Vec<Box<dyn MediaSession>> = Vec::new();
+    if mode == Mode::Real && settings.integrations.mpris {
+        let commands = commands.clone();
+        let on_event = Box::new(move |event| {
+            let _ = commands.send(Command::Media(event));
+        });
+        match Mpris::new(on_event) {
+            Ok(mpris) => sessions.push(Box::new(mpris)),
+            Err(e) => tracing::warn!("MPRIS unavailable: {e:#}"),
         }
+    }
+    if settings.integrations.discord_rich_presence {
+        let client_id = settings
+            .integrations
+            .discord_client_id
+            .clone()
+            .unwrap_or_default();
+        match DiscordSession::new(client_id) {
+            Ok(discord) => sessions.push(Box::new(discord)),
+            Err(e) => tracing::warn!("Discord presence unavailable: {e:#}"),
+        }
+    }
+    match sessions.len() {
+        0 => Box::new(NoMediaSession),
+        1 => sessions.remove(0),
+        _ => Box::new(MediaSessions(sessions)),
     }
 }
 
@@ -156,13 +171,17 @@ pub fn run(mode: Mode) -> Result<()> {
         covers,
     };
     ui::install(&window, &ctx, &settings);
+    sleep_timer::install(&window, &ctx);
 
     let deps = Deps {
         audio: audio_output(mode, &settings, &commands)?,
         media: media_session(mode, &settings, &commands),
         store,
         session: ctx.session.clone(),
-        ui: Arc::new(ui::player::SlintSink::new(window.as_weak(), ctx.clone())),
+        ui: Arc::new(SleepTimerUi::new(
+            ui::player::SlintSink::new(window.as_weak(), ctx.clone()),
+            window.as_weak(),
+        )),
         commands: commands.clone(),
     };
     let controller = Controller::new(deps, settings.clone(), stored_queue, None);

@@ -51,12 +51,37 @@ export component AppWindow inherits Window {
 
     key-scope := FocusScope {
         key-pressed(event) => {
-            if (event.text == " " && AppState.page == Page.main) {
+            if (AppState.page != Page.main || event.modifiers.alt || event.modifiers.meta) {
+                return reject;
+            }
+            if (event.text == "/" || (event.modifiers.control && (event.text == "f" || event.text == "F"))) {
+                AppState.navigate(Route.search, "");
+                return accept;
+            }
+            if (event.modifiers.control) {
+                if (event.text == Key.RightArrow) {
+                    PlayerState.next();
+                } else if (event.text == Key.LeftArrow) {
+                    PlayerState.previous();
+                } else if (event.text == Key.UpArrow) {
+                    PlayerState.set-volume(Math.min(100, PlayerState.volume + 5));
+                } else if (event.text == Key.DownArrow) {
+                    PlayerState.set-volume(Math.max(0, PlayerState.volume - 5));
+                } else if (event.text == "s" || event.text == "S") {
+                    PlayerState.toggle-shuffle();
+                } else if (event.text == "r" || event.text == "R") {
+                    PlayerState.cycle-repeat();
+                } else {
+                    return reject;
+                }
+                return accept;
+            }
+            if (event.text == " ") {
                 PlayerState.toggle-pause();
                 return accept;
             }
-            if (AppState.page == Page.main && (event.text == "/" || (event.modifiers.control && (event.text == "f" || event.text == "F")))) {
-                AppState.navigate(Route.search, "");
+            if (event.text == "m" || event.text == "M") {
+                PlayerState.toggle-mute();
                 return accept;
             }
             return reject;

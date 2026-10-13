@@ -2,6 +2,7 @@ import { Theme, Icons, Format } from "theme.slint";
 import { AppState, PlayerState, Route } from "globals.slint";
 import { NowPlayingState, NowPlayingTab } from "now_playing.slint";
 import { Bar, Icon, IconButton, TooltipAnchor } from "widgets.slint";
+import { SleepTimerButton } from "sleep_timer.slint";
 
 export component PlayerBar inherits Rectangle {
     height: 88px;
@@ -181,6 +182,10 @@ export component PlayerBar inherits Rectangle {
             width: 30%;
             alignment: end;
             spacing: 8px;
+
+            SleepTimerButton {
+                y: (parent.height - self.height) / 2;
+            }
 
             IconButton {
                 y: (parent.height - self.height) / 2;

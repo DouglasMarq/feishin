@@ -127,6 +127,9 @@ pub struct FakeServer {
     order_cache: Mutex<Option<(SongListQuery, Arc<Vec<usize>>)>>,
     scrobbles: Mutex<Vec<ScrobbleCall>>,
     playlists: Mutex<DemoPlaylists>,
+    play_queue: Mutex<Option<ServerPlayQueue>>,
+    queue_saves: Mutex<usize>,
+    credential: Mutex<Option<Credential>>,
 }
 
 struct DemoPlaylist {
@@ -210,6 +213,24 @@ impl FakeServer {
             order_cache: Mutex::default(),
             scrobbles: Mutex::default(),
             playlists: Mutex::new(DemoPlaylists::generated(song_count)),
+            play_queue: Mutex::default(),
+            queue_saves: Mutex::default(),
+            credential: Mutex::default(),
+        }
+    }
+
+    /// How many times the play queue was saved, and the last saved queue.
+    #[cfg(test)]
+    pub fn saved_play_queue(&self) -> (usize, Option<ServerPlayQueue>) {
+        let saves = self.queue_saves.lock().map(|n| *n).unwrap_or_default();
+        let queue = self.play_queue.lock().ok().and_then(|q| q.clone());
+        (saves, queue)
+    }
+
+    #[cfg(test)]
+    pub fn set_credential(&self, credential: Credential) {
+        if let Ok(mut current) = self.credential.lock() {
+            *current = Some(credential);
         }
     }
 
@@ -565,6 +586,10 @@ impl MusicServer for FakeServer {
         &self.config
     }
 
+    fn credential(&self) -> Option<Credential> {
+        self.credential.lock().ok().and_then(|c| c.clone())
+    }
+
     async fn ping(&self) -> Result<()> {
         Ok(())
     }
@@ -800,15 +825,31 @@ impl MusicServer for FakeServer {
 
     async fn save_play_queue(
         &self,
-        _song_ids: &[String],
-        _current_song_id: Option<&str>,
-        _position_ms: u64,
+        song_ids: &[String],
+        current_song_id: Option<&str>,
+        position_ms: u64,
     ) -> Result<()> {
+        let songs = song_ids
+            .iter()
+            .map(|id| {
+                parse_index(id, "song-")
+                    .filter(|&i| i < self.song_count)
+                    .map_or_else(|| blank_song(id, &self.config.id, 0), |i| self.song_at(i))
+            })
+            .collect();
+        if let (Ok(mut queue), Ok(mut saves)) = (self.play_queue.lock(), self.queue_saves.lock()) {
+            *queue = Some(ServerPlayQueue {
+                songs,
+                current_song_id: current_song_id.map(str::to_owned),
+                position_ms,
+            });
+            *saves += 1;
+        }
         Ok(())
     }
 
     async fn play_queue(&self) -> Result<Option<ServerPlayQueue>> {
-        Ok(None)
+        Ok(self.play_queue.lock().ok().and_then(|q| q.clone()))
     }
 
     async fn lyrics(&self, song: &Song) -> Result<Option<String>> {

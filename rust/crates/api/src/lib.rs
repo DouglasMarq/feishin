@@ -72,6 +72,11 @@ pub struct StreamOptions {
 pub trait MusicServer: Send + Sync {
     fn config(&self) -> &ServerConfig;
 
+    /// The latest credential when the server refreshes it during use (Navidrome JWT); persist it.
+    fn credential(&self) -> Option<Credential> {
+        None
+    }
+
     async fn ping(&self) -> Result<()>;
 
     async fn song_list(&self, query: &SongListQuery, paging: Paging) -> Result<Page<Song>>;

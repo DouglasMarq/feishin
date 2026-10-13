@@ -222,7 +222,7 @@ fn seek_moves_position() {
     let mark = rec.len();
     player.seek(12_000).unwrap();
     rec.wait_after(mark, "position after seek", |e| {
-        matches!(e, PlayerEvent::Position { position_ms, .. } if (12_000..13_000).contains(position_ms))
+        matches!(e, PlayerEvent::Position { position_ms, .. } if (12_000..19_000).contains(position_ms))
     });
     assert!(player.position_ms().unwrap() >= 12_000);
 

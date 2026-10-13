@@ -4,10 +4,13 @@ mod connect;
 mod controller;
 mod covers;
 mod demo;
+mod discord;
 mod library;
 mod media;
+mod play_queue_sync;
 mod scrobble;
 mod session;
+mod sleep_timer;
 mod store;
 mod ui;
 
