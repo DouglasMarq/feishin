@@ -1,5 +1,3 @@
-//! Desktop integration: MPRIS / media keys and Discord Rich Presence.
-
 mod discord;
 mod mpris;
 
@@ -24,13 +22,8 @@ pub enum MediaControlEvent {
     Next,
     Previous,
     Stop,
-    SeekTo {
-        position_ms: u64,
-    },
-    SeekBy {
-        offset_ms: i64,
-    },
-    /// 0.0-1.0.
+    SeekTo { position_ms: u64 },
+    SeekBy { offset_ms: i64 },
     SetVolume(f64),
     Raise,
     Quit,

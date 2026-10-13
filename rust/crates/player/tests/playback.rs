@@ -1,12 +1,14 @@
+#![cfg(test)]
+
 use std::sync::{Arc, Condvar, Mutex, OnceLock, Weak};
 use std::thread;
 use std::time::{Duration, Instant};
 
 use feishin_player::{Player, PlayerConfig, PlayerEvent, ReplayGainMode};
 
-const TIMEOUT: Duration = Duration::from_secs(10);
+const WAIT_TIMEOUT: Duration = Duration::from_secs(10);
 
-fn sine(seconds: u32) -> String {
+fn sine_wave_url(seconds: u32) -> String {
     format!("av://lavfi:sine=frequency=440:duration={seconds}")
 }
 
@@ -26,50 +28,70 @@ impl Recorder {
         self.events.lock().unwrap().clone()
     }
 
-    fn wait_for(&self, what: &str, pred: impl Fn(&PlayerEvent) -> bool) -> PlayerEvent {
-        let deadline = Instant::now() + TIMEOUT;
+    fn wait_for(&self, description: &str, predicate: impl Fn(&PlayerEvent) -> bool) -> PlayerEvent {
+        let deadline = Instant::now() + WAIT_TIMEOUT;
         let mut events = self.events.lock().unwrap();
-        let mut seen = 0;
+        let mut checked_count = 0;
         loop {
-            if let Some(found) = events[seen..].iter().find(|e| pred(e)) {
+            if let Some(found) = events[checked_count..]
+                .iter()
+                .find(|event| predicate(event))
+            {
                 return found.clone();
             }
-            seen = events.len();
+            checked_count = events.len();
             let now = Instant::now();
-            assert!(now < deadline, "timed out waiting for {what}: {events:?}");
+            assert!(
+                now < deadline,
+                "timed out waiting for {description}: {events:?}"
+            );
             events = self.changed.wait_timeout(events, deadline - now).unwrap().0;
         }
     }
 
     fn wait_for_event(&self, expected: PlayerEvent) {
-        self.wait_for(&format!("{expected:?}"), |e| *e == expected);
+        self.wait_for(&format!("{expected:?}"), |event| *event == expected);
     }
 
-    fn wait_after(&self, mark: usize, what: &str, pred: impl Fn(&PlayerEvent) -> bool) {
-        let deadline = Instant::now() + TIMEOUT;
+    fn wait_after(
+        &self,
+        event_count_before: usize,
+        description: &str,
+        predicate: impl Fn(&PlayerEvent) -> bool,
+    ) {
+        let deadline = Instant::now() + WAIT_TIMEOUT;
         let mut events = self.events.lock().unwrap();
-        while !events[mark..].iter().any(&pred) {
+        while !events[event_count_before..].iter().any(&predicate) {
             let now = Instant::now();
-            assert!(now < deadline, "timed out waiting for {what}: {events:?}");
+            assert!(
+                now < deadline,
+                "timed out waiting for {description}: {events:?}"
+            );
             events = self.changed.wait_timeout(events, deadline - now).unwrap().0;
         }
     }
 
-    fn len(&self) -> usize {
+    fn wait_for_event_after(&self, event_count_before: usize, expected: PlayerEvent) {
+        self.wait_after(event_count_before, &format!("{expected:?}"), |event| {
+            *event == expected
+        });
+    }
+
+    fn event_count(&self) -> usize {
         self.events.lock().unwrap().len()
     }
 
     fn milestones(&self) -> Vec<PlayerEvent> {
         self.snapshot()
             .into_iter()
-            .filter(|e| !matches!(e, PlayerEvent::Position { .. }))
+            .filter(|event| !matches!(event, PlayerEvent::Position { .. }))
             .collect()
     }
 
     fn positions(&self) -> Vec<(u64, Option<u64>)> {
         self.snapshot()
             .into_iter()
-            .filter_map(|e| match e {
+            .filter_map(|event| match event {
                 PlayerEvent::Position {
                     position_ms,
                     duration_ms,
@@ -82,8 +104,9 @@ impl Recorder {
 
 fn player_with(config: PlayerConfig) -> (Player, Arc<Recorder>) {
     let recorder = Arc::new(Recorder::default());
-    let sink = Arc::clone(&recorder);
-    let player = Player::with_null_output(config, Box::new(move |e| sink.push(e))).unwrap();
+    let event_sink = Arc::clone(&recorder);
+    let player =
+        Player::with_null_output(config, Box::new(move |event| event_sink.push(event))).unwrap();
     (player, recorder)
 }
 
@@ -94,43 +117,46 @@ fn player() -> (Player, Arc<Recorder>) {
 fn has_error(events: &[PlayerEvent]) -> bool {
     events
         .iter()
-        .any(|e| matches!(e, PlayerEvent::Error { .. }))
+        .any(|event| matches!(event, PlayerEvent::Error { .. }))
 }
 
 #[test]
 fn load_plays_to_natural_end() {
-    let (player, rec) = player();
-    player.load(1, &sine(1), 0).unwrap();
-    rec.wait_for_event(PlayerEvent::Idle);
+    let (player, recorder) = player();
+    player.load(1, &sine_wave_url(1), 0).unwrap();
+    recorder.wait_for_event(PlayerEvent::Idle);
 
     assert_eq!(
-        rec.milestones(),
+        recorder.milestones(),
         vec![
             PlayerEvent::Started { uid: 1 },
             PlayerEvent::TrackEnded { uid: 1 },
             PlayerEvent::Idle,
         ]
     );
-    let positions = rec.positions();
+    let positions = recorder.positions();
     assert!(positions.len() >= 3, "{positions:?}");
     assert!(
-        positions.windows(2).all(|w| w[0].0 <= w[1].0),
+        positions.windows(2).all(|pair| pair[0].0 <= pair[1].0),
         "{positions:?}"
     );
-    let duration = positions.iter().find_map(|p| p.1).unwrap();
+    let duration = positions
+        .iter()
+        .find_map(|(_, duration_ms)| *duration_ms)
+        .unwrap();
     assert!((900..=1100).contains(&duration), "{duration}");
 }
 
 #[test]
 fn position_events_arrive_about_every_250ms() {
-    let (player, rec) = player();
-    player.load(1, &sine(3), 0).unwrap();
-    rec.wait_for_event(PlayerEvent::Started { uid: 1 });
-    let start = rec.len();
+    let (player, recorder) = player();
+    player.load(1, &sine_wave_url(3), 0).unwrap();
+    recorder.wait_for_event(PlayerEvent::Started { uid: 1 });
+    let event_count_before = recorder.event_count();
     thread::sleep(Duration::from_millis(1600));
-    let count = rec.snapshot()[start..]
+    let count = recorder.snapshot()[event_count_before..]
         .iter()
-        .filter(|e| matches!(e, PlayerEvent::Position { .. }))
+        .filter(|event| matches!(event, PlayerEvent::Position { .. }))
         .count();
     assert!((4..=9).contains(&count), "{count} positions in 1.6 s");
     assert!(player.position_ms().is_some());
@@ -138,53 +164,64 @@ fn position_events_arrive_about_every_250ms() {
 
 #[test]
 fn load_starts_at_offset() {
-    let (player, rec) = player();
-    player.load(1, &sine(10), 4000).unwrap();
-    rec.wait_for_event(PlayerEvent::Started { uid: 1 });
-    rec.wait_for("position", |e| matches!(e, PlayerEvent::Position { .. }));
+    let (player, recorder) = player();
+    player.load(1, &sine_wave_url(10), 4000).unwrap();
+    recorder.wait_for_event(PlayerEvent::Started { uid: 1 });
+    recorder.wait_for("position", |event| {
+        matches!(event, PlayerEvent::Position { .. })
+    });
     assert!(
-        rec.positions().iter().all(|p| p.0 >= 4000),
+        recorder
+            .positions()
+            .iter()
+            .all(|(position_ms, _)| *position_ms >= 4000),
         "{:?}",
-        rec.positions()
+        recorder.positions()
     );
+}
+
+fn pause_and_assert_position_freezes(player: &Player, recorder: &Recorder) -> usize {
+    player.pause().unwrap();
+    recorder.wait_for_event(PlayerEvent::Paused);
+    thread::sleep(Duration::from_millis(200));
+    let event_count_before = recorder.event_count();
+    let paused_at = player.position_ms().unwrap();
+    thread::sleep(Duration::from_millis(700));
+    let after_pause: Vec<_> = recorder.snapshot()[event_count_before..].to_vec();
+    assert!(
+        !after_pause
+            .iter()
+            .any(|event| matches!(event, PlayerEvent::Position { .. })),
+        "{after_pause:?}"
+    );
+    assert_eq!(player.position_ms(), Some(paused_at));
+    event_count_before
+}
+
+fn toggle_pause_and_wait_for(player: &Player, recorder: &Recorder, expected: PlayerEvent) {
+    let event_count_before = recorder.event_count();
+    player.toggle_pause().unwrap();
+    recorder.wait_for_event_after(event_count_before, expected);
 }
 
 #[test]
 fn pause_and_resume() {
-    let (player, rec) = player();
-    player.load(1, &sine(10), 0).unwrap();
-    rec.wait_for(
+    let (player, recorder) = player();
+    player.load(1, &sine_wave_url(10), 0).unwrap();
+    recorder.wait_for(
         "playback underway",
-        |e| matches!(e, PlayerEvent::Position { position_ms, .. } if *position_ms > 100),
+        |event| matches!(event, PlayerEvent::Position { position_ms, .. } if *position_ms > 100),
     );
 
-    player.pause().unwrap();
-    rec.wait_for_event(PlayerEvent::Paused);
-    thread::sleep(Duration::from_millis(200));
-    let mark = rec.len();
-    let paused_at = player.position_ms().unwrap();
-    thread::sleep(Duration::from_millis(700));
-    let after_pause: Vec<_> = rec.snapshot()[mark..].to_vec();
-    assert!(
-        !after_pause
-            .iter()
-            .any(|e| matches!(e, PlayerEvent::Position { .. })),
-        "{after_pause:?}"
-    );
-    assert_eq!(player.position_ms(), Some(paused_at));
-
+    let event_count_before = pause_and_assert_position_freezes(&player, &recorder);
     player.play().unwrap();
-    rec.wait_after(mark, "Resumed", |e| *e == PlayerEvent::Resumed);
+    recorder.wait_for_event_after(event_count_before, PlayerEvent::Resumed);
 
-    let mark = rec.len();
-    player.toggle_pause().unwrap();
-    rec.wait_after(mark, "Paused", |e| *e == PlayerEvent::Paused);
-    let mark = rec.len();
-    player.toggle_pause().unwrap();
-    rec.wait_after(mark, "Resumed", |e| *e == PlayerEvent::Resumed);
+    toggle_pause_and_wait_for(&player, &recorder, PlayerEvent::Paused);
+    toggle_pause_and_wait_for(&player, &recorder, PlayerEvent::Resumed);
 
     assert_eq!(
-        rec.milestones(),
+        recorder.milestones(),
         vec![
             PlayerEvent::Started { uid: 1 },
             PlayerEvent::Paused,
@@ -197,13 +234,13 @@ fn pause_and_resume() {
 
 #[test]
 fn load_unpauses() {
-    let (player, rec) = player();
+    let (player, recorder) = player();
     player.pause().unwrap();
-    rec.wait_for_event(PlayerEvent::Paused);
-    player.load(1, &sine(1), 0).unwrap();
-    rec.wait_for_event(PlayerEvent::Idle);
+    recorder.wait_for_event(PlayerEvent::Paused);
+    player.load(1, &sine_wave_url(1), 0).unwrap();
+    recorder.wait_for_event(PlayerEvent::Idle);
     assert_eq!(
-        rec.milestones(),
+        recorder.milestones(),
         vec![
             PlayerEvent::Paused,
             PlayerEvent::Resumed,
@@ -216,35 +253,35 @@ fn load_unpauses() {
 
 #[test]
 fn seek_moves_position() {
-    let (player, rec) = player();
-    player.load(1, &sine(20), 0).unwrap();
-    rec.wait_for_event(PlayerEvent::Started { uid: 1 });
-    let mark = rec.len();
+    let (player, recorder) = player();
+    player.load(1, &sine_wave_url(20), 0).unwrap();
+    recorder.wait_for_event(PlayerEvent::Started { uid: 1 });
+    let event_count_before = recorder.event_count();
     player.seek(12_000).unwrap();
-    rec.wait_after(mark, "position after seek", |e| {
-        matches!(e, PlayerEvent::Position { position_ms, .. } if (12_000..19_000).contains(position_ms))
+    recorder.wait_after(event_count_before, "position after seek", |event| {
+        matches!(event, PlayerEvent::Position { position_ms, .. } if (12_000..19_000).contains(position_ms))
     });
     assert!(player.position_ms().unwrap() >= 12_000);
 
     player.pause().unwrap();
-    rec.wait_for_event(PlayerEvent::Paused);
-    let mark = rec.len();
+    recorder.wait_for_event(PlayerEvent::Paused);
+    let event_count_before = recorder.event_count();
     player.seek(3_000).unwrap();
-    rec.wait_after(mark, "position after paused seek", |e| {
-        matches!(e, PlayerEvent::Position { position_ms, .. } if (3_000..3_100).contains(position_ms))
+    recorder.wait_after(event_count_before, "position after paused seek", |event| {
+        matches!(event, PlayerEvent::Position { position_ms, .. } if (3_000..3_100).contains(position_ms))
     });
-    assert!(!has_error(&rec.snapshot()));
+    assert!(!has_error(&recorder.snapshot()));
 }
 
 #[test]
 fn gapless_transition_to_preloaded_track() {
-    let (player, rec) = player();
-    player.load(1, &sine(1), 0).unwrap();
-    player.preload_next(2, &sine(1)).unwrap();
-    rec.wait_for_event(PlayerEvent::Idle);
+    let (player, recorder) = player();
+    player.load(1, &sine_wave_url(1), 0).unwrap();
+    player.preload_next(2, &sine_wave_url(1)).unwrap();
+    recorder.wait_for_event(PlayerEvent::Idle);
 
     assert_eq!(
-        rec.milestones(),
+        recorder.milestones(),
         vec![
             PlayerEvent::Started { uid: 1 },
             PlayerEvent::TrackEnded { uid: 1 },
@@ -257,16 +294,16 @@ fn gapless_transition_to_preloaded_track() {
 
 #[test]
 fn sequential_transition_without_gapless() {
-    let (player, rec) = player_with(PlayerConfig {
+    let (player, recorder) = player_with(PlayerConfig {
         gapless: false,
         ..PlayerConfig::default()
     });
-    player.load(1, &sine(1), 0).unwrap();
-    player.preload_next(2, &sine(1)).unwrap();
-    rec.wait_for_event(PlayerEvent::Idle);
+    player.load(1, &sine_wave_url(1), 0).unwrap();
+    player.preload_next(2, &sine_wave_url(1)).unwrap();
+    recorder.wait_for_event(PlayerEvent::Idle);
 
     assert_eq!(
-        rec.milestones(),
+        recorder.milestones(),
         vec![
             PlayerEvent::Started { uid: 1 },
             PlayerEvent::TrackEnded { uid: 1 },
@@ -279,14 +316,14 @@ fn sequential_transition_without_gapless() {
 
 #[test]
 fn preload_replaces_previous_preload() {
-    let (player, rec) = player();
-    player.load(1, &sine(1), 0).unwrap();
-    player.preload_next(2, &sine(1)).unwrap();
-    player.preload_next(3, &sine(1)).unwrap();
-    rec.wait_for_event(PlayerEvent::Idle);
+    let (player, recorder) = player();
+    player.load(1, &sine_wave_url(1), 0).unwrap();
+    player.preload_next(2, &sine_wave_url(1)).unwrap();
+    player.preload_next(3, &sine_wave_url(1)).unwrap();
+    recorder.wait_for_event(PlayerEvent::Idle);
 
     assert_eq!(
-        rec.milestones(),
+        recorder.milestones(),
         vec![
             PlayerEvent::Started { uid: 1 },
             PlayerEvent::TrackEnded { uid: 1 },
@@ -299,14 +336,14 @@ fn preload_replaces_previous_preload() {
 
 #[test]
 fn clear_next_removes_preloaded_track() {
-    let (player, rec) = player();
-    player.load(1, &sine(1), 0).unwrap();
-    player.preload_next(2, &sine(1)).unwrap();
+    let (player, recorder) = player();
+    player.load(1, &sine_wave_url(1), 0).unwrap();
+    player.preload_next(2, &sine_wave_url(1)).unwrap();
     player.clear_next().unwrap();
-    rec.wait_for_event(PlayerEvent::Idle);
+    recorder.wait_for_event(PlayerEvent::Idle);
 
     assert_eq!(
-        rec.milestones(),
+        recorder.milestones(),
         vec![
             PlayerEvent::Started { uid: 1 },
             PlayerEvent::TrackEnded { uid: 1 },
@@ -318,27 +355,27 @@ fn clear_next_removes_preloaded_track() {
 #[test]
 fn preload_after_gapless_transition_keeps_chain_going() {
     let recorder = Arc::new(Recorder::default());
-    let slot: Arc<OnceLock<Weak<Player>>> = Arc::new(OnceLock::new());
-    let sink = Arc::clone(&recorder);
-    let player_ref = Arc::clone(&slot);
+    let player_slot: Arc<OnceLock<Weak<Player>>> = Arc::new(OnceLock::new());
+    let event_sink = Arc::clone(&recorder);
+    let callback_player_slot = Arc::clone(&player_slot);
     let player = Arc::new(
         Player::with_null_output(
             PlayerConfig::default(),
             Box::new(move |event| {
                 if let PlayerEvent::Started { uid } = event
                     && uid < 3
-                    && let Some(player) = player_ref.get().and_then(Weak::upgrade)
+                    && let Some(player) = callback_player_slot.get().and_then(Weak::upgrade)
                 {
-                    player.preload_next(uid + 1, &sine(1)).unwrap();
+                    player.preload_next(uid + 1, &sine_wave_url(1)).unwrap();
                 }
-                sink.push(event);
+                event_sink.push(event);
             }),
         )
         .unwrap(),
     );
-    slot.set(Arc::downgrade(&player)).unwrap();
+    player_slot.set(Arc::downgrade(&player)).unwrap();
 
-    player.load(1, &sine(1), 0).unwrap();
+    player.load(1, &sine_wave_url(1), 0).unwrap();
     recorder.wait_for_event(PlayerEvent::Idle);
 
     assert_eq!(
@@ -357,16 +394,16 @@ fn preload_after_gapless_transition_keeps_chain_going() {
 
 #[test]
 fn stop_does_not_report_track_end() {
-    let (player, rec) = player();
-    player.load(1, &sine(10), 0).unwrap();
-    player.preload_next(2, &sine(1)).unwrap();
-    rec.wait_for_event(PlayerEvent::Started { uid: 1 });
+    let (player, recorder) = player();
+    player.load(1, &sine_wave_url(10), 0).unwrap();
+    player.preload_next(2, &sine_wave_url(1)).unwrap();
+    recorder.wait_for_event(PlayerEvent::Started { uid: 1 });
     player.stop().unwrap();
-    rec.wait_for_event(PlayerEvent::Idle);
+    recorder.wait_for_event(PlayerEvent::Idle);
     thread::sleep(Duration::from_millis(300));
 
     assert_eq!(
-        rec.milestones(),
+        recorder.milestones(),
         vec![PlayerEvent::Started { uid: 1 }, PlayerEvent::Idle]
     );
     assert_eq!(player.position_ms(), None);
@@ -374,14 +411,14 @@ fn stop_does_not_report_track_end() {
 
 #[test]
 fn load_replaces_current_track_without_track_end() {
-    let (player, rec) = player();
-    player.load(1, &sine(10), 0).unwrap();
-    rec.wait_for_event(PlayerEvent::Started { uid: 1 });
-    player.load(2, &sine(1), 0).unwrap();
-    rec.wait_for_event(PlayerEvent::Idle);
+    let (player, recorder) = player();
+    player.load(1, &sine_wave_url(10), 0).unwrap();
+    recorder.wait_for_event(PlayerEvent::Started { uid: 1 });
+    player.load(2, &sine_wave_url(1), 0).unwrap();
+    recorder.wait_for_event(PlayerEvent::Idle);
 
     assert_eq!(
-        rec.milestones(),
+        recorder.milestones(),
         vec![
             PlayerEvent::Started { uid: 1 },
             PlayerEvent::Started { uid: 2 },
@@ -393,13 +430,13 @@ fn load_replaces_current_track_without_track_end() {
 
 #[test]
 fn load_failure_reports_error_with_uid() {
-    let (player, rec) = player();
+    let (player, recorder) = player();
     player
         .load(7, "/nonexistent/feishin-player-test.flac", 0)
         .unwrap();
-    rec.wait_for_event(PlayerEvent::Idle);
+    recorder.wait_for_event(PlayerEvent::Idle);
 
-    let milestones = rec.milestones();
+    let milestones = recorder.milestones();
     assert!(
         matches!(
             milestones.as_slice(),
@@ -411,14 +448,14 @@ fn load_failure_reports_error_with_uid() {
 
 #[test]
 fn failing_preload_reports_error_and_goes_idle() {
-    let (player, rec) = player();
-    player.load(1, &sine(1), 0).unwrap();
+    let (player, recorder) = player();
+    player.load(1, &sine_wave_url(1), 0).unwrap();
     player
         .preload_next(2, "/nonexistent/feishin-player-test.flac")
         .unwrap();
-    rec.wait_for_event(PlayerEvent::Idle);
+    recorder.wait_for_event(PlayerEvent::Idle);
 
-    let milestones = rec.milestones();
+    let milestones = recorder.milestones();
     assert!(
         matches!(
             milestones.as_slice(),
@@ -435,14 +472,14 @@ fn failing_preload_reports_error_and_goes_idle() {
 
 #[test]
 fn seek_while_idle_fails() {
-    let (player, _rec) = player();
+    let (player, _recorder) = player();
     assert!(player.seek(1000).is_err());
     assert_eq!(player.position_ms(), None);
 }
 
 #[test]
 fn settings_and_devices() {
-    let (player, rec) = player_with(PlayerConfig {
+    let (player, recorder) = player_with(PlayerConfig {
         replay_gain: ReplayGainMode::Album,
         volume: 40,
         ..PlayerConfig::default()
@@ -457,29 +494,32 @@ fn settings_and_devices() {
     player.set_audio_device(None).unwrap();
 
     let devices = player.audio_devices().unwrap();
-    assert!(devices.iter().any(|d| d.name == "auto"), "{devices:?}");
-    assert!(devices.iter().all(|d| !d.name.is_empty()));
+    assert!(
+        devices.iter().any(|device| device.name == "auto"),
+        "{devices:?}"
+    );
+    assert!(devices.iter().all(|device| !device.name.is_empty()));
 
-    player.load(1, &sine(1), 0).unwrap();
-    rec.wait_for_event(PlayerEvent::Idle);
-    assert!(!has_error(&rec.snapshot()));
+    player.load(1, &sine_wave_url(1), 0).unwrap();
+    recorder.wait_for_event(PlayerEvent::Idle);
+    assert!(!has_error(&recorder.snapshot()));
 }
 
 #[test]
 fn player_is_usable_across_threads() {
-    let (player, rec) = player();
+    let (player, recorder) = player();
     let player = Arc::new(player);
     let worker = {
         let player = Arc::clone(&player);
-        thread::spawn(move || player.load(1, &sine(10), 0))
+        thread::spawn(move || player.load(1, &sine_wave_url(10), 0))
     };
     worker.join().unwrap().unwrap();
-    rec.wait_for_event(PlayerEvent::Started { uid: 1 });
+    recorder.wait_for_event(PlayerEvent::Started { uid: 1 });
     let pauser = {
         let player = Arc::clone(&player);
         thread::spawn(move || player.pause())
     };
     pauser.join().unwrap().unwrap();
-    rec.wait_for_event(PlayerEvent::Paused);
+    recorder.wait_for_event(PlayerEvent::Paused);
     drop(player);
 }
