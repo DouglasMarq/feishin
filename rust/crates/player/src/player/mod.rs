@@ -88,6 +88,11 @@ impl Player {
     pub fn is_crossfading(&self) -> bool {
         self.mixer.read(|state| state.is_crossfading())
     }
+
+    #[doc(hidden)]
+    pub fn holds_next_track(&self) -> bool {
+        self.mixer.read(|state| state.holds_next_track())
+    }
 }
 
 impl Drop for Player {

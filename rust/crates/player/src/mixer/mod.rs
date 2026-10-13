@@ -3,6 +3,7 @@ mod durations;
 mod fade;
 mod fader;
 mod output;
+mod standby;
 mod state;
 mod transport;
 

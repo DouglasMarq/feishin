@@ -87,6 +87,10 @@ impl Routing {
         self.standby = Standby::Preloading { uid, loaded: false };
     }
 
+    pub(crate) fn preload_failed(&mut self, uid: Uid, message: String) {
+        self.standby = Standby::Failed { uid, message };
+    }
+
     pub(crate) fn clear_standby(&mut self) {
         self.standby = Standby::Empty;
     }

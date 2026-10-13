@@ -5,7 +5,7 @@ use crate::deck::DeckClock;
 
 pub(crate) const FADE_STEP: Duration = Duration::from_millis(40);
 const SHORTEST_RECHECK: Duration = Duration::from_millis(5);
-const LONGEST_RECHECK: Duration = Duration::from_millis(500);
+pub(super) const LONGEST_RECHECK: Duration = Duration::from_millis(500);
 const OUTGOING_END_GRACE_SECONDS: f64 = 1.5;
 pub(crate) const OUTPUT_BUFFER_SECONDS: f64 = 0.2;
 const DRAIN_MARGIN_SECONDS: f64 = OUTPUT_BUFFER_SECONDS + 0.05;
@@ -29,6 +29,22 @@ impl FadeWindow {
             start: audible_end - length,
             end: audible_end,
         })
+    }
+
+    pub(super) fn starts_at(self) -> f64 {
+        self.start
+    }
+
+    fn fitting_incoming(self, incoming_duration: Option<f64>) -> Self {
+        let longest_for_incoming = incoming_duration
+            .filter(|seconds| seconds.is_finite() && *seconds > 0.0)
+            .map_or(f64::INFINITY, |seconds| {
+                seconds * LONGEST_FADE_SHARE_OF_TRACK
+            });
+        Self {
+            start: self.start.max(self.end - longest_for_incoming),
+            end: self.end,
+        }
     }
 
     pub(crate) fn has_begun(self, position: f64) -> bool {
@@ -70,8 +86,13 @@ pub(crate) enum FaderPlan {
     Finish,
 }
 
-pub(crate) fn plan_before_fade(crossfade: Duration, lead: DeckClock) -> FaderPlan {
-    let window = FadeWindow::planned(lead.duration, crossfade);
+pub(crate) fn plan_before_fade(
+    crossfade: Duration,
+    lead: DeckClock,
+    incoming_duration: Option<f64>,
+) -> FaderPlan {
+    let window = FadeWindow::planned(lead.duration, crossfade)
+        .map(|window| window.fitting_incoming(incoming_duration));
     match (lead.position, window) {
         (Some(position), Some(window)) if !lead.paused => match window.has_begun(position) {
             true => FaderPlan::Begin(window.starting_at(position)),
@@ -168,25 +189,46 @@ mod tests {
         let end = audible_end(200.0);
         let start = end - 6.0;
         assert_eq!(
-            plan_before_fade(SIX_SECONDS, clock(100.0, 200.0)),
+            plan_before_fade(SIX_SECONDS, clock(100.0, 200.0), None),
             FaderPlan::Recheck(LONGEST_RECHECK)
         );
         assert_eq!(
-            plan_before_fade(SIX_SECONDS, clock(start - 0.1, 200.0)),
+            plan_before_fade(SIX_SECONDS, clock(start - 0.1, 200.0), None),
             FaderPlan::Recheck(Duration::from_secs_f64(start - (start - 0.1)))
         );
         assert_eq!(
-            plan_before_fade(SIX_SECONDS, clock(start - 0.000_001, 200.0)),
+            plan_before_fade(SIX_SECONDS, clock(start - 0.000_001, 200.0), None),
             FaderPlan::Recheck(SHORTEST_RECHECK)
         );
         assert_eq!(
-            plan_before_fade(SIX_SECONDS, clock(start, 200.0)),
+            plan_before_fade(SIX_SECONDS, clock(start, 200.0), None),
             FaderPlan::Begin(window(start, end))
         );
         assert_eq!(
-            plan_before_fade(SIX_SECONDS, clock(198.0, 200.0)),
+            plan_before_fade(SIX_SECONDS, clock(198.0, 200.0), None),
             FaderPlan::Begin(window(198.0, end))
         );
+    }
+
+    #[test]
+    fn short_incoming_track_shortens_the_fade() {
+        let end = audible_end(200.0);
+        let capped_start = end - 2.0;
+        let shortly_before = capped_start - 0.25;
+        assert_eq!(
+            plan_before_fade(SIX_SECONDS, clock(shortly_before, 200.0), Some(5.0)),
+            FaderPlan::Recheck(Duration::from_secs_f64(capped_start - shortly_before))
+        );
+        assert_eq!(
+            plan_before_fade(SIX_SECONDS, clock(capped_start, 200.0), Some(5.0)),
+            FaderPlan::Begin(window(capped_start, end))
+        );
+        for unusable in [Some(0.0), Some(f64::NAN), Some(f64::INFINITY), None] {
+            assert_eq!(
+                plan_before_fade(SIX_SECONDS, clock(end - 6.0, 200.0), unusable),
+                FaderPlan::Begin(window(end - 6.0, end))
+            );
+        }
     }
 
     #[test]
@@ -205,7 +247,7 @@ mod tests {
         };
         for lead in [paused, unknown_position, unknown_duration] {
             assert_eq!(
-                plan_before_fade(SIX_SECONDS, lead),
+                plan_before_fade(SIX_SECONDS, lead, None),
                 FaderPlan::Recheck(LONGEST_RECHECK)
             );
         }

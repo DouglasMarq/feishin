@@ -3,7 +3,7 @@ use std::time::Duration;
 use super::state::MixerState;
 use crate::PlayerEvent;
 use crate::crossfade::{
-    FADE_STEP, FadeWindow, FaderPlan, Gain, plan_before_fade, plan_during_fade,
+    FADE_STEP, FadeWindow, FaderPlan, Gain, StandbyLoad, plan_before_fade, plan_during_fade,
 };
 use crate::deck::{Deck, DeckSetting};
 use crate::error::log_failure;
@@ -33,9 +33,9 @@ impl MixerState {
     pub(super) fn fader_tick(&mut self) -> FaderTick {
         match self.fade {
             Some(window) => self.ramp_fade(window),
-            None if self.config.crossfade_enabled() && self.routing.standby_is_ready() => {
-                self.watch_for_fade_start()
-            }
+            None if !self.config.crossfade_enabled() => FaderTick::idle(),
+            None if self.routing.standby_is_ready() => self.watch_for_fade_start(),
+            None if self.standby_load_is_waiting() => self.watch_for_standby_load(),
             None => FaderTick::idle(),
         }
     }
@@ -44,27 +44,33 @@ impl MixerState {
         self.routing.is_fading()
     }
 
+    pub(crate) fn holds_next_track(&self) -> bool {
+        self.routing.has_standby() && !self.routing.is_fading()
+    }
+
     pub(super) fn finish_fade(&mut self) {
         if !self.routing.is_fading() {
             return;
         }
         self.dismiss_standby();
-        log_failure(
-            self.preload_pending_into_standby(),
-            "preloading the next track",
-        );
+        self.load_standby_in_background_when_due();
+    }
+
+    fn watch_for_standby_load(&mut self) -> FaderTick {
+        match self.standby_load_plan() {
+            StandbyLoad::Now => {
+                self.preload_pending_in_background();
+                FaderTick::idle()
+            }
+            StandbyLoad::Later(wait) => FaderTick::after(wait),
+        }
     }
 
     fn watch_for_fade_start(&mut self) -> FaderTick {
-        let Ok(lead) = self.lead_deck() else {
+        let Some(lead) = self.lead_clock() else {
             return FaderTick::idle();
         };
-        let mut clock = lead.clock();
-        clock.duration = self
-            .durations
-            .expected_seconds(self.routing.lead())
-            .or(clock.duration);
-        match plan_before_fade(self.config.crossfade, clock) {
+        match plan_before_fade(self.config.crossfade, lead, self.incoming_duration()) {
             FaderPlan::Begin(window) => self.begin_fade(window),
             FaderPlan::Recheck(delay) => FaderTick::after(delay),
             FaderPlan::Ramp(_) | FaderPlan::Finish => FaderTick::idle(),

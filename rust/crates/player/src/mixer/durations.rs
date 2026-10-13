@@ -6,6 +6,7 @@ use feishin_core::queue::Uid;
 use crate::crossfade::DeckSlot;
 
 const REMEMBERED_TRACKS: usize = 4;
+const REPORTED_DURATION_TOLERANCE_SECONDS: f64 = 1.5;
 
 #[derive(Default)]
 pub(crate) struct TrackDurations {
@@ -35,7 +36,20 @@ impl TrackDurations {
         }
     }
 
-    pub(crate) fn expected_seconds(&self, slot: DeckSlot) -> Option<f64> {
+    pub(crate) fn expected_seconds(&self, slot: DeckSlot, reported: Option<f64>) -> Option<f64> {
+        let reported = reported.filter(|seconds| seconds.is_finite() && *seconds > 0.0);
+        match (self.hinted_seconds(slot), reported) {
+            (Some(hinted), Some(reported))
+                if (reported - hinted).abs() <= REPORTED_DURATION_TOLERANCE_SECONDS =>
+            {
+                Some(reported)
+            }
+            (Some(hinted), _) => Some(hinted),
+            (None, reported) => reported,
+        }
+    }
+
+    fn hinted_seconds(&self, slot: DeckSlot) -> Option<f64> {
         let playing = match slot {
             DeckSlot::First => self.first_playing,
             DeckSlot::Second => self.second_playing,
@@ -58,13 +72,40 @@ mod tests {
         durations.remember(2, Some(1_500));
         durations.remember(3, None);
         durations.remember(4, Some(0));
-        assert_eq!(durations.expected_seconds(DeckSlot::First), None);
+        assert_eq!(durations.expected_seconds(DeckSlot::First, None), None);
         durations.playing(DeckSlot::First, 1);
         durations.playing(DeckSlot::Second, 2);
-        assert_eq!(durations.expected_seconds(DeckSlot::First), Some(200.0));
-        assert_eq!(durations.expected_seconds(DeckSlot::Second), Some(1.5));
+        assert_eq!(
+            durations.expected_seconds(DeckSlot::First, None),
+            Some(200.0)
+        );
+        assert_eq!(
+            durations.expected_seconds(DeckSlot::Second, None),
+            Some(1.5)
+        );
         durations.playing(DeckSlot::First, 3);
-        assert_eq!(durations.expected_seconds(DeckSlot::First), None);
+        assert_eq!(durations.expected_seconds(DeckSlot::First, None), None);
+    }
+
+    #[test]
+    fn precise_reported_duration_wins_only_when_close_to_the_hint() {
+        let mut durations = TrackDurations::default();
+        durations.remember(1, Some(200_000));
+        durations.playing(DeckSlot::First, 1);
+        let expected = |reported| durations.expected_seconds(DeckSlot::First, reported);
+        assert_eq!(expected(Some(200.7)), Some(200.7));
+        assert_eq!(expected(Some(199.2)), Some(199.2));
+        assert_eq!(expected(Some(30.0)), Some(200.0));
+        assert_eq!(expected(Some(f64::NAN)), Some(200.0));
+        assert_eq!(expected(None), Some(200.0));
+        assert_eq!(
+            durations.expected_seconds(DeckSlot::Second, Some(42.0)),
+            Some(42.0)
+        );
+        assert_eq!(
+            durations.expected_seconds(DeckSlot::Second, Some(-1.0)),
+            None
+        );
     }
 
     #[test]
@@ -75,9 +116,9 @@ mod tests {
         }
         durations.remember(9, Some(9_500));
         durations.playing(DeckSlot::First, 9);
-        assert_eq!(durations.expected_seconds(DeckSlot::First), Some(9.5));
+        assert_eq!(durations.expected_seconds(DeckSlot::First, None), Some(9.5));
         durations.playing(DeckSlot::First, 6);
-        assert_eq!(durations.expected_seconds(DeckSlot::First), None);
+        assert_eq!(durations.expected_seconds(DeckSlot::First, None), None);
         assert_eq!(durations.known_seconds.len(), REMEMBERED_TRACKS);
     }
 }

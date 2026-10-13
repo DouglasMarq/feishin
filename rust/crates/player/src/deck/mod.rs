@@ -70,10 +70,14 @@ impl Deck {
         self.shared.mpv.get_property::<f64>("time-pos").ok()
     }
 
+    pub(crate) fn duration_seconds(&self) -> Option<f64> {
+        self.shared.mpv.get_property::<f64>("duration").ok()
+    }
+
     pub(crate) fn clock(&self) -> DeckClock {
         DeckClock {
             position: self.position_seconds(),
-            duration: self.shared.mpv.get_property::<f64>("duration").ok(),
+            duration: self.duration_seconds(),
             paused: self.is_paused(),
         }
     }

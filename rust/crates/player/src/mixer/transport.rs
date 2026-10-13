@@ -2,7 +2,7 @@ use super::state::{MixerState, PendingTrack};
 use crate::MediaSource;
 use crate::crossfade::Gain;
 use crate::deck::DeckSetting;
-use crate::error::{PlayerError, Result, log_failure};
+use crate::error::{Result, log_failure};
 
 impl MixerState {
     pub(crate) fn load(&mut self, source: MediaSource<'_>, start_ms: u64) -> Result<()> {
@@ -30,7 +30,7 @@ impl MixerState {
         });
         match self.routing.is_fading() {
             true => Ok(()),
-            false => self.preload_pending_into_standby(),
+            false => self.load_standby_when_due(),
         }
     }
 
@@ -64,19 +64,5 @@ impl MixerState {
     pub(crate) fn toggle_pause(&self) -> Result<()> {
         let paused = self.lead_deck()?.is_paused();
         self.set_paused(!paused)
-    }
-
-    pub(super) fn preload_pending_into_standby(&mut self) -> Result<()> {
-        let Some(pending) = self.pending_next.take() else {
-            return Ok(());
-        };
-        let standby = self.standby_deck().ok_or(PlayerError::Closed)?;
-        standby.apply(&DeckSetting::Gain(Gain::SILENT))?;
-        standby.apply(&DeckSetting::Paused(true))?;
-        standby.replace(pending.uid, &pending.url, 0)?;
-        self.durations
-            .playing(self.routing.standby_slot(), pending.uid);
-        self.routing.preload(pending.uid);
-        Ok(())
     }
 }

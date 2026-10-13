@@ -61,6 +61,7 @@ impl MixerState {
     }
 
     pub(super) fn route(&mut self, slot: DeckSlot, event: PlayerEvent) -> Vec<PlayerEvent> {
+        let event = self.with_current_pause_state(slot, event);
         if let PlayerEvent::Started { uid } = event {
             self.durations.playing(slot, uid);
         }
@@ -68,6 +69,7 @@ impl MixerState {
         let outgoing_ended = self.routing.outgoing_deck_went_idle(slot, &event);
         if lead_ended {
             self.finish_fade();
+            self.preload_pending_in_background();
         }
         let outcome = self.routing.route(slot, event);
         if outgoing_ended {
@@ -79,12 +81,25 @@ impl MixerState {
         outcome.events
     }
 
+    fn with_current_pause_state(&self, slot: DeckSlot, event: PlayerEvent) -> PlayerEvent {
+        let reports_pause = matches!(event, PlayerEvent::Paused | PlayerEvent::Resumed);
+        match self.lead_deck() {
+            Ok(lead) if reports_pause && slot == self.routing.lead() => match lead.is_paused() {
+                true => PlayerEvent::Paused,
+                false => PlayerEvent::Resumed,
+            },
+            _ => event,
+        }
+    }
+
     pub(super) fn change_crossfade(&mut self, crossfade: Duration) {
         let toggled = self.config.crossfade.is_zero() != crossfade.is_zero();
         self.config.crossfade = crossfade;
         if toggled {
             self.pending_next = None;
-            self.dismiss_standby();
+            if !self.routing.is_fading() {
+                self.dismiss_standby();
+            }
             log_failure(
                 self.lead_deck().and_then(Deck::clear_next),
                 "clearing the next track",
