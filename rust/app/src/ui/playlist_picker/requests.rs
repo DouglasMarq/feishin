@@ -6,7 +6,8 @@ use slint::ComponentHandle;
 
 use super::choices::new_song_ids;
 use super::dialog::close;
-use super::picker::{PendingRequest, SharedPicker, lock};
+use super::listed_requests::{PickedPlaylist, add_listed, create_listed};
+use super::picker::{PendingRequest, PickedSongs, SharedPicker, lock};
 use crate::ui::playlists::song_count_label;
 use crate::ui::{
     AppWindow, Context, PlaylistPickerState, on_ui, playlist_detail, playlists, show_status,
@@ -15,11 +16,6 @@ use crate::ui::{
 enum RequestOutcome {
     Succeeded(String),
     Failed(String),
-}
-
-struct PickedPlaylist {
-    id: String,
-    name: String,
 }
 
 fn start_request(window: &AppWindow, shared: &SharedPicker) -> Option<PendingRequest> {
@@ -51,22 +47,46 @@ pub fn pick(window: &AppWindow, ctx: &Context, shared: &SharedPicker, playlist_i
     let Some(server) = ctx.session.get() else {
         return;
     };
-    let Some(PendingRequest {
-        generation,
-        song_ids,
-    }) = start_request(window, shared)
-    else {
+    let Some(PendingRequest { generation, songs }) = start_request(window, shared) else {
         return;
     };
     let picked = PickedPlaylist {
         name: lock(shared).playlist_name(&playlist_id),
         id: playlist_id,
     };
+    match songs {
+        PickedSongs::Ids(song_ids) => {
+            let ids_request = IdsRequest {
+                generation,
+                song_ids,
+            };
+            pick_ids(window, ctx, shared, server, picked, ids_request);
+        }
+        PickedSongs::Listed(listed) => {
+            close(window, shared);
+            add_listed(window, ctx, server, picked, listed);
+        }
+    }
+}
+
+struct IdsRequest {
+    generation: u64,
+    song_ids: Vec<String>,
+}
+
+fn pick_ids(
+    window: &AppWindow,
+    ctx: &Context,
+    shared: &SharedPicker,
+    server: Arc<dyn MusicServer>,
+    picked: PickedPlaylist,
+    request: IdsRequest,
+) {
     let (weak, shared) = (window.as_weak(), Arc::clone(shared));
     ctx.rt.spawn(async move {
-        let outcome = add_new_songs(server.as_ref(), &picked.id, &song_ids).await;
+        let outcome = add_new_songs(server.as_ref(), &picked.id, &request.song_ids).await;
         on_ui(&weak, move |window| {
-            finish_pick(window, &shared, generation, &picked, outcome);
+            finish_pick(window, &shared, request.generation, &picked, outcome);
         });
     });
 }
@@ -112,19 +132,38 @@ pub fn create(window: &AppWindow, ctx: &Context, shared: &SharedPicker, name: &s
     let Some(server) = ctx.session.get().filter(|_| !name.is_empty()) else {
         return;
     };
-    let Some(PendingRequest {
-        generation,
-        song_ids,
-    }) = start_request(window, shared)
-    else {
+    let Some(PendingRequest { generation, songs }) = start_request(window, shared) else {
         return;
     };
-    let song_ids = new_song_ids(&[], &song_ids);
+    match songs {
+        PickedSongs::Ids(song_ids) => {
+            let ids_request = IdsRequest {
+                generation,
+                song_ids,
+            };
+            create_with_ids(window, ctx, shared, server, name, ids_request);
+        }
+        PickedSongs::Listed(listed) => {
+            close(window, shared);
+            create_listed(window, ctx, server, name, listed);
+        }
+    }
+}
+
+fn create_with_ids(
+    window: &AppWindow,
+    ctx: &Context,
+    shared: &SharedPicker,
+    server: Arc<dyn MusicServer>,
+    name: String,
+    request: IdsRequest,
+) {
+    let song_ids = new_song_ids(&[], &request.song_ids);
     let (weak, shared) = (window.as_weak(), Arc::clone(shared));
     ctx.rt.spawn(async move {
         let result = server.create_playlist(&name, &song_ids).await;
         on_ui(&weak, move |window| {
-            finish_create(window, &shared, generation, song_ids.len(), result);
+            finish_create(window, &shared, request.generation, song_ids.len(), result);
         });
     });
 }

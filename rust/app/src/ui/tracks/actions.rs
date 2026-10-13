@@ -4,10 +4,12 @@ use feishin_api::{ApiError, MusicServer};
 use feishin_core::model::{ItemKind, Song};
 use slint::{ComponentHandle, SharedString};
 
+use super::listed_actions::act_on_listed;
 use super::model::TracksModel;
-use super::selection::SelectionSnapshot;
+use super::selection::{FirstSelected, SelectedSongs};
 use super::{string_model, with_model};
 use crate::controller::Command;
+use crate::ui::playlist_picker::PlaylistPicker;
 use crate::ui::{Actions, AppState, AppWindow, Context, Route, on_ui, show_status};
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -20,37 +22,18 @@ pub(super) enum SongAction {
     Rate(u8),
 }
 
-pub(super) fn act_on_selection(window: &AppWindow, ctx: &Context, action: SongAction) {
-    let Some(snapshot) = with_model(window, TracksModel::selection) else {
-        return;
-    };
-    let action_ctx = ctx.clone();
-    with_resolved(window, ctx, snapshot, move |window, songs| {
-        perform(window, &action_ctx, action, songs);
-    });
+#[derive(Clone)]
+pub(super) struct ActionTarget {
+    pub ctx: Context,
+    pub picker: PlaylistPicker,
 }
 
-fn with_resolved(
-    window: &AppWindow,
-    ctx: &Context,
-    snapshot: SelectionSnapshot,
-    use_songs: impl FnOnce(&AppWindow, Vec<Song>) + Send + 'static,
-) {
-    if snapshot.is_loaded() {
-        use_songs(window, snapshot.into_loaded());
-        return;
+pub(super) fn act_on_selection(window: &AppWindow, target: &ActionTarget, action: SongAction) {
+    match with_model(window, TracksModel::selected_songs) {
+        Some(SelectedSongs::Loaded(songs)) => perform(window, &target.ctx, action, songs),
+        Some(SelectedSongs::Listed(listed)) => act_on_listed(window, target, action, listed),
+        None => {}
     }
-    let Some(server) = ctx.session.get() else {
-        return;
-    };
-    let weak = window.as_weak();
-    ctx.rt.spawn(async move {
-        let result = snapshot.resolve(server.as_ref()).await;
-        on_ui(&weak, move |window| match result {
-            Ok(songs) => use_songs(window, songs),
-            Err(error) => show_status(window, &format!("Could not load the selection: {error}")),
-        });
-    });
 }
 
 fn perform(window: &AppWindow, ctx: &Context, action: SongAction, songs: Vec<Song>) {
@@ -99,7 +82,7 @@ pub(super) fn set_favorite(window: &AppWindow, ctx: &Context, ids: Vec<String>, 
     });
 }
 
-async fn rate_until_failure(
+pub(super) async fn rate_until_failure(
     server: Arc<dyn MusicServer>,
     ids: Vec<String>,
     rating: u8,
@@ -139,15 +122,42 @@ pub(super) fn go_to(
     route: Route,
     target: impl FnOnce(&Song) -> Option<String> + Send + 'static,
 ) {
-    let Some(snapshot) = with_model(window, TracksModel::selection) else {
+    let Some(first) = with_model(window, TracksModel::first_selected).flatten() else {
         return;
     };
-    with_resolved(window, ctx, snapshot.first_only(), move |window, songs| {
-        let target_id = songs.first().and_then(target);
-        if let Some(target_id) = target_id {
+    with_first_song(window, ctx, first, move |window, song| {
+        if let Some(target_id) = target(&song) {
             window
                 .global::<AppState>()
                 .invoke_navigate(route, target_id.into());
         }
+    });
+}
+
+fn with_first_song(
+    window: &AppWindow,
+    ctx: &Context,
+    first: FirstSelected,
+    use_song: impl FnOnce(&AppWindow, Song) + Send + 'static,
+) {
+    if let Some(song) = first.song {
+        use_song(window, song);
+        return;
+    }
+    let Some(server) = ctx.session.get() else {
+        return;
+    };
+    let weak = window.as_weak();
+    ctx.rt.spawn(async move {
+        let mut chunks = first.listed.into_chunks(1);
+        let result = chunks.next_songs(server.as_ref()).await;
+        on_ui(&weak, move |window| match result {
+            Ok(songs) => {
+                if let Some(song) = songs.into_iter().flatten().next() {
+                    use_song(window, song);
+                }
+            }
+            Err(error) => show_status(window, &format!("Could not load the selection: {error}")),
+        });
     });
 }

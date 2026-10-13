@@ -4,7 +4,7 @@ use feishin_core::model::Playlist;
 use slint::{ComponentHandle, ModelRc, VecModel};
 
 use super::choices::{filter_playlists, picker_row};
-use super::picker::{SharedPicker, lock};
+use super::picker::{PickedSongs, SharedPicker, lock};
 use crate::ui::playlists::fetch_all;
 use crate::ui::{
     AppWindow, Context, PickerRow, PlaylistPickerState, clamp_i32, on_ui, show_status,
@@ -20,7 +20,7 @@ pub fn show_rows(window: &AppWindow, shared: &SharedPicker) {
 }
 
 pub fn close(window: &AppWindow, shared: &SharedPicker) {
-    lock(shared).restart(Vec::new());
+    lock(shared).restart(PickedSongs::default());
     let state = window.global::<PlaylistPickerState>();
     state.set_open(false);
     state.set_creating(false);
@@ -28,15 +28,15 @@ pub fn close(window: &AppWindow, shared: &SharedPicker) {
     state.set_rows(ModelRc::default());
 }
 
-pub fn open(window: &AppWindow, ctx: &Context, shared: &SharedPicker, song_ids: Vec<String>) {
+pub fn open(window: &AppWindow, ctx: &Context, shared: &SharedPicker, songs: PickedSongs) {
     let Some(server) = ctx.session.get() else {
         return;
     };
-    if song_ids.is_empty() {
+    let song_count = songs.song_count();
+    if song_count == 0 {
         return;
     }
-    let song_count = song_ids.len();
-    let generation = lock(shared).restart(song_ids);
+    let generation = lock(shared).restart(songs);
     show_opened(window, song_count);
     let (weak, shared) = (window.as_weak(), Arc::clone(shared));
     ctx.rt.spawn(async move {

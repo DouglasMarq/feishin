@@ -2,7 +2,8 @@ use feishin_core::model::{Paging, SongListQuery};
 use slint::Model;
 
 use super::super::model::{CACHED_PAGES, PAGE_SIZE, TracksModel, paging_for_page};
-use super::{RequestLog, drain, logging_model, page_of, songs_in};
+use super::super::selection::SelectedSongs;
+use super::{RequestLog, drain, listed_songs, logging_model, page_of, songs_in};
 use crate::demo::FakeServer;
 
 const PAGES: usize = 40;
@@ -137,18 +138,21 @@ async fn selections_spanning_evicted_pages_resolve_through_the_server() {
             .is_some_and(|row| row.selected && !row.loaded)
     );
 
-    let snapshot = model.selection();
-    assert!(snapshot.missing_pages().contains(&0));
-    let first = model.selection().first_only();
-    assert!(!first.is_loaded());
+    let Some(first) = model.first_selected() else {
+        panic!("expected a first selected row");
+    };
+    assert!(first.song.is_none());
+    let SelectedSongs::Listed(listed) = model.selected_songs() else {
+        panic!("expected a listed selection");
+    };
 
     let selected_rows = Paging {
         start_index: 5,
         limit: TOTAL - 9,
     };
     let expected = songs_in(&server, &model.query(), selected_rows).await;
-    let resolved = snapshot.resolve(&server).await.unwrap_or_default();
-    assert_eq!(resolved, expected);
-    let first_song = first.resolve(&server).await.unwrap_or_default();
+    assert_eq!(listed_songs(&server, listed).await, expected);
+    let first_song = listed_songs(&server, first.listed).await;
     assert_eq!(first_song.first(), expected.first());
+    assert_eq!(first_song.len(), 1);
 }
