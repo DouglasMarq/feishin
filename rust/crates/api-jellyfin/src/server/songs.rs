@@ -7,7 +7,7 @@ use super::{JellyfinServer, MAX_IDS_PER_QUERY_STRING};
 use crate::dto;
 use crate::item_fields::{SONG_FIELDS, SONG_ITEM_TYPE};
 use crate::normalize;
-use crate::query_params::{QueryParams, comma_separated_ids, comma_separated_years};
+use crate::query_params::{QueryParams, comma_separated_ids};
 use crate::sorting::{song_sort, sort_order};
 
 struct FetchedSongs {
@@ -202,8 +202,5 @@ fn song_params(query: &SongListQuery, album_ids: &[String], window: &SongWindow)
         .set("SortBy", song_sort(query.sort))
         .set("SortOrder", sort_order(query.order))
         .set("StartIndex", window.start)
-        .set_optional(
-            "Years",
-            comma_separated_years(query.year_from, query.year_to),
-        )
+        .year_range(query.year_from, query.year_to)
 }

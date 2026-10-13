@@ -7,7 +7,7 @@ use crate::item_fields::{
     ALBUM_DETAIL_FIELDS, ALBUM_ITEM_TYPE, ALBUM_LIST_FIELDS, SONG_FIELDS, SONG_ITEM_TYPE,
 };
 use crate::normalize;
-use crate::query_params::{QueryParams, comma_separated_ids, comma_separated_years};
+use crate::query_params::{QueryParams, comma_separated_ids};
 use crate::sorting::{ALBUM_TRACK_ORDER, album_sort, sort_order};
 
 impl JellyfinServer {
@@ -88,8 +88,5 @@ fn album_params(query: &AlbumListQuery, start: usize, limit: Option<usize>) -> Q
         .set("SortBy", album_sort(query.sort))
         .set("SortOrder", sort_order(query.order))
         .set("StartIndex", start)
-        .set_optional(
-            "Years",
-            comma_separated_years(query.year_from, query.year_to),
-        )
+        .year_range(query.year_from, query.year_to)
 }
