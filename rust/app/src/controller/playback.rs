@@ -29,8 +29,8 @@ impl Controller {
     }
 
     pub(super) fn load_current(&mut self, start_ms: u64) {
-        self.leave_radio();
         let Some(item) = self.queue.current() else {
+            self.leave_radio();
             self.stop();
             return;
         };
@@ -41,6 +41,7 @@ impl Controller {
             return;
         };
         let now_playing = QueueTrack::clone(&item.track);
+        self.leave_radio();
         self.scrobble_tracker.stop();
         self.preloaded = None;
         self.position_ms = start_ms;

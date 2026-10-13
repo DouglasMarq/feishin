@@ -281,3 +281,24 @@ async fn pausing_a_station_closes_the_stream_and_play_returns_to_the_live_point(
     harness.controller.handle(Command::TogglePause);
     assert_eq!(harness.audio.take(), [AudioCall::Load(RADIO_STREAM_UID, 0)]);
 }
+
+#[tokio::test]
+async fn a_queue_track_that_cannot_load_keeps_the_station_playing() {
+    let (mut harness, current) = queue_at_thirty_seconds(false);
+    tune_in(&mut harness);
+    harness.audio.take();
+    harness.ui.clear();
+    harness.session.set(None);
+
+    harness.controller.handle(Command::PlayUid(current));
+
+    assert_eq!(harness.audio.take(), []);
+    assert!(harness.controller.is_playing());
+    assert!(
+        !harness
+            .ui
+            .any(|update| matches!(update, UiUpdate::Radio(None)))
+    );
+    harness.player(PlayerEvent::StreamTitle(Some("Still live".into())));
+    assert!(shows_station(&harness, Some("Still live")));
+}
