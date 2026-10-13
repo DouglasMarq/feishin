@@ -91,6 +91,10 @@ impl Controller {
             self.resume_from_saved_position();
             return;
         }
+        if self.playing && self.is_radio_playing() {
+            self.pause_station();
+            return;
+        }
         let result = match self.playing {
             true => self.deps.audio.pause(),
             false => self.deps.audio.play(),

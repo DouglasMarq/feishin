@@ -112,16 +112,26 @@ impl Controller {
         self.publish_playback();
     }
 
-    pub(super) fn stop_radio(&mut self) {
-        if self.radio.is_none() {
-            return;
-        }
+    pub(super) fn pause_station(&mut self) {
+        self.close_stream();
+        self.update_media_status();
+        self.publish_playback();
+    }
+
+    fn close_stream(&mut self) {
         if let Err(error) = self.deps.audio.stop() {
             tracing::warn!("stopping the radio stream failed: {error:#}");
         }
         self.loaded = None;
         self.loading = None;
         self.playing = false;
+    }
+
+    pub(super) fn stop_radio(&mut self) {
+        if self.radio.is_none() {
+            return;
+        }
+        self.close_stream();
         self.leave_radio();
         self.publish_now_playing();
         if let Some(track) = self.current_track() {

@@ -266,3 +266,18 @@ async fn the_media_session_stop_button_stops_the_station() {
     harness.controller.handle(Command::TogglePause);
     assert_eq!(harness.audio.take(), [AudioCall::Load(current, 30_000)]);
 }
+
+#[tokio::test]
+async fn pausing_a_station_closes_the_stream_and_play_returns_to_the_live_point() {
+    let (mut harness, _current) = queue_at_thirty_seconds(false);
+    tune_in(&mut harness);
+    harness.audio.take();
+
+    harness.controller.handle(Command::TogglePause);
+    assert_eq!(harness.audio.take(), [AudioCall::Stop]);
+    assert!(!harness.controller.is_playing());
+    assert!(shows_station(&harness, None));
+
+    harness.controller.handle(Command::TogglePause);
+    assert_eq!(harness.audio.take(), [AudioCall::Load(RADIO_STREAM_UID, 0)]);
+}
