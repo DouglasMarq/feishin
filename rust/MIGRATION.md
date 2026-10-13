@@ -10,9 +10,11 @@ Goal: replace the Electron app with a native Rust app that uses a fraction of th
 - Wave 0: done (Slint chosen; spike numbers below).
 - Wave 1: done and in daily testing against Navidrome (login/import, Tracks, Spotify-like queue, player bar, queue panel, MPRIS, scrobble, persistence).
 - Wave 2: views done (home, albums, artists, genres, favorites, playlists + picker, search, tracks context menu/filters); needs real-library testing.
-- Wave 3: partly done (gapless, ReplayGain, output device, bitrate, hotkeys, sleep timer, full-screen now playing, server queue sync); crossfade not started.
-- Wave 4: Subsonic and Jellyfin backends implemented and unit tested, not yet tested against real servers.
-- Wave 5: lyrics (server, lrclib, NetEase, Genius) and Discord done; radio, i18n, themes not started.
+- Wave 3: done (gapless, crossfade 0-12 s with two alternating mpv players, ReplayGain, output device, bitrate, hotkeys, sleep timer, full-screen now playing, server queue sync).
+- Wave 4: Subsonic and Jellyfin backends implemented and tested against real servers in containers (`scripts/live-servers.sh up|test|down`: Navidrome latest/0.54/0.56, gonic, Jellyfin 12.2/10.10; 328 live tests, 11 backend bugs fixed).
+- Wave 5: lyrics, Discord, internet radio (server stations plus the radio-browser.info directory, live ICY titles), 32 themes from the Electron app with follow-system light/dark and accent color, folder browsing, share links. i18n not started.
+- Discover (beyond the Electron app): a view fed by YouTube Music (For you, new releases, charts per country, moods). Songs found in the server library play from the server; others play from YouTube through the external `yt-dlp` binary, resolved to a direct URL off the UI thread. Signing in uses the cookies of a browser chosen in Settings, exported by yt-dlp into `$XDG_RUNTIME_DIR/feishin-rs` and deleted after reading. YouTube tracks are never scrobbled or synced to the server.
+- Wave 7: packaging done (`packaging/`: desktop entry and metainfo for `org.jeffvli.feishin.native`, Arch `feishin-native-git` PKGBUILD, AppImage script, manual GitHub workflow). Removing the Electron app is still pending.
 - Demo mode RSS/PSS with all views: 135 / 91 MB.
 - Huge libraries (measured with `--demo --demo-songs 100000`, release build):
   - Idle RssAnon about 46 MB at both 20k and 100k songs; total RSS about 141 MB.
@@ -21,12 +23,11 @@ Goal: replace the Electron app with a native Rust app that uses a fraction of th
   - Play from a list starts after the first page (about 1-5 ms from click to playback, previously 100-425 ms at row 50000) and streams the rest in; peak RssAnon about 95-105 MB, previously 160 MB.
   - Track selection is stored as row ranges; bulk actions and add-to-playlist stream in 500-song chunks.
   - The queue is saved off the UI thread in a compact binary file (`queue.bin`, 5.6 MB per 100k songs, previously 24 MB of JSON), debounced, and also on SIGTERM. It loads after the window opens. Server queue sync is keyed on the queue revision.
-- Known gaps:
-  - With page eviction, changes made on the server while scrolling can shift rows.
-  - A page that keeps failing is requested again whenever its rows come back into view.
-  - Quitting while a play-from-list stream is still loading saves only the part loaded so far.
-  - Two streamed adds to the same playlist running at once can add the same songs twice.
-  - Background bulk edits are not cancelled on logout or shutdown.
+- Known limitations:
+  - A server-side change that keeps a list's size (one add and one delete) is not detected while scrolling.
+  - Quitting while a play-from-list stream takes longer than 3 s to load saves only the part loaded so far.
+  - The signed-in YouTube Music home has never been tested against a real account; the YouTube Music web client version is hard-coded.
+  - Radio mode is not restored after a restart and dropped streams do not reconnect automatically.
 
 ## Scope decisions
 
