@@ -9,8 +9,7 @@ const NOT_IMPLEMENTED_STATUS: i32 = 501;
 
 fn sharing_error(error: ApiError) -> ApiError {
     match error {
-        ApiError::NotFound
-        | ApiError::Server {
+        ApiError::Server {
             code: NOT_IMPLEMENTED_STATUS,
             ..
         } => ApiError::Unsupported(SHARING_DISABLED),
@@ -62,7 +61,7 @@ mod tests {
         ));
         assert!(matches!(
             sharing_error(ApiError::NotFound),
-            ApiError::Unsupported(_)
+            ApiError::NotFound
         ));
         assert!(matches!(
             sharing_error(ApiError::Network("down".into())),
