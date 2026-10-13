@@ -1,7 +1,7 @@
 use std::sync::atomic::AtomicU64;
 use std::sync::{Mutex, MutexGuard};
 
-use feishin_storage::settings::{PlaybackSettings, Settings};
+use feishin_storage::settings::{MAX_CROSSFADE_SECONDS, PlaybackSettings, Settings};
 
 use super::choices::{
     Choices, bitrate_choices, device_choices, format_choices, replay_gain_from_index,
@@ -13,6 +13,7 @@ use crate::controller::SettingsSnapshot;
 pub(super) struct PlaybackForm {
     pub(super) replay_gain: i32,
     pub(super) gapless: bool,
+    pub(super) crossfade_seconds: i32,
     pub(super) device: i32,
     pub(super) bitrate: i32,
     pub(super) format: i32,
@@ -46,6 +47,7 @@ impl View {
         PlaybackSettings {
             replay_gain: replay_gain_from_index(form.replay_gain),
             gapless: form.gapless,
+            crossfade_seconds: crossfade_seconds_from_form(form.crossfade_seconds),
             audio_device: self
                 .devices
                 .value(form.device)
@@ -62,6 +64,10 @@ impl View {
             ..current.clone()
         }
     }
+}
+
+fn crossfade_seconds_from_form(seconds: i32) -> u8 {
+    u8::try_from(seconds.clamp(0, i32::from(MAX_CROSSFADE_SECONDS))).unwrap_or(0)
 }
 
 #[derive(Default)]
@@ -100,6 +106,7 @@ mod tests {
         let form = PlaybackForm {
             replay_gain: 2,
             gapless: false,
+            crossfade_seconds: 7,
             device: 0,
             bitrate: 3,
             format: 2,
@@ -108,6 +115,7 @@ mod tests {
         let playback = view.playback(form);
         assert_eq!(playback.replay_gain, ReplayGainSetting::Album);
         assert!(!playback.gapless && !playback.scrobble);
+        assert_eq!(playback.crossfade_seconds, 7);
         assert_eq!(playback.audio_device, None);
         assert_eq!(playback.max_bitrate_kbps, Some(192));
         assert_eq!(playback.transcode_format.as_deref(), Some("opus"));
@@ -115,5 +123,16 @@ mod tests {
 
         let out_of_range = view.playback(PlaybackForm { device: 99, ..form });
         assert_eq!(out_of_range.audio_device.as_deref(), Some("pipewire/hdmi"));
+
+        let too_long = view.playback(PlaybackForm {
+            crossfade_seconds: 99,
+            ..form
+        });
+        assert_eq!(too_long.crossfade_seconds, MAX_CROSSFADE_SECONDS);
+        let negative = view.playback(PlaybackForm {
+            crossfade_seconds: -3,
+            ..form
+        });
+        assert_eq!(negative.crossfade_seconds, 0);
     }
 }

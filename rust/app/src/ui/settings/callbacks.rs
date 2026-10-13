@@ -45,6 +45,7 @@ fn apply_playback(window: &AppWindow, ctx: &Context, shared: &Arc<Shared>) {
     let form = PlaybackForm {
         replay_gain: state.get_replay_gain(),
         gapless: state.get_gapless(),
+        crossfade_seconds: state.get_crossfade_seconds(),
         device: state.get_device_index(),
         bitrate: state.get_bitrate_index(),
         format: state.get_format_index(),

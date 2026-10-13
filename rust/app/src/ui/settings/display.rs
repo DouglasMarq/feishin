@@ -1,4 +1,4 @@
-use feishin_storage::settings::Settings;
+use feishin_storage::settings::{MAX_CROSSFADE_SECONDS, Settings};
 use slint::{ComponentHandle, ModelRc, SharedString, VecModel};
 
 use super::choices::replay_gain_index;
@@ -50,6 +50,10 @@ fn set_playback_fields(state: &SettingsState, view: &View) {
     let playback = &view.settings.playback;
     state.set_replay_gain(replay_gain_index(playback.replay_gain));
     state.set_gapless(playback.gapless);
+    state.set_max_crossfade_seconds(i32::from(MAX_CROSSFADE_SECONDS));
+    state.set_crossfade_seconds(i32::from(
+        playback.crossfade_seconds.min(MAX_CROSSFADE_SECONDS),
+    ));
     state.set_scrobble(playback.scrobble);
     state.set_devices(string_model(&view.devices.labels));
     state.set_device_index(slint_index(view.devices.selected));
