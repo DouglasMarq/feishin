@@ -1,0 +1,18 @@
+[package]
+name = "feishin-live-tests"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[dev-dependencies]
+feishin-api.workspace = true
+feishin-api-jellyfin.workspace = true
+feishin-api-navidrome.workspace = true
+feishin-api-subsonic.workspace = true
+feishin-core.workspace = true
+reqwest.workspace = true
+tokio = { workspace = true, features = ["macros", "rt-multi-thread"] }
+
+[lints]
+workspace = true

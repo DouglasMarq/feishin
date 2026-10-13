@@ -1,3 +1,5 @@
+use std::collections::{BTreeSet, HashSet};
+
 use feishin_api::{ApiError, Result};
 use feishin_core::model::{Page, Paging, Playlist, SortOrder};
 use reqwest::Method;
@@ -78,7 +80,7 @@ impl JellyfinServer {
             return Ok(());
         }
         let items = self.playlist_items(playlist_id, NO_FIELDS).await?;
-        let entry_ids = entry_ids_at(&items, positions)?;
+        let entry_ids = entry_ids_to_remove(&items, positions)?;
         let path = playlist_items_path(playlist_id);
         for entry_batch in entry_ids.chunks(MAX_IDS_PER_QUERY_STRING) {
             let params = QueryParams::default().set("EntryIds", entry_batch.join(","));
@@ -94,14 +96,46 @@ impl JellyfinServer {
     }
 }
 
-fn entry_ids_at(items: &[dto::Song], positions: &[usize]) -> Result<Vec<String>> {
-    positions
+fn entry_id_at(items: &[dto::Song], position: usize) -> Result<&str> {
+    items
+        .get(position)
+        .and_then(|item| item.playlist_item_id.as_deref())
+        .ok_or(ApiError::NotFound)
+}
+
+fn entry_ids_at(items: &[dto::Song], positions: &BTreeSet<usize>) -> Result<Vec<String>> {
+    let mut seen_entry_ids: HashSet<&str> = HashSet::new();
+    let mut entry_ids: Vec<String> = Vec::new();
+    for position in positions {
+        let entry_id = entry_id_at(items, *position)?;
+        if seen_entry_ids.insert(entry_id) {
+            entry_ids.push(entry_id.to_owned());
+        }
+    }
+    Ok(entry_ids)
+}
+
+fn kept_entries_share_an_id(
+    items: &[dto::Song],
+    removed_positions: &BTreeSet<usize>,
+    removed_entry_ids: &[String],
+) -> bool {
+    let removed_ids: HashSet<&str> = removed_entry_ids.iter().map(String::as_str).collect();
+    items
         .iter()
-        .map(|position| {
-            items
-                .get(*position)
-                .and_then(|item| item.playlist_item_id.clone())
-                .ok_or(ApiError::NotFound)
-        })
-        .collect()
+        .enumerate()
+        .filter(|(position, _)| !removed_positions.contains(position))
+        .filter_map(|(_, item)| item.playlist_item_id.as_deref())
+        .any(|entry_id| removed_ids.contains(entry_id))
+}
+
+fn entry_ids_to_remove(items: &[dto::Song], positions: &[usize]) -> Result<Vec<String>> {
+    let removed_positions: BTreeSet<usize> = positions.iter().copied().collect();
+    let entry_ids = entry_ids_at(items, &removed_positions)?;
+    match kept_entries_share_an_id(items, &removed_positions, &entry_ids) {
+        true => Err(ApiError::Unsupported(
+            "removing one copy of a song repeated in a Jellyfin playlist",
+        )),
+        false => Ok(entry_ids),
+    }
 }

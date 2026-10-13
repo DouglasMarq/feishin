@@ -43,7 +43,7 @@ async fn song_list_without_filters_uses_empty_search3() {
     assert_eq!(first.artists[0].name, "Artist");
     assert_eq!(first.duration_ms, 180_000);
     assert_eq!(first.bitrate_kbps, Some(320));
-    assert_eq!(first.container.as_deref(), Some("mpeg"));
+    assert_eq!(first.container.as_deref(), Some("mp3"));
     assert_eq!(first.cover_art_id.as_deref(), Some("mf-s1"));
     assert_eq!(first.play_count, 3);
     assert!(!first.favorite);
@@ -258,4 +258,48 @@ async fn song_count_probes_then_pages() {
         ..Default::default()
     };
     assert_eq!(server.song_count(&search).await.ok(), Some(742));
+}
+
+#[tokio::test]
+async fn a_year_filter_on_songs_is_reported_as_unsupported_instead_of_ignored() {
+    let mock = MockServer::start().await;
+    Mock::given(path("/rest/search3.view"))
+        .respond_with(ok(
+            json!({ "searchResult3": { "song": [song("s1", "One")] } }),
+        ))
+        .mount(&mock)
+        .await;
+
+    let query = SongListQuery {
+        year_from: Some(2021),
+        year_to: Some(2022),
+        ..Default::default()
+    };
+    let subsonic = server(&mock);
+    let listed = subsonic.song_list(&query, paging(0, 10)).await;
+    assert!(matches!(listed, Err(feishin_api::ApiError::Unsupported(_))));
+    let counted = subsonic.song_count(&query).await;
+    assert!(matches!(
+        counted,
+        Err(feishin_api::ApiError::Unsupported(_))
+    ));
+}
+
+#[tokio::test]
+async fn random_lists_filtered_by_year_can_still_be_counted() {
+    let mock = MockServer::start().await;
+    Mock::given(path("/rest/getSongsByGenre.view"))
+        .respond_with(ok(
+            json!({ "songsByGenre": { "song": [song("s1", "One")] } }),
+        ))
+        .mount(&mock)
+        .await;
+
+    let query = SongListQuery {
+        sort: SongSort::Random,
+        genre_ids: vec!["Jazz".into()],
+        year_from: Some(1990),
+        ..Default::default()
+    };
+    assert!(server(&mock).song_count(&query).await.is_ok());
 }

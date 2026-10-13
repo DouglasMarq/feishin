@@ -1552,6 +1552,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "feishin-live-tests"
+version = "0.1.0"
+dependencies = [
+ "feishin-api",
+ "feishin-api-jellyfin",
+ "feishin-api-navidrome",
+ "feishin-api-subsonic",
+ "feishin-core",
+ "reqwest",
+ "tokio",
+]
+
+[[package]]
 name = "feishin-lyrics"
 version = "0.1.0"
 dependencies = [

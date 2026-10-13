@@ -5,6 +5,8 @@ mod annotations;
 #[cfg(test)]
 mod fallback_caching;
 #[cfg(test)]
+mod fallback_counts;
+#[cfg(test)]
 mod library;
 #[cfg(test)]
 mod play_queue;
@@ -22,3 +24,7 @@ mod songs;
 mod support;
 #[cfg(test)]
 mod urls;
+#[cfg(test)]
+mod year_ranges;
+#[cfg(test)]
+mod year_walks;

@@ -128,11 +128,15 @@ async fn song_count_on_old_server_uses_legacy_filters() {
 }
 
 #[tokio::test]
-async fn song_count_without_session_is_auth_error() {
+async fn song_count_with_native_only_filters_needs_a_session() {
     let mock = MockServer::start().await;
     mount_ping(&mock, "0.58.0", &[]).await;
     let server = server(&mock, None);
-    let result = server.song_count(&SongListQuery::default()).await;
+    let by_genre = SongListQuery {
+        genre_ids: vec!["g1".into()],
+        ..SongListQuery::default()
+    };
+    let result = server.song_count(&by_genre).await;
     assert!(matches!(result, Err(ApiError::Auth(_))));
 }
 

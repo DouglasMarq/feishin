@@ -3,7 +3,8 @@ use feishin_core::model::{Page, Paging, Song, SongListQuery};
 
 use crate::NavidromeServer;
 use crate::catalog::SUBSONIC_MAX_ITEMS;
-use crate::catalog::paging::subsonic_page;
+use crate::catalog::paging::{count_by_paging, subsonic_page};
+use crate::catalog::song_years::spans_several_years;
 use crate::features::Features;
 use crate::http::missing_session_error;
 use crate::native::{NativeSong, normalize_song};
@@ -38,7 +39,7 @@ impl NavidromeServer {
     ) -> Result<Page<Song>> {
         let features = self.features().await;
         self.native_or_subsonic(
-            self.native_song_page(query, paging, &features),
+            self.native_song_page_in_years(query, paging, &features),
             self.subsonic_song_page(query, paging),
         )
         .await
@@ -46,10 +47,42 @@ impl NavidromeServer {
 
     pub(crate) async fn count_songs(&self, query: &SongListQuery) -> Result<usize> {
         let features = self.features().await;
-        let page = self
-            .native_song_page(query, COUNT_PAGING, &features)
-            .await?;
+        self.native_or_subsonic(
+            self.native_song_count(query, &features),
+            self.subsonic_song_count(query),
+        )
+        .await
+    }
+
+    async fn native_song_count(&self, query: &SongListQuery, features: &Features) -> Result<usize> {
+        if spans_several_years(query) {
+            return self.song_count_across_years(query, features).await;
+        }
+        let page = self.native_song_page(query, COUNT_PAGING, features).await?;
         Ok(page.total_count.unwrap_or(0))
+    }
+
+    async fn subsonic_song_count(&self, query: &SongListQuery) -> Result<usize> {
+        count_by_paging(SUBSONIC_MAX_ITEMS, |start_index| async move {
+            let paging = Paging {
+                start_index,
+                limit: SUBSONIC_MAX_ITEMS,
+            };
+            Ok(self.subsonic_song_page(query, paging).await?.items.len())
+        })
+        .await
+    }
+
+    async fn native_song_page_in_years(
+        &self,
+        query: &SongListQuery,
+        paging: Paging,
+        features: &Features,
+    ) -> Result<Page<Song>> {
+        match spans_several_years(query) {
+            true => self.song_page_across_years(query, paging, features).await,
+            false => self.native_song_page(query, paging, features).await,
+        }
     }
 
     pub(crate) async fn fetch_song(&self, id: &str) -> Result<Song> {
@@ -60,10 +93,12 @@ impl NavidromeServer {
     pub(crate) async fn fetch_random_songs(
         &self,
         count: usize,
-        genre: Option<&str>,
+        genre_id: Option<&str>,
     ) -> Result<Vec<Song>> {
         let mut params: QueryParams = vec![("size", count.to_string())];
-        params.extend(genre.map(|genre| ("genre", genre.to_owned())));
+        if let Some(genre_id) = genre_id {
+            params.push(("genre", self.genre_name(genre_id).await));
+        }
         let response: subsonic::RandomSongs = self.subsonic("getRandomSongs", &params).await?;
         Ok(self.songs_from_subsonic(response.random_songs.unwrap_or_default().song))
     }
@@ -97,7 +132,7 @@ impl NavidromeServer {
         Ok(subsonic::normalize_song(song, self.server_id()))
     }
 
-    async fn native_song_page(
+    pub(crate) async fn native_song_page(
         &self,
         query: &SongListQuery,
         paging: Paging,

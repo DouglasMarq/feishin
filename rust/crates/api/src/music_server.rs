@@ -22,7 +22,7 @@ pub trait MusicServer: Send + Sync {
     async fn song_list(&self, query: &SongListQuery, paging: Paging) -> Result<Page<Song>>;
     async fn song_count(&self, query: &SongListQuery) -> Result<usize>;
     async fn song(&self, id: &str) -> Result<Song>;
-    async fn random_songs(&self, count: usize, genre: Option<&str>) -> Result<Vec<Song>>;
+    async fn random_songs(&self, count: usize, genre_id: Option<&str>) -> Result<Vec<Song>>;
     async fn similar_songs(&self, song_id: &str, count: usize) -> Result<Vec<Song>>;
 
     async fn album_list(&self, query: &AlbumListQuery, paging: Paging) -> Result<Page<Album>>;

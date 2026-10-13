@@ -174,3 +174,36 @@ async fn artist_detail_and_list() {
     assert_eq!(artists.total_count, Some(77));
     assert_eq!(artists.items[1].id, "ar2");
 }
+
+#[tokio::test]
+async fn artist_list_and_detail_request_item_counts() {
+    let mock = MockServer::start().await;
+    Mock::given(method("GET"))
+        .and(path("/artists/albumArtists"))
+        .and(query_param("Fields", "ItemCounts"))
+        .respond_with(ResponseTemplate::new(200).set_body_json(list(vec![artist_json("ar1")], 1)))
+        .expect(1)
+        .mount(&mock)
+        .await;
+    Mock::given(method("GET"))
+        .and(path(format!("/users/{USER}/items/ar1")))
+        .and(query_param("Fields", "ItemCounts"))
+        .respond_with(ResponseTemplate::new(200).set_body_json(artist_json("ar1")))
+        .expect(1)
+        .mount(&mock)
+        .await;
+    Mock::given(method("GET"))
+        .and(path(items_path()))
+        .respond_with(ResponseTemplate::new(200).set_body_json(list(Vec::new(), 0)))
+        .mount(&mock)
+        .await;
+
+    let jellyfin = server(&mock);
+    let artists = jellyfin
+        .artist_list(&ArtistListQuery::default(), page(0, 10))
+        .await
+        .unwrap();
+    assert_eq!(artists.items[0].album_count, Some(4));
+    let detail = jellyfin.artist("ar1").await.unwrap();
+    assert_eq!(detail.artist.album_count, Some(4));
+}

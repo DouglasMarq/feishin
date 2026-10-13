@@ -72,6 +72,8 @@ pub(crate) struct SubsonicSong {
     #[serde(deserialize_with = "optional_string")]
     pub content_type: Option<String>,
     #[serde(deserialize_with = "optional_string")]
+    pub suffix: Option<String>,
+    #[serde(deserialize_with = "optional_string")]
     pub created: Option<String>,
 }
 
@@ -116,7 +118,7 @@ pub(crate) fn normalize_song(song: SubsonicSong, server_id: &str) -> Song {
         song.artist_id.as_deref(),
         song.artist.as_deref(),
     );
-    let container = audio_container(song.content_type.as_deref());
+    let container = audio_container(song.suffix, song.content_type.as_deref());
     let replay_gain = song_replay_gain(song.replay_gain.unwrap_or_default());
 
     Song {
@@ -146,10 +148,12 @@ pub(crate) fn normalize_song(song: SubsonicSong, server_id: &str) -> Song {
     }
 }
 
-fn audio_container(content_type: Option<&str>) -> Option<String> {
-    content_type
-        .and_then(|content_type| content_type.strip_prefix(AUDIO_CONTENT_TYPE_PREFIX))
-        .map(str::to_owned)
+fn audio_container(suffix: Option<String>, content_type: Option<&str>) -> Option<String> {
+    non_empty(suffix).or_else(|| {
+        content_type
+            .and_then(|content_type| content_type.strip_prefix(AUDIO_CONTENT_TYPE_PREFIX))
+            .map(str::to_owned)
+    })
 }
 
 fn position_or_first(position: Option<u32>) -> u32 {
@@ -172,6 +176,15 @@ mod tests {
     use serde_json::json;
 
     use super::*;
+
+    #[test]
+    fn container_is_the_file_suffix_rather_than_the_mime_subtype() {
+        let raw: SubsonicSong = serde_json::from_value(
+            json!({"id": "1", "title": "T", "contentType": "audio/mpeg", "suffix": "mp3"}),
+        )
+        .expect("fixture");
+        assert_eq!(normalize_song(raw, "srv").container.as_deref(), Some("mp3"));
+    }
 
     #[test]
     fn song_from_subsonic() {

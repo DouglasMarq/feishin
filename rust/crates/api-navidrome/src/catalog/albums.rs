@@ -1,9 +1,10 @@
 use feishin_api::{ApiError, Result};
-use feishin_core::model::{Album, AlbumDetail, AlbumListQuery, Page, Paging, SortOrder};
+use feishin_core::model::{Album, AlbumDetail, AlbumListQuery, AlbumSort, Page, Paging, SortOrder};
 
 use crate::NavidromeServer;
 use crate::catalog::SUBSONIC_MAX_ITEMS;
-use crate::catalog::paging::subsonic_page;
+use crate::catalog::album_years::YearRange;
+use crate::catalog::paging::{count_by_paging, subsonic_page};
 use crate::features::Features;
 use crate::http::missing_session_error;
 use crate::native::{NativeAlbum, NativeSong, normalize_album};
@@ -19,6 +20,9 @@ impl NavidromeServer {
         query: &AlbumListQuery,
         paging: Paging,
     ) -> Result<Page<Album>> {
+        if let Some(range) = YearRange::of(query) {
+            return self.album_page_in_year_range(query, range, paging).await;
+        }
         let features = self.features().await;
         let start = paging.start_index;
         self.native_or_subsonic(
@@ -29,9 +33,42 @@ impl NavidromeServer {
     }
 
     pub(crate) async fn count_albums(&self, query: &AlbumListQuery) -> Result<usize> {
+        if let Some(range) = YearRange::of(query) {
+            return self.count_albums_in_year_range(query, range).await;
+        }
         let features = self.features().await;
-        let page = self.native_album_page(query, 0, 1, &features).await?;
+        self.native_or_subsonic(
+            self.native_album_count(query, &features),
+            self.subsonic_album_count(query),
+        )
+        .await
+    }
+
+    async fn native_album_count(
+        &self,
+        query: &AlbumListQuery,
+        features: &Features,
+    ) -> Result<usize> {
+        let page = self.native_album_page(query, 0, 1, features).await?;
         Ok(page.total_count.unwrap_or(0))
+    }
+
+    async fn subsonic_album_count(&self, query: &AlbumListQuery) -> Result<usize> {
+        let by_name = AlbumListQuery {
+            sort: AlbumSort::Name,
+            ..query.clone()
+        };
+        count_by_paging(SUBSONIC_MAX_ITEMS, |start_index| {
+            let by_name = &by_name;
+            async move {
+                let paging = Paging {
+                    start_index,
+                    limit: SUBSONIC_MAX_ITEMS,
+                };
+                Ok(self.subsonic_album_page(by_name, paging).await?.items.len())
+            }
+        })
+        .await
     }
 
     pub(crate) async fn fetch_album_detail(&self, id: &str) -> Result<AlbumDetail> {

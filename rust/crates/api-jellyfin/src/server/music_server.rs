@@ -30,8 +30,8 @@ impl MusicServer for JellyfinServer {
         self.song_by_id(id).await
     }
 
-    async fn random_songs(&self, count: usize, genre: Option<&str>) -> Result<Vec<Song>> {
-        self.random_song_list(count, genre).await
+    async fn random_songs(&self, count: usize, genre_id: Option<&str>) -> Result<Vec<Song>> {
+        self.random_song_list(count, genre_id).await
     }
 
     async fn similar_songs(&self, song_id: &str, count: usize) -> Result<Vec<Song>> {

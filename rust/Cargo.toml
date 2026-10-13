@@ -7,6 +7,7 @@ members = [
     "crates/api-navidrome",
     "crates/api-subsonic",
     "crates/core",
+    "crates/live-tests",
     "crates/lyrics",
     "crates/platform",
     "crates/player",

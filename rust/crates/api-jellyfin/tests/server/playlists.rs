@@ -150,3 +150,51 @@ async fn delete_playlist() {
 
     server(&mock).delete_playlist("p1").await.unwrap();
 }
+
+async fn mount_repeated_song_playlist(mock: &MockServer) {
+    Mock::given(method("GET"))
+        .and(path("/playlists/p1/items"))
+        .respond_with(ResponseTemplate::new(200).set_body_json(list(
+            vec![
+                song_json("s1", "a"),
+                song_json("s2", "a"),
+                song_json("s1", "a"),
+            ],
+            3,
+        )))
+        .mount(mock)
+        .await;
+}
+
+#[tokio::test]
+async fn removing_one_copy_of_a_repeated_song_is_refused() {
+    let mock = MockServer::start().await;
+    mount_repeated_song_playlist(&mock).await;
+    Mock::given(method("DELETE"))
+        .and(path("/playlists/p1/items"))
+        .respond_with(ResponseTemplate::new(204))
+        .expect(0)
+        .mount(&mock)
+        .await;
+
+    let removed = server(&mock).remove_from_playlist("p1", &[0]).await;
+    assert!(matches!(removed, Err(ApiError::Unsupported(_))));
+}
+
+#[tokio::test]
+async fn removing_every_copy_of_a_repeated_song_sends_its_entry_once() {
+    let mock = MockServer::start().await;
+    mount_repeated_song_playlist(&mock).await;
+    Mock::given(method("DELETE"))
+        .and(path("/playlists/p1/items"))
+        .and(query_param("EntryIds", "entry-s1"))
+        .respond_with(ResponseTemplate::new(204))
+        .expect(1)
+        .mount(&mock)
+        .await;
+
+    server(&mock)
+        .remove_from_playlist("p1", &[0, 2])
+        .await
+        .unwrap();
+}

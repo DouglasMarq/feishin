@@ -18,8 +18,9 @@ pub const ARTIST_LIST_FIELDS: &[&str] = &[
     "Overview",
     "SortName",
     "ProviderIds",
+    "ItemCounts",
 ];
-pub const ARTIST_DETAIL_FIELDS: &[&str] = &["Genres", "Overview", "SortName"];
+pub const ARTIST_DETAIL_FIELDS: &[&str] = &["Genres", "Overview", "SortName", "ItemCounts"];
 pub const PLAYLIST_LIST_FIELDS: &[&str] = &[
     "ChildCount",
     "Genres",

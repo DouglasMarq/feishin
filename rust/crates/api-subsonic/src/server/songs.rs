@@ -1,4 +1,4 @@
-use feishin_api::Result;
+use feishin_api::{ApiError, Result};
 use feishin_core::model::{Page, Paging, Song, SongListQuery, SongSort};
 
 use super::SubsonicServer;
@@ -58,6 +58,17 @@ impl<'query> SongSource<'query> {
     }
 }
 
+fn filters_by_year(query: &SongListQuery) -> bool {
+    nonzero_year_filter(query.year_from).is_some() || nonzero_year_filter(query.year_to).is_some()
+}
+
+fn ensure_year_filter_applies(query: &SongListQuery, source: &SongSource<'_>) -> Result<()> {
+    match (filters_by_year(query), source) {
+        (false, _) | (true, SongSource::Random) => Ok(()),
+        (true, _) => Err(ApiError::Unsupported("filtering songs by year")),
+    }
+}
+
 fn page_window(paging: Paging) -> SearchWindow {
     SearchWindow {
         offset: paging.start_index,
@@ -73,7 +84,9 @@ impl SubsonicServer {
     ) -> Result<Page<Song>> {
         let folder = query.music_folder_id.as_deref();
         let window = page_window(paging);
-        match SongSource::for_list(query) {
+        let source = SongSource::for_list(query);
+        ensure_year_filter_applies(query, &source)?;
+        match source {
             SongSource::Search(term) => self.searched_song_page(term, paging, folder).await,
             SongSource::Random => self.random_song_page(query, paging).await,
             SongSource::Genre(genre) => {
@@ -124,6 +137,7 @@ impl SubsonicServer {
 
     pub(super) async fn count_songs(&self, query: &SongListQuery) -> Result<usize> {
         let folder = query.music_folder_id.as_deref();
+        ensure_year_filter_applies(query, &SongSource::for_list(query))?;
         match SongSource::for_count(query) {
             SongSource::Search(term) => {
                 count_by_probing(|offset, count| async move {
