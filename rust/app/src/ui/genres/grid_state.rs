@@ -6,8 +6,14 @@ use slint::Image;
 use super::card::{CardData, CardSource};
 use super::cover_cache::cached_cover;
 use crate::ui::Card;
+use crate::ui::page_cache::{PageCache, PageShape};
 
 pub const GRID_PAGE: usize = 60;
+const CACHED_PAGES: usize = 16;
+const GRID_PAGES: PageShape = PageShape {
+    page_size: GRID_PAGE,
+    capacity: CACHED_PAGES,
+};
 
 pub enum GridRequest {
     Page {
@@ -26,16 +32,28 @@ pub struct RowChange {
     pub changed: Range<usize>,
 }
 
-#[derive(Default)]
 pub struct GridState {
     pub generation: u64,
     pub source: Option<CardSource>,
     pub columns: usize,
     total: usize,
-    pages: HashMap<usize, Vec<CardData>>,
-    requested: HashSet<usize>,
+    pages: PageCache<CardData>,
     covers_requested: HashSet<String>,
     overrides: HashMap<String, bool>,
+}
+
+impl Default for GridState {
+    fn default() -> Self {
+        Self {
+            generation: 0,
+            source: None,
+            columns: 0,
+            total: 0,
+            pages: PageCache::new(GRID_PAGES),
+            covers_requested: HashSet::new(),
+            overrides: HashMap::new(),
+        }
+    }
 }
 
 impl GridState {
@@ -48,12 +66,7 @@ impl GridState {
     }
 
     fn cards(&self) -> impl Iterator<Item = (usize, &CardData)> {
-        self.pages.iter().flat_map(|(page, cards)| {
-            cards
-                .iter()
-                .enumerate()
-                .map(move |(offset, card)| (page * GRID_PAGE + offset, card))
-        })
+        self.pages.rows()
     }
 
     fn card_with_id(&self, id: &str) -> Option<(usize, &CardData)> {
@@ -71,7 +84,7 @@ impl GridState {
 
     pub fn request_first_page(&mut self) -> Option<GridRequest> {
         let source = self.source.clone()?;
-        self.requested.insert(0);
+        self.pages.mark_requested(0);
         Some(GridRequest::Page {
             generation: self.generation,
             source,
@@ -85,7 +98,7 @@ impl GridState {
         cards: Vec<CardData>,
         total: Option<usize>,
     ) -> RowChange {
-        let start = page * GRID_PAGE;
+        let start = self.pages.first_index_of(page);
         let end = start + cards.len();
         let old_rows = self.rows();
         self.total = self.total_after_page(total, cards.len(), end);
@@ -107,7 +120,7 @@ impl GridState {
     }
 
     pub fn forget_page_request(&mut self, generation: u64, page: usize) -> bool {
-        self.generation == generation && self.requested.remove(&page)
+        self.generation == generation && self.pages.forget_request(page)
     }
 
     pub fn cover_loaded(&mut self, cover_id: &str) -> HashSet<usize> {
@@ -149,13 +162,8 @@ impl GridState {
     }
 
     fn card_at(&mut self, index: usize, requests: &mut Vec<GridRequest>) -> Card {
-        let page = index / GRID_PAGE;
-        let loaded = self
-            .pages
-            .get(&page)
-            .and_then(|cards| cards.get(index % GRID_PAGE));
-        let Some(data) = loaded else {
-            requests.extend(self.request_page(page));
+        self.request_pages_around(index, requests);
+        let Some(data) = self.pages.get(index) else {
             return Card::default();
         };
         let cover = data.cover_id.as_deref().and_then(cached_cover);
@@ -175,13 +183,17 @@ impl GridState {
         loaded_card(data, cover, favorite)
     }
 
-    fn request_page(&mut self, page: usize) -> Option<GridRequest> {
-        let source = self.source.as_ref()?;
-        self.requested.insert(page).then(|| GridRequest::Page {
-            generation: self.generation,
+    fn request_pages_around(&mut self, index: usize, requests: &mut Vec<GridRequest>) {
+        let Some(source) = self.source.as_ref() else {
+            return;
+        };
+        let generation = self.generation;
+        let pages = self.pages.pages_to_fetch(index, self.total);
+        requests.extend(pages.into_iter().map(|page| GridRequest::Page {
+            generation,
             source: source.clone(),
             page,
-        })
+        }));
     }
 }
 

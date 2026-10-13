@@ -1,15 +1,21 @@
 use std::cell::RefCell;
-use std::collections::{BTreeSet, HashMap, HashSet};
+use std::collections::BTreeSet;
 
 use feishin_core::model::AlbumListQuery;
 use slint::{Image, Model, ModelNotify, ModelRc, ModelTracker, VecModel};
 
+use super::super::page_cache::{PageCache, PageShape};
 use super::super::{AlbumGridCard, AlbumGridRow};
 use super::card::CardData;
 use super::cover_cache::CoverLru;
 
 pub const PAGE_SIZE: usize = 60;
 const COVER_CAPACITY: usize = 96;
+const CACHED_PAGES: usize = 16;
+const GRID_PAGES: PageShape = PageShape {
+    page_size: PAGE_SIZE,
+    capacity: CACHED_PAGES,
+};
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum GridRequest {
@@ -32,14 +38,13 @@ struct GridState {
     query: Option<AlbumListQuery>,
     total: usize,
     columns: usize,
-    pages: HashMap<usize, Vec<CardData>>,
-    requested: HashSet<usize>,
+    pages: PageCache<CardData>,
     covers: CoverLru<Image>,
 }
 
 impl GridState {
     fn card(&self, index: usize) -> Option<&CardData> {
-        self.pages.get(&(index / PAGE_SIZE))?.get(index % PAGE_SIZE)
+        self.pages.get(index)
     }
 
     fn rows_for(&self, indexes: impl IntoIterator<Item = usize>) -> BTreeSet<usize> {
@@ -51,28 +56,23 @@ impl GridState {
 
     fn indexes_with_cover(&self, cover_art_id: &str) -> Vec<usize> {
         self.pages
-            .iter()
-            .flat_map(|(page, cards)| {
-                cards
-                    .iter()
-                    .enumerate()
-                    .filter(|(_, card)| card.cover_art_id.as_deref() == Some(cover_art_id))
-                    .map(move |(position, _)| page * PAGE_SIZE + position)
-            })
+            .rows()
+            .filter(|(_, card)| card.cover_art_id.as_deref() == Some(cover_art_id))
+            .map(|(index, _)| index)
             .collect()
     }
 
-    fn request_missing_page(&mut self, index: usize, requests: &mut Vec<GridRequest>) {
-        let page = index / PAGE_SIZE;
-        if let Some(query) = self.query.clone()
-            && self.requested.insert(page)
-        {
-            requests.push(GridRequest::Page {
-                generation: self.generation,
-                query,
-                page,
-            });
-        }
+    fn request_pages_around(&mut self, index: usize, requests: &mut Vec<GridRequest>) {
+        let Some(query) = self.query.as_ref() else {
+            return;
+        };
+        let generation = self.generation;
+        let pages = self.pages.pages_to_fetch(index, self.total);
+        requests.extend(pages.into_iter().map(|page| GridRequest::Page {
+            generation,
+            query: query.clone(),
+            page,
+        }));
     }
 
     fn cached_cover(&mut self, card: &CardData, requests: &mut Vec<GridRequest>) -> Option<Image> {
@@ -87,8 +87,8 @@ impl GridState {
     }
 
     fn grid_card(&mut self, index: usize, requests: &mut Vec<GridRequest>) -> AlbumGridCard {
+        self.request_pages_around(index, requests);
         let Some(data) = self.card(index).cloned() else {
-            self.request_missing_page(index, requests);
             return AlbumGridCard::default();
         };
         let cover = self.cached_cover(&data, requests);
@@ -136,8 +136,7 @@ impl AlbumGridModel {
                 query: None,
                 total: 0,
                 columns: 1,
-                pages: HashMap::new(),
-                requested: HashSet::new(),
+                pages: PageCache::new(GRID_PAGES),
                 covers: CoverLru::new(COVER_CAPACITY),
             }),
             notify: ModelNotify::default(),
@@ -151,8 +150,7 @@ impl AlbumGridModel {
             state.generation += 1;
             state.query = Some(query.clone());
             state.total = 0;
-            state.pages.clear();
-            state.requested.clear();
+            state.pages = PageCache::new(GRID_PAGES);
             state.generation
         };
         self.notify.reset();
@@ -199,7 +197,7 @@ impl AlbumGridModel {
             if state.generation != generation {
                 return;
             }
-            let start = page * PAGE_SIZE;
+            let start = state.pages.first_index_of(page);
             let end = (start + cards.len()).min(state.total);
             state.pages.insert(page, cards);
             state.rows_for(start..end)
@@ -210,7 +208,7 @@ impl AlbumGridModel {
     pub fn page_failed(&self, generation: u64, page: usize) {
         let mut state = self.state.borrow_mut();
         if state.generation == generation {
-            state.requested.remove(&page);
+            state.pages.forget_request(page);
         }
     }
 
@@ -297,11 +295,18 @@ mod tests {
         model.row_data(16);
         assert!(matches!(
             drain(log).as_slice(),
-            [GridRequest::Page {
-                generation: 1,
-                page: 1,
-                ..
-            }]
+            [
+                GridRequest::Page {
+                    generation: 1,
+                    page: 1,
+                    ..
+                },
+                GridRequest::Page {
+                    generation: 1,
+                    page: 2,
+                    ..
+                }
+            ]
         ));
     }
 
@@ -343,5 +348,43 @@ mod tests {
         model.apply_page(1, 0, vec![CardData::default()]);
         assert!(!model.apply_count(1, 5));
         assert_eq!(model.row_count(), 0);
+    }
+
+    fn requested_pages(log: &RequestLog) -> Vec<usize> {
+        drain(log)
+            .into_iter()
+            .filter_map(|request| match request {
+                GridRequest::Page { page, .. } => Some(page),
+                _ => None,
+            })
+            .collect()
+    }
+
+    fn album_page(page: usize) -> Vec<CardData> {
+        (page * PAGE_SIZE..(page + 1) * PAGE_SIZE)
+            .map(|index| CardData::from_album(&album(index)))
+            .collect()
+    }
+
+    #[test]
+    fn far_pages_are_evicted_and_fetched_again() {
+        let (log, model) = recording();
+        model.set_columns(PAGE_SIZE);
+        model.reset(AlbumListQuery::default());
+        assert!(model.apply_count(1, PAGE_SIZE * 40));
+        drain(&log);
+        for row in 0..40 {
+            model.row_data(row);
+            for page in requested_pages(&log) {
+                model.apply_page(1, page, album_page(page));
+            }
+        }
+        let first = model.row_data(0).expect("row");
+        assert!(first.cards.iter().all(|card| !card.loaded));
+        assert_eq!(requested_pages(&log), [0]);
+        let kept = model.row_data(39 - CACHED_PAGES + 1).expect("row");
+        assert!(kept.cards.iter().all(|card| card.loaded));
+        let evicted = model.row_data(39 - CACHED_PAGES).expect("row");
+        assert!(evicted.cards.iter().all(|card| !card.loaded));
     }
 }

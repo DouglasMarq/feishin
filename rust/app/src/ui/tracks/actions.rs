@@ -5,6 +5,7 @@ use feishin_core::model::{ItemKind, Song};
 use slint::{ComponentHandle, SharedString};
 
 use super::model::TracksModel;
+use super::selection::SelectionSnapshot;
 use super::{string_model, with_model};
 use crate::controller::Command;
 use crate::ui::{Actions, AppState, AppWindow, Context, Route, on_ui, show_status};
@@ -23,19 +24,30 @@ pub(super) fn act_on_selection(window: &AppWindow, ctx: &Context, action: SongAc
     let Some(snapshot) = with_model(window, TracksModel::selection) else {
         return;
     };
+    let action_ctx = ctx.clone();
+    with_resolved(window, ctx, snapshot, move |window, songs| {
+        perform(window, &action_ctx, action, songs);
+    });
+}
+
+fn with_resolved(
+    window: &AppWindow,
+    ctx: &Context,
+    snapshot: SelectionSnapshot,
+    use_songs: impl FnOnce(&AppWindow, Vec<Song>) + Send + 'static,
+) {
     if snapshot.is_loaded() {
-        perform(window, ctx, action, snapshot.into_loaded());
+        use_songs(window, snapshot.into_loaded());
         return;
     }
     let Some(server) = ctx.session.get() else {
         return;
     };
     let weak = window.as_weak();
-    let ctx = ctx.clone();
-    ctx.rt.clone().spawn(async move {
+    ctx.rt.spawn(async move {
         let result = snapshot.resolve(server.as_ref()).await;
         on_ui(&weak, move |window| match result {
-            Ok(songs) => perform(window, &ctx, action, songs),
+            Ok(songs) => use_songs(window, songs),
             Err(error) => show_status(window, &format!("Could not load the selection: {error}")),
         });
     });
@@ -123,15 +135,19 @@ pub(super) fn set_rating(window: &AppWindow, ctx: &Context, ids: Vec<String>, ra
 
 pub(super) fn go_to(
     window: &AppWindow,
+    ctx: &Context,
     route: Route,
-    target: impl FnOnce(&Song) -> Option<String>,
+    target: impl FnOnce(&Song) -> Option<String> + Send + 'static,
 ) {
-    let target_id = with_model(window, TracksModel::first_selected)
-        .flatten()
-        .and_then(|song| target(&song));
-    if let Some(target_id) = target_id {
-        window
-            .global::<AppState>()
-            .invoke_navigate(route, target_id.into());
-    }
+    let Some(snapshot) = with_model(window, TracksModel::selection) else {
+        return;
+    };
+    with_resolved(window, ctx, snapshot.first_only(), move |window, songs| {
+        let target_id = songs.first().and_then(target);
+        if let Some(target_id) = target_id {
+            window
+                .global::<AppState>()
+                .invoke_navigate(route, target_id.into());
+        }
+    });
 }

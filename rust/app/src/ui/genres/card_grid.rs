@@ -200,13 +200,19 @@ mod tests {
         );
         assert_eq!(
             drain(&log),
-            ["cover al-0", "cover al-1", "cover al-2", "cover al-3"]
+            [
+                "page 1:1",
+                "cover al-0",
+                "cover al-1",
+                "cover al-2",
+                "cover al-3"
+            ]
         );
         grid.row_data(0);
         assert!(drain(&log).is_empty());
 
         grid.row_data(GRID_PAGE / 4);
-        assert_eq!(drain(&log), ["page 1:1"]);
+        assert!(drain(&log).is_empty());
         assert!(grid.apply_page(1, 1, cards(GRID_PAGE..GRID_PAGE + 2), None));
         assert_eq!(grid.row_count(), (GRID_PAGE + 2).div_ceil(4));
 
@@ -247,5 +253,43 @@ mod tests {
         let row = grid.row_data(1).map(|row| row.cards).unwrap_or_default();
         assert!(row.row_data(0).is_some_and(|card| !card.favorite));
         assert_eq!(grid.favorite("missing"), None);
+    }
+
+    fn requested_pages(log: &RequestLog) -> Vec<String> {
+        drain(log)
+            .into_iter()
+            .filter(|request| request.starts_with("page"))
+            .collect()
+    }
+
+    #[test]
+    fn grid_evicts_far_pages_and_fetches_them_again() {
+        let log: RequestLog = Rc::default();
+        let grid = logging_grid(&log);
+        grid.set_columns(GRID_PAGE);
+        grid.reset(Some(CardSource::Albums(AlbumListQuery::default())));
+        let total = Some(GRID_PAGE * 30);
+        assert!(grid.apply_page(1, 0, cards(0..GRID_PAGE), total));
+        drain(&log);
+        for row in 0..30 {
+            grid.row_data(row);
+            for request in requested_pages(&log) {
+                let page = request
+                    .rsplit(':')
+                    .next()
+                    .and_then(|page| page.parse::<usize>().ok())
+                    .unwrap_or_default();
+                let range = page * GRID_PAGE..(page + 1) * GRID_PAGE;
+                grid.apply_page(1, page, cards(range), total);
+            }
+        }
+        assert_eq!(grid.favorite("album-0"), None);
+        let row = grid.row_data(0).map(|row| row.cards).unwrap_or_default();
+        assert!(row.iter().all(|card| !card.loaded));
+        assert_eq!(requested_pages(&log), ["page 1:0"]);
+        assert!(grid.page_failed(1, 0));
+        assert!(!grid.page_failed(0, 0));
+        grid.row_data(0);
+        assert_eq!(requested_pages(&log), ["page 1:0"]);
     }
 }

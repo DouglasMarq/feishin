@@ -1,3 +1,4 @@
+mod eviction;
 mod headless;
 
 use std::cell::RefCell;
@@ -49,7 +50,7 @@ fn pages_are_requested_once_and_stale_generations_ignored() {
 
     assert!(model.row_data(150).is_some_and(|row| !row.loaded));
     model.row_data(160);
-    assert_eq!(drain(&log), [(1, Some(1))]);
+    assert_eq!(drain(&log), [(1, Some(1)), (1, Some(2))]);
 
     model.apply_page(1, 1, vec![test_song("x", 1000)]);
     model.set_current(Some("x"));
@@ -114,8 +115,10 @@ fn selection_marks_rows_and_resets_with_the_query() {
         [1]
     );
     assert!(!snapshot.is_loaded());
+    let first = model.selection().first_only();
+    assert!(first.is_loaded());
     assert_eq!(
-        model.first_selected().map(|song| song.id),
+        first.into_loaded().first().map(|song| song.id.clone()),
         Some("s2".into())
     );
 

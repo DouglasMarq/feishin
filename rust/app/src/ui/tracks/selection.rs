@@ -79,6 +79,11 @@ impl SelectionSnapshot {
         self.rows.iter().all(|(_, song)| song.is_some())
     }
 
+    pub fn first_only(mut self) -> Self {
+        self.rows.truncate(1);
+        self
+    }
+
     pub fn into_loaded(self) -> Vec<Song> {
         self.rows.into_iter().filter_map(|(_, song)| song).collect()
     }
