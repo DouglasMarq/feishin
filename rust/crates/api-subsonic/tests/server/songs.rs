@@ -259,3 +259,28 @@ async fn song_count_probes_then_pages() {
     };
     assert_eq!(server.song_count(&search).await.ok(), Some(742));
 }
+
+#[tokio::test]
+async fn a_year_filter_on_songs_is_reported_as_unsupported_instead_of_ignored() {
+    let mock = MockServer::start().await;
+    Mock::given(path("/rest/search3.view"))
+        .respond_with(ok(
+            json!({ "searchResult3": { "song": [song("s1", "One")] } }),
+        ))
+        .mount(&mock)
+        .await;
+
+    let query = SongListQuery {
+        year_from: Some(2021),
+        year_to: Some(2022),
+        ..Default::default()
+    };
+    let subsonic = server(&mock);
+    let listed = subsonic.song_list(&query, paging(0, 10)).await;
+    assert!(matches!(listed, Err(feishin_api::ApiError::Unsupported(_))));
+    let counted = subsonic.song_count(&query).await;
+    assert!(matches!(
+        counted,
+        Err(feishin_api::ApiError::Unsupported(_))
+    ));
+}
