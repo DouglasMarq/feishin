@@ -37,6 +37,8 @@ pub trait MusicServer: Send + Sync {
 
     async fn playlist_list(&self, paging: Paging) -> Result<Page<Playlist>>;
     async fn playlist_songs(&self, id: &str) -> Result<Vec<Song>>;
+    async fn playlist(&self, id: &str) -> Result<Playlist>;
+    async fn playlist_song_page(&self, id: &str, paging: Paging) -> Result<Page<Song>>;
     async fn create_playlist(&self, name: &str, song_ids: &[String]) -> Result<Playlist>;
     async fn add_to_playlist(&self, playlist_id: &str, song_ids: &[String]) -> Result<()>;
     async fn remove_from_playlist(

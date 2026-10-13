@@ -3,6 +3,7 @@ mod artists;
 mod library;
 mod music_server;
 mod playback;
+mod playlist_items;
 mod playlists;
 mod search;
 mod session;

@@ -51,6 +51,13 @@ impl DemoPlaylists {
         }
     }
 
+    fn get(&self, id: &str) -> Result<&DemoPlaylist> {
+        self.items
+            .iter()
+            .find(|playlist| playlist.id == id)
+            .ok_or(ApiError::NotFound)
+    }
+
     fn get_mut(&mut self, id: &str) -> Result<&mut DemoPlaylist> {
         self.items
             .iter_mut()
@@ -115,6 +122,26 @@ impl FakeServer {
             .collect())
     }
 
+    pub(super) fn playlist_by_id(&self, id: &str) -> Result<Playlist> {
+        let playlists = self.locked_playlists();
+        Ok(self.to_playlist(playlists.get(id)?))
+    }
+
+    pub(super) fn playlist_songs_page(&self, id: &str, paging: Paging) -> Result<Page<Song>> {
+        let playlists = self.locked_playlists();
+        let songs = &playlists.get(id)?.songs;
+        Ok(Page {
+            items: songs
+                .iter()
+                .skip(paging.start_index)
+                .take(paging.limit)
+                .map(|&index| self.song_at(index))
+                .collect(),
+            start_index: paging.start_index,
+            total_count: Some(songs.len()),
+        })
+    }
+
     pub(super) fn insert_playlist(&self, name: &str, song_ids: &[String]) -> Playlist {
         let songs = self.song_indexes(song_ids);
         let mut playlists = self.locked_playlists();
@@ -155,5 +182,32 @@ impl FakeServer {
             return Err(ApiError::NotFound);
         }
         Ok(())
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use feishin_api::MusicServer;
+
+    use super::*;
+
+    #[tokio::test]
+    async fn playlist_pages_slice_the_demo_playlist() {
+        let server = FakeServer::new(500);
+        let all = server.playlist_songs("playlist-1").await.unwrap();
+        let header = server.playlist("playlist-1").await.unwrap();
+        assert_eq!(header.song_count as usize, all.len());
+        let paging = Paging {
+            start_index: 2,
+            limit: 3,
+        };
+        let page = server
+            .playlist_song_page("playlist-1", paging)
+            .await
+            .unwrap();
+        assert_eq!(page.total_count, Some(all.len()));
+        assert_eq!(page.items, all[2..5]);
+        assert!(server.playlist("missing").await.is_err());
+        assert!(server.playlist_song_page("missing", paging).await.is_err());
     }
 }

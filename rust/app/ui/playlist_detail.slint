@@ -43,7 +43,7 @@ component SongRow inherits Rectangle {
     in property <PlaylistSongRow> item;
     in property <int> index;
     callback pressed();
-    property <bool> playing: root.item.track.id == PlayerState.song-id;
+    property <bool> playing: root.item.track.loaded && root.item.track.id == PlayerState.song-id;
     height: 36px;
     background: root.item.selected ? Theme.selected : (touch.has-hover ? Theme.hover : transparent);
 
@@ -138,10 +138,19 @@ component SongRow inherits Rectangle {
                     }
                 }
 
-                Cell {
+                if root.item.track.loaded: Cell {
                     width: PlaylistDetailState.title-width;
                     text: root.item.track.title;
                     text-color: root.playing ? Theme.primary : Theme.foreground;
+                }
+
+                if !root.item.track.loaded: Rectangle {
+                    width: PlaylistDetailState.title-width;
+
+                    Skeleton {
+                        x: 12px;
+                        width: parent.width * 0.6;
+                    }
                 }
 
                 Cell {

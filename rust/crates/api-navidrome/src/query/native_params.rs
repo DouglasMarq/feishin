@@ -96,7 +96,11 @@ pub(crate) fn album_songs(album_id: &str, features: &Features) -> QueryParams {
 }
 
 pub(crate) fn playlist_tracks(features: &Features) -> QueryParams {
-    let mut params = sorted_page(0, UNBOUNDED_END, Some("id"), "ASC");
+    playlist_track_page(0, UNBOUNDED_END, features)
+}
+
+pub(crate) fn playlist_track_page(start: usize, end: i64, features: &Features) -> QueryParams {
+    let mut params = sorted_page(start, end, Some("id"), "ASC");
     push_missing(&mut params, features);
     params
 }

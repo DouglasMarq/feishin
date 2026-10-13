@@ -9,6 +9,7 @@ mod list_caches;
 mod music_server;
 mod pages;
 mod play_queue;
+mod playlist_cache;
 mod playlists;
 mod requests;
 mod songs;
@@ -23,12 +24,14 @@ use crate::client::{Client, Params, RequestEncoding};
 use crate::extensions::Extensions;
 use crate::types::{OpenSubsonicExtensions, Ping};
 use list_caches::ListCaches;
+use playlist_cache::PlaylistCache;
 
 pub struct SubsonicServer {
     config: ServerConfig,
     client: Client,
     extensions: OnceCell<Extensions>,
     list_caches: ListCaches,
+    playlist_cache: PlaylistCache,
 }
 
 fn is_open_subsonic(ping: &Ping) -> bool {
@@ -43,6 +46,7 @@ impl SubsonicServer {
             client,
             extensions: OnceCell::new(),
             list_caches: ListCaches::new(),
+            playlist_cache: PlaylistCache::default(),
         })
     }
 
