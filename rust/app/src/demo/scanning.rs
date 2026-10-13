@@ -6,35 +6,37 @@ use super::server::FakeServer;
 
 const DEMO_SCAN_POLLS: u64 = 3;
 
-#[derive(Default)]
 pub(super) struct DemoScan {
-    polls_left: AtomicU64,
+    polls_done: AtomicU64,
+}
+
+impl Default for DemoScan {
+    fn default() -> Self {
+        Self {
+            polls_done: AtomicU64::new(DEMO_SCAN_POLLS),
+        }
+    }
 }
 
 impl FakeServer {
     pub(super) fn begin_demo_scan(&self) -> LibraryScan {
-        self.scan
-            .polls_left
-            .store(DEMO_SCAN_POLLS, Ordering::Relaxed);
-        self.demo_scan_progress(DEMO_SCAN_POLLS)
+        self.scan.polls_done.store(0, Ordering::Relaxed);
+        self.demo_scan_progress(0)
     }
 
     pub(super) fn poll_demo_scan(&self) -> LibraryScan {
-        let polls_left = self
+        let polls_done = self
             .scan
-            .polls_left
-            .fetch_update(Ordering::Relaxed, Ordering::Relaxed, |left| {
-                left.checked_sub(1)
-            })
-            .map_or(0, |left| left.saturating_sub(1));
-        self.demo_scan_progress(polls_left)
+            .polls_done
+            .fetch_add(1, Ordering::Relaxed)
+            .saturating_add(1);
+        self.demo_scan_progress(polls_done.min(DEMO_SCAN_POLLS))
     }
 
-    fn demo_scan_progress(&self, polls_left: u64) -> LibraryScan {
+    fn demo_scan_progress(&self, polls_done: u64) -> LibraryScan {
         let song_count = self.library.song_count() as u64;
-        let polls_done = DEMO_SCAN_POLLS.saturating_sub(polls_left);
         LibraryScan {
-            scanning: polls_left > 0,
+            scanning: polls_done < DEMO_SCAN_POLLS,
             scanned_items: Some(song_count * polls_done / DEMO_SCAN_POLLS),
         }
     }
@@ -43,6 +45,13 @@ impl FakeServer {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn a_demo_server_is_idle_before_any_scan() {
+        let server = FakeServer::new(900);
+
+        assert!(!server.poll_demo_scan().scanning);
+    }
 
     #[test]
     fn a_demo_scan_finishes_after_a_few_polls() {
