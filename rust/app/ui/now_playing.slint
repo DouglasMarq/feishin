@@ -1,17 +1,534 @@
-import { Theme } from "theme.slint";
-import { AppState } from "globals.slint";
+import { ListView } from "std-widgets.slint";
+import { Theme, Icons } from "theme.slint";
+import { AppState, PlayerState, QueueRow, QueueState, Route, TrackRow } from "globals.slint";
+import { Icon, IconButton } from "widgets.slint";
+
+export struct ArtistLink {
+    id: string,
+    name: string,
+}
+
+/// `time-ms` is -1 for unsynced lines.
+export struct LyricRow {
+    text: string,
+    time-ms: int,
+}
+
+export enum NowPlayingTab { lyrics, up-next, similar }
+
+export enum LyricsStatus { idle, loading, found, missing, failed }
 
 export global NowPlayingState {
+    in-out property <NowPlayingTab> tab: NowPlayingTab.lyrics;
+    /// The song whose details are shown.
+    in property <string> song-id;
+    in property <bool> loaded;
+    in property <[ArtistLink]> artists;
+    in property <string> album-id;
+    in property <image> cover;
+    in property <bool> has-cover;
+    in property <[LyricRow]> lyrics;
+    in property <bool> lyrics-synced;
+    in property <LyricsStatus> lyrics-status;
+    in property <string> lyrics-source;
+    in property <int> active-line: -1;
+    in property <[QueueRow]> up-next;
+    /// Queue index of the first `up-next` row, -1 when nothing is current.
+    in property <int> up-next-offset: -1;
+    in property <[TrackRow]> similar;
+    in property <bool> similar-loading;
     callback load(string);
+    callback position-changed();
+    callback refresh-up-next();
+    callback play-similar(string);
+}
+
+component TabButton inherits Rectangle {
+    in property <string> text;
+    in property <bool> active;
+    callback clicked();
+    height: 36px;
+    width: label.preferred-width + 8px;
+
+    label := Text {
+        text: root.text;
+        color: root.active ? Theme.foreground : (touch.has-hover ? Theme.foreground : Theme.muted);
+        font-size: 15px;
+        font-weight: 600;
+        vertical-alignment: center;
+    }
+
+    if root.active: Rectangle {
+        y: parent.height - 2px;
+        height: 2px;
+        border-radius: 1px;
+        background: Theme.primary;
+    }
+
+    touch := TouchArea {
+        mouse-cursor: pointer;
+        clicked => {
+            root.clicked();
+        }
+    }
+}
+
+component Link inherits Rectangle {
+    in property <string> text;
+    in property <length> font-size: 14px;
+    in property <bool> enabled: true;
+    callback clicked();
+    min-width: 0px;
+    preferred-width: label.preferred-width;
+    height: label.preferred-height;
+
+    label := Text {
+        width: parent.width;
+        text: root.text;
+        font-size: root.font-size;
+        color: touch.has-hover && root.enabled ? Theme.foreground : Theme.muted;
+        overflow: elide;
+    }
+
+    touch := TouchArea {
+        enabled: root.enabled;
+        mouse-cursor: root.enabled ? pointer : default;
+        clicked => {
+            root.clicked();
+        }
+    }
+}
+
+component Placeholder inherits Text {
+    color: Theme.muted;
+    horizontal-alignment: center;
+    vertical-alignment: center;
+    wrap: word-wrap;
+}
+
+component LyricsPanel inherits Rectangle {
+    property <length> active-y;
+    property <length> active-h;
+    changed active-y => {
+        self.follow();
+    }
+    changed active-h => {
+        self.follow();
+    }
+
+    function follow() {
+        flick.content-y = min(0px, max(flick.height - flick.content-height, flick.height / 2 - self.active-y - self.active-h / 2));
+    }
+
+    if NowPlayingState.lyrics-status == LyricsStatus.loading: Placeholder {
+        text: "Searching for lyrics...";
+    }
+    if NowPlayingState.lyrics-status == LyricsStatus.missing: Placeholder {
+        text: "No lyrics found";
+    }
+    if NowPlayingState.lyrics-status == LyricsStatus.failed: Placeholder {
+        text: "Could not load lyrics";
+    }
+
+    flick := Flickable {
+        visible: NowPlayingState.lyrics-status == LyricsStatus.found;
+        height: parent.height - footer.height;
+        y: 0;
+        content-width: self.width;
+        changed height => {
+            root.follow();
+        }
+
+        VerticalLayout {
+            width: parent.width;
+            padding-top: NowPlayingState.lyrics-synced ? flick.height / 3 : 8px;
+            padding-bottom: NowPlayingState.lyrics-synced ? flick.height / 2 : 8px;
+            padding-left: 8px;
+            padding-right: 8px;
+            spacing: NowPlayingState.lyrics-synced ? 18px : 4px;
+
+            for line[i] in NowPlayingState.lyrics: line-view := Rectangle {
+                property <bool> active: NowPlayingState.lyrics-synced && i == NowPlayingState.active-line;
+                property <bool> seekable: NowPlayingState.lyrics-synced && line.time-ms >= 0;
+                function report() {
+                    if (self.active) {
+                        root.active-y = self.y;
+                        root.active-h = self.height;
+                    }
+                }
+                init => {
+                    self.report();
+                }
+                changed active => {
+                    self.report();
+                }
+                changed y => {
+                    self.report();
+                }
+                changed height => {
+                    self.report();
+                }
+                height: text.preferred-height;
+
+                text := Text {
+                    width: parent.width;
+                    text: line.text == "" && NowPlayingState.lyrics-synced ? "..." : line.text;
+                    wrap: word-wrap;
+                    horizontal-alignment: NowPlayingState.lyrics-synced ? center : left;
+                    font-size: NowPlayingState.lyrics-synced ? 24px : 16px;
+                    font-weight: NowPlayingState.lyrics-synced ? 700 : 400;
+                    color: !NowPlayingState.lyrics-synced ? Theme.foreground : (line-view.active ? Theme.foreground : (touch.has-hover ? #c8c8c8 : #5e5e5e));
+                    animate color { duration: 200ms; }
+                }
+
+                touch := TouchArea {
+                    enabled: line-view.seekable;
+                    mouse-cursor: line-view.seekable ? pointer : default;
+                    clicked => {
+                        PlayerState.seek(line.time-ms);
+                    }
+                }
+            }
+        }
+    }
+
+    footer := Text {
+        y: parent.height - self.height;
+        height: NowPlayingState.lyrics-status == LyricsStatus.found ? 28px : 0px;
+        visible: NowPlayingState.lyrics-status == LyricsStatus.found;
+        text: "Lyrics from " + NowPlayingState.lyrics-source;
+        color: Theme.muted;
+        font-size: 11px;
+        horizontal-alignment: center;
+        vertical-alignment: center;
+    }
+}
+
+component UpNextPanel inherits Rectangle {
+    if NowPlayingState.up-next.length == 0: Placeholder {
+        text: "The queue is empty";
+    }
+
+    ListView {
+        for row[i] in NowPlayingState.up-next: Rectangle {
+            height: 52px;
+            border-radius: Theme.radius;
+            background: row.current ? Theme.selected : (touch.has-hover ? Theme.hover : transparent);
+
+            touch := TouchArea {
+                double-clicked => {
+                    QueueState.play(row.uid);
+                }
+            }
+
+            HorizontalLayout {
+                padding-left: 12px;
+                padding-right: 12px;
+                spacing: 12px;
+
+                Rectangle {
+                    width: 24px;
+
+                    if row.current: Icon {
+                        path: Icons.note;
+                        color: Theme.primary;
+                        width: 16px;
+                        height: 16px;
+                    }
+                    if !row.current: Text {
+                        text: i;
+                        color: Theme.muted;
+                        font-size: 12px;
+                        horizontal-alignment: center;
+                        vertical-alignment: center;
+                    }
+                }
+
+                VerticalLayout {
+                    alignment: center;
+                    horizontal-stretch: 1;
+
+                    Text {
+                        text: row.title;
+                        color: row.current ? Theme.primary : Theme.foreground;
+                        overflow: elide;
+                    }
+
+                    Text {
+                        text: row.artists;
+                        color: Theme.muted;
+                        font-size: 12px;
+                        overflow: elide;
+                    }
+                }
+
+                Text {
+                    text: row.duration;
+                    color: Theme.muted;
+                    font-size: 12px;
+                    vertical-alignment: center;
+                }
+            }
+        }
+    }
+}
+
+component SimilarPanel inherits Rectangle {
+    if NowPlayingState.similar-loading: Placeholder {
+        text: "Loading similar songs...";
+    }
+    if !NowPlayingState.similar-loading && NowPlayingState.similar.length == 0: Placeholder {
+        text: "No similar songs found";
+    }
+
+    ListView {
+        for track in NowPlayingState.similar: Rectangle {
+            height: 52px;
+            border-radius: Theme.radius;
+            background: touch.has-hover ? Theme.hover : transparent;
+
+            touch := TouchArea {
+                double-clicked => {
+                    NowPlayingState.play-similar(track.id);
+                }
+            }
+
+            HorizontalLayout {
+                padding-left: 12px;
+                padding-right: 12px;
+                spacing: 12px;
+
+                Rectangle {
+                    width: 24px;
+
+                    if !touch.has-hover: Text {
+                        text: track.index;
+                        color: Theme.muted;
+                        font-size: 12px;
+                        horizontal-alignment: center;
+                        vertical-alignment: center;
+                    }
+                    if touch.has-hover: IconButton {
+                        icon: Icons.play;
+                        icon-size: 18px;
+                        width: 24px;
+                        height: 24px;
+                        clicked => {
+                            NowPlayingState.play-similar(track.id);
+                        }
+                    }
+                }
+
+                VerticalLayout {
+                    alignment: center;
+                    horizontal-stretch: 1;
+
+                    Text {
+                        text: track.title;
+                        color: Theme.foreground;
+                        overflow: elide;
+                    }
+
+                    Text {
+                        text: track.artists + (track.album == "" ? "" : "  -  " + track.album);
+                        color: Theme.muted;
+                        font-size: 12px;
+                        overflow: elide;
+                    }
+                }
+
+                Text {
+                    text: track.duration;
+                    color: Theme.muted;
+                    font-size: 12px;
+                    vertical-alignment: center;
+                }
+            }
+        }
+    }
 }
 
 export component NowPlayingView inherits Rectangle {
+    property <string> current-song: PlayerState.song-id;
+    property <int> position: PlayerState.position-ms;
+    property <int> head: NowPlayingState.up-next-offset;
+    property <string> queue-probe: QueueState.rows.length + ":" + (head >= 0 && head < QueueState.rows.length ? QueueState.rows[head].uid + (QueueState.rows[head].current ? "*" : "") : "") + ":" + (head >= 0 && head + 1 < QueueState.rows.length ? QueueState.rows[head + 1].uid : "");
+    background: Theme.background;
+    clip: true;
+
     init => {
-        NowPlayingState.load(AppState.detail-id);
+        NowPlayingState.load(PlayerState.song-id);
+    }
+    changed current-song => {
+        NowPlayingState.load(self.current-song);
+    }
+    changed position => {
+        NowPlayingState.position-changed();
+    }
+    changed queue-probe => {
+        NowPlayingState.refresh-up-next();
     }
 
-    Text {
-        text: "Now playing";
-        color: Theme.muted;
+    if NowPlayingState.has-cover: Image {
+        width: parent.width;
+        height: parent.height;
+        source: NowPlayingState.cover;
+        image-fit: cover;
+        opacity: 0.14;
+    }
+
+    Rectangle {
+        background: @linear-gradient(180deg, #0c0c0c66 0%, Theme.background 85%);
+    }
+
+    if !PlayerState.has-song: Placeholder {
+        text: "Nothing is playing";
+        font-size: 16px;
+    }
+
+    IconButton {
+        x: parent.width - self.width - 16px;
+        y: 16px;
+        icon: Icons.close;
+        clicked => {
+            if (AppState.can-go-back) {
+                AppState.back();
+            } else {
+                AppState.navigate(Route.tracks, "");
+            }
+        }
+    }
+
+    if PlayerState.has-song: HorizontalLayout {
+        padding: 40px;
+        padding-top: 56px;
+        spacing: 48px;
+
+        left := Rectangle {
+            width: 42%;
+            property <length> side: max(0px, min(self.width, self.height - meta.preferred-height - 24px));
+
+            Rectangle {
+                x: (parent.width - self.width) / 2;
+                y: 0;
+                width: left.side;
+                height: left.side;
+                border-radius: 10px;
+                background: Theme.surface-raised;
+                clip: true;
+
+                if NowPlayingState.has-cover: Image {
+                    width: parent.width;
+                    height: parent.height;
+                    source: NowPlayingState.cover;
+                    image-fit: cover;
+                }
+                if !NowPlayingState.has-cover: Icon {
+                    path: Icons.note;
+                    color: Theme.muted;
+                    width: parent.width / 3;
+                    height: parent.height / 3;
+                }
+            }
+
+            meta := VerticalLayout {
+                x: (parent.width - left.side) / 2;
+                y: left.side + 24px;
+                width: left.side;
+                height: self.preferred-height;
+                spacing: 6px;
+
+                Text {
+                    text: PlayerState.title;
+                    color: Theme.foreground;
+                    font-size: 26px;
+                    font-weight: 700;
+                    overflow: elide;
+                    horizontal-alignment: center;
+                }
+
+                HorizontalLayout {
+                    alignment: center;
+
+                    if NowPlayingState.artists.length == 0: Text {
+                        text: PlayerState.artists;
+                        color: Theme.muted;
+                        font-size: 16px;
+                        overflow: elide;
+                    }
+                    for artist[i] in NowPlayingState.artists: HorizontalLayout {
+                        if i > 0: Text {
+                            text: ", ";
+                            color: Theme.muted;
+                            font-size: 16px;
+                        }
+                        Link {
+                            text: artist.name;
+                            font-size: 16px;
+                            enabled: artist.id != "";
+                            clicked => {
+                                AppState.navigate(Route.artist-detail, artist.id);
+                            }
+                        }
+                    }
+                }
+
+                HorizontalLayout {
+                    alignment: center;
+
+                    Link {
+                        text: PlayerState.album;
+                        font-size: 14px;
+                        enabled: NowPlayingState.album-id != "";
+                        clicked => {
+                            AppState.navigate(Route.album-detail, NowPlayingState.album-id);
+                        }
+                    }
+                }
+            }
+        }
+
+        VerticalLayout {
+            horizontal-stretch: 1;
+            spacing: 16px;
+
+            HorizontalLayout {
+                alignment: start;
+                spacing: 24px;
+
+                TabButton {
+                    text: "Lyrics";
+                    active: NowPlayingState.tab == NowPlayingTab.lyrics;
+                    clicked => {
+                        NowPlayingState.tab = NowPlayingTab.lyrics;
+                    }
+                }
+
+                TabButton {
+                    text: "Up next";
+                    active: NowPlayingState.tab == NowPlayingTab.up-next;
+                    clicked => {
+                        NowPlayingState.tab = NowPlayingTab.up-next;
+                        NowPlayingState.refresh-up-next();
+                    }
+                }
+
+                TabButton {
+                    text: "Similar";
+                    active: NowPlayingState.tab == NowPlayingTab.similar;
+                    clicked => {
+                        NowPlayingState.tab = NowPlayingTab.similar;
+                    }
+                }
+            }
+
+            Rectangle {
+                vertical-stretch: 1;
+
+                if NowPlayingState.tab == NowPlayingTab.lyrics: LyricsPanel { }
+                if NowPlayingState.tab == NowPlayingTab.up-next: UpNextPanel { }
+                if NowPlayingState.tab == NowPlayingTab.similar: SimilarPanel { }
+            }
+        }
     }
 }
