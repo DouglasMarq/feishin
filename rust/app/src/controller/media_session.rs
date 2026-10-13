@@ -43,6 +43,10 @@ impl Controller {
     }
 
     fn stop_from_media_session(&mut self) {
+        if self.is_radio_playing() {
+            self.stop_radio();
+            return;
+        }
         if self.playing {
             self.toggle_pause();
         }

@@ -218,3 +218,51 @@ async fn favorites_are_kept_in_the_settings() {
     let saved = harness.store.load_settings().unwrap_or_default();
     assert!(saved.radio.favorites.is_empty());
 }
+
+#[tokio::test]
+async fn stations_that_are_not_internet_streams_are_refused() {
+    let (mut harness, current) = queue_at_thirty_seconds(false);
+    let local_file = RadioStation {
+        stream_url: "file:///home/user/secret.flac".into(),
+        ..station()
+    };
+
+    radio(&mut harness, RadioCommand::Play(local_file));
+
+    assert_eq!(harness.audio.take(), []);
+    assert!(harness.controller.is_playing());
+    assert_eq!(harness.current_uid(), Some(current));
+    assert!(
+        harness
+            .ui
+            .errors()
+            .iter()
+            .any(|error| error.contains("not an internet stream"))
+    );
+    assert!(
+        !harness
+            .ui
+            .any(|update| matches!(update, UiUpdate::Radio(Some(_))))
+    );
+}
+
+#[tokio::test]
+async fn the_media_session_stop_button_stops_the_station() {
+    let (mut harness, current) = queue_at_thirty_seconds(false);
+    tune_in(&mut harness);
+    harness.audio.take();
+    harness.ui.clear();
+
+    harness
+        .controller
+        .handle(Command::Media(MediaControlEvent::Stop));
+
+    assert_eq!(harness.audio.take(), [AudioCall::Stop]);
+    assert!(
+        harness
+            .ui
+            .any(|update| matches!(update, UiUpdate::Radio(None)))
+    );
+    harness.controller.handle(Command::TogglePause);
+    assert_eq!(harness.audio.take(), [AudioCall::Load(current, 30_000)]);
+}

@@ -77,6 +77,13 @@ impl Controller {
     }
 
     fn play_station(&mut self, station: RadioStation) {
+        if !station.has_network_stream_url() {
+            self.deps.ui.send(UiUpdate::Error(format!(
+                "{} cannot be played: its stream address is not an internet stream",
+                station.name
+            )));
+            return;
+        }
         self.discard_preload();
         self.scrobble_tracker.stop();
         let track = stream_track(&station);
@@ -105,7 +112,7 @@ impl Controller {
         self.publish_playback();
     }
 
-    fn stop_radio(&mut self) {
+    pub(super) fn stop_radio(&mut self) {
         if self.radio.is_none() {
             return;
         }

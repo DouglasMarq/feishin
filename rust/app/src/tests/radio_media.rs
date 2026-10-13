@@ -104,3 +104,25 @@ async fn media_sessions_see_the_station_live_title_and_the_way_back() {
     }));
     assert_eq!(media.take(), []);
 }
+
+#[tokio::test]
+async fn reconnecting_keeps_the_station_in_the_media_session() {
+    let temp_dir = tempfile::tempdir().unwrap_or_else(|error| panic!("temp dir: {error}"));
+    let media = RecordingMedia::default();
+    let mut controller = controller_with(&media, &temp_dir);
+    controller.play_now(test_songs(1, 100_000), "s0");
+    controller.handle(Command::Radio(RadioCommand::Play(RadioStation {
+        id: "7".into(),
+        name: "Jazz FM".into(),
+        stream_url: "https://jazz.example.com/stream".into(),
+        homepage_url: None,
+    })));
+    media.take();
+
+    controller.handle(Command::Connected {
+        config: crate::demo::FakeServer::config_for_demo(),
+        others: Vec::new(),
+    });
+
+    assert_eq!(media.take(), []);
+}
