@@ -1,9 +1,9 @@
 use async_trait::async_trait;
 use feishin_api::{ApiError, Credential, MusicServer, Result, StreamOptions};
 use feishin_core::model::{
-    Album, AlbumDetail, AlbumListQuery, Artist, ArtistDetail, ArtistListQuery, Genre, ItemKind,
-    LibraryScan, MusicFolder, Page, Paging, Playlist, SearchResults, ServerConfig, ServerPlayQueue,
-    Song, SongListQuery,
+    Album, AlbumDetail, AlbumListQuery, Artist, ArtistDetail, ArtistListQuery, Folder, FolderId,
+    Genre, ItemKind, LibraryScan, MusicFolder, Page, Paging, Playlist, SearchResults, ServerConfig,
+    ServerPlayQueue, Share, Song, SongListQuery,
 };
 
 use super::ids::parse_song_index;
@@ -184,6 +184,22 @@ impl MusicServer for FakeServer {
 
     async fn library_scan(&self) -> Result<LibraryScan> {
         Ok(self.poll_demo_scan())
+    }
+
+    async fn subfolders(&self, folder: &FolderId) -> Result<Vec<Folder>> {
+        self.demo_subfolders(folder)
+    }
+
+    async fn folder_song_page(&self, folder: &FolderId, paging: Paging) -> Result<Page<Song>> {
+        self.demo_folder_song_page(folder, paging)
+    }
+
+    fn can_share(&self) -> bool {
+        self.demo_can_share()
+    }
+
+    async fn create_share(&self, item_ids: &[String], description: Option<&str>) -> Result<Share> {
+        self.create_demo_share(item_ids, description)
     }
 
     fn stream_url(&self, song_id: &str, _options: &StreamOptions) -> String {

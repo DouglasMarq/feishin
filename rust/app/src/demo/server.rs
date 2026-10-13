@@ -9,6 +9,7 @@ use super::play_queue::DemoPlayQueue;
 use super::playlists::DemoPlaylists;
 use super::scanning::DemoScan;
 use super::scrobbles::ScrobbleCall;
+use super::sharing::DemoShares;
 use super::song_order::CachedSongOrder;
 
 pub struct FakeServer {
@@ -22,6 +23,7 @@ pub struct FakeServer {
     pub(super) queue_saves: Mutex<usize>,
     pub(super) credential: Mutex<Option<Credential>>,
     pub(super) scan: DemoScan,
+    pub(super) shares: DemoShares,
 }
 
 impl FakeServer {
@@ -37,6 +39,7 @@ impl FakeServer {
             queue_saves: Mutex::default(),
             credential: Mutex::default(),
             scan: DemoScan::default(),
+            shares: DemoShares::default(),
         }
     }
 
