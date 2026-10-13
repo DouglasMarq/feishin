@@ -4,6 +4,7 @@ mod collection;
 mod library_scan;
 mod list_query;
 mod paging;
+mod radio;
 mod search;
 mod server;
 mod song;
@@ -17,6 +18,7 @@ pub use list_query::{
     AlbumListQuery, AlbumSort, ArtistListQuery, ArtistSort, SongListQuery, SongSort, SortOrder,
 };
 pub use paging::{Page, Paging};
+pub use radio::{RadioStation, RadioStationDraft};
 pub use search::{ItemKind, SearchResults};
 pub use server::{ServerConfig, ServerPlayQueue, ServerType};
 pub use song::{ReplayGain, Song};

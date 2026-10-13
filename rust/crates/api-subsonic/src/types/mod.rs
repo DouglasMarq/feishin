@@ -5,6 +5,7 @@ mod library;
 mod lyrics;
 mod play_queue;
 mod playlist;
+mod radio;
 mod responses;
 mod scan_status;
 mod server_info;
@@ -17,6 +18,7 @@ pub use library::{SubsonicGenre, SubsonicMusicFolder};
 pub use lyrics::{LyricsList, StructuredLyric};
 pub use play_queue::{GetPlayQueue, GetPlayQueueByIndex, PlayQueue};
 pub use playlist::{PlaylistResponse, Playlists, SubsonicPlaylist};
+pub use radio::{InternetRadioStations, SubsonicRadioStation, UserResponse};
 pub use responses::{
     AlbumList2, ArtistInfo2, Empty, Genres, GetAlbum, GetArtist, GetArtists, GetSong, MusicFolders,
     RandomSongs, Search3, SearchResult, SimilarSongs, SongsByGenre, Starred2, TopSongs,

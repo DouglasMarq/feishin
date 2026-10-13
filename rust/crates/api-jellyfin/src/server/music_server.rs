@@ -2,8 +2,8 @@ use async_trait::async_trait;
 use feishin_api::{ApiError, MusicServer, Result, StreamOptions};
 use feishin_core::model::{
     Album, AlbumDetail, AlbumListQuery, Artist, ArtistDetail, ArtistListQuery, Genre, ItemKind,
-    LibraryScan, MusicFolder, Page, Paging, Playlist, SearchResults, ServerConfig, ServerPlayQueue,
-    Song, SongListQuery,
+    LibraryScan, MusicFolder, Page, Paging, Playlist, RadioStation, RadioStationDraft,
+    SearchResults, ServerConfig, ServerPlayQueue, Song, SongListQuery,
 };
 
 use super::JellyfinServer;
@@ -150,6 +150,26 @@ impl MusicServer for JellyfinServer {
 
     async fn library_scan(&self) -> Result<LibraryScan> {
         self.fetch_library_scan().await
+    }
+
+    async fn radio_stations(&self) -> Result<Vec<RadioStation>> {
+        Ok(Vec::new())
+    }
+
+    async fn can_manage_radio_stations(&self) -> Result<bool> {
+        Ok(false)
+    }
+
+    async fn create_radio_station(&self, _station: &RadioStationDraft) -> Result<()> {
+        Err(ApiError::Unsupported("internet radio stations"))
+    }
+
+    async fn update_radio_station(&self, _id: &str, _station: &RadioStationDraft) -> Result<()> {
+        Err(ApiError::Unsupported("internet radio stations"))
+    }
+
+    async fn delete_radio_station(&self, _id: &str) -> Result<()> {
+        Err(ApiError::Unsupported("internet radio stations"))
     }
 
     fn stream_url(&self, song_id: &str, options: &StreamOptions) -> String {
