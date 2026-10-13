@@ -456,7 +456,7 @@ component FilterChip inherits Rectangle {
 
 export component TracksView inherits Rectangle {
     callback row-clicked();
-    property <bool> filtered: TracksState.filter-favorite || TracksState.genre-index > 0 || TracksState.year-from != "" || TracksState.year-to != "";
+    property <bool> filtered: TracksState.filter-favorite || TracksState.genre-index > 0;
     min-width: 320px;
     background: Theme.background;
 
@@ -469,6 +469,7 @@ export component TracksView inherits Rectangle {
             padding: 20px;
             padding-bottom: 12px;
             spacing: 12px;
+            height: 76px;
 
             Text {
                 text: "Tracks";
@@ -485,25 +486,8 @@ export component TracksView inherits Rectangle {
             }
 
             Rectangle {
-                horizontal-stretch: 1;
+                width: 8px;
             }
-
-            LineEdit {
-                width: 280px;
-                placeholder-text: "Search";
-                text <=> TracksState.search-text;
-                edited(text) => {
-                    TracksState.search-edited(text);
-                }
-            }
-        }
-
-        HorizontalLayout {
-            padding-left: 20px;
-            padding-right: 20px;
-            padding-bottom: 12px;
-            spacing: 8px;
-            alignment: start;
 
             FilterChip {
                 y: (parent.height - self.height) / 2;
@@ -518,36 +502,11 @@ export component TracksView inherits Rectangle {
             }
 
             ComboBox {
+                y: (parent.height - self.height) / 2;
                 width: 180px;
                 model: TracksState.genres;
                 current-index <=> TracksState.genre-index;
                 selected => {
-                    TracksState.filters-changed(false);
-                }
-            }
-
-            LineEdit {
-                width: 96px;
-                input-type: number;
-                placeholder-text: "Year from";
-                text <=> TracksState.year-from;
-                edited => {
-                    TracksState.filters-changed(true);
-                }
-                accepted => {
-                    TracksState.filters-changed(false);
-                }
-            }
-
-            LineEdit {
-                width: 96px;
-                input-type: number;
-                placeholder-text: "Year to";
-                text <=> TracksState.year-to;
-                edited => {
-                    TracksState.filters-changed(true);
-                }
-                accepted => {
                     TracksState.filters-changed(false);
                 }
             }
@@ -558,9 +517,21 @@ export component TracksView inherits Rectangle {
                 clicked => {
                     TracksState.filter-favorite = false;
                     TracksState.genre-index = 0;
-                    TracksState.year-from = "";
-                    TracksState.year-to = "";
                     TracksState.filters-changed(false);
+                }
+            }
+
+            Rectangle {
+                horizontal-stretch: 1;
+            }
+
+            LineEdit {
+                y: (parent.height - self.height) / 2;
+                width: 280px;
+                placeholder-text: "Search";
+                text <=> TracksState.search-text;
+                edited(text) => {
+                    TracksState.search-edited(text);
                 }
             }
         }
