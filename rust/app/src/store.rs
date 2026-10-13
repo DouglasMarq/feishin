@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 use std::path::{Path, PathBuf};
-use std::sync::Mutex;
+use std::sync::{Mutex, PoisonError};
 
 use anyhow::{Context, Result, anyhow};
 use feishin_api::Credential;
@@ -24,14 +24,53 @@ pub trait Store: Send + Sync {
     fn import_feishin(&self) -> Result<Vec<ImportedServer>>;
 }
 
+struct QueueFiles {
+    data_dir: PathBuf,
+    access: Mutex<()>,
+}
+
+impl QueueFiles {
+    fn new(data_dir: PathBuf) -> Self {
+        Self {
+            data_dir,
+            access: Mutex::new(()),
+        }
+    }
+
+    fn exclusively<Output>(
+        &self,
+        action: impl FnOnce(&Path) -> feishin_storage::Result<Output>,
+    ) -> Result<Output> {
+        let access = self.access.lock().unwrap_or_else(PoisonError::into_inner);
+        let outcome = action(&self.data_dir);
+        drop(access);
+        Ok(outcome?)
+    }
+
+    fn load(&self) -> Result<Option<StoredQueue>> {
+        self.exclusively(queue_store::load)
+    }
+
+    fn save(&self, queue: &EncodedQueue) -> Result<()> {
+        self.exclusively(|data_dir| queue_store::save(data_dir, queue))
+    }
+
+    fn save_playback(&self, playback: &PlaybackState) -> Result<()> {
+        self.exclusively(|data_dir| queue_store::save_playback(data_dir, playback))
+    }
+}
+
 pub struct SystemStore {
     paths: Paths,
+    queue_files: QueueFiles,
 }
 
 impl SystemStore {
     pub fn from_env() -> Result<Self> {
+        let paths = Paths::from_env()?;
         Ok(Self {
-            paths: Paths::from_env()?,
+            queue_files: QueueFiles::new(paths.data_dir.clone()),
+            paths,
         })
     }
 
@@ -56,13 +95,13 @@ impl Store for SystemStore {
         Ok(settings.save(&self.paths)?)
     }
     fn load_queue(&self) -> Result<Option<StoredQueue>> {
-        Ok(queue_store::load(&self.paths.data_dir)?)
+        self.queue_files.load()
     }
     fn save_queue(&self, queue: &EncodedQueue) -> Result<()> {
-        Ok(queue_store::save(&self.paths.data_dir, queue)?)
+        self.queue_files.save(queue)
     }
     fn save_playback(&self, playback: &PlaybackState) -> Result<()> {
-        Ok(queue_store::save_playback(&self.paths.data_dir, playback)?)
+        self.queue_files.save_playback(playback)
     }
     fn credential(&self, server_id: &str) -> Result<Option<Credential>> {
         Ok(credentials::get(server_id)?
@@ -83,13 +122,16 @@ impl Store for SystemStore {
 
 pub struct JsonStore {
     dir: PathBuf,
+    queue_files: QueueFiles,
     credentials: Mutex<HashMap<String, Credential>>,
 }
 
 impl JsonStore {
     pub fn new(dir: impl Into<PathBuf>) -> Self {
+        let dir = dir.into();
         Self {
-            dir: dir.into(),
+            queue_files: QueueFiles::new(dir.clone()),
+            dir,
             credentials: Mutex::default(),
         }
     }
@@ -122,13 +164,13 @@ impl Store for JsonStore {
         self.write("settings.json", settings)
     }
     fn load_queue(&self) -> Result<Option<StoredQueue>> {
-        Ok(queue_store::load(&self.dir)?)
+        self.queue_files.load()
     }
     fn save_queue(&self, queue: &EncodedQueue) -> Result<()> {
-        Ok(queue_store::save(&self.dir, queue)?)
+        self.queue_files.save(queue)
     }
     fn save_playback(&self, playback: &PlaybackState) -> Result<()> {
-        Ok(queue_store::save_playback(&self.dir, playback)?)
+        self.queue_files.save_playback(playback)
     }
     fn credential(&self, server_id: &str) -> Result<Option<Credential>> {
         let credentials = self
@@ -153,5 +195,38 @@ impl Store for JsonStore {
     }
     fn import_feishin(&self) -> Result<Vec<ImportedServer>> {
         Ok(Vec::new())
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use std::sync::Arc;
+    use std::time::Duration;
+
+    use feishin_core::queue::RepeatMode;
+
+    use super::*;
+
+    #[test]
+    fn queue_files_are_touched_by_one_caller_at_a_time() {
+        let directory = tempfile::tempdir().unwrap();
+        let queue_files = Arc::new(QueueFiles::new(directory.path().to_path_buf()));
+        let playback_file = directory.path().join(queue_store::PLAYBACK_FILE);
+        let held = queue_files.access.lock().unwrap();
+        let saver = {
+            let queue_files = Arc::clone(&queue_files);
+            std::thread::spawn(move || {
+                queue_files.save_playback(&PlaybackState {
+                    current_uid: Some(3),
+                    position_ms: 10,
+                    repeat: RepeatMode::None,
+                })
+            })
+        };
+        std::thread::sleep(Duration::from_millis(50));
+        assert!(!playback_file.exists());
+        drop(held);
+        assert!(saver.join().unwrap().is_ok());
+        assert!(playback_file.exists());
     }
 }

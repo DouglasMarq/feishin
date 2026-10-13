@@ -60,8 +60,13 @@ impl Controller {
             elapsed = ?started.elapsed(),
             "encoded the queue for saving"
         );
-        self.persistence.schedule.mark_saved(self.queue.revision());
-        Some(self.persistence.writer.write(QueueFile::Queue(encoded)))
+        let revision = self.queue.revision();
+        self.persistence.schedule.mark_saved(revision);
+        Some(
+            self.persistence
+                .writer
+                .write(QueueFile::Queue { encoded, revision }),
+        )
     }
 
     fn save_playback_file(&mut self) -> oneshot::Receiver<()> {

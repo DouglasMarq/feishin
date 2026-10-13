@@ -7,7 +7,7 @@ use feishin_storage::queue_store::{self, StoredQueue};
 use super::harness::{
     Harness, settle, start_harness, start_harness_with, test_settings, test_songs,
 };
-use crate::controller::Command;
+use crate::controller::{Command, PersistenceEvent};
 use crate::store::Store;
 
 const QUEUE_SAVE_DELAY: Duration = Duration::from_secs(10);
@@ -102,4 +102,24 @@ async fn shutdown_saves_pending_changes() {
     let stored = harness.store.load_queue().ok().flatten();
     assert_eq!(stored.as_ref().map(saved_ids).map(|ids| ids.len()), Some(6));
     assert_eq!(stored.map(|stored| stored.position_ms), Some(7_000));
+}
+
+#[tokio::test(start_paused = true)]
+async fn a_failed_queue_save_is_written_again_at_shutdown() {
+    let mut harness = start_harness(test_settings(false, false));
+    harness.controller.play_now(test_songs(3, 100_000), "s0");
+    advance_and_handle(&mut harness, QUEUE_SAVE_DELAY).await;
+    assert!(wait_for_saved(&harness, |stored| stored.snapshot.items.len() == 3).await);
+    let queue_file = harness.temp_dir.path().join(queue_store::QUEUE_FILE);
+    assert!(std::fs::remove_file(queue_file).is_ok());
+
+    let revision = harness.controller.queue().revision();
+    harness
+        .controller
+        .handle(Command::Persistence(PersistenceEvent::QueueSaveFailed(
+            revision,
+        )));
+    assert!(harness.shutdown().await.is_ok());
+    let stored = harness.store.load_queue().ok().flatten();
+    assert_eq!(stored.map(|stored| stored.snapshot.items.len()), Some(3));
 }

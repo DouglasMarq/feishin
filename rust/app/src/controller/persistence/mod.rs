@@ -21,6 +21,7 @@ pub enum PersistenceEvent {
     Restored(Option<Box<RestoredQueue>>),
     SaveDue(SaveTimer),
     SyncDue(u64),
+    QueueSaveFailed(u64),
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -36,10 +37,10 @@ pub(super) struct QueuePersistence {
 }
 
 impl QueuePersistence {
-    pub(super) fn new(store: Arc<dyn Store>) -> Self {
+    pub(super) fn new(store: Arc<dyn Store>, commands: mpsc::UnboundedSender<Command>) -> Self {
         Self {
             schedule: SaveSchedule::default(),
-            writer: QueueFileWriter::new(store),
+            writer: QueueFileWriter::new(store, commands),
             restore: RestoreState::Settled,
         }
     }
@@ -80,6 +81,9 @@ impl Controller {
             PersistenceEvent::Restored(restored) => self.restore_saved_queue(restored),
             PersistenceEvent::SaveDue(timer) => self.local_save_due(timer),
             PersistenceEvent::SyncDue(generation) => self.queue_sync_due(generation),
+            PersistenceEvent::QueueSaveFailed(revision) => {
+                self.persistence.schedule.mark_failed(revision);
+            }
         }
     }
 

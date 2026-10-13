@@ -24,17 +24,27 @@ impl SaveTimer {
     }
 }
 
-#[derive(Debug, Default)]
+#[derive(Debug)]
 pub(super) struct SaveSchedule {
-    saved_revision: u64,
+    saved_revision: Option<u64>,
     armed_revision: Option<u64>,
     generation: u64,
+}
+
+impl Default for SaveSchedule {
+    fn default() -> Self {
+        Self {
+            saved_revision: Some(0),
+            armed_revision: None,
+            generation: 0,
+        }
+    }
 }
 
 impl SaveSchedule {
     pub(super) fn plan(&mut self, revision: u64) -> Option<SaveTimer> {
         match (
-            revision == self.saved_revision,
+            self.saved_revision == Some(revision),
             self.armed_revision == Some(revision),
         ) {
             (true, _) => Some(self.arm(SaveKind::Playback)),
@@ -48,17 +58,23 @@ impl SaveSchedule {
 
     pub(super) fn is_due(&self, timer: SaveTimer, revision: u64) -> bool {
         timer.generation == self.generation
-            && (timer.kind == SaveKind::Queue || revision == self.saved_revision)
+            && (timer.kind == SaveKind::Queue || self.saved_revision == Some(revision))
     }
 
     pub(super) fn has_unsaved_changes(&self, revision: u64) -> bool {
-        revision != self.saved_revision
+        self.saved_revision != Some(revision)
     }
 
     pub(super) fn mark_saved(&mut self, revision: u64) {
-        self.saved_revision = revision;
+        self.saved_revision = Some(revision);
         self.armed_revision = None;
         self.generation += 1;
+    }
+
+    pub(super) fn mark_failed(&mut self, revision: u64) {
+        if self.saved_revision == Some(revision) {
+            self.saved_revision = None;
+        }
     }
 
     fn arm(&mut self, kind: SaveKind) -> SaveTimer {
@@ -113,5 +129,20 @@ mod tests {
         assert!(schedule.is_due(queue, 1));
         assert_eq!(queue.delay(), QUEUE_SAVE_DELAY);
         assert_eq!(playback.delay(), PLAYBACK_SAVE_DELAY);
+    }
+
+    #[test]
+    fn a_failed_queue_save_is_retried_on_the_next_change_or_at_shutdown() {
+        let mut schedule = SaveSchedule::default();
+        schedule.mark_saved(3);
+        schedule.mark_failed(2);
+        assert!(!schedule.has_unsaved_changes(3));
+        schedule.mark_failed(3);
+        assert!(schedule.has_unsaved_changes(3));
+        assert_eq!(
+            schedule.plan(3).map(|timer| timer.kind),
+            Some(SaveKind::Queue)
+        );
+        assert_eq!(schedule.plan(3), None);
     }
 }
