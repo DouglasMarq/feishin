@@ -101,6 +101,7 @@ export component AppWindow inherits Window {
 
                 Rectangle {
                     horizontal-stretch: 1;
+                    clip: true;
 
                     if AppState.route == Route.tracks: TracksView {
                         row-clicked => {

@@ -10,6 +10,7 @@ component FilterChip inherits Rectangle {
     in property <string> tooltip;
     callback clicked();
     height: 30px;
+    horizontal-stretch: 0;
     border-radius: 15px;
     border-width: 1px;
     border-color: root.active ? Theme.primary : Theme.border;
@@ -48,30 +49,10 @@ component FilterChip inherits Rectangle {
     }
 }
 
-export component TracksToolbar inherits HorizontalLayout {
-    property <bool> filtered: TracksState.filter-favorite || TracksState.genre-index > 0;
-    padding: 20px;
-    padding-bottom: 12px;
+component TracksFilters inherits HorizontalLayout {
+    in property <bool> filtered;
+    in property <bool> compact;
     spacing: 12px;
-    height: 76px;
-
-    Text {
-        text: "Tracks";
-        font-size: 24px;
-        font-weight: 700;
-        color: Theme.foreground;
-        vertical-alignment: center;
-    }
-
-    Text {
-        text: TracksState.loading ? "" : TracksState.total;
-        color: Theme.muted;
-        vertical-alignment: center;
-    }
-
-    Rectangle {
-        width: 8px;
-    }
 
     FilterChip {
         y: (parent.height - self.height) / 2;
@@ -87,7 +68,10 @@ export component TracksToolbar inherits HorizontalLayout {
 
     ComboBox {
         y: (parent.height - self.height) / 2;
-        width: 180px;
+        min-width: 100px;
+        preferred-width: 180px;
+        max-width: 180px;
+        horizontal-stretch: 1;
         model: TracksState.genres;
         current-index <=> TracksState.genre-index;
         selected => {
@@ -97,7 +81,8 @@ export component TracksToolbar inherits HorizontalLayout {
 
     if root.filtered: FilterChip {
         y: (parent.height - self.height) / 2;
-        text: "Clear filters";
+        text: root.compact ? "Clear" : "Clear filters";
+        tooltip: "Clear the favorites and genre filters";
         clicked => {
             TracksState.filter-favorite = false;
             TracksState.genre-index = 0;
@@ -108,14 +93,66 @@ export component TracksToolbar inherits HorizontalLayout {
     Rectangle {
         horizontal-stretch: 1;
     }
+}
 
-    LineEdit {
-        y: (parent.height - self.height) / 2;
-        width: 280px;
-        placeholder-text: "Search";
-        text <=> TracksState.search-text;
-        edited(text) => {
-            TracksState.search-edited(text);
+export component TracksToolbar inherits VerticalLayout {
+    in property <length> available-width;
+    property <bool> filtered: TracksState.filter-favorite || TracksState.genre-index > 0;
+    property <bool> compact: root.available-width < (root.filtered ? 760px : 640px);
+    padding: 20px;
+    padding-bottom: 12px;
+    spacing: 8px;
+
+    HorizontalLayout {
+        spacing: 12px;
+        height: 44px;
+
+        Text {
+            text: "Tracks";
+            font-size: 24px;
+            font-weight: 700;
+            color: Theme.foreground;
+            vertical-alignment: center;
+        }
+
+        Text {
+            text: TracksState.loading ? "" : TracksState.total;
+            color: Theme.muted;
+            vertical-alignment: center;
+        }
+
+        if !root.compact: Rectangle {
+            width: 8px;
+        }
+
+        if !root.compact: TracksFilters {
+            filtered: root.filtered;
+        }
+
+        Rectangle {
+            horizontal-stretch: 1;
+        }
+
+        LineEdit {
+            y: (parent.height - self.height) / 2;
+            min-width: 120px;
+            preferred-width: 280px;
+            max-width: 280px;
+            horizontal-stretch: 1;
+            placeholder-text: "Search";
+            text <=> TracksState.search-text;
+            edited(text) => {
+                TracksState.search-edited(text);
+            }
+        }
+    }
+
+    if root.compact: HorizontalLayout {
+        height: 36px;
+
+        TracksFilters {
+            filtered: root.filtered;
+            compact: true;
         }
     }
 }

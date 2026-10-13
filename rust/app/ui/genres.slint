@@ -403,7 +403,10 @@ component GenreList inherits VerticalLayout {
         }
 
         LineEdit {
-            width: 280px;
+            min-width: 140px;
+            preferred-width: 280px;
+            max-width: 280px;
+            horizontal-stretch: 1;
             placeholder-text: "Filter";
             edited(text) => {
                 GenresState.filter-edited(text);

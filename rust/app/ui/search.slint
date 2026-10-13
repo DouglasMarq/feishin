@@ -397,7 +397,10 @@ export component SearchView inherits Rectangle {
             }
 
             input := LineEdit {
-                width: 320px;
+                min-width: 160px;
+                preferred-width: 320px;
+                max-width: 320px;
+                horizontal-stretch: 1;
                 placeholder-text: "Search songs, albums, artists";
                 text <=> SearchState.query;
                 edited(text) => {

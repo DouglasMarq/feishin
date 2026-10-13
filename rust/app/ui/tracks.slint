@@ -31,7 +31,9 @@ export component TracksView inherits Rectangle {
         }
 
         VerticalLayout {
-            TracksToolbar { }
+            TracksToolbar {
+                available-width: root.width;
+            }
 
             TracksHeader {
                 content-x: list.content-x;
