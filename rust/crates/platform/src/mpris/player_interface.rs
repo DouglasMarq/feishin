@@ -133,11 +133,11 @@ impl PlayerInterface for MprisPlayer {
     }
 
     async fn can_go_next(&self) -> fdo::Result<bool> {
-        Ok(true)
+        Ok(!self.core.snapshot().live_stream)
     }
 
     async fn can_go_previous(&self) -> fdo::Result<bool> {
-        Ok(true)
+        Ok(!self.core.snapshot().live_stream)
     }
 
     async fn can_play(&self) -> fdo::Result<bool> {
@@ -149,7 +149,7 @@ impl PlayerInterface for MprisPlayer {
     }
 
     async fn can_seek(&self) -> fdo::Result<bool> {
-        Ok(true)
+        Ok(!self.core.snapshot().live_stream)
     }
 
     async fn can_control(&self) -> fdo::Result<bool> {

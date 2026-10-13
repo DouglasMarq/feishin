@@ -45,6 +45,7 @@ impl MprisPlayerCore {
             Update::Metadata(now_playing) => self.apply_metadata(&now_playing),
             Update::Status(status) => self.apply_status(status, now),
             Update::Volume(volume) => self.apply_volume(volume),
+            Update::LiveStream(live) => self.apply_live_stream(live),
             Update::Emit(properties) => AppliedUpdate::properties(properties),
         }
     }
@@ -112,6 +113,19 @@ impl MprisPlayerCore {
                 .collect(),
             seeked_to: seeked.then(|| time_from_ms(position_ms)),
         }
+    }
+
+    fn apply_live_stream(&self, live: bool) -> AppliedUpdate {
+        let mut snapshot = self.snapshot();
+        if snapshot.live_stream == live {
+            return AppliedUpdate::default();
+        }
+        snapshot.live_stream = live;
+        AppliedUpdate::properties(vec![
+            Property::CanGoNext(!live),
+            Property::CanGoPrevious(!live),
+            Property::CanSeek(!live),
+        ])
     }
 
     fn apply_volume(&self, volume: f64) -> AppliedUpdate {
@@ -201,6 +215,39 @@ mod tests {
         assert!(
             matches!(applied.properties.as_slice(), [Property::Volume(volume)] if *volume == 0.5)
         );
+    }
+
+    #[test]
+    fn live_streams_disable_skipping_and_seeking() {
+        let (core, _channel) = player_core(Box::new(|_| {}));
+        let now = Instant::now();
+        assert!(
+            core.apply(Update::LiveStream(false), now)
+                .properties
+                .is_empty()
+        );
+
+        let applied = core.apply(Update::LiveStream(true), now);
+        assert!(matches!(
+            applied.properties.as_slice(),
+            [
+                Property::CanGoNext(false),
+                Property::CanGoPrevious(false),
+                Property::CanSeek(false)
+            ]
+        ));
+        assert!(core.snapshot().live_stream);
+        assert!(
+            core.apply(Update::LiveStream(true), now)
+                .properties
+                .is_empty()
+        );
+
+        let applied = core.apply(Update::LiveStream(false), now);
+        assert!(matches!(
+            applied.properties.as_slice(),
+            [Property::CanGoNext(true), ..]
+        ));
     }
 
     #[test]
