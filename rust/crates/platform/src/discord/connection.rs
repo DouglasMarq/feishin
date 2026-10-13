@@ -37,13 +37,21 @@ pub(super) fn spawn_connection_thread(
                 .connect()
                 .map_err(|error| PlatformError::Discord(error.to_string()));
             let is_connected = connected.is_ok();
-            let _ = ready_sender.send(connected);
+            report_connection_result(&ready_sender, connected);
             if is_connected {
                 run(client, command_receiver);
             }
         })
         .map(drop)
         .map_err(|error| PlatformError::Discord(error.to_string()))
+}
+
+fn report_connection_result(ready_sender: &mpsc::SyncSender<Result<()>>, connected: Result<()>) {
+    if ready_sender.send(connected).is_err() {
+        tracing::debug!(
+            "Discord RPC connection result arrived after DiscordPresence::connect stopped waiting"
+        );
+    }
 }
 
 fn run(mut client: DiscordIpcClient, command_receiver: mpsc::Receiver<Command>) {
@@ -71,8 +79,8 @@ fn latest_pending_command(
 }
 
 fn close(client: &mut DiscordIpcClient, is_connected: bool) {
-    if is_connected {
-        let _ = client.close();
+    if is_connected && let Err(error) = client.close() {
+        tracing::debug!(%error, "Discord RPC close failed");
     }
 }
 

@@ -54,8 +54,11 @@ impl MprisPlayerCore {
     }
 
     pub(super) fn notify(&self, properties: Vec<Property>) {
-        if let Some(updates) = self.updates.upgrade() {
-            let _ = updates.send(Update::Emit(properties));
+        let Some(updates) = self.updates.upgrade() else {
+            return;
+        };
+        if updates.send(Update::Emit(properties)).is_err() {
+            tracing::debug!("MPRIS thread stopped before a property change could be emitted");
         }
     }
 

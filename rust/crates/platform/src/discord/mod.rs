@@ -79,7 +79,9 @@ impl DiscordPresence {
 
 impl Drop for DiscordPresence {
     fn drop(&mut self) {
-        let _ = self.commands.send(Command::Close);
+        if self.commands.send(Command::Close).is_err() {
+            tracing::debug!("Discord thread already stopped before close");
+        }
     }
 }
 

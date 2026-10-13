@@ -21,7 +21,10 @@ pub(super) fn run(
     match runtime {
         Ok(runtime) => runtime.block_on(serve(player, update_receiver, ready_sender)),
         Err(error) => {
-            let _ = ready_sender.send(Err(PlatformError::MediaControls(error.to_string())));
+            report_registration(
+                &ready_sender,
+                Err(PlatformError::MediaControls(error.to_string())),
+            );
         }
     }
 }
@@ -34,15 +37,23 @@ async fn serve(
     let server = match register(player).await {
         Ok(server) => server,
         Err(error) => {
-            let _ = ready_sender.send(Err(error));
+            report_registration(&ready_sender, Err(error));
             return;
         }
     };
-    let _ = ready_sender.send(Ok(()));
+    report_registration(&ready_sender, Ok(()));
 
     while let Some(update) = update_receiver.recv().await {
         let applied = server.imp().core.apply(update, Instant::now());
         publish(&server, applied).await;
+    }
+}
+
+fn report_registration(ready_sender: &ReadySender, registration: Result<()>) {
+    if ready_sender.send(registration).is_err() {
+        tracing::debug!(
+            "MPRIS registration result arrived after MediaControls::new stopped waiting"
+        );
     }
 }
 
