@@ -2,7 +2,7 @@ use std::sync::{Arc, Mutex};
 
 use anyhow::Result;
 use feishin_core::model::{Song, SongListQuery};
-use feishin_core::queue::Uid;
+use feishin_core::queue::{QueueView, Uid};
 use feishin_player::PlayerEvent;
 use feishin_storage::settings::{Settings, UiSettings};
 use tokio::sync::{mpsc, oneshot};
@@ -87,11 +87,13 @@ impl UiSink for RecordingUi {
 
 impl RecordingUi {
     pub(super) fn last_queue(&self) -> Option<Vec<Uid>> {
+        self.last_queue_view().map(|view| view.uids().collect())
+    }
+
+    pub(super) fn last_queue_view(&self) -> Option<QueueView> {
         let updates = self.0.lock().ok()?;
         updates.iter().rev().find_map(|update| match update {
-            UiUpdate::Queue { entries, .. } => {
-                Some(entries.iter().map(|entry| entry.uid).collect())
-            }
+            UiUpdate::Queue(view) => Some(view.clone()),
             _ => None,
         })
     }

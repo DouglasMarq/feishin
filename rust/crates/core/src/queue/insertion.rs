@@ -1,3 +1,5 @@
+use std::sync::Arc;
+
 use super::{FIRST_POSITION, Queue, QueueItem, Uid};
 use crate::model::Song;
 
@@ -10,10 +12,10 @@ impl Queue {
         self.interner.clear();
         self.items = self.create_items(&songs);
         self.reindex_all();
-        self.bump_revision();
         let start_index = start_song_id.and_then(|song_id| self.index_of_song(song_id));
         let start_position = self.start_position_after_replacing(start_index);
         self.current_uid = self.uid_at_position(start_position);
+        self.bump_revision();
         self.current()
     }
 
@@ -27,8 +29,8 @@ impl Queue {
         let new_items = self.create_items(&songs);
         self.items.splice(insert_index..insert_index, new_items);
         self.reindex_from(insert_index);
-        self.bump_revision();
         self.insert_into_shuffled_order(insert_index, insert_position, added_count);
+        self.bump_revision();
     }
 
     pub fn add_last(&mut self, songs: Vec<Song>) {
@@ -36,8 +38,11 @@ impl Queue {
         let new_items = self.create_items(&songs);
         self.items.extend(new_items);
         self.reindex_from(first_new_index);
+        self.append_to_shuffled_order(first_new_index);
         self.bump_revision();
+    }
 
+    fn append_to_shuffled_order(&mut self, first_new_index: usize) {
         let Some(mut play_order) = self.shuffled_play_order.take() else {
             return;
         };
@@ -57,7 +62,7 @@ impl Queue {
             .iter()
             .map(|song| QueueItem {
                 uid: self.allocate_uid(),
-                track: self.interner.track_of(song),
+                track: Arc::new(self.interner.track_of(song)),
             })
             .collect()
     }

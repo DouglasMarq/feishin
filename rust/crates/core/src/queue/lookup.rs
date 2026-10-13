@@ -11,9 +11,7 @@ impl Queue {
 
     pub(super) fn position_of_index(&self, item_index: usize) -> Option<usize> {
         match &self.shuffled_play_order {
-            Some(play_order) => play_order
-                .iter()
-                .position(|&ordered_index| ordered_index == item_index),
+            Some(_) => self.layout().position_of_index(item_index),
             None => (item_index < self.items.len()).then_some(item_index),
         }
     }

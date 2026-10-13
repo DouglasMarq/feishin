@@ -79,11 +79,11 @@ mod tests {
                 items: vec![
                     QueueItem {
                         uid: 1,
-                        track: QueueTrack::from(&song("a")),
+                        track: QueueTrack::from(&song("a")).into(),
                     },
                     QueueItem {
                         uid: 2,
-                        track: QueueTrack::from(&song("b")),
+                        track: QueueTrack::from(&song("b")).into(),
                     },
                 ],
                 shuffled: Some(vec![1, 0]),

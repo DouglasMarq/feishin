@@ -1,5 +1,6 @@
 use std::collections::HashSet;
 use std::mem;
+use std::sync::Arc;
 
 use serde::{Deserialize, Serialize};
 
@@ -54,7 +55,7 @@ impl Queue {
                     true => item.uid,
                     false => self.allocate_uid(),
                 };
-                let track = self.interner.reintern(item.track);
+                let track = Arc::new(self.interner.reintern(Arc::unwrap_or_clone(item.track)));
                 QueueItem { uid, track }
             })
             .collect()

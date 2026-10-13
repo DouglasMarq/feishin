@@ -134,6 +134,9 @@ export global PlayerState {
 
 export global QueueState {
     in property <[QueueRow]> rows;
+    in property <int> revision;
+    in property <int> current-position: -1;
+    in property <string> current-uid;
     callback play(uid: string);
     callback remove(uid: string);
     callback move(from-index: int, to-index: int);

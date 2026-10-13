@@ -9,3 +9,4 @@ mod shuffling;
 mod snapshot;
 mod support;
 mod tracks;
+mod view;

@@ -104,6 +104,7 @@ pub(super) fn assert_invariants(queue: &Queue) {
         assert!(is_permutation(&play_order, queue.len()));
     }
     assert_uid_indexes_match(queue);
+    assert_view_matches(queue, &display);
     let highest_uid = queue.items().iter().map(|item| item.uid).max();
     assert!(queue.snapshot().next_uid > highest_uid.unwrap_or(0));
 }
@@ -124,4 +125,16 @@ fn assert_uid_indexes_match(queue: &Queue) {
     for (item_index, item) in queue.items().iter().enumerate() {
         assert_eq!(queue.index_of(item.uid), Some(item_index));
     }
+}
+
+fn assert_view_matches(queue: &Queue, display: &[Uid]) {
+    let view = queue.view();
+    assert_eq!(view.uids().collect::<Vec<_>>(), display);
+    assert_eq!(view.len(), queue.len());
+    assert_eq!(view.revision(), queue.revision());
+    assert_eq!(view.current_position(), queue.current_position());
+    assert_eq!(
+        view.current().map(|item| item.uid),
+        queue.current().map(|item| item.uid)
+    );
 }

@@ -73,7 +73,7 @@ fn legacy_items_holding_full_songs_still_load() {
     let legacy_item = serde_json::json!({ "uid": 7, "song": album_song("old") });
     let item: QueueItem = serde_json::from_value(legacy_item).unwrap();
     assert_eq!(item.uid, 7);
-    assert_eq!(item.track, QueueTrack::from(&album_song("old")));
+    assert_eq!(*item.track, QueueTrack::from(&album_song("old")));
 }
 
 #[test]

@@ -42,15 +42,15 @@ fn items_with_duplicate_uids() -> Vec<QueueItem> {
     vec![
         QueueItem {
             uid: 5,
-            track: track("a"),
+            track: track("a").into(),
         },
         QueueItem {
             uid: 5,
-            track: track("b"),
+            track: track("b").into(),
         },
         QueueItem {
             uid: 9,
-            track: track("c"),
+            track: track("c").into(),
         },
     ]
 }

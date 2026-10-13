@@ -1,16 +1,6 @@
-use feishin_core::queue::QueueItem;
+use feishin_core::queue::QueueTrack;
 
-use super::{Controller, QueueEntry, UiUpdate};
-
-fn queue_entry(item: &QueueItem) -> QueueEntry {
-    QueueEntry {
-        uid: item.uid,
-        song_id: item.track.song_id.to_string(),
-        title: item.track.title.to_string(),
-        artists: item.track.artist_names(),
-        duration_ms: item.track.duration_ms,
-    }
-}
+use super::{Controller, UiUpdate};
 
 impl Controller {
     pub(super) fn publish_all(&self) {
@@ -25,7 +15,7 @@ impl Controller {
         let track = self
             .queue
             .current()
-            .map(|item| Box::new(item.track.clone()));
+            .map(|item| Box::new(QueueTrack::clone(&item.track)));
         self.deps.ui.send(UiUpdate::NowPlaying(track));
     }
 
@@ -52,21 +42,10 @@ impl Controller {
     }
 
     pub(super) fn publish_queue(&self) {
-        let entries = self
-            .queue
-            .display_order()
-            .into_iter()
-            .map(queue_entry)
-            .collect();
-        self.deps.ui.send(UiUpdate::Queue {
-            entries,
-            current: self.queue.current().map(|item| item.uid),
-        });
+        self.deps.ui.send(UiUpdate::Queue(self.queue.view()));
     }
 
     pub(super) fn publish_queue_current(&self) {
-        self.deps.ui.send(UiUpdate::QueueCurrent(
-            self.queue.current().map(|item| item.uid),
-        ));
+        self.publish_queue();
     }
 }

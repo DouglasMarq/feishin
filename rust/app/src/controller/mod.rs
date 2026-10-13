@@ -24,7 +24,7 @@ use feishin_storage::settings::Settings;
 use tokio::sync::mpsc;
 
 pub use command::{Command, SettingsSnapshot, forward_command};
-pub use ui_update::{QueueEntry, UiSink, UiUpdate, artist_names};
+pub use ui_update::{UiSink, UiUpdate, artist_names};
 
 use crate::audio::AudioOutput;
 use crate::media::MediaSession;
@@ -121,7 +121,9 @@ impl Controller {
     }
 
     fn current_track(&self) -> Option<QueueTrack> {
-        self.queue.current().map(|item| item.track.clone())
+        self.queue
+            .current()
+            .map(|item| QueueTrack::clone(&item.track))
     }
 
     fn current_duration_ms(&self) -> u64 {

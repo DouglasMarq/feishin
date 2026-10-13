@@ -10,18 +10,22 @@ mod reordering;
 mod shuffling;
 mod snapshot;
 mod track;
+mod view;
 
 #[cfg(test)]
 mod tests;
 
 use std::collections::HashMap;
+use std::sync::{Arc, OnceLock};
 
 pub use item::{Advance, QueueItem, RepeatMode, Uid};
 pub use snapshot::QueueSnapshot;
 pub use track::QueueTrack;
+pub use view::QueueView;
 
 use interner::TrackInterner;
 use random::SplitMix64;
+use view::QueueLayout;
 
 const FIRST_UID: Uid = 1;
 const FIRST_POSITION: usize = 0;
@@ -37,6 +41,7 @@ pub struct Queue {
     revision: u64,
     interner: TrackInterner,
     random_generator: SplitMix64,
+    layout: OnceLock<Arc<QueueLayout>>,
 }
 
 impl Default for Queue {
@@ -65,6 +70,7 @@ impl Queue {
             revision: 0,
             interner: TrackInterner::default(),
             random_generator,
+            layout: OnceLock::new(),
         }
     }
 
@@ -102,6 +108,14 @@ impl Queue {
     pub fn current_position(&self) -> Option<usize> {
         self.current_index()
             .and_then(|item_index| self.position_of_index(item_index))
+    }
+
+    pub fn view(&self) -> QueueView {
+        QueueView::new(Arc::clone(self.layout()), self.current_position())
+    }
+
+    fn layout(&self) -> &Arc<QueueLayout> {
+        self.layout.get_or_init(|| Arc::new(QueueLayout::of(self)))
     }
 
     pub fn repeat(&self) -> RepeatMode {

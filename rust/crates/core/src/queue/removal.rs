@@ -35,10 +35,10 @@ impl Queue {
         self.uid_indexes = HashMap::new();
         self.interner.clear();
         self.current_uid = None;
-        self.bump_revision();
         if let Some(play_order) = &mut self.shuffled_play_order {
             play_order.clear();
         }
+        self.bump_revision();
     }
 
     fn release_spare_capacity(&mut self) {
