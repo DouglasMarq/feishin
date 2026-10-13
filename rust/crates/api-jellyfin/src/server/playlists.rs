@@ -1,4 +1,4 @@
-use std::collections::BTreeSet;
+use std::collections::{BTreeSet, HashSet};
 
 use feishin_api::{ApiError, Result};
 use feishin_core::model::{Page, Paging, Playlist, SortOrder};
@@ -104,10 +104,11 @@ fn entry_id_at(items: &[dto::Song], position: usize) -> Result<&str> {
 }
 
 fn entry_ids_at(items: &[dto::Song], positions: &BTreeSet<usize>) -> Result<Vec<String>> {
+    let mut seen_entry_ids: HashSet<&str> = HashSet::new();
     let mut entry_ids: Vec<String> = Vec::new();
     for position in positions {
         let entry_id = entry_id_at(items, *position)?;
-        if !entry_ids.iter().any(|known| known == entry_id) {
+        if seen_entry_ids.insert(entry_id) {
             entry_ids.push(entry_id.to_owned());
         }
     }
@@ -119,12 +120,13 @@ fn kept_entries_share_an_id(
     removed_positions: &BTreeSet<usize>,
     removed_entry_ids: &[String],
 ) -> bool {
+    let removed_ids: HashSet<&str> = removed_entry_ids.iter().map(String::as_str).collect();
     items
         .iter()
         .enumerate()
         .filter(|(position, _)| !removed_positions.contains(position))
-        .filter_map(|(_, item)| item.playlist_item_id.as_ref())
-        .any(|entry_id| removed_entry_ids.contains(entry_id))
+        .filter_map(|(_, item)| item.playlist_item_id.as_deref())
+        .any(|entry_id| removed_ids.contains(entry_id))
 }
 
 fn entry_ids_to_remove(items: &[dto::Song], positions: &[usize]) -> Result<Vec<String>> {
