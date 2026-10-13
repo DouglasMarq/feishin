@@ -1,17 +1,525 @@
-import { Theme } from "theme.slint";
-import { AppState } from "globals.slint";
+import { LineEdit, ScrollView } from "std-widgets.slint";
+import { Theme, Icons } from "theme.slint";
+import { Actions, AppState, PlayerState, Route, TrackRow } from "globals.slint";
+import { Icon } from "widgets.slint";
+import { Cell, HeaderCell } from "tracks.slint";
 
-export global SearchState {
-    callback load(string);
+export enum SearchKind { songs, albums, artists }
+
+export struct SearchCard {
+    id: string,
+    title: string,
+    subtitle: string,
+    cover: image,
+    has-cover: bool,
 }
 
-export component SearchView inherits Rectangle {
-    init => {
-        SearchState.load(AppState.detail-id);
+export global SearchState {
+    in-out property <string> query;
+    in property <bool> loading;
+    in property <[TrackRow]> songs;
+    in property <[SearchCard]> albums;
+    in property <[SearchCard]> artists;
+    in property <bool> songs-more;
+    in property <bool> albums-more;
+    in property <bool> artists-more;
+    in property <bool> songs-busy;
+    in property <bool> albums-busy;
+    in property <bool> artists-busy;
+    callback load(string);
+    callback edited(string);
+    callback submit(string);
+    callback show-more(SearchKind);
+    callback need-cover(SearchKind, int);
+    callback play(int);
+    callback play-only(int);
+    callback play-next(int);
+    callback add-to-queue(int);
+}
+
+component SectionTitle inherits HorizontalLayout {
+    in property <string> text;
+    in property <int> count;
+    in property <bool> more;
+    padding-top: 20px;
+    padding-bottom: 8px;
+    spacing: 8px;
+
+    Text {
+        text: root.text;
+        font-size: 18px;
+        font-weight: 700;
+        color: Theme.foreground;
+        vertical-alignment: center;
     }
 
     Text {
-        text: "Search";
+        text: root.count + (root.more ? "+" : "");
         color: Theme.muted;
+        vertical-alignment: center;
+    }
+
+    Rectangle {
+        horizontal-stretch: 1;
+    }
+}
+
+component MoreButton inherits Rectangle {
+    in property <bool> busy;
+    callback clicked();
+    height: 44px;
+
+    Rectangle {
+        x: 0;
+        width: label.preferred-width + 28px;
+        height: 30px;
+        border-radius: self.height / 2;
+        border-width: 1px;
+        border-color: Theme.border;
+        background: touch.has-hover && !root.busy ? Theme.hover : transparent;
+
+        label := Text {
+            text: root.busy ? "Loading..." : "Show more";
+            color: touch.has-hover ? Theme.foreground : Theme.muted;
+            font-weight: 600;
+        }
+
+        touch := TouchArea {
+            enabled: !root.busy;
+            mouse-cursor: pointer;
+            clicked => {
+                root.clicked();
+            }
+        }
+    }
+}
+
+component SongRow inherits Rectangle {
+    in property <TrackRow> track;
+    in property <length> w-title;
+    in property <length> w-artist;
+    in property <length> w-album;
+    property <bool> playing: root.track.id == PlayerState.song-id;
+    property <int> position: root.track.index - 1;
+    height: 36px;
+    background: touch.has-hover ? Theme.hover : transparent;
+
+    menu := ContextMenuArea {
+        Menu {
+            MenuItem {
+                title: "Play";
+                activated => {
+                    SearchState.play-only(root.position);
+                }
+            }
+
+            MenuItem {
+                title: "Play next";
+                activated => {
+                    SearchState.play-next(root.position);
+                }
+            }
+
+            MenuItem {
+                title: "Add to queue";
+                activated => {
+                    SearchState.add-to-queue(root.position);
+                }
+            }
+
+            MenuSeparator { }
+
+            MenuItem {
+                title: "Add to playlist";
+                activated => {
+                    Actions.add-to-playlist([root.track.id]);
+                }
+            }
+        }
+
+        touch := TouchArea {
+            double-clicked => {
+                SearchState.play(root.position);
+            }
+            pointer-event(event) => {
+                if (event.kind == PointerEventKind.down && event.button == PointerEventButton.right) {
+                    menu.show({ x: self.mouse-x, y: self.mouse-y });
+                }
+            }
+
+            HorizontalLayout {
+                Rectangle {
+                    width: 48px;
+
+                    if !touch.has-hover && !root.playing: Text {
+                        x: 0;
+                        width: parent.width - 16px;
+                        text: root.track.index;
+                        color: Theme.muted;
+                        horizontal-alignment: right;
+                        vertical-alignment: center;
+                    }
+
+                    if !touch.has-hover && root.playing: Icon {
+                        x: parent.width - 16px - self.width;
+                        path: Icons.note;
+                        color: Theme.primary;
+                        width: 16px;
+                        height: 16px;
+                    }
+
+                    if touch.has-hover: Rectangle {
+                        x: parent.width - 16px - self.width;
+                        width: 24px;
+                        height: 24px;
+                        border-radius: 12px;
+                        background: play-touch.has-hover ? Theme.primary : transparent;
+
+                        Icon {
+                            path: Icons.play;
+                            width: 18px;
+                            height: 18px;
+                        }
+
+                        play-touch := TouchArea {
+                            mouse-cursor: pointer;
+                            clicked => {
+                                SearchState.play(root.position);
+                            }
+                        }
+                    }
+                }
+
+                Cell {
+                    width: root.w-title;
+                    text: root.track.title;
+                    text-color: root.playing ? Theme.primary : Theme.foreground;
+                }
+
+                Cell {
+                    width: root.w-artist;
+                    text: root.track.artists;
+                }
+
+                Cell {
+                    width: root.w-album;
+                    text: root.track.album;
+                }
+
+                Cell {
+                    text: root.track.duration;
+                }
+            }
+        }
+    }
+}
+
+component CardView inherits Rectangle {
+    in property <SearchCard> card;
+    in property <bool> round;
+    in property <length> view-top;
+    in property <length> view-bottom;
+    property <bool> in-view: self.absolute-position.y + self.height > root.view-top && self.absolute-position.y < root.view-bottom;
+    callback open();
+    callback need-cover();
+    height: self.width + 52px;
+
+    if root.in-view: Rectangle {
+        init => {
+            root.need-cover();
+        }
+    }
+
+    art := Rectangle {
+        y: 0;
+        width: root.width;
+        height: root.width;
+        border-radius: root.round ? self.width / 2 : Theme.radius;
+        background: Theme.surface-raised;
+        clip: true;
+
+        if root.card.has-cover: Image {
+            width: parent.width;
+            height: parent.height;
+            source: root.card.cover;
+            image-fit: cover;
+        }
+
+        if !root.card.has-cover: Icon {
+            path: root.round ? Icons.artist : Icons.album;
+            color: Theme.muted;
+            width: 48px;
+            height: 48px;
+        }
+
+        if touch.has-hover: Rectangle {
+            background: #00000040;
+        }
+    }
+
+    VerticalLayout {
+        y: art.height + 8px;
+        height: 40px;
+        spacing: 2px;
+        alignment: start;
+
+        Text {
+            text: root.card.title;
+            color: Theme.foreground;
+            font-weight: 600;
+            overflow: elide;
+            horizontal-alignment: root.round ? center : left;
+        }
+
+        if root.card.subtitle != "": Text {
+            text: root.card.subtitle;
+            color: Theme.muted;
+            font-size: 12px;
+            overflow: elide;
+            horizontal-alignment: root.round ? center : left;
+        }
+    }
+
+    touch := TouchArea {
+        mouse-cursor: pointer;
+        clicked => {
+            root.open();
+        }
+    }
+}
+
+component CardGrid inherits Rectangle {
+    in property <[SearchCard]> cards;
+    in property <SearchKind> kind;
+    in property <bool> round;
+    in property <length> view-top;
+    in property <length> view-bottom;
+    property <length> gap: 16px;
+    property <int> columns: max(1, floor((root.width + root.gap) / (160px + root.gap)));
+    property <length> card-width: (root.width - (root.columns - 1) * root.gap) / root.columns;
+    property <length> card-height: root.card-width + 52px;
+    callback open(string);
+    height: ceil(root.cards.length / root.columns) * (root.card-height + root.gap);
+
+    for card[i] in root.cards: CardView {
+        x: mod(i, root.columns) * (root.card-width + root.gap);
+        y: floor(i / root.columns) * (root.card-height + root.gap);
+        width: root.card-width;
+        card: card;
+        round: root.round;
+        view-top: root.view-top;
+        view-bottom: root.view-bottom;
+        open => {
+            root.open(card.id);
+        }
+        need-cover => {
+            SearchState.need-cover(root.kind, i);
+        }
+    }
+}
+
+export component SearchView inherits Rectangle {
+    property <bool> empty: SearchState.songs.length == 0 && SearchState.albums.length == 0 && SearchState.artists.length == 0;
+    property <length> w-title: max(160px, (scroll.visible-width - 40px - 48px - 72px) * 0.4);
+    property <length> w-artist: max(120px, (scroll.visible-width - 40px - 48px - 72px) * 0.3);
+    property <length> w-album: max(120px, (scroll.visible-width - 40px - 48px - 72px) * 0.3);
+    min-width: 320px;
+    background: Theme.background;
+
+    init => {
+        SearchState.load(AppState.detail-id);
+        input.focus();
+    }
+
+    VerticalLayout {
+        HorizontalLayout {
+            padding: 20px;
+            padding-bottom: 12px;
+            spacing: 12px;
+
+            Text {
+                text: "Search";
+                font-size: 24px;
+                font-weight: 700;
+                color: Theme.foreground;
+                vertical-alignment: center;
+            }
+
+            Rectangle {
+                horizontal-stretch: 1;
+            }
+
+            input := LineEdit {
+                width: 320px;
+                placeholder-text: "Search songs, albums, artists";
+                text <=> SearchState.query;
+                edited(text) => {
+                    SearchState.edited(text);
+                }
+                accepted(text) => {
+                    SearchState.submit(text);
+                }
+            }
+        }
+
+        Rectangle {
+            vertical-stretch: 1;
+
+            scroll := ScrollView {
+                content-width: self.visible-width;
+                content-height: content.preferred-height;
+
+                content := VerticalLayout {
+                    width: scroll.visible-width;
+                    padding-left: 20px;
+                    padding-right: 20px;
+                    padding-bottom: 20px;
+
+                    if SearchState.songs.length > 0: VerticalLayout {
+                        SectionTitle {
+                            text: "Songs";
+                            count: SearchState.songs.length;
+                            more: SearchState.songs-more;
+                        }
+
+                        Rectangle {
+                            height: 33px;
+
+                            HorizontalLayout {
+                                HeaderCell {
+                                    text: "#";
+                                    sortable: false;
+                                    align: right;
+                                    column-width: 48px;
+                                }
+
+                                HeaderCell {
+                                    text: "Title";
+                                    sortable: false;
+                                    column-width: root.w-title;
+                                }
+
+                                HeaderCell {
+                                    text: "Artist";
+                                    sortable: false;
+                                    column-width: root.w-artist;
+                                }
+
+                                HeaderCell {
+                                    text: "Album";
+                                    sortable: false;
+                                    column-width: root.w-album;
+                                }
+
+                                HeaderCell {
+                                    text: "Time";
+                                    sortable: false;
+                                    column-width: 72px;
+                                }
+
+                                Rectangle { }
+                            }
+
+                            Rectangle {
+                                y: parent.height - 1px;
+                                height: 1px;
+                                background: Theme.border;
+                            }
+                        }
+
+                        for row in SearchState.songs: SongRow {
+                            track: row;
+                            w-title: root.w-title;
+                            w-artist: root.w-artist;
+                            w-album: root.w-album;
+                        }
+
+                        if SearchState.songs-more: MoreButton {
+                            busy: SearchState.songs-busy;
+                            clicked => {
+                                SearchState.show-more(SearchKind.songs);
+                            }
+                        }
+                    }
+
+                    if SearchState.albums.length > 0: VerticalLayout {
+                        SectionTitle {
+                            text: "Albums";
+                            count: SearchState.albums.length;
+                            more: SearchState.albums-more;
+                        }
+
+                        CardGrid {
+                            cards: SearchState.albums;
+                            kind: SearchKind.albums;
+                            view-top: scroll.absolute-position.y;
+                            view-bottom: scroll.absolute-position.y + scroll.height;
+                            open(id) => {
+                                AppState.navigate(Route.album-detail, id);
+                            }
+                        }
+
+                        if SearchState.albums-more: MoreButton {
+                            busy: SearchState.albums-busy;
+                            clicked => {
+                                SearchState.show-more(SearchKind.albums);
+                            }
+                        }
+                    }
+
+                    if SearchState.artists.length > 0: VerticalLayout {
+                        SectionTitle {
+                            text: "Artists";
+                            count: SearchState.artists.length;
+                            more: SearchState.artists-more;
+                        }
+
+                        CardGrid {
+                            cards: SearchState.artists;
+                            kind: SearchKind.artists;
+                            round: true;
+                            view-top: scroll.absolute-position.y;
+                            view-bottom: scroll.absolute-position.y + scroll.height;
+                            open(id) => {
+                                AppState.navigate(Route.artist-detail, id);
+                            }
+                        }
+
+                        if SearchState.artists-more: MoreButton {
+                            busy: SearchState.artists-busy;
+                            clicked => {
+                                SearchState.show-more(SearchKind.artists);
+                            }
+                        }
+                    }
+                }
+            }
+
+            if root.empty: VerticalLayout {
+                alignment: center;
+                spacing: 12px;
+
+                Icon {
+                    x: (parent.width - self.width) / 2;
+                    path: Icons.search;
+                    color: Theme.muted;
+                    width: 48px;
+                    height: 48px;
+                }
+
+                Text {
+                    text: SearchState.loading ? "Searching..." : SearchState.query.is-empty ? "Search your library for songs, albums and artists" : "No results for \"\{SearchState.query}\"";
+                    color: Theme.muted;
+                    horizontal-alignment: center;
+                }
+            }
+
+            if SearchState.loading && !root.empty: Rectangle {
+                y: 0;
+                height: 2px;
+                background: Theme.primary;
+                opacity: 0.8;
+            }
+        }
     }
 }

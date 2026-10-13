@@ -53,6 +53,10 @@ export component AppWindow inherits Window {
                 PlayerState.toggle-pause();
                 return accept;
             }
+            if (AppState.page == Page.main && (event.text == "/" || (event.modifiers.control && (event.text == "f" || event.text == "F")))) {
+                AppState.navigate(Route.search, "");
+                return accept;
+            }
             return reject;
         }
 
