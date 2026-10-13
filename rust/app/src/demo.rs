@@ -396,6 +396,12 @@ impl FakeServer {
                             .contains(&format!("artist-{}", Self::album_artist(a))))
             })
             .collect();
+        let random_seed = u64::from(
+            std::time::SystemTime::now()
+                .duration_since(std::time::UNIX_EPOCH)
+                .unwrap_or_default()
+                .subsec_nanos(),
+        );
         let key = |a: usize| -> (String, i64) {
             let album = self.album_at(a);
             match query.sort {
@@ -406,11 +412,14 @@ impl FakeServer {
                 AlbumSort::Duration => (String::new(), album.duration_ms as i64),
                 AlbumSort::Favorited => (String::new(), i64::from(album.favorite)),
                 AlbumSort::RecentlyAdded => (String::new(), -(a as i64)),
+                AlbumSort::RecentlyPlayed => (String::new(), (mix(a as u64 ^ 0x91a) % 10_000) as i64),
+                AlbumSort::PlayCount => (String::new(), (mix(a as u64 ^ 0xc0) % 10_000) as i64),
+                AlbumSort::Random => (String::new(), (mix(a as u64 ^ random_seed) % 10_000) as i64),
                 _ => (String::new(), mix(a as u64 ^ 0xa1) as i64),
             }
         };
         order.sort_by_cached_key(|&a| (key(a), a));
-        if query.order == SortOrder::Desc {
+        if query.order == SortOrder::Desc && query.sort != AlbumSort::Random {
             order.reverse();
         }
         order
