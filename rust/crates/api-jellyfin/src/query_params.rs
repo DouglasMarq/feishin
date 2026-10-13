@@ -1,3 +1,5 @@
+const MAX_LISTED_YEARS: i64 = 100;
+
 #[derive(Debug, Default, Clone)]
 pub struct QueryParams(Vec<(&'static str, String)>);
 
@@ -22,12 +24,12 @@ impl QueryParams {
 
     pub fn year_range(self, from: Option<i32>, to: Option<i32>) -> Self {
         match (nonzero_year(from), nonzero_year(to)) {
-            (Some(_), Some(_)) => self.set_optional("Years", comma_separated_years(from, to)),
-            (Some(first), None) => {
-                self.set("MinPremiereDate", format!("{first:04}-01-01T00:00:00Z"))
+            (Some(first), Some(last)) if lists_every_year(first, last) => {
+                self.set_optional("Years", comma_separated_years(first, last))
             }
-            (None, Some(last)) => self.set("MaxPremiereDate", format!("{last:04}-12-31T23:59:59Z")),
-            (None, None) => self,
+            (first, last) => self
+                .set_optional("MinPremiereDate", first.map(first_instant_of))
+                .set_optional("MaxPremiereDate", last.map(last_instant_of)),
         }
     }
 
@@ -44,9 +46,19 @@ fn nonzero_year(year: Option<i32>) -> Option<i32> {
     year.filter(|year| *year != 0)
 }
 
-fn comma_separated_years(from: Option<i32>, to: Option<i32>) -> Option<String> {
-    let first_year = nonzero_year(from)?;
-    let last_year = nonzero_year(to)?;
+fn lists_every_year(first: i32, last: i32) -> bool {
+    i64::from(last) - i64::from(first) < MAX_LISTED_YEARS
+}
+
+fn first_instant_of(year: i32) -> String {
+    format!("{year:04}-01-01T00:00:00Z")
+}
+
+fn last_instant_of(year: i32) -> String {
+    format!("{year:04}-12-31T23:59:59Z")
+}
+
+fn comma_separated_years(first_year: i32, last_year: i32) -> Option<String> {
     let years: Vec<String> = (first_year..=last_year)
         .map(|year| year.to_string())
         .collect();
@@ -80,5 +92,16 @@ mod tests {
             [("MaxPremiereDate", "2019-12-31T23:59:59Z".to_owned())]
         );
         assert!(year_pairs(None, None).is_empty());
+    }
+
+    #[test]
+    fn wide_closed_ranges_filter_on_the_premiere_date() {
+        assert_eq!(
+            year_pairs(Some(1), Some(9999)),
+            [
+                ("MinPremiereDate", "0001-01-01T00:00:00Z".to_owned()),
+                ("MaxPremiereDate", "9999-12-31T23:59:59Z".to_owned())
+            ]
+        );
     }
 }
