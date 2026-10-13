@@ -1212,6 +1212,8 @@ version = "0.1.0"
 dependencies = [
  "async-trait",
  "feishin-core",
+ "serde",
+ "serde_json",
  "thiserror 2.0.21",
 ]
 
@@ -1287,6 +1289,7 @@ dependencies = [
 name = "feishin-storage"
 version = "0.1.0"
 dependencies = [
+ "feishin-api",
  "feishin-core",
  "reqwest",
  "serde",

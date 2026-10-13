@@ -6,6 +6,7 @@ license.workspace = true
 publish.workspace = true
 
 [dependencies]
+feishin-api.workspace = true
 feishin-core.workspace = true
 reqwest.workspace = true
 serde.workspace = true

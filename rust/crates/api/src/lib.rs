@@ -1,10 +1,9 @@
 //! The `MusicServer` trait every backend implements (mirrors `src/renderer/api/controller.ts`).
 //!
 //! Each backend crate also exposes, as inherent functions on its server type:
-//! - `async fn login(config: ServerConfig, password: &str) -> Result<(Self, String)>`
-//!   returning the server and an opaque credential string to persist.
-//! - `fn with_credential(config: ServerConfig, credential: &str) -> Result<Self>`
-//!   restoring a session from that credential without the password.
+//! - `async fn login(config: ServerConfig, password: &str) -> Result<(Self, Credential)>`
+//! - `fn with_credential(config: ServerConfig, credential: &Credential) -> Result<Self>`
+//!   restoring a session without the password.
 
 use async_trait::async_trait;
 use feishin_core::model::{
@@ -12,6 +11,36 @@ use feishin_core::model::{
     MusicFolder, Page, Paging, Playlist, SearchResults, ServerConfig, ServerPlayQueue, Song,
     SongListQuery,
 };
+use serde::{Deserialize, Serialize};
+
+/// Persisted by `feishin_storage::credentials` as JSON. Field values mirror what the Electron Feishin
+/// stores (`credential` / `ndCredential` in `ServerListItem`), so imported servers work unchanged.
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(tag = "type", rename_all = "snake_case")]
+pub enum Credential {
+    /// `subsonic` is the auth query string (`u=..&s=..&t=..`); `nd_token` is the native API JWT,
+    /// refreshed from `x-nd-authorization` response headers and allowed to expire.
+    Navidrome {
+        subsonic: String,
+        nd_token: Option<String>,
+    },
+    /// `subsonic` is `u=..&s=..&t=..` or `u=..&p=..`.
+    Subsonic { subsonic: String },
+    Jellyfin {
+        access_token: String,
+        user_id: String,
+    },
+}
+
+impl Credential {
+    pub fn to_json(&self) -> String {
+        serde_json::to_string(self).expect("credential serializes")
+    }
+
+    pub fn from_json(json: &str) -> Result<Self> {
+        serde_json::from_str(json).map_err(|e| ApiError::Decode(e.to_string()))
+    }
+}
 
 #[derive(Debug, thiserror::Error)]
 pub enum ApiError {

@@ -3,6 +3,7 @@
 
 use std::path::Path;
 
+use feishin_api::Credential;
 use feishin_core::model::ServerConfig;
 
 use crate::Result;
@@ -10,8 +11,8 @@ use crate::Result;
 #[derive(Debug, Clone, PartialEq)]
 pub struct ImportedServer {
     pub config: ServerConfig,
-    /// Credential in the format the matching backend's `with_credential` accepts, when Feishin saved one.
-    pub credential: Option<String>,
+    /// Ready for `feishin_storage::credentials::set(id, &credential.to_json())`, when Feishin saved one.
+    pub credential: Option<Credential>,
 }
 
 /// `feishin_config_dir` is usually `~/.config/feishin`.
