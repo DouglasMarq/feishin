@@ -1,0 +1,327 @@
+import { LineEdit, ListView } from "std-widgets.slint";
+import { Theme, Icons } from "theme.slint";
+import { TracksState, TrackRow } from "globals.slint";
+import { Icon } from "widgets.slint";
+
+component HeaderCell inherits Rectangle {
+    in property <string> text;
+    in property <string> column;
+    in property <bool> sortable: true;
+    in property <TextHorizontalAlignment> align: left;
+    in-out property <length> column-width;
+    property <bool> sorted: root.sortable && TracksState.sort-column == root.column;
+    width: root.column-width;
+    height: 32px;
+
+    TouchArea {
+        enabled: root.sortable;
+        mouse-cursor: root.sortable ? pointer : default;
+        clicked => {
+            TracksState.sort-by(root.column);
+        }
+    }
+
+    HorizontalLayout {
+        padding-left: 8px;
+        padding-right: 10px;
+        spacing: 2px;
+
+        Text {
+            text: root.text;
+            color: root.sorted ? Theme.foreground : Theme.muted;
+            font-size: 12px;
+            font-weight: 600;
+            vertical-alignment: center;
+            horizontal-alignment: root.align;
+            overflow: elide;
+            horizontal-stretch: 1;
+        }
+
+        if root.sorted: Icon {
+            y: (parent.height - self.height) / 2;
+            path: TracksState.sort-desc ? Icons.arrow-down : Icons.arrow-up;
+            color: Theme.foreground;
+            width: 16px;
+            height: 16px;
+        }
+    }
+
+    TouchArea {
+        x: parent.width - 5px;
+        width: 8px;
+        mouse-cursor: col-resize;
+        moved => {
+            if (self.pressed) {
+                root.column-width = max(40px, root.column-width + self.mouse-x - self.pressed-x);
+            }
+        }
+    }
+}
+
+component Cell inherits Rectangle {
+    in property <string> text;
+    in property <color> text-color: Theme.muted;
+
+    Text {
+        x: 8px;
+        width: parent.width - 18px;
+        text: root.text;
+        color: root.text-color;
+        vertical-alignment: center;
+        overflow: elide;
+    }
+}
+
+component Skeleton inherits Rectangle {
+    height: 10px;
+    border-radius: 5px;
+    background: Theme.surface-raised;
+}
+
+component TrackRowView inherits Rectangle {
+    in property <TrackRow> track;
+    callback play();
+    callback clicked();
+    height: 36px;
+    background: touch.has-hover ? Theme.hover : transparent;
+
+    touch := TouchArea {
+        clicked => {
+            root.clicked();
+        }
+        double-clicked => {
+            if (root.track.loaded) {
+                root.play();
+            }
+        }
+
+        HorizontalLayout {
+            Rectangle {
+                width: TracksState.w-index;
+
+                if !touch.has-hover && !root.track.playing: Text {
+                    x: 0;
+                    width: parent.width - 16px;
+                    text: root.track.index;
+                    color: Theme.muted;
+                    horizontal-alignment: right;
+                    vertical-alignment: center;
+                }
+
+                if !touch.has-hover && root.track.playing: Icon {
+                    x: parent.width - 16px - self.width;
+                    path: Icons.note;
+                    color: Theme.primary;
+                    width: 16px;
+                    height: 16px;
+                }
+
+                if touch.has-hover && root.track.loaded: Rectangle {
+                    x: parent.width - 16px - self.width;
+                    width: 24px;
+                    height: 24px;
+                    border-radius: 12px;
+                    background: play-touch.has-hover ? Theme.primary : transparent;
+
+                    Icon {
+                        path: Icons.play;
+                        width: 18px;
+                        height: 18px;
+                    }
+
+                    play-touch := TouchArea {
+                        mouse-cursor: pointer;
+                        clicked => {
+                            root.play();
+                        }
+                    }
+                }
+            }
+
+            if root.track.loaded: HorizontalLayout {
+                Cell {
+                    width: TracksState.w-title;
+                    text: root.track.title;
+                    text-color: root.track.playing ? Theme.primary : Theme.foreground;
+                }
+
+                Cell {
+                    width: TracksState.w-artist;
+                    text: root.track.artists;
+                }
+
+                Cell {
+                    width: TracksState.w-album;
+                    text: root.track.album;
+                }
+
+                Cell {
+                    width: TracksState.w-year;
+                    text: root.track.year;
+                }
+
+                Cell {
+                    width: TracksState.w-plays;
+                    text: root.track.plays;
+                }
+
+                Cell {
+                    width: TracksState.w-duration;
+                    text: root.track.duration;
+                }
+
+                Rectangle { }
+            }
+
+            if !root.track.loaded: HorizontalLayout {
+                spacing: 24px;
+                padding-right: 24px;
+
+                Rectangle {
+                    width: TracksState.w-title - 24px;
+
+                    Skeleton {
+                        width: parent.width * 0.6;
+                    }
+                }
+
+                Rectangle {
+                    width: TracksState.w-artist - 24px;
+
+                    Skeleton {
+                        width: parent.width * 0.5;
+                    }
+                }
+
+                Rectangle { }
+            }
+        }
+    }
+}
+
+export component TracksView inherits Rectangle {
+    callback row-clicked();
+    min-width: 320px;
+    background: Theme.background;
+
+    VerticalLayout {
+        HorizontalLayout {
+            padding: 20px;
+            padding-bottom: 12px;
+            spacing: 12px;
+
+            Text {
+                text: "Tracks";
+                font-size: 24px;
+                font-weight: 700;
+                color: Theme.foreground;
+                vertical-alignment: center;
+            }
+
+            Text {
+                text: TracksState.loading ? "" : TracksState.total;
+                color: Theme.muted;
+                vertical-alignment: center;
+            }
+
+            Rectangle {
+                horizontal-stretch: 1;
+            }
+
+            LineEdit {
+                width: 280px;
+                placeholder-text: "Search";
+                edited(text) => {
+                    TracksState.search-edited(text);
+                }
+            }
+        }
+
+        Rectangle {
+            height: 33px;
+            min-width: 0px;
+            clip: true;
+
+            HorizontalLayout {
+                x: list.content-x;
+
+                HeaderCell {
+                    text: "#";
+                    column: "index";
+                    sortable: false;
+                    align: right;
+                    column-width <=> TracksState.w-index;
+                }
+
+                HeaderCell {
+                    text: "Title";
+                    column: "title";
+                    column-width <=> TracksState.w-title;
+                }
+
+                HeaderCell {
+                    text: "Artist";
+                    column: "artist";
+                    column-width <=> TracksState.w-artist;
+                }
+
+                HeaderCell {
+                    text: "Album";
+                    column: "album";
+                    column-width <=> TracksState.w-album;
+                }
+
+                HeaderCell {
+                    text: "Year";
+                    column: "year";
+                    column-width <=> TracksState.w-year;
+                }
+
+                HeaderCell {
+                    text: "Plays";
+                    column: "plays";
+                    column-width <=> TracksState.w-plays;
+                }
+
+                HeaderCell {
+                    text: "Time";
+                    column: "duration";
+                    column-width <=> TracksState.w-duration;
+                }
+
+                Rectangle { }
+            }
+
+            Rectangle {
+                y: parent.height - 1px;
+                height: 1px;
+                background: Theme.border;
+            }
+        }
+
+        Rectangle {
+            min-width: 0px;
+            clip: true;
+
+            list := ListView {
+                for row in TracksState.rows: TrackRowView {
+                    track: row;
+                    clicked => {
+                        root.row-clicked();
+                    }
+                    play => {
+                        root.row-clicked();
+                        TracksState.play-row(row.index - 1);
+                    }
+                }
+            }
+
+            if !TracksState.loading && TracksState.total == 0: Text {
+                text: "No tracks found";
+                color: Theme.muted;
+                horizontal-alignment: center;
+                vertical-alignment: center;
+            }
+        }
+    }
+}

@@ -1,0 +1,141 @@
+import { Theme, Icons } from "theme.slint";
+import { AppState } from "globals.slint";
+import { Icon } from "widgets.slint";
+
+component NavEntry inherits Rectangle {
+    in property <string> icon;
+    in property <string> label;
+    in property <bool> active;
+    in property <bool> enabled: true;
+    callback clicked();
+    height: 36px;
+    border-radius: Theme.radius;
+    background: root.active ? Theme.surface-raised : (touch.has-hover && root.enabled ? Theme.hover : transparent);
+    opacity: root.enabled ? 1 : 0.4;
+
+    HorizontalLayout {
+        padding-left: 10px;
+        padding-right: 10px;
+        spacing: 12px;
+
+        Icon {
+            y: (parent.height - self.height) / 2;
+            path: root.icon;
+            color: root.active ? Theme.primary : Theme.muted;
+        }
+
+        Text {
+            text: root.label;
+            color: root.active ? Theme.foreground : Theme.muted;
+            font-weight: root.active ? 600 : 400;
+            vertical-alignment: center;
+        }
+    }
+
+    touch := TouchArea {
+        enabled: root.enabled;
+        clicked => {
+            root.clicked();
+        }
+    }
+}
+
+export component Sidebar inherits Rectangle {
+    width: 220px;
+    background: Theme.background-alt;
+
+    VerticalLayout {
+        padding: 12px;
+        spacing: 2px;
+
+        HorizontalLayout {
+            padding: 8px;
+            padding-bottom: 16px;
+            spacing: 10px;
+            alignment: start;
+
+            Icon {
+                path: Icons.note;
+                color: Theme.primary;
+                width: 24px;
+                height: 24px;
+            }
+
+            Text {
+                text: "Feishin";
+                font-size: 18px;
+                font-weight: 700;
+                color: Theme.foreground;
+                vertical-alignment: center;
+            }
+        }
+
+        Text {
+            text: "LIBRARY";
+            color: Theme.muted;
+            font-size: 11px;
+            font-weight: 600;
+            height: 28px;
+            vertical-alignment: center;
+        }
+
+        NavEntry {
+            icon: Icons.home;
+            label: "Home";
+            enabled: false;
+        }
+
+        NavEntry {
+            icon: Icons.note;
+            label: "Tracks";
+            active: true;
+        }
+
+        NavEntry {
+            icon: Icons.album;
+            label: "Albums";
+            enabled: false;
+        }
+
+        NavEntry {
+            icon: Icons.artist;
+            label: "Artists";
+            enabled: false;
+        }
+
+        NavEntry {
+            icon: Icons.genre;
+            label: "Genres";
+            enabled: false;
+        }
+
+        NavEntry {
+            icon: Icons.playlist;
+            label: "Playlists";
+            enabled: false;
+        }
+
+        NavEntry {
+            icon: Icons.folder;
+            label: "Folders";
+            enabled: false;
+        }
+
+        NavEntry {
+            icon: Icons.heart;
+            label: "Favorites";
+            enabled: false;
+        }
+
+        Rectangle {
+            vertical-stretch: 1;
+        }
+
+        Text {
+            text: AppState.server-name;
+            color: Theme.muted;
+            font-size: 11px;
+            overflow: elide;
+        }
+    }
+}

@@ -1,0 +1,132 @@
+import { Button, ComboBox, LineEdit } from "std-widgets.slint";
+import { Theme, Icons } from "theme.slint";
+import { LoginState } from "globals.slint";
+import { Icon } from "widgets.slint";
+
+component Label inherits Text {
+    color: Theme.muted;
+    font-size: 12px;
+}
+
+export component LoginView inherits Rectangle {
+    background: Theme.background;
+
+    VerticalLayout {
+        alignment: center;
+
+        HorizontalLayout {
+            alignment: center;
+
+            Rectangle {
+                width: 380px;
+                background: Theme.surface;
+                border-radius: 12px;
+                border-width: 1px;
+                border-color: Theme.border;
+
+                VerticalLayout {
+                    padding: 28px;
+                    spacing: 10px;
+
+                    HorizontalLayout {
+                        spacing: 10px;
+                        alignment: start;
+
+                        Icon {
+                            path: Icons.note;
+                            color: Theme.primary;
+                            width: 28px;
+                            height: 28px;
+                        }
+
+                        Text {
+                            text: "Feishin";
+                            font-size: 22px;
+                            font-weight: 700;
+                            color: Theme.foreground;
+                            vertical-alignment: center;
+                        }
+                    }
+
+                    Text {
+                        text: "Connect to your music server";
+                        color: Theme.muted;
+                    }
+
+                    Rectangle {
+                        height: 6px;
+                    }
+
+                    Label {
+                        text: "Server type";
+                    }
+
+                    ComboBox {
+                        model: ["Navidrome", "Subsonic", "Jellyfin"];
+                        current-index <=> LoginState.server-type;
+                        enabled: !LoginState.busy;
+                    }
+
+                    Label {
+                        text: "URL";
+                    }
+
+                    LineEdit {
+                        placeholder-text: "https://music.example.com";
+                        text <=> LoginState.url;
+                        enabled: !LoginState.busy;
+                    }
+
+                    Label {
+                        text: "Username";
+                    }
+
+                    LineEdit {
+                        text <=> LoginState.username;
+                        enabled: !LoginState.busy;
+                    }
+
+                    Label {
+                        text: "Password";
+                    }
+
+                    LineEdit {
+                        input-type: password;
+                        text <=> LoginState.password;
+                        enabled: !LoginState.busy;
+                        accepted => {
+                            LoginState.login();
+                        }
+                    }
+
+                    if LoginState.error != "": Text {
+                        text: LoginState.error;
+                        color: Theme.danger;
+                        wrap: word-wrap;
+                    }
+
+                    Rectangle {
+                        height: 6px;
+                    }
+
+                    Button {
+                        text: LoginState.busy ? "Connecting..." : "Sign in";
+                        primary: true;
+                        enabled: !LoginState.busy;
+                        clicked => {
+                            LoginState.login();
+                        }
+                    }
+
+                    Button {
+                        text: "Import from Feishin";
+                        enabled: !LoginState.busy;
+                        clicked => {
+                            LoginState.import-feishin();
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
