@@ -179,7 +179,6 @@ export component AlbumGridCardView inherits Rectangle {
     }
 }
 
-/// Virtualized cover grid. Rust regroups `rows` whenever `columns-changed` fires.
 export component AlbumGrid inherits Rectangle {
     in property <[AlbumGridRow]> rows;
     in property <length> min-card-width: 168px;

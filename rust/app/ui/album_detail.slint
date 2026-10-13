@@ -9,7 +9,6 @@ export struct AlbumDetailArtist {
     name: string,
 }
 
-/// A track, or a disc header when `disc-header` is set.
 export struct AlbumDetailTrack {
     id: string,
     number: string,
@@ -59,16 +58,16 @@ component Rating inherits HorizontalLayout {
     callback rate(int);
     spacing: 2px;
 
-    for i in 5: Rectangle {
+    for star-index in 5: Rectangle {
         width: 20px;
         height: 20px;
 
         Star {
-            filled: root.hovered >= 0 ? i <= root.hovered : i < root.value;
+            filled: root.hovered >= 0 ? star-index <= root.hovered : star-index < root.value;
         }
 
         TooltipAnchor {
-            text: i + 1 == root.value ? "Clear rating" : i == 0 ? "Rate 1 star" : "Rate " + (i + 1) + " stars";
+            text: star-index + 1 == root.value ? "Clear rating" : star-index == 0 ? "Rate 1 star" : "Rate " + (star-index + 1) + " stars";
             hovered: touch.has-hover;
         }
 
@@ -76,13 +75,13 @@ component Rating inherits HorizontalLayout {
             mouse-cursor: pointer;
             changed has-hover => {
                 if (self.has-hover) {
-                    root.hovered = i;
-                } else if (root.hovered == i) {
+                    root.hovered = star-index;
+                } else if (root.hovered == star-index) {
                     root.hovered = -1;
                 }
             }
             clicked => {
-                root.rate(i + 1 == root.value ? 0 : i + 1);
+                root.rate(star-index + 1 == root.value ? 0 : star-index + 1);
             }
         }
     }
@@ -362,8 +361,8 @@ export component AlbumDetailView inherits Rectangle {
                     HorizontalLayout {
                         alignment: start;
 
-                        for artist[i] in AlbumDetailState.artists: HorizontalLayout {
-                            if i > 0: Text {
+                        for artist[artist-index] in AlbumDetailState.artists: HorizontalLayout {
+                            if artist-index > 0: Text {
                                 text: ", ";
                                 color: Theme.muted;
                             }

@@ -24,8 +24,7 @@ export global HomeState {
     callback load(string);
     callback refresh(int);
     callback play(string);
-    /// A card scrolled into view without its cover: (shelf index, card index).
-    callback cover-needed(int, int);
+    callback cover-needed(shelf-index: int, card-index: int);
 }
 
 global HomeIcons {
@@ -233,12 +232,12 @@ component ShelfView inherits VerticalLayout {
             content-width: root.shelf.albums.length * root.stride - (root.stride - 160px);
             content-height: self.height;
 
-            for album[i] in root.shelf.albums: AlbumCard {
-                x: i * root.stride;
+            for album[album-index] in root.shelf.albums: AlbumCard {
+                x: album-index * root.stride;
                 album: album;
                 on-screen: root.on-screen && self.x + strip.content-x + self.width > 0 && self.x + strip.content-x < strip.width;
                 cover-needed => {
-                    HomeState.cover-needed(root.index, i);
+                    HomeState.cover-needed(root.index, album-index);
                 }
             }
         }
@@ -284,9 +283,9 @@ export component HomeView inherits Rectangle {
                 color: Theme.foreground;
             }
 
-            for shelf[si] in HomeState.shelves: ShelfView {
+            for shelf[shelf-index] in HomeState.shelves: ShelfView {
                 shelf: shelf;
-                index: si;
+                index: shelf-index;
                 on-screen: self.y + page.content-y + self.height > 0 && self.y + page.content-y < page.height;
             }
         }
