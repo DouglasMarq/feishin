@@ -4,7 +4,7 @@ use std::sync::Arc;
 use feishin_api::MusicServer;
 use slint::ComponentHandle;
 
-use super::streamed::{ListedAdd, add_listed_songs, existing_song_ids};
+use super::streamed::{ListedAdd, add_listed_songs, add_listed_to_existing};
 use crate::ui::playlists::song_count_label;
 use crate::ui::tracks::ListedSongs;
 use crate::ui::{AppWindow, Context, on_ui, playlist_detail, playlists, show_status};
@@ -37,12 +37,7 @@ pub fn add_listed(
     report(0);
     let weak = window.as_weak();
     ctx.rt.spawn(async move {
-        let outcome = match existing_song_ids(server.as_ref(), &picked.id).await {
-            Ok(existing) => {
-                add_listed_songs(server.as_ref(), &picked.id, listed, existing, report).await
-            }
-            Err(error) => ListedAdd::failed(error),
-        };
+        let outcome = add_listed_to_existing(server.as_ref(), &picked.id, listed, report).await;
         on_ui(&weak, move |window| finish_add(window, &picked, outcome));
     });
 }

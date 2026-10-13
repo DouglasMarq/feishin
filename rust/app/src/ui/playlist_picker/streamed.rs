@@ -2,6 +2,7 @@ use std::collections::HashSet;
 
 use feishin_api::{ApiError, MusicServer};
 
+use super::playlist_writes::exclusive_playlist_write;
 use crate::list_stream::{PlaylistId, RowRanges, SongSource};
 use crate::ui::tracks::{LISTED_CHUNK_SIZE, ListedChunks, ListedSongs, SelectionRanges};
 
@@ -40,6 +41,19 @@ pub async fn existing_song_ids(
         existing.extend(song_ids);
     }
     Ok(existing)
+}
+
+pub async fn add_listed_to_existing(
+    server: &dyn MusicServer,
+    playlist_id: &str,
+    listed: ListedSongs,
+    report: impl Fn(usize),
+) -> ListedAdd {
+    let _exclusive = exclusive_playlist_write(playlist_id).await;
+    match existing_song_ids(server, playlist_id).await {
+        Ok(existing) => add_listed_songs(server, playlist_id, listed, existing, report).await,
+        Err(error) => ListedAdd::failed(error),
+    }
 }
 
 pub async fn add_listed_songs(
