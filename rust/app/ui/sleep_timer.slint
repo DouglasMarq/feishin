@@ -1,0 +1,92 @@
+import { Theme } from "theme.slint";
+import { PlayerState } from "globals.slint";
+import { IconButton } from "widgets.slint";
+
+component MenuItem inherits Rectangle {
+    in property <string> text;
+    in property <color> text-color: Theme.foreground;
+    callback clicked();
+    height: 30px;
+    border-radius: 4px;
+    background: touch.has-hover ? Theme.hover : transparent;
+
+    Text {
+        x: 10px;
+        text: root.text;
+        color: root.text-color;
+        vertical-alignment: center;
+    }
+
+    touch := TouchArea {
+        mouse-cursor: pointer;
+        clicked => {
+            root.clicked();
+        }
+    }
+}
+
+/// Player bar button that opens the sleep timer menu and shows the remaining time.
+export component SleepTimerButton inherits Rectangle {
+    property <length> menu-width: 190px;
+    height: 32px;
+    width: row.preferred-width;
+
+    row := HorizontalLayout {
+        spacing: 2px;
+
+        IconButton {
+            icon: "M15 1H9v2h6V1zm-4 13h2V8h-2v6zm8.03-6.61l1.42-1.42c-.43-.51-.9-.99-1.41-1.41l-1.42 1.42C16.07 4.74 14.12 4 12 4c-4.97 0-9 4.03-9 9s4.02 9 9 9 9-4.03 9-9c0-2.12-.74-4.07-1.97-5.61zM12 20c-3.87 0-7-3.13-7-7s3.13-7 7-7 7 3.13 7 7-3.13 7-7 7z";
+            active: PlayerState.sleep-active;
+            clicked => {
+                menu.show();
+            }
+        }
+
+        if PlayerState.sleep-active: Text {
+            text: PlayerState.sleep-label;
+            color: Theme.primary;
+            font-size: 11px;
+            vertical-alignment: center;
+        }
+    }
+
+    menu := PopupWindow {
+        x: root.width - root.menu-width;
+        y: -self.height - 8px;
+        width: root.menu-width;
+        height: list.preferred-height;
+
+        Rectangle {
+            background: Theme.surface-raised;
+            border-radius: Theme.radius;
+            border-width: 1px;
+            border-color: Theme.border;
+        }
+
+        list := VerticalLayout {
+            padding: 6px;
+
+            for minutes in [15, 30, 45, 60, 90]: MenuItem {
+                text: minutes + " minutes";
+                clicked => {
+                    PlayerState.start-sleep-timer(minutes);
+                }
+            }
+
+            MenuItem {
+                text: "End of current track";
+                clicked => {
+                    PlayerState.start-sleep-timer(0);
+                }
+            }
+
+            if PlayerState.sleep-active: MenuItem {
+                text: "Cancel timer";
+                text-color: Theme.danger;
+                clicked => {
+                    PlayerState.cancel-sleep-timer();
+                }
+            }
+        }
+    }
+}

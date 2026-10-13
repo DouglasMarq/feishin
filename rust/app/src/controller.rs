@@ -2,8 +2,8 @@
 
 use std::sync::Arc;
 
-use feishin_api::StreamOptions;
-use feishin_core::model::{ServerConfig, Song, SongListQuery};
+use feishin_api::{Credential, MusicServer, StreamOptions};
+use feishin_core::model::{ServerConfig, ServerPlayQueue, Song, SongListQuery};
 use feishin_core::queue::{Advance, Queue, QueueItem, RepeatMode, Uid};
 use feishin_platform::{MediaControlEvent, NowPlaying, PlaybackStatus};
 use feishin_player::PlayerEvent;
@@ -14,8 +14,10 @@ use tokio::sync::{mpsc, oneshot};
 use crate::audio::{AudioOutput, Track};
 use crate::library::fetch_all_songs;
 use crate::media::MediaSession;
+use crate::play_queue_sync::{PlayQueueState, PlayQueueSync};
 use crate::scrobble::ScrobbleTracker;
 use crate::session::Session;
+use crate::sleep_timer::{SleepMode, SleepStatus, SleepTimer};
 use crate::store::Store;
 
 /// Going back further than this into a track restarts it instead of moving to the previous one.
@@ -62,6 +64,15 @@ pub enum Command {
         uids: Vec<Uid>,
         before: Option<Uid>,
     },
+    /// Starts or replaces the sleep timer; `None` cancels it.
+    SleepTimer(Option<SleepMode>),
+    SleepTick {
+        elapsed_ms: u64,
+    },
+    RestoreQueue {
+        request: u64,
+        queue: ServerPlayQueue,
+    },
     Shutdown {
         ui: UiSettings,
         done: oneshot::Sender<()>,
@@ -105,6 +116,7 @@ pub enum UiUpdate {
 
 pub trait UiSink: Send + Sync {
     fn send(&self, update: UiUpdate);
+    fn sleep_timer(&self, _status: Option<SleepStatus>) {}
 }
 
 pub struct Deps {
@@ -128,6 +140,9 @@ pub struct Controller {
     position_ms: u64,
     duration_ms: u64,
     play_request: u64,
+    queue_sync: PlayQueueSync,
+    sleep: SleepTimer,
+    saved_credential: Option<Credential>,
 }
 
 pub fn artist_names(song: &Song) -> String {
@@ -157,7 +172,7 @@ impl Controller {
             None => (seed.map_or_else(Queue::new, Queue::with_seed), 0),
         };
         let duration_ms = queue.current().map_or(0, |item| item.song.duration_ms);
-        let controller = Self {
+        let mut controller = Self {
             deps,
             queue,
             settings,
@@ -169,8 +184,12 @@ impl Controller {
             position_ms,
             duration_ms,
             play_request: 0,
+            queue_sync: PlayQueueSync::default(),
+            sleep: SleepTimer::default(),
+            saved_credential: None,
         };
         controller.publish_all();
+        controller.update_media_volume();
         controller
     }
 
@@ -190,6 +209,11 @@ impl Controller {
     #[cfg(test)]
     pub fn is_playing(&self) -> bool {
         self.playing
+    }
+
+    #[cfg(test)]
+    pub fn sleep_status(&self) -> Option<SleepStatus> {
+        self.sleep.status()
     }
 
     /// Returns `false` once the controller has shut down.
@@ -249,10 +273,30 @@ impl Controller {
                 self.queue.move_items(&uids, before);
                 self.queue_changed();
             }
+            Command::SleepTimer(mode) => self.set_sleep_timer(mode),
+            Command::SleepTick { elapsed_ms } => {
+                if self.sleep.tick(elapsed_ms, self.playing) && self.playing {
+                    self.toggle_pause();
+                }
+                self.deps.ui.sleep_timer(self.sleep.status());
+            }
+            Command::RestoreQueue { request, queue } => self.restore_queue(request, queue),
             Command::Shutdown { ui, done } => {
                 self.settings.ui = ui;
                 self.persist();
-                let _ = done.send(());
+                self.persist_credential();
+                match self.play_queue_state() {
+                    Some((server, state)) => {
+                        let sync = self.queue_sync.clone();
+                        tokio::spawn(async move {
+                            sync.flush(server, state).await;
+                            let _ = done.send(());
+                        });
+                    }
+                    None => {
+                        let _ = done.send(());
+                    }
+                }
                 return false;
             }
         }
@@ -282,6 +326,83 @@ impl Controller {
         if let Err(e) = self.deps.store.save_settings(&self.settings) {
             tracing::warn!("saving settings failed: {e:#}");
         }
+        self.persist_credential();
+        if self.queue.is_empty() {
+            self.fetch_server_queue();
+        }
+    }
+
+    fn persist_credential(&mut self) {
+        let Some(server) = self.deps.session.get() else {
+            return;
+        };
+        let Some(credential) = server.credential() else {
+            return;
+        };
+        if self.saved_credential.as_ref() == Some(&credential) {
+            return;
+        }
+        match self
+            .deps
+            .store
+            .set_credential(&server.config().id, &credential)
+        {
+            Ok(()) => self.saved_credential = Some(credential),
+            Err(e) => tracing::warn!("saving credential failed: {e:#}"),
+        }
+    }
+
+    fn fetch_server_queue(&self) {
+        let Some(server) = self.deps.session.get() else {
+            return;
+        };
+        let request = self.play_request;
+        let commands = self.deps.commands.clone();
+        tokio::spawn(async move {
+            match server.play_queue().await {
+                Ok(Some(queue)) if !queue.songs.is_empty() => {
+                    let _ = commands.send(Command::RestoreQueue { request, queue });
+                }
+                Ok(_) => {}
+                Err(e) => tracing::debug!("server play queue: {e}"),
+            }
+        });
+    }
+
+    fn restore_queue(&mut self, request: u64, queue: ServerPlayQueue) {
+        if request != self.play_request || !self.queue.is_empty() {
+            return;
+        }
+        self.queue.set_shuffle(false);
+        self.queue
+            .play_now(queue.songs, queue.current_song_id.as_deref());
+        self.position_ms = queue.position_ms;
+        self.duration_ms = self.queue.current().map_or(0, |item| item.song.duration_ms);
+        if let Some((_, state)) = self.play_queue_state() {
+            self.queue_sync.mark_saved(state);
+        }
+        self.publish_all();
+    }
+
+    fn play_queue_state(&self) -> Option<(Arc<dyn MusicServer>, PlayQueueState)> {
+        let server = self.deps.session.get()?;
+        let state = PlayQueueState::of(&self.queue, self.position_ms, &server.config().id)?;
+        Some((server, state))
+    }
+
+    fn schedule_queue_sync(&self) {
+        if let Some((server, state)) = self.play_queue_state() {
+            self.queue_sync.schedule(server, state);
+        }
+    }
+
+    fn set_sleep_timer(&mut self, mode: Option<SleepMode>) {
+        match mode {
+            Some(mode) => self.sleep.start(mode, &self.deps.commands),
+            None => self.sleep.cancel(),
+        }
+        self.deps.ui.sleep_timer(self.sleep.status());
+        self.refresh_preload();
     }
 
     fn play_from_list(&mut self, query: SongListQuery, song_id: String) {
@@ -362,6 +483,7 @@ impl Controller {
             .send(UiUpdate::NowPlaying(Some(Box::new(song))));
         self.deps.ui.send(UiUpdate::QueueCurrent(Some(track.uid)));
         self.publish_playback();
+        self.schedule_queue_sync();
     }
 
     fn stop(&mut self) {
@@ -403,7 +525,9 @@ impl Controller {
                 if self.loaded != Some(uid) || self.preloaded.is_some() {
                     return;
                 }
-                if self.queue.next(Advance::Auto).is_some() {
+                if self.sleep.ends_with_track() {
+                    self.sleep_at_track_end();
+                } else if self.queue.next(Advance::Auto).is_some() {
                     self.load_current(0);
                 } else {
                     self.stop();
@@ -438,6 +562,7 @@ impl Controller {
             let song = self.queue.current().map(|item| Box::new(item.song.clone()));
             self.deps.ui.send(UiUpdate::NowPlaying(song));
             self.publish_queue_current();
+            self.schedule_queue_sync();
         } else {
             return;
         }
@@ -452,11 +577,26 @@ impl Controller {
         self.refresh_preload();
     }
 
+    fn sleep_at_track_end(&mut self) {
+        self.sleep.cancel();
+        self.deps.ui.sleep_timer(None);
+        self.queue.next(Advance::Auto);
+        self.stop();
+        let song = self.queue.current().map(|item| Box::new(item.song.clone()));
+        self.deps.ui.send(UiUpdate::NowPlaying(song));
+        self.publish_queue_current();
+        self.schedule_queue_sync();
+    }
+
     fn refresh_preload(&mut self) {
         if !self.settings.playback.gapless || self.loaded.is_none() {
             return;
         }
-        let next = self.queue.peek_next().and_then(|item| self.track(item));
+        let next = self
+            .queue
+            .peek_next()
+            .filter(|_| !self.sleep.ends_with_track())
+            .and_then(|item| self.track(item));
         if next.as_ref().map(|track| track.uid) == self.preloaded {
             return;
         }
@@ -507,6 +647,9 @@ impl Controller {
             self.playing = playing;
             self.update_media_status();
             self.publish_playback();
+            if !playing {
+                self.schedule_queue_sync();
+            }
         }
     }
 
@@ -538,6 +681,7 @@ impl Controller {
         self.position_ms = position_ms;
         self.update_media_status();
         self.publish_playback();
+        self.schedule_queue_sync();
     }
 
     fn set_volume(&mut self, volume: u8) {
@@ -546,13 +690,12 @@ impl Controller {
         if let Err(e) = self.deps.audio.set_volume(volume) {
             tracing::warn!("setting volume failed: {e:#}");
         }
-        if let Err(e) = self.deps.media.set_volume(f64::from(volume) / 100.0) {
-            tracing::debug!("media session volume: {e:#}");
-        }
         if volume > 0 && self.settings.playback.muted {
             self.set_muted(false);
+        } else {
+            self.update_media_volume();
+            self.publish_volume();
         }
-        self.publish_volume();
     }
 
     fn set_muted(&mut self, muted: bool) {
@@ -560,7 +703,16 @@ impl Controller {
         if let Err(e) = self.deps.audio.set_muted(muted) {
             tracing::warn!("muting failed: {e:#}");
         }
+        self.update_media_volume();
         self.publish_volume();
+    }
+
+    fn update_media_volume(&mut self) {
+        let playback = &self.settings.playback;
+        let volume = if playback.muted { 0 } else { playback.volume };
+        if let Err(e) = self.deps.media.set_volume(f64::from(volume) / 100.0) {
+            tracing::debug!("media session volume: {e:#}");
+        }
     }
 
     fn remove(&mut self, uids: &[Uid]) {
@@ -585,6 +737,7 @@ impl Controller {
         self.publish_queue();
         self.publish_modes();
         self.refresh_preload();
+        self.schedule_queue_sync();
     }
 
     fn on_media_event(&mut self, event: MediaControlEvent) {
