@@ -59,6 +59,7 @@ mod tests {
         let settings = YouTubeSettings {
             yt_dlp_path: Some("/opt/yt-dlp".into()),
             cookies_from_browser: Some(CookieBrowser::Brave),
+            country: None,
         };
         assert_eq!(
             yt_dlp_for(&settings),

@@ -140,6 +140,18 @@ fn youtube_settings_are_saved_from_the_form() {
 
     state.set_yt_dlp_path(" /opt/yt-dlp ".into());
     state.set_cookie_browser_index(1);
+    let countries: Vec<_> = state.get_chart_countries().iter().collect();
+    assert!(
+        countries
+            .first()
+            .is_some_and(|label| label.starts_with("Automatic ("))
+    );
+    let mexico = countries
+        .iter()
+        .position(|label| label == "Mexico")
+        .and_then(|index| i32::try_from(index).ok())
+        .unwrap();
+    state.set_chart_country_index(mexico);
     state.invoke_youtube_changed();
     match received.try_recv() {
         Ok(Command::YouTube(YouTubeCommand::SaveSettings(saved))) => {
@@ -148,6 +160,7 @@ fn youtube_settings_are_saved_from_the_form() {
                 saved.cookies_from_browser,
                 Some(feishin_youtube::CookieBrowser::Firefox)
             );
+            assert_eq!(saved.country.as_deref(), Some("MX"));
         }
         _ => panic!("expected SaveSettings"),
     }

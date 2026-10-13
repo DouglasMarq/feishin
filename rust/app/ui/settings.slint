@@ -47,6 +47,8 @@ export global SettingsState {
     in-out property <string> yt-dlp-path;
     in property <[string]> cookie-browsers;
     in-out property <int> cookie-browser-index;
+    in property <[string]> chart-countries;
+    in-out property <int> chart-country-index;
     in-out property <string> youtube-link;
     callback youtube-changed();
     callback play-youtube-link();
@@ -172,12 +174,25 @@ component YouTubeSection inherits Section {
     }
 
     Option {
-        title: "Browser cookies";
-        description: "yt-dlp signs in to YouTube with this browser's cookies, for YouTube Premium audio. Feishin never reads them.";
+        title: "Sign in with browser";
+        description: "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Feishin deletes right after reading.";
 
         Picker {
             model: SettingsState.cookie-browsers;
             current-index <=> SettingsState.cookie-browser-index;
+            selected => {
+                SettingsState.youtube-changed();
+            }
+        }
+    }
+
+    Option {
+        title: "Chart country";
+        description: "Default country for the Discover charts. Automatic follows your system region.";
+
+        Picker {
+            model: SettingsState.chart-countries;
+            current-index <=> SettingsState.chart-country-index;
             selected => {
                 SettingsState.youtube-changed();
             }

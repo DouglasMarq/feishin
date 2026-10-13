@@ -169,6 +169,7 @@ mod tests {
             youtube: YouTubeSettings {
                 yt_dlp_path: Some("/opt/yt-dlp".into()),
                 cookies_from_browser: Some(feishin_youtube::CookieBrowser::Firefox),
+                country: Some("BR".into()),
             },
         }
     }
