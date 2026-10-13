@@ -48,7 +48,6 @@ pub enum Command {
     CycleRepeat,
     PlayUid(Uid),
     /// Replace the queue with `songs` already in hand (album, playlist, search results), starting at `song_id`.
-    #[expect(dead_code, reason = "used by the wave 2 views")]
     PlaySongs {
         songs: Vec<Song>,
         song_id: Option<String>,

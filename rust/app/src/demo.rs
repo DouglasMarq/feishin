@@ -6,9 +6,9 @@ use std::sync::{Arc, Mutex};
 use async_trait::async_trait;
 use feishin_api::{ApiError, Credential, MusicServer, Result, StreamOptions};
 use feishin_core::model::{
-    Album, AlbumDetail, AlbumListQuery, Artist, ArtistDetail, ArtistListQuery, ArtistRef, Genre,
-    ItemKind, MusicFolder, Page, Paging, Playlist, SearchResults, ServerConfig, ServerPlayQueue,
-    ServerType, Song, SongListQuery, SongSort, SortOrder,
+    Album, AlbumDetail, AlbumListQuery, Artist, ArtistDetail, ArtistListQuery, ArtistRef,
+    ArtistSort, Genre, ItemKind, MusicFolder, Page, Paging, Playlist, SearchResults, ServerConfig,
+    ServerPlayQueue, ServerType, Song, SongListQuery, SongSort, SortOrder,
 };
 
 pub const DEMO_SONG_COUNT: usize = 20_000;
@@ -268,17 +268,37 @@ impl FakeServer {
         }
     }
 
+    fn artist_albums(&self, artist: usize) -> impl Iterator<Item = usize> {
+        (0..self.album_count()).filter(move |&a| Self::album_artist(a) == artist)
+    }
+
     fn artist_at(&self, artist: usize) -> Artist {
+        let albums: Vec<usize> = self.artist_albums(artist).collect();
+        let songs = albums
+            .iter()
+            .map(|&a| self.album_at(a).song_count)
+            .sum::<u32>();
+        let hash = mix(artist as u64 ^ 0xb10);
+        let name = Self::artist_name(artist);
         Artist {
             id: format!("artist-{artist}"),
             server_id: self.config.id.clone(),
-            name: Self::artist_name(artist),
-            album_count: None,
-            song_count: None,
-            cover_art_id: None,
-            favorite: false,
-            user_rating: None,
-            biography: None,
+            album_count: Some(albums.len() as u32),
+            song_count: Some(songs),
+            cover_art_id: Some(format!("ar-{artist}")),
+            favorite: hash.is_multiple_of(5),
+            user_rating: Some((hash >> 8) as u8 % 6).filter(|r| *r > 0),
+            biography: Some(format!(
+                "<p>{name} is a {} artist known for <i>{}</i>.</p><p>Over {} albums, {name} moved \
+                 from small &amp; noisy rooms to large stages. <a href=\"https://www.last.fm\">Read \
+                 more on Last.fm</a></p>",
+                GENRES[(hash % GENRES.len() as u64) as usize].to_lowercase(),
+                albums
+                    .first()
+                    .map_or_else(|| "nothing yet".to_owned(), |&a| Self::album_name(a)),
+                albums.len()
+            )),
+            name,
         }
     }
 
@@ -447,24 +467,53 @@ impl MusicServer for FakeServer {
         })
     }
 
-    async fn artist_list(&self, _query: &ArtistListQuery, paging: Paging) -> Result<Page<Artist>> {
-        Ok(Self::page(
-            (0..ARTIST_COUNT).map(|a| self.artist_at(a)),
-            paging,
-        ))
+    async fn artist_list(&self, query: &ArtistListQuery, paging: Paging) -> Result<Page<Artist>> {
+        let search = query.search.as_deref().map(str::to_lowercase);
+        let mut artists: Vec<Artist> = (0..ARTIST_COUNT)
+            .map(|a| self.artist_at(a))
+            .filter(|a| query.favorite.is_none_or(|favorite| a.favorite == favorite))
+            .filter(|a| {
+                search
+                    .as_deref()
+                    .is_none_or(|search| a.name.to_lowercase().contains(search))
+            })
+            .collect();
+        match query.sort {
+            ArtistSort::Name => artists.sort_by_key(|a| a.name.to_lowercase()),
+            ArtistSort::AlbumCount => artists.sort_by_key(|a| a.album_count),
+            ArtistSort::SongCount => artists.sort_by_key(|a| a.song_count),
+            ArtistSort::Rating => artists.sort_by_key(|a| a.user_rating),
+            ArtistSort::Favorited => artists.sort_by_key(|a| a.favorite),
+            ArtistSort::PlayCount | ArtistSort::Random => {
+                artists.sort_by_key(|a| mix(parse_index(&a.id, "artist-").unwrap_or(0) as u64));
+            }
+        }
+        if query.order == SortOrder::Desc {
+            artists.reverse();
+        }
+        let mut page = Self::page(artists.into_iter(), paging);
+        page.total_count = None;
+        Ok(page)
     }
 
     async fn artist(&self, id: &str) -> Result<ArtistDetail> {
         let artist = parse_index(id, "artist-")
             .filter(|&a| a < ARTIST_COUNT)
             .ok_or(ApiError::NotFound)?;
+        let mut top_songs: Vec<Song> = self
+            .artist_albums(artist)
+            .flat_map(|a| a * SONGS_PER_ALBUM..((a + 1) * SONGS_PER_ALBUM).min(self.song_count))
+            .map(|i| self.song_at(i))
+            .collect();
+        top_songs.sort_by_key(|song| std::cmp::Reverse(song.play_count));
+        top_songs.truncate(20);
         Ok(ArtistDetail {
             artist: self.artist_at(artist),
-            albums: (0..self.album_count())
-                .filter(|&a| Self::album_artist(a) == artist)
+            albums: self
+                .artist_albums(artist)
                 .map(|a| self.album_at(a))
                 .collect(),
-            top_songs: Vec::new(),
+            top_songs,
         })
     }
 
