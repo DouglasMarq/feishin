@@ -262,7 +262,7 @@ impl FakeServer {
             cover_art_id: Some(format!("al-{album}")),
             play_count: 0,
             user_rating: None,
-            favorite: false,
+            favorite: mix(album as u64 ^ 0xfa).is_multiple_of(7),
             created_at: None,
             last_played_at: None,
         }
@@ -276,10 +276,21 @@ impl FakeServer {
             album_count: None,
             song_count: None,
             cover_art_id: None,
-            favorite: false,
+            favorite: mix(artist as u64 ^ 0xfa).is_multiple_of(7),
             user_rating: None,
             biography: None,
         }
+    }
+
+    fn album_matches(&self, album: usize, query: &AlbumListQuery) -> bool {
+        query
+            .favorite
+            .is_none_or(|favorite| favorite == self.album_at(album).favorite)
+            && (query.genre_ids.is_empty()
+                || query.genre_ids.contains(&format!(
+                    "genre-{}",
+                    Self::song_genre(album * SONGS_PER_ALBUM)
+                )))
     }
 
     fn matches(&self, index: usize, query: &SongListQuery, search: Option<&str>) -> bool {
@@ -424,15 +435,20 @@ impl MusicServer for FakeServer {
         Ok(Vec::new())
     }
 
-    async fn album_list(&self, _query: &AlbumListQuery, paging: Paging) -> Result<Page<Album>> {
+    async fn album_list(&self, query: &AlbumListQuery, paging: Paging) -> Result<Page<Album>> {
+        let albums: Vec<usize> = (0..self.album_count())
+            .filter(|&a| self.album_matches(a, query))
+            .collect();
         Ok(Self::page(
-            (0..self.album_count()).map(|a| self.album_at(a)),
+            albums.into_iter().map(|a| self.album_at(a)),
             paging,
         ))
     }
 
-    async fn album_count(&self, _query: &AlbumListQuery) -> Result<usize> {
-        Ok(self.album_count())
+    async fn album_count(&self, query: &AlbumListQuery) -> Result<usize> {
+        Ok((0..self.album_count())
+            .filter(|&a| self.album_matches(a, query))
+            .count())
     }
 
     async fn album(&self, id: &str) -> Result<AlbumDetail> {
@@ -447,11 +463,12 @@ impl MusicServer for FakeServer {
         })
     }
 
-    async fn artist_list(&self, _query: &ArtistListQuery, paging: Paging) -> Result<Page<Artist>> {
-        Ok(Self::page(
-            (0..ARTIST_COUNT).map(|a| self.artist_at(a)),
-            paging,
-        ))
+    async fn artist_list(&self, query: &ArtistListQuery, paging: Paging) -> Result<Page<Artist>> {
+        let artists: Vec<Artist> = (0..ARTIST_COUNT)
+            .map(|a| self.artist_at(a))
+            .filter(|a| query.favorite.is_none_or(|favorite| favorite == a.favorite))
+            .collect();
+        Ok(Self::page(artists.into_iter(), paging))
     }
 
     async fn artist(&self, id: &str) -> Result<ArtistDetail> {
@@ -469,14 +486,22 @@ impl MusicServer for FakeServer {
     }
 
     async fn genre_list(&self) -> Result<Vec<Genre>> {
+        let mut counts = [(0u32, 0u32); GENRES.len()];
+        for album in 0..self.album_count() {
+            let first = album * SONGS_PER_ALBUM;
+            let count = &mut counts[Self::song_genre(first)];
+            count.0 += 1;
+            count.1 += SONGS_PER_ALBUM.min(self.song_count - first) as u32;
+        }
         Ok(GENRES
             .iter()
+            .zip(counts)
             .enumerate()
-            .map(|(i, name)| Genre {
+            .map(|(i, (name, (albums, songs)))| Genre {
                 id: format!("genre-{i}"),
                 name: (*name).to_owned(),
-                song_count: None,
-                album_count: None,
+                song_count: Some(songs),
+                album_count: Some(albums),
             })
             .collect())
     }
