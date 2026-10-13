@@ -3,7 +3,7 @@ use feishin_core::model::{Album, AlbumListQuery, Page, Paging, SortOrder};
 
 use crate::NavidromeServer;
 use crate::catalog::SUBSONIC_MAX_ITEMS;
-use crate::catalog::paging::subsonic_page;
+use crate::catalog::paging::{count_by_paging, subsonic_page};
 use crate::query::{QueryParams, SubsonicAlbumListType};
 use crate::subsonic;
 
@@ -96,15 +96,11 @@ impl NavidromeServer {
         query: &AlbumListQuery,
         range: YearRange,
     ) -> Result<usize> {
-        let mut counted = 0;
-        loop {
-            let params = by_year_params(query, range, counted, SUBSONIC_MAX_ITEMS);
-            let received = self.albums_by_year(&params, query).await?.len();
-            counted += received;
-            if received < SUBSONIC_MAX_ITEMS {
-                return Ok(counted);
-            }
-        }
+        count_by_paging(SUBSONIC_MAX_ITEMS, |start_index| async move {
+            let params = by_year_params(query, range, start_index, SUBSONIC_MAX_ITEMS);
+            Ok(self.albums_by_year(&params, query).await?.len())
+        })
+        .await
     }
 
     async fn albums_by_year(
