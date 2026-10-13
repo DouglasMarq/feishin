@@ -6,6 +6,7 @@ mod controller;
 mod covers;
 mod demo;
 mod discord;
+mod identity;
 mod library;
 mod list_stream;
 mod media;

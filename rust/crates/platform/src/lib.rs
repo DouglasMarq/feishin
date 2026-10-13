@@ -2,7 +2,7 @@ mod discord;
 mod mpris;
 
 pub use discord::{DEFAULT_DISCORD_CLIENT_ID, DiscordDisplayType, DiscordOptions, DiscordPresence};
-pub use mpris::MediaControls;
+pub use mpris::{MediaControls, MediaIdentity};
 
 #[derive(Debug, thiserror::Error)]
 pub enum PlatformError {

@@ -37,21 +37,28 @@ struct MprisPlayer {
     core: Arc<MprisPlayerCore>,
 }
 
+#[derive(Debug, Clone, Copy)]
+pub struct MediaIdentity<'text> {
+    pub name: &'text str,
+    pub desktop_entry: &'text str,
+}
+
 pub struct MediaControls {
     updates: mpsc::UnboundedSender<Update>,
 }
 
 impl MediaControls {
     pub fn new(
-        app_name: &str,
+        identity: MediaIdentity<'_>,
         on_event: Box<dyn Fn(MediaControlEvent) + Send + Sync>,
     ) -> Result<Self> {
         let (updates, update_receiver) = mpsc::unbounded_channel();
         let (ready_sender, ready_receiver) = std_mpsc::sync_channel(1);
         let player = MprisPlayer {
             core: Arc::new(MprisPlayerCore {
-                identity: app_name.to_owned(),
-                bus_suffix: bus_suffix(app_name),
+                identity: identity.name.to_owned(),
+                bus_suffix: bus_suffix(identity.name),
+                desktop_entry: identity.desktop_entry.to_owned(),
                 snapshot: Mutex::new(PlaybackSnapshot::new()),
                 on_event,
                 updates: updates.downgrade(),

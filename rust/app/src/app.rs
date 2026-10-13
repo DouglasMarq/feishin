@@ -269,6 +269,7 @@ pub fn run(mode: Mode) -> Result<()> {
     let settings = load_settings_or_default(backends.store.as_ref());
 
     let window = AppWindow::new().context("creating the window")?;
+    crate::identity::announce_xdg_app_id();
     let (commands, receiver) = mpsc::unbounded_channel();
     let context = app_context(&runtime, backends, &commands);
     ui::install(&window, &context, &settings);

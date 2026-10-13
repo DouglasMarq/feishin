@@ -6,7 +6,9 @@ use std::process::{Child, Command, Stdio};
 use std::sync::mpsc;
 use std::time::Duration;
 
-use feishin_platform::{MediaControlEvent, MediaControls, NowPlaying, PlaybackStatus};
+use feishin_platform::{
+    MediaControlEvent, MediaControls, MediaIdentity, NowPlaying, PlaybackStatus,
+};
 use zbus::fdo::PropertiesProxy;
 use zbus::names::InterfaceName;
 use zbus::zvariant::{OwnedValue, Value};
@@ -14,6 +16,7 @@ use zbus::zvariant::{OwnedValue, Value};
 const OBJECT_PATH: &str = "/org/mpris/MediaPlayer2";
 const ROOT_INTERFACE: &str = "org.mpris.MediaPlayer2";
 const PLAYER_INTERFACE: &str = "org.mpris.MediaPlayer2.Player";
+const TEST_DESKTOP_ENTRY: &str = "org.example.feishin.test";
 const RECEIVE_TIMEOUT: Duration = Duration::from_secs(5);
 const STATUS_POLL_INTERVAL: Duration = Duration::from_millis(20);
 
@@ -144,6 +147,9 @@ async fn assert_published_metadata(properties: &PropertiesProxy<'_>) {
 async fn assert_published_state(properties: &PropertiesProxy<'_>, app_name: &str) {
     let identity = String::try_from(get(properties, ROOT_INTERFACE, "Identity").await).unwrap();
     assert_eq!(identity, app_name);
+    let desktop_entry =
+        String::try_from(get(properties, ROOT_INTERFACE, "DesktopEntry").await).unwrap();
+    assert_eq!(desktop_entry, TEST_DESKTOP_ENTRY);
 
     wait_for_status(properties, "Paused").await;
     assert_published_metadata(properties).await;
@@ -225,7 +231,10 @@ fn mpris_registers_and_dispatches_events() {
 
     let (event_sender, events) = mpsc::channel();
     let controls = MediaControls::new(
-        &app_name,
+        MediaIdentity {
+            name: &app_name,
+            desktop_entry: TEST_DESKTOP_ENTRY,
+        },
         Box::new(move |event| {
             let _ = event_sender.send(event);
         }),

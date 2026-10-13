@@ -30,6 +30,7 @@ impl AppliedUpdate {
 pub(super) struct MprisPlayerCore {
     pub(super) identity: String,
     pub(super) bus_suffix: String,
+    pub(super) desktop_entry: String,
     pub(super) snapshot: Mutex<PlaybackSnapshot>,
     pub(super) on_event: EventCallback,
     pub(super) updates: mpsc::WeakUnboundedSender<Update>,
@@ -153,6 +154,7 @@ mod tests {
         let core = MprisPlayerCore {
             identity: "Feishin".to_owned(),
             bus_suffix: "feishin".to_owned(),
+            desktop_entry: "org.example.feishin".to_owned(),
             snapshot: Mutex::new(PlaybackSnapshot::new()),
             on_event,
             updates: update_sender.downgrade(),
