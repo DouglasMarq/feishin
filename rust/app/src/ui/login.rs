@@ -3,6 +3,7 @@ use std::sync::Arc;
 use anyhow::{Result, anyhow};
 use feishin_api::MusicServer;
 use feishin_core::model::{ServerConfig, ServerType};
+use feishin_storage::feishin_import::ImportedServer;
 use slint::ComponentHandle;
 
 use super::{AppState, AppWindow, Context, LoginState, Page, on_ui, tracks};
@@ -19,21 +20,17 @@ fn server_type(index: i32) -> ServerType {
 fn new_server_id() -> String {
     let nanos = std::time::SystemTime::now()
         .duration_since(std::time::UNIX_EPOCH)
-        .map(|d| d.as_nanos())
+        .map(|elapsed| elapsed.as_nanos())
         .unwrap_or_default();
     format!("{nanos:x}")
 }
 
-/// Normalizes user input into `ServerConfig::url` form (scheme present, no trailing slash).
 pub fn normalize_url(input: &str) -> Option<String> {
     let url = input.trim().trim_end_matches('/');
-    if url.is_empty() {
-        return None;
-    }
-    if url.contains("://") {
-        Some(url.to_owned())
-    } else {
-        Some(format!("https://{url}"))
+    match (url.is_empty(), url.contains("://")) {
+        (true, _) => None,
+        (false, true) => Some(url.to_owned()),
+        (false, false) => Some(format!("https://{url}")),
     }
 }
 
@@ -42,7 +39,6 @@ fn host_of(url: &str) -> String {
     rest.split('/').next().unwrap_or(rest).to_owned()
 }
 
-/// Switches to the library once `server` is connected.
 pub fn enter_main(window: &AppWindow, server: &Arc<dyn MusicServer>) {
     let app = window.global::<AppState>();
     app.set_server_name(server.config().name.as_str().into());
@@ -65,7 +61,7 @@ fn finish(window: &slint::Weak<AppWindow>, result: Result<Arc<dyn MusicServer>>)
                 login.set_error("".into());
                 enter_main(window, &server);
             }
-            Err(e) => login.set_error(format!("{e:#}").into()),
+            Err(error) => login.set_error(format!("{error:#}").into()),
         }
     });
 }
@@ -76,8 +72,8 @@ async fn login(
     password: String,
 ) -> Result<Arc<dyn MusicServer>> {
     let (server, credential) = ctx.connector.login(config.clone(), &password).await?;
-    if let Err(e) = ctx.store.set_credential(&config.id, &credential) {
-        tracing::warn!("saving credential failed: {e:#}");
+    if let Err(error) = ctx.store.set_credential(&config.id, &credential) {
+        tracing::warn!("saving credential failed: {error:#}");
     }
     ctx.session.set(Some(Arc::clone(&server)));
     ctx.send(Command::Connected {
@@ -87,26 +83,34 @@ async fn login(
     Ok(server)
 }
 
-async fn import(ctx: &Context) -> Result<Arc<dyn MusicServer>> {
-    let store = Arc::clone(&ctx.store);
-    let imported = tokio::task::spawn_blocking(move || store.import_feishin()).await??;
+fn first_restored_session(
+    ctx: &Context,
+    imported: &[ImportedServer],
+) -> Option<(ServerConfig, Arc<dyn MusicServer>)> {
     let mut connected = None;
-    for server in &imported {
+    for server in imported {
         let Some(credential) = &server.credential else {
             continue;
         };
-        if let Err(e) = ctx.store.set_credential(&server.config.id, credential) {
-            tracing::warn!("saving credential failed: {e:#}");
+        if let Err(error) = ctx.store.set_credential(&server.config.id, credential) {
+            tracing::warn!("saving credential failed: {error:#}");
             continue;
         }
-        if connected.is_none() {
-            match ctx.connector.restore(&server.config, credential) {
-                Ok(session) => connected = Some((server.config.clone(), session)),
-                Err(e) => tracing::warn!("{}: {e:#}", server.config.name),
-            }
+        if connected.is_some() {
+            continue;
+        }
+        match ctx.connector.restore(&server.config, credential) {
+            Ok(session) => connected = Some((server.config.clone(), session)),
+            Err(error) => tracing::warn!("{}: {error:#}", server.config.name),
         }
     }
-    let (config, server) = connected.ok_or_else(|| {
+    connected
+}
+
+async fn import(ctx: &Context) -> Result<Arc<dyn MusicServer>> {
+    let store = Arc::clone(&ctx.store);
+    let imported = tokio::task::spawn_blocking(move || store.import_feishin()).await??;
+    let (config, server) = first_restored_session(ctx, &imported).ok_or_else(|| {
         anyhow!(
             "Found {} server(s) in Feishin but none with a usable saved login",
             imported.len()
@@ -115,17 +119,28 @@ async fn import(ctx: &Context) -> Result<Arc<dyn MusicServer>> {
     ctx.session.set(Some(Arc::clone(&server)));
     ctx.send(Command::Connected {
         config,
-        others: imported.into_iter().map(|s| s.config).collect(),
+        others: imported
+            .into_iter()
+            .map(|imported_server| imported_server.config)
+            .collect(),
     });
     Ok(server)
 }
 
-pub fn install(window: &AppWindow, ctx: &Context) {
-    let state = window.global::<LoginState>();
+fn config_from_form(state: &LoginState<'_>, url: String) -> ServerConfig {
+    ServerConfig {
+        id: new_server_id(),
+        name: host_of(&url),
+        server_type: server_type(state.get_server_type()),
+        url,
+        username: state.get_username().trim().to_owned(),
+    }
+}
 
+fn install_login(window: &AppWindow, ctx: &Context) {
     let weak = window.as_weak();
     let login_ctx = ctx.clone();
-    state.on_login(move || {
+    window.global::<LoginState>().on_login(move || {
         let Some(window) = weak.upgrade() else {
             return;
         };
@@ -134,13 +149,7 @@ pub fn install(window: &AppWindow, ctx: &Context) {
             state.set_error("Enter the server URL".into());
             return;
         };
-        let config = ServerConfig {
-            id: new_server_id(),
-            name: host_of(&url),
-            server_type: server_type(state.get_server_type()),
-            url,
-            username: state.get_username().trim().to_owned(),
-        };
+        let config = config_from_form(&state, url);
         let password = state.get_password().to_string();
         state.set_busy(true);
         state.set_error("".into());
@@ -151,10 +160,12 @@ pub fn install(window: &AppWindow, ctx: &Context) {
             finish(&weak, result);
         });
     });
+}
 
+fn install_import(window: &AppWindow, ctx: &Context) {
     let weak = window.as_weak();
     let import_ctx = ctx.clone();
-    state.on_import_feishin(move || {
+    window.global::<LoginState>().on_import_feishin(move || {
         let Some(window) = weak.upgrade() else {
             return;
         };
@@ -168,6 +179,11 @@ pub fn install(window: &AppWindow, ctx: &Context) {
             finish(&weak, result);
         });
     });
+}
+
+pub fn install(window: &AppWindow, ctx: &Context) {
+    install_login(window, ctx);
+    install_import(window, ctx);
 }
 
 #[cfg(test)]

@@ -1,413 +1,12 @@
 import { ComboBox, LineEdit, ListView } from "std-widgets.slint";
 import { Theme, Icons } from "theme.slint";
-import { AppState, Route, TracksState, TrackRow } from "globals.slint";
+import { TracksState } from "globals.slint";
 import { Icon, TooltipAnchor } from "widgets.slint";
+import { HeaderCell } from "track_cells.slint";
+import { TrackRowView } from "track_row.slint";
 
-global Glyphs {
-    out property <string> star: "M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z";
-    out property <string> heart-outline: "M16.5 3c-1.74 0-3.41.81-4.5 2.09C10.91 3.81 9.24 3 7.5 3 4.42 3 2 5.42 2 8.5c0 3.78 3.4 6.86 8.55 11.54L12 21.35l1.45-1.32C18.6 15.36 22 12.28 22 8.5 22 5.42 19.58 3 16.5 3zm-4.4 15.55l-.1.1-.1-.1C7.14 14.24 4 11.39 4 8.5 4 6.5 5.5 5 7.5 5c1.54 0 3.04.99 3.57 2.36h1.87C13.46 5.99 14.96 5 16.5 5c2 0 3.5 1.5 3.5 3.5 0 2.89-3.14 5.74-7.9 10.05z";
-}
-
-export component HeaderCell inherits Rectangle {
-    in property <string> text;
-    /// Shown instead of `text` when set.
-    in property <string> icon;
-    in property <string> column;
-    in property <bool> sortable: true;
-    in property <TextHorizontalAlignment> align: left;
-    in-out property <length> column-width;
-    property <bool> sorted: root.sortable && TracksState.sort-column == root.column;
-    /// Right click, in window coordinates.
-    callback context-menu(length, length);
-    width: root.column-width;
-    height: 32px;
-
-    TooltipAnchor {
-        text: root.sortable ? "Sort by " + root.text + (root.sorted ? (TracksState.sort-desc ? ": descending" : ": ascending") : "") : "";
-        hovered: sort-touch.has-hover;
-    }
-
-    sort-touch := TouchArea {
-        mouse-cursor: root.sortable ? pointer : default;
-        clicked => {
-            if (root.sortable) {
-                TracksState.sort-by(root.column);
-            }
-        }
-        pointer-event(event) => {
-            if (event.kind == PointerEventKind.down && event.button == PointerEventButton.right) {
-                root.context-menu(self.absolute-position.x + self.mouse-x, self.absolute-position.y + self.mouse-y);
-            }
-        }
-    }
-
-    HorizontalLayout {
-        padding-left: 8px;
-        padding-right: 10px;
-        spacing: 2px;
-
-        if root.icon == "": Text {
-            text: root.text;
-            color: root.sorted ? Theme.foreground : Theme.muted;
-            font-size: 12px;
-            font-weight: 600;
-            vertical-alignment: center;
-            horizontal-alignment: root.align;
-            overflow: elide;
-            horizontal-stretch: 1;
-        }
-
-        if root.icon != "": Rectangle {
-            horizontal-stretch: 1;
-
-            Icon {
-                x: 0;
-                path: root.icon;
-                color: root.sorted ? Theme.foreground : Theme.muted;
-                width: 14px;
-                height: 14px;
-            }
-        }
-
-        if root.sorted: Icon {
-            y: (parent.height - self.height) / 2;
-            path: TracksState.sort-desc ? Icons.arrow-down : Icons.arrow-up;
-            color: Theme.foreground;
-            width: 16px;
-            height: 16px;
-        }
-    }
-
-    resize-touch := TouchArea {
-        x: parent.width - 5px;
-        width: 8px;
-        mouse-cursor: col-resize;
-
-        TooltipAnchor {
-            text: "Resize column";
-            hovered: resize-touch.has-hover;
-        }
-
-        moved => {
-            if (self.pressed) {
-                root.column-width = max(40px, root.column-width + self.mouse-x - self.pressed-x);
-            }
-        }
-    }
-}
-
-export component Cell inherits Rectangle {
-    in property <string> text;
-    in property <color> text-color: Theme.muted;
-
-    Text {
-        x: 8px;
-        width: parent.width - 18px;
-        text: root.text;
-        color: root.text-color;
-        vertical-alignment: center;
-        overflow: elide;
-    }
-}
-
-component LinkCell inherits Rectangle {
-    in property <string> text;
-    in property <bool> enabled: true;
-    callback clicked();
-    callback context-menu(length, length);
-
-    label := Text {
-        x: 8px;
-        width: parent.width - 18px;
-        text: root.text;
-        color: link.has-hover && root.enabled ? Theme.foreground : Theme.muted;
-        vertical-alignment: center;
-        overflow: elide;
-    }
-
-    link := TouchArea {
-        x: 8px;
-        width: min(label.preferred-width, parent.width - 18px);
-        enabled: root.enabled;
-        mouse-cursor: pointer;
-        clicked => {
-            root.clicked();
-        }
-        pointer-event(event) => {
-            if (event.kind == PointerEventKind.down && event.button == PointerEventButton.right) {
-                root.context-menu(self.absolute-position.x + self.mouse-x, self.absolute-position.y + self.mouse-y);
-            }
-        }
-    }
-}
-
-component FavoriteCell inherits Rectangle {
-    in property <bool> favorite;
-    in property <bool> row-hover;
-    callback toggle();
-    callback context-menu(length, length);
-
-    if root.favorite || root.row-hover: Icon {
-        x: 8px;
-        path: root.favorite ? Icons.heart : Glyphs.heart-outline;
-        color: root.favorite ? Theme.danger : (touch.has-hover ? Theme.foreground : Theme.muted);
-        width: 16px;
-        height: 16px;
-    }
-
-    TooltipAnchor {
-        x: 4px;
-        width: 24px;
-        text: root.favorite ? "Remove from favorites" : "Add to favorites";
-        hovered: touch.has-hover;
-    }
-
-    touch := TouchArea {
-        x: 4px;
-        width: 24px;
-        mouse-cursor: pointer;
-        clicked => {
-            root.toggle();
-        }
-        pointer-event(event) => {
-            if (event.kind == PointerEventKind.down && event.button == PointerEventButton.right) {
-                root.context-menu(self.absolute-position.x + self.mouse-x, self.absolute-position.y + self.mouse-y);
-            }
-        }
-    }
-}
-
-component RatingCell inherits Rectangle {
-    in property <int> rating;
-    callback rate(int);
-    callback context-menu(length, length);
-    property <int> hovered: -1;
-
-    HorizontalLayout {
-        x: 6px;
-        alignment: start;
-
-        for i in 5: Rectangle {
-            width: 17px;
-
-            Icon {
-                path: Glyphs.star;
-                color: (root.hovered >= 0 ? i <= root.hovered : i < root.rating) ? (root.hovered >= 0 ? Theme.foreground : Theme.muted) : #ffffff1a;
-                width: 15px;
-                height: 15px;
-            }
-
-            TooltipAnchor {
-                text: i + 1 == root.rating ? "Clear rating" : (i == 0 ? "Rate 1 star" : "Rate \{i + 1} stars");
-                hovered: star-touch.has-hover;
-            }
-
-            star-touch := TouchArea {
-                mouse-cursor: pointer;
-                changed has-hover => {
-                    if (self.has-hover) {
-                        root.hovered = i;
-                    } else if (root.hovered == i) {
-                        root.hovered = -1;
-                    }
-                }
-                clicked => {
-                    root.rate(i + 1 == root.rating ? 0 : i + 1);
-                }
-                pointer-event(event) => {
-                    if (event.kind == PointerEventKind.down && event.button == PointerEventButton.right) {
-                        root.context-menu(self.absolute-position.x + self.mouse-x, self.absolute-position.y + self.mouse-y);
-                    }
-                }
-            }
-        }
-    }
-}
-
-export component Skeleton inherits Rectangle {
-    height: 10px;
-    border-radius: 5px;
-    background: Theme.surface-raised;
-}
-
-/// One song row. Album and artist names link to their pages; `select` and `context-menu` are optional.
-export component TrackRowView inherits Rectangle {
-    in property <TrackRow> track;
-    callback play();
-    callback clicked();
-    /// Left press with Ctrl / Shift state.
-    callback select(bool, bool);
-    /// Right press, in window coordinates.
-    callback context-menu(length, length);
-    callback toggle-favorite();
-    callback rate(int);
-    height: 36px;
-    background: root.track.selected ? Theme.selected : (touch.has-hover ? Theme.hover : transparent);
-
-    touch := TouchArea {
-        clicked => {
-            root.clicked();
-        }
-        double-clicked => {
-            if (root.track.loaded) {
-                root.play();
-            }
-        }
-        pointer-event(event) => {
-            if (event.kind == PointerEventKind.down && root.track.loaded) {
-                if (event.button == PointerEventButton.left) {
-                    root.select(event.modifiers.control, event.modifiers.shift);
-                } else if (event.button == PointerEventButton.right) {
-                    root.context-menu(self.absolute-position.x + self.mouse-x, self.absolute-position.y + self.mouse-y);
-                }
-            }
-        }
-
-        HorizontalLayout {
-            Rectangle {
-                width: TracksState.w-index;
-
-                if !touch.has-hover && !root.track.playing: Text {
-                    x: 0;
-                    width: parent.width - 16px;
-                    text: root.track.index;
-                    color: Theme.muted;
-                    horizontal-alignment: right;
-                    vertical-alignment: center;
-                }
-
-                if !touch.has-hover && root.track.playing: Icon {
-                    x: parent.width - 16px - self.width;
-                    path: Icons.note;
-                    color: Theme.primary;
-                    width: 16px;
-                    height: 16px;
-                }
-
-                if touch.has-hover && root.track.loaded: Rectangle {
-                    x: parent.width - 16px - self.width;
-                    width: 24px;
-                    height: 24px;
-                    border-radius: 12px;
-                    background: play-touch.has-hover ? Theme.primary : transparent;
-
-                    Icon {
-                        path: Icons.play;
-                        width: 18px;
-                        height: 18px;
-                    }
-
-                    TooltipAnchor {
-                        text: "Play";
-                        hovered: play-touch.has-hover;
-                    }
-
-                    play-touch := TouchArea {
-                        mouse-cursor: pointer;
-                        clicked => {
-                            root.play();
-                        }
-                    }
-                }
-            }
-
-            if root.track.loaded: HorizontalLayout {
-                Cell {
-                    width: TracksState.w-title;
-                    text: root.track.title;
-                    text-color: root.track.playing ? Theme.primary : Theme.foreground;
-                }
-
-                if TracksState.show-artist: LinkCell {
-                    width: TracksState.w-artist;
-                    text: root.track.artists;
-                    enabled: root.track.artist-id != "";
-                    clicked => {
-                        AppState.navigate(Route.artist-detail, root.track.artist-id);
-                    }
-                    context-menu(x, y) => {
-                        root.context-menu(x, y);
-                    }
-                }
-
-                if TracksState.show-album: LinkCell {
-                    width: TracksState.w-album;
-                    text: root.track.album;
-                    enabled: root.track.album-id != "";
-                    clicked => {
-                        AppState.navigate(Route.album-detail, root.track.album-id);
-                    }
-                    context-menu(x, y) => {
-                        root.context-menu(x, y);
-                    }
-                }
-
-                if TracksState.show-year: Cell {
-                    width: TracksState.w-year;
-                    text: root.track.year;
-                }
-
-                if TracksState.show-plays: Cell {
-                    width: TracksState.w-plays;
-                    text: root.track.plays;
-                }
-
-                if TracksState.show-duration: Cell {
-                    width: TracksState.w-duration;
-                    text: root.track.duration;
-                }
-
-                if TracksState.show-favorite: FavoriteCell {
-                    width: TracksState.w-favorite;
-                    favorite: root.track.favorite;
-                    row-hover: touch.has-hover;
-                    toggle => {
-                        root.toggle-favorite();
-                    }
-                    context-menu(x, y) => {
-                        root.context-menu(x, y);
-                    }
-                }
-
-                if TracksState.show-rating: RatingCell {
-                    width: TracksState.w-rating;
-                    rating: root.track.rating;
-                    rate(value) => {
-                        root.rate(value);
-                    }
-                    context-menu(x, y) => {
-                        root.context-menu(x, y);
-                    }
-                }
-
-                Rectangle { }
-            }
-
-            if !root.track.loaded: HorizontalLayout {
-                spacing: 24px;
-                padding-right: 24px;
-
-                Rectangle {
-                    width: TracksState.w-title - 24px;
-
-                    Skeleton {
-                        width: parent.width * 0.6;
-                    }
-                }
-
-                Rectangle {
-                    width: TracksState.w-artist - 24px;
-
-                    Skeleton {
-                        width: parent.width * 0.5;
-                    }
-                }
-
-                Rectangle { }
-            }
-        }
-    }
-}
+export { Cell, HeaderCell, Skeleton } from "track_cells.slint";
+export { TrackRowView } from "track_row.slint";
 
 component FilterChip inherits Rectangle {
     in property <string> text;
@@ -595,8 +194,8 @@ export component TracksView inherits Rectangle {
                         sortable: false;
                         align: right;
                         column-width <=> TracksState.w-index;
-                        context-menu(x, y) => {
-                            header-menu.show({ x: x - header.absolute-position.x, y: y - header.absolute-position.y });
+                        context-menu(pointer-x, pointer-y) => {
+                            header-menu.show({ x: pointer-x - header.absolute-position.x, y: pointer-y - header.absolute-position.y });
                         }
                     }
 
@@ -604,8 +203,8 @@ export component TracksView inherits Rectangle {
                         text: "Title";
                         column: "title";
                         column-width <=> TracksState.w-title;
-                        context-menu(x, y) => {
-                            header-menu.show({ x: x - header.absolute-position.x, y: y - header.absolute-position.y });
+                        context-menu(pointer-x, pointer-y) => {
+                            header-menu.show({ x: pointer-x - header.absolute-position.x, y: pointer-y - header.absolute-position.y });
                         }
                     }
 
@@ -613,8 +212,8 @@ export component TracksView inherits Rectangle {
                         text: "Artist";
                         column: "artist";
                         column-width <=> TracksState.w-artist;
-                        context-menu(x, y) => {
-                            header-menu.show({ x: x - header.absolute-position.x, y: y - header.absolute-position.y });
+                        context-menu(pointer-x, pointer-y) => {
+                            header-menu.show({ x: pointer-x - header.absolute-position.x, y: pointer-y - header.absolute-position.y });
                         }
                     }
 
@@ -622,8 +221,8 @@ export component TracksView inherits Rectangle {
                         text: "Album";
                         column: "album";
                         column-width <=> TracksState.w-album;
-                        context-menu(x, y) => {
-                            header-menu.show({ x: x - header.absolute-position.x, y: y - header.absolute-position.y });
+                        context-menu(pointer-x, pointer-y) => {
+                            header-menu.show({ x: pointer-x - header.absolute-position.x, y: pointer-y - header.absolute-position.y });
                         }
                     }
 
@@ -631,8 +230,8 @@ export component TracksView inherits Rectangle {
                         text: "Year";
                         column: "year";
                         column-width <=> TracksState.w-year;
-                        context-menu(x, y) => {
-                            header-menu.show({ x: x - header.absolute-position.x, y: y - header.absolute-position.y });
+                        context-menu(pointer-x, pointer-y) => {
+                            header-menu.show({ x: pointer-x - header.absolute-position.x, y: pointer-y - header.absolute-position.y });
                         }
                     }
 
@@ -640,8 +239,8 @@ export component TracksView inherits Rectangle {
                         text: "Plays";
                         column: "plays";
                         column-width <=> TracksState.w-plays;
-                        context-menu(x, y) => {
-                            header-menu.show({ x: x - header.absolute-position.x, y: y - header.absolute-position.y });
+                        context-menu(pointer-x, pointer-y) => {
+                            header-menu.show({ x: pointer-x - header.absolute-position.x, y: pointer-y - header.absolute-position.y });
                         }
                     }
 
@@ -649,8 +248,8 @@ export component TracksView inherits Rectangle {
                         text: "Time";
                         column: "duration";
                         column-width <=> TracksState.w-duration;
-                        context-menu(x, y) => {
-                            header-menu.show({ x: x - header.absolute-position.x, y: y - header.absolute-position.y });
+                        context-menu(pointer-x, pointer-y) => {
+                            header-menu.show({ x: pointer-x - header.absolute-position.x, y: pointer-y - header.absolute-position.y });
                         }
                     }
 
@@ -659,8 +258,8 @@ export component TracksView inherits Rectangle {
                         icon: Icons.heart;
                         column: "favorite";
                         column-width <=> TracksState.w-favorite;
-                        context-menu(x, y) => {
-                            header-menu.show({ x: x - header.absolute-position.x, y: y - header.absolute-position.y });
+                        context-menu(pointer-x, pointer-y) => {
+                            header-menu.show({ x: pointer-x - header.absolute-position.x, y: pointer-y - header.absolute-position.y });
                         }
                     }
 
@@ -668,8 +267,8 @@ export component TracksView inherits Rectangle {
                         text: "Rating";
                         column: "rating";
                         column-width <=> TracksState.w-rating;
-                        context-menu(x, y) => {
-                            header-menu.show({ x: x - header.absolute-position.x, y: y - header.absolute-position.y });
+                        context-menu(pointer-x, pointer-y) => {
+                            header-menu.show({ x: pointer-x - header.absolute-position.x, y: pointer-y - header.absolute-position.y });
                         }
                     }
 
@@ -822,9 +421,9 @@ export component TracksView inherits Rectangle {
                         select(toggle, extend) => {
                             TracksState.select-row(row.index - 1, toggle, extend);
                         }
-                        context-menu(x, y) => {
+                        context-menu(pointer-x, pointer-y) => {
                             TracksState.context-row(row.index - 1);
-                            row-menu.show({ x: x - list-area.absolute-position.x, y: y - list-area.absolute-position.y });
+                            row-menu.show({ x: pointer-x - list-area.absolute-position.x, y: pointer-y - list-area.absolute-position.y });
                         }
                         toggle-favorite => {
                             TracksState.toggle-favorite(row.index - 1);

@@ -5,41 +5,47 @@ use slint::{ComponentHandle, SharedString};
 
 use super::{AppState, AppWindow, Route};
 
-/// Browser-like history for `AppState.navigate` / `AppState.back`, kept on the UI thread.
-pub fn install(window: &AppWindow) {
-    let history: Rc<RefCell<Vec<(Route, SharedString)>>> = Rc::default();
-    let state = window.global::<AppState>();
+type History = Rc<RefCell<Vec<(Route, SharedString)>>>;
 
+fn install_navigate(window: &AppWindow, history: History) {
     let weak = window.as_weak();
-    let stack = Rc::clone(&history);
-    state.on_navigate(move |route, id| {
-        let Some(window) = weak.upgrade() else {
-            return;
-        };
-        let state = window.global::<AppState>();
-        let current = (state.get_route(), state.get_detail_id());
-        if current == (route, id.clone()) {
-            return;
-        }
-        let mut stack = stack.borrow_mut();
-        stack.push(current);
-        state.set_detail_id(id);
-        state.set_route(route);
-        state.set_can_go_back(true);
-    });
+    window
+        .global::<AppState>()
+        .on_navigate(move |route, detail_id| {
+            let Some(window) = weak.upgrade() else {
+                return;
+            };
+            let state = window.global::<AppState>();
+            let current = (state.get_route(), state.get_detail_id());
+            if current == (route, detail_id.clone()) {
+                return;
+            }
+            history.borrow_mut().push(current);
+            state.set_detail_id(detail_id);
+            state.set_route(route);
+            state.set_can_go_back(true);
+        });
+}
 
+fn install_back(window: &AppWindow, history: History) {
     let weak = window.as_weak();
-    state.on_back(move || {
+    window.global::<AppState>().on_back(move || {
         let Some(window) = weak.upgrade() else {
             return;
         };
         let mut stack = history.borrow_mut();
-        let Some((route, id)) = stack.pop() else {
+        let Some((route, detail_id)) = stack.pop() else {
             return;
         };
         let state = window.global::<AppState>();
-        state.set_detail_id(id);
+        state.set_detail_id(detail_id);
         state.set_route(route);
         state.set_can_go_back(!stack.is_empty());
     });
+}
+
+pub fn install(window: &AppWindow) {
+    let history = History::default();
+    install_navigate(window, Rc::clone(&history));
+    install_back(window, history);
 }

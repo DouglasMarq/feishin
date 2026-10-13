@@ -1,5 +1,3 @@
-//! Slint views and the glue between them and the controller. Each view module installs its own callbacks.
-
 use std::sync::Arc;
 
 use feishin_storage::settings::{Settings, UiSettings};
@@ -39,7 +37,6 @@ pub mod search;
 pub mod settings;
 pub mod tracks;
 
-/// Everything the views need to reach the I/O side. Cheap to clone and `Send`.
 #[derive(Clone)]
 pub struct Context {
     pub rt: tokio::runtime::Handle,
@@ -58,16 +55,15 @@ impl Context {
     }
 }
 
-/// Runs `f` on the UI thread if the window still exists.
-pub fn on_ui(window: &slint::Weak<AppWindow>, f: impl FnOnce(&AppWindow) + Send + 'static) {
+pub fn on_ui(window: &slint::Weak<AppWindow>, update: impl FnOnce(&AppWindow) + Send + 'static) {
     let window = window.clone();
     let queued = slint::invoke_from_event_loop(move || {
         if let Some(window) = window.upgrade() {
-            f(&window);
+            update(&window);
         }
     });
-    if let Err(e) = queued {
-        tracing::debug!("UI event loop is gone: {e}");
+    if let Err(error) = queued {
+        tracing::debug!("UI event loop is gone: {error}");
     }
 }
 
@@ -95,7 +91,6 @@ pub fn install(window: &AppWindow, ctx: &Context, settings: &Settings) {
         .set_queue_open(settings.ui.queue_panel_open);
 }
 
-/// UI settings to persist, read back from the window.
 pub fn ui_settings(window: &AppWindow, previous: &UiSettings) -> UiSettings {
     UiSettings {
         track_columns: tracks::columns(window),
@@ -108,13 +103,16 @@ pub fn show_status(window: &AppWindow, message: &str) {
     window.global::<AppState>().set_status(message.into());
 }
 
-pub fn format_duration(ms: u64) -> String {
-    let seconds = ms / 1000;
-    let (hours, minutes, seconds) = (seconds / 3600, seconds / 60 % 60, seconds % 60);
-    if hours > 0 {
-        format!("{hours}:{minutes:02}:{seconds:02}")
-    } else {
-        format!("{minutes}:{seconds:02}")
+pub fn format_duration(duration_ms: u64) -> String {
+    let total_seconds = duration_ms / 1000;
+    let (hours, minutes, seconds) = (
+        total_seconds / 3600,
+        total_seconds / 60 % 60,
+        total_seconds % 60,
+    );
+    match hours {
+        0 => format!("{minutes}:{seconds:02}"),
+        _ => format!("{hours}:{minutes:02}:{seconds:02}"),
     }
 }
 

@@ -1,0 +1,180 @@
+import { Theme, Icons } from "theme.slint";
+import { AppState, Route, TracksState, TrackRow } from "globals.slint";
+import { Icon, TooltipAnchor } from "widgets.slint";
+import { Cell, FavoriteCell, LinkCell, RatingCell, Skeleton } from "track_cells.slint";
+
+export component TrackRowView inherits Rectangle {
+    in property <TrackRow> track;
+    callback play();
+    callback clicked();
+    callback select(bool, bool);
+    callback context-menu(length, length);
+    callback toggle-favorite();
+    callback rate(int);
+    height: 36px;
+    background: root.track.selected ? Theme.selected : (touch.has-hover ? Theme.hover : transparent);
+
+    touch := TouchArea {
+        clicked => {
+            root.clicked();
+        }
+        double-clicked => {
+            if (root.track.loaded) {
+                root.play();
+            }
+        }
+        pointer-event(event) => {
+            if (event.kind == PointerEventKind.down && root.track.loaded) {
+                if (event.button == PointerEventButton.left) {
+                    root.select(event.modifiers.control, event.modifiers.shift);
+                } else if (event.button == PointerEventButton.right) {
+                    root.context-menu(self.absolute-position.x + self.mouse-x, self.absolute-position.y + self.mouse-y);
+                }
+            }
+        }
+
+        HorizontalLayout {
+            Rectangle {
+                width: TracksState.w-index;
+
+                if !touch.has-hover && !root.track.playing: Text {
+                    x: 0;
+                    width: parent.width - 16px;
+                    text: root.track.index;
+                    color: Theme.muted;
+                    horizontal-alignment: right;
+                    vertical-alignment: center;
+                }
+
+                if !touch.has-hover && root.track.playing: Icon {
+                    x: parent.width - 16px - self.width;
+                    path: Icons.note;
+                    color: Theme.primary;
+                    width: 16px;
+                    height: 16px;
+                }
+
+                if touch.has-hover && root.track.loaded: Rectangle {
+                    x: parent.width - 16px - self.width;
+                    width: 24px;
+                    height: 24px;
+                    border-radius: 12px;
+                    background: play-touch.has-hover ? Theme.primary : transparent;
+
+                    Icon {
+                        path: Icons.play;
+                        width: 18px;
+                        height: 18px;
+                    }
+
+                    TooltipAnchor {
+                        text: "Play";
+                        hovered: play-touch.has-hover;
+                    }
+
+                    play-touch := TouchArea {
+                        mouse-cursor: pointer;
+                        clicked => {
+                            root.play();
+                        }
+                    }
+                }
+            }
+
+            if root.track.loaded: HorizontalLayout {
+                Cell {
+                    width: TracksState.w-title;
+                    text: root.track.title;
+                    text-color: root.track.playing ? Theme.primary : Theme.foreground;
+                }
+
+                if TracksState.show-artist: LinkCell {
+                    width: TracksState.w-artist;
+                    text: root.track.artists;
+                    enabled: root.track.artist-id != "";
+                    clicked => {
+                        AppState.navigate(Route.artist-detail, root.track.artist-id);
+                    }
+                    context-menu(pointer-x, pointer-y) => {
+                        root.context-menu(pointer-x, pointer-y);
+                    }
+                }
+
+                if TracksState.show-album: LinkCell {
+                    width: TracksState.w-album;
+                    text: root.track.album;
+                    enabled: root.track.album-id != "";
+                    clicked => {
+                        AppState.navigate(Route.album-detail, root.track.album-id);
+                    }
+                    context-menu(pointer-x, pointer-y) => {
+                        root.context-menu(pointer-x, pointer-y);
+                    }
+                }
+
+                if TracksState.show-year: Cell {
+                    width: TracksState.w-year;
+                    text: root.track.year;
+                }
+
+                if TracksState.show-plays: Cell {
+                    width: TracksState.w-plays;
+                    text: root.track.plays;
+                }
+
+                if TracksState.show-duration: Cell {
+                    width: TracksState.w-duration;
+                    text: root.track.duration;
+                }
+
+                if TracksState.show-favorite: FavoriteCell {
+                    width: TracksState.w-favorite;
+                    favorite: root.track.favorite;
+                    row-hover: touch.has-hover;
+                    toggle => {
+                        root.toggle-favorite();
+                    }
+                    context-menu(pointer-x, pointer-y) => {
+                        root.context-menu(pointer-x, pointer-y);
+                    }
+                }
+
+                if TracksState.show-rating: RatingCell {
+                    width: TracksState.w-rating;
+                    rating: root.track.rating;
+                    rate(value) => {
+                        root.rate(value);
+                    }
+                    context-menu(pointer-x, pointer-y) => {
+                        root.context-menu(pointer-x, pointer-y);
+                    }
+                }
+
+                Rectangle { }
+            }
+
+            if !root.track.loaded: HorizontalLayout {
+                spacing: 24px;
+                padding-right: 24px;
+
+                Rectangle {
+                    width: TracksState.w-title - 24px;
+
+                    Skeleton {
+                        width: parent.width * 0.6;
+                    }
+                }
+
+                Rectangle {
+                    width: TracksState.w-artist - 24px;
+
+                    Skeleton {
+                        width: parent.width * 0.5;
+                    }
+                }
+
+                Rectangle { }
+            }
+        }
+    }
+}

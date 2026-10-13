@@ -1,6 +1,5 @@
 import { Theme } from "theme.slint";
 
-/// One tooltip for the whole window, drawn by `TooltipOverlay` in app.slint.
 export global Tooltip {
     out property <string> text;
     out property <length> anchor-x;
@@ -10,21 +9,21 @@ export global Tooltip {
     out property <bool> visible;
     property <int> serial;
 
-    public function show(text: string, x: length, y: length, width: length, height: length) -> int {
+    public function show(text: string, left: length, top: length, width: length, height: length) -> int {
         self.serial += 1;
         self.text = text;
-        self.anchor-x = x;
-        self.anchor-y = y;
+        self.anchor-x = left;
+        self.anchor-y = top;
         self.anchor-width = width;
         self.anchor-height = height;
         self.visible = text != "";
         self.serial
     }
 
-    public function update(token: int, text: string, x: length, width: length) {
+    public function update(token: int, text: string, left: length, width: length) {
         if (token == self.serial && self.visible) {
             self.text = text;
-            self.anchor-x = x;
+            self.anchor-x = left;
             self.anchor-width = width;
         }
     }
@@ -59,13 +58,10 @@ export component TooltipOverlay inherits Rectangle {
     }
 }
 
-/// Shows `text` in the window tooltip while `hovered` (after a short delay) or immediately while `active`.
-/// Place it inside the element the tooltip describes, sized to it.
 export component TooltipAnchor {
     in property <string> text;
     in property <bool> hovered;
     in property <bool> active;
-    /// When >= 0, the tooltip is centered on this x (relative to the anchor) instead of the anchor's center.
     in property <length> follow-x: -1px;
     property <int> token: -1;
     property <bool> shown;
@@ -160,25 +156,18 @@ export component IconButton inherits Rectangle {
     }
 }
 
-/// Horizontal slider for 0..1 values. `changed` fires while dragging, `committed` on release.
-/// With `scroll-step` > 0 the mouse wheel moves the value by that step (firing both callbacks).
 export component Bar inherits Rectangle {
     in property <float> value;
     in property <float> scroll-step;
-    /// Shown while hovering (after a delay) and immediately while dragging or scrolling.
     in property <string> tooltip;
-    /// Center the tooltip on the pointer instead of the bar (e.g. a seek bar showing the time under the cursor).
     in property <bool> tooltip-follows-pointer;
     out property <bool> dragging: touch.pressed;
     out property <float> hover-value: max(0, min(1, touch.mouse-x / root.width));
     out property <float> drag-preview: root.drag-value;
-    /// True while the user is dragging or wheel-scrolling, i.e. `drag-preview` is ahead of `value`.
     out property <bool> adjusting: root.dragging || root.scrolling;
-    /// True while the bar shows the user's chosen value instead of `value` (dragging or waiting for it to apply).
     out property <bool> holding: root.dragging || root.settling;
     property <bool> scrolling;
     property <float> drag-value;
-    /// After a commit, keep showing `drag-value` until `value` catches up, so the knob does not jump back.
     property <bool> settling;
     property <float> shown: root.dragging || root.settling ? root.drag-value : root.value;
     callback changed(float);
