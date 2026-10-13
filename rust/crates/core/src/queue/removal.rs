@@ -2,16 +2,18 @@ use std::collections::{HashMap, HashSet};
 
 use super::{Queue, Uid};
 
+const SPARE_CAPACITY_FACTOR: usize = 2;
+
 impl Queue {
     pub fn remove(&mut self, uids: &[Uid]) {
         let removed_uids: HashSet<Uid> = uids.iter().copied().collect();
-        if !self
+        let Some(first_removed_index) = self
             .items
             .iter()
-            .any(|item| removed_uids.contains(&item.uid))
-        {
+            .position(|item| removed_uids.contains(&item.uid))
+        else {
             return;
-        }
+        };
         if self
             .current_uid
             .is_some_and(|uid| removed_uids.contains(&uid))
@@ -20,7 +22,10 @@ impl Queue {
         }
         self.reindex_shuffled_order_without(&removed_uids);
         self.items.retain(|item| !removed_uids.contains(&item.uid));
-        self.reindex_all();
+        self.uid_indexes
+            .retain(|uid, _item_index| !removed_uids.contains(uid));
+        self.reindex_from(first_removed_index);
+        self.release_spare_capacity();
         self.interner.release_unused();
         self.bump_revision();
     }
@@ -33,6 +38,18 @@ impl Queue {
         self.bump_revision();
         if let Some(play_order) = &mut self.shuffled_play_order {
             play_order.clear();
+        }
+    }
+
+    fn release_spare_capacity(&mut self) {
+        if self.items.capacity() / SPARE_CAPACITY_FACTOR > self.items.len() {
+            self.items.shrink_to_fit();
+            self.uid_indexes.shrink_to_fit();
+        }
+        if let Some(play_order) = &mut self.shuffled_play_order
+            && play_order.capacity() / SPARE_CAPACITY_FACTOR > play_order.len()
+        {
+            play_order.shrink_to_fit();
         }
     }
 

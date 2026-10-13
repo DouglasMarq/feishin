@@ -1,6 +1,6 @@
 use std::sync::Arc;
 
-use super::support::{assert_invariants, item_ids, song, songs};
+use super::support::{assert_invariants, item_ids, numbered_songs, song, songs};
 use crate::model::{ArtistRef, Song};
 use crate::queue::{Advance, Queue, QueueItem, QueueSnapshot, QueueTrack, RepeatMode};
 
@@ -127,5 +127,42 @@ fn play_uid_finds_items_after_every_kind_of_edit() {
         );
     }
     assert!(queue.play_uid(2).is_none());
+    assert_invariants(&queue);
+}
+
+fn song_on_album(id: &str, album: &str) -> Song {
+    Song {
+        album: Some(album.into()),
+        ..album_song(id)
+    }
+}
+
+#[test]
+fn removing_the_last_track_of_an_album_frees_its_shared_strings() {
+    let mut queue = Queue::with_seed(7);
+    queue.play_now(
+        vec![song_on_album("a", "Kept"), song_on_album("b", "Dropped")],
+        Some("a"),
+    );
+    let album_of = |queue: &Queue, item_index: usize| {
+        Arc::downgrade(queue.items()[item_index].track.album.as_ref().unwrap())
+    };
+    let kept_album = album_of(&queue, 0);
+    let dropped_album = album_of(&queue, 1);
+    queue.remove(&[queue.items()[1].uid]);
+    assert_eq!(dropped_album.strong_count(), 0);
+    assert_eq!(kept_album.strong_count(), 2);
+    assert_invariants(&queue);
+}
+
+#[test]
+fn removing_most_of_a_long_queue_releases_its_spare_capacity() {
+    let mut queue = Queue::with_seed(8);
+    queue.play_now(numbered_songs(1_000), Some("s0"));
+    let removed_uids: Vec<_> = queue.items().iter().skip(10).map(|item| item.uid).collect();
+    queue.remove(&removed_uids);
+    assert_eq!(queue.len(), 10);
+    assert!(queue.items.capacity() < 100);
+    assert!(queue.uid_indexes.capacity() < 100);
     assert_invariants(&queue);
 }
