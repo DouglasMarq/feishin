@@ -15,7 +15,7 @@ export component HeaderCell inherits Rectangle {
     in property <TextHorizontalAlignment> align: left;
     in-out property <length> column-width;
     property <bool> sorted: root.sortable && TracksState.sort-column == root.column;
-    callback context-menu(length, length);
+    callback context-menu(window-x: length, window-y: length);
     width: root.column-width;
     height: 32px;
 
@@ -111,7 +111,7 @@ export component LinkCell inherits Rectangle {
     in property <string> text;
     in property <bool> enabled: true;
     callback clicked();
-    callback context-menu(length, length);
+    callback context-menu(window-x: length, window-y: length);
 
     label := Text {
         x: 8px;
@@ -142,7 +142,7 @@ export component FavoriteCell inherits Rectangle {
     in property <bool> favorite;
     in property <bool> row-hover;
     callback toggle();
-    callback context-menu(length, length);
+    callback context-menu(window-x: length, window-y: length);
 
     if root.favorite || root.row-hover: Icon {
         x: 8px;
@@ -176,8 +176,8 @@ export component FavoriteCell inherits Rectangle {
 
 export component RatingCell inherits Rectangle {
     in property <int> rating;
-    callback rate(int);
-    callback context-menu(length, length);
+    callback rate(rating: int);
+    callback context-menu(window-x: length, window-y: length);
     property <int> hovered: -1;
 
     HorizontalLayout {

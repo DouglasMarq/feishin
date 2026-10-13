@@ -170,8 +170,8 @@ export component Bar inherits Rectangle {
     property <float> drag-value;
     property <bool> settling;
     property <float> shown: root.dragging || root.settling ? root.drag-value : root.value;
-    callback changed(float);
-    callback committed(float);
+    callback changed(value: float);
+    callback committed(value: float);
     height: 16px;
 
     track := Rectangle {

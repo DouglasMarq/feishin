@@ -68,9 +68,9 @@ export global TracksState {
     in-out property <length> w-year: 64px;
     in-out property <length> w-plays: 64px;
     in-out property <length> w-duration: 72px;
-    callback search-edited(string);
-    callback sort-by(string);
-    callback play-row(int);
+    callback search-edited(text: string);
+    callback sort-by(column: string);
+    callback play-row(row-index: int);
     in-out property <bool> show-artist: true;
     in-out property <bool> show-album: true;
     in-out property <bool> show-year: true;
@@ -95,12 +95,12 @@ export global TracksState {
     callback play-selected();
     callback queue-selected(play-next: bool);
     callback add-selected-to-playlist();
-    callback favorite-selected(bool);
-    callback rate-selected(int);
+    callback favorite-selected(favorite: bool);
+    callback rate-selected(rating: int);
     callback go-to-album();
     callback go-to-artist();
-    callback toggle-favorite(int);
-    callback rate-row(int, int);
+    callback toggle-favorite(row-index: int);
+    callback rate-row(row-index: int, rating: int);
 }
 
 export global PlayerState {
@@ -125,8 +125,8 @@ export global PlayerState {
     callback toggle-pause();
     callback next();
     callback previous();
-    callback seek(int);
-    callback set-volume(int);
+    callback seek(position-ms: int);
+    callback set-volume(volume: int);
     callback toggle-mute();
     callback toggle-shuffle();
     callback cycle-repeat();
@@ -134,7 +134,7 @@ export global PlayerState {
 
 export global QueueState {
     in property <[QueueRow]> rows;
-    callback play(string);
-    callback remove(string);
-    callback move(int, int);
+    callback play(uid: string);
+    callback remove(uid: string);
+    callback move(from-index: int, to-index: int);
 }

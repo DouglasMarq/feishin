@@ -33,14 +33,17 @@ fn install_back(window: &AppWindow, history: History) {
         let Some(window) = weak.upgrade() else {
             return;
         };
-        let mut stack = history.borrow_mut();
-        let Some((route, detail_id)) = stack.pop() else {
+        let (previous, has_older_entries) = {
+            let mut stack = history.borrow_mut();
+            (stack.pop(), !stack.is_empty())
+        };
+        let Some((route, detail_id)) = previous else {
             return;
         };
         let state = window.global::<AppState>();
         state.set_detail_id(detail_id);
         state.set_route(route);
-        state.set_can_go_back(!stack.is_empty());
+        state.set_can_go_back(has_older_entries);
     });
 }
 

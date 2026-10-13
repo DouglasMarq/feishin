@@ -7,10 +7,10 @@ export component TrackRowView inherits Rectangle {
     in property <TrackRow> track;
     callback play();
     callback clicked();
-    callback select(bool, bool);
-    callback context-menu(length, length);
+    callback select(ctrl-held: bool, shift-held: bool);
+    callback context-menu(window-x: length, window-y: length);
     callback toggle-favorite();
-    callback rate(int);
+    callback rate(rating: int);
     height: 36px;
     background: root.track.selected ? Theme.selected : (touch.has-hover ? Theme.hover : transparent);
 

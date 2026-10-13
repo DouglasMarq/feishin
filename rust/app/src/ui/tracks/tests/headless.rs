@@ -23,6 +23,13 @@ use crate::ui::{AppState, AppWindow, Context, Page, Route, TrackRow, TracksState
 type Jobs = Arc<Mutex<Vec<Box<dyn FnOnce() + Send>>>>;
 
 const SIZE: PhysicalSize = PhysicalSize::new(1280, 820);
+const TOOLBAR_HEIGHT: f32 = 76.0;
+const COLUMN_HEADER_HEIGHT: f32 = 33.0;
+const TRACK_ROW_HEIGHT: f32 = 36.0;
+
+fn vertical_center_of_row(row_index: u8) -> f32 {
+    TOOLBAR_HEIGHT + COLUMN_HEADER_HEIGHT + TRACK_ROW_HEIGHT * (f32::from(row_index) + 0.5)
+}
 
 struct TestPlatform {
     window: Rc<MinimalSoftwareWindow>,
@@ -157,9 +164,9 @@ fn assert_songs_and_genres_load(harness: &Harness) {
 }
 
 fn assert_pointer_selection(harness: &Harness) {
-    harness.click(PointerEventButton::Left, 160.0);
+    harness.click(PointerEventButton::Left, vertical_center_of_row(0));
     assert!(harness.row(0).selected);
-    harness.click(PointerEventButton::Right, 304.0);
+    harness.click(PointerEventButton::Right, vertical_center_of_row(4));
     assert_eq!(harness.tracks().get_selected_count(), 1);
     assert!(harness.row(4).selected && !harness.row(0).selected);
     assert!(harness.pump(|| true));
