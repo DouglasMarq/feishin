@@ -18,6 +18,7 @@ import { FavoritesView } from "favorites.slint";
 import { SearchView } from "search.slint";
 import { SettingsView } from "settings.slint";
 import { NowPlayingView } from "now_playing.slint";
+import { PlaylistPicker, PlaylistPickerState } from "playlist_picker.slint";
 
 export { Actions, AppState, LoginState, Page, PlayerState, QueueRow, QueueState, Route, TrackRow, TracksState } from "globals.slint";
 export { HomeState } from "home.slint";
@@ -32,6 +33,7 @@ export { FavoritesState } from "favorites.slint";
 export { SearchState } from "search.slint";
 export { SettingsState } from "settings.slint";
 export { NowPlayingState } from "now_playing.slint";
+export { PlaylistPickerState } from "playlist_picker.slint";
 
 
 export component AppWindow inherits Window {
@@ -99,6 +101,8 @@ export component AppWindow inherits Window {
 
             PlayerBar { }
         }
+
+        if PlaylistPickerState.open: PlaylistPicker { }
 
         if AppState.status != "": Rectangle {
             x: parent.width - self.width - 20px;

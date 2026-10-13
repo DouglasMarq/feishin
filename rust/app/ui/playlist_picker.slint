@@ -1,0 +1,290 @@
+import { Button, LineEdit, ListView } from "std-widgets.slint";
+import { Theme, Icons } from "theme.slint";
+import { Icon } from "widgets.slint";
+
+export struct PickerRow {
+    id: string,
+    name: string,
+    info: string,
+}
+
+/// Full-window backdrop with a centered card. Clicking outside or pressing Escape cancels.
+export component Modal inherits Rectangle {
+    in property <string> title;
+    in property <length> card-width: 420px;
+    callback cancel();
+    forward-focus: scope;
+    background: #000000a6;
+
+    scope := FocusScope {
+        key-pressed(event) => {
+            if (event.text == Key.Escape) {
+                root.cancel();
+                return accept;
+            }
+            return reject;
+        }
+
+        TouchArea {
+            clicked => {
+                root.cancel();
+            }
+        }
+
+        card := Rectangle {
+            width: min(root.card-width, root.width - 40px);
+            height: min(layout.preferred-height, root.height - 40px);
+            x: (root.width - self.width) / 2;
+            y: (root.height - self.height) / 2;
+            border-radius: 8px;
+            background: Theme.surface;
+            border-width: 1px;
+            border-color: Theme.border;
+            clip: true;
+
+            TouchArea { }
+
+            layout := VerticalLayout {
+                padding: 20px;
+                spacing: 14px;
+
+                Text {
+                    text: root.title;
+                    font-size: 16px;
+                    font-weight: 700;
+                    color: Theme.foreground;
+                    overflow: elide;
+                }
+
+                @children
+            }
+        }
+    }
+}
+
+/// Right-aligned row of dialog buttons.
+export component DialogButtons inherits HorizontalLayout {
+    in property <string> confirm-text: "OK";
+    in property <bool> confirm-enabled: true;
+    in property <bool> danger;
+    callback confirm();
+    callback cancel();
+    spacing: 8px;
+    alignment: end;
+
+    Button {
+        text: "Cancel";
+        clicked => {
+            root.cancel();
+        }
+    }
+
+    Rectangle {
+        min-width: confirm-text.preferred-width + 28px;
+        height: 32px;
+        border-radius: 4px;
+        background: root.danger ? Theme.danger : Theme.primary;
+        opacity: root.confirm-enabled ? (confirm-touch.has-hover ? 0.85 : 1) : 0.4;
+
+        confirm-text := Text {
+            text: root.confirm-text;
+            color: white;
+            font-weight: 600;
+        }
+
+        confirm-touch := TouchArea {
+            enabled: root.confirm-enabled;
+            mouse-cursor: pointer;
+            clicked => {
+                root.confirm();
+            }
+        }
+    }
+}
+
+/// A dialog asking for a playlist name.
+export component NameDialog inherits Modal {
+    in property <string> initial-name;
+    in property <bool> busy;
+    callback submit(string);
+    title: "New playlist";
+
+    init => {
+        name-edit.focus();
+    }
+
+    name-edit := LineEdit {
+        placeholder-text: "Playlist name";
+        text: root.initial-name;
+        accepted(text) => {
+            if (!root.busy && text != "") {
+                root.submit(text);
+            }
+        }
+    }
+
+    DialogButtons {
+        confirm-text: root.busy ? "Creating..." : "Create";
+        confirm-enabled: !root.busy && name-edit.text != "";
+        cancel => {
+            root.cancel();
+        }
+        confirm => {
+            root.submit(name-edit.text);
+        }
+    }
+}
+
+export global PlaylistPickerState {
+    in property <bool> open;
+    in property <[PickerRow]> rows;
+    in property <int> song-count;
+    in property <bool> loading;
+    in property <bool> busy;
+    in-out property <bool> creating;
+    in-out property <string> filter;
+    callback filter-edited(string);
+    callback pick(string);
+    callback create(string);
+    callback cancel();
+}
+
+component PickerItem inherits Rectangle {
+    in property <string> icon;
+    in property <string> name;
+    in property <string> info;
+    in property <bool> enabled: true;
+    callback clicked();
+    height: 44px;
+    border-radius: 4px;
+    background: touch.has-hover && root.enabled ? Theme.hover : transparent;
+    opacity: root.enabled ? 1 : 0.5;
+
+    HorizontalLayout {
+        padding-left: 10px;
+        padding-right: 10px;
+        spacing: 10px;
+
+        Icon {
+            y: (parent.height - self.height) / 2;
+            path: root.icon;
+            color: Theme.muted;
+            width: 18px;
+            height: 18px;
+        }
+
+        Text {
+            text: root.name;
+            color: Theme.foreground;
+            vertical-alignment: center;
+            overflow: elide;
+            horizontal-stretch: 1;
+        }
+
+        Text {
+            text: root.info;
+            color: Theme.muted;
+            font-size: 12px;
+            vertical-alignment: center;
+        }
+    }
+
+    touch := TouchArea {
+        enabled: root.enabled;
+        mouse-cursor: pointer;
+        clicked => {
+            root.clicked();
+        }
+    }
+}
+
+component PickerList inherits Modal {
+    title: PlaylistPickerState.song-count == 1 ? "Add 1 song to playlist" : "Add " + PlaylistPickerState.song-count + " songs to playlist";
+    card-width: 460px;
+
+    init => {
+        filter-edit.focus();
+    }
+
+    filter-edit := LineEdit {
+        placeholder-text: "Filter playlists";
+        text: PlaylistPickerState.filter;
+        edited(text) => {
+            PlaylistPickerState.filter = text;
+            PlaylistPickerState.filter-edited(text);
+        }
+        accepted => {
+            if (PlaylistPickerState.rows.length == 1 && !PlaylistPickerState.busy) {
+                PlaylistPickerState.pick(PlaylistPickerState.rows[0].id);
+            }
+        }
+    }
+
+    PickerItem {
+        icon: Icons.playlist;
+        name: "New playlist";
+        enabled: !PlaylistPickerState.busy;
+        clicked => {
+            PlaylistPickerState.creating = true;
+        }
+    }
+
+    Rectangle {
+        height: 1px;
+        background: Theme.border;
+    }
+
+    Rectangle {
+        height: 300px;
+
+        ListView {
+            for row in PlaylistPickerState.rows: PickerItem {
+                icon: Icons.note;
+                name: row.name;
+                info: row.info;
+                enabled: !PlaylistPickerState.busy;
+                clicked => {
+                    PlaylistPickerState.pick(row.id);
+                }
+            }
+        }
+
+        if PlaylistPickerState.rows.length == 0: Text {
+            text: PlaylistPickerState.loading ? "Loading playlists..." : "No playlists found";
+            color: Theme.muted;
+            horizontal-alignment: center;
+            vertical-alignment: center;
+        }
+    }
+
+    HorizontalLayout {
+        alignment: end;
+
+        Button {
+            text: "Cancel";
+            clicked => {
+                PlaylistPickerState.cancel();
+            }
+        }
+    }
+}
+
+/// Overlay behind `Actions.add-to-playlist`: pick an existing playlist or create one.
+export component PlaylistPicker inherits Rectangle {
+    if !PlaylistPickerState.creating: PickerList {
+        cancel => {
+            PlaylistPickerState.cancel();
+        }
+    }
+
+    if PlaylistPickerState.creating: NameDialog {
+        initial-name: PlaylistPickerState.filter;
+        busy: PlaylistPickerState.busy;
+        cancel => {
+            PlaylistPickerState.creating = false;
+        }
+        submit(name) => {
+            PlaylistPickerState.create(name);
+        }
+    }
+}

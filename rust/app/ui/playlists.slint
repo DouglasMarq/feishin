@@ -1,17 +1,340 @@
-import { Theme } from "theme.slint";
-import { AppState } from "globals.slint";
+import { Button, ListView } from "std-widgets.slint";
+import { Theme, Icons } from "theme.slint";
+import { AppState, Route } from "globals.slint";
+import { Icon, IconButton } from "widgets.slint";
+import { Cell, Skeleton } from "tracks.slint";
+import { DialogButtons, Modal, NameDialog } from "playlist_picker.slint";
+
+export struct PlaylistRow {
+    id: string,
+    name: string,
+    songs: string,
+    duration: string,
+    owner: string,
+    cover: image,
+    has-cover: bool,
+}
 
 export global PlaylistsState {
+    in property <[PlaylistRow]> rows;
+    in property <bool> loading;
+    in property <bool> busy;
+    in-out property <bool> creating;
+    in-out property <string> delete-id;
+    in-out property <string> delete-name;
     callback load(string);
+    /// Plays a playlist: `how` is "now", "next" or "last".
+    callback play(string, string);
+    callback create(string);
+    callback delete(string);
+}
+
+component Header inherits Rectangle {
+    in property <string> text;
+    in property <length> inset: 8px;
+
+    Text {
+        x: root.inset;
+        width: parent.width - root.inset;
+        text: root.text;
+        color: Theme.muted;
+        font-size: 12px;
+        font-weight: 600;
+        vertical-alignment: center;
+        overflow: elide;
+    }
+}
+
+component PlaylistRowView inherits Rectangle {
+    in property <PlaylistRow> item;
+    height: 56px;
+    background: touch.has-hover ? Theme.hover : transparent;
+
+    touch := TouchArea {
+        mouse-cursor: pointer;
+        clicked => {
+            AppState.navigate(Route.playlist-detail, root.item.id);
+        }
+
+        ContextMenuArea {
+            Menu {
+                MenuItem {
+                    title: "Play";
+                    activated => {
+                        PlaylistsState.play(root.item.id, "now");
+                    }
+                }
+
+                MenuItem {
+                    title: "Play next";
+                    activated => {
+                        PlaylistsState.play(root.item.id, "next");
+                    }
+                }
+
+                MenuItem {
+                    title: "Add to queue";
+                    activated => {
+                        PlaylistsState.play(root.item.id, "last");
+                    }
+                }
+
+                MenuSeparator { }
+
+                MenuItem {
+                    title: "Delete";
+                    activated => {
+                        PlaylistsState.delete-name = root.item.name;
+                        PlaylistsState.delete-id = root.item.id;
+                    }
+                }
+            }
+
+            HorizontalLayout {
+                padding-left: 20px;
+                padding-right: 12px;
+                spacing: 12px;
+
+                Rectangle {
+                    y: (parent.height - self.height) / 2;
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 4px;
+                    background: Theme.surface-raised;
+                    clip: true;
+
+                    if root.item.has-cover: Image {
+                        source: root.item.cover;
+                        image-fit: cover;
+                        width: parent.width;
+                        height: parent.height;
+                    }
+
+                    if !root.item.has-cover: Icon {
+                        path: Icons.playlist;
+                        color: Theme.muted;
+                    }
+                }
+
+                Text {
+                    text: root.item.name;
+                    color: Theme.foreground;
+                    vertical-alignment: center;
+                    overflow: elide;
+                    horizontal-stretch: 1;
+                    min-width: 120px;
+                }
+
+                Cell {
+                    width: 80px;
+                    text: root.item.songs;
+                }
+
+                Cell {
+                    width: 90px;
+                    text: root.item.duration;
+                }
+
+                Cell {
+                    width: 160px;
+                    text: root.item.owner;
+                }
+
+                HorizontalLayout {
+                    width: 72px;
+                    alignment: end;
+
+                    if touch.has-hover: IconButton {
+                        y: (parent.height - self.height) / 2;
+                        icon: Icons.play;
+                        clicked => {
+                            PlaylistsState.play(root.item.id, "now");
+                        }
+                    }
+
+                    if touch.has-hover: IconButton {
+                        y: (parent.height - self.height) / 2;
+                        icon: Icons.close;
+                        icon-size: 18px;
+                        clicked => {
+                            PlaylistsState.delete-name = root.item.name;
+                            PlaylistsState.delete-id = root.item.id;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+component SkeletonRow inherits Rectangle {
+    height: 56px;
+
+    HorizontalLayout {
+        padding-left: 20px;
+        spacing: 12px;
+
+        Rectangle {
+            y: (parent.height - self.height) / 2;
+            width: 40px;
+            height: 40px;
+            border-radius: 4px;
+            background: Theme.surface-raised;
+        }
+
+        Rectangle {
+            Skeleton {
+                x: 0;
+                width: min(240px, parent.width * 0.6);
+            }
+        }
+    }
 }
 
 export component PlaylistsView inherits Rectangle {
+    min-width: 320px;
+    background: Theme.background;
+
     init => {
         PlaylistsState.load(AppState.detail-id);
     }
 
-    Text {
-        text: "Playlists";
-        color: Theme.muted;
+    VerticalLayout {
+        HorizontalLayout {
+            padding: 20px;
+            padding-bottom: 12px;
+            spacing: 12px;
+
+            Text {
+                text: "Playlists";
+                font-size: 24px;
+                font-weight: 700;
+                color: Theme.foreground;
+                vertical-alignment: center;
+            }
+
+            Text {
+                text: PlaylistsState.loading ? "" : PlaylistsState.rows.length;
+                color: Theme.muted;
+                vertical-alignment: center;
+            }
+
+            Rectangle {
+                horizontal-stretch: 1;
+            }
+
+            Button {
+                text: "New playlist";
+                primary: true;
+                clicked => {
+                    PlaylistsState.creating = true;
+                }
+            }
+        }
+
+        Rectangle {
+            height: 33px;
+
+            HorizontalLayout {
+                padding-left: 20px;
+                padding-right: 12px;
+                spacing: 12px;
+
+                Rectangle {
+                    width: 40px;
+                }
+
+                Header {
+                    text: "Name";
+                    inset: 0;
+                    horizontal-stretch: 1;
+                    min-width: 120px;
+                }
+
+                Header {
+                    width: 80px;
+                    text: "Songs";
+                }
+
+                Header {
+                    width: 90px;
+                    text: "Duration";
+                }
+
+                Header {
+                    width: 160px;
+                    text: "Owner";
+                }
+
+                Rectangle {
+                    width: 72px;
+                }
+            }
+
+            Rectangle {
+                y: parent.height - 1px;
+                height: 1px;
+                background: Theme.border;
+            }
+        }
+
+        Rectangle {
+            if PlaylistsState.loading && PlaylistsState.rows.length == 0: VerticalLayout {
+                alignment: start;
+
+                for i in 6: SkeletonRow { }
+            }
+
+            ListView {
+                for row in PlaylistsState.rows: PlaylistRowView {
+                    item: row;
+                }
+            }
+
+            if !PlaylistsState.loading && PlaylistsState.rows.length == 0: Text {
+                text: "No playlists yet";
+                color: Theme.muted;
+                horizontal-alignment: center;
+                vertical-alignment: center;
+            }
+        }
+    }
+
+    if PlaylistsState.creating: NameDialog {
+        busy: PlaylistsState.busy;
+        cancel => {
+            PlaylistsState.creating = false;
+        }
+        submit(name) => {
+            PlaylistsState.create(name);
+        }
+    }
+
+    if PlaylistsState.delete-id != "": Modal {
+        title: "Delete playlist";
+        init => {
+            self.focus();
+        }
+        cancel => {
+            PlaylistsState.delete-id = "";
+        }
+
+        Text {
+            text: "Delete \"" + PlaylistsState.delete-name + "\"? This cannot be undone.";
+            color: Theme.foreground;
+            wrap: word-wrap;
+        }
+
+        DialogButtons {
+            confirm-text: PlaylistsState.busy ? "Deleting..." : "Delete";
+            confirm-enabled: !PlaylistsState.busy;
+            danger: true;
+            cancel => {
+                PlaylistsState.delete-id = "";
+            }
+            confirm => {
+                PlaylistsState.delete(PlaylistsState.delete-id);
+            }
+        }
     }
 }
