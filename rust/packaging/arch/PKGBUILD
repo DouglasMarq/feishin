@@ -5,8 +5,8 @@ pkgdesc="Native Rust build of Feishin, a self-hosted music player for Navidrome,
 arch=('x86_64' 'aarch64')
 url="https://github.com/DouglasMarq/feishin"
 license=('GPL-3.0-only')
-depends=('mpv' 'fontconfig' 'gcc-libs' 'glibc' 'hicolor-icon-theme' 'libglvnd' 'libxkbcommon'
-         'libxkbcommon-x11' 'wayland' 'libx11' 'libxcursor' 'libxi' 'libxrandr')
+depends=('mpv' 'fontconfig' 'ttf-font' 'libgcc' 'glibc' 'hicolor-icon-theme' 'libglvnd'
+         'libxkbcommon' 'libxkbcommon-x11' 'wayland' 'libx11' 'libxcursor' 'libxi' 'libxrandr')
 makedepends=('cargo' 'git' 'pkgconf')
 provides=('feishin-native')
 conflicts=('feishin' 'feishin-bin' 'feishin-git' 'feishin-appimage')
