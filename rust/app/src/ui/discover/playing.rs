@@ -6,6 +6,7 @@ use feishin_youtube::music::MusicSong;
 use slint::ComponentHandle;
 
 use super::deps::DiscoverDeps;
+use super::send_order::SendTurn;
 use crate::controller::{Command, TrackCommand};
 use crate::discover::resolve_tracks;
 use crate::ui::{AppWindow, on_ui, show_status};
@@ -55,6 +56,19 @@ pub fn play_songs(
     send_resolved(window, deps, songs, placement, message);
 }
 
+struct SendTicket {
+    turn: SendTurn,
+    play_request: Option<u64>,
+}
+
+fn ticket_for(deps: &DiscoverDeps, placement: Placement) -> SendTicket {
+    SendTicket {
+        turn: deps.send_order.take_turn(),
+        play_request: matches!(placement, Placement::PlayFrom(_))
+            .then(|| deps.latest_play.fetch_add(1, Ordering::Relaxed) + 1),
+    }
+}
+
 pub fn send_resolved(
     window: &AppWindow,
     deps: &DiscoverDeps,
@@ -62,18 +76,29 @@ pub fn send_resolved(
     placement: Placement,
     message: Option<String>,
 ) {
+    let ticket = ticket_for(deps, placement);
+    send_with_ticket(window, deps, songs, (placement, message), ticket);
+}
+
+fn send_with_ticket(
+    window: &AppWindow,
+    deps: &DiscoverDeps,
+    songs: Vec<MusicSong>,
+    (placement, message): (Placement, Option<String>),
+    mut ticket: SendTicket,
+) {
     if songs.is_empty() {
         show_status(window, "Nothing to play here");
         return;
     }
-    let request = matches!(placement, Placement::PlayFrom(_))
-        .then(|| deps.latest_play.fetch_add(1, Ordering::Relaxed) + 1);
     let deps = deps.clone();
     let weak_window = window.as_weak();
     deps.ctx.rt.clone().spawn(async move {
         let tracks = resolve_tracks(&deps.matcher, deps.ctx.session.get(), &songs).await;
-        let superseded =
-            request.is_some_and(|request| deps.latest_play.load(Ordering::Relaxed) != request);
+        ticket.turn.wait_for_earlier_turns().await;
+        let superseded = ticket
+            .play_request
+            .is_some_and(|request| deps.latest_play.load(Ordering::Relaxed) != request);
         if superseded {
             return;
         }
@@ -92,6 +117,7 @@ pub fn play_collection(
 ) {
     let source = Arc::clone(&deps.source);
     let settings = deps.settings();
+    let ticket = ticket_for(deps, placement);
     let collection_deps = deps.clone();
     let weak_window = window.as_weak();
     deps.ctx.rt.spawn(async move {
@@ -99,7 +125,13 @@ pub fn play_collection(
         on_ui(&weak_window, move |window| match result {
             Ok(page) => {
                 let message = queued_message(placement, &page.songs, Some(&page.title));
-                send_resolved(window, &collection_deps, page.songs, placement, message);
+                send_with_ticket(
+                    window,
+                    &collection_deps,
+                    page.songs,
+                    (placement, message),
+                    ticket,
+                );
             }
             Err(error) => show_status(
                 window,

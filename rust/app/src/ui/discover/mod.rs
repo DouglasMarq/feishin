@@ -13,6 +13,7 @@ mod page_loading;
 mod playing;
 mod render;
 mod sections;
+mod send_order;
 
 #[cfg(test)]
 mod headless_tests;
