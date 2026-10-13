@@ -126,6 +126,65 @@ pub struct FakeServer {
     song_count: usize,
     order_cache: Mutex<Option<(SongListQuery, Arc<Vec<usize>>)>>,
     scrobbles: Mutex<Vec<ScrobbleCall>>,
+    playlists: Mutex<DemoPlaylists>,
+}
+
+struct DemoPlaylist {
+    id: String,
+    name: String,
+    comment: Option<String>,
+    songs: Vec<usize>,
+}
+
+#[derive(Default)]
+struct DemoPlaylists {
+    items: Vec<DemoPlaylist>,
+    next_id: usize,
+}
+
+impl DemoPlaylists {
+    const NAMES: [&str; 6] = [
+        "Morning Coffee",
+        "Workout",
+        "Late Night Drive",
+        "Focus",
+        "Road Trip",
+        "Rainy Day",
+    ];
+
+    fn generated(song_count: usize) -> Self {
+        let mut playlists = Self::default();
+        if song_count == 0 {
+            return playlists;
+        }
+        for (p, name) in Self::NAMES.iter().enumerate() {
+            let len = 8 + (mix(p as u64 ^ 0x9e7) % 60) as usize;
+            let songs = (0..len)
+                .map(|i| (mix((p * 1000 + i) as u64 ^ 0x91) % song_count as u64) as usize)
+                .collect();
+            let comment = (p % 2 == 0).then(|| format!("A demo playlist with {len} songs"));
+            playlists.push(name, comment, songs);
+        }
+        playlists
+    }
+
+    fn push(&mut self, name: &str, comment: Option<String>, songs: Vec<usize>) -> &DemoPlaylist {
+        self.next_id += 1;
+        self.items.push(DemoPlaylist {
+            id: format!("playlist-{}", self.next_id),
+            name: name.to_owned(),
+            comment,
+            songs,
+        });
+        &self.items[self.items.len() - 1]
+    }
+
+    fn get_mut(&mut self, id: &str) -> Result<&mut DemoPlaylist> {
+        self.items
+            .iter_mut()
+            .find(|p| p.id == id)
+            .ok_or(ApiError::NotFound)
+    }
 }
 
 impl FakeServer {
@@ -150,6 +209,7 @@ impl FakeServer {
             song_count,
             order_cache: Mutex::default(),
             scrobbles: Mutex::default(),
+            playlists: Mutex::new(DemoPlaylists::generated(song_count)),
         }
     }
 
@@ -377,6 +437,36 @@ impl FakeServer {
         order
     }
 
+    fn playlists(&self) -> std::sync::MutexGuard<'_, DemoPlaylists> {
+        self.playlists
+            .lock()
+            .unwrap_or_else(std::sync::PoisonError::into_inner)
+    }
+
+    fn song_indexes(&self, song_ids: &[String]) -> Vec<usize> {
+        song_ids
+            .iter()
+            .filter_map(|id| parse_index(id, "song-"))
+            .filter(|&i| i < self.song_count)
+            .collect()
+    }
+
+    fn to_playlist(&self, playlist: &DemoPlaylist) -> Playlist {
+        Playlist {
+            id: playlist.id.clone(),
+            server_id: self.config.id.clone(),
+            name: playlist.name.clone(),
+            comment: playlist.comment.clone(),
+            owner: Some(self.config.username.clone()),
+            public: false,
+            song_count: playlist.songs.len() as u32,
+            duration_ms: playlist.songs.iter().map(|&i| Self::song_duration(i)).sum(),
+            cover_art_id: Some(format!("pl-{}", playlist.id)),
+            created_at: None,
+            updated_at: None,
+        }
+    }
+
     fn page<T>(items: impl ExactSizeIterator<Item = T>, paging: Paging) -> Page<T> {
         let total = items.len();
         Page {
@@ -489,27 +579,52 @@ impl MusicServer for FakeServer {
     }
 
     async fn playlist_list(&self, paging: Paging) -> Result<Page<Playlist>> {
-        Ok(Self::page(Vec::new().into_iter(), paging))
+        let playlists = self.playlists();
+        Ok(Self::page(
+            playlists.items.iter().map(|p| self.to_playlist(p)),
+            paging,
+        ))
     }
 
-    async fn playlist_songs(&self, _id: &str) -> Result<Vec<Song>> {
-        Err(ApiError::NotFound)
+    async fn playlist_songs(&self, id: &str) -> Result<Vec<Song>> {
+        let mut playlists = self.playlists();
+        let playlist = playlists.get_mut(id)?;
+        Ok(playlist.songs.iter().map(|&i| self.song_at(i)).collect())
     }
 
-    async fn create_playlist(&self, _name: &str, _song_ids: &[String]) -> Result<Playlist> {
-        Err(ApiError::Unsupported("playlists in demo mode"))
+    async fn create_playlist(&self, name: &str, song_ids: &[String]) -> Result<Playlist> {
+        let songs = self.song_indexes(song_ids);
+        let mut playlists = self.playlists();
+        let playlist = playlists.push(name, None, songs);
+        Ok(self.to_playlist(playlist))
     }
 
-    async fn add_to_playlist(&self, _playlist_id: &str, _song_ids: &[String]) -> Result<()> {
-        Err(ApiError::Unsupported("playlists in demo mode"))
+    async fn add_to_playlist(&self, playlist_id: &str, song_ids: &[String]) -> Result<()> {
+        let songs = self.song_indexes(song_ids);
+        let mut playlists = self.playlists();
+        playlists.get_mut(playlist_id)?.songs.extend(songs);
+        Ok(())
     }
 
-    async fn remove_from_playlist(&self, _playlist_id: &str, _indexes: &[usize]) -> Result<()> {
-        Err(ApiError::Unsupported("playlists in demo mode"))
+    async fn remove_from_playlist(&self, playlist_id: &str, indexes: &[usize]) -> Result<()> {
+        let mut playlists = self.playlists();
+        let playlist = playlists.get_mut(playlist_id)?;
+        let mut position = 0;
+        playlist.songs.retain(|_| {
+            position += 1;
+            !indexes.contains(&(position - 1))
+        });
+        Ok(())
     }
 
-    async fn delete_playlist(&self, _id: &str) -> Result<()> {
-        Err(ApiError::Unsupported("playlists in demo mode"))
+    async fn delete_playlist(&self, id: &str) -> Result<()> {
+        let mut playlists = self.playlists();
+        let before = playlists.items.len();
+        playlists.items.retain(|p| p.id != id);
+        if playlists.items.len() == before {
+            return Err(ApiError::NotFound);
+        }
+        Ok(())
     }
 
     async fn search(&self, query: &str, limit: usize) -> Result<SearchResults> {

@@ -1,12 +1,197 @@
-import { Theme } from "theme.slint";
-import { AppState } from "globals.slint";
+import { Button, ListView } from "std-widgets.slint";
+import { Theme, Icons } from "theme.slint";
+import { AppState, PlayerState, Route, TrackRow } from "globals.slint";
+import { Icon, IconButton } from "widgets.slint";
+import { Cell, HeaderCell, Skeleton } from "tracks.slint";
+
+export struct PlaylistSongRow {
+    track: TrackRow,
+    album-id: string,
+    artist-id: string,
+    selected: bool,
+}
 
 export global PlaylistDetailState {
+    in property <string> name;
+    in property <string> comment;
+    in property <string> info;
+    in property <image> cover;
+    in property <bool> has-cover;
+    in property <[PlaylistSongRow]> rows;
+    in property <bool> loading;
+    in property <bool> busy;
+    in property <int> selected-count;
+    in-out property <length> w-index: 56px;
+    in-out property <length> w-title: 320px;
+    in-out property <length> w-artist: 200px;
+    in-out property <length> w-album: 240px;
+    in-out property <length> w-duration: 72px;
     callback load(string);
+    callback play(bool);
+    callback play-row(int);
+    callback select(int, bool, bool);
+    callback select-all();
+    callback clear-selection();
+    callback remove-selected();
+    callback add-selected-to-playlist();
+    /// Runs a context menu action ("play", "next", "last", "playlist", "remove") on the row, or on the
+    /// selection when the row is part of it.
+    callback context-action(int, string);
+}
+
+component SongRow inherits Rectangle {
+    in property <PlaylistSongRow> item;
+    in property <int> index;
+    callback pressed();
+    property <bool> playing: root.item.track.id == PlayerState.song-id;
+    height: 36px;
+    background: root.item.selected ? Theme.selected : (touch.has-hover ? Theme.hover : transparent);
+
+    touch := TouchArea {
+        pointer-event(event) => {
+            if (event.kind == PointerEventKind.down && event.button == PointerEventButton.left) {
+                root.pressed();
+                PlaylistDetailState.select(root.index, event.modifiers.control || event.modifiers.meta, event.modifiers.shift);
+            }
+        }
+        double-clicked => {
+            PlaylistDetailState.play-row(root.index);
+        }
+
+        ContextMenuArea {
+            Menu {
+                MenuItem {
+                    title: "Play";
+                    activated => {
+                        PlaylistDetailState.context-action(root.index, "play");
+                    }
+                }
+
+                MenuItem {
+                    title: "Play next";
+                    activated => {
+                        PlaylistDetailState.context-action(root.index, "next");
+                    }
+                }
+
+                MenuItem {
+                    title: "Add to queue";
+                    activated => {
+                        PlaylistDetailState.context-action(root.index, "last");
+                    }
+                }
+
+                MenuItem {
+                    title: "Add to playlist";
+                    activated => {
+                        PlaylistDetailState.context-action(root.index, "playlist");
+                    }
+                }
+
+                MenuSeparator { }
+
+                MenuItem {
+                    title: "Go to album";
+                    enabled: root.item.album-id != "";
+                    activated => {
+                        AppState.navigate(Route.album-detail, root.item.album-id);
+                    }
+                }
+
+                MenuItem {
+                    title: "Go to artist";
+                    enabled: root.item.artist-id != "";
+                    activated => {
+                        AppState.navigate(Route.artist-detail, root.item.artist-id);
+                    }
+                }
+
+                MenuSeparator { }
+
+                MenuItem {
+                    title: "Remove from playlist";
+                    activated => {
+                        PlaylistDetailState.context-action(root.index, "remove");
+                    }
+                }
+            }
+
+            HorizontalLayout {
+                Rectangle {
+                    width: PlaylistDetailState.w-index;
+
+                    if !root.playing: Text {
+                        x: 0;
+                        width: parent.width - 16px;
+                        text: root.item.track.index;
+                        color: Theme.muted;
+                        horizontal-alignment: right;
+                        vertical-alignment: center;
+                    }
+
+                    if root.playing: Icon {
+                        x: parent.width - 16px - self.width;
+                        path: Icons.note;
+                        color: Theme.primary;
+                        width: 16px;
+                        height: 16px;
+                    }
+                }
+
+                Cell {
+                    width: PlaylistDetailState.w-title;
+                    text: root.item.track.title;
+                    text-color: root.playing ? Theme.primary : Theme.foreground;
+                }
+
+                Cell {
+                    width: PlaylistDetailState.w-artist;
+                    text: root.item.track.artists;
+                }
+
+                Cell {
+                    width: PlaylistDetailState.w-album;
+                    text: root.item.track.album;
+                }
+
+                Cell {
+                    width: PlaylistDetailState.w-duration;
+                    text: root.item.track.duration;
+                }
+
+                Rectangle { }
+            }
+        }
+    }
+}
+
+component PlayButton inherits Rectangle {
+    callback clicked();
+    width: 48px;
+    height: 48px;
+    border-radius: 24px;
+    background: touch.has-hover ? Theme.primary.brighter(15%) : Theme.primary;
+
+    Icon {
+        path: Icons.play;
+        color: white;
+        width: 26px;
+        height: 26px;
+    }
+
+    touch := TouchArea {
+        mouse-cursor: pointer;
+        clicked => {
+            root.clicked();
+        }
+    }
 }
 
 export component PlaylistDetailView inherits Rectangle {
     property <string> id: AppState.detail-id;
+    min-width: 320px;
+    background: Theme.background;
+    forward-focus: keys;
 
     init => {
         PlaylistDetailState.load(root.id);
@@ -16,8 +201,215 @@ export component PlaylistDetailView inherits Rectangle {
         PlaylistDetailState.load(root.id);
     }
 
-    Text {
-        text: "Playlist";
-        color: Theme.muted;
+    keys := FocusScope {
+        key-pressed(event) => {
+            if (event.text == Key.Delete && PlaylistDetailState.selected-count > 0) {
+                PlaylistDetailState.remove-selected();
+                return accept;
+            }
+            if (event.text == Key.Escape && PlaylistDetailState.selected-count > 0) {
+                PlaylistDetailState.clear-selection();
+                return accept;
+            }
+            if ((event.modifiers.control || event.modifiers.meta) && (event.text == "a" || event.text == "A")) {
+                PlaylistDetailState.select-all();
+                return accept;
+            }
+            return reject;
+        }
+
+        VerticalLayout {
+            HorizontalLayout {
+                padding: 20px;
+                spacing: 20px;
+                height: 220px;
+
+                Rectangle {
+                    width: 180px;
+                    height: 180px;
+                    border-radius: 6px;
+                    background: Theme.surface-raised;
+                    clip: true;
+
+                    if PlaylistDetailState.has-cover: Image {
+                        source: PlaylistDetailState.cover;
+                        image-fit: cover;
+                        width: parent.width;
+                        height: parent.height;
+                    }
+
+                    if !PlaylistDetailState.has-cover: Icon {
+                        path: Icons.playlist;
+                        color: Theme.muted;
+                        width: 64px;
+                        height: 64px;
+                    }
+                }
+
+                VerticalLayout {
+                    alignment: end;
+                    spacing: 8px;
+
+                    Text {
+                        text: "PLAYLIST";
+                        color: Theme.muted;
+                        font-size: 11px;
+                        font-weight: 700;
+                    }
+
+                    if PlaylistDetailState.loading && PlaylistDetailState.name == "": Skeleton {
+                        width: 260px;
+                        height: 28px;
+                        border-radius: 6px;
+                    }
+
+                    Text {
+                        text: PlaylistDetailState.name;
+                        color: Theme.foreground;
+                        font-size: 32px;
+                        font-weight: 800;
+                        overflow: elide;
+                    }
+
+                    if PlaylistDetailState.comment != "": Text {
+                        text: PlaylistDetailState.comment;
+                        color: Theme.muted;
+                        wrap: word-wrap;
+                        max-height: 40px;
+                        overflow: elide;
+                    }
+
+                    Text {
+                        text: PlaylistDetailState.info;
+                        color: Theme.muted;
+                    }
+                }
+            }
+
+            HorizontalLayout {
+                padding-left: 20px;
+                padding-right: 20px;
+                padding-bottom: 12px;
+                spacing: 12px;
+                alignment: start;
+
+                PlayButton {
+                    clicked => {
+                        PlaylistDetailState.play(false);
+                    }
+                }
+
+                IconButton {
+                    y: (parent.height - self.height) / 2;
+                    width: 40px;
+                    height: 40px;
+                    icon: Icons.shuffle;
+                    icon-size: 24px;
+                    enabled: PlaylistDetailState.rows.length > 0;
+                    clicked => {
+                        PlaylistDetailState.play(true);
+                    }
+                }
+
+                if PlaylistDetailState.selected-count > 0: HorizontalLayout {
+                    spacing: 8px;
+                    padding-left: 12px;
+
+                    Text {
+                        text: PlaylistDetailState.selected-count + " selected";
+                        color: Theme.muted;
+                        vertical-alignment: center;
+                    }
+
+                    Button {
+                        y: (parent.height - self.height) / 2;
+                        text: "Add to playlist";
+                        clicked => {
+                            PlaylistDetailState.add-selected-to-playlist();
+                        }
+                    }
+
+                    Button {
+                        y: (parent.height - self.height) / 2;
+                        text: PlaylistDetailState.busy ? "Removing..." : "Remove";
+                        enabled: !PlaylistDetailState.busy;
+                        clicked => {
+                            PlaylistDetailState.remove-selected();
+                        }
+                    }
+                }
+            }
+
+            Rectangle {
+                height: 33px;
+                min-width: 0px;
+                clip: true;
+
+                HorizontalLayout {
+                    x: list.content-x;
+
+                    HeaderCell {
+                        text: "#";
+                        sortable: false;
+                        align: right;
+                        column-width <=> PlaylistDetailState.w-index;
+                    }
+
+                    HeaderCell {
+                        text: "Title";
+                        sortable: false;
+                        column-width <=> PlaylistDetailState.w-title;
+                    }
+
+                    HeaderCell {
+                        text: "Artist";
+                        sortable: false;
+                        column-width <=> PlaylistDetailState.w-artist;
+                    }
+
+                    HeaderCell {
+                        text: "Album";
+                        sortable: false;
+                        column-width <=> PlaylistDetailState.w-album;
+                    }
+
+                    HeaderCell {
+                        text: "Time";
+                        sortable: false;
+                        column-width <=> PlaylistDetailState.w-duration;
+                    }
+
+                    Rectangle { }
+                }
+
+                Rectangle {
+                    y: parent.height - 1px;
+                    height: 1px;
+                    background: Theme.border;
+                }
+            }
+
+            Rectangle {
+                min-width: 0px;
+                clip: true;
+
+                list := ListView {
+                    for row[i] in PlaylistDetailState.rows: SongRow {
+                        item: row;
+                        index: i;
+                        pressed => {
+                            keys.focus();
+                        }
+                    }
+                }
+
+                if PlaylistDetailState.rows.length == 0: Text {
+                    text: PlaylistDetailState.loading ? "Loading..." : "This playlist is empty";
+                    color: Theme.muted;
+                    horizontal-alignment: center;
+                    vertical-alignment: center;
+                }
+            }
+        }
     }
 }

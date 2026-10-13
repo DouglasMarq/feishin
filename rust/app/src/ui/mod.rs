@@ -26,6 +26,7 @@ pub mod nav;
 pub mod now_playing;
 pub mod player;
 pub mod playlist_detail;
+pub mod playlist_picker;
 pub mod playlists;
 pub mod queue;
 pub mod search;
@@ -78,6 +79,7 @@ pub fn install(window: &AppWindow, ctx: &Context, settings: &Settings) {
     genres::install(window, ctx);
     playlists::install(window, ctx);
     playlist_detail::install(window, ctx);
+    playlist_picker::install(window, ctx);
     favorites::install(window, ctx);
     search::install(window, ctx);
     settings::install(window, ctx);
