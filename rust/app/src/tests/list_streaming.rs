@@ -282,3 +282,58 @@ async fn streamed_pages_refresh_the_gapless_preload() {
     let following = harness.uid_of(&expected[1000]).unwrap_or(Uid::MAX);
     assert_eq!(harness.audio.take(), [AudioCall::Preload(following)]);
 }
+
+#[tokio::test]
+async fn a_play_that_cannot_load_lets_the_running_stream_finish_the_queue() {
+    let (mut harness, expected) = streaming_harness(false).await;
+    harness.request_from_list(by_name(), 700, &expected[700]);
+    harness.handle_next_command().await;
+    harness.controller.handle(Command::PlayFromList {
+        source: SongSource::Playlist(PlaylistId("missing".into())),
+        song_id: None,
+        row_index: ListRow(0),
+    });
+    harness.finish_streams().await;
+
+    let errors = harness.ui.errors();
+    assert_eq!(errors.len(), 1, "{errors:?}");
+    assert!(errors[0].starts_with("Could not load the list"));
+    assert_eq!(harness.queued_ids(), expected);
+    assert_eq!(harness.current_id().as_ref(), Some(&expected[700]));
+}
+
+#[tokio::test]
+async fn songs_enqueued_while_a_play_is_loading_survive_its_start() {
+    let (mut harness, expected) = streaming_harness(false).await;
+    harness.request_from_list(by_name(), 0, &expected[0]);
+    enqueue(&mut harness, single(1200..1234), Placement::Last);
+    harness.finish_streams().await;
+
+    let wanted = [expected.clone(), expected[1200..1234].to_vec()].concat();
+    assert_eq!(harness.queued_ids(), wanted);
+    assert_eq!(harness.current_id().as_ref(), Some(&expected[0]));
+}
+
+#[tokio::test]
+async fn shuffled_play_next_streams_mix_every_page_of_the_selection_after_the_current_song() {
+    let (mut harness, expected) = streaming_harness(false).await;
+    harness.controller.play_now(test_songs(2, 1000), "s0");
+    harness.controller.handle(Command::ToggleShuffle);
+    enqueue(&mut harness, single(0..1234), Placement::Next);
+    harness.finish_streams().await;
+
+    let order = harness.queued_ids();
+    assert_eq!(order.len(), 1236);
+    assert_eq!(order[0], "s0");
+    assert_eq!(order.last().map(String::as_str), Some("s1"));
+    assert_eq!(sorted(order[1..1235].to_vec()), sorted(expected.clone()));
+    let later_pages = &expected[500..];
+    let later_positions: Vec<usize> = order
+        .iter()
+        .enumerate()
+        .filter(|(_, id)| later_pages.contains(id))
+        .map(|(position, _)| position)
+        .collect();
+    let span = later_positions.last().unwrap_or(&0) - later_positions.first().unwrap_or(&0) + 1;
+    assert!(span > later_pages.len() + 100, "{span}");
+}

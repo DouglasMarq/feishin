@@ -20,22 +20,37 @@ struct Upcoming {
     own_count: usize,
 }
 
+pub(super) struct AddedItems {
+    pub(super) first_index: usize,
+    pub(super) count: usize,
+    pub(super) fallback_position: usize,
+}
+
 impl Queue {
     pub(super) fn interleave_into_shuffled_order(
         &mut self,
-        insert_index: usize,
-        added_count: usize,
+        added: AddedItems,
         is_own: &dyn Fn(Uid) -> bool,
     ) {
         let Some(play_order) = self.shuffled_play_order.take() else {
             return;
         };
-        let mut merged = shift_indexes_from(play_order, insert_index, added_count);
-        let upcoming_order = merged.split_off(self.first_upcoming_position(&merged));
-        let upcoming = self.classify(upcoming_order, is_own);
-        let added = self.shuffled_indexes((insert_index..insert_index + added_count).collect());
-        let slots = self.shuffled_slots(upcoming.own_count, added_count);
-        merged.extend(interleave(upcoming, added, slots));
+        let mut merged = shift_indexes_from(play_order, added.first_index, added.count);
+        let first_upcoming = self.first_upcoming_position(&merged);
+        let upcoming = self.classify(merged.split_off(first_upcoming), is_own);
+        let added_range = added.first_index..added.first_index + added.count;
+        let added_indexes = self.shuffled_indexes(added_range.collect());
+        let placed = match upcoming.own_count {
+            0 => {
+                let offset = added.fallback_position.saturating_sub(first_upcoming);
+                place_at(upcoming, added_indexes, offset)
+            }
+            own_count => {
+                let slots = self.shuffled_slots(own_count, added.count);
+                interleave(upcoming, added_indexes, slots)
+            }
+        };
+        merged.extend(placed);
         self.shuffled_play_order = Some(merged);
     }
 
@@ -70,6 +85,17 @@ impl Queue {
         self.random_generator.shuffle(&mut slots);
         slots
     }
+}
+
+fn place_at(upcoming: Upcoming, added: Vec<usize>, offset: usize) -> Vec<usize> {
+    let mut placed: Vec<usize> = upcoming
+        .entries
+        .into_iter()
+        .map(|(item_index, _)| item_index)
+        .collect();
+    let offset = offset.min(placed.len());
+    placed.splice(offset..offset, added);
+    placed
 }
 
 fn interleave(upcoming: Upcoming, added: Vec<usize>, slots: Vec<Slot>) -> Vec<usize> {

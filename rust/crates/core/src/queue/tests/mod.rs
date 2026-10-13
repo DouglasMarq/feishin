@@ -8,5 +8,6 @@ mod reordering;
 mod shuffling;
 mod snapshot;
 mod streamed;
+mod streamed_fallback;
 mod support;
 mod tracks;

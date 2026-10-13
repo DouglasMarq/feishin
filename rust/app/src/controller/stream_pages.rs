@@ -53,6 +53,7 @@ impl Controller {
             ));
             return;
         }
+        self.list_streams.cancel_older_than(stream);
         self.queue.play_now_at(songs, Some(start_index));
         let first_uid = self.queue.items().first().map_or(0, |item| item.uid);
         let end_uid = self.queue.items().last().map_or(0, |item| item.uid + 1);
@@ -67,11 +68,13 @@ impl Controller {
         let StreamPage { songs, applied } = page;
         if let Some(active) = self.list_streams.get_mut(stream) {
             let anchor = active.anchor(side, &self.queue);
-            let inserted = match active.placement() {
-                Placement::Now => self
+            let inserted = match (active.placement(), active.is_started()) {
+                (Placement::Next | Placement::Last, false) => {
+                    self.queue.insert_at_anchor(&songs, anchor)
+                }
+                _ => self
                     .queue
                     .insert_interleaved(&songs, anchor, |uid| active.owns(uid)),
-                Placement::Next | Placement::Last => self.queue.insert_at_anchor(&songs, anchor),
             };
             active.record(side, inserted);
         }

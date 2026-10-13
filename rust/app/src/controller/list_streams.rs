@@ -106,6 +106,12 @@ impl ActiveStream {
     }
 }
 
+impl Drop for ActiveStream {
+    fn drop(&mut self) {
+        self.task.abort();
+    }
+}
+
 #[derive(Default)]
 pub(super) struct ListStreams {
     last_id: u64,
@@ -131,13 +137,58 @@ impl ListStreams {
     }
 
     pub(super) fn cancel_all(&mut self) {
-        for (_, active) in self.active.drain() {
-            active.task.abort();
-        }
+        self.active.clear();
+    }
+
+    pub(super) fn cancel_unstarted_plays(&mut self) {
+        self.active
+            .retain(|_, active| active.placement != Placement::Now || active.is_started());
+    }
+
+    pub(super) fn cancel_older_than(&mut self, newest: StreamId) {
+        self.active.retain(|stream, _| stream.0 >= newest.0);
     }
 
     #[cfg(test)]
     pub(super) fn is_empty(&self) -> bool {
         self.active.is_empty()
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    fn idle_task() -> AbortHandle {
+        tokio::spawn(std::future::pending::<()>()).abort_handle()
+    }
+
+    #[tokio::test]
+    async fn dropping_a_stream_stops_its_task() {
+        let task = tokio::spawn(std::future::pending::<()>());
+        drop(ActiveStream::new(Placement::Now, task.abort_handle()));
+        assert!(task.await.is_err_and(|error| error.is_cancelled()));
+    }
+
+    #[tokio::test]
+    async fn a_new_play_only_cancels_plays_that_have_not_started() {
+        let mut streams = ListStreams::default();
+        let started = streams.next_id();
+        let mut started_stream = ActiveStream::new(Placement::Now, idle_task());
+        started_stream.record_start(1..3);
+        streams.insert(started, started_stream);
+        let pending = streams.next_id();
+        streams.insert(pending, ActiveStream::new(Placement::Now, idle_task()));
+        let enqueued = streams.next_id();
+        streams.insert(enqueued, ActiveStream::new(Placement::Last, idle_task()));
+
+        streams.cancel_unstarted_plays();
+        assert!(streams.get_mut(started).is_some());
+        assert!(streams.get_mut(pending).is_none());
+        assert!(streams.get_mut(enqueued).is_some());
+
+        streams.cancel_older_than(enqueued);
+        assert!(streams.get_mut(started).is_none());
+        assert!(streams.get_mut(enqueued).is_some());
     }
 }

@@ -55,7 +55,7 @@ impl Controller {
     ) {
         if placement == Placement::Now {
             self.play_request += 1;
-            self.list_streams.cancel_all();
+            self.list_streams.cancel_unstarted_plays();
         }
         let Some(server) = self.deps.session.get() else {
             return;

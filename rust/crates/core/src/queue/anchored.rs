@@ -1,5 +1,6 @@
 use std::ops::Range;
 
+use super::interleaving::AddedItems;
 use super::{Queue, Uid};
 use crate::model::Song;
 
@@ -31,8 +32,14 @@ impl Queue {
         is_own: impl Fn(Uid) -> bool,
     ) -> Range<Uid> {
         let insert_index = self.anchor_index(anchor);
+        let fallback_position = self.anchor_position(anchor);
         let inserted = self.splice_songs(insert_index, songs);
-        self.interleave_into_shuffled_order(insert_index, songs.len(), &is_own);
+        let added = AddedItems {
+            first_index: insert_index,
+            count: songs.len(),
+            fallback_position,
+        };
+        self.interleave_into_shuffled_order(added, &is_own);
         inserted
     }
 
