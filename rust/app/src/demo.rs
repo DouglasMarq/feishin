@@ -302,6 +302,17 @@ impl FakeServer {
         }
     }
 
+    fn album_matches(&self, album: usize, query: &AlbumListQuery) -> bool {
+        query
+            .favorite
+            .is_none_or(|favorite| favorite == self.album_at(album).favorite)
+            && (query.genre_ids.is_empty()
+                || query.genre_ids.contains(&format!(
+                    "genre-{}",
+                    Self::song_genre(album * SONGS_PER_ALBUM)
+                )))
+    }
+
     fn matches(&self, index: usize, query: &SongListQuery, search: Option<&str>) -> bool {
         let album = index / SONGS_PER_ALBUM;
         let artist = Self::album_artist(album);
@@ -414,6 +425,7 @@ impl FakeServer {
                         || query
                             .artist_ids
                             .contains(&format!("artist-{}", Self::album_artist(a))))
+                    && self.album_matches(a, query)
             })
             .collect();
         let random_seed = u64::from(
@@ -566,14 +578,22 @@ impl MusicServer for FakeServer {
     }
 
     async fn genre_list(&self) -> Result<Vec<Genre>> {
+        let mut counts = [(0u32, 0u32); GENRES.len()];
+        for album in 0..self.album_count() {
+            let first = album * SONGS_PER_ALBUM;
+            let count = &mut counts[Self::song_genre(first)];
+            count.0 += 1;
+            count.1 += SONGS_PER_ALBUM.min(self.song_count - first) as u32;
+        }
         Ok(GENRES
             .iter()
+            .zip(counts)
             .enumerate()
-            .map(|(i, name)| Genre {
+            .map(|(i, (name, (albums, songs)))| Genre {
                 id: format!("genre-{i}"),
                 name: (*name).to_owned(),
-                song_count: None,
-                album_count: None,
+                song_count: Some(songs),
+                album_count: Some(albums),
             })
             .collect())
     }

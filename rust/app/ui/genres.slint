@@ -1,17 +1,605 @@
-import { Theme } from "theme.slint";
-import { AppState } from "globals.slint";
+import { LineEdit, ListView } from "std-widgets.slint";
+import { Theme, Icons } from "theme.slint";
+import { AppState, PlayerState, Route, TrackRow, TracksState } from "globals.slint";
+import { HeaderCell, Skeleton, TrackRowView } from "tracks.slint";
+import { Icon, IconButton } from "widgets.slint";
+
+export struct Card {
+    id: string,
+    title: string,
+    subtitle: string,
+    cover: image,
+    has-cover: bool,
+    favorite: bool,
+    loaded: bool,
+}
+
+export struct CardRow {
+    cards: [Card],
+}
+
+export struct TrackItem {
+    track: TrackRow,
+    favorite: bool,
+}
+
+export struct GenreRow {
+    id: string,
+    name: string,
+    albums: string,
+    tracks: string,
+}
+
+export global LibraryIcons {
+    out property <string> heart-outline: "M16.5 3c-1.74 0-3.41.81-4.5 2.09C10.91 3.81 9.24 3 7.5 3 4.42 3 2 5.42 2 8.5c0 3.78 3.4 6.86 8.55 11.54L12 21.35l1.45-1.32C18.6 15.36 22 12.28 22 8.5 22 5.42 19.58 3 16.5 3zm-4.4 15.55l-.1.1-.1-.1C7.14 14.24 4 11.39 4 8.5 4 6.5 5.5 5 7.5 5c1.54 0 3.04.99 3.57 2.36h1.87C13.46 5.99 14.96 5 16.5 5c2 0 3.5 1.5 3.5 3.5 0 2.89-3.14 5.74-7.9 10.05z";
+    out property <string> arrow-back: "M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z";
+}
 
 export global GenresState {
+    in property <[GenreRow]> genres;
+    in property <bool> genres-loading;
+    in property <string> title;
+    in property <string> album-count;
+    in property <string> track-count;
+    in property <[CardRow]> albums;
+    in property <bool> albums-loading;
+    in property <[TrackItem]> tracks;
+    in property <bool> tracks-loading;
+    in-out property <int> tab;
     callback load(string);
+    callback filter-edited(string);
+    callback album-columns(int);
+    callback play-track(int);
+}
+
+export component Tab inherits Rectangle {
+    in property <string> text;
+    in property <string> count;
+    in property <bool> active;
+    callback clicked();
+    width: layout.preferred-width;
+    height: 32px;
+    border-radius: 16px;
+    background: root.active ? Theme.surface-raised : (touch.has-hover ? Theme.hover : transparent);
+
+    layout := HorizontalLayout {
+        padding-left: 14px;
+        padding-right: 14px;
+        spacing: 6px;
+
+        Text {
+            text: root.text;
+            color: root.active ? Theme.foreground : Theme.muted;
+            font-weight: 600;
+            vertical-alignment: center;
+        }
+
+        if root.count != "": Text {
+            text: root.count;
+            color: Theme.muted;
+            vertical-alignment: center;
+        }
+    }
+
+    touch := TouchArea {
+        mouse-cursor: pointer;
+        clicked => {
+            root.clicked();
+        }
+    }
+}
+
+export component FavoriteButton inherits Rectangle {
+    in property <bool> favorite;
+    callback clicked();
+    width: 28px;
+    height: 28px;
+    border-radius: 14px;
+    background: touch.has-hover ? Theme.hover : transparent;
+
+    Icon {
+        path: root.favorite ? Icons.heart : LibraryIcons.heart-outline;
+        color: root.favorite ? Theme.primary : (touch.has-hover ? Theme.foreground : Theme.muted);
+        width: 18px;
+        height: 18px;
+    }
+
+    touch := TouchArea {
+        mouse-cursor: pointer;
+        clicked => {
+            root.clicked();
+        }
+    }
+}
+
+export component CardView inherits Rectangle {
+    in property <Card> card;
+    in property <bool> round;
+    in property <bool> show-favorite;
+    callback open();
+    callback toggle-favorite();
+    height: self.width + 52px;
+
+    touch := TouchArea {
+        mouse-cursor: root.card.loaded ? pointer : default;
+        clicked => {
+            if (root.card.loaded) {
+                root.open();
+            }
+        }
+    }
+
+    Rectangle {
+        x: 0;
+        y: 0;
+        width: root.width;
+        height: root.width;
+        border-radius: root.round ? self.width / 2 : Theme.radius;
+        background: Theme.surface-raised;
+        clip: true;
+
+        if root.card.has-cover: Image {
+            width: parent.width;
+            height: parent.height;
+            source: root.card.cover;
+            image-fit: cover;
+        }
+
+        if !root.card.has-cover && root.card.loaded: Icon {
+            path: root.round ? Icons.artist : Icons.album;
+            color: Theme.muted;
+            width: parent.width * 0.35;
+            height: parent.width * 0.35;
+        }
+
+        if touch.has-hover: Rectangle {
+            background: #ffffff10;
+        }
+    }
+
+    if root.show-favorite && root.card.loaded && (touch.has-hover || !root.card.favorite): Rectangle {
+        x: root.width - self.width - 8px;
+        y: root.round ? root.width - self.height - 8px : 8px;
+        width: 32px;
+        height: 32px;
+        border-radius: 16px;
+        background: #000000b0;
+
+        FavoriteButton {
+            favorite: root.card.favorite;
+            clicked => {
+                root.toggle-favorite();
+            }
+        }
+    }
+
+    if root.card.loaded: VerticalLayout {
+        y: root.width + 8px;
+        height: 44px;
+        spacing: 2px;
+        alignment: start;
+
+        Text {
+            text: root.card.title;
+            color: Theme.foreground;
+            font-weight: 600;
+            overflow: elide;
+            horizontal-alignment: root.round ? center : left;
+        }
+
+        Text {
+            text: root.card.subtitle;
+            color: Theme.muted;
+            font-size: 12px;
+            overflow: elide;
+            horizontal-alignment: root.round ? center : left;
+        }
+    }
+
+    if !root.card.loaded: Skeleton {
+        x: 0;
+        y: root.width + 12px;
+        width: root.width * 0.7;
+    }
+}
+
+/// Virtualized grid of cards; `columns-changed` reports how many cards each row must hold.
+export component CardGrid inherits Rectangle {
+    in property <[CardRow]> rows;
+    in property <bool> round;
+    in property <bool> show-favorite;
+    in property <bool> loading;
+    in property <string> empty-text;
+    property <length> gap: 16px;
+    property <length> pad: 20px;
+    out property <int> columns: max(1, min(10, Math.floor((root.width - 2 * root.pad + root.gap) / (176px + root.gap))));
+    property <length> card-width: (root.width - 2 * root.pad - (root.columns - 1) * root.gap) / root.columns;
+    callback columns-changed(int);
+    callback open(string);
+    callback toggle-favorite(string);
+
+    init => {
+        root.columns-changed(root.columns);
+    }
+
+    changed columns => {
+        root.columns-changed(root.columns);
+    }
+
+    ListView {
+        for row in root.rows: HorizontalLayout {
+            padding-left: root.pad;
+            padding-right: root.pad;
+            padding-bottom: 20px;
+            spacing: root.gap;
+            alignment: start;
+
+            for card in row.cards: CardView {
+                width: root.card-width;
+                card: card;
+                round: root.round;
+                show-favorite: root.show-favorite;
+                open => {
+                    root.open(card.id);
+                }
+                toggle-favorite => {
+                    root.toggle-favorite(card.id);
+                }
+            }
+        }
+    }
+
+    if !root.loading && root.rows.length == 0: Text {
+        text: root.empty-text;
+        color: Theme.muted;
+        horizontal-alignment: center;
+        vertical-alignment: center;
+    }
+}
+
+/// Virtualized track table sharing the Tracks view columns; rows highlight the playing song.
+export component TrackTable inherits Rectangle {
+    in property <[TrackItem]> rows;
+    in property <bool> loading;
+    in property <bool> show-favorite;
+    in property <string> empty-text: "No tracks found";
+    callback play(int);
+    callback toggle-favorite(int);
+    min-width: 320px;
+
+    VerticalLayout {
+        Rectangle {
+            height: 33px;
+            min-width: 0px;
+            clip: true;
+
+            HorizontalLayout {
+                x: list.content-x;
+
+                HeaderCell {
+                    text: "#";
+                    sortable: false;
+                    align: right;
+                    column-width <=> TracksState.w-index;
+                }
+
+                HeaderCell {
+                    text: "Title";
+                    sortable: false;
+                    column-width <=> TracksState.w-title;
+                }
+
+                HeaderCell {
+                    text: "Artist";
+                    sortable: false;
+                    column-width <=> TracksState.w-artist;
+                }
+
+                HeaderCell {
+                    text: "Album";
+                    sortable: false;
+                    column-width <=> TracksState.w-album;
+                }
+
+                HeaderCell {
+                    text: "Year";
+                    sortable: false;
+                    column-width <=> TracksState.w-year;
+                }
+
+                HeaderCell {
+                    text: "Plays";
+                    sortable: false;
+                    column-width <=> TracksState.w-plays;
+                }
+
+                HeaderCell {
+                    text: "Time";
+                    sortable: false;
+                    column-width <=> TracksState.w-duration;
+                }
+
+                Rectangle { }
+            }
+
+            Rectangle {
+                y: parent.height - 1px;
+                height: 1px;
+                background: Theme.border;
+            }
+        }
+
+        Rectangle {
+            min-width: 0px;
+            clip: true;
+
+            list := ListView {
+                for item in root.rows: Rectangle {
+                    height: 36px;
+
+                    TrackRowView {
+                        track: {
+                            id: item.track.id,
+                            index: item.track.index,
+                            title: item.track.title,
+                            artists: item.track.artists,
+                            album: item.track.album,
+                            duration: item.track.duration,
+                            year: item.track.year,
+                            plays: item.track.plays,
+                            loaded: item.track.loaded,
+                            playing: item.track.loaded && item.track.id == PlayerState.song-id,
+                        };
+                        play => {
+                            root.play(item.track.index - 1);
+                        }
+                    }
+
+                    if root.show-favorite && item.track.loaded: FavoriteButton {
+                        x: parent.width - self.width - 12px;
+                        favorite: item.favorite;
+                        clicked => {
+                            root.toggle-favorite(item.track.index - 1);
+                        }
+                    }
+                }
+            }
+
+            if !root.loading && root.rows.length == 0: Text {
+                text: root.empty-text;
+                color: Theme.muted;
+                horizontal-alignment: center;
+                vertical-alignment: center;
+            }
+        }
+    }
+}
+
+component GenreList inherits VerticalLayout {
+    HorizontalLayout {
+        padding: 20px;
+        padding-bottom: 12px;
+        spacing: 12px;
+
+        Text {
+            text: "Genres";
+            font-size: 24px;
+            font-weight: 700;
+            color: Theme.foreground;
+            vertical-alignment: center;
+        }
+
+        Text {
+            text: GenresState.genres-loading ? "" : GenresState.genres.length;
+            color: Theme.muted;
+            vertical-alignment: center;
+        }
+
+        Rectangle {
+            horizontal-stretch: 1;
+        }
+
+        LineEdit {
+            width: 280px;
+            placeholder-text: "Filter";
+            edited(text) => {
+                GenresState.filter-edited(text);
+            }
+        }
+    }
+
+    Rectangle {
+        height: 33px;
+
+        HorizontalLayout {
+            padding-left: 20px;
+            padding-right: 20px;
+
+            Text {
+                text: "Name";
+                color: Theme.muted;
+                font-size: 12px;
+                font-weight: 600;
+                vertical-alignment: center;
+                horizontal-stretch: 1;
+            }
+
+            Text {
+                width: 100px;
+                text: "Albums";
+                color: Theme.muted;
+                font-size: 12px;
+                font-weight: 600;
+                vertical-alignment: center;
+                horizontal-alignment: right;
+            }
+
+            Text {
+                width: 100px;
+                text: "Tracks";
+                color: Theme.muted;
+                font-size: 12px;
+                font-weight: 600;
+                vertical-alignment: center;
+                horizontal-alignment: right;
+            }
+        }
+
+        Rectangle {
+            y: parent.height - 1px;
+            height: 1px;
+            background: Theme.border;
+        }
+    }
+
+    Rectangle {
+        ListView {
+            for genre in GenresState.genres: Rectangle {
+                height: 40px;
+                background: touch.has-hover ? Theme.hover : transparent;
+
+                touch := TouchArea {
+                    mouse-cursor: pointer;
+                    clicked => {
+                        AppState.navigate(Route.genres, genre.id);
+                    }
+                }
+
+                HorizontalLayout {
+                    padding-left: 20px;
+                    padding-right: 20px;
+                    spacing: 12px;
+
+                    Icon {
+                        y: (parent.height - self.height) / 2;
+                        path: Icons.genre;
+                        color: Theme.muted;
+                        width: 18px;
+                        height: 18px;
+                    }
+
+                    Text {
+                        text: genre.name;
+                        color: Theme.foreground;
+                        vertical-alignment: center;
+                        overflow: elide;
+                        horizontal-stretch: 1;
+                    }
+
+                    Text {
+                        width: 100px;
+                        text: genre.albums;
+                        color: Theme.muted;
+                        vertical-alignment: center;
+                        horizontal-alignment: right;
+                    }
+
+                    Text {
+                        width: 100px;
+                        text: genre.tracks;
+                        color: Theme.muted;
+                        vertical-alignment: center;
+                        horizontal-alignment: right;
+                    }
+                }
+            }
+        }
+
+        if !GenresState.genres-loading && GenresState.genres.length == 0: Text {
+            text: "No genres found";
+            color: Theme.muted;
+            horizontal-alignment: center;
+            vertical-alignment: center;
+        }
+    }
+}
+
+component GenreDetail inherits VerticalLayout {
+    HorizontalLayout {
+        padding: 20px;
+        padding-bottom: 12px;
+        spacing: 12px;
+
+        if AppState.can-go-back: IconButton {
+            y: (parent.height - self.height) / 2;
+            icon: LibraryIcons.arrow-back;
+            clicked => {
+                AppState.back();
+            }
+        }
+
+        Text {
+            text: GenresState.title;
+            font-size: 24px;
+            font-weight: 700;
+            color: Theme.foreground;
+            vertical-alignment: center;
+            overflow: elide;
+        }
+
+        Rectangle {
+            horizontal-stretch: 1;
+        }
+
+        Tab {
+            y: (parent.height - self.height) / 2;
+            text: "Albums";
+            count: GenresState.album-count;
+            active: GenresState.tab == 0;
+            clicked => {
+                GenresState.tab = 0;
+            }
+        }
+
+        Tab {
+            y: (parent.height - self.height) / 2;
+            text: "Tracks";
+            count: GenresState.track-count;
+            active: GenresState.tab == 1;
+            clicked => {
+                GenresState.tab = 1;
+            }
+        }
+    }
+
+    Rectangle {
+        if GenresState.tab == 0: CardGrid {
+            rows: GenresState.albums;
+            loading: GenresState.albums-loading;
+            empty-text: "No albums found";
+            columns-changed(columns) => {
+                GenresState.album-columns(columns);
+            }
+            open(id) => {
+                AppState.navigate(Route.album-detail, id);
+            }
+        }
+
+        if GenresState.tab == 1: TrackTable {
+            rows: GenresState.tracks;
+            loading: GenresState.tracks-loading;
+            play(index) => {
+                GenresState.play-track(index);
+            }
+        }
+    }
 }
 
 export component GenresView inherits Rectangle {
+    property <string> id: AppState.detail-id;
+    min-width: 320px;
+    background: Theme.background;
+
     init => {
-        GenresState.load(AppState.detail-id);
+        GenresState.load(root.id);
     }
 
-    Text {
-        text: "Genres";
-        color: Theme.muted;
+    changed id => {
+        if (AppState.route == Route.genres) {
+            GenresState.load(root.id);
+        }
     }
+
+    if root.id == "": GenreList { }
+    if root.id != "": GenreDetail { }
 }

@@ -1,17 +1,125 @@
 import { Theme } from "theme.slint";
-import { AppState } from "globals.slint";
+import { AppState, Route } from "globals.slint";
+import { CardGrid, CardRow, Tab, TrackItem, TrackTable } from "genres.slint";
 
 export global FavoritesState {
+    in property <[TrackItem]> tracks;
+    in property <bool> tracks-loading;
+    in property <[CardRow]> albums;
+    in property <bool> albums-loading;
+    in property <[CardRow]> artists;
+    in property <bool> artists-loading;
+    in-out property <int> tab;
     callback load(string);
+    callback play-track(int);
+    callback toggle-track(int);
+    callback toggle-album(string);
+    callback toggle-artist(string);
+    callback album-columns(int);
+    callback artist-columns(int);
 }
 
 export component FavoritesView inherits Rectangle {
+    min-width: 320px;
+    background: Theme.background;
+
     init => {
         FavoritesState.load(AppState.detail-id);
     }
 
-    Text {
-        text: "Favorites";
-        color: Theme.muted;
+    VerticalLayout {
+        HorizontalLayout {
+            padding: 20px;
+            padding-bottom: 12px;
+            spacing: 12px;
+
+            Text {
+                text: "Favorites";
+                font-size: 24px;
+                font-weight: 700;
+                color: Theme.foreground;
+                vertical-alignment: center;
+            }
+
+            Rectangle {
+                horizontal-stretch: 1;
+            }
+
+            Tab {
+                y: (parent.height - self.height) / 2;
+                text: "Tracks";
+                count: FavoritesState.tracks-loading ? "" : FavoritesState.tracks.length;
+                active: FavoritesState.tab == 0;
+                clicked => {
+                    FavoritesState.tab = 0;
+                }
+            }
+
+            Tab {
+                y: (parent.height - self.height) / 2;
+                text: "Albums";
+                active: FavoritesState.tab == 1;
+                clicked => {
+                    FavoritesState.tab = 1;
+                }
+            }
+
+            Tab {
+                y: (parent.height - self.height) / 2;
+                text: "Artists";
+                active: FavoritesState.tab == 2;
+                clicked => {
+                    FavoritesState.tab = 2;
+                }
+            }
+        }
+
+        Rectangle {
+            if FavoritesState.tab == 0: TrackTable {
+                rows: FavoritesState.tracks;
+                loading: FavoritesState.tracks-loading;
+                show-favorite: true;
+                empty-text: "No favorite tracks";
+                play(index) => {
+                    FavoritesState.play-track(index);
+                }
+                toggle-favorite(index) => {
+                    FavoritesState.toggle-track(index);
+                }
+            }
+
+            if FavoritesState.tab == 1: CardGrid {
+                rows: FavoritesState.albums;
+                loading: FavoritesState.albums-loading;
+                show-favorite: true;
+                empty-text: "No favorite albums";
+                columns-changed(columns) => {
+                    FavoritesState.album-columns(columns);
+                }
+                open(id) => {
+                    AppState.navigate(Route.album-detail, id);
+                }
+                toggle-favorite(id) => {
+                    FavoritesState.toggle-album(id);
+                }
+            }
+
+            if FavoritesState.tab == 2: CardGrid {
+                rows: FavoritesState.artists;
+                loading: FavoritesState.artists-loading;
+                round: true;
+                show-favorite: true;
+                empty-text: "No favorite artists";
+                columns-changed(columns) => {
+                    FavoritesState.artist-columns(columns);
+                }
+                open(id) => {
+                    AppState.navigate(Route.artist-detail, id);
+                }
+                toggle-favorite(id) => {
+                    FavoritesState.toggle-artist(id);
+                }
+            }
+        }
     }
 }
