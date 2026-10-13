@@ -5,6 +5,16 @@ Goal: replace the Electron app with a native Rust app that uses a fraction of th
 - Today: ~530 MB PSS / ~977 MB RSS (installed Feishin, Electron 43, measured 2026-10-13 with `scripts/measure-ram.sh`).
 - Desired (not mandatory): <= 80 MB idle, <= 150 MB with a 20k-track list open. Measured at the end of every wave to catch regressions, but missing it does not block a wave.
 
+## Status (2026-10-13)
+
+- Wave 0: done (Slint chosen; spike numbers below).
+- Wave 1: done and in daily testing against Navidrome (login/import, Tracks, Spotify-like queue, player bar, queue panel, MPRIS, scrobble, persistence).
+- Wave 2: views done (home, albums, artists, genres, favorites, playlists + picker, search, tracks context menu/filters); needs real-library testing.
+- Wave 3: partly done (gapless, ReplayGain, output device, bitrate, hotkeys, sleep timer, full-screen now playing, server queue sync); crossfade not started.
+- Wave 4: Subsonic and Jellyfin backends implemented and unit tested, not yet tested against real servers.
+- Wave 5: lyrics (server, lrclib, NetEase, Genius) and Discord done; radio, i18n, themes not started.
+- Demo mode RSS/PSS with all views: 135 / 91 MB.
+
 ## Scope decisions
 
 - Linux only at first. Windows/macOS later, after cutover.
