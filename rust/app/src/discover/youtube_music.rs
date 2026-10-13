@@ -48,7 +48,7 @@ impl YouTubeMusicSource {
         &self,
         settings: &YouTubeSettings,
     ) -> Result<MusicClient, MusicError> {
-        let auth = self.sign_in.current(settings).await;
+        let auth = self.sign_in.current(settings);
         self.client(settings, auth)
     }
 
@@ -81,7 +81,7 @@ impl YouTubeMusicSource {
             Err(error) => {
                 tracing::warn!("the personalized YouTube Music home failed: {error}");
                 if error.is_rejected_sign_in() {
-                    self.sign_in.forget().await;
+                    self.sign_in.forget();
                 }
                 let notice = FeedNotice::SignInFailed(sign_in_reason(&error));
                 self.anonymous_home(settings, notice).await
@@ -134,7 +134,7 @@ impl DiscoverSource for YouTubeMusicSource {
         let signed_in = self.signed_in_client(&settings).await?;
         match signed_in.collection(&browse_id).await {
             Err(error) if error.is_rejected_sign_in() && signed_in.is_signed_in() => {
-                self.sign_in.forget().await;
+                self.sign_in.forget();
                 self.client(&settings, None)?.collection(&browse_id).await
             }
             other => other,
@@ -149,7 +149,7 @@ impl DiscoverSource for YouTubeMusicSource {
         let signed_in = self.signed_in_client(&settings).await?;
         match signed_in.search_songs(&query).await {
             Err(error) if error.is_rejected_sign_in() && signed_in.is_signed_in() => {
-                self.sign_in.forget().await;
+                self.sign_in.forget();
                 self.client(&settings, None)?.search_songs(&query).await
             }
             other => other,

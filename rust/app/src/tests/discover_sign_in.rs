@@ -119,3 +119,38 @@ async fn a_browser_without_a_session_explains_the_fallback() {
         FeedNotice::SignInFailed("yt-dlp failed: could not copy Chrome cookie database".into())
     );
 }
+
+#[tokio::test]
+async fn pages_and_searches_do_not_wait_for_a_slow_sign_in() {
+    let fake = FakeYtDlp::with_body(&format!("sleep 3\n{EXPORT_COOKIES}")).await;
+    let server = MockServer::start().await;
+    Mock::given(method("POST"))
+        .and(path("/search"))
+        .respond_with(ResponseTemplate::new(200).set_body_json(json!({})))
+        .mount(&server)
+        .await;
+    Mock::given(method("POST"))
+        .and(path("/browse"))
+        .respond_with(home_response())
+        .mount(&server)
+        .await;
+    let private_dir = tempfile::tempdir().unwrap();
+    let discover = std::sync::Arc::new(source(&server, &private_dir));
+    let signing_in = tokio::spawn({
+        let discover = std::sync::Arc::clone(&discover);
+        let settings = settings(&fake);
+        async move { discover.feed(FeedRequest::ForYou, settings).await }
+    });
+    tokio::time::sleep(std::time::Duration::from_millis(300)).await;
+    let search = tokio::time::timeout(
+        std::time::Duration::from_secs(2),
+        discover.search("anything".into(), settings(&fake)),
+    )
+    .await;
+    assert_eq!(search, Ok(Ok(Vec::new())), "the search was not held back");
+    let feed = signing_in.await.unwrap().unwrap();
+    assert_eq!(
+        feed.notice,
+        FeedNotice::Personalized(CookieBrowser::Chromium)
+    );
+}
