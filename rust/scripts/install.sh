@@ -17,7 +17,7 @@ refresh_menus() {
 
 remove_legacy_entry() {
     local legacy_desktop_file="$prefix/share/applications/feishin.desktop"
-    grep -qx "Exec=$binary" "$legacy_desktop_file" 2>/dev/null || return 0
+    grep -qxF "Exec=$binary" "$legacy_desktop_file" 2>/dev/null || return 0
     rm -f "$legacy_desktop_file"
     for size in "${legacy_icon_sizes[@]}"; do
         rm -f "$prefix/share/icons/hicolor/${size}x${size}/apps/feishin.png"
