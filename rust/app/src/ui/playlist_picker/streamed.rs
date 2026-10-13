@@ -46,13 +46,13 @@ pub async fn add_listed_songs(
     server: &dyn MusicServer,
     playlist_id: &str,
     listed: ListedSongs,
-    existing: &HashSet<String>,
+    mut known: HashSet<String>,
     report: impl Fn(usize),
 ) -> ListedAdd {
     let mut chunks = listed.into_chunks(LISTED_CHUNK_SIZE);
     let mut outcome = ListedAdd::default();
     loop {
-        match add_next_chunk(server, playlist_id, &mut chunks, existing).await {
+        match add_next_chunk(server, playlist_id, &mut chunks, &mut known).await {
             Ok(Some(chunk)) => {
                 outcome.read += chunk.read;
                 outcome.added += chunk.added;
@@ -71,13 +71,13 @@ async fn add_next_chunk(
     server: &dyn MusicServer,
     playlist_id: &str,
     chunks: &mut ListedChunks,
-    existing: &HashSet<String>,
+    known: &mut HashSet<String>,
 ) -> feishin_api::Result<Option<ChunkAdded>> {
     let Some(song_ids) = chunks.next_ids(server).await? else {
         return Ok(None);
     };
     let read = song_ids.len();
-    let new_ids = unseen_ids(existing, song_ids);
+    let new_ids = unseen_ids(known, song_ids);
     if !new_ids.is_empty() {
         server.add_to_playlist(playlist_id, &new_ids).await?;
     }
@@ -87,10 +87,9 @@ async fn add_next_chunk(
     }))
 }
 
-fn unseen_ids(existing: &HashSet<String>, song_ids: Vec<String>) -> Vec<String> {
-    let mut seen = HashSet::new();
+fn unseen_ids(known: &mut HashSet<String>, song_ids: Vec<String>) -> Vec<String> {
     song_ids
         .into_iter()
-        .filter(|song_id| !existing.contains(song_id) && seen.insert(song_id.clone()))
+        .filter(|song_id| known.insert(song_id.clone()))
         .collect()
 }

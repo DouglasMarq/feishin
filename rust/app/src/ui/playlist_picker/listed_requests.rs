@@ -39,7 +39,7 @@ pub fn add_listed(
     ctx.rt.spawn(async move {
         let outcome = match existing_song_ids(server.as_ref(), &picked.id).await {
             Ok(existing) => {
-                add_listed_songs(server.as_ref(), &picked.id, listed, &existing, report).await
+                add_listed_songs(server.as_ref(), &picked.id, listed, existing, report).await
             }
             Err(error) => ListedAdd::failed(error),
         };
@@ -77,8 +77,14 @@ pub fn create_listed(
         let created = server.create_playlist(&name, &[]).await;
         let outcome = match &created {
             Ok(playlist) => {
-                let no_songs = HashSet::new();
-                add_listed_songs(server.as_ref(), &playlist.id, listed, &no_songs, report).await
+                add_listed_songs(
+                    server.as_ref(),
+                    &playlist.id,
+                    listed,
+                    HashSet::new(),
+                    report,
+                )
+                .await
             }
             Err(_) => ListedAdd::default(),
         };
