@@ -16,6 +16,25 @@ pub(crate) struct NativeTag {
     pub song_count: Option<u32>,
 }
 
+#[derive(Debug, Default, Deserialize)]
+#[serde(default)]
+pub(crate) struct NativeGenre {
+    #[serde(deserialize_with = "string")]
+    pub id: String,
+    #[serde(deserialize_with = "string")]
+    pub name: String,
+}
+
+pub(crate) fn genre_with_counts(genre: NativeGenre, counted: &[Genre]) -> Genre {
+    let counts = counted.iter().find(|known| known.name == genre.name);
+    Genre {
+        id: genre.id,
+        song_count: counts.and_then(|known| known.song_count),
+        album_count: counts.and_then(|known| known.album_count),
+        name: genre.name,
+    }
+}
+
 pub(crate) fn normalize_genre(tag: NativeTag) -> Genre {
     Genre {
         id: tag.id,

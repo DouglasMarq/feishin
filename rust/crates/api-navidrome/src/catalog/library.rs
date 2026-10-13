@@ -2,7 +2,7 @@ use feishin_api::Result;
 use feishin_core::model::{Genre, MusicFolder, SearchResults};
 
 use crate::NavidromeServer;
-use crate::native::{NativeTag, normalize_genre};
+use crate::native::{NativeGenre, NativeTag, genre_with_counts, normalize_genre};
 use crate::query::QueryParams;
 use crate::subsonic;
 
@@ -10,7 +10,9 @@ impl NavidromeServer {
     pub(crate) async fn list_genres(&self) -> Result<Vec<Genre>> {
         let features = self.features().await;
         if !features.has_big_feature_release() {
-            return self.subsonic_genres().await;
+            return self
+                .native_or_subsonic(self.legacy_native_genres(), self.subsonic_genres())
+                .await;
         }
         self.native_or_subsonic(self.native_genres(), self.subsonic_genres())
             .await
@@ -75,6 +77,19 @@ impl NavidromeServer {
             .collect();
         genres.sort_by_key(|genre| genre.name.to_lowercase());
         Ok(genres)
+    }
+
+    async fn legacy_native_genres(&self) -> Result<Vec<Genre>> {
+        let params: QueryParams = vec![("_sort", "name".into()), ("_order", "ASC".into())];
+        let (genres, _): (Vec<NativeGenre>, _) = self.native_get("genre", &params).await?;
+        let counted = self.subsonic_genres().await.unwrap_or_else(|error| {
+            tracing::debug!(%error, "genre counts unavailable");
+            Vec::new()
+        });
+        Ok(genres
+            .into_iter()
+            .map(|genre| genre_with_counts(genre, &counted))
+            .collect())
     }
 
     async fn native_genres(&self) -> Result<Vec<Genre>> {
