@@ -11,6 +11,8 @@ mod playlist_paging;
 #[cfg(test)]
 mod playlists;
 #[cfg(test)]
+mod scanning;
+#[cfg(test)]
 mod songs;
 #[cfg(test)]
 mod support;

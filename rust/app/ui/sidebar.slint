@@ -1,6 +1,6 @@
 import { Theme, Icons } from "theme.slint";
 import { AppState, Route } from "globals.slint";
-import { Icon } from "widgets.slint";
+import { Icon, IconButton } from "widgets.slint";
 
 component NavEntry inherits Rectangle {
     in property <string> icon;
@@ -170,11 +170,32 @@ export component Sidebar inherits Rectangle {
             }
         }
 
-        Text {
-            text: AppState.server-name;
-            color: Theme.muted;
-            font-size: 11px;
-            overflow: elide;
+        HorizontalLayout {
+            spacing: 4px;
+
+            Text {
+                horizontal-stretch: 1;
+                text: AppState.server-name;
+                color: Theme.muted;
+                font-size: 11px;
+                overflow: elide;
+                vertical-alignment: center;
+            }
+
+            if AppState.server-name != "": IconButton {
+                width: 24px;
+                height: 24px;
+                icon: Icons.refresh;
+                icon-size: 16px;
+                active: AppState.library-scanning;
+                transform-rotation: AppState.library-scanning ? mod(animation-tick(), 1s) / 1s * 360deg : 0deg;
+                tooltip: AppState.library-scanning ? (AppState.library-scan-progress == "" ? "Scanning the library for new content..." : "Scanning the library: " + AppState.library-scan-progress) : "Rescan the library for new content";
+                clicked => {
+                    if (!AppState.library-scanning) {
+                        AppState.rescan-library();
+                    }
+                }
+            }
         }
     }
 }

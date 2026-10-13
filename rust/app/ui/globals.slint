@@ -33,6 +33,9 @@ export global AppState {
     in-out property <bool> queue-open: true;
     in-out property <string> status;
     in property <string> server-name;
+    in property <bool> library-scanning;
+    in property <string> library-scan-progress;
+    callback rescan-library();
     in property <Route> route: Route.tracks;
     in property <string> detail-id;
     in property <bool> can-go-back;

@@ -5,6 +5,7 @@ mod music_server;
 mod playback;
 mod playlist_items;
 mod playlists;
+mod scanning;
 mod search;
 mod session;
 mod songs;

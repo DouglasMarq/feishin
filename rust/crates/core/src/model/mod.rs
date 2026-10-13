@@ -1,6 +1,7 @@
 mod album;
 mod artist;
 mod collection;
+mod library_scan;
 mod list_query;
 mod paging;
 mod search;
@@ -11,6 +12,7 @@ mod song_id;
 pub use album::{Album, AlbumDetail};
 pub use artist::{Artist, ArtistDetail, ArtistRef};
 pub use collection::{Genre, MusicFolder, Playlist};
+pub use library_scan::LibraryScan;
 pub use list_query::{
     AlbumListQuery, AlbumSort, ArtistListQuery, ArtistSort, SongListQuery, SongSort, SortOrder,
 };

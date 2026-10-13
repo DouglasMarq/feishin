@@ -7,6 +7,7 @@ use super::artist_albums::ArtistAlbums;
 use super::library::DemoLibrary;
 use super::play_queue::DemoPlayQueue;
 use super::playlists::DemoPlaylists;
+use super::scanning::DemoScan;
 use super::scrobbles::ScrobbleCall;
 use super::song_order::CachedSongOrder;
 
@@ -20,6 +21,7 @@ pub struct FakeServer {
     pub(super) play_queue: Mutex<Option<DemoPlayQueue>>,
     pub(super) queue_saves: Mutex<usize>,
     pub(super) credential: Mutex<Option<Credential>>,
+    pub(super) scan: DemoScan,
 }
 
 impl FakeServer {
@@ -34,6 +36,7 @@ impl FakeServer {
             play_queue: Mutex::default(),
             queue_saves: Mutex::default(),
             credential: Mutex::default(),
+            scan: DemoScan::default(),
         }
     }
 

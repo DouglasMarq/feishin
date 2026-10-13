@@ -2,8 +2,8 @@ use async_trait::async_trait;
 use feishin_api::{Credential, MusicServer, Result, StreamOptions};
 use feishin_core::model::{
     Album, AlbumDetail, AlbumListQuery, Artist, ArtistDetail, ArtistListQuery, Genre, ItemKind,
-    MusicFolder, Page, Paging, Playlist, SearchResults, ServerConfig, ServerPlayQueue, Song,
-    SongListQuery,
+    LibraryScan, MusicFolder, Page, Paging, Playlist, SearchResults, ServerConfig, ServerPlayQueue,
+    Song, SongListQuery,
 };
 use serde::de::IgnoredAny;
 
@@ -152,6 +152,14 @@ impl MusicServer for NavidromeServer {
         Ok(lyrics_text(
             response.lyrics_list.unwrap_or_default().structured_lyrics,
         ))
+    }
+
+    async fn start_library_scan(&self) -> Result<LibraryScan> {
+        self.begin_library_scan().await
+    }
+
+    async fn library_scan(&self) -> Result<LibraryScan> {
+        self.fetch_library_scan().await
     }
 
     fn stream_url(&self, song_id: &str, options: &StreamOptions) -> String {

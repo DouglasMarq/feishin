@@ -12,6 +12,7 @@ mod play_queue;
 mod playlist_cache;
 mod playlists;
 mod requests;
+mod scanning;
 mod songs;
 mod transport;
 mod urls;

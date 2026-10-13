@@ -25,6 +25,7 @@ pub mod artists;
 pub mod favorites;
 pub mod genres;
 pub mod home;
+pub mod library_scan;
 pub mod login;
 pub mod nav;
 pub mod now_playing;
@@ -75,6 +76,7 @@ pub fn install(window: &AppWindow, ctx: &Context, settings: &Settings) {
     player::install(window, ctx);
     login::install(window, ctx);
     nav::install(window);
+    library_scan::install(window, ctx);
     home::install(window, ctx);
     albums::install(window, ctx);
     album_detail::install(window, ctx);

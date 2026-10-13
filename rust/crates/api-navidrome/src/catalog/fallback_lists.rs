@@ -32,6 +32,11 @@ impl FallbackLists {
 }
 
 impl NavidromeServer {
+    pub(crate) fn forget_fallback_lists(&self) {
+        self.fallback_lists.artist_index.invalidate_all();
+        self.fallback_lists.playlists.invalidate_all();
+    }
+
     pub(crate) async fn changing_annotations<Output>(
         &self,
         change: impl Future<Output = Result<Output>>,

@@ -15,6 +15,7 @@ mod paging;
 mod play_queue;
 mod playlists;
 mod records;
+mod scanning;
 mod scrobbles;
 mod selections;
 mod server;

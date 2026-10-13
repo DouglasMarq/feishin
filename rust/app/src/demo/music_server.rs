@@ -2,8 +2,8 @@ use async_trait::async_trait;
 use feishin_api::{ApiError, Credential, MusicServer, Result, StreamOptions};
 use feishin_core::model::{
     Album, AlbumDetail, AlbumListQuery, Artist, ArtistDetail, ArtistListQuery, Genre, ItemKind,
-    MusicFolder, Page, Paging, Playlist, SearchResults, ServerConfig, ServerPlayQueue, Song,
-    SongListQuery,
+    LibraryScan, MusicFolder, Page, Paging, Playlist, SearchResults, ServerConfig, ServerPlayQueue,
+    Song, SongListQuery,
 };
 
 use super::ids::parse_song_index;
@@ -176,6 +176,14 @@ impl MusicServer for FakeServer {
 
     async fn lyrics(&self, song: &Song) -> Result<Option<String>> {
         Ok(parse_song_index(&song.id).map(|index| demo_lyrics(index, song.duration_ms)))
+    }
+
+    async fn start_library_scan(&self) -> Result<LibraryScan> {
+        Ok(self.begin_demo_scan())
+    }
+
+    async fn library_scan(&self) -> Result<LibraryScan> {
+        Ok(self.poll_demo_scan())
     }
 
     fn stream_url(&self, song_id: &str, _options: &StreamOptions) -> String {

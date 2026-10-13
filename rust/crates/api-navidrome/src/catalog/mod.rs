@@ -6,6 +6,7 @@ mod library;
 mod paging;
 mod play_queue;
 mod playlists;
+mod scanning;
 mod songs;
 mod urls;
 

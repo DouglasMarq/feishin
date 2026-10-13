@@ -269,3 +269,41 @@ async fn search_count_probes_instead_of_paging_every_match() {
     assert!(requests <= 20, "{requests} requests");
     assert!(downloaded_songs.load(Ordering::SeqCst) <= 520);
 }
+
+async fn mount_scan_status(mock: &MockServer, scanning: bool) {
+    Mock::given(path("/rest/getScanStatus.view"))
+        .respond_with(ok(
+            json!({ "scanStatus": { "scanning": scanning, "count": 250 } }),
+        ))
+        .expect(1)
+        .mount(mock)
+        .await;
+}
+
+#[tokio::test]
+async fn a_finished_library_scan_refreshes_the_artist_index() {
+    let mock = MockServer::start().await;
+    mount_artist_index(&mock, "1", 2).await;
+    mount_scan_status(&mock, false).await;
+    let server = server(&mock);
+
+    artist_page(&server, "1", 0).await;
+    let scan = server.library_scan().await.map(|scan| scan.scanning);
+    artist_page(&server, "1", 0).await;
+
+    assert_eq!(scan.ok(), Some(false));
+}
+
+#[tokio::test]
+async fn a_running_library_scan_keeps_the_artist_index() {
+    let mock = MockServer::start().await;
+    mount_artist_index(&mock, "1", 1).await;
+    mount_scan_status(&mock, true).await;
+    let server = server(&mock);
+
+    artist_page(&server, "1", 0).await;
+    let scan = server.library_scan().await.map(|scan| scan.scanning);
+    artist_page(&server, "1", 0).await;
+
+    assert_eq!(scan.ok(), Some(true));
+}

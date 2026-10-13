@@ -3,6 +3,7 @@ mod library;
 mod lyrics;
 mod media;
 mod requests;
+mod scheduled_task;
 
 use serde::{Deserialize, Deserializer};
 
@@ -13,6 +14,7 @@ pub use library::{
 pub use lyrics::{LyricLine, Lyrics};
 pub use media::{ImageTags, MediaSource, Song};
 pub use requests::{AuthenticateByName, EmptyBody, NewPlaylist, PlaybackEvent, PlaybackReport};
+pub use scheduled_task::ScheduledTask;
 
 fn null_as_default<'de, Source, Field>(deserializer: Source) -> Result<Field, Source::Error>
 where

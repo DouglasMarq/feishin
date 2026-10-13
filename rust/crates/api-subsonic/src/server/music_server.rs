@@ -2,8 +2,8 @@ use async_trait::async_trait;
 use feishin_api::{MusicServer, Result, StreamOptions};
 use feishin_core::model::{
     Album, AlbumDetail, AlbumListQuery, Artist, ArtistDetail, ArtistListQuery, Genre, ItemKind,
-    MusicFolder, Page, Paging, Playlist, SearchResults, ServerConfig, ServerPlayQueue, Song,
-    SongListQuery,
+    LibraryScan, MusicFolder, Page, Paging, Playlist, SearchResults, ServerConfig, ServerPlayQueue,
+    Song, SongListQuery,
 };
 
 use super::SubsonicServer;
@@ -137,6 +137,14 @@ impl MusicServer for SubsonicServer {
 
     async fn lyrics(&self, song: &Song) -> Result<Option<String>> {
         self.fetch_lyrics(song).await
+    }
+
+    async fn start_library_scan(&self) -> Result<LibraryScan> {
+        self.begin_library_scan().await
+    }
+
+    async fn library_scan(&self) -> Result<LibraryScan> {
+        self.fetch_library_scan().await
     }
 
     fn stream_url(&self, song_id: &str, options: &StreamOptions) -> String {

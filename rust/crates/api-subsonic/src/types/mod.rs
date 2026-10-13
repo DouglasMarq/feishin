@@ -6,6 +6,7 @@ mod lyrics;
 mod play_queue;
 mod playlist;
 mod responses;
+mod scan_status;
 mod server_info;
 mod song;
 mod starred;
@@ -20,6 +21,7 @@ pub use responses::{
     AlbumList2, ArtistInfo2, Empty, Genres, GetAlbum, GetArtist, GetArtists, GetSong, MusicFolders,
     RandomSongs, Search3, SearchResult, SimilarSongs, SongsByGenre, Starred2, TopSongs,
 };
+pub use scan_status::{ScanStatus, ScanStatusResponse};
 pub use server_info::{OpenSubsonicExtensions, Ping};
 pub use song::{Contributor, GenreItem, ReplayGain, SimpleArtist, SubsonicSong};
 
