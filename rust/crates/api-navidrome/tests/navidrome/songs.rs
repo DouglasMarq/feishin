@@ -5,7 +5,7 @@ use wiremock::matchers::{method, path, query_param, query_param_is_missing};
 use wiremock::{Mock, MockServer, ResponseTemplate};
 
 use crate::support::{
-    AudioFormat, mount_ping, nd_song, query_values, server, subsonic_entry, subsonic_ok,
+    AudioFormat, mount_ping, native_song_json, query_values, server, subsonic_entry, subsonic_ok,
 };
 
 async fn mount_filtered_song_list(mock: &MockServer) {
@@ -23,8 +23,8 @@ async fn mount_filtered_song_list(mock: &MockServer) {
             ResponseTemplate::new(200)
                 .insert_header("x-total-count", "1234")
                 .set_body_json(json!([
-                    nd_song("s1", "Love One"),
-                    nd_song("s2", "Love Two")
+                    native_song_json("s1", "Love One"),
+                    native_song_json("s2", "Love Two")
                 ])),
         )
         .expect(1)
@@ -113,7 +113,7 @@ async fn song_count_on_old_server_uses_legacy_filters() {
         .respond_with(
             ResponseTemplate::new(200)
                 .insert_header("x-total-count", "42")
-                .set_body_json(json!([nd_song("s1", "One")])),
+                .set_body_json(json!([native_song_json("s1", "One")])),
         )
         .expect(1)
         .mount(&mock)
@@ -208,7 +208,7 @@ async fn lyrics_from_opensubsonic_extension() {
     mount_ping(&mock, "0.58.0", &["songLyrics"]).await;
     Mock::given(method("GET"))
         .and(path("/api/song/s1"))
-        .respond_with(ResponseTemplate::new(200).set_body_json(nd_song("s1", "One")))
+        .respond_with(ResponseTemplate::new(200).set_body_json(native_song_json("s1", "One")))
         .mount(&mock)
         .await;
     Mock::given(method("GET"))

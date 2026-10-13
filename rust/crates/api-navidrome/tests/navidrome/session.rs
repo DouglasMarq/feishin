@@ -4,7 +4,9 @@ use serde_json::{Value, json};
 use wiremock::matchers::{body_json, header, method, path, query_param};
 use wiremock::{Mock, MockServer, ResponseTemplate};
 
-use crate::support::{SUBSONIC_AUTH, config, nd_song, server, subsonic_failed, subsonic_ok};
+use crate::support::{
+    SUBSONIC_AUTH, config, native_song_json, server, subsonic_failed, subsonic_ok,
+};
 
 async fn mount_login(mock: &MockServer) {
     Mock::given(method("POST"))
@@ -79,7 +81,7 @@ async fn native_calls_pick_up_refreshed_token() {
         .respond_with(
             ResponseTemplate::new(200)
                 .insert_header("x-nd-authorization", "jwt-2")
-                .set_body_json(nd_song("s1", "First")),
+                .set_body_json(native_song_json("s1", "First")),
         )
         .expect(1)
         .mount(&mock)
@@ -87,7 +89,7 @@ async fn native_calls_pick_up_refreshed_token() {
     Mock::given(method("GET"))
         .and(path("/api/song/s2"))
         .and(header("x-nd-authorization", "Bearer jwt-2"))
-        .respond_with(ResponseTemplate::new(200).set_body_json(nd_song("s2", "Second")))
+        .respond_with(ResponseTemplate::new(200).set_body_json(native_song_json("s2", "Second")))
         .expect(1)
         .mount(&mock)
         .await;

@@ -110,9 +110,8 @@ impl NavidromeServer {
         if songs.is_empty() {
             return Ok(None);
         }
-        let current = queue.current.unwrap_or(0) as usize;
         Ok(Some(ServerPlayQueue {
-            current_song_id: song_id_at(&songs, current),
+            current_song_id: song_id_at(&songs, queue.current.unwrap_or(0)),
             songs,
             position_ms: queue.position.unwrap_or(0),
         }))
@@ -130,7 +129,7 @@ impl NavidromeServer {
         let current_song_id = match cursor {
             QueueCursor::ByIndex => body
                 .current_index
-                .and_then(|index| song_id_at(&songs, index as usize)),
+                .and_then(|index| song_id_at(&songs, index)),
             QueueCursor::BySongId => body.current,
         };
         Ok(Some(ServerPlayQueue {
@@ -157,7 +156,8 @@ impl NavidromeServer {
     }
 }
 
-fn song_id_at(songs: &[Song], index: usize) -> Option<String> {
+fn song_id_at(songs: &[Song], index: u32) -> Option<String> {
+    let index = usize::try_from(index).ok()?;
     songs.get(index).map(|song| song.id.clone())
 }
 

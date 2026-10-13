@@ -4,7 +4,8 @@ use wiremock::matchers::{method, path, query_param};
 use wiremock::{Mock, MockServer, ResponseTemplate};
 
 use crate::support::{
-    AudioFormat, mount_ping, nd_album, nd_song, server, subsonic_entry, subsonic_ok,
+    AudioFormat, mount_ping, native_album_json, native_song_json, server, subsonic_entry,
+    subsonic_ok,
 };
 
 #[tokio::test]
@@ -13,7 +14,7 @@ async fn album_detail_fetches_album_and_tracks() {
     mount_ping(&mock, "0.58.0", &[]).await;
     Mock::given(method("GET"))
         .and(path("/api/album/al1"))
-        .respond_with(ResponseTemplate::new(200).set_body_json(nd_album("al1")))
+        .respond_with(ResponseTemplate::new(200).set_body_json(native_album_json("al1")))
         .expect(1)
         .mount(&mock)
         .await;
@@ -25,10 +26,10 @@ async fn album_detail_fetches_album_and_tracks() {
         .and(query_param("_sort", "album"))
         .and(query_param("_order", "ASC"))
         .and(query_param("missing", "false"))
-        .respond_with(
-            ResponseTemplate::new(200)
-                .set_body_json(json!([nd_song("s1", "One"), nd_song("s2", "Two")])),
-        )
+        .respond_with(ResponseTemplate::new(200).set_body_json(json!([
+            native_song_json("s1", "One"),
+            native_song_json("s2", "Two")
+        ])))
         .expect(1)
         .mount(&mock)
         .await;
@@ -77,7 +78,7 @@ async fn mount_artist_albums(mock: &MockServer) {
         .respond_with(
             ResponseTemplate::new(200)
                 .insert_header("x-total-count", "2")
-                .set_body_json(json!([nd_album("al1"), nd_album("al2")])),
+                .set_body_json(json!([native_album_json("al1"), native_album_json("al2")])),
         )
         .expect(1)
         .mount(mock)

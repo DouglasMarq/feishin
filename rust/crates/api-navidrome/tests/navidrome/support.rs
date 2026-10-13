@@ -77,11 +77,11 @@ pub async fn mount_ping(mock: &MockServer, version: &str, extensions: &[&str]) {
         .await;
 }
 
-pub fn nd_song(id: &str, title: &str) -> Value {
-    merged(nd_song_identity(id, title), nd_song_metadata())
+pub fn native_song_json(id: &str, title: &str) -> Value {
+    merged(native_song_identity(id, title), native_song_metadata())
 }
 
-fn nd_song_identity(id: &str, title: &str) -> Value {
+fn native_song_identity(id: &str, title: &str) -> Value {
     json!({
         "id": id,
         "title": title,
@@ -99,7 +99,7 @@ fn nd_song_identity(id: &str, title: &str) -> Value {
     })
 }
 
-fn nd_song_metadata() -> Value {
+fn native_song_metadata() -> Value {
     json!({
         "bitRate": 320,
         "bookmarkPosition": 0,
@@ -130,7 +130,7 @@ fn nd_song_metadata() -> Value {
     })
 }
 
-pub fn nd_album(id: &str) -> Value {
+pub fn native_album_json(id: &str) -> Value {
     json!({
         "id": id,
         "name": "Album One",
@@ -157,7 +157,7 @@ pub fn nd_album(id: &str) -> Value {
     })
 }
 
-pub fn nd_playlist(id: &str, name: &str) -> Value {
+pub fn native_playlist_json(id: &str, name: &str) -> Value {
     json!({
         "id": id,
         "name": name,

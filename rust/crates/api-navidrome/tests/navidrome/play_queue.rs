@@ -3,7 +3,9 @@ use serde_json::json;
 use wiremock::matchers::{body_json, method, path, query_param};
 use wiremock::{Mock, MockServer, ResponseTemplate};
 
-use crate::support::{AudioFormat, mount_ping, nd_song, server, subsonic_entry, subsonic_ok};
+use crate::support::{
+    AudioFormat, mount_ping, native_song_json, server, subsonic_entry, subsonic_ok,
+};
 
 async fn mount_index_queue_save_and_native_queue(mock: &MockServer) {
     Mock::given(method("GET"))
@@ -26,7 +28,7 @@ async fn mount_index_queue_save_and_native_queue(mock: &MockServer) {
             "changedBy": "feishin",
             "createdAt": "2024-01-01T00:00:00Z",
             "updatedAt": "2024-01-01T00:00:00Z",
-            "items": [nd_song("s1", "One"), nd_song("s2", "Two")]
+            "items": [native_song_json("s1", "One"), native_song_json("s2", "Two")]
         })))
         .expect(1)
         .mount(mock)

@@ -4,7 +4,7 @@ use serde_json::json;
 use wiremock::matchers::{body_json, method, path, query_param, query_param_is_missing};
 use wiremock::{Mock, MockServer, ResponseTemplate};
 
-use crate::support::{mount_ping, nd_playlist, nd_song, server, subsonic_ok};
+use crate::support::{mount_ping, native_playlist_json, native_song_json, server, subsonic_ok};
 
 async fn mount_playlist_page(mock: &MockServer) {
     Mock::given(method("GET"))
@@ -16,7 +16,7 @@ async fn mount_playlist_page(mock: &MockServer) {
         .respond_with(
             ResponseTemplate::new(200)
                 .insert_header("x-total-count", "3")
-                .set_body_json(json!([nd_playlist("pl1", "Mix")])),
+                .set_body_json(json!([native_playlist_json("pl1", "Mix")])),
         )
         .expect(1)
         .mount(mock)
@@ -24,7 +24,7 @@ async fn mount_playlist_page(mock: &MockServer) {
 }
 
 async fn mount_playlist_tracks(mock: &MockServer) {
-    let mut track = nd_song("1", "One");
+    let mut track = native_song_json("1", "One");
     track["mediaFileId"] = json!("s1");
     track["playlistId"] = json!("pl1");
     Mock::given(method("GET"))
@@ -84,16 +84,16 @@ async fn mount_create_and_add(mock: &MockServer) {
         .await;
     Mock::given(method("GET"))
         .and(path("/api/playlist/pl9"))
-        .respond_with(ResponseTemplate::new(200).set_body_json(nd_playlist("pl9", "New")))
+        .respond_with(ResponseTemplate::new(200).set_body_json(native_playlist_json("pl9", "New")))
         .expect(1)
         .mount(mock)
         .await;
 }
 
 async fn mount_remove_and_delete(mock: &MockServer) {
-    let mut first = nd_song("7", "One");
+    let mut first = native_song_json("7", "One");
     first["mediaFileId"] = json!("s1");
-    let mut second = nd_song("8", "Two");
+    let mut second = native_song_json("8", "Two");
     second["mediaFileId"] = json!("s2");
     Mock::given(method("GET"))
         .and(path("/api/playlist/pl9/tracks"))
