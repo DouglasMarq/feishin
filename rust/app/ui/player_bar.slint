@@ -146,7 +146,7 @@ export component PlayerBar inherits Rectangle {
 
                 Text {
                     width: 44px;
-                    text: Format.time(seek.dragging ? seek.preview-ms : PlayerState.position-ms);
+                    text: Format.time(seek.holding ? seek.preview-ms : PlayerState.position-ms);
                     color: Theme.muted;
                     font-size: 11px;
                     horizontal-alignment: right;

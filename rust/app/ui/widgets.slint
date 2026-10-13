@@ -174,9 +174,13 @@ export component Bar inherits Rectangle {
     out property <float> drag-preview: root.drag-value;
     /// True while the user is dragging or wheel-scrolling, i.e. `drag-preview` is ahead of `value`.
     out property <bool> adjusting: root.dragging || root.scrolling;
+    /// True while the bar shows the user's chosen value instead of `value` (dragging or waiting for it to apply).
+    out property <bool> holding: root.dragging || root.settling;
     property <bool> scrolling;
     property <float> drag-value;
-    property <float> shown: root.dragging ? root.drag-value : root.value;
+    /// After a commit, keep showing `drag-value` until `value` catches up, so the knob does not jump back.
+    property <bool> settling;
+    property <float> shown: root.dragging || root.settling ? root.drag-value : root.value;
     callback changed(float);
     callback committed(float);
     height: 16px;
@@ -211,6 +215,20 @@ export component Bar inherits Rectangle {
         follow-x: root.tooltip-follows-pointer ? (root.dragging ? root.width * root.drag-value : touch.mouse-x) : -1px;
     }
 
+    settle-timer := Timer {
+        interval: 1500ms;
+        running: root.settling;
+        triggered => {
+            root.settling = false;
+        }
+    }
+
+    changed value => {
+        if (root.settling && abs(root.value - root.drag-value) < 0.01) {
+            root.settling = false;
+        }
+    }
+
     scroll-timer := Timer {
         interval: 800ms;
         running: root.scrolling;
@@ -227,6 +245,8 @@ export component Bar inherits Rectangle {
             }
             root.drag-value = max(0, min(1, root.value + (event.delta-y > 0 ? root.scroll-step : -root.scroll-step)));
             root.changed(root.drag-value);
+            root.settling = true;
+            settle-timer.restart();
             root.committed(root.drag-value);
             root.scrolling = true;
             scroll-timer.restart();
@@ -237,6 +257,8 @@ export component Bar inherits Rectangle {
                 root.drag-value = max(0, min(1, self.mouse-x / root.width));
                 root.changed(root.drag-value);
             } else if (event.kind == PointerEventKind.up && event.button == PointerEventButton.left) {
+                root.settling = true;
+                settle-timer.restart();
                 root.committed(root.drag-value);
             }
         }
