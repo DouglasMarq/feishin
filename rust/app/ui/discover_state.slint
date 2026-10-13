@@ -69,6 +69,8 @@ export global DiscoverState {
     callback search(query: string);
     callback cover-needed(shelf: int, card: int);
     callback song-cover-needed(index: int);
+    callback card-visibility-changed(shelf: int, card: int, visible: bool);
+    callback song-rows-shown(first-row: int, row-count: int);
     callback play-from-card(shelf: int, card: int);
     callback play-card(shelf: int, card: int);
     callback play-card-next(shelf: int, card: int);

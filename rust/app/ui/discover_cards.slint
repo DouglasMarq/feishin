@@ -47,9 +47,15 @@ export component DiscoverCardView inherits Rectangle {
     height: 214px;
 
     init => {
+        if (root.on-screen) {
+            DiscoverState.card-visibility-changed(root.shelf-index, root.card-index, true);
+        }
         if (root.wants-cover) {
             DiscoverState.cover-needed(root.shelf-index, root.card-index);
         }
+    }
+    changed on-screen => {
+        DiscoverState.card-visibility-changed(root.shelf-index, root.card-index, self.on-screen);
     }
     changed wants-cover => {
         if (self.wants-cover) {

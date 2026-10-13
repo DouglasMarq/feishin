@@ -16,6 +16,8 @@ mod sections;
 
 #[cfg(test)]
 mod headless_tests;
+#[cfg(test)]
+mod model_tests;
 
 use std::rc::Rc;
 use std::sync::Arc;

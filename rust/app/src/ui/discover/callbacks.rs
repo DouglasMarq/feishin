@@ -2,7 +2,7 @@ use feishin_youtube::music::CHART_COUNTRIES;
 use slint::ComponentHandle;
 
 use super::card_actions::{open_card_in_browser, place_card, play_from_card};
-use super::covers::{load_card_cover, load_song_cover};
+use super::covers::{card_visibility_changed, load_card_cover, load_song_cover, song_rows_shown};
 use super::deps::DiscoverDeps;
 use super::loading::{refresh_sections, show_sections};
 use super::model::with_discover;
@@ -113,6 +113,30 @@ fn install_navigation(window: &AppWindow, deps: &DiscoverDeps) {
     state.on_select_mood(on_index(window, deps, select_mood));
 }
 
+fn install_visibility(window: &AppWindow) {
+    let state = window.global::<DiscoverState>();
+    let weak_window = window.as_weak();
+    state.on_card_visibility_changed(move |shelf, card, visible| {
+        if let (Some(window), Ok(shelf), Ok(card)) = (
+            weak_window.upgrade(),
+            usize::try_from(shelf),
+            usize::try_from(card),
+        ) {
+            card_visibility_changed(&window, shelf, card, visible);
+        }
+    });
+    let weak_window = window.as_weak();
+    state.on_song_rows_shown(move |first_row, row_count| {
+        if let (Some(window), Ok(first_row), Ok(row_count)) = (
+            weak_window.upgrade(),
+            usize::try_from(first_row),
+            usize::try_from(row_count),
+        ) {
+            song_rows_shown(&window, first_row, row_count);
+        }
+    });
+}
+
 fn install_cards(window: &AppWindow, deps: &DiscoverDeps) {
     let state = window.global::<DiscoverState>();
     state.on_cover_needed(on_card(window, deps, load_card_cover));
@@ -150,5 +174,6 @@ fn install_page(window: &AppWindow, deps: &DiscoverDeps) {
 pub fn install_callbacks(window: &AppWindow, deps: &DiscoverDeps) {
     install_navigation(window, deps);
     install_cards(window, deps);
+    install_visibility(window);
     install_page(window, deps);
 }

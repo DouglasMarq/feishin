@@ -119,6 +119,25 @@ impl DiscoverModel {
         }
     }
 
+    pub fn set_card_visible(&self, shelf: usize, card: usize, visible: bool) {
+        let card_id = self
+            .slots
+            .borrow()
+            .get(shelf)
+            .and_then(|slot| slot.cards.row_data(card))
+            .map(|shown| shown.id.to_string());
+        let Some(card_id) = card_id else {
+            return;
+        };
+        let evicted = self
+            .card_covers
+            .borrow_mut()
+            .set_visible((shelf, card_id), visible);
+        for (evicted_shelf, evicted_id) in evicted {
+            self.update_card(evicted_shelf, &evicted_id, None);
+        }
+    }
+
     fn update_card(&self, shelf: usize, card_id: &str, cover: Option<Image>) -> bool {
         let slots = self.slots.borrow();
         let Some(cards) = slots.get(shelf).map(|slot| &slot.cards) else {
@@ -137,7 +156,7 @@ impl DiscoverModel {
 
     pub fn show_page_songs(&self) {
         self.song_generation.set(self.song_generation.get() + 1);
-        self.song_covers.borrow_mut().clear();
+        self.song_covers.borrow_mut().forget_covers();
         let rows: Vec<DiscoverSong> = self
             .page
             .borrow()
@@ -175,6 +194,13 @@ impl DiscoverModel {
         };
         self.update_song(index, Some(cover));
         let evicted = self.song_covers.borrow_mut().show(index);
+        for evicted_index in evicted {
+            self.update_song(evicted_index, None);
+        }
+    }
+
+    pub fn show_song_rows(&self, rows: std::ops::Range<usize>) {
+        let evicted = self.song_covers.borrow_mut().show_only(rows);
         for evicted_index in evicted {
             self.update_song(evicted_index, None);
         }

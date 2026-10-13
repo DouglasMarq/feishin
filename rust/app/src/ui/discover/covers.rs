@@ -83,3 +83,13 @@ pub fn load_page_cover(window: &AppWindow, deps: &DiscoverDeps, generation: u64,
         state.set_page_has_cover(true);
     });
 }
+
+pub fn card_visibility_changed(window: &AppWindow, shelf: usize, card: usize, visible: bool) {
+    with_discover(window, |model| model.set_card_visible(shelf, card, visible));
+}
+
+pub fn song_rows_shown(window: &AppWindow, first_row: usize, row_count: usize) {
+    with_discover(window, |model| {
+        model.show_song_rows(first_row..first_row.saturating_add(row_count));
+    });
+}

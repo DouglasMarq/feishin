@@ -177,12 +177,22 @@ component SongRows inherits Rectangle {
     property <int> first-row;
     height: root.row-count * root.row-height;
 
+    function report-shown-rows() {
+        DiscoverState.song-rows-shown(root.first-row, root.slot-count);
+    }
+
     init => {
         root.first-row = root.wanted-first-row;
+        root.report-shown-rows();
     }
 
     changed wanted-first-row => {
         root.first-row = root.wanted-first-row;
+        root.report-shown-rows();
+    }
+
+    changed slot-count => {
+        root.report-shown-rows();
     }
 
     for slot in root.slot-count: SongRowView {
