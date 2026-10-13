@@ -46,7 +46,7 @@ fn open_now_playing_page() -> NowPlayingPage {
         commands: sender,
         session,
         store: Arc::new(JsonStore::new(dir.path())),
-        connector: Arc::new(DemoConnector),
+        connector: Arc::new(DemoConnector::default()),
         covers: Arc::new(DemoCovers),
     };
     let window = AppWindow::new().unwrap();

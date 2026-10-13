@@ -8,7 +8,7 @@ use feishin_core::model::{
 
 use super::ids::parse_song_index;
 use super::lyrics::demo_lyrics;
-use super::paging::paginate;
+use super::paging::paginate_order;
 use super::scrobbles::ScrobbleCall;
 use super::server::FakeServer;
 
@@ -28,10 +28,7 @@ impl MusicServer for FakeServer {
 
     async fn song_list(&self, query: &SongListQuery, paging: Paging) -> Result<Page<Song>> {
         let order = self.sorted_songs(query);
-        Ok(paginate(
-            order.iter().map(|&index| self.song_at(index)),
-            paging,
-        ))
+        Ok(paginate_order(&order, paging, |index| self.song_at(index)))
     }
 
     async fn song_count(&self, query: &SongListQuery) -> Result<usize> {
@@ -55,10 +52,7 @@ impl MusicServer for FakeServer {
 
     async fn album_list(&self, query: &AlbumListQuery, paging: Paging) -> Result<Page<Album>> {
         let order = self.sorted_albums(query);
-        Ok(paginate(
-            order.iter().map(|&album| self.album_at(album)),
-            paging,
-        ))
+        Ok(paginate_order(&order, paging, |album| self.album_at(album)))
     }
 
     async fn album_count(&self, query: &AlbumListQuery) -> Result<usize> {

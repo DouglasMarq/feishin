@@ -140,7 +140,7 @@ fn demo_context(runtime: &Runtime) -> (Context, UnboundedReceiver<Command>) {
         store: Arc::new(JsonStore::new(
             std::env::temp_dir().join("feishin-rs-ui-test"),
         )),
-        connector: Arc::new(DemoConnector),
+        connector: Arc::new(DemoConnector::default()),
         covers: Arc::new(DemoCovers),
     };
     ctx.session.set(Some(Arc::new(FakeServer::new(600))));

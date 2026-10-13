@@ -2,11 +2,8 @@ use feishin_core::model::ArtistRef;
 
 use super::hashing::{pick_word, scramble};
 use super::ids::artist_id;
+use super::library::SONGS_PER_ALBUM;
 use super::vocabulary::{ADJECTIVES, FIRST_NAMES, GENRES, LAST_NAMES, NOUNS};
-
-pub const DEMO_SONG_COUNT: usize = 20_000;
-pub(super) const SONGS_PER_ALBUM: usize = 12;
-pub(super) const ARTIST_COUNT: usize = 400;
 
 pub(super) fn album_of_song(index: usize) -> usize {
     index / SONGS_PER_ALBUM
@@ -39,10 +36,6 @@ pub(super) fn album_name(album: usize) -> String {
         pick_word(&ADJECTIVES, hash),
         pick_word(&NOUNS, hash >> 16)
     )
-}
-
-pub(super) fn album_artist(album: usize) -> usize {
-    (scramble(album as u64) % ARTIST_COUNT as u64) as usize
 }
 
 pub(super) fn album_year(album: usize) -> i32 {
@@ -84,6 +77,10 @@ pub(super) fn genre_name(genre: usize) -> &'static str {
 
 pub(super) fn song_traits_hash(index: usize) -> u64 {
     scramble(index as u64 ^ 0x5eed)
+}
+
+pub(super) fn song_play_count(index: usize) -> u32 {
+    (song_traits_hash(index) % 60) as u32
 }
 
 pub(super) fn song_is_favorite(index: usize) -> bool {

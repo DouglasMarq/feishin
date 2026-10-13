@@ -125,7 +125,7 @@ fn demo_context(
         commands,
         session,
         store: Arc::new(JsonStore::new(store_dir.path())),
-        connector: Arc::new(DemoConnector),
+        connector: Arc::new(DemoConnector::default()),
         covers: Arc::new(DemoCovers),
     };
     (ctx, received)

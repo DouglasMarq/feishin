@@ -1,12 +1,14 @@
 mod account;
 mod album_order;
 mod albums;
+mod artist_albums;
 mod artists;
 mod catalog;
 mod cover;
 mod genres;
 mod hashing;
 mod ids;
+mod library;
 mod lyrics;
 mod music_server;
 mod paging;
@@ -21,13 +23,15 @@ mod songs;
 mod vocabulary;
 
 #[cfg(test)]
+mod scale_tests;
+#[cfg(test)]
 mod test_support;
 #[cfg(test)]
 mod tests;
 
 pub use account::demo_credential;
-pub use catalog::DEMO_SONG_COUNT;
 pub use cover::render_cover;
+pub use library::{DEMO_SONG_COUNT, DemoLibrary, MAX_DEMO_SONG_COUNT};
 #[cfg(test)]
 pub use scrobbles::ScrobbleCall;
 pub use server::FakeServer;
