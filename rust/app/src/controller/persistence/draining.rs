@@ -39,12 +39,19 @@ impl Controller {
             return;
         }
         tracing::info!("waiting for list streams to finish loading before saving the queue");
+        self.silence_while_draining();
         self.shutdown = ShutdownState::Draining(Box::new(PendingShutdown { ui, done }));
         send_after(
             &self.deps.commands,
             STREAM_DRAIN_DEADLINE,
             PersistenceEvent::StreamDrainDeadline,
         );
+    }
+
+    fn silence_while_draining(&self) {
+        if let Err(error) = self.deps.audio.set_muted(true) {
+            tracing::warn!("muting playback while quitting failed: {error:#}");
+        }
     }
 
     pub(super) fn stream_drain_deadline(&mut self) {

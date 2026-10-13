@@ -27,6 +27,7 @@ pub(super) enum AudioCall {
     Pause,
     Stop,
     Seek(u64),
+    Mute(bool),
 }
 
 #[derive(Clone, Default)]
@@ -73,8 +74,8 @@ impl AudioOutput for RecordingAudio {
     fn set_volume(&self, _volume: u8) -> Result<()> {
         Ok(())
     }
-    fn set_muted(&self, _muted: bool) -> Result<()> {
-        Ok(())
+    fn set_muted(&self, muted: bool) -> Result<()> {
+        self.record(AudioCall::Mute(muted))
     }
 }
 

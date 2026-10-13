@@ -4,7 +4,7 @@ use feishin_core::model::SongListQuery;
 use feishin_storage::settings::UiSettings;
 use tokio::sync::oneshot;
 
-use super::harness::{Harness, start_harness_with, test_settings};
+use super::harness::{AudioCall, Harness, start_harness_with, test_settings};
 use crate::controller::{Command, PersistenceEvent};
 use crate::list_stream::{ListRow, SongSource};
 use crate::store::Store;
@@ -65,6 +65,24 @@ async fn a_stream_still_loading_at_the_deadline_is_saved_as_far_as_it_got() {
     assert!(!harness.controller.handle(deadline));
     assert!(finished.await.is_ok());
     assert_eq!(saved_song_count(&harness), Some(FIRST_PAGE));
+}
+
+#[tokio::test]
+async fn playback_is_silenced_while_the_closed_app_waits_for_streams() {
+    let mut harness = streaming_harness().await;
+    harness.audio.take();
+    let _finished = request_shutdown(&mut harness);
+    assert_eq!(harness.audio.take(), [AudioCall::Mute(true)]);
+}
+
+#[tokio::test]
+async fn quitting_without_streams_leaves_the_sound_alone() {
+    let mut harness = start_harness_with(test_settings(false, false), 10, None);
+    harness.audio.take();
+    let (done, _finished) = oneshot::channel();
+    let ui = UiSettings::default();
+    assert!(!harness.controller.handle(Command::Shutdown { ui, done }));
+    assert!(!harness.audio.take().contains(&AudioCall::Mute(true)));
 }
 
 #[tokio::test]
