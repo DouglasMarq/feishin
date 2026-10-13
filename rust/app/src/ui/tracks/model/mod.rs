@@ -208,6 +208,7 @@ impl TracksModel {
             state.total = total;
             state.pages.invalidate();
             state.pages.insert(page, songs);
+            state.selection = Selection::default();
         }
         self.notify.reset();
     }

@@ -80,6 +80,7 @@ fn show_page(
             if let Some(PageApplied::TotalChanged(total)) = applied {
                 let state = window.global::<TracksState>();
                 state.set_total(clamp_i32(total as u64));
+                state.set_selected_count(0);
             }
         }
         Err(error) => {

@@ -5,6 +5,7 @@ use slint::{ComponentHandle, Model, ModelRc};
 
 use super::model::{PageRequest, PlaylistSongsModel};
 use super::pages::paging_for_page;
+use crate::ui::page_cache::PageApplied;
 use crate::ui::{AppWindow, Context, PlaylistDetailState, on_ui, show_status};
 
 pub fn with_model<Output>(
@@ -42,13 +43,15 @@ fn spawn_page_load(window: slint::Weak<AppWindow>, ctx: &Context, request: PageR
 }
 
 fn show_page(window: &AppWindow, request: &PageRequest, result: feishin_api::Result<Page<Song>>) {
-    let (generation, page) = (request.generation, request.page);
     match result {
         Ok(songs) => {
-            with_model(window, |model| model.apply_requested_page(request, songs));
+            let applied = with_model(window, |model| model.apply_requested_page(request, songs));
+            if let Some(PageApplied::TotalChanged(_)) = applied {
+                window.global::<PlaylistDetailState>().set_selected_count(0);
+            }
         }
         Err(error) => {
-            let current = with_model(window, |model| model.page_failed(generation, page));
+            let current = with_model(window, |model| model.page_failed(request));
             if current == Some(true) {
                 show_status(window, &format!("Could not load the playlist: {error}"));
             }

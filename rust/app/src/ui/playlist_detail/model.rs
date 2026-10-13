@@ -28,6 +28,10 @@ struct ModelState {
 }
 
 impl ModelState {
+    fn is_current(&self, request: &PageRequest) -> bool {
+        (self.generation, self.revision) == (request.generation, request.revision)
+    }
+
     fn page_request(&mut self, row: usize) -> Option<PageRequest> {
         let page = page_of(row);
         self.pages.request_once(page).then(|| PageRequest {
@@ -95,7 +99,7 @@ impl PlaylistSongsModel {
     pub fn apply_requested_page(&self, request: &PageRequest, listed: Page<Song>) -> PageApplied {
         let new_total = {
             let state = self.state.borrow();
-            if (state.generation, state.revision) != (request.generation, request.revision) {
+            if !state.is_current(request) {
                 return PageApplied::Stale;
             }
             changed_total(state.total, listed.total_count)
@@ -119,16 +123,17 @@ impl PlaylistSongsModel {
             state.total = total;
             state.pages.invalidate();
             state.pages.insert(page, songs);
+            state.selection.clear();
         }
         self.notify.reset();
     }
 
-    pub fn page_failed(&self, generation: u64, page: usize) -> bool {
+    pub fn page_failed(&self, request: &PageRequest) -> bool {
         let mut state = self.state.borrow_mut();
-        if state.generation != generation {
+        if !state.is_current(request) {
             return false;
         }
-        state.pages.request_failed(page);
+        state.pages.request_failed(request.page);
         true
     }
 

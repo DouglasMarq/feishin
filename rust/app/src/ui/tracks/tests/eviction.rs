@@ -196,6 +196,18 @@ fn a_changed_server_total_drops_the_cached_pages_and_requests_them_again() {
 }
 
 #[test]
+fn a_changed_server_total_drops_the_selection() {
+    let (model, log) = counted_model();
+    scroll_to(&model, &log, 0);
+    assert_eq!(model.select(3, false, false), 1);
+    model.row_data(10 * PAGE_SIZE);
+    let changed = model.apply_listed_page(1, 10, listed_page(10, TOTAL - 1));
+    assert_eq!(changed, PageApplied::TotalChanged(TOTAL - 1));
+    assert!(model.first_selected().is_none());
+    assert_eq!(model.select_all(), TOTAL - 1);
+}
+
+#[test]
 fn a_failing_page_is_not_requested_again_while_it_backs_off() {
     let (model, log) = counted_model();
     model.row_data(5 * PAGE_SIZE);

@@ -64,12 +64,21 @@ fn stale_generations_are_ignored_and_failures_back_off() {
     assert!(model.apply_first_page(2, 300, page_of_songs(0, PAGE_SIZE)));
     model.row_data(220);
     assert_eq!(requested_pages(&log), [(2, 2)]);
-    assert!(!model.page_failed(1, 2));
+    assert!(!model.page_failed(&page_request(1, 0, 2)));
     model.row_data(220);
     assert!(requested_pages(&log).is_empty());
-    assert!(model.page_failed(2, 2));
+    assert!(model.page_failed(&page_request(2, 0, 2)));
     model.row_data(220);
     assert!(requested_pages(&log).is_empty());
+}
+
+fn page_request(generation: u64, revision: u64, page: usize) -> PageRequest {
+    PageRequest {
+        generation,
+        revision,
+        playlist_id: "playlist-1".into(),
+        page,
+    }
 }
 
 fn take_requests(log: &RequestLog) -> Vec<PageRequest> {
@@ -82,6 +91,42 @@ fn listed(page: usize, total: usize) -> Page<Song> {
         start_index: page * PAGE_SIZE,
         total_count: Some(total),
     }
+}
+
+fn grown_playlist_model() -> (PlaylistSongsModel, RequestLog) {
+    let (model, log) = logging_model();
+    model.reset(1, "playlist-1");
+    model.apply_first_page(1, 10 * PAGE_SIZE, page_of_songs(0, PAGE_SIZE));
+    model.row_data(4 * PAGE_SIZE);
+    let requests = take_requests(&log);
+    let [fourth] = requests.as_slice() else {
+        panic!("expected one page request, got {}", requests.len());
+    };
+    let grown = model.apply_requested_page(fourth, listed(4, 10 * PAGE_SIZE + 1));
+    assert_eq!(grown, PageApplied::TotalChanged(10 * PAGE_SIZE + 1));
+    (model, log)
+}
+
+#[test]
+fn a_page_that_failed_before_the_playlist_changed_does_not_hold_back_the_new_rows() {
+    let (model, log) = grown_playlist_model();
+    model.row_data(5);
+    assert_eq!(requested_pages(&log), [(1, 0)]);
+    assert!(!model.page_failed(&page_request(1, 0, 0)));
+    model.apply_requested_page(&page_request(1, 1, 0), listed(0, 10 * PAGE_SIZE + 1));
+    assert_eq!(model.song_id_at(5).as_deref(), Some("s5"));
+}
+
+#[test]
+fn a_playlist_that_changed_size_drops_the_selection() {
+    let (model, _log) = logging_model();
+    model.reset(1, "playlist-1");
+    model.apply_first_page(1, 10 * PAGE_SIZE, page_of_songs(0, PAGE_SIZE));
+    model.click(3, ClickMode::Select);
+    assert_eq!(model.selected_indexes(), [3]);
+    let changed = model.apply_requested_page(&page_request(1, 0, 4), listed(4, 10 * PAGE_SIZE - 1));
+    assert_eq!(changed, PageApplied::TotalChanged(10 * PAGE_SIZE - 1));
+    assert!(model.selected_indexes().is_empty());
 }
 
 #[test]
