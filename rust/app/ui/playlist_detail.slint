@@ -1,7 +1,7 @@
 import { Button, ListView } from "std-widgets.slint";
 import { Theme, Icons } from "theme.slint";
 import { AppState, PlayerState, Route, TrackRow } from "globals.slint";
-import { Icon, IconButton } from "widgets.slint";
+import { Icon, IconButton, TooltipAnchor } from "widgets.slint";
 import { Cell, HeaderCell, Skeleton } from "tracks.slint";
 
 export struct PlaylistSongRow {
@@ -179,6 +179,11 @@ component PlayButton inherits Rectangle {
         height: 26px;
     }
 
+    TooltipAnchor {
+        text: "Play";
+        hovered: touch.has-hover;
+    }
+
     touch := TouchArea {
         mouse-cursor: pointer;
         clicked => {
@@ -305,6 +310,7 @@ export component PlaylistDetailView inherits Rectangle {
                     height: 40px;
                     icon: Icons.shuffle;
                     icon-size: 24px;
+                    tooltip: "Shuffle play";
                     enabled: PlaylistDetailState.rows.length > 0;
                     clicked => {
                         PlaylistDetailState.play(true);
