@@ -57,14 +57,15 @@ async fn fetch_playlist(server: Arc<dyn MusicServer>, request: LoadRequest) {
         server.playlist_songs(&request.playlist_id),
         fetch_all(server.as_ref())
     );
-    let meta = playlists
+    let metadata = playlists
         .inspect_err(|error| tracing::debug!("playlist metadata: {error}"))
         .ok()
-        .and_then(|all| {
-            all.into_iter()
+        .and_then(|playlists| {
+            playlists
+                .into_iter()
                 .find(|playlist| playlist.id == request.playlist_id)
         });
-    if let Some(cover_id) = meta
+    if let Some(cover_id) = metadata
         .as_ref()
         .and_then(|playlist| playlist.cover_art_id.clone())
     {
@@ -77,7 +78,7 @@ async fn fetch_playlist(server: Arc<dyn MusicServer>, request: LoadRequest) {
         ..
     } = request;
     on_ui(&window, move |window| {
-        apply_loaded(window, &shared, generation, songs, meta);
+        apply_loaded(window, &shared, generation, songs, metadata);
     });
 }
 
@@ -117,7 +118,7 @@ fn apply_loaded(
     shared: &SharedDetail,
     generation: u64,
     songs: feishin_api::Result<Vec<Song>>,
-    meta: Option<Playlist>,
+    metadata: Option<Playlist>,
 ) {
     let mut detail = lock(shared);
     if detail.generation != generation {
@@ -133,24 +134,31 @@ fn apply_loaded(
             return;
         }
     };
-    detail.name = meta
+    detail.name = metadata
         .as_ref()
         .map_or_else(|| "Playlist".to_owned(), |playlist| playlist.name.clone());
-    show_header(window, &detail.name, &songs, meta.as_ref());
+    show_header(window, &detail.name, &songs, metadata.as_ref());
     state.set_rows(ModelRc::new(VecModel::from(song_rows(&songs))));
     detail.songs = songs;
 }
 
-fn show_header(window: &AppWindow, name: &str, songs: &[Song], meta: Option<&Playlist>) {
+fn show_header(window: &AppWindow, name: &str, songs: &[Song], metadata: Option<&Playlist>) {
     let state = window.global::<PlaylistDetailState>();
     state.set_name(name.into());
     state.set_comment(
-        meta.and_then(|playlist| playlist.comment.as_deref())
+        metadata
+            .and_then(|playlist| playlist.comment.as_deref())
             .unwrap_or_default()
             .trim()
             .into(),
     );
-    state.set_info(header_info(songs, meta.and_then(|playlist| playlist.owner.as_deref())).into());
+    state.set_info(
+        header_info(
+            songs,
+            metadata.and_then(|playlist| playlist.owner.as_deref()),
+        )
+        .into(),
+    );
 }
 
 pub fn refresh_if_showing(window: &AppWindow, playlist_id: &str) {

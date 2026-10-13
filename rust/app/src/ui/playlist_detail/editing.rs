@@ -40,8 +40,11 @@ fn finish_removal(
     window.global::<PlaylistDetailState>().set_busy(false);
     match result {
         Ok(()) => {
-            let what = song_count_label(removed);
-            show_status(window, &format!("Removed {what} from \"{}\"", target.name));
+            let removed_label = song_count_label(removed);
+            show_status(
+                window,
+                &format!("Removed {removed_label} from \"{}\"", target.name),
+            );
             refresh_if_showing(window, &target.playlist_id);
         }
         Err(error) => show_status(window, &format!("Could not remove songs: {error}")),

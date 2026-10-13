@@ -1,5 +1,24 @@
 use std::collections::BTreeSet;
 
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum ClickMode {
+    Select,
+    Toggle,
+    SelectRange,
+    AddRange,
+}
+
+impl ClickMode {
+    pub fn from_modifiers(toggle_held: bool, range_held: bool) -> Self {
+        match (toggle_held, range_held) {
+            (false, false) => Self::Select,
+            (true, false) => Self::Toggle,
+            (false, true) => Self::SelectRange,
+            (true, true) => Self::AddRange,
+        }
+    }
+}
+
 #[derive(Debug, Default, Clone, PartialEq, Eq)]
 pub struct Selection {
     selected: BTreeSet<usize>,
@@ -7,18 +26,21 @@ pub struct Selection {
 }
 
 impl Selection {
-    pub fn click(&mut self, index: usize, toggle: bool, range: bool) {
-        match self.anchor {
-            Some(anchor) if range => self.extend_from_anchor(anchor, index, toggle),
-            _ if toggle => self.toggle(index),
-            _ => self.select_only(index),
+    pub fn click(&mut self, index: usize, mode: ClickMode) {
+        match (mode, self.anchor) {
+            (ClickMode::SelectRange, Some(anchor)) => self.select_range(anchor, index),
+            (ClickMode::AddRange, Some(anchor)) => self.add_range(anchor, index),
+            (ClickMode::Toggle | ClickMode::AddRange, _) => self.toggle(index),
+            (ClickMode::Select | ClickMode::SelectRange, _) => self.select_only(index),
         }
     }
 
-    fn extend_from_anchor(&mut self, anchor: usize, index: usize, keep_selected: bool) {
-        if !keep_selected {
-            self.selected.clear();
-        }
+    fn select_range(&mut self, anchor: usize, index: usize) {
+        self.selected.clear();
+        self.add_range(anchor, index);
+    }
+
+    fn add_range(&mut self, anchor: usize, index: usize) {
         self.selected.extend(anchor.min(index)..=anchor.max(index));
     }
 
@@ -35,8 +57,8 @@ impl Selection {
         self.anchor = Some(index);
     }
 
-    pub fn select_all(&mut self, len: usize) {
-        self.selected = (0..len).collect();
+    pub fn select_all(&mut self, song_count: usize) {
+        self.selected = (0..song_count).collect();
     }
 
     pub fn clear(&mut self) {
@@ -80,19 +102,19 @@ mod tests {
     #[test]
     fn clicks_select_toggle_and_extend() {
         let mut selection = Selection::default();
-        selection.click(2, false, false);
+        selection.click(2, ClickMode::Select);
         assert_eq!(selection.indexes(), [2]);
-        selection.click(5, false, true);
+        selection.click(5, ClickMode::SelectRange);
         assert_eq!(selection.indexes(), [2, 3, 4, 5]);
-        selection.click(0, false, true);
+        selection.click(0, ClickMode::SelectRange);
         assert_eq!(selection.indexes(), [0, 1, 2]);
-        selection.click(7, true, false);
+        selection.click(7, ClickMode::Toggle);
         assert_eq!(selection.indexes(), [0, 1, 2, 7]);
-        selection.click(1, true, false);
+        selection.click(1, ClickMode::Toggle);
         assert_eq!(selection.indexes(), [0, 2, 7]);
-        selection.click(3, true, true);
+        selection.click(3, ClickMode::AddRange);
         assert_eq!(selection.indexes(), [0, 1, 2, 3, 7]);
-        selection.click(4, false, false);
+        selection.click(4, ClickMode::Select);
         assert_eq!(selection.indexes(), [4]);
         selection.select_all(3);
         assert_eq!(selection.len(), 3);
@@ -101,10 +123,33 @@ mod tests {
     }
 
     #[test]
+    fn modifiers_choose_the_click_mode() {
+        assert_eq!(ClickMode::from_modifiers(false, false), ClickMode::Select);
+        assert_eq!(ClickMode::from_modifiers(true, false), ClickMode::Toggle);
+        assert_eq!(
+            ClickMode::from_modifiers(false, true),
+            ClickMode::SelectRange
+        );
+        assert_eq!(ClickMode::from_modifiers(true, true), ClickMode::AddRange);
+    }
+
+    #[test]
+    fn range_clicks_without_an_anchor_fall_back() {
+        let mut selection = Selection::default();
+        selection.click(3, ClickMode::SelectRange);
+        assert_eq!(selection.indexes(), [3]);
+        let mut selection = Selection::default();
+        selection.click(4, ClickMode::AddRange);
+        assert_eq!(selection.indexes(), [4]);
+        selection.click(4, ClickMode::Toggle);
+        assert!(selection.indexes().is_empty());
+    }
+
+    #[test]
     fn context_targets_follow_the_selection() {
         let mut selection = Selection::default();
-        selection.click(1, false, false);
-        selection.click(3, true, false);
+        selection.click(1, ClickMode::Select);
+        selection.click(3, ClickMode::Toggle);
         assert_eq!(selection.targets(3), [1, 3]);
         assert_eq!(selection.targets(2), [2]);
     }

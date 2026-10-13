@@ -3,7 +3,7 @@ use std::sync::Arc;
 use slint::{ComponentHandle, Model};
 
 use super::detail::{SharedDetail, lock};
-use super::selection::Selection;
+use super::selection::{ClickMode, Selection};
 use crate::ui::{AppWindow, PlaylistDetailState, clamp_i32};
 
 fn sync_selection(window: &AppWindow, before: &Selection, after: &Selection) {
@@ -37,13 +37,14 @@ pub fn install_selection(window: &AppWindow, shared: &SharedDetail) {
     let state = window.global::<PlaylistDetailState>();
 
     let (weak, select_shared) = (window.as_weak(), Arc::clone(shared));
-    state.on_select(move |index, toggle, range| {
+    state.on_select(move |index, toggle_held, range_held| {
         let (Some(window), Ok(index)) = (weak.upgrade(), usize::try_from(index)) else {
             return;
         };
+        let mode = ClickMode::from_modifiers(toggle_held, range_held);
         update_selection(&window, &select_shared, |selection, song_count| {
             if index < song_count {
-                selection.click(index, toggle, range);
+                selection.click(index, mode);
             }
         });
     });

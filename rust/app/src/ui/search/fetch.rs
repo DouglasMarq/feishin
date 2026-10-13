@@ -31,6 +31,6 @@ where
     true
 }
 
-pub fn report(window: &AppWindow, what: &str, error: impl Display) {
-    show_status(window, &format!("{what}: {error}"));
+pub fn report(window: &AppWindow, failure: &str, error: impl Display) {
+    show_status(window, &format!("{failure}: {error}"));
 }
