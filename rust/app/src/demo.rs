@@ -282,6 +282,23 @@ impl FakeServer {
         }
     }
 
+    fn search_hits(
+        names: impl Fn(usize) -> String,
+        count: usize,
+        search: Option<&str>,
+    ) -> Vec<usize> {
+        let term = search
+            .map(str::trim)
+            .filter(|s| !s.is_empty())
+            .map(str::to_lowercase);
+        (0..count)
+            .filter(|&i| {
+                term.as_deref()
+                    .is_none_or(|t| names(i).to_lowercase().contains(t))
+            })
+            .collect()
+    }
+
     fn matches(&self, index: usize, query: &SongListQuery, search: Option<&str>) -> bool {
         let album = index / SONGS_PER_ALBUM;
         let artist = Self::album_artist(album);
@@ -424,9 +441,17 @@ impl MusicServer for FakeServer {
         Ok(Vec::new())
     }
 
-    async fn album_list(&self, _query: &AlbumListQuery, paging: Paging) -> Result<Page<Album>> {
+    async fn album_list(&self, query: &AlbumListQuery, paging: Paging) -> Result<Page<Album>> {
+        let names = |a| {
+            format!(
+                "{} {}",
+                Self::album_name(a),
+                Self::artist_name(Self::album_artist(a))
+            )
+        };
+        let hits = Self::search_hits(names, self.album_count(), query.search.as_deref());
         Ok(Self::page(
-            (0..self.album_count()).map(|a| self.album_at(a)),
+            hits.into_iter().map(|a| self.album_at(a)),
             paging,
         ))
     }
@@ -447,9 +472,10 @@ impl MusicServer for FakeServer {
         })
     }
 
-    async fn artist_list(&self, _query: &ArtistListQuery, paging: Paging) -> Result<Page<Artist>> {
+    async fn artist_list(&self, query: &ArtistListQuery, paging: Paging) -> Result<Page<Artist>> {
+        let hits = Self::search_hits(Self::artist_name, ARTIST_COUNT, query.search.as_deref());
         Ok(Self::page(
-            (0..ARTIST_COUNT).map(|a| self.artist_at(a)),
+            hits.into_iter().map(|a| self.artist_at(a)),
             paging,
         ))
     }
@@ -521,10 +547,18 @@ impl MusicServer for FakeServer {
             start_index: 0,
             limit,
         };
+        let albums = AlbumListQuery {
+            search: query.search.clone(),
+            ..AlbumListQuery::default()
+        };
+        let artists = ArtistListQuery {
+            search: query.search.clone(),
+            ..ArtistListQuery::default()
+        };
         Ok(SearchResults {
             songs: self.song_list(&query, paging).await?.items,
-            albums: Vec::new(),
-            artists: Vec::new(),
+            albums: self.album_list(&albums, paging).await?.items,
+            artists: self.artist_list(&artists, paging).await?.items,
         })
     }
 
@@ -665,5 +699,14 @@ mod tests {
         };
         let count = server.song_count(&query).await.unwrap_or_default();
         assert!(count > 0 && count < 1000);
+    }
+
+    #[tokio::test]
+    async fn search_finds_albums_and_artists() {
+        let server = FakeServer::new(1000);
+        let results = server.search("ada", 5).await.ok();
+        let (albums, artists) = results.map_or((0, 0), |r| (r.albums.len(), r.artists.len()));
+        assert!(albums > 0 && albums <= 5);
+        assert!(artists > 0 && artists <= 5);
     }
 }
