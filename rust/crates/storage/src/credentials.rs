@@ -9,24 +9,37 @@ use crate::{Result, StorageError};
 pub const SERVICE: &str = "feishin-rs";
 
 pub fn set(server_id: &str, credential: &str) -> Result<()> {
-    entry(server_id)?
-        .set_password(credential)
-        .map_err(keyring_error)
+    off_runtime(|| {
+        entry(server_id)?
+            .set_password(credential)
+            .map_err(keyring_error)
+    })
 }
 
 pub fn get(server_id: &str) -> Result<Option<String>> {
-    match entry(server_id)?.get_password() {
+    off_runtime(|| match entry(server_id)?.get_password() {
         Ok(credential) => Ok(Some(credential)),
         Err(Error::NoEntry) => Ok(None),
         Err(e) => Err(keyring_error(e)),
-    }
+    })
 }
 
 pub fn delete(server_id: &str) -> Result<()> {
-    match entry(server_id)?.delete_credential() {
+    off_runtime(|| match entry(server_id)?.delete_credential() {
         Ok(()) | Err(Error::NoEntry) => Ok(()),
         Err(e) => Err(keyring_error(e)),
-    }
+    })
+}
+
+/// The Secret Service store blocks on its own async runtime, which panics when called from inside
+/// a Tokio runtime, so keyring calls always run on a short-lived plain thread.
+fn off_runtime<T: Send>(f: impl FnOnce() -> Result<T> + Send) -> Result<T> {
+    std::thread::scope(|scope| {
+        scope
+            .spawn(f)
+            .join()
+            .unwrap_or_else(|_| Err(StorageError::Keyring("keyring thread panicked".into())))
+    })
 }
 
 /// Replaces the platform keyring with a process-wide in-memory store (for tests and keyring-less sessions).
@@ -126,6 +139,14 @@ mod tests {
         delete("server-1").unwrap();
         assert_eq!(get("server-1").unwrap(), None);
         assert_eq!(get("server-2").unwrap().as_deref(), Some("two"));
+    }
+
+    #[tokio::test(flavor = "multi_thread")]
+    async fn works_inside_a_tokio_runtime() {
+        mock();
+        set("server-rt", "inside").unwrap();
+        assert_eq!(get("server-rt").unwrap().as_deref(), Some("inside"));
+        delete("server-rt").unwrap();
     }
 
     #[test]
