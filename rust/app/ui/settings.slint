@@ -32,9 +32,7 @@ export global SettingsState {
     in-out property <bool> discord;
     in property <[LyricsSourceRow]> lyrics-sources;
     in property <[ServerRow]> servers;
-    /// Id of the server being connected to, while a switch is in progress.
     in property <string> switching;
-    /// Loaded at startup so other views can follow the playing song.
     in-out property <bool> follow-current-song;
     callback load(string);
     callback playback-changed();

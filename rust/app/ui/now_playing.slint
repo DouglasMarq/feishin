@@ -8,7 +8,6 @@ export struct ArtistLink {
     name: string,
 }
 
-/// `time-ms` is -1 for unsynced lines.
 export struct LyricRow {
     text: string,
     time-ms: int,
@@ -20,7 +19,6 @@ export enum LyricsStatus { idle, loading, found, missing, failed }
 
 export global NowPlayingState {
     in-out property <NowPlayingTab> tab: NowPlayingTab.lyrics;
-    /// The song whose details are shown.
     in property <string> song-id;
     in property <bool> loaded;
     in property <[ArtistLink]> artists;
@@ -33,7 +31,6 @@ export global NowPlayingState {
     in property <string> lyrics-source;
     in property <int> active-line: -1;
     in property <[QueueRow]> up-next;
-    /// Queue index of the first `up-next` row, -1 when nothing is current.
     in property <int> up-next-offset: -1;
     in property <[TrackRow]> similar;
     in property <bool> similar-loading;
@@ -108,16 +105,16 @@ component Placeholder inherits Text {
 
 component LyricsPanel inherits Rectangle {
     property <length> active-y;
-    property <length> active-h;
+    property <length> active-height;
     changed active-y => {
-        self.follow();
+        self.follow-active-line();
     }
-    changed active-h => {
-        self.follow();
+    changed active-height => {
+        self.follow-active-line();
     }
 
-    function follow() {
-        flick.content-y = min(0px, max(flick.height - flick.content-height, flick.height / 2 - self.active-y - self.active-h / 2));
+    function follow-active-line() {
+        lyrics-scroller.content-y = min(0px, max(lyrics-scroller.height - lyrics-scroller.content-height, lyrics-scroller.height / 2 - self.active-y - self.active-height / 2));
     }
 
     if NowPlayingState.lyrics-status == LyricsStatus.loading: Placeholder {
@@ -130,43 +127,43 @@ component LyricsPanel inherits Rectangle {
         text: "Could not load lyrics";
     }
 
-    flick := Flickable {
+    lyrics-scroller := Flickable {
         visible: NowPlayingState.lyrics-status == LyricsStatus.found;
         height: parent.height - footer.height;
         y: 0;
         content-width: self.width;
         changed height => {
-            root.follow();
+            root.follow-active-line();
         }
 
         VerticalLayout {
             width: parent.width;
-            padding-top: NowPlayingState.lyrics-synced ? flick.height / 3 : 8px;
-            padding-bottom: NowPlayingState.lyrics-synced ? flick.height / 2 : 8px;
+            padding-top: NowPlayingState.lyrics-synced ? lyrics-scroller.height / 3 : 8px;
+            padding-bottom: NowPlayingState.lyrics-synced ? lyrics-scroller.height / 2 : 8px;
             padding-left: 8px;
             padding-right: 8px;
             spacing: NowPlayingState.lyrics-synced ? 18px : 4px;
 
-            for line[i] in NowPlayingState.lyrics: line-view := Rectangle {
-                property <bool> active: NowPlayingState.lyrics-synced && i == NowPlayingState.active-line;
+            for line[line-index] in NowPlayingState.lyrics: line-view := Rectangle {
+                property <bool> active: NowPlayingState.lyrics-synced && line-index == NowPlayingState.active-line;
                 property <bool> seekable: NowPlayingState.lyrics-synced && line.time-ms >= 0;
-                function report() {
+                function report-active-position() {
                     if (self.active) {
                         root.active-y = self.y;
-                        root.active-h = self.height;
+                        root.active-height = self.height;
                     }
                 }
                 init => {
-                    self.report();
+                    self.report-active-position();
                 }
                 changed active => {
-                    self.report();
+                    self.report-active-position();
                 }
                 changed y => {
-                    self.report();
+                    self.report-active-position();
                 }
                 changed height => {
-                    self.report();
+                    self.report-active-position();
                 }
                 height: text.preferred-height;
 
@@ -210,7 +207,7 @@ component UpNextPanel inherits Rectangle {
     }
 
     ListView {
-        for row[i] in NowPlayingState.up-next: Rectangle {
+        for row[row-index] in NowPlayingState.up-next: Rectangle {
             height: 52px;
             border-radius: Theme.radius;
             background: row.current ? Theme.selected : (touch.has-hover ? Theme.hover : transparent);
@@ -236,7 +233,7 @@ component UpNextPanel inherits Rectangle {
                         height: 16px;
                     }
                     if !row.current: Text {
-                        text: i;
+                        text: row-index;
                         color: Theme.muted;
                         font-size: 12px;
                         horizontal-alignment: center;
@@ -352,8 +349,8 @@ component SimilarPanel inherits Rectangle {
 export component NowPlayingView inherits Rectangle {
     property <string> current-song: PlayerState.song-id;
     property <int> position: PlayerState.position-ms;
-    property <int> head: NowPlayingState.up-next-offset;
-    property <string> queue-probe: QueueState.rows.length + ":" + (head >= 0 && head < QueueState.rows.length ? QueueState.rows[head].uid + (QueueState.rows[head].current ? "*" : "") : "") + ":" + (head >= 0 && head + 1 < QueueState.rows.length ? QueueState.rows[head + 1].uid : "");
+    property <int> up-next-head: NowPlayingState.up-next-offset;
+    property <string> queue-probe: QueueState.rows.length + ":" + (up-next-head >= 0 && up-next-head < QueueState.rows.length ? QueueState.rows[up-next-head].uid + (QueueState.rows[up-next-head].current ? "*" : "") : "") + ":" + (up-next-head >= 0 && up-next-head + 1 < QueueState.rows.length ? QueueState.rows[up-next-head + 1].uid : "");
     background: Theme.background;
     clip: true;
 
@@ -406,15 +403,15 @@ export component NowPlayingView inherits Rectangle {
         padding-top: 56px;
         spacing: 48px;
 
-        left := Rectangle {
+        cover-column := Rectangle {
             width: 42%;
-            property <length> side: max(0px, min(self.width, self.height - meta.preferred-height - 24px));
+            property <length> cover-side: max(0px, min(self.width, self.height - song-details.preferred-height - 24px));
 
             Rectangle {
                 x: (parent.width - self.width) / 2;
                 y: 0;
-                width: left.side;
-                height: left.side;
+                width: cover-column.cover-side;
+                height: cover-column.cover-side;
                 border-radius: 10px;
                 background: Theme.surface-raised;
                 clip: true;
@@ -433,10 +430,10 @@ export component NowPlayingView inherits Rectangle {
                 }
             }
 
-            meta := VerticalLayout {
-                x: (parent.width - left.side) / 2;
-                y: left.side + 24px;
-                width: left.side;
+            song-details := VerticalLayout {
+                x: (parent.width - cover-column.cover-side) / 2;
+                y: cover-column.cover-side + 24px;
+                width: cover-column.cover-side;
                 height: self.preferred-height;
                 spacing: 6px;
 
@@ -458,8 +455,8 @@ export component NowPlayingView inherits Rectangle {
                         font-size: 16px;
                         overflow: elide;
                     }
-                    for artist[i] in NowPlayingState.artists: HorizontalLayout {
-                        if i > 0: Text {
+                    for artist[artist-index] in NowPlayingState.artists: HorizontalLayout {
+                        if artist-index > 0: Text {
                             text: ", ";
                             color: Theme.muted;
                             font-size: 16px;
