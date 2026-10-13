@@ -157,3 +157,70 @@ pub async fn artist_top_songs_belong_to_the_artist(backend: Backend) {
         "{top:?}"
     );
 }
+
+async fn remove_every_copy_of_the_first_song(server: &dyn MusicServer, playlist: &str) {
+    let songs = server.playlist_songs(playlist).await.expect("songs");
+    let first = songs.first().expect("a first song").id.clone();
+    let copies: Vec<usize> = songs
+        .iter()
+        .enumerate()
+        .filter(|(_, song)| song.id == first)
+        .map(|(position, _)| position)
+        .collect();
+    server
+        .remove_from_playlist(playlist, &copies)
+        .await
+        .expect("remove every copy");
+    let remaining = server.playlist_songs(playlist).await.expect("songs");
+    assert_eq!(remaining.len(), songs.len() - copies.len());
+    assert!(remaining.iter().all(|song| song.id != first));
+}
+
+async fn remove_leading_entries(backend: Backend, server: &dyn MusicServer, playlist: &str) {
+    let leading: Vec<usize> = (0..42).collect();
+    let removed = server.remove_from_playlist(playlist, &leading).await;
+    if !backend.has_an_entry_id_per_playlist_position() {
+        assert!(matches!(removed, Err(ApiError::Unsupported(_))));
+        return;
+    }
+    removed.expect("remove leading entries");
+    let remaining = server.playlist_songs(playlist).await.expect("songs");
+    assert_eq!(remaining.len(), 14);
+}
+
+pub async fn long_playlists_with_repeats_are_edited(backend: Backend) {
+    let server = backend.connect().await;
+    let library: Vec<String> = crate::support::all_songs(&*server)
+        .await
+        .into_iter()
+        .map(|song| song.id)
+        .collect();
+    let repeated: Vec<String> = library.iter().cycle().take(64).cloned().collect();
+    let playlist = server
+        .create_playlist(&format!("Long {backend:?}"), &repeated)
+        .await
+        .expect("create long playlist")
+        .id;
+    assert_eq!(
+        server.playlist_songs(&playlist).await.expect("songs").len(),
+        64
+    );
+    remove_every_copy_of_the_first_song(&*server, &playlist).await;
+    remove_leading_entries(backend, &*server, &playlist).await;
+    server.delete_playlist(&playlist).await.expect("delete");
+}
+
+pub async fn streams_transcode_to_opus(backend: Backend) {
+    let server = backend.connect().await;
+    let song = song_titled(&*server, "Dawn Chorus").await;
+    let options = feishin_api::StreamOptions {
+        max_bitrate_kbps: Some(96),
+        format: Some("opus".into()),
+    };
+    let stream = crate::support::download(&server.stream_url(&song.id, &options)).await;
+    assert!(
+        crate::support::is_audio(&stream.bytes),
+        "{}",
+        stream.content_type
+    );
+}

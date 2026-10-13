@@ -85,6 +85,10 @@ impl Backend {
         }
     }
 
+    pub fn has_an_entry_id_per_playlist_position(self) -> bool {
+        self != Self::Jellyfin
+    }
+
     pub fn supports_ratings(self) -> bool {
         self != Self::Jellyfin
     }
