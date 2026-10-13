@@ -1,4 +1,5 @@
-const FEATURING_WORDS: [&str; 5] = ["feat", "ft", "with", "part", "prod"];
+const FEATURING_WORDS: [&str; 4] = ["feat", "ft", "with", "prod"];
+const ABBREVIATED_FEATURING_WORDS: [&str; 1] = ["part."];
 const UNBRACKETED_FEATURING: [&str; 4] = [" feat. ", " feat ", " ft. ", " ft "];
 
 pub fn normalized_name(text: &str) -> String {
@@ -44,11 +45,15 @@ fn next_bracket(text: &str) -> Option<(&str, &str, &str)> {
 
 fn is_featuring(bracketed: &str) -> bool {
     let inner = bracketed.trim_matches(['(', ')', '[', ']', ' ']);
-    FEATURING_WORDS.iter().any(|word| {
+    let spelled_out = FEATURING_WORDS.iter().any(|word| {
         inner
             .strip_prefix(word)
             .is_some_and(|rest| rest.starts_with(['.', ' ']))
-    })
+    });
+    spelled_out
+        || ABBREVIATED_FEATURING_WORDS
+            .iter()
+            .any(|word| inner.starts_with(word))
 }
 
 fn cut_unbracketed_featuring(text: &str) -> &str {
@@ -81,6 +86,11 @@ mod tests {
         assert_eq!(normalized_name("Pós (Ao Vivo)"), "pós ao vivo");
         assert_eq!(normalized_name("Track [Remix]"), "track remix");
         assert_eq!(normalized_name("Unclosed (bracket"), "unclosed bracket");
+        assert_eq!(normalized_name("Suite (Part 2)"), "suite part 2");
+        assert_ne!(
+            normalized_name("Suite (Part 1)"),
+            normalized_name("Suite (Part 2)")
+        );
     }
 
     #[test]
