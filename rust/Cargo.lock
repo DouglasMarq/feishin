@@ -1591,6 +1591,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "feishin-radio-browser"
+version = "0.1.0"
+dependencies = [
+ "reqwest",
+ "serde",
+ "serde_json",
+ "thiserror 2.0.21",
+ "tokio",
+ "tracing",
+ "wiremock",
+]
+
+[[package]]
 name = "feishin-storage"
 version = "0.1.0"
 dependencies = [
