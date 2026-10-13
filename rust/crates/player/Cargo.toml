@@ -11,3 +11,6 @@ libc = "0.2"
 libmpv2 = { version = "6.0.0", default-features = false }
 libmpv2-sys = "4.0.1"
 thiserror.workspace = true
+
+[lints]
+workspace = true

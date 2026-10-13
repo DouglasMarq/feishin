@@ -28,3 +28,6 @@ zbus-secret-service-keyring-store = { version = "1.0.1", features = ["crypto-rus
 [dev-dependencies]
 tokio = { workspace = true, features = ["rt-multi-thread", "macros", "test-util"] }
 wiremock = "0.6.5"
+
+[lints]
+workspace = true

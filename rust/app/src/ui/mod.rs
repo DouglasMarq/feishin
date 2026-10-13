@@ -12,7 +12,12 @@ use crate::covers::CoverProvider;
 use crate::session::Session;
 use crate::store::Store;
 
-slint::include_modules!();
+#[allow(clippy::all, clippy::pedantic, clippy::restriction, clippy::nursery)]
+mod generated {
+    slint::include_modules!();
+}
+
+pub use generated::*;
 
 pub mod album_detail;
 pub mod album_grid;

@@ -42,3 +42,14 @@ tracing = "0.1"
 lto = "thin"
 codegen-units = 1
 strip = true
+
+[workspace.lints.clippy]
+unwrap_used = "deny"
+expect_used = "deny"
+panic = "deny"
+unreachable = "deny"
+todo = "deny"
+unimplemented = "deny"
+indexing_slicing = "deny"
+min_ident_chars = "deny"
+too_many_lines = "deny"

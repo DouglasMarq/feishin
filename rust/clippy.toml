@@ -1,0 +1,7 @@
+allow-unwrap-in-tests = true
+allow-expect-in-tests = true
+allow-panic-in-tests = true
+allow-indexing-slicing-in-tests = true
+min-ident-chars-threshold = 1
+allowed-idents-below-min-chars = []
+too-many-lines-threshold = 40
