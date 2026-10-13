@@ -1,0 +1,26 @@
+name: Rust AppImage
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  appimage:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install system dependencies
+        run: sudo apt-get update && sudo apt-get install -y libmpv-dev libfontconfig1-dev pkg-config file desktop-file-utils appstream
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: rust
+      - name: Build the AppImage
+        run: bash rust/packaging/appimage/build-appimage.sh "$RUNNER_TEMP/appimage"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: feishin-native-appimage
+          path: ${{ runner.temp }}/appimage/*.AppImage
+          if-no-files-found: error
