@@ -1,12 +1,282 @@
-import { Theme } from "theme.slint";
-import { AppState } from "globals.slint";
+import { ScrollView } from "std-widgets.slint";
+import { Theme, Icons } from "theme.slint";
+import { Actions, AppState, PlayerState, Route } from "globals.slint";
+import { Icon, IconButton } from "widgets.slint";
+import { Cell, Skeleton } from "tracks.slint";
+
+export struct AlbumDetailArtist {
+    id: string,
+    name: string,
+}
+
+/// A track, or a disc header when `disc-header` is set.
+export struct AlbumDetailTrack {
+    id: string,
+    number: string,
+    title: string,
+    artists: string,
+    artist-id: string,
+    plays: string,
+    duration: string,
+    disc-header: string,
+}
 
 export global AlbumDetailState {
+    in property <string> album-id;
+    in property <bool> loading;
+    in property <string> error;
+    in property <string> name;
+    in property <[AlbumDetailArtist]> artists;
+    in property <string> info;
+    in property <image> cover;
+    in property <bool> has-cover;
+    in-out property <bool> favorite;
+    in-out property <int> rating;
+    in property <[AlbumDetailTrack]> tracks;
     callback load(string);
+    callback play();
+    callback shuffle();
+    callback toggle-favorite();
+    callback set-rating(int);
+    callback play-track(string);
+    callback play-next(string);
+    callback add-to-queue(string);
+}
+
+component Star inherits Path {
+    in property <bool> filled;
+    commands: "M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z";
+    fill: root.filled ? #f5c518 : #3a3a3a;
+    viewbox-width: 24;
+    viewbox-height: 24;
+    width: 18px;
+    height: 18px;
+}
+
+component Rating inherits HorizontalLayout {
+    in property <int> value;
+    property <int> hovered: -1;
+    callback rate(int);
+    spacing: 2px;
+
+    for i in 5: Rectangle {
+        width: 20px;
+        height: 20px;
+
+        Star {
+            filled: root.hovered >= 0 ? i <= root.hovered : i < root.value;
+        }
+
+        touch := TouchArea {
+            mouse-cursor: pointer;
+            changed has-hover => {
+                if (self.has-hover) {
+                    root.hovered = i;
+                } else if (root.hovered == i) {
+                    root.hovered = -1;
+                }
+            }
+            clicked => {
+                root.rate(i + 1 == root.value ? 0 : i + 1);
+            }
+        }
+    }
+}
+
+component LinkText inherits Text {
+    callback clicked();
+    color: touch.has-hover ? Theme.foreground : Theme.muted;
+    font-weight: 600;
+
+    touch := TouchArea {
+        mouse-cursor: pointer;
+        clicked => {
+            root.clicked();
+        }
+    }
+}
+
+component TrackHeader inherits Rectangle {
+    height: 33px;
+
+    HorizontalLayout {
+        padding-left: 24px;
+        padding-right: 24px;
+
+        Cell {
+            width: 48px;
+            text: "#";
+        }
+
+        Cell {
+            horizontal-stretch: 2;
+            text: "Title";
+        }
+
+        Cell {
+            horizontal-stretch: 1;
+            text: "Artist";
+        }
+
+        Cell {
+            width: 64px;
+            text: "Plays";
+        }
+
+        Cell {
+            width: 72px;
+            text: "Time";
+        }
+    }
+
+    Rectangle {
+        x: 24px;
+        y: parent.height - 1px;
+        width: parent.width - 48px;
+        height: 1px;
+        background: Theme.border;
+    }
+}
+
+component AlbumTrackRowView inherits Rectangle {
+    in property <AlbumDetailTrack> track;
+    property <bool> playing: PlayerState.song-id == root.track.id;
+    height: root.track.disc-header != "" ? 44px : 36px;
+
+    if root.track.disc-header != "": Text {
+        x: 32px;
+        y: parent.height - self.height - 6px;
+        text: root.track.disc-header;
+        color: Theme.muted;
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    if root.track.disc-header == "": ContextMenuArea {
+        Menu {
+            MenuItem {
+                title: "Play";
+                activated => {
+                    AlbumDetailState.play-track(root.track.id);
+                }
+            }
+
+            MenuItem {
+                title: "Play next";
+                activated => {
+                    AlbumDetailState.play-next(root.track.id);
+                }
+            }
+
+            MenuItem {
+                title: "Add to queue";
+                activated => {
+                    AlbumDetailState.add-to-queue(root.track.id);
+                }
+            }
+
+            MenuSeparator { }
+
+            MenuItem {
+                title: "Add to playlist";
+                activated => {
+                    Actions.add-to-playlist([root.track.id]);
+                }
+            }
+
+            MenuItem {
+                title: "Go to artist";
+                enabled: root.track.artist-id != "";
+                activated => {
+                    AppState.navigate(Route.artist-detail, root.track.artist-id);
+                }
+            }
+        }
+
+        Rectangle {
+            x: 16px;
+            width: parent.width - 32px;
+            border-radius: Theme.radius;
+            background: touch.has-hover ? Theme.hover : transparent;
+
+            touch := TouchArea {
+                double-clicked => {
+                    AlbumDetailState.play-track(root.track.id);
+                }
+
+                HorizontalLayout {
+                    padding-left: 8px;
+                    padding-right: 8px;
+
+                    Rectangle {
+                        width: 48px;
+
+                        if !touch.has-hover && !root.playing: Text {
+                            x: 8px;
+                            text: root.track.number;
+                            color: Theme.muted;
+                            vertical-alignment: center;
+                        }
+
+                        if !touch.has-hover && root.playing: Icon {
+                            x: 6px;
+                            path: Icons.note;
+                            color: Theme.primary;
+                            width: 16px;
+                            height: 16px;
+                        }
+
+                        if touch.has-hover: Rectangle {
+                            x: 2px;
+                            width: 24px;
+                            height: 24px;
+                            border-radius: 12px;
+                            background: play-touch.has-hover ? Theme.primary : transparent;
+
+                            Icon {
+                                path: Icons.play;
+                                width: 18px;
+                                height: 18px;
+                            }
+
+                            play-touch := TouchArea {
+                                mouse-cursor: pointer;
+                                clicked => {
+                                    AlbumDetailState.play-track(root.track.id);
+                                }
+                            }
+                        }
+                    }
+
+                    Cell {
+                        horizontal-stretch: 2;
+                        text: root.track.title;
+                        text-color: root.playing ? Theme.primary : Theme.foreground;
+                    }
+
+                    Cell {
+                        horizontal-stretch: 1;
+                        text: root.track.artists;
+                    }
+
+                    Cell {
+                        width: 64px;
+                        text: root.track.plays;
+                    }
+
+                    Cell {
+                        width: 72px;
+                        text: root.track.duration;
+                    }
+                }
+            }
+        }
+    }
 }
 
 export component AlbumDetailView inherits Rectangle {
     property <string> id: AppState.detail-id;
+    background: Theme.background;
 
     init => {
         AlbumDetailState.load(root.id);
@@ -16,8 +286,176 @@ export component AlbumDetailView inherits Rectangle {
         AlbumDetailState.load(root.id);
     }
 
-    Text {
-        text: "Album";
-        color: Theme.muted;
+    scroll := ScrollView {
+        content-width: self.visible-width;
+        content-height: content.preferred-height;
+
+        content := VerticalLayout {
+            width: scroll.visible-width;
+            alignment: start;
+
+            HorizontalLayout {
+                padding: 24px;
+                spacing: 24px;
+                alignment: start;
+
+                Rectangle {
+                    width: 220px;
+                    height: 220px;
+                    border-radius: Theme.radius;
+                    background: Theme.surface-raised;
+                    clip: true;
+                    drop-shadow-blur: 16px;
+                    drop-shadow-color: #00000080;
+
+                    if AlbumDetailState.has-cover: Image {
+                        source: AlbumDetailState.cover;
+                        width: parent.width;
+                        height: parent.height;
+                        image-fit: cover;
+                    }
+
+                    if !AlbumDetailState.has-cover: Icon {
+                        path: Icons.album;
+                        color: Theme.border;
+                        width: 88px;
+                        height: 88px;
+                    }
+                }
+
+                VerticalLayout {
+                    alignment: end;
+                    spacing: 8px;
+                    horizontal-stretch: 1;
+
+                    Text {
+                        text: "ALBUM";
+                        color: Theme.muted;
+                        font-size: 11px;
+                        font-weight: 600;
+                    }
+
+                    if AlbumDetailState.loading: Skeleton {
+                        width: 280px;
+                        height: 28px;
+                        border-radius: 8px;
+                    }
+
+                    if !AlbumDetailState.loading: Text {
+                        text: AlbumDetailState.error != "" ? AlbumDetailState.error : AlbumDetailState.name;
+                        color: Theme.foreground;
+                        font-size: 32px;
+                        font-weight: 800;
+                        wrap: word-wrap;
+                    }
+
+                    HorizontalLayout {
+                        alignment: start;
+
+                        for artist[i] in AlbumDetailState.artists: HorizontalLayout {
+                            if i > 0: Text {
+                                text: ", ";
+                                color: Theme.muted;
+                            }
+
+                            LinkText {
+                                text: artist.name;
+                                clicked => {
+                                    AppState.navigate(Route.artist-detail, artist.id);
+                                }
+                            }
+                        }
+                    }
+
+                    Text {
+                        text: AlbumDetailState.info;
+                        color: Theme.muted;
+                        font-size: 12px;
+                        wrap: word-wrap;
+                    }
+                }
+            }
+
+            HorizontalLayout {
+                padding-left: 24px;
+                padding-right: 24px;
+                spacing: 16px;
+                alignment: start;
+                height: 56px;
+
+                Rectangle {
+                    y: (parent.height - self.height) / 2;
+                    width: 52px;
+                    height: 52px;
+                    border-radius: 26px;
+                    background: play-touch.has-hover ? Theme.primary.brighter(20%) : Theme.primary;
+                    opacity: AlbumDetailState.tracks.length > 0 ? 1 : 0.5;
+
+                    Icon {
+                        path: Icons.play;
+                        color: white;
+                        width: 28px;
+                        height: 28px;
+                    }
+
+                    play-touch := TouchArea {
+                        mouse-cursor: pointer;
+                        clicked => {
+                            AlbumDetailState.play();
+                        }
+                    }
+                }
+
+                IconButton {
+                    y: (parent.height - self.height) / 2;
+                    width: 40px;
+                    height: 40px;
+                    icon: Icons.shuffle;
+                    icon-size: 24px;
+                    clicked => {
+                        AlbumDetailState.shuffle();
+                    }
+                }
+
+                IconButton {
+                    y: (parent.height - self.height) / 2;
+                    width: 40px;
+                    height: 40px;
+                    icon: Icons.heart;
+                    icon-size: 24px;
+                    icon-color: AlbumDetailState.favorite ? Theme.danger : Theme.muted;
+                    clicked => {
+                        AlbumDetailState.toggle-favorite();
+                    }
+                }
+
+                Rectangle {
+                    width: rating.preferred-width;
+
+                    rating := Rating {
+                        y: (parent.height - self.height) / 2;
+                        height: 20px;
+                        value: AlbumDetailState.rating;
+                        rate(value) => {
+                            AlbumDetailState.set-rating(value);
+                        }
+                    }
+                }
+            }
+
+            Rectangle {
+                height: 16px;
+            }
+
+            TrackHeader { }
+
+            for track in AlbumDetailState.tracks: AlbumTrackRowView {
+                track: track;
+            }
+
+            Rectangle {
+                height: 32px;
+            }
+        }
     }
 }

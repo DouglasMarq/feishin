@@ -1,0 +1,234 @@
+import { ListView } from "std-widgets.slint";
+import { Theme, Icons } from "theme.slint";
+import { Icon } from "widgets.slint";
+import { Skeleton } from "tracks.slint";
+
+export struct AlbumGridCard {
+    id: string,
+    name: string,
+    artists: string,
+    artist-id: string,
+    year: string,
+    cover: image,
+    has-cover: bool,
+    loaded: bool,
+}
+
+export struct AlbumGridRow {
+    cards: [AlbumGridCard],
+}
+
+export component AlbumGridCardView inherits Rectangle {
+    in property <AlbumGridCard> card;
+    callback open();
+    callback play();
+    callback play-next();
+    callback add-to-queue();
+    callback add-to-playlist();
+    callback open-artist();
+    height: self.width + 52px;
+
+    ContextMenuArea {
+        enabled: root.card.loaded;
+
+        Menu {
+            MenuItem {
+                title: "Play";
+                activated => {
+                    root.play();
+                }
+            }
+
+            MenuItem {
+                title: "Play next";
+                activated => {
+                    root.play-next();
+                }
+            }
+
+            MenuItem {
+                title: "Add to queue";
+                activated => {
+                    root.add-to-queue();
+                }
+            }
+
+            MenuSeparator { }
+
+            MenuItem {
+                title: "Add to playlist";
+                activated => {
+                    root.add-to-playlist();
+                }
+            }
+
+            MenuItem {
+                title: "Go to artist";
+                enabled: root.card.artist-id != "";
+                activated => {
+                    root.open-artist();
+                }
+            }
+        }
+
+        VerticalLayout {
+            spacing: 8px;
+
+            Rectangle {
+                height: root.width;
+                border-radius: Theme.radius;
+                background: Theme.surface-raised;
+                clip: true;
+
+                if root.card.has-cover: Image {
+                    source: root.card.cover;
+                    width: parent.width;
+                    height: parent.height;
+                    image-fit: cover;
+                }
+
+                if !root.card.has-cover: Icon {
+                    path: Icons.album;
+                    color: Theme.border;
+                    width: parent.width * 0.4;
+                    height: parent.width * 0.4;
+                }
+
+                touch := TouchArea {
+                    enabled: root.card.loaded;
+                    mouse-cursor: pointer;
+                    clicked => {
+                        root.open();
+                    }
+
+                    if touch.has-hover: Rectangle {
+                        background: #00000059;
+
+                        Rectangle {
+                            x: 12px;
+                            y: parent.height - self.height - 12px;
+                            width: 44px;
+                            height: 44px;
+                            border-radius: 22px;
+                            background: play-touch.has-hover ? Theme.primary.brighter(20%) : Theme.primary;
+                            drop-shadow-blur: 8px;
+                            drop-shadow-color: #00000080;
+
+                            Icon {
+                                path: Icons.play;
+                                color: white;
+                                width: 24px;
+                                height: 24px;
+                            }
+
+                            play-touch := TouchArea {
+                                mouse-cursor: pointer;
+                                clicked => {
+                                    root.play();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            if root.card.loaded: VerticalLayout {
+                spacing: 4px;
+
+                name-text := Text {
+                    text: root.card.name;
+                    color: Theme.foreground;
+                    font-weight: 600;
+                    overflow: elide;
+
+                    TouchArea {
+                        mouse-cursor: pointer;
+                        clicked => {
+                            root.open();
+                        }
+                    }
+                }
+
+                Text {
+                    text: root.card.year == "" ? root.card.artists : root.card.artists + " • " + root.card.year;
+                    color: Theme.muted;
+                    font-size: 12px;
+                    overflow: elide;
+                }
+            }
+
+            if !root.card.loaded: VerticalLayout {
+                spacing: 10px;
+                padding-top: 4px;
+                alignment: start;
+
+                Skeleton {
+                    width: root.width * 0.7;
+                }
+
+                Skeleton {
+                    width: root.width * 0.45;
+                }
+            }
+        }
+    }
+}
+
+/// Virtualized cover grid. Rust regroups `rows` whenever `columns-changed` fires.
+export component AlbumGrid inherits Rectangle {
+    in property <[AlbumGridRow]> rows;
+    in property <length> min-card-width: 168px;
+    property <length> gap: 20px;
+    property <length> pad: 20px;
+    property <length> scrollbar: 14px;
+    property <length> usable: max(0px, root.width - 2 * root.pad - root.scrollbar);
+    out property <int> columns: max(1, Math.floor((root.usable + root.gap) / (root.min-card-width + root.gap)));
+    property <length> card-width: (root.usable - (root.columns - 1) * root.gap) / root.columns;
+    callback columns-changed(int);
+    callback open(string);
+    callback play(string);
+    callback play-next(string);
+    callback add-to-queue(string);
+    callback add-to-playlist(string);
+    callback open-artist(string);
+
+    init => {
+        root.columns-changed(root.columns);
+    }
+
+    changed columns => {
+        root.columns-changed(root.columns);
+    }
+
+    ListView {
+        for row in root.rows: HorizontalLayout {
+            padding-left: root.pad;
+            padding-bottom: root.gap;
+            spacing: root.gap;
+            alignment: start;
+
+            for card in row.cards: AlbumGridCardView {
+                width: root.card-width;
+                card: card;
+                open => {
+                    root.open(card.id);
+                }
+                play => {
+                    root.play(card.id);
+                }
+                play-next => {
+                    root.play-next(card.id);
+                }
+                add-to-queue => {
+                    root.add-to-queue(card.id);
+                }
+                add-to-playlist => {
+                    root.add-to-playlist(card.id);
+                }
+                open-artist => {
+                    root.open-artist(card.artist-id);
+                }
+            }
+        }
+    }
+}

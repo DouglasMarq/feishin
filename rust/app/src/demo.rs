@@ -6,9 +6,9 @@ use std::sync::{Arc, Mutex};
 use async_trait::async_trait;
 use feishin_api::{ApiError, Credential, MusicServer, Result, StreamOptions};
 use feishin_core::model::{
-    Album, AlbumDetail, AlbumListQuery, Artist, ArtistDetail, ArtistListQuery, ArtistRef, Genre,
-    ItemKind, MusicFolder, Page, Paging, Playlist, SearchResults, ServerConfig, ServerPlayQueue,
-    ServerType, Song, SongListQuery, SongSort, SortOrder,
+    Album, AlbumDetail, AlbumListQuery, AlbumSort, Artist, ArtistDetail, ArtistListQuery,
+    ArtistRef, Genre, ItemKind, MusicFolder, Page, Paging, Playlist, SearchResults, ServerConfig,
+    ServerPlayQueue, ServerType, Song, SongListQuery, SongSort, SortOrder,
 };
 
 pub const DEMO_SONG_COUNT: usize = 20_000;
@@ -262,7 +262,7 @@ impl FakeServer {
             cover_art_id: Some(format!("al-{album}")),
             play_count: 0,
             user_rating: None,
-            favorite: false,
+            favorite: mix(album as u64 ^ 0xfa7).is_multiple_of(6),
             created_at: None,
             last_played_at: None,
         }
@@ -377,6 +377,45 @@ impl FakeServer {
         order
     }
 
+    fn sorted_albums(&self, query: &AlbumListQuery) -> Vec<usize> {
+        let search = query.search.as_deref().map(str::to_lowercase);
+        let mut order: Vec<usize> = (0..self.album_count())
+            .filter(|&a| {
+                let album = self.album_at(a);
+                search.as_deref().is_none_or(|search| {
+                    album.name.to_lowercase().contains(search)
+                        || Self::artist_name(Self::album_artist(a))
+                            .to_lowercase()
+                            .contains(search)
+                }) && query
+                    .favorite
+                    .is_none_or(|favorite| favorite == album.favorite)
+                    && (query.artist_ids.is_empty()
+                        || query
+                            .artist_ids
+                            .contains(&format!("artist-{}", Self::album_artist(a))))
+            })
+            .collect();
+        let key = |a: usize| -> (String, i64) {
+            let album = self.album_at(a);
+            match query.sort {
+                AlbumSort::Name => (album.name.to_lowercase(), 0),
+                AlbumSort::AlbumArtist => (Self::artist_name(Self::album_artist(a)), 0),
+                AlbumSort::Year => (String::new(), i64::from(album.year.unwrap_or_default())),
+                AlbumSort::SongCount => (String::new(), i64::from(album.song_count)),
+                AlbumSort::Duration => (String::new(), album.duration_ms as i64),
+                AlbumSort::Favorited => (String::new(), i64::from(album.favorite)),
+                AlbumSort::RecentlyAdded => (String::new(), -(a as i64)),
+                _ => (String::new(), mix(a as u64 ^ 0xa1) as i64),
+            }
+        };
+        order.sort_by_cached_key(|&a| (key(a), a));
+        if query.order == SortOrder::Desc {
+            order.reverse();
+        }
+        order
+    }
+
     fn page<T>(items: impl ExactSizeIterator<Item = T>, paging: Paging) -> Page<T> {
         let total = items.len();
         Page {
@@ -424,15 +463,13 @@ impl MusicServer for FakeServer {
         Ok(Vec::new())
     }
 
-    async fn album_list(&self, _query: &AlbumListQuery, paging: Paging) -> Result<Page<Album>> {
-        Ok(Self::page(
-            (0..self.album_count()).map(|a| self.album_at(a)),
-            paging,
-        ))
+    async fn album_list(&self, query: &AlbumListQuery, paging: Paging) -> Result<Page<Album>> {
+        let order = self.sorted_albums(query);
+        Ok(Self::page(order.iter().map(|&a| self.album_at(a)), paging))
     }
 
-    async fn album_count(&self, _query: &AlbumListQuery) -> Result<usize> {
-        Ok(self.album_count())
+    async fn album_count(&self, query: &AlbumListQuery) -> Result<usize> {
+        Ok(self.sorted_albums(query).len())
     }
 
     async fn album(&self, id: &str) -> Result<AlbumDetail> {
@@ -654,6 +691,40 @@ mod tests {
             first.last().map(|s| s.title.to_lowercase())
                 <= second.first().map(|s| s.title.to_lowercase())
         );
+    }
+
+    #[tokio::test]
+    async fn albums_filter_and_sort() {
+        let server = FakeServer::new(1200);
+        let all = AlbumListQuery::default();
+        assert_eq!(
+            MusicServer::album_count(&server, &all).await.ok(),
+            Some(100)
+        );
+        let favorites = AlbumListQuery {
+            favorite: Some(true),
+            ..AlbumListQuery::default()
+        };
+        let count = MusicServer::album_count(&server, &favorites)
+            .await
+            .unwrap_or_default();
+        assert!(count > 0 && count < 100);
+        let paging = Paging {
+            start_index: 0,
+            limit: 100,
+        };
+        let ids = |page: Result<Page<Album>>| -> Vec<String> {
+            page.map(|page| page.items.into_iter().map(|a| a.id).collect())
+                .unwrap_or_default()
+        };
+        let mut asc = ids(server.album_list(&all, paging).await);
+        let desc = AlbumListQuery {
+            order: SortOrder::Desc,
+            ..all
+        };
+        let desc = ids(server.album_list(&desc, paging).await);
+        asc.reverse();
+        assert_eq!(asc, desc);
     }
 
     #[tokio::test]
