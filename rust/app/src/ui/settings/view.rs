@@ -7,6 +7,7 @@ use super::choices::{
     Choices, bitrate_choices, device_choices, format_choices, replay_gain_from_index,
 };
 use super::lyrics_sources::{LyricsSource, lyrics_sources};
+use super::youtube::cookie_browser_choices;
 use crate::controller::SettingsSnapshot;
 
 #[derive(Debug, Clone, Copy)]
@@ -26,6 +27,7 @@ pub(super) struct View {
     pub(super) bitrates: Choices<Option<u32>>,
     pub(super) formats: Choices<Option<String>>,
     pub(super) lyrics: Vec<LyricsSource>,
+    pub(super) cookie_browsers: Choices<Option<feishin_youtube::CookieBrowser>>,
 }
 
 impl View {
@@ -37,6 +39,7 @@ impl View {
             bitrates: bitrate_choices(playback.max_bitrate_kbps),
             formats: format_choices(playback.transcode_format.as_deref()),
             lyrics: lyrics_sources(&settings.integrations.lyrics_sources),
+            cookie_browsers: cookie_browser_choices(settings.youtube.cookies_from_browser),
             settings,
         }
     }

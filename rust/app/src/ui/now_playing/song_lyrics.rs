@@ -91,7 +91,14 @@ async fn remote_lyrics(
     song: &Song,
     sources: &[LyricsSource],
 ) -> Result<Option<SongLyrics>, LyricsLookupError> {
-    let found = feishin_lyrics::fetch(&LYRICS_HTTP_CLIENT, &lyrics_query(song), sources)
+    remote_lyrics_for(&lyrics_query(song), sources).await
+}
+
+pub(super) async fn remote_lyrics_for(
+    query: &LyricsQuery,
+    sources: &[LyricsSource],
+) -> Result<Option<SongLyrics>, LyricsLookupError> {
+    let found = feishin_lyrics::fetch(&LYRICS_HTTP_CLIENT, query, sources)
         .await
         .map_err(LyricsLookupError::Remote)?;
     Ok(found.map(|found| SongLyrics {

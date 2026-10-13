@@ -40,6 +40,13 @@ impl View {
             .insert(song_id, lyrics);
     }
 
+    pub(super) fn external_track(&self, song_id: &str) -> Option<feishin_core::queue::QueueTrack> {
+        song_id
+            .starts_with(feishin_core::queue::YOUTUBE_SONG_ID_PREFIX)
+            .then(|| self.up_next.external_track(song_id))
+            .flatten()
+    }
+
     pub(super) fn highlight_active_line(&self, window: &AppWindow) {
         let position_ms = u64::try_from(window.global::<PlayerState>().get_position_ms());
         let line = active_line(&self.line_times_ms.borrow(), position_ms.unwrap_or(0));
@@ -102,6 +109,7 @@ impl View {
         state.set_active_line(NO_INDEX);
         state.set_similar(ModelRc::default());
         state.set_similar_loading(false);
+        state.set_external(false);
         self.line_times_ms.borrow_mut().clear();
         self.similar.borrow_mut().clear();
     }

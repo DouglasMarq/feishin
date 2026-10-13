@@ -1,7 +1,7 @@
-import { Button, ComboBox, ScrollView, Switch } from "std-widgets.slint";
+import { Button, ComboBox, LineEdit, ScrollView, Switch } from "std-widgets.slint";
 import { Theme, Icons } from "theme.slint";
 import { AppState, PlayerState } from "globals.slint";
-import { Bar, IconButton } from "widgets.slint";
+import { Bar, IconButton, TooltipAnchor } from "widgets.slint";
 
 export struct ServerRow {
     id: string,
@@ -44,6 +44,14 @@ export global SettingsState {
     callback remove-server(string);
     callback add-server();
     callback log-out();
+    in-out property <string> yt-dlp-path;
+    in property <[string]> cookie-browsers;
+    in-out property <int> cookie-browser-index;
+    in-out property <string> youtube-link;
+    callback youtube-changed();
+    callback play-youtube-link();
+    callback play-youtube-link-next();
+    callback add-youtube-link();
 }
 
 component Section inherits Rectangle {
@@ -105,6 +113,117 @@ component Option inherits HorizontalLayout {
 
 component Picker inherits ComboBox {
     width: 220px;
+}
+
+component ActionChip inherits Rectangle {
+    in property <string> text;
+    in property <string> tooltip;
+    in property <bool> enabled: true;
+    callback clicked();
+    height: 32px;
+    width: label.preferred-width + 24px;
+    border-radius: 16px;
+    border-width: 1px;
+    border-color: Theme.border;
+    background: touch.has-hover && root.enabled ? Theme.hover : transparent;
+    opacity: root.enabled ? 1 : 0.4;
+
+    label := Text {
+        text: root.text;
+        color: Theme.foreground;
+        vertical-alignment: center;
+    }
+
+    TooltipAnchor {
+        text: root.tooltip;
+        hovered: touch.has-hover;
+    }
+
+    touch := TouchArea {
+        enabled: root.enabled;
+        mouse-cursor: root.enabled ? pointer : default;
+        clicked => {
+            root.clicked();
+        }
+    }
+}
+
+component YouTubeSection inherits Section {
+    property <bool> has-link: SettingsState.youtube-link != "";
+    title: "YouTube";
+
+    Option {
+        title: "yt-dlp program";
+        description: "Plays YouTube tracks. Leave empty to use yt-dlp from your PATH.";
+
+        path-edit := LineEdit {
+            width: 220px;
+            placeholder-text: "yt-dlp";
+            text <=> SettingsState.yt-dlp-path;
+            accepted => {
+                SettingsState.youtube-changed();
+            }
+            changed has-focus => {
+                if (!self.has-focus) {
+                    SettingsState.youtube-changed();
+                }
+            }
+        }
+    }
+
+    Option {
+        title: "Browser cookies";
+        description: "yt-dlp signs in to YouTube with this browser's cookies, for YouTube Premium audio. Feishin never reads them.";
+
+        Picker {
+            model: SettingsState.cookie-browsers;
+            current-index <=> SettingsState.cookie-browser-index;
+            selected => {
+                SettingsState.youtube-changed();
+            }
+        }
+    }
+
+    Option {
+        title: "Play a YouTube link";
+        description: "Paste a YouTube or YouTube Music link to try yt-dlp.";
+
+        LineEdit {
+            width: 220px;
+            placeholder-text: "https://music.youtube.com/watch?v=";
+            text <=> SettingsState.youtube-link;
+            accepted => {
+                SettingsState.play-youtube-link();
+            }
+        }
+
+        ActionChip {
+            text: "Play";
+            enabled: root.has-link;
+            tooltip: root.has-link ? "Play this link now" : "Paste a link first";
+            clicked => {
+                SettingsState.play-youtube-link();
+            }
+        }
+
+        ActionChip {
+            text: "Next";
+            enabled: root.has-link;
+            tooltip: root.has-link ? "Play this link after the current song" : "Paste a link first";
+            clicked => {
+                SettingsState.play-youtube-link-next();
+            }
+        }
+
+        ActionChip {
+            text: "Queue";
+            enabled: root.has-link;
+            tooltip: root.has-link ? "Add this link to the end of the queue" : "Paste a link first";
+            clicked => {
+                SettingsState.add-youtube-link();
+            }
+        }
+    }
 }
 
 component Divider inherits Rectangle {
@@ -464,6 +583,8 @@ export component SettingsView inherits Rectangle {
                     }
                 }
             }
+
+            YouTubeSection { }
 
             Section {
                 title: "Servers";

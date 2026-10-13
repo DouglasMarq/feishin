@@ -56,6 +56,26 @@ pub(super) fn lyrics_plan(names: &[String]) -> Vec<LyricsStep> {
     plan
 }
 
+const ALL_REMOTE_SOURCES: [LyricsSource; 3] = [
+    LyricsSource::Lrclib,
+    LyricsSource::NetEase,
+    LyricsSource::Genius,
+];
+
+pub(super) fn remote_sources(names: &[String]) -> Vec<LyricsSource> {
+    let configured: Vec<LyricsSource> = lyrics_plan(names)
+        .into_iter()
+        .flat_map(|step| match step {
+            LyricsStep::Server => Vec::new(),
+            LyricsStep::Remote(sources) => sources,
+        })
+        .collect();
+    match configured.is_empty() {
+        true => ALL_REMOTE_SOURCES.to_vec(),
+        false => configured,
+    }
+}
+
 #[cfg(test)]
 pub(super) fn source_names(names: &[&str]) -> Vec<String> {
     names.iter().map(|name| (*name).to_owned()).collect()
@@ -85,5 +105,17 @@ mod tests {
             ]
         );
         assert!(lyrics_plan(&[]).is_empty());
+    }
+
+    #[test]
+    fn remote_sources_skip_the_server_and_fall_back_to_all() {
+        assert_eq!(
+            remote_sources(&source_names(&["server", "genius", "lrclib"])),
+            vec![LyricsSource::Genius, LyricsSource::Lrclib]
+        );
+        assert_eq!(
+            remote_sources(&source_names(&["server"])),
+            ALL_REMOTE_SOURCES.to_vec()
+        );
     }
 }

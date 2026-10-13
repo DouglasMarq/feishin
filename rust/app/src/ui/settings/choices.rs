@@ -13,7 +13,7 @@ pub(super) struct Choices<T> {
 }
 
 impl<T: PartialEq> Choices<T> {
-    fn new(options: Vec<(String, T)>, current: &T) -> Self {
+    pub(super) fn new(options: Vec<(String, T)>, current: &T) -> Self {
         let (labels, values): (Vec<_>, Vec<_>) = options.into_iter().unzip();
         let selected = values
             .iter()

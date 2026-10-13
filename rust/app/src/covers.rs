@@ -19,6 +19,13 @@ pub trait CoverProvider: Send + Sync {
         cover_art_id: &str,
         size: u32,
     ) -> Result<Arc<DecodedImage>>;
+
+    async fn cover_from_url(
+        &self,
+        cache_key: &str,
+        url: &str,
+        size: u32,
+    ) -> Result<Arc<DecodedImage>>;
 }
 
 pub struct CachedCovers(CoverCache);
@@ -46,6 +53,15 @@ impl CoverProvider for CachedCovers {
         let url = server.cover_art_url(cover_art_id, Some(size));
         Ok(self.0.get(&cache_key, &url, size).await?)
     }
+
+    async fn cover_from_url(
+        &self,
+        cache_key: &str,
+        url: &str,
+        size: u32,
+    ) -> Result<Arc<DecodedImage>> {
+        Ok(self.0.get(cache_key, url, size).await?)
+    }
 }
 
 pub struct DemoCovers;
@@ -62,6 +78,19 @@ impl CoverProvider for DemoCovers {
             width: size,
             height: size,
             rgba: render_cover(cover_art_id, size),
+        }))
+    }
+
+    async fn cover_from_url(
+        &self,
+        cache_key: &str,
+        _url: &str,
+        size: u32,
+    ) -> Result<Arc<DecodedImage>> {
+        Ok(Arc::new(DecodedImage {
+            width: size,
+            height: size,
+            rgba: render_cover(cache_key, size),
         }))
     }
 }

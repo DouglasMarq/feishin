@@ -4,6 +4,7 @@ use slint::{ComponentHandle, ModelRc, SharedString, VecModel};
 use super::choices::replay_gain_index;
 use super::lyrics_sources::{LyricsSource, lyrics_source_name};
 use super::view::{Shared, View};
+use super::youtube::show_youtube;
 use crate::controller::SettingsSnapshot;
 use crate::ui::{AppWindow, LyricsSourceRow, ServerRow, SettingsState};
 
@@ -21,7 +22,7 @@ pub(super) fn server_rows(settings: &Settings) -> Vec<ServerRow> {
         .collect()
 }
 
-fn string_model(values: &[String]) -> ModelRc<SharedString> {
+pub(super) fn string_model(values: &[String]) -> ModelRc<SharedString> {
     ModelRc::new(VecModel::from(
         values
             .iter()
@@ -67,6 +68,7 @@ pub(super) fn show(window: &AppWindow, shared: &Shared, snapshot: SettingsSnapsh
     state.set_mpris(settings.integrations.mpris);
     state.set_discord(settings.integrations.discord_rich_presence);
     set_lyrics_rows(&state, &view.lyrics);
+    show_youtube(&state, &view);
     state.set_servers(ModelRc::new(VecModel::from(server_rows(settings))));
     state.set_follow_current_song(settings.ui.follow_current_song);
     state.set_switching("".into());
