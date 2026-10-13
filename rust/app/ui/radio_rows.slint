@@ -96,7 +96,7 @@ component StationActions inherits HorizontalLayout {
         icon: RadioIcons.upload;
         icon-size: 18px;
         enabled: !root.item.on-server && !RadioState.busy;
-        tooltip: root.item.on-server ? "Already on the server" : "Add to the server's stations";
+        tooltip: root.item.on-server ? "Already on the server" : RadioState.busy ? "Saving to the server..." : "Add to the server's stations";
         clicked => {
             RadioState.save-to-server(root.item.source, root.item.id);
         }

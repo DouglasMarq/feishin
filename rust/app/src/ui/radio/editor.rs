@@ -11,7 +11,7 @@ fn local_station_id() -> String {
     let since_epoch = SystemTime::now()
         .duration_since(UNIX_EPOCH)
         .unwrap_or_default();
-    format!("local-{}", since_epoch.as_millis())
+    format!("local-{}", since_epoch.as_nanos())
 }
 
 fn saved_station(id: String, draft: RadioStationDraft) -> RadioStation {
@@ -77,7 +77,7 @@ impl RadioView {
     }
 
     fn save_on_server(&self, id: String, draft: RadioStationDraft) {
-        let Some(server) = self.ctx.session.get() else {
+        let Some(server) = self.connected_server() else {
             return;
         };
         self.set_busy(true);

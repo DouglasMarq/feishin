@@ -1,9 +1,14 @@
+use std::sync::Arc;
+
+use feishin_api::MusicServer;
 use feishin_core::model::{RadioStation, RadioStationDraft};
 use slint::ComponentHandle;
 
 use super::view::RadioView;
 use crate::controller::{Command, RadioCommand};
 use crate::ui::{AppWindow, RadioSource, RadioState, show_status};
+
+const NOT_CONNECTED: &str = "Not connected to a server";
 
 impl RadioView {
     pub(super) fn play(&self, source: RadioSource, id: &str) {
@@ -65,7 +70,7 @@ impl RadioView {
         let Some(station) = self.with_model(|model| model.station(source, id)) else {
             return;
         };
-        let Some(server) = self.ctx.session.get() else {
+        let Some(server) = self.connected_server() else {
             return;
         };
         self.set_busy(true);
@@ -85,7 +90,10 @@ impl RadioView {
     }
 
     pub(super) fn delete(&self, id: &str) {
-        let Some(server) = self.ctx.session.get() else {
+        let Some(server) = self.connected_server() else {
+            if let Some(window) = self.window.upgrade() {
+                window.global::<RadioState>().set_delete_id("".into());
+            }
             return;
         };
         self.set_busy(true);
@@ -99,6 +107,16 @@ impl RadioView {
                 shown.finish_change(window, deleted, "Could not delete the station");
             });
         });
+    }
+
+    pub(super) fn connected_server(&self) -> Option<Arc<dyn MusicServer>> {
+        let server = self.ctx.session.get();
+        if server.is_none()
+            && let Some(window) = self.window.upgrade()
+        {
+            show_status(&window, NOT_CONNECTED);
+        }
+        server
     }
 
     pub(super) fn set_busy(&self, busy: bool) {

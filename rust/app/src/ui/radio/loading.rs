@@ -5,6 +5,8 @@ use feishin_core::model::{RadioStation, ServerType};
 use slint::ComponentHandle;
 use tokio::sync::oneshot;
 
+use super::freshness::{LoadTicket, LoadedStations};
+use super::model::RadioModel;
 use super::view::RadioView;
 use crate::controller::{Command, SettingsSnapshot};
 use crate::ui::{AppWindow, RadioState, show_status};
@@ -51,6 +53,7 @@ impl RadioView {
             state.set_stations_loading(true);
             state.set_server_has_radio(server_has_radio(server.as_ref()));
         }
+        let ticket = self.with_model(RadioModel::begin_load);
         let (reply, answer) = oneshot::channel();
         self.ctx.send(Command::GetSettings(reply));
         let view = self.clone();
@@ -58,30 +61,37 @@ impl RadioView {
             let favorites = saved_favorites(answer).await;
             let server_stations = fetch_server_stations(server).await;
             let shown = view.clone();
-            view.on_window(move |window| shown.apply_loaded(window, favorites, server_stations));
+            view.on_window(move |window| {
+                shown.apply_loaded(window, ticket, favorites, server_stations);
+            });
         });
     }
 
     pub(super) fn apply_loaded(
         &self,
         window: &AppWindow,
+        ticket: LoadTicket,
         favorites: Vec<RadioStation>,
         server_stations: ServerStations,
     ) {
-        let stations = server_stations
-            .stations
-            .inspect_err(|error| {
-                show_status(
-                    window,
-                    &format!("Could not load the radio stations: {error}"),
-                );
-            })
-            .unwrap_or_default();
-        self.with_model(|model| {
-            model.favorites = favorites;
-            model.server_stations = stations;
-            model.can_manage = server_stations.can_manage;
-        });
+        let (loaded, failure) = match server_stations.stations {
+            Ok(stations) => (stations, None),
+            Err(error) => (Vec::new(), Some(error)),
+        };
+        let loaded = LoadedStations {
+            favorites,
+            server_stations: loaded,
+            can_manage: server_stations.can_manage,
+        };
+        if !self.with_model(|model| model.accept_load(ticket, loaded)) {
+            return;
+        }
+        if let Some(error) = failure {
+            show_status(
+                window,
+                &format!("Could not load the radio stations: {error}"),
+            );
+        }
         window.global::<RadioState>().set_stations_loading(false);
         self.render(window);
     }

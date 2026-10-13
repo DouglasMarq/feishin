@@ -17,6 +17,8 @@ pub(super) struct RadioModel {
     pub(super) can_manage: bool,
     pub(super) has_more: bool,
     pub(super) search_generation: u64,
+    pub(super) load_generation: u64,
+    pub(super) favorites_revision: u64,
 }
 
 fn directory_station(station: &DirectoryStation) -> RadioStation {
@@ -165,6 +167,7 @@ impl RadioModel {
     }
 
     pub(super) fn remember_favorite(&mut self, station: RadioStation) {
+        self.favorites_revision += 1;
         match self
             .favorites
             .iter_mut()
@@ -180,6 +183,7 @@ impl RadioModel {
     }
 
     pub(super) fn forget_favorite(&mut self, station_id: &str) {
+        self.favorites_revision += 1;
         self.favorites.retain(|saved| saved.id != station_id);
     }
 }

@@ -126,7 +126,7 @@ component DirectoryPanel inherits VerticalLayout {
         if RadioState.has-more: TextButton {
             text: RadioState.searching ? "Loading..." : "Load more";
             enabled: !RadioState.searching;
-            tooltip: "Show the next page of stations";
+            tooltip: RadioState.searching ? "Loading the next page of stations" : "Show the next page of stations";
             clicked => {
                 RadioState.load-more();
             }
@@ -191,7 +191,7 @@ component StationEditor inherits Modal {
             text: "Save to server";
             primary: true;
             enabled: !RadioState.busy;
-            tooltip: "Add this station to the server for every client";
+            tooltip: RadioState.busy ? "Saving the station to the server..." : "Add this station to the server for every client";
             clicked => {
                 RadioState.save-edit(RadioSource.server);
             }

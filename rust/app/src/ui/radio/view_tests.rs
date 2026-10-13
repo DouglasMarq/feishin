@@ -8,6 +8,7 @@ use tokio::runtime::Runtime;
 use tokio::sync::mpsc::UnboundedReceiver;
 
 use super::loading::ServerStations;
+use super::model::RadioModel;
 use super::now_playing::show_now_playing;
 use super::view::{RadioView, install_with};
 use crate::connect::DemoConnector;
@@ -80,8 +81,9 @@ impl RadioPage {
             stations,
             can_manage: true,
         };
+        let ticket = self.view.with_model(RadioModel::begin_load);
         self.view
-            .apply_loaded(&self.window, vec![favorite()], server_stations);
+            .apply_loaded(&self.window, ticket, vec![favorite()], server_stations);
     }
 
     fn finish_search(&self, query: &StationQuery) {
@@ -266,4 +268,39 @@ fn the_playing_station_is_shown() {
     show_now_playing(&page.window, None);
     assert!(!page.state().get_active());
     assert_eq!(page.state().get_stream_title(), "");
+}
+
+#[test]
+fn server_changes_without_a_connection_are_explained() {
+    let page = open_radio_page();
+    page.finish_loading();
+    page.view.ctx.session.set(None);
+    let state = page.state();
+    state.set_delete_name("Demo Jazz Lounge".into());
+    state.set_delete_id("radio-0".into());
+
+    state.invoke_delete("radio-0".into());
+
+    assert_eq!(state.get_delete_id(), "");
+    assert!(!state.get_busy());
+    assert_eq!(
+        page.window.global::<AppState>().get_status(),
+        "Not connected to a server"
+    );
+}
+
+#[test]
+fn a_slow_load_keeps_a_favorite_saved_meanwhile() {
+    let page = open_radio_page();
+    let ticket = page.view.with_model(RadioModel::begin_load);
+    page.view.keep_favorite(favorite());
+    let server_stations = ServerStations {
+        stations: Ok(Vec::new()),
+        can_manage: false,
+    };
+
+    page.view
+        .apply_loaded(&page.window, ticket, Vec::new(), server_stations);
+
+    assert!(page.stations().iter().any(|row| row.name == "My Station"));
 }
