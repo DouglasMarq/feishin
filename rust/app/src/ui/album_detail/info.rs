@@ -4,7 +4,7 @@ use super::super::format_duration;
 
 fn song_count(detail: &AlbumDetail) -> usize {
     match detail.songs.len() {
-        0 => detail.album.song_count as usize,
+        0 => usize::try_from(detail.album.song_count).unwrap_or(usize::MAX),
         loaded => loaded,
     }
 }

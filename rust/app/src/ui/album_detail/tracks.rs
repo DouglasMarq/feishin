@@ -73,12 +73,16 @@ fn disc_header(disc: u32) -> AlbumDetailTrack {
     }
 }
 
+fn track_number_from_position(position: usize) -> u32 {
+    u32::try_from(position + 1).unwrap_or(u32::MAX)
+}
+
 fn track_row(song: &Song, position: usize) -> AlbumDetailTrack {
     AlbumDetailTrack {
         id: song.id.as_str().into(),
         number: song
             .track_number
-            .unwrap_or(position as u32 + 1)
+            .unwrap_or_else(|| track_number_from_position(position))
             .to_string()
             .into(),
         title: song.title.as_str().into(),
@@ -147,6 +151,16 @@ mod tests {
         );
         assert_eq!(rows[1].number, "1");
         assert_eq!(rows[1].duration, "1:01");
+    }
+
+    #[test]
+    fn untracked_songs_are_numbered_by_position() {
+        let untracked = Song {
+            track_number: None,
+            ..song("c", 1, 1)
+        };
+        let rows = track_rows(&[song("a", 1, 1), song("b", 1, 2), untracked]);
+        assert_eq!(rows[2].number, "3");
     }
 
     #[test]

@@ -28,11 +28,7 @@ pub fn with_list<Output>(
     window: &AppWindow,
     action: impl FnOnce(&ArtistList) -> Output,
 ) -> Option<Output> {
-    let items = window.global::<ArtistsState>().get_items();
-    items
-        .as_any()
-        .downcast_ref::<ListModel>()
-        .map(|model| action(&model.list))
+    shared_list(window).map(|list| action(&list))
 }
 
 fn finish_loading(window: &AppWindow, list: &ArtistList) {

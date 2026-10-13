@@ -36,6 +36,10 @@ pub fn toggle_favorite(window: &AppWindow, ctx: &Context) {
     });
 }
 
+fn stars(clamped_rating: i32) -> u8 {
+    u8::try_from(clamped_rating).unwrap_or_default()
+}
+
 pub fn set_rating(window: &AppWindow, ctx: &Context, rating: i32) {
     let Some((album_id, server)) = shown_album(window, ctx) else {
         return;
@@ -47,7 +51,7 @@ pub fn set_rating(window: &AppWindow, ctx: &Context, rating: i32) {
     let weak_window = window.as_weak();
     ctx.rt.spawn(async move {
         let result = server
-            .set_rating(ItemKind::Album, &album_id, rating as u8)
+            .set_rating(ItemKind::Album, &album_id, stars(rating))
             .await;
         if let Err(error) = result {
             on_ui(&weak_window, move |window| {
