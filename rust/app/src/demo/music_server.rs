@@ -96,6 +96,14 @@ impl MusicServer for FakeServer {
         self.songs_of_playlist(id)
     }
 
+    async fn playlist(&self, id: &str) -> Result<Playlist> {
+        self.playlist_by_id(id)
+    }
+
+    async fn playlist_song_page(&self, id: &str, paging: Paging) -> Result<Page<Song>> {
+        self.playlist_songs_page(id, paging)
+    }
+
     async fn create_playlist(&self, name: &str, song_ids: &[String]) -> Result<Playlist> {
         Ok(self.insert_playlist(name, song_ids))
     }

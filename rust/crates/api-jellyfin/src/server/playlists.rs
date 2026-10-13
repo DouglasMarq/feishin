@@ -1,12 +1,11 @@
 use feishin_api::{ApiError, Result};
-use feishin_core::model::{Page, Paging, Playlist, Song, SortOrder};
+use feishin_core::model::{Page, Paging, Playlist, SortOrder};
 use reqwest::Method;
 
+use super::playlist_items::playlist_items_path;
 use super::{JellyfinServer, MAX_IDS_PER_QUERY_STRING};
 use crate::dto;
-use crate::item_fields::{
-    NO_FIELDS, PLAYLIST_DETAIL_FIELDS, PLAYLIST_ITEM_TYPE, PLAYLIST_LIST_FIELDS, SONG_ITEM_TYPE,
-};
+use crate::item_fields::{NO_FIELDS, PLAYLIST_ITEM_TYPE, PLAYLIST_LIST_FIELDS};
 use crate::normalize;
 use crate::query_params::QueryParams;
 use crate::sorting::{SORT_BY_NAME, sort_order};
@@ -38,11 +37,6 @@ impl JellyfinServer {
         })
     }
 
-    pub(super) async fn playlist_song_list(&self, id: &str) -> Result<Vec<Song>> {
-        let items = self.playlist_items(id, PLAYLIST_DETAIL_FIELDS).await?;
-        Ok(self.normalize_songs(items))
-    }
-
     pub(super) async fn create_audio_playlist(
         &self,
         name: &str,
@@ -56,7 +50,7 @@ impl JellyfinServer {
         let response = send(self.request(Method::POST, "playlists").json(&new_playlist)).await?;
         let created: dto::CreatedPlaylist = decode(response).await?;
         self.append_to_playlist(&created.id, song_ids).await?;
-        self.playlist_detail(&created.id).await
+        self.playlist_summary(&created.id).await
     }
 
     pub(super) async fn append_to_playlist(
@@ -98,27 +92,6 @@ impl JellyfinServer {
         self.execute(self.request(Method::DELETE, &format!("items/{id}")))
             .await
     }
-
-    async fn playlist_detail(&self, id: &str) -> Result<Playlist> {
-        let params = QueryParams::default()
-            .fields(PLAYLIST_DETAIL_FIELDS)
-            .set("Ids", id);
-        let item: dto::Playlist = self.get(&self.item_path(id), &params).await?;
-        Ok(normalize::playlist(item, self.server_id()))
-    }
-
-    async fn playlist_items(&self, id: &str, fields: &[&str]) -> Result<Vec<dto::Song>> {
-        let params = QueryParams::default()
-            .fields(fields)
-            .set("IncludeItemTypes", SONG_ITEM_TYPE)
-            .set("UserId", &self.user_id);
-        let list: dto::ItemList<dto::Song> = self.get(&playlist_items_path(id), &params).await?;
-        Ok(list.items)
-    }
-}
-
-fn playlist_items_path(playlist_id: &str) -> String {
-    format!("playlists/{playlist_id}/items")
 }
 
 fn entry_ids_at(items: &[dto::Song], positions: &[usize]) -> Result<Vec<String>> {

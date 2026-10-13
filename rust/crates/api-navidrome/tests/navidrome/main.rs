@@ -7,6 +7,8 @@ mod library;
 #[cfg(test)]
 mod play_queue;
 #[cfg(test)]
+mod playlist_paging;
+#[cfg(test)]
 mod playlists;
 #[cfg(test)]
 mod session;

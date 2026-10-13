@@ -1,14 +1,15 @@
 use std::sync::Arc;
 
 use feishin_api::MusicServer;
-use feishin_core::model::{Playlist, Song};
+use feishin_core::model::{Page, Playlist, Song};
 use feishin_storage::cover_cache::DecodedImage;
-use slint::{ComponentHandle, ModelRc, VecModel};
+use slint::ComponentHandle;
 
+use super::binding::with_model;
 use super::detail::{SharedDetail, lock};
-use super::rows::{header_info, song_rows};
+use super::pages::paging_for_page;
+use super::rows::{HeaderSummary, header_info};
 use crate::ui::player::to_image;
-use crate::ui::playlists::fetch_all;
 use crate::ui::{AppState, AppWindow, Context, PlaylistDetailState, Route, on_ui, show_status};
 
 const COVER_SIZE: u32 = 300;
@@ -21,21 +22,27 @@ struct LoadRequest {
     generation: u64,
 }
 
-fn reset_view(window: &AppWindow) {
+struct Loaded {
+    generation: u64,
+    first_page: feishin_api::Result<Page<Song>>,
+    metadata: Option<Playlist>,
+}
+
+fn reset_view(window: &AppWindow, generation: u64, playlist_id: &str) {
     let state = window.global::<PlaylistDetailState>();
     state.set_name("".into());
     state.set_comment("".into());
     state.set_info("".into());
     state.set_has_cover(false);
     state.set_cover(slint::Image::default());
-    state.set_rows(ModelRc::default());
     state.set_selected_count(0);
     state.set_busy(false);
+    with_model(window, |model| model.reset(generation, playlist_id));
 }
 
 pub fn load(window: &AppWindow, ctx: &Context, shared: &SharedDetail, playlist_id: &str) {
     let generation = lock(shared).restart(playlist_id);
-    reset_view(window);
+    reset_view(window, generation, playlist_id);
     let state = window.global::<PlaylistDetailState>();
     let Some(server) = ctx.session.get().filter(|_| !playlist_id.is_empty()) else {
         state.set_loading(false);
@@ -53,32 +60,27 @@ pub fn load(window: &AppWindow, ctx: &Context, shared: &SharedDetail, playlist_i
 }
 
 async fn fetch_playlist(server: Arc<dyn MusicServer>, request: LoadRequest) {
-    let (songs, playlists) = tokio::join!(
-        server.playlist_songs(&request.playlist_id),
-        fetch_all(server.as_ref())
+    let (metadata, first_page) = tokio::join!(
+        server.playlist(&request.playlist_id),
+        server.playlist_song_page(&request.playlist_id, paging_for_page(0))
     );
-    let metadata = playlists
+    let metadata = metadata
         .inspect_err(|error| tracing::debug!("playlist metadata: {error}"))
-        .ok()
-        .and_then(|playlists| {
-            playlists
-                .into_iter()
-                .find(|playlist| playlist.id == request.playlist_id)
-        });
+        .ok();
     if let Some(cover_id) = metadata
         .as_ref()
         .and_then(|playlist| playlist.cover_art_id.clone())
     {
         spawn_cover_load(&request, Arc::clone(&server), cover_id);
     }
-    let LoadRequest {
-        window,
-        shared,
-        generation,
-        ..
-    } = request;
-    on_ui(&window, move |window| {
-        apply_loaded(window, &shared, generation, songs, metadata);
+    let loaded = Loaded {
+        generation: request.generation,
+        first_page,
+        metadata,
+    };
+    let shared = request.shared;
+    on_ui(&request.window, move |window| {
+        apply_loaded(window, &shared, loaded);
     });
 }
 
@@ -113,36 +115,45 @@ fn show_cover(window: &AppWindow, shared: &SharedDetail, generation: u64, cover:
     state.set_has_cover(true);
 }
 
-fn apply_loaded(
-    window: &AppWindow,
-    shared: &SharedDetail,
-    generation: u64,
-    songs: feishin_api::Result<Vec<Song>>,
-    metadata: Option<Playlist>,
-) {
+fn apply_loaded(window: &AppWindow, shared: &SharedDetail, loaded: Loaded) {
     let mut detail = lock(shared);
-    if detail.generation != generation {
+    if detail.generation != loaded.generation {
         return;
     }
-    let state = window.global::<PlaylistDetailState>();
-    state.set_loading(false);
-    let songs = match songs {
-        Ok(songs) => songs,
+    window.global::<PlaylistDetailState>().set_loading(false);
+    let page = match loaded.first_page {
+        Ok(page) => page,
         Err(error) => {
             drop(detail);
             show_status(window, &format!("Could not load the playlist: {error}"));
             return;
         }
     };
-    detail.name = metadata
-        .as_ref()
-        .map_or_else(|| "Playlist".to_owned(), |playlist| playlist.name.clone());
-    show_header(window, &detail.name, &songs, metadata.as_ref());
-    state.set_rows(ModelRc::new(VecModel::from(song_rows(&songs))));
-    detail.songs = songs;
+    let metadata = loaded.metadata.as_ref();
+    detail.name = metadata.map_or_else(|| "Playlist".to_owned(), |playlist| playlist.name.clone());
+    let name = detail.name.clone();
+    drop(detail);
+    let total = page
+        .total_count
+        .or_else(|| metadata.map(|playlist| playlist.song_count as usize))
+        .unwrap_or(page.items.len());
+    show_header(
+        window,
+        &name,
+        &HeaderSummary::new(metadata, total),
+        metadata,
+    );
+    with_model(window, |model| {
+        model.apply_first_page(loaded.generation, total, page.items)
+    });
 }
 
-fn show_header(window: &AppWindow, name: &str, songs: &[Song], metadata: Option<&Playlist>) {
+fn show_header(
+    window: &AppWindow,
+    name: &str,
+    summary: &HeaderSummary,
+    metadata: Option<&Playlist>,
+) {
     let state = window.global::<PlaylistDetailState>();
     state.set_name(name.into());
     state.set_comment(
@@ -152,13 +163,7 @@ fn show_header(window: &AppWindow, name: &str, songs: &[Song], metadata: Option<
             .trim()
             .into(),
     );
-    state.set_info(
-        header_info(
-            songs,
-            metadata.and_then(|playlist| playlist.owner.as_deref()),
-        )
-        .into(),
-    );
+    state.set_info(header_info(summary).into());
 }
 
 pub fn refresh_if_showing(window: &AppWindow, playlist_id: &str) {

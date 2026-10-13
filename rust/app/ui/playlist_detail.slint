@@ -138,10 +138,19 @@ component SongRow inherits Rectangle {
                     }
                 }
 
-                Cell {
+                if root.item.track.loaded: Cell {
                     width: PlaylistDetailState.title-width;
                     text: root.item.track.title;
                     text-color: root.playing ? Theme.primary : Theme.foreground;
+                }
+
+                if !root.item.track.loaded: Rectangle {
+                    width: PlaylistDetailState.title-width;
+
+                    Skeleton {
+                        x: 12px;
+                        width: parent.width * 0.6;
+                    }
                 }
 
                 Cell {

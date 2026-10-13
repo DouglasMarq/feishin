@@ -1,11 +1,14 @@
+use std::sync::Arc;
+
 use feishin_api::{ApiError, Result};
 use feishin_core::model::{Page, Paging, Playlist, Song};
 
 use super::SubsonicServer;
 use super::pages::client_page;
+use super::playlist_cache::CachedPlaylist;
 use crate::client::Params;
 use crate::normalize;
-use crate::types::{PlaylistResponse, Playlists, SubsonicSong};
+use crate::types::{PlaylistResponse, Playlists};
 
 impl SubsonicServer {
     pub(super) async fn fetch_playlist_page(&self, paging: Paging) -> Result<Page<Playlist>> {
@@ -20,17 +23,41 @@ impl SubsonicServer {
         Ok(client_page(playlists, paging))
     }
 
-    async fn playlist_entries(&self, id: &str) -> Result<Vec<SubsonicSong>> {
+    async fn cached_playlist(&self, id: &str) -> Result<Arc<CachedPlaylist>> {
+        self.playlist_cache
+            .get_or_load(id, self.load_playlist(id))
+            .await
+    }
+
+    async fn load_playlist(&self, id: &str) -> Result<CachedPlaylist> {
         let response: PlaylistResponse = self
             .fetch("getPlaylist.view", Params::new().add("id", id))
             .await?;
-        let playlist = response.playlist.ok_or(ApiError::NotFound)?;
-        Ok(playlist.entry.unwrap_or_default())
+        let mut playlist = response.playlist.ok_or(ApiError::NotFound)?;
+        let entries = playlist.entry.take().unwrap_or_default();
+        Ok(CachedPlaylist::new(
+            normalize::playlist(playlist, self.server_id()),
+            self.normalize_songs(entries),
+        ))
+    }
+
+    pub(super) async fn fetch_playlist(&self, id: &str) -> Result<Playlist> {
+        let cached = self.cached_playlist(id).await?;
+        Ok(cached.playlist.clone())
     }
 
     pub(super) async fn fetch_playlist_songs(&self, id: &str) -> Result<Vec<Song>> {
-        let entries = self.playlist_entries(id).await?;
-        Ok(self.normalize_songs(entries))
+        let cached = self.cached_playlist(id).await?;
+        Ok(cached.songs().to_vec())
+    }
+
+    pub(super) async fn fetch_playlist_song_page(
+        &self,
+        id: &str,
+        paging: Paging,
+    ) -> Result<Page<Song>> {
+        let cached = self.cached_playlist(id).await?;
+        Ok(cached.song_page(paging))
     }
 
     pub(super) async fn create_playlist_with_songs(
@@ -54,7 +81,9 @@ impl SubsonicServer {
         let params = Params::new()
             .add("playlistId", playlist_id)
             .add_each("songIdToAdd", song_ids);
-        self.send("updatePlaylist.view", params).await
+        let result = self.send("updatePlaylist.view", params).await;
+        self.playlist_cache.invalidate(playlist_id).await;
+        result
     }
 
     pub(super) async fn remove_playlist_indexes(
@@ -66,6 +95,16 @@ impl SubsonicServer {
         let params = Params::new()
             .add("playlistId", playlist_id)
             .add_each("songIndexToRemove", &indexes);
-        self.send("updatePlaylist.view", params).await
+        let result = self.send("updatePlaylist.view", params).await;
+        self.playlist_cache.invalidate(playlist_id).await;
+        result
+    }
+
+    pub(super) async fn delete_playlist_by_id(&self, id: &str) -> Result<()> {
+        let result = self
+            .send("deletePlaylist.view", Params::new().add("id", id))
+            .await;
+        self.playlist_cache.invalidate(id).await;
+        result
     }
 }

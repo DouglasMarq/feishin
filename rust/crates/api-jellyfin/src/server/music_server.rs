@@ -74,6 +74,14 @@ impl MusicServer for JellyfinServer {
         self.playlist_song_list(id).await
     }
 
+    async fn playlist(&self, id: &str) -> Result<Playlist> {
+        self.playlist_summary(id).await
+    }
+
+    async fn playlist_song_page(&self, id: &str, paging: Paging) -> Result<Page<Song>> {
+        self.fetch_playlist_song_page(id, paging).await
+    }
+
     async fn create_playlist(&self, name: &str, song_ids: &[String]) -> Result<Playlist> {
         self.create_audio_playlist(name, song_ids).await
     }

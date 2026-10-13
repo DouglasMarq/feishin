@@ -75,6 +75,14 @@ impl MusicServer for SubsonicServer {
         self.fetch_playlist_songs(id).await
     }
 
+    async fn playlist(&self, id: &str) -> Result<Playlist> {
+        self.fetch_playlist(id).await
+    }
+
+    async fn playlist_song_page(&self, id: &str, paging: Paging) -> Result<Page<Song>> {
+        self.fetch_playlist_song_page(id, paging).await
+    }
+
     async fn create_playlist(&self, name: &str, song_ids: &[String]) -> Result<Playlist> {
         self.create_playlist_with_songs(name, song_ids).await
     }
@@ -88,8 +96,7 @@ impl MusicServer for SubsonicServer {
     }
 
     async fn delete_playlist(&self, id: &str) -> Result<()> {
-        self.send("deletePlaylist.view", Params::new().add("id", id))
-            .await
+        self.delete_playlist_by_id(id).await
     }
 
     async fn search(&self, query: &str, limit: usize) -> Result<SearchResults> {

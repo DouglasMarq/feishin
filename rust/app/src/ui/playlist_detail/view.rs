@@ -1,22 +1,23 @@
 use std::sync::Arc;
 
-use feishin_core::model::Song;
 use slint::ComponentHandle;
 
-use super::detail::{SharedDetail, lock};
-use super::editing::{add_to_playlist, remove};
+use super::actions::{SongAction, act_on_rows};
+use super::binding::{install_model, with_model};
+use super::detail::SharedDetail;
+use super::editing::remove;
 use super::loading::load;
+use super::playing::{PlayStart, play_playlist};
 use super::selecting::install_selection;
-use crate::controller::Command;
-use crate::ui::playlists::PlayMode;
-use crate::ui::{AppWindow, Context, PlayerState, PlaylistDetailState, PlaylistSongAction};
+use crate::ui::{AppWindow, Context, PlaylistDetailState};
 
 pub fn install(window: &AppWindow, ctx: &Context) {
     let shared: SharedDetail = Arc::default();
+    install_model(window, ctx);
     install_load(window, ctx, &shared);
     install_play(window, ctx, &shared);
     install_play_row(window, ctx, &shared);
-    install_selection(window, &shared);
+    install_selection(window);
     install_selection_actions(window, ctx, &shared);
     install_context_action(window, ctx, &shared);
 }
@@ -40,36 +41,27 @@ fn install_play(window: &AppWindow, ctx: &Context, shared: &SharedDetail) {
             let Some(window) = weak.upgrade() else {
                 return;
             };
-            let songs = lock(&play_shared).songs.clone();
-            if songs.is_empty() {
+            if with_model(&window, |model| model.total()).unwrap_or_default() == 0 {
                 return;
             }
-            if shuffle && !window.global::<PlayerState>().get_shuffle() {
-                play_ctx.send(Command::ToggleShuffle);
-            }
-            play_ctx.send(Command::PlaySongs {
-                songs,
-                song_id: None,
-            });
+            let start = PlayStart::FromTop { shuffle };
+            play_playlist(&window, &play_ctx, &play_shared, start);
         });
 }
 
 fn install_play_row(window: &AppWindow, ctx: &Context, shared: &SharedDetail) {
-    let (row_ctx, row_shared) = (ctx.clone(), Arc::clone(shared));
+    let (weak, row_ctx, row_shared) = (window.as_weak(), ctx.clone(), Arc::clone(shared));
     window
         .global::<PlaylistDetailState>()
         .on_play_row(move |index| {
-            let detail = lock(&row_shared);
-            let Some(song) = usize::try_from(index)
-                .ok()
-                .and_then(|index| detail.songs.get(index))
+            let (Some(window), Ok(index)) = (weak.upgrade(), usize::try_from(index)) else {
+                return;
+            };
+            let Some(song_id) = with_model(&window, |model| model.song_id_at(index)).flatten()
             else {
                 return;
             };
-            row_ctx.send(Command::PlaySongs {
-                song_id: Some(song.id.clone()),
-                songs: detail.songs.clone(),
-            });
+            play_playlist(&window, &row_ctx, &row_shared, PlayStart::AtSong(song_id));
         });
 }
 
@@ -79,19 +71,16 @@ fn install_selection_actions(window: &AppWindow, ctx: &Context, shared: &SharedD
     let (weak, remove_ctx, remove_shared) = (window.as_weak(), ctx.clone(), Arc::clone(shared));
     state.on_remove_selected(move || {
         if let Some(window) = weak.upgrade() {
-            let indexes = lock(&remove_shared).selection.indexes();
+            let indexes = with_model(&window, |model| model.selected_indexes()).unwrap_or_default();
             remove(&window, &remove_ctx, &remove_shared, indexes);
         }
     });
 
-    let (weak, add_shared) = (window.as_weak(), Arc::clone(shared));
+    let (weak, add_ctx) = (window.as_weak(), ctx.clone());
     state.on_add_selected_to_playlist(move || {
         if let Some(window) = weak.upgrade() {
-            let songs = {
-                let detail = lock(&add_shared);
-                detail.songs_at(&detail.selection.indexes())
-            };
-            add_to_playlist(&window, &songs);
+            let indexes = with_model(&window, |model| model.selected_indexes()).unwrap_or_default();
+            act_on_rows(&window, &add_ctx, &indexes, SongAction::AddToPlaylist);
         }
     });
 }
@@ -104,38 +93,16 @@ fn install_context_action(window: &AppWindow, ctx: &Context, shared: &SharedDeta
             let (Some(window), Ok(index)) = (weak.upgrade(), usize::try_from(index)) else {
                 return;
             };
-            let (targets, songs) = {
-                let detail = lock(&menu_shared);
-                let targets = detail.selection.targets(index);
-                let songs = detail.songs_at(&targets);
-                (targets, songs)
-            };
-            if songs.is_empty() {
+            let targets = with_model(&window, |model| {
+                (index < model.total()).then(|| model.targets(index))
+            })
+            .flatten();
+            let Some(targets) = targets else {
                 return;
+            };
+            match SongAction::from_menu(action) {
+                Some(song_action) => act_on_rows(&window, &menu_ctx, &targets, song_action),
+                None => remove(&window, &menu_ctx, &menu_shared, targets),
             }
-            let menu_target = MenuTarget { targets, songs };
-            run_context_action(&window, &menu_ctx, &menu_shared, action, menu_target);
         });
-}
-
-struct MenuTarget {
-    targets: Vec<usize>,
-    songs: Vec<Song>,
-}
-
-fn run_context_action(
-    window: &AppWindow,
-    ctx: &Context,
-    shared: &SharedDetail,
-    action: PlaylistSongAction,
-    menu_target: MenuTarget,
-) {
-    let MenuTarget { targets, songs } = menu_target;
-    match action {
-        PlaylistSongAction::AddToPlaylist => add_to_playlist(window, &songs),
-        PlaylistSongAction::Remove => remove(window, ctx, shared, targets),
-        PlaylistSongAction::Play => ctx.send(PlayMode::Now.command(songs)),
-        PlaylistSongAction::PlayNext => ctx.send(PlayMode::Next.command(songs)),
-        PlaylistSongAction::AddToQueue => ctx.send(PlayMode::Last.command(songs)),
-    }
 }

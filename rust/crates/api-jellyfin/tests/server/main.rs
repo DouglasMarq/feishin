@@ -7,6 +7,8 @@ mod library;
 #[cfg(test)]
 mod playback;
 #[cfg(test)]
+mod playlist_paging;
+#[cfg(test)]
 mod playlists;
 #[cfg(test)]
 mod songs;
