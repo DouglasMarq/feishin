@@ -24,10 +24,12 @@ fn replay_gain(gain: types::ReplayGain) -> Option<ReplayGain> {
     })
 }
 
-fn audio_container(content_type: Option<&str>) -> Option<String> {
-    content_type
-        .and_then(|mime_type| mime_type.strip_prefix("audio/"))
-        .map(str::to_owned)
+fn audio_container(suffix: Option<String>, content_type: Option<&str>) -> Option<String> {
+    non_empty_text(suffix).or_else(|| {
+        content_type
+            .and_then(|mime_type| mime_type.strip_prefix("audio/"))
+            .map(str::to_owned)
+    })
 }
 
 pub fn song(item: SubsonicSong, server_id: &str) -> Song {
@@ -62,7 +64,7 @@ pub fn song(item: SubsonicSong, server_id: &str) -> Song {
         replay_gain: item.replay_gain.and_then(replay_gain),
         path: non_empty_text(item.path),
         size_bytes: non_negative_size(item.size),
-        container: audio_container(item.content_type.as_deref()),
+        container: audio_container(item.suffix, item.content_type.as_deref()),
         created_at: item.created,
         last_played_at: None,
     }
@@ -110,6 +112,16 @@ mod tests {
         let gain = song.replay_gain.unwrap_or_default();
         assert_eq!(gain.track_gain_db, Some(-6.5));
         assert_eq!(gain.album_gain_db, None);
+    }
+
+    #[test]
+    fn container_is_the_file_suffix_rather_than_the_mime_subtype() {
+        let mp3 = parse_song(
+            json!({"id": "1", "title": "T", "contentType": "audio/mpeg", "suffix": "mp3"}),
+        );
+        assert_eq!(song(mp3, "srv").container.as_deref(), Some("mp3"));
+        let unsuffixed = parse_song(json!({"id": "2", "title": "T", "contentType": "audio/ogg"}));
+        assert_eq!(song(unsuffixed, "srv").container.as_deref(), Some("ogg"));
     }
 
     #[test]

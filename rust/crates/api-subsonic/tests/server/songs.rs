@@ -43,7 +43,7 @@ async fn song_list_without_filters_uses_empty_search3() {
     assert_eq!(first.artists[0].name, "Artist");
     assert_eq!(first.duration_ms, 180_000);
     assert_eq!(first.bitrate_kbps, Some(320));
-    assert_eq!(first.container.as_deref(), Some("mpeg"));
+    assert_eq!(first.container.as_deref(), Some("mp3"));
     assert_eq!(first.cover_art_id.as_deref(), Some("mf-s1"));
     assert_eq!(first.play_count, 3);
     assert!(!first.favorite);

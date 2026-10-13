@@ -70,6 +70,7 @@ pub struct SubsonicSong {
     #[serde(deserialize_with = "lenient_number")]
     pub size: Option<f64>,
     pub content_type: Option<String>,
+    pub suffix: Option<String>,
     #[serde(deserialize_with = "lenient_optional_id")]
     pub cover_art: Option<String>,
     pub created: Option<String>,
