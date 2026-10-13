@@ -2,17 +2,25 @@ use std::future::Future;
 use std::sync::{Arc, Mutex, MutexGuard, PoisonError};
 use std::time::{Duration, Instant};
 
-use crate::error::Result;
+use tokio::sync::OnceCell;
 
-struct Remembered<Key, Value> {
-    key: Key,
+use crate::error::{ApiError, Result};
+
+struct Fetched<Value> {
     value: Arc<Value>,
     fetched_at: Instant,
 }
 
+struct Slot<Key, Value> {
+    key: Key,
+    fetched: OnceCell<Fetched<Value>>,
+}
+
+type SharedSlot<Key, Value> = Arc<Slot<Key, Value>>;
+
 pub struct LatestCache<Key, Value> {
     time_to_live: Duration,
-    latest: Mutex<Option<Remembered<Key, Value>>>,
+    latest: Mutex<Option<SharedSlot<Key, Value>>>,
 }
 
 impl<Key: PartialEq + Clone, Value> LatestCache<Key, Value> {
@@ -28,32 +36,46 @@ impl<Key: PartialEq + Clone, Value> LatestCache<Key, Value> {
         Fetch: FnOnce() -> Pending,
         Pending: Future<Output = Result<Value>>,
     {
-        if let Some(value) = self.fresh(key) {
-            return Ok(value);
-        }
-        let value = Arc::new(fetch().await?);
-        *self.locked() = Some(Remembered {
-            key: key.clone(),
-            value: Arc::clone(&value),
-            fetched_at: Instant::now(),
-        });
-        Ok(value)
+        let slot = self.slot_for(key);
+        let fetched = slot
+            .fetched
+            .get_or_try_init(|| async {
+                let value = fetch().await?;
+                Ok::<_, ApiError>(Fetched {
+                    value: Arc::new(value),
+                    fetched_at: Instant::now(),
+                })
+            })
+            .await?;
+        Ok(Arc::clone(&fetched.value))
     }
 
     pub fn invalidate(&self) {
         *self.locked() = None;
     }
 
-    fn fresh(&self, key: &Key) -> Option<Arc<Value>> {
-        self.locked()
-            .as_ref()
-            .filter(|remembered| {
-                remembered.key == *key && remembered.fetched_at.elapsed() < self.time_to_live
-            })
-            .map(|remembered| Arc::clone(&remembered.value))
+    fn slot_for(&self, key: &Key) -> SharedSlot<Key, Value> {
+        let mut latest = self.locked();
+        if let Some(slot) = latest.as_ref().filter(|slot| self.is_usable(slot, key)) {
+            return Arc::clone(slot);
+        }
+        let slot = Arc::new(Slot {
+            key: key.clone(),
+            fetched: OnceCell::new(),
+        });
+        *latest = Some(Arc::clone(&slot));
+        slot
     }
 
-    fn locked(&self) -> MutexGuard<'_, Option<Remembered<Key, Value>>> {
+    fn is_usable(&self, slot: &Slot<Key, Value>, key: &Key) -> bool {
+        slot.key == *key
+            && slot
+                .fetched
+                .get()
+                .is_none_or(|fetched| fetched.fetched_at.elapsed() < self.time_to_live)
+    }
+
+    fn locked(&self) -> MutexGuard<'_, Option<SharedSlot<Key, Value>>> {
         self.latest.lock().unwrap_or_else(PoisonError::into_inner)
     }
 }
@@ -70,6 +92,7 @@ mod tests {
         cache
             .get_or_fetch(&key, || async {
                 fetches.fetch_add(1, Ordering::SeqCst);
+                tokio::task::yield_now().await;
                 Ok(u32::from(key) * 10)
             })
             .await
@@ -101,5 +124,27 @@ mod tests {
         lasting.invalidate();
         cached(&lasting, 1, &fetches).await;
         assert_eq!(fetches.load(Ordering::SeqCst), 4);
+    }
+
+    #[tokio::test]
+    async fn concurrent_requests_for_one_key_share_a_single_fetch() {
+        let cache = LatestCache::new(MINUTE);
+        let fetches = AtomicUsize::new(0);
+        let (first, second) =
+            tokio::join!(cached(&cache, 7, &fetches), cached(&cache, 7, &fetches));
+        assert_eq!((first, second), (70, 70));
+        assert_eq!(fetches.load(Ordering::SeqCst), 1);
+    }
+
+    #[tokio::test]
+    async fn a_failed_fetch_is_retried_by_the_next_request() {
+        let cache: LatestCache<u8, u32> = LatestCache::new(MINUTE);
+        let failed = cache
+            .get_or_fetch(&1, || async { Err(ApiError::NotFound) })
+            .await;
+        assert!(matches!(failed, Err(ApiError::NotFound)));
+        let fetches = AtomicUsize::new(0);
+        assert_eq!(cached(&cache, 1, &fetches).await, 10);
+        assert_eq!(fetches.load(Ordering::SeqCst), 1);
     }
 }

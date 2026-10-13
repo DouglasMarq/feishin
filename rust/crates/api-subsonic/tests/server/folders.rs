@@ -116,3 +116,19 @@ async fn only_the_latest_directory_stays_cached() {
 
     assert_eq!(again.items[0].id, "a1");
 }
+
+#[tokio::test]
+async fn opening_a_folder_lists_it_once_for_folders_and_songs_together() {
+    let mock = MockServer::start().await;
+    mount_directory(&mock, "album-1", vec![song_child("t1")], 1).await;
+    let server = server(&mock);
+    let folder = FolderId::directory("album-1");
+
+    let (folders, songs) = tokio::join!(
+        server.subfolders(&folder),
+        server.folder_song_page(&folder, paging(0, 10))
+    );
+
+    assert!(folders.unwrap().is_empty());
+    assert_eq!(songs.unwrap().items[0].id, "t1");
+}
