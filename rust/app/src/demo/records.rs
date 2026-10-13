@@ -70,7 +70,7 @@ impl FakeServer {
             year: Some(album_year(album)),
             genres: vec![genre_name(song_genre(songs.start)).to_owned()],
             song_count: songs.len() as u32,
-            duration_ms: songs.map(song_duration).sum(),
+            duration_ms: self.album_duration_ms(album),
             cover_art_id: Some(album_cover_id(album)),
             play_count: 0,
             user_rating: None,

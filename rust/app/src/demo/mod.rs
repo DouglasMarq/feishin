@@ -23,7 +23,11 @@ mod songs;
 mod vocabulary;
 
 #[cfg(test)]
+mod album_order_tests;
+#[cfg(test)]
 mod scale_tests;
+#[cfg(test)]
+mod sort_key_tests;
 #[cfg(test)]
 mod test_support;
 #[cfg(test)]
