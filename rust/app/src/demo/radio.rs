@@ -21,7 +21,7 @@ fn demo_station(index: usize, name: &str, homepage_url: &str) -> RadioStation {
     RadioStation {
         id: format!("radio-{index}"),
         name: name.to_owned(),
-        stream_url: format!("demo://radio/{index}"),
+        stream_url: format!("https://radio.demo.invalid/{index}"),
         homepage_url: Some(homepage_url.to_owned()),
     }
 }

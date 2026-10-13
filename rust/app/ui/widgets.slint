@@ -127,7 +127,7 @@ export component IconButton inherits Rectangle {
     in property <bool> active;
     in property <bool> enabled: true;
     in property <length> icon-size: 20px;
-    in property <color> icon-color: root.active ? Theme.primary : (touch.has-hover ? Theme.foreground : Theme.muted);
+    in property <color> icon-color: root.active ? Theme.primary : (touch.has-hover && root.enabled ? Theme.foreground : Theme.muted);
     callback clicked();
     width: 32px;
     height: 32px;
@@ -148,10 +148,11 @@ export component IconButton inherits Rectangle {
     }
 
     touch := TouchArea {
-        enabled: root.enabled;
-        mouse-cursor: pointer;
+        mouse-cursor: root.enabled ? pointer : default;
         clicked => {
-            root.clicked();
+            if (root.enabled) {
+                root.clicked();
+            }
         }
     }
 }
@@ -161,7 +162,8 @@ export component Bar inherits Rectangle {
     in property <float> scroll-step;
     in property <string> tooltip;
     in property <bool> tooltip-follows-pointer;
-    out property <bool> dragging: touch.pressed;
+    in property <bool> enabled: true;
+    out property <bool> dragging: touch.pressed && root.enabled;
     out property <float> hover-value: max(0, min(1, touch.mouse-x / root.width));
     out property <float> drag-preview: root.drag-value;
     out property <bool> adjusting: root.dragging || root.scrolling;
@@ -184,11 +186,11 @@ export component Bar inherits Rectangle {
             x: 0;
             width: parent.width * max(0, min(1, root.shown));
             border-radius: 2px;
-            background: touch.has-hover || root.dragging ? Theme.primary : Theme.foreground;
+            background: (touch.has-hover && root.enabled) || root.dragging ? Theme.primary : Theme.foreground;
         }
     }
 
-    if touch.has-hover || root.dragging: Rectangle {
+    if (touch.has-hover && root.enabled) || root.dragging: Rectangle {
         x: root.width * max(0, min(1, root.shown)) - self.width / 2;
         y: (parent.height - self.height) / 2;
         width: 12px;
@@ -227,9 +229,9 @@ export component Bar inherits Rectangle {
     }
 
     touch := TouchArea {
-        mouse-cursor: pointer;
+        mouse-cursor: root.enabled ? pointer : default;
         scroll-event(event) => {
-            if (root.scroll-step <= 0 || event.delta-y == 0) {
+            if (!root.enabled || root.scroll-step <= 0 || event.delta-y == 0) {
                 return reject;
             }
             root.drag-value = max(0, min(1, root.value + (event.delta-y > 0 ? root.scroll-step : -root.scroll-step)));
@@ -242,6 +244,9 @@ export component Bar inherits Rectangle {
             accept
         }
         pointer-event(event) => {
+            if (!root.enabled) {
+                return;
+            }
             if (event.kind == PointerEventKind.down && event.button == PointerEventButton.left) {
                 root.drag-value = max(0, min(1, self.mouse-x / root.width));
                 root.changed(root.drag-value);
@@ -252,7 +257,7 @@ export component Bar inherits Rectangle {
             }
         }
         moved => {
-            if (self.pressed) {
+            if (self.pressed && root.enabled) {
                 root.drag-value = max(0, min(1, self.mouse-x / root.width));
                 root.changed(root.drag-value);
             }

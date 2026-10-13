@@ -2,7 +2,7 @@ use feishin_core::queue::{QueueTrack, RepeatMode};
 use feishin_storage::cover_cache::DecodedImage;
 use slint::{ComponentHandle, Image, Rgba8Pixel, SharedPixelBuffer};
 
-use super::{AppWindow, Context, PlayerState, clamp_i32, on_ui, queue, show_status, tracks};
+use super::{AppWindow, Context, PlayerState, clamp_i32, on_ui, queue, radio, show_status, tracks};
 use crate::controller::{Command, UiSink, UiUpdate};
 
 const COVER_SIZE: u32 = 128;
@@ -162,6 +162,7 @@ fn apply(window: &AppWindow, update: UiUpdate) {
             state.set_repeat(repeat_index(repeat));
         }
         UiUpdate::Queue(view) => queue::set_view(window, view),
+        UiUpdate::Radio(now_playing) => radio::show_now_playing(window, now_playing.as_ref()),
         UiUpdate::Error(message) => show_status(window, &message),
         UiUpdate::Raise => raise(window),
         UiUpdate::Quit => quit(),

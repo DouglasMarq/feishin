@@ -1466,6 +1466,7 @@ dependencies = [
  "feishin-lyrics",
  "feishin-platform",
  "feishin-player",
+ "feishin-radio-browser",
  "feishin-storage",
  "i-slint-backend-testing",
  "reqwest",

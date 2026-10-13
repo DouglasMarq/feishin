@@ -35,6 +35,7 @@ pub mod playlist_detail;
 pub mod playlist_picker;
 pub mod playlists;
 pub mod queue;
+pub mod radio;
 pub mod search;
 pub mod settings;
 pub mod tracks;
@@ -89,6 +90,7 @@ pub fn install(window: &AppWindow, ctx: &Context, settings: &Settings) {
     search::install(window, ctx);
     settings::install(window, ctx);
     now_playing::install(window, ctx);
+    radio::install(window, ctx);
     window
         .global::<AppState>()
         .set_queue_open(settings.ui.queue_panel_open);

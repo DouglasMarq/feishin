@@ -1,0 +1,72 @@
+import { Theme } from "theme.slint";
+import { TooltipAnchor } from "widgets.slint";
+
+export global RadioIcons {
+    out property <string> radio: "M3.24 6.15C2.51 6.43 2 7.17 2 8v12c0 1.1.89 2 2 2h16c1.11 0 2-.9 2-2V8c0-1.11-.89-2-2-2H8.3l8.26-3.34L15.88 1 3.24 6.15zM7 20c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm13-8h-2v-2h-2v2H4V8h16v4z";
+    out property <string> stop: "M6 6h12v12H6z";
+    out property <string> edit: "M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z";
+    out property <string> upload: "M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM14 13v4h-4v-4H7l5-5 5 5h-3z";
+    out property <string> heart-outline: "M16.5 3c-1.74 0-3.41.81-4.5 2.09C10.91 3.81 9.24 3 7.5 3 4.42 3 2 5.42 2 8.5c0 3.78 3.4 6.86 8.55 11.54L12 21.35l1.45-1.32C18.6 15.36 22 12.28 22 8.5 22 5.42 19.58 3 16.5 3zm-4.4 15.55l-.1.1-.1-.1C7.14 14.24 4 11.39 4 8.5 4 6.5 5.5 5 7.5 5c1.54 0 3.04.99 3.57 2.36h1.87C13.46 5.99 14.96 5 16.5 5c2 0 3.5 1.5 3.5 3.5 0 2.89-3.14 5.74-7.9 10.05z";
+}
+
+export component TextButton inherits Rectangle {
+    in property <string> text;
+    in property <string> tooltip;
+    in property <bool> primary;
+    in property <bool> enabled: true;
+    callback clicked();
+    min-width: label.preferred-width + 28px;
+    height: 32px;
+    border-radius: 4px;
+    background: root.primary ? Theme.primary : (touch.has-hover && root.enabled ? Theme.hover : Theme.surface-raised);
+    opacity: root.enabled ? (root.primary && touch.has-hover ? 0.85 : 1) : 0.4;
+
+    label := Text {
+        text: root.text;
+        color: root.primary ? white : Theme.foreground;
+        font-weight: 600;
+    }
+
+    TooltipAnchor {
+        text: root.tooltip;
+        hovered: touch.has-hover;
+    }
+
+    touch := TouchArea {
+        mouse-cursor: root.enabled ? pointer : default;
+        clicked => {
+            if (root.enabled) {
+                root.clicked();
+            }
+        }
+    }
+}
+
+export component TabButton inherits Rectangle {
+    in property <string> text;
+    in property <string> tooltip;
+    in property <bool> active;
+    callback clicked();
+    width: tab-label.preferred-width + 28px;
+    height: 32px;
+    border-radius: 16px;
+    background: root.active ? Theme.surface-raised : (touch.has-hover ? Theme.hover : transparent);
+
+    tab-label := Text {
+        text: root.text;
+        color: root.active ? Theme.foreground : Theme.muted;
+        font-weight: 600;
+    }
+
+    TooltipAnchor {
+        text: root.tooltip;
+        hovered: touch.has-hover;
+    }
+
+    touch := TouchArea {
+        mouse-cursor: pointer;
+        clicked => {
+            root.clicked();
+        }
+    }
+}
