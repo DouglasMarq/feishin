@@ -1,4 +1,5 @@
 use std::fs::{DirBuilder, OpenOptions, Permissions};
+use std::io::Write;
 use std::os::unix::fs::{DirBuilderExt, OpenOptionsExt, PermissionsExt};
 use std::path::{Path, PathBuf};
 use std::sync::atomic::{AtomicU64, Ordering};
@@ -10,6 +11,7 @@ use crate::{YtDlp, unix_now};
 const RUNTIME_SUBDIRECTORY: &str = "feishin-rs";
 const PRIVATE_DIRECTORY_MODE: u32 = 0o700;
 const PRIVATE_FILE_MODE: u32 = 0o600;
+const NETSCAPE_HEADER: &[u8] = b"# Netscape HTTP Cookie File\n";
 
 static EXPORT_COUNTER: AtomicU64 = AtomicU64::new(0);
 
@@ -63,12 +65,12 @@ fn prepare_private_dir(directory: &Path) -> Result<(), MusicError> {
         .map_err(failed)
 }
 
-struct PrivateFile {
+pub(super) struct PrivateFile {
     path: PathBuf,
 }
 
 impl PrivateFile {
-    fn create(directory: &Path) -> Result<Self, MusicError> {
+    pub(super) fn create(directory: &Path) -> Result<Self, MusicError> {
         let number = EXPORT_COUNTER.fetch_add(1, Ordering::Relaxed);
         let path = directory.join(format!(
             "youtube-music-cookies-{}-{number}.txt",
@@ -79,18 +81,21 @@ impl PrivateFile {
         {
             tracing::debug!("could not remove a stale cookie file: {error}");
         }
-        OpenOptions::new()
+        let failed = |error: std::io::Error| {
+            MusicError::SignIn(format!("could not create the cookie file: {error}"))
+        };
+        let mut file = OpenOptions::new()
             .write(true)
             .create_new(true)
             .mode(PRIVATE_FILE_MODE)
             .open(&path)
-            .map_err(|error| {
-                MusicError::SignIn(format!("could not create the cookie file: {error}"))
-            })?;
-        Ok(Self { path })
+            .map_err(failed)?;
+        let created = Self { path };
+        file.write_all(NETSCAPE_HEADER).map_err(failed)?;
+        Ok(created)
     }
 
-    fn path(&self) -> &Path {
+    pub(super) fn path(&self) -> &Path {
         &self.path
     }
 }
