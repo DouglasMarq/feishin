@@ -10,6 +10,7 @@ import { ItemTableListColumn } from '/@/renderer/components/item-list/item-table
 import { ItemListTableComponentProps } from '/@/renderer/components/item-list/types';
 import { useListContext } from '/@/renderer/context/list-context';
 import { songsQueries } from '/@/renderer/features/songs/api/songs-api';
+import { useSongListPlayControls } from '/@/renderer/features/songs/hooks/use-song-list-play-controls';
 import { usePlayerSong } from '/@/renderer/store';
 import { LibraryItem, SongListQuery, SongListSort, SortOrder } from '/@/shared/types/domain-types';
 import { ItemListKey } from '/@/shared/types/types';
@@ -67,6 +68,8 @@ export const SongListInfiniteTable = ({
 
     const currentSong = usePlayerSong();
 
+    const playControls = useSongListPlayControls(query, serverId);
+
     return (
         <ItemTableList
             activeRowId={currentSong?.id}
@@ -94,6 +97,7 @@ export const SongListInfiniteTable = ({
             onColumnResized={handleColumnResized}
             onRangeChanged={onRangeChanged}
             onScrollEnd={handleOnScrollEnd}
+            overrideControls={playControls}
             size={size}
         />
     );

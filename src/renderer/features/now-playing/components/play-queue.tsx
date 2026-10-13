@@ -18,7 +18,6 @@ import { useDragDrop } from '/@/renderer/hooks/use-drag-drop';
 import { useHotkeys } from '/@/renderer/hooks/use-hotkeys';
 import {
     isShuffleEnabled,
-    mapShuffledToQueueIndex,
     subscribeCurrentTrack,
     subscribePlayerQueue,
     useFollowCurrentSong,
@@ -60,8 +59,15 @@ export const PlayQueue = forwardRef<ItemListHandle, QueueProps>(
         useEffect(() => {
             const setQueue = () => {
                 const queue = getQueue() || { groups: [], items: [] };
+                const state = usePlayerStore.getState();
 
-                setData(queue.items);
+                setData(
+                    isShuffleEnabled(state)
+                        ? state.queue.shuffled
+                              .map((index) => state.queue.songs[state.queue.default[index]])
+                              .filter(Boolean)
+                        : queue.items,
+                );
 
                 setGroups([]);
             };
@@ -71,8 +77,10 @@ export const PlayQueue = forwardRef<ItemListHandle, QueueProps>(
             });
 
             const unsubCurrentTrack = subscribeCurrentTrack((e) => {
-                if (followCurrentSong && e.index !== -1) {
-                    tableRef.current?.scrollToIndex(e.index, {
+                const index = usePlayerStore.getState().player.index;
+
+                if (followCurrentSong && e.index !== -1 && index !== -1) {
+                    tableRef.current?.scrollToIndex(index, {
                         align: 'center',
                         behavior: 'auto',
                     });
@@ -81,12 +89,7 @@ export const PlayQueue = forwardRef<ItemListHandle, QueueProps>(
 
             const handleAutoDJQueueAdded = () => {
                 if (followCurrentSong) {
-                    const state = usePlayerStore.getState();
-                    let index = state.player.index;
-
-                    if (isShuffleEnabled(state)) {
-                        index = mapShuffledToQueueIndex(index, state.queue.shuffled);
-                    }
+                    const index = usePlayerStore.getState().player.index;
 
                     if (index !== -1) {
                         // Use setTimeout to ensure the DOM has updated with the new queue items
@@ -105,12 +108,7 @@ export const PlayQueue = forwardRef<ItemListHandle, QueueProps>(
             setQueue();
 
             if (followCurrentSong) {
-                const state = usePlayerStore.getState();
-                let index = state.player.index;
-
-                if (isShuffleEnabled(state)) {
-                    index = mapShuffledToQueueIndex(index, state.queue.shuffled);
-                }
+                const index = usePlayerStore.getState().player.index;
 
                 if (index !== -1) {
                     setTimeout(() => {

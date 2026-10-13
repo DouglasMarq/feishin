@@ -43,6 +43,11 @@ import {
 } from '/@/shared/types/domain-types';
 import { Play, PlayerRepeat, PlayerShuffle } from '/@/shared/types/types';
 
+export interface AddToQueueByListQueryOptions {
+    playSongId?: string;
+    skipConfirmation?: boolean;
+}
+
 export interface PlayerContext {
     addToQueueByData: (
         data: Song[],
@@ -67,6 +72,7 @@ export interface PlayerContext {
         query: any,
         itemType: LibraryItem,
         type: AddToQueueType,
+        options?: AddToQueueByListQueryOptions,
     ) => Promise<void>;
     clearQueue: (skipConfirmation?: boolean) => void;
     clearSelected: (items: QueueSong[]) => void;
@@ -438,7 +444,13 @@ export const PlayerProvider = ({ children }: { children: React.ReactNode }) => {
     );
 
     const addToQueueByListQuery = useCallback(
-        async (serverId: string, query: any, itemType: LibraryItem, type: AddToQueueType) => {
+        async (
+            serverId: string,
+            query: any,
+            itemType: LibraryItem,
+            type: AddToQueueType,
+            options?: AddToQueueByListQueryOptions,
+        ) => {
             let toastId: null | string = null;
             let fetchId: null | string = null;
 
@@ -503,7 +515,7 @@ export const PlayerProvider = ({ children }: { children: React.ReactNode }) => {
                 const allResults: Song[] | string[] = [];
                 const pageSize = 500;
 
-                const confirmed = await confirmLargeFetch();
+                const confirmed = options?.skipConfirmation || (await confirmLargeFetch());
                 if (!confirmed) {
                     return;
                 }
@@ -586,7 +598,13 @@ export const PlayerProvider = ({ children }: { children: React.ReactNode }) => {
                 }
 
                 if (itemType === LibraryItem.SONG) {
-                    addToQueueByData(finalResults as Song[], type);
+                    addToQueueByData(
+                        finalResults as Song[],
+                        type,
+                        options?.playSongId,
+                        undefined,
+                        options?.skipConfirmation,
+                    );
                 } else {
                     await addToQueueByFetch(serverId, finalResults as string[], itemType, type);
                 }

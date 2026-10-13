@@ -26,9 +26,6 @@ const playButtons: {
                 <Text fw={500} ta="center">
                     {i18n.t('player.addNext')}
                 </Text>
-                <Text fw={500} isMuted size="xs" ta="center">
-                    {i18n.t('player.holdToShuffle')}
-                </Text>
             </Stack>
         ),
 
@@ -42,9 +39,6 @@ const playButtons: {
                 <Text fw={500} ta="center">
                     {i18n.t('player.play')}
                 </Text>
-                <Text fw={500} isMuted size="xs" ta="center">
-                    {i18n.t('player.holdToShuffle')}
-                </Text>
             </Stack>
         ),
         secondary: false,
@@ -56,9 +50,6 @@ const playButtons: {
             <Stack gap="xs" justify="center">
                 <Text fw={500} ta="center">
                     {i18n.t('player.addLast')}
-                </Text>
-                <Text fw={500} isMuted size="xs" ta="center">
-                    {i18n.t('player.holdToShuffle')}
                 </Text>
             </Stack>
         ),
@@ -84,9 +75,6 @@ const TooltipLabel = ({ label }: { label: React.ReactNode | string; type: Play }
         <Stack gap="xs" justify="center">
             <Text fw={500} ta="center">
                 {label}
-            </Text>
-            <Text fw={500} isMuted size="xs" ta="center">
-                {i18n.t('player.holdToShuffle')}
             </Text>
         </Stack>
     );

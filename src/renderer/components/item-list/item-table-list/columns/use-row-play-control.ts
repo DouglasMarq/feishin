@@ -139,13 +139,33 @@ export const useRowPlayControl = (props: ItemTableListInnerColumn) => {
                 return;
             }
 
+            if (props.itemType === LibraryItem.SONG && props.controls?.onDoubleClick) {
+                props.controls.onDoubleClick({
+                    event: null,
+                    internalState: props.internalState,
+                    item: song,
+                    itemType: props.itemType,
+                    meta: { playType, singleSongOnly: true },
+                });
+                return;
+            }
+
             playSongFromItemListControl({
                 item: song as Song,
                 meta: { playType, singleSongOnly: true },
                 player,
             });
         },
-        [album, artist, player, playlist, props.itemType, song],
+        [
+            album,
+            artist,
+            player,
+            playlist,
+            props.controls,
+            props.internalState,
+            props.itemType,
+            song,
+        ],
     );
 
     return {

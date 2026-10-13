@@ -8,6 +8,7 @@ import { ItemGridList } from '/@/renderer/components/item-list/item-grid-list/it
 import { ItemListGridComponentProps } from '/@/renderer/components/item-list/types';
 import { useListContext } from '/@/renderer/context/list-context';
 import { songsQueries } from '/@/renderer/features/songs/api/songs-api';
+import { useSongListPlayControls } from '/@/renderer/features/songs/hooks/use-song-list-play-controls';
 import { useGeneralSettings } from '/@/renderer/store';
 import { LibraryItem, SongListQuery, SongListSort, SortOrder } from '/@/shared/types/domain-types';
 import { ItemListKey } from '/@/shared/types/types';
@@ -59,6 +60,8 @@ export const SongListInfiniteGrid = ({
     const rows = useGridRows(LibraryItem.SONG, ItemListKey.SONG, size);
     const { enableGridMultiSelect } = useGeneralSettings();
 
+    const playControls = useSongListPlayControls(query, serverId);
+
     return (
         <ItemGridList
             data={loadedItems}
@@ -77,6 +80,7 @@ export const SongListInfiniteGrid = ({
             itemType={LibraryItem.SONG}
             onRangeChanged={onRangeChanged}
             onScrollEnd={handleOnScrollEnd}
+            overrideControls={playControls}
             rows={rows}
             size={size}
         />

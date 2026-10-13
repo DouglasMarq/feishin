@@ -11,7 +11,6 @@ import { FilterBar } from '/@/renderer/features/shared/components/filter-bar';
 import { LibraryHeaderBar } from '/@/renderer/features/shared/components/library-header-bar';
 import { ListSearchInput } from '/@/renderer/features/shared/components/list-search-input';
 import { SongListHeaderFilters } from '/@/renderer/features/songs/components/song-list-header-filters';
-import { useSongListFilters } from '/@/renderer/features/songs/hooks/use-song-list-filters';
 import { useCurrentServerId } from '/@/renderer/store';
 import { Flex } from '/@/shared/components/flex/flex';
 import { Group } from '/@/shared/components/group/group';
@@ -30,7 +29,6 @@ export const SongListHeader = ({ title }: SongListHeaderProps) => {
             <PageHeader>
                 <Flex justify="space-between" w="100%">
                     <LibraryHeaderBar ignoreMaxWidth>
-                        <PlayButton />
                         <PageTitle title={title} />
                         <SongListHeaderBadge />
                     </LibraryHeaderBar>
@@ -54,20 +52,6 @@ const SongListHeaderBadge = () => {
     });
 
     return <LibraryHeaderBar.Badge isLoading={isFetching}>{itemCount}</LibraryHeaderBar.Badge>;
-};
-
-const PlayButton = () => {
-    const { customFilters } = useListContext();
-    const { query } = useSongListFilters();
-
-    const mergedQuery = useMemo(() => {
-        return {
-            ...query,
-            ...(customFilters ?? {}),
-        };
-    }, [query, customFilters]);
-
-    return <LibraryHeaderBar.PlayButton itemType={LibraryItem.SONG} listQuery={mergedQuery} />;
 };
 
 const PageTitle = ({ title }: { title?: string }) => {

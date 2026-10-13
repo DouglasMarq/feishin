@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useMemo } from 'react';
 
 import { useIsPlayerFetching } from '/@/renderer/features/player/context/player-context';
 import { useLongPress } from '/@/shared/hooks/use-long-press';
@@ -21,7 +21,6 @@ interface UsePlayButtonClickReturn {
         onTouchStart: (e: React.TouchEvent) => void;
     };
     props: {
-        'data-pressing'?: string;
         disabled: boolean;
         style: React.CSSProperties;
     };
@@ -30,44 +29,22 @@ interface UsePlayButtonClickReturn {
 export const usePlayButtonClick = ({
     loading,
     onClick,
-    onLongPress,
 }: UsePlayButtonClickOptions): UsePlayButtonClickReturn => {
     const isPlayerFetching = useIsPlayerFetching();
     const isDisabled = Boolean(isPlayerFetching || loading);
-    const [isPressing, setIsPressing] = useState(false);
-    const [isLongPressing, setIsLongPressing] = useState(false);
+    const handlePress = (e: React.MouseEvent<HTMLButtonElement> | React.TouchEvent) => {
+        if (isDisabled || loading) {
+            return;
+        }
+
+        e.stopPropagation();
+        e.preventDefault();
+        onClick?.(e as React.MouseEvent<HTMLButtonElement>);
+    };
 
     const longPressHandlers = useLongPress<HTMLButtonElement>({
-        onClick: (e) => {
-            if (isDisabled || loading) {
-                return;
-            }
-
-            e.stopPropagation();
-            e.preventDefault();
-            onClick?.(e as React.MouseEvent<HTMLButtonElement>);
-        },
-        onFinish: () => {
-            setIsPressing(false);
-            setIsLongPressing(false);
-        },
-        onLongPress: (e) => {
-            if (isDisabled || loading) {
-                return;
-            }
-
-            e.stopPropagation();
-            e.preventDefault();
-            setIsPressing(false);
-            setIsLongPressing(true);
-            onLongPress?.(e as React.MouseEvent<HTMLButtonElement>);
-        },
-        onStart: () => {
-            if (!isDisabled && !loading) {
-                setIsPressing(true);
-                setIsLongPressing(false);
-            }
-        },
+        onClick: handlePress,
+        onLongPress: handlePress,
     });
 
     const handleMouseDown = useCallback(
@@ -106,16 +83,13 @@ export const usePlayButtonClick = ({
 
     const props = useMemo(() => {
         return {
-            'data-pressing': isPressing ? 'true' : undefined,
             disabled: isDisabled,
             style: {
-                '--long-press-duration': '300ms',
-                '--play-button-scale': isLongPressing ? 1.15 : 1,
                 opacity: isDisabled ? 0.5 : 1,
                 transition: 'opacity 0.2s ease-in-out, transform 0.2s ease-in-out',
             } as React.CSSProperties,
         };
-    }, [isDisabled, isPressing, isLongPressing]);
+    }, [isDisabled]);
 
     return { handlers, props };
 };
