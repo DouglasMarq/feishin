@@ -101,9 +101,9 @@ pub(super) fn parse_duration(text: &str) -> Option<u64> {
         .try_fold(0_u64, |total, part| {
             let valid = !part.is_empty() && part.chars().all(|digit| digit.is_ascii_digit());
             let value: u64 = valid.then(|| part.parse().ok()).flatten()?;
-            Some(total * 60 + value)
+            total.checked_mul(60)?.checked_add(value)
         })
-        .map(|seconds| seconds * 1000)
+        .and_then(|seconds| seconds.checked_mul(1000))
 }
 
 pub(super) fn best_thumbnail(thumbnail_holder: Option<&Value>) -> Option<String> {
@@ -153,6 +153,7 @@ mod tests {
         assert_eq!(parse_duration("Tocou 1,9 mi vezes"), None);
         assert_eq!(parse_duration("3:"), None);
         assert_eq!(parse_duration("12"), None);
+        assert_eq!(parse_duration("9999999999999999999:59"), None);
     }
 
     #[test]
