@@ -8,7 +8,6 @@ export struct PickerRow {
     info: string,
 }
 
-/// Full-window backdrop with a centered card. Clicking outside or pressing Escape cancels.
 export component Modal inherits Rectangle {
     in property <string> title;
     in property <length> card-width: 420px;
@@ -62,7 +61,6 @@ export component Modal inherits Rectangle {
     }
 }
 
-/// Right-aligned row of dialog buttons.
 export component DialogButtons inherits HorizontalLayout {
     in property <string> confirm-text: "OK";
     in property <bool> confirm-enabled: true;
@@ -102,7 +100,6 @@ export component DialogButtons inherits HorizontalLayout {
     }
 }
 
-/// A dialog asking for a playlist name.
 export component NameDialog inherits Modal {
     in property <string> initial-name;
     in property <bool> busy;
@@ -269,7 +266,6 @@ component PickerList inherits Modal {
     }
 }
 
-/// Overlay behind `Actions.add-to-playlist`: pick an existing playlist or create one.
 export component PlaylistPicker inherits Rectangle {
     if !PlaylistPickerState.creating: PickerList {
         cancel => {

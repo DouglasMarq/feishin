@@ -208,7 +208,6 @@ export component CardView inherits Rectangle {
     }
 }
 
-/// Virtualized grid of cards; `columns-changed` reports how many cards each row must hold.
 export component CardGrid inherits Rectangle {
     in property <[CardRow]> rows;
     in property <bool> round;
@@ -216,9 +215,9 @@ export component CardGrid inherits Rectangle {
     in property <bool> loading;
     in property <string> empty-text;
     property <length> gap: 16px;
-    property <length> pad: 20px;
-    out property <int> columns: max(1, min(10, Math.floor((root.width - 2 * root.pad + root.gap) / (176px + root.gap))));
-    property <length> card-width: (root.width - 2 * root.pad - (root.columns - 1) * root.gap) / root.columns;
+    property <length> side-padding: 20px;
+    out property <int> columns: max(1, min(10, Math.floor((root.width - 2 * root.side-padding + root.gap) / (176px + root.gap))));
+    property <length> card-width: (root.width - 2 * root.side-padding - (root.columns - 1) * root.gap) / root.columns;
     callback columns-changed(int);
     callback open(string);
     callback toggle-favorite(string);
@@ -233,8 +232,8 @@ export component CardGrid inherits Rectangle {
 
     ListView {
         for row in root.rows: HorizontalLayout {
-            padding-left: root.pad;
-            padding-right: root.pad;
+            padding-left: root.side-padding;
+            padding-right: root.side-padding;
             padding-bottom: 20px;
             spacing: root.gap;
             alignment: start;
@@ -262,7 +261,6 @@ export component CardGrid inherits Rectangle {
     }
 }
 
-/// Virtualized track table sharing the Tracks view columns; rows highlight the playing song.
 export component TrackTable inherits Rectangle {
     in property <[TrackItem]> rows;
     in property <bool> loading;

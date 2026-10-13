@@ -11,6 +11,8 @@ export struct PlaylistSongRow {
     selected: bool,
 }
 
+export enum PlaylistSongAction { play, play-next, add-to-queue, add-to-playlist, remove }
+
 export global PlaylistDetailState {
     in property <string> name;
     in property <string> comment;
@@ -21,11 +23,11 @@ export global PlaylistDetailState {
     in property <bool> loading;
     in property <bool> busy;
     in property <int> selected-count;
-    in-out property <length> w-index: 56px;
-    in-out property <length> w-title: 320px;
-    in-out property <length> w-artist: 200px;
-    in-out property <length> w-album: 240px;
-    in-out property <length> w-duration: 72px;
+    in-out property <length> index-width: 56px;
+    in-out property <length> title-width: 320px;
+    in-out property <length> artist-width: 200px;
+    in-out property <length> album-width: 240px;
+    in-out property <length> duration-width: 72px;
     callback load(string);
     callback play(bool);
     callback play-row(int);
@@ -34,9 +36,7 @@ export global PlaylistDetailState {
     callback clear-selection();
     callback remove-selected();
     callback add-selected-to-playlist();
-    /// Runs a context menu action ("play", "next", "last", "playlist", "remove") on the row, or on the
-    /// selection when the row is part of it.
-    callback context-action(int, string);
+    callback context-action(int, PlaylistSongAction);
 }
 
 component SongRow inherits Rectangle {
@@ -63,28 +63,28 @@ component SongRow inherits Rectangle {
                 MenuItem {
                     title: "Play";
                     activated => {
-                        PlaylistDetailState.context-action(root.index, "play");
+                        PlaylistDetailState.context-action(root.index, PlaylistSongAction.play);
                     }
                 }
 
                 MenuItem {
                     title: "Play next";
                     activated => {
-                        PlaylistDetailState.context-action(root.index, "next");
+                        PlaylistDetailState.context-action(root.index, PlaylistSongAction.play-next);
                     }
                 }
 
                 MenuItem {
                     title: "Add to queue";
                     activated => {
-                        PlaylistDetailState.context-action(root.index, "last");
+                        PlaylistDetailState.context-action(root.index, PlaylistSongAction.add-to-queue);
                     }
                 }
 
                 MenuItem {
                     title: "Add to playlist";
                     activated => {
-                        PlaylistDetailState.context-action(root.index, "playlist");
+                        PlaylistDetailState.context-action(root.index, PlaylistSongAction.add-to-playlist);
                     }
                 }
 
@@ -111,14 +111,14 @@ component SongRow inherits Rectangle {
                 MenuItem {
                     title: "Remove from playlist";
                     activated => {
-                        PlaylistDetailState.context-action(root.index, "remove");
+                        PlaylistDetailState.context-action(root.index, PlaylistSongAction.remove);
                     }
                 }
             }
 
             HorizontalLayout {
                 Rectangle {
-                    width: PlaylistDetailState.w-index;
+                    width: PlaylistDetailState.index-width;
 
                     if !root.playing: Text {
                         x: 0;
@@ -139,23 +139,23 @@ component SongRow inherits Rectangle {
                 }
 
                 Cell {
-                    width: PlaylistDetailState.w-title;
+                    width: PlaylistDetailState.title-width;
                     text: root.item.track.title;
                     text-color: root.playing ? Theme.primary : Theme.foreground;
                 }
 
                 Cell {
-                    width: PlaylistDetailState.w-artist;
+                    width: PlaylistDetailState.artist-width;
                     text: root.item.track.artists;
                 }
 
                 Cell {
-                    width: PlaylistDetailState.w-album;
+                    width: PlaylistDetailState.album-width;
                     text: root.item.track.album;
                 }
 
                 Cell {
-                    width: PlaylistDetailState.w-duration;
+                    width: PlaylistDetailState.duration-width;
                     text: root.item.track.duration;
                 }
 
@@ -358,31 +358,31 @@ export component PlaylistDetailView inherits Rectangle {
                         text: "#";
                         sortable: false;
                         align: right;
-                        column-width <=> PlaylistDetailState.w-index;
+                        column-width <=> PlaylistDetailState.index-width;
                     }
 
                     HeaderCell {
                         text: "Title";
                         sortable: false;
-                        column-width <=> PlaylistDetailState.w-title;
+                        column-width <=> PlaylistDetailState.title-width;
                     }
 
                     HeaderCell {
                         text: "Artist";
                         sortable: false;
-                        column-width <=> PlaylistDetailState.w-artist;
+                        column-width <=> PlaylistDetailState.artist-width;
                     }
 
                     HeaderCell {
                         text: "Album";
                         sortable: false;
-                        column-width <=> PlaylistDetailState.w-album;
+                        column-width <=> PlaylistDetailState.album-width;
                     }
 
                     HeaderCell {
                         text: "Time";
                         sortable: false;
-                        column-width <=> PlaylistDetailState.w-duration;
+                        column-width <=> PlaylistDetailState.duration-width;
                     }
 
                     Rectangle { }
@@ -400,9 +400,9 @@ export component PlaylistDetailView inherits Rectangle {
                 clip: true;
 
                 list := ListView {
-                    for row[i] in PlaylistDetailState.rows: SongRow {
+                    for row[row-index] in PlaylistDetailState.rows: SongRow {
                         item: row;
-                        index: i;
+                        index: row-index;
                         pressed => {
                             keys.focus();
                         }

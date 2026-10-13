@@ -96,9 +96,9 @@ component MoreButton inherits Rectangle {
 
 component SongRow inherits Rectangle {
     in property <TrackRow> track;
-    in property <length> w-title;
-    in property <length> w-artist;
-    in property <length> w-album;
+    in property <length> title-width;
+    in property <length> artist-width;
+    in property <length> album-width;
     property <bool> playing: root.track.id == PlayerState.song-id;
     property <int> position: root.track.index - 1;
     height: 36px;
@@ -196,18 +196,18 @@ component SongRow inherits Rectangle {
                 }
 
                 Cell {
-                    width: root.w-title;
+                    width: root.title-width;
                     text: root.track.title;
                     text-color: root.playing ? Theme.primary : Theme.foreground;
                 }
 
                 Cell {
-                    width: root.w-artist;
+                    width: root.artist-width;
                     text: root.track.artists;
                 }
 
                 Cell {
-                    width: root.w-album;
+                    width: root.album-width;
                     text: root.track.album;
                 }
 
@@ -306,9 +306,9 @@ component CardGrid inherits Rectangle {
     callback open(string);
     height: ceil(root.cards.length / root.columns) * (root.card-height + root.gap);
 
-    for card[i] in root.cards: CardView {
-        x: mod(i, root.columns) * (root.card-width + root.gap);
-        y: floor(i / root.columns) * (root.card-height + root.gap);
+    for card[card-index] in root.cards: CardView {
+        x: mod(card-index, root.columns) * (root.card-width + root.gap);
+        y: floor(card-index / root.columns) * (root.card-height + root.gap);
         width: root.card-width;
         card: card;
         round: root.round;
@@ -318,16 +318,16 @@ component CardGrid inherits Rectangle {
             root.open(card.id);
         }
         need-cover => {
-            SearchState.need-cover(root.kind, i);
+            SearchState.need-cover(root.kind, card-index);
         }
     }
 }
 
 export component SearchView inherits Rectangle {
     property <bool> empty: SearchState.songs.length == 0 && SearchState.albums.length == 0 && SearchState.artists.length == 0;
-    property <length> w-title: max(160px, (scroll.visible-width - 40px - 48px - 72px) * 0.4);
-    property <length> w-artist: max(120px, (scroll.visible-width - 40px - 48px - 72px) * 0.3);
-    property <length> w-album: max(120px, (scroll.visible-width - 40px - 48px - 72px) * 0.3);
+    property <length> title-width: max(160px, (scroll.visible-width - 40px - 48px - 72px) * 0.4);
+    property <length> artist-width: max(120px, (scroll.visible-width - 40px - 48px - 72px) * 0.3);
+    property <length> album-width: max(120px, (scroll.visible-width - 40px - 48px - 72px) * 0.3);
     min-width: 320px;
     background: Theme.background;
 
@@ -401,19 +401,19 @@ export component SearchView inherits Rectangle {
                                 HeaderCell {
                                     text: "Title";
                                     sortable: false;
-                                    column-width: root.w-title;
+                                    column-width: root.title-width;
                                 }
 
                                 HeaderCell {
                                     text: "Artist";
                                     sortable: false;
-                                    column-width: root.w-artist;
+                                    column-width: root.artist-width;
                                 }
 
                                 HeaderCell {
                                     text: "Album";
                                     sortable: false;
-                                    column-width: root.w-album;
+                                    column-width: root.album-width;
                                 }
 
                                 HeaderCell {
@@ -434,9 +434,9 @@ export component SearchView inherits Rectangle {
 
                         for row in SearchState.songs: SongRow {
                             track: row;
-                            w-title: root.w-title;
-                            w-artist: root.w-artist;
-                            w-album: root.w-album;
+                            title-width: root.title-width;
+                            artist-width: root.artist-width;
+                            album-width: root.album-width;
                         }
 
                         if SearchState.songs-more: MoreButton {
