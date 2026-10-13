@@ -45,30 +45,41 @@ impl RadioBrowser {
     }
 
     pub async fn search(&self, query: &StationQuery) -> Result<Vec<DirectoryStation>> {
-        let base = self.mirror_url().await;
-        let request = self
-            .http
-            .get(format!("{base}/json/stations/search"))
-            .query(&query.parameters());
-        let raw_stations: Vec<RawStation> = self.decoded(request).await?;
+        let raw_stations: Vec<RawStation> = self
+            .get_json("json/stations/search", &query.parameters())
+            .await?;
         Ok(playable_stations(raw_stations))
     }
 
     pub async fn count_click(&self, station_uuid: &str) -> Result<()> {
-        let base = self.mirror_url().await;
-        let request = self.http.get(format!("{base}/json/url/{station_uuid}"));
-        self.decoded::<IgnoredAny>(request).await.map(drop)
+        self.get_json::<IgnoredAny>(&format!("json/url/{station_uuid}"), &[])
+            .await
+            .map(drop)
     }
 
-    async fn decoded<Decoded: DeserializeOwned>(
+    async fn get_json<Decoded: DeserializeOwned>(
         &self,
-        request: reqwest::RequestBuilder,
+        path: &str,
+        parameters: &[(&str, String)],
     ) -> Result<Decoded> {
-        let outcome = send_and_decode(request).await;
-        if matches!(outcome, Err(DirectoryError::Network(_))) {
-            self.forget_mirror();
+        match self.get_from_mirror(path, parameters).await {
+            Err(error) if is_worth_retrying(&error) => {
+                tracing::debug!("radio-browser request failed, trying again: {error}");
+                self.forget_mirror();
+                self.get_from_mirror(path, parameters).await
+            }
+            outcome => outcome,
         }
-        outcome
+    }
+
+    async fn get_from_mirror<Decoded: DeserializeOwned>(
+        &self,
+        path: &str,
+        parameters: &[(&str, String)],
+    ) -> Result<Decoded> {
+        let base = self.mirror_url().await;
+        let request = self.http.get(format!("{base}/{path}")).query(parameters);
+        send_and_decode(request).await
     }
 
     async fn mirror_url(&self) -> String {
@@ -101,6 +112,14 @@ impl RadioBrowser {
 
     fn forget_mirror(&self) {
         *self.remembered_mirror() = None;
+    }
+}
+
+fn is_worth_retrying(error: &DirectoryError) -> bool {
+    match error {
+        DirectoryError::Network(_) => true,
+        DirectoryError::Status(status) => *status >= 500,
+        DirectoryError::Decode(_) => false,
     }
 }
 

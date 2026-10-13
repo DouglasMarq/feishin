@@ -126,12 +126,48 @@ async fn a_failed_mirror_lookup_falls_back_to_the_discovery_host() {
 }
 
 #[tokio::test]
+async fn a_failing_mirror_is_resolved_again_and_retried_once() {
+    let mock = MockServer::start().await;
+    Mock::given(method("GET"))
+        .and(path("/json/servers"))
+        .respond_with(
+            ResponseTemplate::new(200).set_body_json(json!([{ "name": mock_host(&mock) }])),
+        )
+        .expect(2)
+        .mount(&mock)
+        .await;
+    Mock::given(method("GET"))
+        .and(path("/json/stations/search"))
+        .respond_with(ResponseTemplate::new(502))
+        .up_to_n_times(1)
+        .expect(1)
+        .mount(&mock)
+        .await;
+    Mock::given(method("GET"))
+        .and(path("/json/stations/search"))
+        .respond_with(ResponseTemplate::new(200).set_body_json(station_fixture()))
+        .expect(1)
+        .mount(&mock)
+        .await;
+    let directory = RadioBrowser::with_discovery_url(&mock.uri()).expect("client");
+
+    let stations = directory.search(&jazz_in_germany()).await.expect("search");
+
+    assert_eq!(stations.len(), 1);
+}
+
+#[tokio::test]
 async fn server_errors_are_reported() {
     let mock = MockServer::start().await;
-    mount_servers(&mock, json!([])).await;
+    Mock::given(method("GET"))
+        .and(path("/json/servers"))
+        .respond_with(ResponseTemplate::new(200).set_body_json(json!([])))
+        .mount(&mock)
+        .await;
     Mock::given(method("GET"))
         .and(path("/json/stations/search"))
         .respond_with(ResponseTemplate::new(500))
+        .expect(2)
         .mount(&mock)
         .await;
     let directory = RadioBrowser::with_discovery_url(&mock.uri()).expect("client");
