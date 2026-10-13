@@ -1,0 +1,11 @@
+[Desktop Entry]
+Type=Application
+Name=Feishin
+GenericName=Music Player
+Comment=Self-hosted music player for Navidrome, Subsonic and Jellyfin
+Exec=feishin
+Icon=org.jeffvli.feishin.native
+Terminal=false
+Categories=AudioVideo;Audio;Player;
+Keywords=music;player;navidrome;subsonic;jellyfin;streaming;
+StartupWMClass=org.jeffvli.feishin.native

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>org.jeffvli.feishin.native</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>GPL-3.0-only</project_license>
+  <name>Feishin</name>
+  <summary>Self-hosted music player for Navidrome, Subsonic and Jellyfin</summary>
+  <developer id="org.jeffvli">
+    <name>Feishin contributors</name>
+  </developer>
+  <description>
+    <p>
+      Feishin is a desktop music player for your own music server. This is the native
+      build of Feishin: a small, fast application written in Rust that plays audio
+      through mpv.
+    </p>
+    <ul>
+      <li>Connects to Navidrome, OpenSubsonic, Subsonic and Jellyfin servers</li>
+      <li>Browses albums, artists, genres, playlists and songs from large libraries</li>
+      <li>Gapless playback, a play queue that is restored on restart and scrobbling</li>
+      <li>Synchronized lyrics, media keys and desktop media controls (MPRIS)</li>
+    </ul>
+  </description>
+  <launchable type="desktop-id">org.jeffvli.feishin.native.desktop</launchable>
+  <url type="homepage">https://github.com/DouglasMarq/feishin</url>
+  <url type="bugtracker">https://github.com/DouglasMarq/feishin/issues</url>
+  <url type="vcs-browser">https://github.com/DouglasMarq/feishin/tree/feat/rust-native</url>
+  <categories>
+    <category>AudioVideo</category>
+    <category>Audio</category>
+    <category>Player</category>
+  </categories>
+  <keywords>
+    <keyword>music</keyword>
+    <keyword>navidrome</keyword>
+    <keyword>subsonic</keyword>
+    <keyword>jellyfin</keyword>
+  </keywords>
+  <provides>
+    <binary>feishin</binary>
+    <dbus type="user">org.mpris.MediaPlayer2.feishin</dbus>
+  </provides>
+  <supports>
+    <control>pointing</control>
+    <control>keyboard</control>
+  </supports>
+  <requires>
+    <display_length compare="ge">720</display_length>
+  </requires>
+  <content_rating type="oars-1.1"/>
+  <releases>
+    <release version="0.1.0" date="2026-10-13" type="development">
+      <description>
+        <p>First native build of Feishin.</p>
+      </description>
+    </release>
+  </releases>
+</component>

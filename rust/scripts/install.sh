@@ -6,23 +6,28 @@ set -euo pipefail
 
 prefix="${PREFIX:-$HOME/.local}"
 rust_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-icons_dir="$rust_dir/../assets/icons"
+desktop_integration="$rust_dir/packaging/install-desktop-integration.sh"
 binary="$prefix/bin/feishin"
-desktop_file="$prefix/share/applications/feishin.desktop"
-icon_sizes=(16 24 32 48 64 128 256 512)
-
-icon_path() {
-    echo "$prefix/share/icons/hicolor/${1}x${1}/apps/feishin.png"
-}
+legacy_icon_sizes=(16 24 32 48 64 128 256 512)
 
 refresh_menus() {
     command -v update-desktop-database >/dev/null && update-desktop-database -q "$prefix/share/applications" || true
     [[ -f "$prefix/share/icons/hicolor/icon-theme.cache" ]] && gtk-update-icon-cache -q -t "$prefix/share/icons/hicolor" || true
 }
 
+remove_legacy_entry() {
+    local legacy_desktop_file="$prefix/share/applications/feishin.desktop"
+    grep -qx "Exec=$binary" "$legacy_desktop_file" 2>/dev/null || return 0
+    rm -f "$legacy_desktop_file"
+    for size in "${legacy_icon_sizes[@]}"; do
+        rm -f "$prefix/share/icons/hicolor/${size}x${size}/apps/feishin.png"
+    done
+}
+
 uninstall() {
-    rm -f "$binary" "$desktop_file"
-    for size in "${icon_sizes[@]}"; do rm -f "$(icon_path "$size")"; done
+    rm -f "$binary"
+    bash "$desktop_integration" --uninstall "$prefix"
+    remove_legacy_entry
     refresh_menus
     echo "Removed Feishin from $prefix (settings in ~/.config/feishin-rs were kept)"
 }
@@ -32,28 +37,11 @@ warn_about_electron_package() {
     echo "Note: the Electron Feishin package is still installed; remove it with: sudo pacman -Rns feishin" >&2
 }
 
-write_desktop_file() {
-    install -d "$(dirname "$desktop_file")"
-    cat > "$desktop_file" <<EOF
-[Desktop Entry]
-Type=Application
-Name=Feishin
-Comment=Self-hosted music player
-Exec=$binary
-Icon=feishin
-Terminal=false
-Categories=AudioVideo;Audio;Player;
-StartupWMClass=feishin
-EOF
-}
-
 install_app() {
     cargo build --release --manifest-path "$rust_dir/Cargo.toml" -p feishin
     install -Dm755 "$rust_dir/target/release/feishin" "$binary"
-    for size in "${icon_sizes[@]}"; do
-        install -Dm644 "$icons_dir/${size}x${size}.png" "$(icon_path "$size")"
-    done
-    write_desktop_file
+    remove_legacy_entry
+    bash "$desktop_integration" "$prefix" "$binary"
     refresh_menus
     echo "Installed $binary"
     warn_about_electron_package
