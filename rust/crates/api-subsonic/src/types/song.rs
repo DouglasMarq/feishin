@@ -3,7 +3,7 @@ use serde::Deserialize;
 use super::lenient::{lenient_id, lenient_number, lenient_optional_id};
 use super::starred::Starred;
 
-#[derive(Debug, Default, Deserialize)]
+#[derive(Debug, Default, Clone, Deserialize)]
 #[serde(rename_all = "camelCase", default)]
 pub struct SimpleArtist {
     #[serde(deserialize_with = "lenient_id")]
@@ -11,7 +11,7 @@ pub struct SimpleArtist {
     pub name: String,
 }
 
-#[derive(Debug, Default, Deserialize)]
+#[derive(Debug, Default, Clone, Deserialize)]
 #[serde(rename_all = "camelCase", default)]
 pub struct Contributor {
     pub artist: SimpleArtist,
@@ -19,13 +19,13 @@ pub struct Contributor {
     pub sub_role: Option<String>,
 }
 
-#[derive(Debug, Default, Deserialize)]
+#[derive(Debug, Default, Clone, Deserialize)]
 #[serde(default)]
 pub struct GenreItem {
     pub name: String,
 }
 
-#[derive(Debug, Default, Deserialize)]
+#[derive(Debug, Default, Clone, Deserialize)]
 #[serde(rename_all = "camelCase", default)]
 pub struct ReplayGain {
     #[serde(deserialize_with = "lenient_number")]
@@ -38,7 +38,7 @@ pub struct ReplayGain {
     pub track_peak: Option<f64>,
 }
 
-#[derive(Debug, Default, Deserialize)]
+#[derive(Debug, Default, Clone, Deserialize)]
 #[serde(rename_all = "camelCase", default)]
 pub struct SubsonicSong {
     #[serde(deserialize_with = "lenient_id")]

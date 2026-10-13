@@ -17,6 +17,14 @@ pub(crate) fn paginate<Item>(items: Vec<Item>, paging: Paging) -> Page<Item> {
     }
 }
 
+pub(crate) fn cloned_page<Item: Clone>(page: Page<&Item>) -> Page<Item> {
+    Page {
+        items: page.items.into_iter().cloned().collect(),
+        start_index: page.start_index,
+        total_count: page.total_count,
+    }
+}
+
 pub(crate) fn subsonic_page<Item>(items: Vec<Item>, start_index: usize) -> Page<Item> {
     Page {
         items,

@@ -20,7 +20,7 @@ impl NavidromeServer {
         }
         let params: QueryParams = ids.iter().map(|id| (key, id.clone())).collect();
         let endpoint = if favorite { "star" } else { "unstar" };
-        self.subsonic::<IgnoredAny>(endpoint, &params)
+        self.changing_annotations(self.subsonic::<IgnoredAny>(endpoint, &params))
             .await
             .map(|_| ())
     }
@@ -33,7 +33,7 @@ impl NavidromeServer {
             ("id", id.to_owned()),
             ("rating", rating.min(MAX_RATING).to_string()),
         ];
-        self.subsonic::<IgnoredAny>("setRating", &params)
+        self.changing_annotations(self.subsonic::<IgnoredAny>("setRating", &params))
             .await
             .map(|_| ())
     }

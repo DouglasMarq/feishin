@@ -9,6 +9,8 @@ mod auth;
 #[cfg(test)]
 mod library;
 #[cfg(test)]
+mod list_caching;
+#[cfg(test)]
 mod lyrics;
 #[cfg(test)]
 mod play_queue;

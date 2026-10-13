@@ -5,7 +5,7 @@ use feishin_core::model::{
 };
 
 use crate::NavidromeServer;
-use crate::catalog::paging::paginate;
+use crate::catalog::paging::{cloned_page, paginate};
 use crate::features::{Features, OpenSubsonicExtension};
 use crate::http::missing_session_error;
 use crate::native::{NativeArtist, normalize_artist};
@@ -62,25 +62,14 @@ impl NavidromeServer {
         if has_native_only_artist_filters(query) {
             return Err(missing_session_error());
         }
-        let params: QueryParams = query
-            .music_folder_id
-            .clone()
-            .map(|folder| ("musicFolderId", folder))
-            .into_iter()
-            .collect();
-        let response: subsonic::Artists = self.subsonic("getArtists", &params).await?;
-        let mut artists: Vec<Artist> = response
-            .artists
-            .unwrap_or_default()
-            .index
-            .into_iter()
-            .flat_map(|index| index.artist)
-            .map(|artist| subsonic::normalize_artist(artist, self.server_id()))
-            .collect();
-        if query.order == SortOrder::Desc {
-            artists.reverse();
-        }
-        Ok(paginate(artists, paging))
+        let index = self
+            .subsonic_artist_index(query.music_folder_id.as_deref())
+            .await?;
+        let artists: Vec<&Artist> = match query.order {
+            SortOrder::Asc => index.iter().collect(),
+            SortOrder::Desc => index.iter().rev().collect(),
+        };
+        Ok(cloned_page(paginate(artists, paging)))
     }
 
     async fn native_artist(&self, id: &str, features: &Features) -> Result<ArtistDetail> {

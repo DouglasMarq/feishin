@@ -2,15 +2,27 @@ use feishin_api::Result;
 use feishin_core::model::{Artist, ArtistDetail, ArtistListQuery, Page, Paging, Song};
 
 use super::SubsonicServer;
-use super::pages::{client_page, non_empty_search, wants_favorites_only};
+use super::pages::{client_page, cloned_page, non_empty_search, wants_favorites_only};
 use crate::client::Params;
 use crate::normalize;
 use crate::sort::sort_artists;
 use crate::types::{ArtistInfo2, GetArtist, SubsonicArtist, TopSongs};
 
-fn retain_name_matches(artists: &mut Vec<SubsonicArtist>, term: &str) {
-    let lowercase_term = term.to_lowercase();
-    artists.retain(|artist| artist.name.to_lowercase().contains(&lowercase_term));
+fn matching_artists<'index>(
+    index: &'index [SubsonicArtist],
+    query: &ArtistListQuery,
+) -> Vec<&'index SubsonicArtist> {
+    let lowercase_term = non_empty_search(query.search.as_ref()).map(str::to_lowercase);
+    let favorites_only = wants_favorites_only(query.favorite);
+    index
+        .iter()
+        .filter(|artist| {
+            lowercase_term
+                .as_ref()
+                .is_none_or(|term| artist.name.to_lowercase().contains(term))
+        })
+        .filter(|artist| !favorites_only || artist.starred.is_starred())
+        .collect()
 }
 
 fn biography_or_none(artist_info: Result<ArtistInfo2>) -> Option<String> {
@@ -28,15 +40,10 @@ impl SubsonicServer {
         query: &ArtistListQuery,
         paging: Paging,
     ) -> Result<Page<Artist>> {
-        let mut artists = self.artist_index(query.music_folder_id.as_deref()).await?;
-        if let Some(term) = non_empty_search(query.search.as_ref()) {
-            retain_name_matches(&mut artists, term);
-        }
-        if wants_favorites_only(query.favorite) {
-            artists.retain(|artist| artist.starred.is_starred());
-        }
+        let index = self.artist_index(query.music_folder_id.as_deref()).await?;
+        let mut artists = matching_artists(&index, query);
         sort_artists(&mut artists, query.sort, query.order);
-        let page = client_page(artists, paging);
+        let page = cloned_page(client_page(artists, paging));
         Ok(Page {
             items: self.normalize_artists(page.items),
             start_index: page.start_index,

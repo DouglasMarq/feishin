@@ -1,3 +1,5 @@
+use std::borrow::Borrow;
+
 use feishin_core::model::{Song, SongSort, SortOrder};
 
 use super::key::{SortValue, created_day, number, order_by, text};
@@ -75,11 +77,17 @@ fn song_sort_values(song: &Song, sort: SongSort) -> Vec<SortValue> {
     }
 }
 
-pub fn sort_songs(items: &mut [Song], sort: SongSort, order: SortOrder) {
+fn song_of<Entry: Borrow<Song>>(entry: &Entry) -> &Song {
+    <Entry as Borrow<Song>>::borrow(entry)
+}
+
+pub fn sort_songs<Entry: Borrow<Song>>(items: &mut [Entry], sort: SongSort, order: SortOrder) {
     let descending = order == SortOrder::Desc;
     match sort {
         SongSort::Random => shuffle(items),
-        ordered => order_by(items, descending, |song| song_sort_values(song, ordered)),
+        ordered => order_by(items, descending, |entry| {
+            song_sort_values(song_of(entry), ordered)
+        }),
     }
 }
 

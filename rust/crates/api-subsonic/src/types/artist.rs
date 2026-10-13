@@ -4,7 +4,7 @@ use super::album::SubsonicAlbum;
 use super::lenient::{lenient_id, lenient_number, lenient_optional_id};
 use super::starred::Starred;
 
-#[derive(Debug, Default, Deserialize)]
+#[derive(Debug, Default, Clone, Deserialize)]
 #[serde(rename_all = "camelCase", default)]
 pub struct SubsonicArtist {
     #[serde(deserialize_with = "lenient_id")]

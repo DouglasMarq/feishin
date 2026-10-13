@@ -2,8 +2,10 @@ mod albums;
 mod annotations;
 mod artists;
 mod auth;
+mod cached_lists;
 mod counting;
 mod library;
+mod list_caches;
 mod music_server;
 mod pages;
 mod play_queue;
@@ -20,11 +22,13 @@ use tokio::sync::OnceCell;
 use crate::client::{Client, Params, RequestEncoding};
 use crate::extensions::Extensions;
 use crate::types::{OpenSubsonicExtensions, Ping};
+use list_caches::ListCaches;
 
 pub struct SubsonicServer {
     config: ServerConfig,
     client: Client,
     extensions: OnceCell<Extensions>,
+    list_caches: ListCaches,
 }
 
 fn is_open_subsonic(ping: &Ping) -> bool {
@@ -38,6 +42,7 @@ impl SubsonicServer {
             config,
             client,
             extensions: OnceCell::new(),
+            list_caches: ListCaches::new(),
         })
     }
 

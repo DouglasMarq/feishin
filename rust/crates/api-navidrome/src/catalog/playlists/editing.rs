@@ -14,10 +14,10 @@ impl NavidromeServer {
         name: &str,
         song_ids: &[String],
     ) -> Result<Playlist> {
-        self.native_or_subsonic(
+        self.changing_playlists(self.native_or_subsonic(
             self.native_create_playlist(name, song_ids),
             self.subsonic_create_playlist(name, song_ids),
-        )
+        ))
         .await
     }
 
@@ -29,10 +29,10 @@ impl NavidromeServer {
         if song_ids.is_empty() {
             return Ok(());
         }
-        self.native_or_subsonic(
+        self.changing_playlists(self.native_or_subsonic(
             self.native_add_tracks(playlist_id, song_ids),
             self.subsonic_add_tracks(playlist_id, song_ids),
-        )
+        ))
         .await
     }
 
@@ -44,10 +44,10 @@ impl NavidromeServer {
         if indexes.is_empty() {
             return Ok(());
         }
-        self.native_or_subsonic(
+        self.changing_playlists(self.native_or_subsonic(
             self.native_remove_tracks(playlist_id, indexes),
             self.subsonic_remove_tracks(playlist_id, indexes),
-        )
+        ))
         .await
     }
 
@@ -62,7 +62,8 @@ impl NavidromeServer {
                 .await
                 .map(|_| ())
         };
-        self.native_or_subsonic(native, subsonic).await
+        self.changing_playlists(self.native_or_subsonic(native, subsonic))
+            .await
     }
 
     async fn native_create_playlist(&self, name: &str, song_ids: &[String]) -> Result<Playlist> {

@@ -2,8 +2,8 @@ use feishin_api::Result;
 use feishin_core::model::{Album, AlbumDetail, AlbumListQuery, Page, Paging};
 
 use super::SubsonicServer;
-use super::counting::{MAX_ITEMS, count_by_paging};
-use super::pages::{client_page, non_empty_search, server_page, wants_favorites_only};
+use super::counting::{MAX_ITEMS, count_by_probing};
+use super::pages::{client_page, cloned_page, non_empty_search, server_page, wants_favorites_only};
 use super::requests::SearchWindow;
 use crate::album_list::{AlbumListType, album_list_params};
 use crate::client::Params;
@@ -61,8 +61,10 @@ impl SubsonicServer {
                 Ok(self.client_sorted_album_page(albums, query, paging))
             }
             AlbumSource::Favorites => {
-                let albums = self.starred(folder).await?.album.unwrap_or_default();
-                Ok(self.client_sorted_album_page(albums, query, paging))
+                let starred = self.starred(folder).await?;
+                let mut albums: Vec<&Album> = starred.albums.iter().collect();
+                sort_albums(&mut albums, query.sort, query.order);
+                Ok(cloned_page(client_page(albums, paging)))
             }
             AlbumSource::ServerList => self.server_album_page(query, paging).await,
         }
@@ -104,18 +106,14 @@ impl SubsonicServer {
         let folder = query.music_folder_id.as_deref();
         match AlbumSource::for_query(query) {
             AlbumSource::Search(term) => {
-                count_by_paging(0, |offset, count| async move {
+                count_by_probing(|offset, count| async move {
                     let window = SearchWindow { offset, count };
                     Ok(self.search_albums(term, window, folder).await?.len())
                 })
                 .await
             }
             AlbumSource::ArtistAlbums => Ok(self.artist_albums(&query.artist_ids).await?.len()),
-            AlbumSource::Favorites => Ok(self
-                .starred(folder)
-                .await?
-                .album
-                .map_or(0, |albums| albums.len())),
+            AlbumSource::Favorites => Ok(self.starred(folder).await?.albums.len()),
             AlbumSource::ServerList => self.count_server_album_list(query).await,
         }
     }

@@ -88,6 +88,14 @@ async fn mount_starred_and_searched_albums(mock: &MockServer) {
         .await;
     Mock::given(path("/rest/search3.view"))
         .and(query_param("query", "be"))
+        .and(query_param("albumCount", "1"))
+        .and(query_param("albumOffset", "500"))
+        .respond_with(ok(json!({ "searchResult3": {} })))
+        .expect(1)
+        .mount(mock)
+        .await;
+    Mock::given(path("/rest/search3.view"))
+        .and(query_param("query", "be"))
         .and(query_param("albumCount", "500"))
         .and(query_param("albumOffset", "0"))
         .respond_with(ok(

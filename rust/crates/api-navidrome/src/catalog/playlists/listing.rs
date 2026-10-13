@@ -2,7 +2,7 @@ use feishin_api::{ApiError, Result};
 use feishin_core::model::{Page, Paging, Playlist, Song};
 
 use crate::NavidromeServer;
-use crate::catalog::paging::paginate;
+use crate::catalog::paging::{cloned_page, paginate};
 use crate::features::Features;
 use crate::native::{NativePlaylist, NativeSong, normalize_playlist};
 use crate::query::{self, QueryParams, end_index};
@@ -67,15 +67,8 @@ impl NavidromeServer {
     }
 
     async fn subsonic_playlist_page(&self, paging: Paging) -> Result<Page<Playlist>> {
-        let response: subsonic::Playlists = self.subsonic("getPlaylists", &[]).await?;
-        let playlists = response
-            .playlists
-            .unwrap_or_default()
-            .playlist
-            .into_iter()
-            .map(|playlist| subsonic::normalize_playlist(playlist, self.server_id()))
-            .collect();
-        Ok(paginate(playlists, paging))
+        let playlists = self.subsonic_playlists().await?;
+        Ok(cloned_page(paginate(playlists.iter().collect(), paging)))
     }
 
     async fn native_playlist_songs(&self, id: &str, features: &Features) -> Result<Vec<Song>> {
