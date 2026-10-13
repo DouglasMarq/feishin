@@ -26,6 +26,7 @@ tracing.workspace = true
 tracing-subscriber = { version = "0.3.23", features = ["env-filter"] }
 
 [dev-dependencies]
+i-slint-backend-testing = "1.18"
 tempfile = "3.27.0"
 
 [build-dependencies]

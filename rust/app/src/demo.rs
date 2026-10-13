@@ -420,8 +420,14 @@ impl MusicServer for FakeServer {
             .collect())
     }
 
-    async fn similar_songs(&self, _song_id: &str, _count: usize) -> Result<Vec<Song>> {
-        Ok(Vec::new())
+    async fn similar_songs(&self, song_id: &str, count: usize) -> Result<Vec<Song>> {
+        let index = parse_index(song_id, "song-").ok_or(ApiError::NotFound)?;
+        let seed = mix(index as u64 ^ 0x51a);
+        Ok((0..count.min(self.song_count.saturating_sub(1)))
+            .map(|i| (mix(seed ^ i as u64) % self.song_count as u64) as usize)
+            .filter(|&i| i != index)
+            .map(|i| self.song_at(i))
+            .collect())
     }
 
     async fn album_list(&self, _query: &AlbumListQuery, paging: Paging) -> Result<Page<Album>> {
@@ -565,8 +571,8 @@ impl MusicServer for FakeServer {
         Ok(None)
     }
 
-    async fn lyrics(&self, _song: &Song) -> Result<Option<String>> {
-        Ok(None)
+    async fn lyrics(&self, song: &Song) -> Result<Option<String>> {
+        Ok(parse_index(&song.id, "song-").map(|index| demo_lyrics(index, song.duration_ms)))
     }
 
     fn stream_url(&self, song: &Song, _options: &StreamOptions) -> String {
@@ -576,6 +582,35 @@ impl MusicServer for FakeServer {
     fn cover_art_url(&self, cover_art_id: &str, size: Option<u32>) -> String {
         format!("demo://cover/{cover_art_id}?size={}", size.unwrap_or(0))
     }
+}
+
+/// Generated lyrics: synced LRC, or plain text for every seventh song.
+fn demo_lyrics(index: usize, duration_ms: u64) -> String {
+    let seed = mix(index as u64 ^ 0x1e7);
+    let count = (duration_ms / 4_000).clamp(4, 90);
+    (0..count)
+        .map(|n| {
+            let hash = mix(seed ^ n);
+            let text = format!(
+                "{} {} in the {}",
+                pick(&ADJECTIVES, hash),
+                pick(&NOUNS, hash >> 16).to_lowercase(),
+                pick(&NOUNS, hash >> 32).to_lowercase()
+            );
+            if index.is_multiple_of(7) {
+                text
+            } else {
+                let ms = 2_000 + n * 4_000;
+                format!(
+                    "[{:02}:{:02}.{:02}]{text}",
+                    ms / 60_000,
+                    ms / 1000 % 60,
+                    ms % 1000 / 10
+                )
+            }
+        })
+        .collect::<Vec<_>>()
+        .join("\n")
 }
 
 pub fn demo_credential() -> Credential {

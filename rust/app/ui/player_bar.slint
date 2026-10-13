@@ -1,5 +1,6 @@
 import { Theme, Icons, Format } from "theme.slint";
-import { AppState, PlayerState } from "globals.slint";
+import { AppState, PlayerState, Route } from "globals.slint";
+import { NowPlayingState, NowPlayingTab } from "now_playing.slint";
 import { Bar, Icon, IconButton } from "widgets.slint";
 
 export component PlayerBar inherits Rectangle {
@@ -17,7 +18,7 @@ export component PlayerBar inherits Rectangle {
         padding-right: 16px;
         spacing: 16px;
 
-        HorizontalLayout {
+        song-info := HorizontalLayout {
             width: 30%;
             spacing: 12px;
             alignment: start;
@@ -172,6 +173,20 @@ export component PlayerBar inherits Rectangle {
 
             IconButton {
                 y: (parent.height - self.height) / 2;
+                icon: "M12 14c1.66 0 2.99-1.34 2.99-3L15 5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z";
+                active: AppState.route == Route.now-playing && NowPlayingState.tab == NowPlayingTab.lyrics;
+                clicked => {
+                    if (self.active) {
+                        AppState.back();
+                    } else {
+                        NowPlayingState.tab = NowPlayingTab.lyrics;
+                        AppState.navigate(Route.now-playing, "");
+                    }
+                }
+            }
+
+            IconButton {
+                y: (parent.height - self.height) / 2;
                 icon: Icons.queue;
                 active: AppState.queue-open;
                 clicked => {
@@ -194,6 +209,20 @@ export component PlayerBar inherits Rectangle {
                 changed(value) => {
                     PlayerState.set-volume(value * 100);
                 }
+            }
+        }
+    }
+
+    TouchArea {
+        x: song-info.x;
+        width: song-info.width;
+        enabled: PlayerState.has-song;
+        mouse-cursor: pointer;
+        clicked => {
+            if (AppState.route == Route.now-playing) {
+                AppState.back();
+            } else {
+                AppState.navigate(Route.now-playing, "");
             }
         }
     }
