@@ -35,13 +35,8 @@ body:
           label: What local environments are you seeing the problem on?
           multiple: true
           options:
-              - Desktop Windows
-              - Desktop macOS
-              - Desktop Linux
-              - Web Firefox
-              - Web Chrome
-              - Web Safari
-              - Web Microsoft Edge
+              - Linux (Wayland)
+              - Linux (X11)
               - Other (please specify in the next field)
 
     - type: textarea
@@ -49,7 +44,7 @@ body:
       attributes:
           label: What happened?
           description: Also tell us, what did you expect to happen?
-          placeholder: Include screenshots and error logs if possible. The browser devtools can be opened using CTRL + SHIFT + I (Windows/Linux) or CMD + SHIFT + I (macOS).
+          placeholder: Include screenshots and logs if possible. Run `RUST_LOG=feishin=debug feishin` from a terminal to get a detailed log.
       validations:
           required: true
 

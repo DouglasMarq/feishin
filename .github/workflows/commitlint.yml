@@ -1,0 +1,38 @@
+name: Commitlint
+
+on: [push, pull_request]
+
+jobs:
+    commitlint:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Check out Git repository
+              uses: actions/checkout@v6
+              with:
+                  fetch-depth: 0
+
+            - name: Install Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: 22
+
+            - name: Install commitlint
+              run: npm install --no-save --no-package-lock @commitlint/cli@21.2.2 @commitlint/config-conventional@21.2.2
+
+            - name: Lint PR commits
+              if: github.event_name == 'pull_request'
+              run: npx commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }} --verbose
+
+            - name: Fetch pre-push tip (unreachable after force-push)
+              if: github.event_name == 'push' && github.event.before != '0000000000000000000000000000000000000000'
+              run: git fetch origin ${{ github.event.before }}
+
+            - name: Lint push commits
+              if: github.event_name == 'push'
+              run: |
+                  if [ "${{ github.event.before }}" = "0000000000000000000000000000000000000000" ]; then
+                    npx commitlint --last --verbose
+                  else
+                    npx commitlint --from ${{ github.event.before }} --to ${{ github.event.after }} --verbose
+                  fi

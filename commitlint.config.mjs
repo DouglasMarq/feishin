@@ -1,7 +1,6 @@
 /** @type {import('@commitlint/types').UserConfig} */
 const config = {
     extends: ['@commitlint/config-conventional'],
-    ignores: [(commit) => commit.includes('Translated using Weblate')],
     rules: {
         'scope-enum': [
             2,
@@ -16,13 +15,11 @@ const config = {
                 'player',
                 'radio',
                 'release',
-                'remote',
                 'servers',
                 'sharing',
                 'tag-editor',
                 'theme',
                 'ui',
-                'visualizer',
                 'window',
             ],
         ],

@@ -12,14 +12,14 @@ Bug fixes are likely to be accepted without discussion.
 
 ## Development environment
 
-Feishin is built and tested with Node.js `v23.11.0` and pnpm `11.5.2`. Newer versions of Node.js are also supported.
+Feishin is a Rust workspace in `rust/` (Slint UI, libmpv playback). You need a stable Rust toolchain and the `libmpv`, `fontconfig`, `xkbcommon` and `dbus` development files.
 
-Useful development commands include:
+- `cargo run -p feishin` - run the app
+- `cargo run -p feishin -- --demo` - run against a generated library, without a server
+- `cargo clippy --workspace --all-targets -- -D warnings` and `cargo test --workspace` - must pass before a pull request
+- `scripts/live-servers.sh up` then `scripts/live-servers.sh test` - API tests against Navidrome, gonic and Jellyfin containers
 
-- `pnpm run dev` - Start the electron app development environment
-- `pnpm run dev:watch` - Start the electron app development environment with main process autoreloading
-- `pnpm run package:dev` - Quick unpacked production build
-- `pnpm run build:remote` - Manually rebuild the remote app if you make changes
+Code standards are in `rust/CLAUDE.md`.
 
 ## AI Disclosure
 
@@ -42,4 +42,4 @@ Please include:
 
 ## Translations
 
-Translations are managed through [Weblate](https://hosted.weblate.org/projects/feishin/). You only need to include translation strings for the `en.json` file. Do not manually update the other language files as these are handled directly by volunteer translators.
+Translations are gettext catalogs in `rust/app/translations/<language>/LC_MESSAGES/feishin.po`. When you add or change user-visible text, wrap it in `@tr(...)` (Slint) or `tr!`/`tr_plural!` (Rust) and run `rust/scripts/translations.py` to add the new strings to every catalog. To improve a translation, edit the `msgstr` entries of your language and check the result with `rust/scripts/translations.py check <language>`.

@@ -5,17 +5,17 @@ Goal: replace the Electron app with a native Rust app that uses a fraction of th
 - Today: ~530 MB PSS / ~977 MB RSS (installed Feishin, Electron 43, measured 2026-10-13 with `scripts/measure-ram.sh`).
 - Desired (not mandatory): <= 80 MB idle, <= 150 MB with a 20k-track list open. Measured at the end of every wave to catch regressions, but missing it does not block a wave.
 
-## Status (2026-10-13)
+## Status (2026-10-14)
 
 - Wave 0: done (Slint chosen; spike numbers below).
 - Wave 1: done and in daily testing against Navidrome (login/import, Tracks, Spotify-like queue, player bar, queue panel, MPRIS, scrobble, persistence).
-- Wave 2: views done (home, albums, artists, genres, favorites, playlists + picker, search, tracks context menu/filters); needs real-library testing.
+- Wave 2: done (home, albums, artists, genres, favorites, playlists + picker, search, tracks context menu/filters). Checked on 2026-10-14 by driving the app headless (Slint MCP introspection, `--features slint/mcp`) against a Navidrome with a generated 205-song library (unicode names, compilation, multi-disc, untagged files, missing covers and years): every view loads and renders, favorite, rating, playlist creation and album playback reach the server. Context menus cannot be opened by the headless backend and were not part of that check.
 - Wave 3: done (gapless, crossfade 0-12 s with two alternating mpv players, ReplayGain, output device, bitrate, hotkeys, sleep timer, full-screen now playing, server queue sync).
 - Wave 4: Subsonic and Jellyfin backends implemented and tested against real servers in containers (`scripts/live-servers.sh up|test|down`: Navidrome latest/0.54/0.56, gonic, Jellyfin 12.2/10.10; 328 live tests, 11 backend bugs fixed).
-- Wave 5: lyrics, Discord, internet radio (server stations plus the radio-browser.info directory, live ICY titles), 32 themes from the Electron app with follow-system light/dark and accent color, folder browsing, share links. i18n not started.
+- Wave 5: lyrics, Discord, internet radio (server stations plus the radio-browser.info directory, live ICY titles), 32 themes from the Electron app with follow-system light/dark and accent color, folder browsing, share links, and i18n: Slint bundles the gettext catalogs of `app/translations` (`@tr`), Rust messages use `tr!`/`tr_plural!` over the same catalogs, and Settings > Interface > Language picks one of 39 languages or follows the system. The catalogs were seeded from the Electron app's community translations where the English text matched (about 90 strings per language); the other strings were machine translated. `scripts/translations.py` extracts new strings and checks placeholders.
 - Discover (beyond the Electron app): a view fed by YouTube Music (For you, new releases, charts per country, moods). Songs found in the server library play from the server; others play from YouTube through the external `yt-dlp` binary, resolved to a direct URL off the UI thread. Signing in uses the cookies of a browser chosen in Settings, exported by yt-dlp into `$XDG_RUNTIME_DIR/feishin-rs` and deleted after reading. YouTube tracks are never scrobbled or synced to the server.
 - Power management: screen locking and system sleep are blocked while playing, through the `org.freedesktop.ScreenSaver` and `org.freedesktop.PowerManagement` D-Bus inhibitors (the Electron app had this behind two off-by-default settings; the native app always does it).
-- Wave 7: packaging done (`packaging/`: desktop entry and metainfo for `org.jeffvli.feishin.native`, Arch `feishin-native-git` PKGBUILD, AppImage script, manual GitHub workflow). Removing the Electron app is still pending, blocked on i18n (which reuses `src/i18n/locales`) and real-library testing of the wave 2 views.
+- Wave 7: done. Packaging (`packaging/`: desktop entry and metainfo for `org.jeffvli.feishin.native`, Arch `feishin-native-git` PKGBUILD, AppImage script, manual GitHub workflow), and the Electron/TypeScript app, its build tooling and its workflows were removed on 2026-10-14 (`src/`, pnpm/electron-vite configs, Docker/web build, publish workflows). Commit messages are still checked by commitlint in the Commitlint workflow.
 - Demo mode RSS/PSS with all views: 135 / 91 MB.
 - Huge libraries (measured with `--demo --demo-songs 100000`, release build):
   - Idle RssAnon about 46 MB at both 20k and 100k songs; total RSS about 141 MB.
@@ -24,6 +24,7 @@ Goal: replace the Electron app with a native Rust app that uses a fraction of th
   - Play from a list starts after the first page (about 1-5 ms from click to playback, previously 100-425 ms at row 50000) and streams the rest in; peak RssAnon about 95-105 MB, previously 160 MB.
   - Track selection is stored as row ranges; bulk actions and add-to-playlist stream in 500-song chunks.
   - The queue is saved off the UI thread in a compact binary file (`queue.bin`, 5.6 MB per 100k songs, previously 24 MB of JSON), debounced, and also on SIGTERM. It loads after the window opens. Server queue sync is keyed on the queue revision.
+- Accessibility: the shared buttons, tabs, sidebar entries and sliders expose a role, label and default action to screen readers; one-off clickable areas in individual views do not yet.
 - Known limitations:
   - A server-side change that keeps a list's size (one add and one delete) is not detected while scrolling.
   - Quitting while a play-from-list stream takes longer than 3 s to load saves only the part loaded so far.
@@ -35,7 +36,7 @@ Goal: replace the Electron app with a native Rust app that uses a fraction of th
 - Linux only at first. Windows/macOS later, after cutover.
 - Navidrome first. Subsonic/OpenSubsonic and Jellyfin in wave 4.
 - Cut: Butterchurn visualizer, waveform, mobile layout, remote control.
-- The TypeScript app stays in the repo as reference until wave 7.
+- The TypeScript app stayed in the repo as reference until wave 7; it is in the git history before the removal commit.
 
 ## Stack
 
@@ -102,7 +103,7 @@ Decision: Slint. iced spike not needed.
 
 ### Wave 5 - Extras (~3-4 weeks)
 - Lyrics (lrclib, NetEase, Genius; synced), Discord Rich Presence, radio, similar songs, sharing.
-- i18n reusing `src/i18n/locales`, themes.
+- i18n (seeded from the Electron app's locales), themes.
 
 ### Wave 6 - Optional heavy features (decide one by one)
 - Tag editor (`lofty`), DLNA casting (`rupnp`), jukebox mode.

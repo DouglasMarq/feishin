@@ -1,8 +1,7 @@
 # Packaging the native app
 
-Everything needed to ship the Rust rewrite of Feishin on Linux. The Electron app and its
-packaging are untouched; the native app is a separate package that conflicts with it because
-both install a `feishin` binary.
+Everything needed to ship Feishin on Linux. The package conflicts with the packages of the old
+Electron app because both install a `feishin` binary.
 
 | Path | What it is |
 | --- | --- |
@@ -14,8 +13,8 @@ both install a `feishin` binary.
 
 The app id is `org.jeffvli.feishin.native`. The binary sets it as the Wayland app id and X11
 `WM_CLASS`, and reports it as the MPRIS `DesktopEntry`, so the window, the media controls and
-the menu entry are matched to the same icon. The icon name is the app id too, so the native
-app can be installed next to the Electron app's icons without clashing.
+the menu entry are matched to the same icon. The icon name is the app id too, so it does not
+clash with icons left behind by the Electron app.
 
 ## Install for the current user
 
