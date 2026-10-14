@@ -1,5 +1,7 @@
 use anyhow::Result;
-use feishin_platform::{MediaControlEvent, MediaControls, NowPlaying, PlaybackStatus};
+use feishin_platform::{
+    MediaControlEvent, MediaControls, NowPlaying, PlaybackStatus, SleepInhibitor,
+};
 
 pub trait MediaSession: Send {
     fn set_metadata(&mut self, now_playing: &NowPlaying) -> Result<()>;
@@ -33,6 +35,27 @@ impl MediaSession for Mpris {
     }
     fn set_live_stream(&mut self, live: bool) -> Result<()> {
         Ok(self.0.set_live_stream(live)?)
+    }
+}
+
+pub struct SleepInhibition(SleepInhibitor);
+
+impl SleepInhibition {
+    pub fn new() -> Result<Self> {
+        Ok(Self(SleepInhibitor::new(crate::identity::APP_NAME)?))
+    }
+}
+
+impl MediaSession for SleepInhibition {
+    fn set_metadata(&mut self, _now_playing: &NowPlaying) -> Result<()> {
+        Ok(())
+    }
+    fn set_status(&mut self, status: PlaybackStatus) -> Result<()> {
+        let playing = matches!(status, PlaybackStatus::Playing { .. });
+        Ok(self.0.set_inhibited(playing)?)
+    }
+    fn set_volume(&mut self, _volume: f64) -> Result<()> {
+        Ok(())
     }
 }
 

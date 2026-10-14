@@ -1,10 +1,12 @@
 mod color_scheme;
 mod discord;
 mod mpris;
+mod sleep_inhibitor;
 
 pub use color_scheme::{SystemColorScheme, current_color_scheme, watch_color_scheme};
 pub use discord::{DEFAULT_DISCORD_CLIENT_ID, DiscordDisplayType, DiscordOptions, DiscordPresence};
 pub use mpris::{MediaControls, MediaIdentity};
+pub use sleep_inhibitor::SleepInhibitor;
 
 #[derive(Debug, thiserror::Error)]
 pub enum PlatformError {
@@ -14,6 +16,8 @@ pub enum PlatformError {
     Discord(String),
     #[error("desktop settings error: {0}")]
     DesktopSettings(String),
+    #[error("sleep inhibitor error: {0}")]
+    SleepInhibitor(String),
 }
 
 pub type Result<T> = std::result::Result<T, PlatformError>;

@@ -16,7 +16,7 @@ use crate::covers::{CachedCovers, CoverProvider, DemoCovers};
 use crate::demo::{DemoLibrary, FakeServer, demo_credential};
 use crate::discord::DiscordSession;
 use crate::discover::{DemoDiscover, DiscoverSource, YouTubeMusicSource};
-use crate::media::{MediaSession, MediaSessions, Mpris, NoMediaSession};
+use crate::media::{MediaSession, MediaSessions, Mpris, NoMediaSession, SleepInhibition};
 use crate::session::Session;
 use crate::sleep_timer::{self, SleepTimerUi};
 use crate::store::{JsonStore, Store, SystemStore};
@@ -96,6 +96,13 @@ fn mpris_session(commands: &mpsc::UnboundedSender<Command>) -> Option<Box<dyn Me
         .map(|mpris| Box::new(mpris) as Box<dyn MediaSession>)
 }
 
+fn sleep_inhibition() -> Option<Box<dyn MediaSession>> {
+    SleepInhibition::new()
+        .inspect_err(|error| tracing::warn!("sleep inhibition unavailable: {error:#}"))
+        .ok()
+        .map(|inhibition| Box::new(inhibition) as Box<dyn MediaSession>)
+}
+
 fn discord_session(settings: &Settings) -> Option<Box<dyn MediaSession>> {
     let client_id = settings
         .integrations
@@ -123,6 +130,9 @@ fn media_session(
     let mut sessions: Vec<Box<dyn MediaSession>> = Vec::new();
     if mode == Mode::Real && settings.integrations.mpris {
         sessions.extend(mpris_session(commands));
+    }
+    if mode == Mode::Real {
+        sessions.extend(sleep_inhibition());
     }
     if settings.integrations.discord_rich_presence {
         sessions.extend(discord_session(settings));
