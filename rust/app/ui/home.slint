@@ -102,7 +102,7 @@ component AlbumCard inherits Rectangle {
             }
 
             TooltipAnchor {
-                text: "Play";
+                text: @tr("Play");
                 hovered: play-touch.has-hover;
             }
 
@@ -198,7 +198,7 @@ component ShelfView inherits VerticalLayout {
         if root.shelf.refreshable: IconButton {
             icon: HomeIcons.refresh;
             enabled: !root.shelf.loading;
-            tooltip: "Refresh";
+            tooltip: @tr("Refresh");
             clicked => {
                 HomeState.refresh(root.index);
             }
@@ -207,7 +207,7 @@ component ShelfView inherits VerticalLayout {
         IconButton {
             icon: HomeIcons.left;
             enabled: strip.content-x < 0;
-            tooltip: "Scroll left";
+            tooltip: @tr("Scroll left");
             clicked => {
                 strip.content-x = min(0px, strip.content-x + strip.width * 0.8);
             }
@@ -216,7 +216,7 @@ component ShelfView inherits VerticalLayout {
         IconButton {
             icon: HomeIcons.right;
             enabled: -strip.content-x < root.max-scroll;
-            tooltip: "Scroll right";
+            tooltip: @tr("Scroll right");
             clicked => {
                 strip.content-x = max(-root.max-scroll, strip.content-x - strip.width * 0.8);
             }
@@ -251,7 +251,7 @@ component ShelfView inherits VerticalLayout {
 
         if !root.shelf.loading && root.shelf.albums.length == 0: Text {
             x: 0;
-            text: "No albums";
+            text: @tr("No albums");
             color: Theme.muted;
             vertical-alignment: center;
         }
@@ -277,7 +277,7 @@ export component HomeView inherits Rectangle {
             spacing: 28px;
 
             Text {
-                text: "Home";
+                text: @tr("Home");
                 font-size: 24px;
                 font-weight: 700;
                 color: Theme.foreground;

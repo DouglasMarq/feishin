@@ -44,7 +44,7 @@ export component QueuePanel inherits Rectangle {
             spacing: 8px;
 
             Text {
-                text: "Queue";
+                text: @tr("Queue");
                 font-size: 16px;
                 font-weight: 700;
                 color: Theme.foreground;
@@ -126,7 +126,7 @@ export component QueuePanel inherits Rectangle {
                             y: (parent.height - self.height) / 2;
                             icon: Icons.close;
                             icon-size: 16px;
-                            tooltip: "Remove from queue";
+                            tooltip: @tr("Remove from queue");
                             width: 28px;
                             height: 28px;
                             opacity: touch.has-hover ? 1 : 0;

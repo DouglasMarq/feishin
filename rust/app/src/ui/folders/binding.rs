@@ -60,7 +60,7 @@ fn show_song_page(
         Err(error) => {
             let current = with_model(window, |model| model.song_page_failed(request));
             if current == Some(true) {
-                show_status(window, &format!("Could not load the folder: {error}"));
+                show_status(window, &tr!("Could not load the folder: {}", error));
             }
         }
     }

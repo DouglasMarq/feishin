@@ -5,8 +5,6 @@ use slint::ComponentHandle;
 use super::{AppWindow, Context, ShareKind, ShareState, on_ui, show_status, tracks};
 
 const NOT_AUTHORIZED_CODE: i32 = 50;
-pub const SELECTION_NOT_LOADED: &str =
-    "Only loaded tracks can be shared: select fewer tracks or scroll through them first";
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 struct ShareRequest {
@@ -47,10 +45,12 @@ pub fn show_availability(window: &AppWindow, server: &dyn MusicServer) {
     state.set_unavailable_reason(unavailable_reason(server.config().server_type).into());
 }
 
-fn unavailable_reason(server_type: ServerType) -> &'static str {
+fn unavailable_reason(server_type: ServerType) -> String {
     match server_type {
-        ServerType::Jellyfin => "Jellyfin has no public share links",
-        ServerType::Navidrome | ServerType::Subsonic => "this server has no public share links",
+        ServerType::Jellyfin => tr!("Jellyfin has no public share links"),
+        ServerType::Navidrome | ServerType::Subsonic => {
+            tr!("this server has no public share links")
+        }
     }
 }
 
@@ -65,7 +65,12 @@ fn share_selected_tracks(window: &AppWindow, ctx: &Context) {
                 description: None,
             },
         ),
-        None => show_status(window, SELECTION_NOT_LOADED),
+        None => show_status(
+            window,
+            &tr!(
+                "Only loaded tracks can be shared: select fewer tracks or scroll through them first"
+            ),
+        ),
     }
 }
 
@@ -75,12 +80,12 @@ fn start_share(window: &AppWindow, ctx: &Context, request: ShareRequest) {
         return;
     }
     let Some(server) = ctx.session.get() else {
-        show_status(window, "Not connected to a server");
+        show_status(window, &tr!("Not connected to a server"));
         return;
     };
     if !server.can_share() {
         let reason = unavailable_reason(server.config().server_type);
-        show_status(window, &format!("Cannot share: {reason}"));
+        show_status(window, &tr!("Cannot share: {}", reason));
         return;
     }
     state.set_busy(true);
@@ -99,7 +104,7 @@ fn finish_share(window: &AppWindow, result: Result<Share, ApiError>) {
             copy_link(window, &share.url);
             show_status(
                 window,
-                &format!("Share link copied to the clipboard: {}", share.url),
+                &tr!("Share link copied to the clipboard: {}", share.url),
             );
         }
         Err(error) => show_status(window, &failure_message(&error)),
@@ -117,9 +122,9 @@ fn failure_message(error: &ApiError) -> String {
         ApiError::Server {
             code: NOT_AUTHORIZED_CODE,
             ..
-        } => "Your user is not allowed to share on this server".into(),
-        ApiError::Unsupported(reason) => format!("Could not create a share link: {reason}"),
-        other => format!("Could not create a share link: {other}"),
+        } => tr!("Your user is not allowed to share on this server"),
+        ApiError::Unsupported(reason) => tr!("Could not create a share link: {}", reason),
+        other => tr!("Could not create a share link: {}", other),
     }
 }
 

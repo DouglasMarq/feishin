@@ -61,21 +61,21 @@ component PlaylistRowView inherits Rectangle {
         ContextMenuArea {
             Menu {
                 MenuItem {
-                    title: "Play";
+                    title: @tr("Play");
                     activated => {
                         PlaylistsState.play(root.item.id, PlaylistPlayMode.now);
                     }
                 }
 
                 MenuItem {
-                    title: "Play next";
+                    title: @tr("Play next");
                     activated => {
                         PlaylistsState.play(root.item.id, PlaylistPlayMode.next);
                     }
                 }
 
                 MenuItem {
-                    title: "Add to queue";
+                    title: @tr("Add to queue");
                     activated => {
                         PlaylistsState.play(root.item.id, PlaylistPlayMode.last);
                     }
@@ -92,7 +92,7 @@ component PlaylistRowView inherits Rectangle {
                 MenuSeparator { }
 
                 MenuItem {
-                    title: "Delete";
+                    title: @tr("Delete");
                     activated => {
                         PlaylistsState.delete-name = root.item.name;
                         PlaylistsState.delete-id = root.item.id;
@@ -157,7 +157,7 @@ component PlaylistRowView inherits Rectangle {
                     if touch.has-hover: IconButton {
                         y: (parent.height - self.height) / 2;
                         icon: Icons.play;
-                        tooltip: "Play";
+                        tooltip: @tr("Play");
                         clicked => {
                             PlaylistsState.play(root.item.id, PlaylistPlayMode.now);
                         }
@@ -167,7 +167,7 @@ component PlaylistRowView inherits Rectangle {
                         y: (parent.height - self.height) / 2;
                         icon: Icons.close;
                         icon-size: 18px;
-                        tooltip: "Delete playlist";
+                        tooltip: @tr("Delete playlist");
                         clicked => {
                             PlaylistsState.delete-name = root.item.name;
                             PlaylistsState.delete-id = root.item.id;
@@ -218,7 +218,7 @@ export component PlaylistsView inherits Rectangle {
             spacing: 12px;
 
             Text {
-                text: "Playlists";
+                text: @tr("Playlists");
                 font-size: 24px;
                 font-weight: 700;
                 color: Theme.foreground;
@@ -236,7 +236,7 @@ export component PlaylistsView inherits Rectangle {
             }
 
             Button {
-                text: "New playlist";
+                text: @tr("New playlist");
                 primary: true;
                 clicked => {
                     PlaylistsState.creating = true;
@@ -257,7 +257,7 @@ export component PlaylistsView inherits Rectangle {
                 }
 
                 Header {
-                    text: "Name";
+                    text: @tr("Name");
                     inset: 0;
                     horizontal-stretch: 1;
                     min-width: 120px;
@@ -265,17 +265,17 @@ export component PlaylistsView inherits Rectangle {
 
                 Header {
                     width: 80px;
-                    text: "Songs";
+                    text: @tr("Songs");
                 }
 
                 Header {
                     width: 90px;
-                    text: "Duration";
+                    text: @tr("Duration");
                 }
 
                 Header {
                     width: 160px;
-                    text: "Owner";
+                    text: @tr("Owner");
                 }
 
                 Rectangle {
@@ -304,7 +304,7 @@ export component PlaylistsView inherits Rectangle {
             }
 
             if !PlaylistsState.loading && PlaylistsState.rows.length == 0: Text {
-                text: "No playlists yet";
+                text: @tr("No playlists yet");
                 color: Theme.muted;
                 horizontal-alignment: center;
                 vertical-alignment: center;
@@ -323,7 +323,7 @@ export component PlaylistsView inherits Rectangle {
     }
 
     if PlaylistsState.delete-id != "": Modal {
-        title: "Delete playlist";
+        title: @tr("Delete playlist");
         init => {
             self.focus();
         }
@@ -332,13 +332,13 @@ export component PlaylistsView inherits Rectangle {
         }
 
         Text {
-            text: "Delete \"" + PlaylistsState.delete-name + "\"? This cannot be undone.";
+            text: @tr("Delete \"{}\"? This cannot be undone.", PlaylistsState.delete-name);
             color: Theme.foreground;
             wrap: word-wrap;
         }
 
         DialogButtons {
-            confirm-text: PlaylistsState.busy ? "Deleting..." : "Delete";
+            confirm-text: PlaylistsState.busy ? @tr("Deleting...") : @tr("Delete");
             confirm-enabled: !PlaylistsState.busy;
             danger: true;
             cancel => {

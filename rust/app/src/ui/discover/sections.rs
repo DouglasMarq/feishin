@@ -45,12 +45,12 @@ impl Section {
         }
     }
 
-    pub fn name(self) -> &'static str {
+    pub fn load_error(self, error: &str) -> String {
         match self {
-            Self::ForYou => "your home",
-            Self::NewReleases => "new releases",
-            Self::Charts => "the charts",
-            Self::Moods => "moods and genres",
+            Self::ForYou => tr!("Could not load your home: {}", error),
+            Self::NewReleases => tr!("Could not load new releases: {}", error),
+            Self::Charts => tr!("Could not load the charts: {}", error),
+            Self::Moods => tr!("Could not load moods and genres: {}", error),
         }
     }
 }

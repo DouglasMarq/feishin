@@ -110,7 +110,11 @@ impl Page {
         }
         match result {
             Ok(songs) => {
-                self.subtitle = format!("{} songs on YouTube Music", songs.len());
+                self.subtitle = tr_plural!(
+                    "{n} song on YouTube Music",
+                    "{n} songs on YouTube Music",
+                    songs.len()
+                );
                 self.songs = songs;
             }
             Err(error) => self.error = Some(error),

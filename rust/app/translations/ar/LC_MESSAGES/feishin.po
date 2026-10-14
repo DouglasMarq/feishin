@@ -1,0 +1,1608 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: ar\n"
+"Plural-Forms: nplurals=6; plural=(n==0) ? 0 : (n==1) ? 1 : (n==2) ? 2 : (n%100>=3 && n%100<=10) ? 3 : (n%100>=11) ? 4 : 5;\n"
+
+
+msgid "\"{}\" plays next"
+msgstr "\"{}\" يُشغَّل تاليًا"
+
+msgid "\"{}\" will play next"
+msgstr "سيُشغَّل \"{}\" تاليًا"
+
+msgid "1 star"
+msgstr "نجمة واحدة"
+
+msgid "2 stars"
+msgstr "نجمتان"
+
+msgid "3 stars"
+msgstr "3 نجوم"
+
+msgid "4 stars"
+msgstr "4 نجوم"
+
+msgid "5 stars"
+msgstr "5 نجوم"
+
+msgid "About {}"
+msgstr "نبذة عن {}"
+
+msgid "Accent color"
+msgstr "لون التمييز"
+
+msgid "Accent color not changed: {}."
+msgstr "لم يتغير لون التمييز: {}."
+
+msgid "Accent color {}"
+msgstr "لون التمييز {}"
+
+msgid "Accent color {} (selected)"
+msgstr "لون التمييز {} (محدد)"
+
+msgid "Accent color {} (theme accent in use)"
+msgstr "لون التمييز {} (لون السمة مستخدم)"
+
+msgid "Add a station by its stream URL"
+msgstr "إضافة محطة عبر رابط البث"
+
+msgid "Add all songs to the queue"
+msgstr "إضافة كل الأغاني إلى قائمة الانتظار"
+
+msgid "Add server"
+msgstr "إضافة خادم"
+
+msgid "Add station"
+msgstr "إضافة محطة"
+
+msgid "Add this link to the end of the queue"
+msgstr "إضافة هذا الرابط إلى نهاية قائمة الانتظار"
+
+msgid "Add this station to the server for every client"
+msgstr "إضافة هذه المحطة إلى الخادم لجميع العملاء"
+
+msgid "Add to favorites"
+msgstr "إضافة إلى المفضلة"
+
+msgid "Add to playlist"
+msgstr "إضافة إلى قائمة تشغيل"
+
+msgid "Add to queue"
+msgstr "إضافة إلى قائمة الانتظار"
+
+msgid "Add to the server's stations"
+msgstr "إضافة إلى محطات الخادم"
+
+msgid "Add {n} song to playlist"
+msgid_plural "Add {n} songs to playlist"
+msgstr[0] "إضافة {n} أغنية إلى قائمة التشغيل"
+msgstr[1] "إضافة أغنية واحدة إلى قائمة التشغيل"
+msgstr[2] "إضافة أغنيتين إلى قائمة التشغيل"
+msgstr[3] "إضافة {n} أغانٍ إلى قائمة التشغيل"
+msgstr[4] "إضافة {n} أغنية إلى قائمة التشغيل"
+msgstr[5] "إضافة {n} أغنية إلى قائمة التشغيل"
+
+msgid "Add {} to the queue"
+msgstr "إضافة {} إلى قائمة الانتظار"
+
+msgid "Added \"{}\" to the queue"
+msgstr "تمت إضافة \"{}\" إلى قائمة الانتظار"
+
+msgid "Added only {n} song to \"{}\": {}"
+msgid_plural "Added only {n} songs to \"{}\": {}"
+msgstr[0] "تمت إضافة {n} أغنية فقط إلى \"{}\": {}"
+msgstr[1] "تمت إضافة أغنية واحدة فقط إلى \"{}\": {}"
+msgstr[2] "تمت إضافة أغنيتان فقط إلى \"{}\": {}"
+msgstr[3] "تمت إضافة {n} أغانٍ فقط إلى \"{}\": {}"
+msgstr[4] "تمت إضافة {n} أغنية فقط إلى \"{}\": {}"
+msgstr[5] "تمت إضافة {n} أغنية فقط إلى \"{}\": {}"
+
+msgid "Added {n} song from \"{}\" to the queue"
+msgid_plural "Added {n} songs from \"{}\" to the queue"
+msgstr[0] "تمت إضافة {n} أغنية من \"{}\" إلى قائمة الانتظار"
+msgstr[1] "تمت إضافة أغنية واحدة من \"{}\" إلى قائمة الانتظار"
+msgstr[2] "تمت إضافة أغنيتان من \"{}\" إلى قائمة الانتظار"
+msgstr[3] "تمت إضافة {n} أغانٍ من \"{}\" إلى قائمة الانتظار"
+msgstr[4] "تمت إضافة {n} أغنية من \"{}\" إلى قائمة الانتظار"
+msgstr[5] "تمت إضافة {n} أغنية من \"{}\" إلى قائمة الانتظار"
+
+msgid "Added {n} song to \"{}\""
+msgid_plural "Added {n} songs to \"{}\""
+msgstr[0] "تمت إضافة {n} أغنية إلى \"{}\""
+msgstr[1] "تمت إضافة أغنية واحدة إلى \"{}\""
+msgstr[2] "تمت إضافة أغنيتان إلى \"{}\""
+msgstr[3] "تمت إضافة {n} أغانٍ إلى \"{}\""
+msgstr[4] "تمت إضافة {n} أغنية إلى \"{}\""
+msgstr[5] "تمت إضافة {n} أغنية إلى \"{}\""
+
+msgid "Added {n} song to the queue"
+msgid_plural "Added {n} songs to the queue"
+msgstr[0] "تمت إضافة {n} أغنية إلى قائمة الانتظار"
+msgstr[1] "تمت إضافة أغنية واحدة إلى قائمة الانتظار"
+msgstr[2] "تمت إضافة أغنيتان إلى قائمة الانتظار"
+msgstr[3] "تمت إضافة {n} أغانٍ إلى قائمة الانتظار"
+msgstr[4] "تمت إضافة {n} أغنية إلى قائمة الانتظار"
+msgstr[5] "تمت إضافة {n} أغنية إلى قائمة الانتظار"
+
+msgid "Adding to \"{}\": {} of {n} song"
+msgid_plural "Adding to \"{}\": {} of {n} songs"
+msgstr[0] "جارٍ الإضافة إلى \"{}\": {} من {n} أغنية"
+msgstr[1] "جارٍ الإضافة إلى \"{}\": {} من أغنية واحدة"
+msgstr[2] "جارٍ الإضافة إلى \"{}\": {} من أغنيتين"
+msgstr[3] "جارٍ الإضافة إلى \"{}\": {} من {n} أغانٍ"
+msgstr[4] "جارٍ الإضافة إلى \"{}\": {} من {n} أغنية"
+msgstr[5] "جارٍ الإضافة إلى \"{}\": {} من {n} أغنية"
+
+msgid "ALBUM"
+msgstr "ألبوم"
+
+msgid "Album"
+msgstr "ألبوم"
+
+msgid "album"
+msgstr "الألبوم"
+
+msgid "Album artist"
+msgstr "فنان الألبوم"
+
+msgid "Album count"
+msgstr "عدد الألبومات"
+
+msgid "Album not found"
+msgstr "لم يُعثر على الألبوم"
+
+msgid "Albums"
+msgstr "الألبومات"
+
+msgid "All genres"
+msgstr "كل الأنواع"
+
+msgid "Already at the end"
+msgstr "في النهاية بالفعل"
+
+msgid "Already at the start"
+msgstr "في البداية بالفعل"
+
+msgid "Already in \"{}\""
+msgstr "موجود بالفعل في \"{}\""
+
+msgid "Already on the server"
+msgstr "موجودة بالفعل على الخادم"
+
+msgid "Amber"
+msgstr "كهرماني"
+
+msgid "Appearance"
+msgstr "المظهر"
+
+msgid "ARTIST"
+msgstr "فنان"
+
+msgid "Artist"
+msgstr "فنان"
+
+msgid "Artists"
+msgstr "الفنانون"
+
+msgid "Ask the server to transcode down to this bitrate. Applies from the next song."
+msgstr "يطلب من الخادم تحويل الترميز إلى معدل البت هذا كحد أقصى. يُطبَّق بدءًا من الأغنية التالية."
+
+msgid "Audio device"
+msgstr "جهاز الصوت"
+
+msgid "Automatic ({})"
+msgstr "تلقائي ({})"
+
+msgid "Back"
+msgstr "رجوع"
+
+msgid "Blue"
+msgstr "أزرق"
+
+msgid "by {}"
+msgstr "بواسطة {}"
+
+msgid "Cancel"
+msgstr "إلغاء"
+
+msgid "Cancel timer"
+msgstr "إلغاء المؤقت"
+
+msgid "Cannot share: {}"
+msgstr "تعذرت المشاركة: {}"
+
+msgid "Chart country"
+msgstr "بلد قوائم الصدارة"
+
+msgid "Charts"
+msgstr "قوائم الصدارة"
+
+msgid "Choose a browser under Settings, YouTube to sign in for a personalized home"
+msgstr "اختر متصفحًا في الإعدادات، قسم YouTube، لتسجيل الدخول والحصول على صفحة رئيسية مخصصة"
+
+msgid "Clear"
+msgstr "مسح"
+
+msgid "Clear filters"
+msgstr "مسح عوامل التصفية"
+
+msgid "Clear rating"
+msgstr "مسح التقييم"
+
+msgid "Clear the favorites and genre filters"
+msgstr "مسح تصفية المفضلة والأنواع"
+
+msgid "Close"
+msgstr "إغلاق"
+
+msgid "Close now playing"
+msgstr "إغلاق شاشة التشغيل الحالي"
+
+msgid "Close without saving"
+msgstr "إغلاق دون حفظ"
+
+msgid "Colors used across the whole app."
+msgstr "الألوان المستخدمة في التطبيق بأكمله."
+
+msgid "Connect to your music server"
+msgstr "اتصل بخادم الموسيقى الخاص بك"
+
+msgid "Connecting..."
+msgstr "جارٍ الاتصال..."
+
+msgid "Could not add to \"{}\": {}"
+msgstr "تعذرت الإضافة إلى \"{}\": {}"
+
+msgid "Could not add {} to the server"
+msgstr "تعذرت إضافة {} إلى الخادم"
+
+msgid "Could not create a share link: {}"
+msgstr "تعذر إنشاء رابط مشاركة: {}"
+
+msgid "Could not create the playlist: {}"
+msgstr "تعذر إنشاء قائمة التشغيل: {}"
+
+msgid "Could not delete the playlist: {}"
+msgstr "تعذر حذف قائمة التشغيل: {}"
+
+msgid "Could not delete the station"
+msgstr "تعذر حذف المحطة"
+
+msgid "Could not load albums: {}"
+msgstr "تعذر تحميل الألبومات: {}"
+
+msgid "Could not load artists: {}"
+msgstr "تعذر تحميل الفنانين: {}"
+
+msgid "Could not load Discover: {}"
+msgstr "تعذر تحميل صفحة الاستكشاف: {}"
+
+msgid "Could not load genres: {}"
+msgstr "تعذر تحميل الأنواع: {}"
+
+msgid "Could not load it from YouTube Music: {}"
+msgstr "تعذر تحميله من YouTube Music: {}"
+
+msgid "Could not load lyrics"
+msgstr "تعذر تحميل كلمات الأغنية"
+
+msgid "Could not load moods and genres: {}"
+msgstr "تعذر تحميل الأمزجة والأنواع: {}"
+
+msgid "Could not load more results: {}"
+msgstr "تعذر تحميل المزيد من النتائج: {}"
+
+msgid "Could not load new releases: {}"
+msgstr "تعذر تحميل الإصدارات الجديدة: {}"
+
+msgid "Could not load playlists: {}"
+msgstr "تعذر تحميل قوائم التشغيل: {}"
+
+msgid "Could not load the album: {}"
+msgstr "تعذر تحميل الألبوم: {}"
+
+msgid "Could not load the artist: {}"
+msgstr "تعذر تحميل الفنان: {}"
+
+msgid "Could not load the charts: {}"
+msgstr "تعذر تحميل قوائم الصدارة: {}"
+
+msgid "Could not load the folder: {}"
+msgstr "تعذر تحميل المجلد: {}"
+
+msgid "Could not load the list: {}"
+msgstr "تعذر تحميل القائمة: {}"
+
+msgid "Could not load the playlist: {}"
+msgstr "تعذر تحميل قائمة التشغيل: {}"
+
+msgid "Could not load the radio stations: {}"
+msgstr "تعذر تحميل محطات الراديو: {}"
+
+msgid "Could not load the selection: {}"
+msgstr "تعذر تحميل التحديد: {}"
+
+msgid "Could not load this page: {}"
+msgstr "تعذر تحميل هذه الصفحة: {}"
+
+msgid "Could not load tracks: {}"
+msgstr "تعذر تحميل المقاطع: {}"
+
+msgid "Could not load your home: {}"
+msgstr "تعذر تحميل صفحتك الرئيسية: {}"
+
+msgid "Could not open the folder: {}"
+msgstr "تعذر فتح المجلد: {}"
+
+msgid "Could not open YouTube Music: {}"
+msgstr "تعذر فتح YouTube Music: {}"
+
+msgid "Could not play \"{}\" from YouTube: {}"
+msgstr "تعذر تشغيل \"{}\" من YouTube: {}"
+
+msgid "Could not play album: {}"
+msgstr "تعذر تشغيل الألبوم: {}"
+
+msgid "Could not play from YouTube: {}"
+msgstr "تعذر التشغيل من YouTube: {}"
+
+msgid "Could not play the album: {}"
+msgstr "تعذر تشغيل الألبوم: {}"
+
+msgid "Could not remove songs: {}"
+msgstr "تعذرت إزالة الأغاني: {}"
+
+msgid "Could not rescan the library: {}"
+msgstr "تعذرت إعادة فحص المكتبة: {}"
+
+msgid "Could not set the rating: {}"
+msgstr "تعذر تعيين التقييم: {}"
+
+msgid "Could not sign in to YouTube Music ({}). Showing general picks instead."
+msgstr "تعذر تسجيل الدخول إلى YouTube Music ({}). يتم عرض اختيارات عامة بدلًا من ذلك."
+
+msgid "Could not switch server: {}"
+msgstr "تعذر تبديل الخادم: {}"
+
+msgid "Could not update favorite: {}"
+msgstr "تعذر تحديث التفضيل: {}"
+
+msgid "Could not update favorites: {}"
+msgstr "تعذر تحديث المفضلة: {}"
+
+msgid "Could not update rating: {}"
+msgstr "تعذر تحديث التقييم: {}"
+
+msgid "Could not update the favorite: {}"
+msgstr "تعذر تحديث التفضيل: {}"
+
+msgid "Country"
+msgstr "البلد"
+
+msgid "Create"
+msgstr "إنشاء"
+
+msgid "Created \"{}\" with only {n} song: {}"
+msgid_plural "Created \"{}\" with only {n} songs: {}"
+msgstr[0] "تم إنشاء \"{}\" مع {n} أغنية فقط: {}"
+msgstr[1] "تم إنشاء \"{}\" مع أغنية واحدة فقط: {}"
+msgstr[2] "تم إنشاء \"{}\" مع أغنيتين فقط: {}"
+msgstr[3] "تم إنشاء \"{}\" مع {n} أغانٍ فقط: {}"
+msgstr[4] "تم إنشاء \"{}\" مع {n} أغنية فقط: {}"
+msgstr[5] "تم إنشاء \"{}\" مع {n} أغنية فقط: {}"
+
+msgid "Created \"{}\" with {n} song"
+msgid_plural "Created \"{}\" with {n} songs"
+msgstr[0] "تم إنشاء \"{}\" مع {n} أغنية"
+msgstr[1] "تم إنشاء \"{}\" مع أغنية واحدة"
+msgstr[2] "تم إنشاء \"{}\" مع أغنيتين"
+msgstr[3] "تم إنشاء \"{}\" مع {n} أغانٍ"
+msgstr[4] "تم إنشاء \"{}\" مع {n} أغنية"
+msgstr[5] "تم إنشاء \"{}\" مع {n} أغنية"
+
+msgid "Created playlist \"{}\""
+msgstr "تم إنشاء قائمة التشغيل \"{}\""
+
+msgid "Creating a share link..."
+msgstr "جارٍ إنشاء رابط مشاركة..."
+
+msgid "Creating..."
+msgstr "جارٍ الإنشاء..."
+
+msgid "Crossfade"
+msgstr "التلاشي المتداخل"
+
+msgid "Crossfade could not be changed: {}"
+msgstr "تعذر تغيير التلاشي المتداخل: {}"
+
+msgid "Crossfade: {}"
+msgstr "التلاشي المتداخل: {}"
+
+msgid "Current"
+msgstr "الحالي"
+
+msgid "Custom accent color: {} (theme accent in use)"
+msgstr "لون تمييز مخصص: {} (لون السمة مستخدم)"
+
+msgid "Custom accent color: {}, press Enter to apply"
+msgstr "لون تمييز مخصص: {}، اضغط Enter للتطبيق"
+
+msgid "Dark theme"
+msgstr "السمة الداكنة"
+
+msgid "DARK THEMES"
+msgstr "السمات الداكنة"
+
+msgid "Default country for the Discover charts. Automatic follows your system region."
+msgstr "البلد الافتراضي لقوائم الصدارة في الاستكشاف. الوضع التلقائي يتبع منطقة نظامك."
+
+msgid "Default Dark"
+msgstr "داكن افتراضي"
+
+msgid "Default Light"
+msgstr "فاتح افتراضي"
+
+msgid "Delete"
+msgstr "حذف"
+
+msgid "Delete \"{}\" from the server? This cannot be undone."
+msgstr "هل تريد حذف \"{}\" من الخادم؟ لا يمكن التراجع عن ذلك."
+
+msgid "Delete \"{}\"? This cannot be undone."
+msgstr "هل تريد حذف \"{}\"؟ لا يمكن التراجع عن ذلك."
+
+msgid "Delete playlist"
+msgstr "حذف قائمة التشغيل"
+
+msgid "Delete station"
+msgstr "حذف المحطة"
+
+msgid "Delete {} from the server"
+msgstr "حذف {} من الخادم"
+
+msgid "Deleted playlist \"{}\""
+msgstr "تم حذف قائمة التشغيل \"{}\""
+
+msgid "Deleting..."
+msgstr "جارٍ الحذف..."
+
+msgid "Demo mode: these picks are made up and play from your demo library"
+msgstr "الوضع التجريبي: هذه الاختيارات وهمية وتُشغَّل من مكتبتك التجريبية"
+
+msgid "Directory"
+msgstr "الدليل"
+
+msgid "Disc {}"
+msgstr "القرص {}"
+
+msgid "Discord Rich Presence"
+msgstr "Discord Rich Presence"
+
+msgid "Discover"
+msgstr "استكشاف"
+
+msgid "Discover is open"
+msgstr "الاستكشاف مفتوح"
+
+msgid "Discover new music on YouTube Music"
+msgstr "اكتشف موسيقى جديدة على YouTube Music"
+
+msgid "Duration"
+msgstr "مدة"
+
+msgid "Edit station"
+msgstr "تعديل المحطة"
+
+msgid "Edit {}"
+msgstr "تعديل {}"
+
+msgid "End of current track"
+msgstr "نهاية المقطع الحالي"
+
+msgid "End of track"
+msgstr "نهاية المقطع"
+
+msgid "Enter a name for the station"
+msgstr "أدخل اسمًا للمحطة"
+
+msgid "Enter a name, country or tag to search"
+msgstr "أدخل اسمًا أو بلدًا أو وسمًا للبحث"
+
+msgid "Enter a stream URL that starts with http:// or https://"
+msgstr "أدخل رابط بث يبدأ بـ http:// أو https://"
+
+msgid "Enter the server URL"
+msgstr "أدخل رابط الخادم"
+
+msgid "Fade the end of each song into the next one. Off keeps gapless playback."
+msgstr "يمزج نهاية كل أغنية مع بداية الأغنية التالية. الإيقاف يحافظ على التشغيل دون فواصل."
+
+msgid "Favorite"
+msgstr "مفضلة"
+
+msgid "Favorited"
+msgstr "مفضل"
+
+msgid "Favorites"
+msgstr "المفضلة"
+
+msgid "Favorites only: off"
+msgstr "المفضلة فقط: متوقف"
+
+msgid "Favorites only: on"
+msgstr "المفضلة فقط: مفعّل"
+
+msgid "Filter"
+msgstr "تصفية"
+
+msgid "Filter playlists"
+msgstr "تصفية قوائم التشغيل"
+
+msgid "Find stations by name, country or tag"
+msgstr "ابحث عن محطات بالاسم أو البلد أو الوسم"
+
+msgid "Find stations in the radio-browser.info directory"
+msgstr "ابحث عن محطات في دليل radio-browser.info"
+
+msgid "Folder"
+msgstr "مجلد"
+
+msgid "Folders"
+msgstr "مجلدات"
+
+msgid "Follow current song"
+msgstr "تتبّع الأغنية الحالية"
+
+msgid "Follow system color scheme"
+msgstr "اتباع نظام ألوان النظام"
+
+msgid "For you"
+msgstr "لك"
+
+msgid "Forget this server?"
+msgstr "هل تريد نسيان هذا الخادم؟"
+
+msgid "Format the server should transcode to. Applies from the next song."
+msgstr "الصيغة التي يحوّل الخادم الترميز إليها. يُطبَّق بدءًا من الأغنية التالية."
+
+msgid "Found {n} server in Feishin but it has no usable saved login"
+msgid_plural "Found {n} servers in Feishin but none with a usable saved login"
+msgstr[0] "تم العثور على {n} خادم في Feishin لكن لا يوجد بينها تسجيل دخول محفوظ صالح"
+msgstr[1] "تم العثور على خادم واحد في Feishin لكن ليس له تسجيل دخول محفوظ صالح"
+msgstr[2] "تم العثور على خادمين في Feishin لكن لا يوجد بينهما تسجيل دخول محفوظ صالح"
+msgstr[3] "تم العثور على {n} خوادم في Feishin لكن لا يوجد بينها تسجيل دخول محفوظ صالح"
+msgstr[4] "تم العثور على {n} خادمًا في Feishin لكن لا يوجد بينها تسجيل دخول محفوظ صالح"
+msgstr[5] "تم العثور على {n} خادم في Feishin لكن لا يوجد بينها تسجيل دخول محفوظ صالح"
+
+msgid "Gapless playback"
+msgstr "تشغيل دون فواصل"
+
+msgid "Genres"
+msgstr "أنواع"
+
+msgid "Go back to {}"
+msgstr "العودة إلى {}"
+
+msgid "Go to album"
+msgstr "الانتقال إلى الألبوم"
+
+msgid "Go to artist"
+msgstr "الانتقال إلى الفنان"
+
+msgid "Go to {}"
+msgstr "الانتقال إلى {}"
+
+msgid "Green"
+msgstr "أخضر"
+
+msgid "Hide lyrics"
+msgstr "إخفاء كلمات الأغنية"
+
+msgid "Hide queue"
+msgstr "إخفاء قائمة الانتظار"
+
+msgid "High Contrast Dark"
+msgstr "داكن عالي التباين"
+
+msgid "High Contrast Light"
+msgstr "فاتح عالي التباين"
+
+msgid "Highlight with the color that comes with the theme."
+msgstr "التمييز باللون المرفق مع السمة."
+
+msgid "Home"
+msgstr "الرئيسية"
+
+msgid "Homepage (optional)"
+msgstr "الموقع الإلكتروني (اختياري)"
+
+msgid "Import from Feishin"
+msgstr "استيراد من Feishin"
+
+msgid "Install yt-dlp to play YouTube tracks"
+msgstr "ثبّت yt-dlp لتشغيل مقاطع YouTube"
+
+msgid "Integrations"
+msgstr "التكاملات"
+
+msgid "Interface"
+msgstr "الواجهة"
+
+msgid "Internet radio"
+msgstr "راديو الإنترنت"
+
+msgid "item"
+msgstr "العنصر"
+
+msgid "Jellyfin has no public share links"
+msgstr "لا يوفر Jellyfin روابط مشاركة عامة"
+
+msgid "Keep this station in the favorites on this device"
+msgstr "الاحتفاظ بهذه المحطة في المفضلة على هذا الجهاز"
+
+msgid "Language"
+msgstr "اللغة"
+
+msgid "LIBRARY"
+msgstr "المكتبة"
+
+msgid "Library scan finished"
+msgstr "انتهى فحص المكتبة"
+
+msgid "Library scan finished: {n} item"
+msgid_plural "Library scan finished: {n} items"
+msgstr[0] "انتهى فحص المكتبة: {n} عنصر"
+msgstr[1] "انتهى فحص المكتبة: عنصر واحد"
+msgstr[2] "انتهى فحص المكتبة: عنصران"
+msgstr[3] "انتهى فحص المكتبة: {n} عناصر"
+msgstr[4] "انتهى فحص المكتبة: {n} عنصرًا"
+msgstr[5] "انتهى فحص المكتبة: {n} عنصر"
+
+msgid "Light theme"
+msgstr "السمة الفاتحة"
+
+msgid "LIGHT THEMES"
+msgstr "السمات الفاتحة"
+
+msgid "Listening to {}"
+msgstr "تستمع إلى {}"
+
+msgid "LIVE"
+msgstr "مباشر"
+
+msgid "Load more"
+msgstr "تحميل المزيد"
+
+msgid "Load this section again"
+msgstr "إعادة تحميل هذا القسم"
+
+msgid "Loading playlists..."
+msgstr "جارٍ تحميل قوائم التشغيل..."
+
+msgid "Loading similar songs..."
+msgstr "جارٍ تحميل أغانٍ مشابهة..."
+
+msgid "Loading stations..."
+msgstr "جارٍ تحميل المحطات..."
+
+msgid "Loading the next page of stations"
+msgstr "جارٍ تحميل الصفحة التالية من المحطات"
+
+msgid "Loading..."
+msgstr "جارٍ التحميل..."
+
+msgid "Log out"
+msgstr "تسجيل الخروج"
+
+msgid "Looking up the YouTube link..."
+msgstr "جارٍ البحث عن رابط YouTube..."
+
+msgid "Lyrics"
+msgstr "كلمات الأغنية"
+
+msgid "Lyrics from {}"
+msgstr "كلمات الأغنية من {}"
+
+msgid "Lyrics sources"
+msgstr "مصادر كلمات الأغاني"
+
+msgid "Maximum bitrate"
+msgstr "الحد الأقصى لمعدل البت"
+
+msgid "Media keys and desktop media controls. Takes effect after a restart."
+msgstr "مفاتيح الوسائط وعناصر التحكم بالوسائط في سطح المكتب. يسري بعد إعادة التشغيل."
+
+msgid "Moods and genres"
+msgstr "الأمزجة والأنواع"
+
+msgid "Most played"
+msgstr "الأكثر تشغيلًا"
+
+msgid "Move down"
+msgstr "نقل لأسفل"
+
+msgid "Move up"
+msgstr "نقل لأعلى"
+
+msgid "MPRIS"
+msgstr "MPRIS"
+
+msgid "Mute"
+msgstr "كتم الصوت"
+
+msgid "Name"
+msgstr "الاسم"
+
+msgid "New playlist"
+msgstr "قائمة تشغيل جديدة"
+
+msgid "New releases"
+msgstr "إصدارات جديدة"
+
+msgid "Next"
+msgstr "التالي"
+
+msgid "Next is unavailable while a radio station plays"
+msgstr "التالي غير متاح أثناء تشغيل محطة راديو"
+
+msgid "No albums"
+msgstr "لا توجد ألبومات"
+
+msgid "No albums found"
+msgstr "لم يُعثر على ألبومات"
+
+msgid "No artists found"
+msgstr "لم يُعثر على فنانين"
+
+msgid "no browser is selected"
+msgstr "لم يتم اختيار أي متصفح"
+
+msgid "No favorite albums"
+msgstr "لا توجد ألبومات مفضلة"
+
+msgid "No favorite artists"
+msgstr "لا يوجد فنانون مفضلون"
+
+msgid "No favorite tracks"
+msgstr "لا توجد مقاطع مفضلة"
+
+msgid "No genres found"
+msgstr "لم يُعثر على أنواع"
+
+msgid "No lyrics found"
+msgstr "لم يُعثر على كلمات"
+
+msgid "No playlists found"
+msgstr "لم يُعثر على قوائم تشغيل"
+
+msgid "No playlists yet"
+msgstr "لا توجد قوائم تشغيل بعد"
+
+msgid "No rating"
+msgstr "بلا تقييم"
+
+msgid "No results for \"{}\""
+msgstr "لا توجد نتائج لـ \"{}\""
+
+msgid "No saved login for {}; remove it and add it again"
+msgstr "لا يوجد تسجيل دخول محفوظ لـ {}؛ أزله ثم أضفه مجددًا"
+
+msgid "No saved servers."
+msgstr "لا توجد خوادم محفوظة."
+
+msgid "No similar songs found"
+msgstr "لم يُعثر على أغانٍ مشابهة"
+
+msgid "No songs here"
+msgstr "لا توجد أغانٍ هنا"
+
+msgid "No stations found"
+msgstr "لم يُعثر على محطات"
+
+msgid "No stations yet. Add one or find one in the directory."
+msgstr "لا توجد محطات بعد. أضف واحدة أو ابحث عن واحدة في الدليل."
+
+msgid "No tracks found"
+msgstr "لم يُعثر على مقاطع"
+
+msgid "None"
+msgstr "لا شيء"
+
+msgid "Normalize loudness using the track or album gain tags."
+msgstr "توحيد مستوى الصوت باستخدام وسوم الكسب للمقطع أو الألبوم."
+
+msgid "Not connected to a server"
+msgstr "غير متصل بخادم"
+
+msgid "Nothing is playing"
+msgstr "لا يتم تشغيل شيء"
+
+msgid "Nothing to add yet"
+msgstr "لا شيء لإضافته بعد"
+
+msgid "Nothing to go back to"
+msgstr "لا يوجد ما يمكن الرجوع إليه"
+
+msgid "Nothing to play here"
+msgstr "لا يوجد ما يمكن تشغيله هنا"
+
+msgid "Nothing to play yet"
+msgstr "لا يوجد ما يمكن تشغيله بعد"
+
+msgid "Nothing to show here right now"
+msgstr "لا يوجد ما يُعرض هنا حاليًا"
+
+msgid "Off"
+msgstr "معطّل"
+
+msgid "OK"
+msgstr "موافق"
+
+msgid "On the server"
+msgstr "على الخادم"
+
+msgid "Only a server admin can rescan the library"
+msgstr "يمكن لمسؤول الخادم فقط إعادة فحص المكتبة"
+
+msgid "Only loaded tracks can be shared: select fewer tracks or scroll through them first"
+msgstr "لا يمكن مشاركة إلا المقاطع المحمّلة: حدد مقاطع أقل أو مرّر خلالها أولًا"
+
+msgid "Open"
+msgstr "فتح"
+
+msgid "Open in YouTube Music"
+msgstr "فتح في YouTube Music"
+
+msgid "Open now playing"
+msgstr "فتح شاشة التشغيل الحالي"
+
+msgid "Open radio"
+msgstr "فتح الراديو"
+
+msgid "Open the album \"{}\""
+msgstr "فتح الألبوم \"{}\""
+
+msgid "Open the playlist \"{}\""
+msgstr "فتح قائمة التشغيل \"{}\""
+
+msgid "Open the queue panel"
+msgstr "فتح لوحة قائمة الانتظار"
+
+msgid "Open {}"
+msgstr "فتح {}"
+
+msgid "Original"
+msgstr "الأصلي"
+
+msgid "Output used by the player."
+msgstr "المخرج الذي يستخدمه المشغل."
+
+msgid "Owner"
+msgstr "المالك"
+
+msgid "Password"
+msgstr "كلمة السر"
+
+msgid "Paste a link first"
+msgstr "الصق رابطًا أولًا"
+
+msgid "Paste a YouTube or YouTube Music link first"
+msgstr "الصق رابط YouTube أو YouTube Music أولًا"
+
+msgid "Paste a YouTube or YouTube Music link to try yt-dlp."
+msgstr "الصق رابط YouTube أو YouTube Music لتجربة yt-dlp."
+
+msgid "Pause"
+msgstr "إيقاف مؤقت"
+
+msgid "Pause the radio station"
+msgstr "إيقاف محطة الراديو مؤقتًا"
+
+msgid "Personalized with your YouTube Music account from {}"
+msgstr "مخصصة بحسابك على YouTube Music من {}"
+
+msgid "Pick a color, or type one as #rrggbb and press Enter."
+msgstr "اختر لونًا، أو اكتبه بالصيغة #rrggbb واضغط Enter."
+
+msgid "Pick a mood or genre to see its playlists"
+msgstr "اختر مزاجًا أو نوعًا لعرض قوائم التشغيل الخاصة به"
+
+msgid "Play"
+msgstr "تشغيل"
+
+msgid "Play \"{}\" and the rest of this shelf"
+msgstr "تشغيل \"{}\" وبقية هذا الرف"
+
+msgid "Play a YouTube link"
+msgstr "تشغيل رابط YouTube"
+
+msgid "Play album"
+msgstr "تشغيل الألبوم"
+
+msgid "Play all"
+msgstr "تشغيل الكل"
+
+msgid "Play all {n} song"
+msgid_plural "Play all {n} songs"
+msgstr[0] "تشغيل جميع الأغاني ({n})"
+msgstr[1] "تشغيل الأغنية الوحيدة"
+msgstr[2] "تشغيل الأغنيتين"
+msgstr[3] "تشغيل جميع الأغاني الـ{n}"
+msgstr[4] "تشغيل جميع الأغاني الـ{n}"
+msgstr[5] "تشغيل جميع الأغاني الـ{n}"
+
+msgid "Play count"
+msgstr "عدد التشغيلات"
+
+msgid "Play every song in {} and its subfolders"
+msgstr "تشغيل كل الأغاني في {} ومجلداته الفرعية"
+
+msgid "Play from here"
+msgstr "التشغيل من هنا"
+
+msgid "Play from this song"
+msgstr "التشغيل من هذه الأغنية"
+
+msgid "Play from {}"
+msgstr "التشغيل من {}"
+
+msgid "Play next"
+msgstr "تشغيل تاليًا"
+
+msgid "Play the album"
+msgstr "تشغيل الألبوم"
+
+msgid "Play the playlist"
+msgstr "تشغيل قائمة التشغيل"
+
+msgid "Play the radio station"
+msgstr "تشغيل محطة الراديو"
+
+msgid "Play this link after the current song"
+msgstr "تشغيل هذا الرابط بعد الأغنية الحالية"
+
+msgid "Play this link now"
+msgstr "تشغيل هذا الرابط الآن"
+
+msgid "Play {}"
+msgstr "تشغيل {}"
+
+msgid "Play {} next"
+msgstr "تشغيل {} تاليًا"
+
+msgid "Play {} with its subfolders"
+msgstr "تشغيل {} مع مجلداته الفرعية"
+
+msgid "Playback"
+msgstr "التشغيل"
+
+msgid "Playback failed: {}"
+msgstr "فشل التشغيل: {}"
+
+msgid "Playing {} failed: {}"
+msgstr "فشل تشغيل {}: {}"
+
+msgid "PLAYLIST"
+msgstr "قائمة تشغيل"
+
+msgid "Playlist"
+msgstr "قائمة تشغيل"
+
+msgid "playlist"
+msgstr "قائمة تشغيل"
+
+msgid "Playlist name"
+msgstr "اسم قائمة التشغيل"
+
+msgid "Playlists"
+msgstr "قوائم تشغيل"
+
+msgid "Plays"
+msgstr "مرات التشغيل"
+
+msgid "Plays YouTube tracks. Leave empty to use yt-dlp from your PATH."
+msgstr "يشغّل مقاطع YouTube. اتركه فارغًا لاستخدام yt-dlp من PATH."
+
+msgid "Preload the next song so it starts without a pause."
+msgstr "تحميل الأغنية التالية مسبقًا لتبدأ دون توقف."
+
+msgid "Previous"
+msgstr "السابق"
+
+msgid "Previous is unavailable while a radio station plays"
+msgstr "السابق غير متاح أثناء تشغيل محطة راديو"
+
+msgid "Purple"
+msgstr "بنفسجي"
+
+msgid "Queue"
+msgstr "قائمة الانتظار"
+
+msgid "Radio"
+msgstr "الراديو"
+
+msgid "Random"
+msgstr "عشوائي"
+
+msgid "Rate {n} star"
+msgid_plural "Rate {n} stars"
+msgstr[0] "منح {n} نجمة"
+msgstr[1] "منح نجمة واحدة"
+msgstr[2] "منح نجمتين"
+msgstr[3] "منح {n} نجوم"
+msgstr[4] "منح {n} نجمة"
+msgstr[5] "منح {n} نجمة"
+
+msgid "Rating"
+msgstr "التقييم"
+
+msgid "Recently added"
+msgstr "أُضيف مؤخرًا"
+
+msgid "Recently played"
+msgstr "شُغّل مؤخرًا"
+
+msgid "Red"
+msgstr "أحمر"
+
+msgid "Refresh"
+msgstr "تحديث"
+
+msgid "Refresh this section"
+msgstr "تحديث هذا القسم"
+
+msgid "Release year"
+msgstr "سنة الإصدار"
+
+msgid "Remove"
+msgstr "إزالة"
+
+msgid "Remove from favorites"
+msgstr "إزالة من المفضلة"
+
+msgid "Remove from playlist"
+msgstr "إزالة من قائمة التشغيل"
+
+msgid "Remove from queue"
+msgstr "إزالة من قائمة الانتظار"
+
+msgid "Removed {n} song from \"{}\""
+msgid_plural "Removed {n} songs from \"{}\""
+msgstr[0] "تمت إزالة {n} أغنية من \"{}\""
+msgstr[1] "تمت إزالة أغنية واحدة من \"{}\""
+msgstr[2] "تمت إزالة أغنيتان من \"{}\""
+msgstr[3] "تمت إزالة {n} أغانٍ من \"{}\""
+msgstr[4] "تمت إزالة {n} أغنية من \"{}\""
+msgstr[5] "تمت إزالة {n} أغنية من \"{}\""
+
+msgid "Removing..."
+msgstr "جارٍ الإزالة..."
+
+msgid "Repeat: all"
+msgstr "التكرار: الكل"
+
+msgid "Repeat: off"
+msgstr "التكرار: متوقف"
+
+msgid "Repeat: one"
+msgstr "التكرار: أغنية واحدة"
+
+msgid "ReplayGain"
+msgstr "ReplayGain"
+
+msgid "Report what you play to the server."
+msgstr "إبلاغ الخادم بما تشغّله."
+
+msgid "Rescan the library for new content"
+msgstr "إعادة فحص المكتبة بحثًا عن محتوى جديد"
+
+msgid "Resize column"
+msgstr "تغيير حجم العمود"
+
+msgid "Save"
+msgstr "حفظ"
+
+msgid "Save on this device"
+msgstr "حفظ على هذا الجهاز"
+
+msgid "Save the changes on the server"
+msgstr "حفظ التغييرات على الخادم"
+
+msgid "Save the changes on this device"
+msgstr "حفظ التغييرات على هذا الجهاز"
+
+msgid "Save to favorites on this device"
+msgstr "حفظ في المفضلة على هذا الجهاز"
+
+msgid "Save to server"
+msgstr "حفظ على الخادم"
+
+msgid "Saved on this device"
+msgstr "محفوظة على هذا الجهاز"
+
+msgid "Saved on this device, click to remove"
+msgstr "محفوظة على هذا الجهاز، انقر للإزالة"
+
+msgid "Saving the station to the server..."
+msgstr "جارٍ حفظ المحطة على الخادم..."
+
+msgid "Saving to the server..."
+msgstr "جارٍ الحفظ على الخادم..."
+
+msgid "Saving..."
+msgstr "جارٍ الحفظ..."
+
+msgid "Scanning the library for new content..."
+msgstr "جارٍ فحص المكتبة بحثًا عن محتوى جديد..."
+
+msgid "Scanning the library: {}"
+msgstr "جارٍ فحص المكتبة: {}"
+
+msgid "Scrobble"
+msgstr "تسجيل الاستماع"
+
+msgid "Scroll left"
+msgstr "التمرير لليسار"
+
+msgid "Scroll lists and the queue to the song that is playing."
+msgstr "تمرير القوائم وقائمة الانتظار إلى الأغنية قيد التشغيل."
+
+msgid "Scroll right"
+msgstr "التمرير لليمين"
+
+msgid "Search"
+msgstr "بحث"
+
+msgid "Search failed: {}"
+msgstr "فشل البحث: {}"
+
+msgid "SEARCH RESULTS"
+msgstr "نتائج البحث"
+
+msgid "Search songs on YouTube Music"
+msgstr "ابحث عن أغانٍ على YouTube Music"
+
+msgid "Search songs, albums, artists"
+msgstr "ابحث عن أغانٍ وألبومات وفنانين"
+
+msgid "Search the radio-browser.info directory"
+msgstr "البحث في دليل radio-browser.info"
+
+msgid "Search your library for songs, albums and artists"
+msgstr "ابحث في مكتبتك عن أغانٍ وألبومات وفنانين"
+
+msgid "Searched from top to bottom until one has lyrics."
+msgstr "يتم البحث من الأعلى إلى الأسفل حتى يُعثر على مصدر فيه كلمات."
+
+msgid "Searching for lyrics..."
+msgstr "جارٍ البحث عن كلمات الأغنية..."
+
+msgid "Searching the radio directory failed: {}"
+msgstr "فشل البحث في دليل الراديو: {}"
+
+msgid "Searching the radio-browser.info directory"
+msgstr "جارٍ البحث في دليل radio-browser.info"
+
+msgid "Searching..."
+msgstr "جارٍ البحث..."
+
+msgid "Seeking is unavailable for live radio"
+msgstr "التقديم والترجيع غير متاحين في الراديو المباشر"
+
+msgid "Server"
+msgstr "الخادم"
+
+msgid "Server type"
+msgstr "نوع الخادم"
+
+msgid "Servers"
+msgstr "الخوادم"
+
+msgid "Set rating"
+msgstr "تحديد التقييم"
+
+msgid "Settings"
+msgstr "الإعدادات"
+
+msgid "Share"
+msgstr "مشاركة"
+
+msgid "Share ({})"
+msgstr "مشاركة ({})"
+
+msgid "Share link copied to the clipboard: {}"
+msgstr "تم نسخ رابط المشاركة إلى الحافظة: {}"
+
+msgid "Share this {}: copy a public link"
+msgstr "مشاركة {}: نسخ رابط عام"
+
+msgid "Sharing is unavailable: {}"
+msgstr "المشاركة غير متاحة: {}"
+
+msgid "SHOW LESS"
+msgstr "عرض أقل"
+
+msgid "Show lyrics"
+msgstr "إظهار كلمات الأغنية"
+
+msgid "SHOW MORE"
+msgstr "عرض المزيد"
+
+msgid "Show more"
+msgstr "عرض المزيد"
+
+msgid "Show playlists for {}"
+msgstr "عرض قوائم التشغيل لـ {}"
+
+msgid "Show queue"
+msgstr "إظهار قائمة الانتظار"
+
+msgid "Show the current song on your Discord profile."
+msgstr "عرض الأغنية الحالية في ملفك الشخصي على Discord."
+
+msgid "Show the next page of stations"
+msgstr "عرض الصفحة التالية من المحطات"
+
+msgid "Show the queue next to the library; remembered on the next start."
+msgstr "عرض قائمة الانتظار بجوار المكتبة؛ يُحفظ للتشغيل التالي."
+
+msgid "Show the server and saved stations"
+msgstr "عرض محطات الخادم والمحطات المحفوظة"
+
+msgid "Show {}"
+msgstr "عرض {}"
+
+msgid "Showing playlists for {}"
+msgstr "يتم عرض قوائم التشغيل لـ {}"
+
+msgid "Showing the charts for {}"
+msgstr "يتم عرض قوائم الصدارة لـ {}"
+
+msgid "Showing the radio-browser.info directory"
+msgstr "يتم عرض دليل radio-browser.info"
+
+msgid "Showing the server and saved stations"
+msgstr "يتم عرض محطات الخادم والمحطات المحفوظة"
+
+msgid "Shuffle"
+msgstr "خلط"
+
+msgid "Shuffle every song in {} and its subfolders"
+msgstr "تشغيل كل الأغاني في {} ومجلداته الفرعية عشوائيًا"
+
+msgid "Shuffle play"
+msgstr "تشغيل عشوائي"
+
+msgid "Shuffle: off"
+msgstr "الخلط: متوقف"
+
+msgid "Shuffle: on"
+msgstr "الخلط: مفعّل"
+
+msgid "Sign in"
+msgstr "تسجيل الدخول"
+
+msgid "Sign in with browser"
+msgstr "تسجيل الدخول عبر المتصفح"
+
+msgid "Sign out and forget this server's saved login?"
+msgstr "هل تريد تسجيل الخروج ونسيان بيانات الدخول المحفوظة لهذا الخادم؟"
+
+msgid "Sign out and forget this server?"
+msgstr "هل تريد تسجيل الخروج ونسيان هذا الخادم؟"
+
+msgid "Similar"
+msgstr "مشابهة"
+
+msgid "Similar songs come from your server, so YouTube tracks have none"
+msgstr "تأتي الأغاني المشابهة من خادمك، لذا لا توجد أغانٍ مشابهة لمقاطع YouTube"
+
+msgid "Sleep timer: off"
+msgstr "مؤقت النوم: متوقف"
+
+msgid "Sleep timer: {}"
+msgstr "مؤقت النوم: {}"
+
+msgid "Song count"
+msgstr "عدد الأغاني"
+
+msgid "Songs"
+msgstr "أغاني"
+
+msgid "Sort by {}"
+msgstr "الفرز حسب {}"
+
+msgid "Sort by {}: ascending"
+msgstr "الفرز حسب {}: تصاعدي"
+
+msgid "Sort by {}: descending"
+msgstr "الفرز حسب {}: تنازلي"
+
+msgid "Sort: ascending"
+msgstr "الفرز: تصاعدي"
+
+msgid "Sort: descending"
+msgstr "الفرز: تنازلي"
+
+msgid "Starting volume, shared with the player bar."
+msgstr "مستوى الصوت عند البدء، مشترك مع شريط المشغل."
+
+msgid "Station data from radio-browser.info"
+msgstr "بيانات المحطات من radio-browser.info"
+
+msgid "Station name"
+msgstr "اسم المحطة"
+
+msgid "Stations"
+msgstr "المحطات"
+
+msgid "Stop {}"
+msgstr "إيقاف {}"
+
+msgid "Stream URL"
+msgstr "رابط البث"
+
+msgid "Switch"
+msgstr "تبديل"
+
+msgid "Switch between a dark and a light theme with the desktop. {}"
+msgstr "التبديل بين سمة داكنة وسمة فاتحة تبعًا لسطح المكتب. {}"
+
+msgid "Switch to grid view"
+msgstr "التبديل إلى عرض الشبكة"
+
+msgid "Switch to list view"
+msgstr "التبديل إلى عرض القائمة"
+
+msgid "System default"
+msgstr "افتراضي النظام"
+
+msgid "System default follows the language of the desktop."
+msgstr "افتراضي النظام يتبع لغة سطح المكتب."
+
+msgid "Tag, for example jazz"
+msgstr "وسم، مثلًا jazz"
+
+msgid "The desktop currently prefers dark."
+msgstr "يفضّل سطح المكتب حاليًا الوضع الداكن."
+
+msgid "The desktop currently prefers light."
+msgstr "يفضّل سطح المكتب حاليًا الوضع الفاتح."
+
+msgid "The desktop has no preference, so the dark theme is used."
+msgstr "لا يوجد تفضيل لسطح المكتب، لذا تُستخدم السمة الداكنة."
+
+msgid "The library scan is still running on the server"
+msgstr "لا يزال فحص المكتبة جاريًا على الخادم"
+
+msgid "The queue is empty"
+msgstr "قائمة الانتظار فارغة"
+
+msgid "The queue is incomplete: loading the rest of the list failed ({})"
+msgstr "قائمة الانتظار غير مكتملة: فشل تحميل بقية القائمة ({})"
+
+msgid "The radio directory could not be reached"
+msgstr "تعذر الوصول إلى دليل الراديو"
+
+msgid "The radio station stopped streaming"
+msgstr "توقفت محطة الراديو عن البث"
+
+msgid "The server refused the station: {}"
+msgstr "رفض الخادم المحطة: {}"
+
+msgid "Theme"
+msgstr "السمة"
+
+msgid "There is nothing to play in this list"
+msgstr "لا يوجد ما يمكن تشغيله في هذه القائمة"
+
+msgid "This Discover page does not exist"
+msgstr "صفحة الاستكشاف هذه غير موجودة"
+
+msgid "This folder is empty"
+msgstr "هذا المجلد فارغ"
+
+msgid "This playlist is empty"
+msgstr "قائمة التشغيل هذه فارغة"
+
+msgid "This server has no internet radio. Stations you add are saved on this device."
+msgstr "لا يحتوي هذا الخادم على راديو إنترنت. تُحفظ المحطات التي تضيفها على هذا الجهاز."
+
+msgid "this server has no public share links"
+msgstr "لا يوفر هذا الخادم روابط مشاركة عامة"
+
+msgid "Time"
+msgstr "المدة"
+
+msgid "Title"
+msgstr "العنوان"
+
+msgid "Top songs"
+msgstr "أفضل الأغاني"
+
+msgid "Track"
+msgstr "مقطع"
+
+msgid "Tracks"
+msgstr "مقاطع"
+
+msgid "Transcode format"
+msgstr "صيغة تحويل الترميز"
+
+msgid "Try again"
+msgstr "إعادة المحاولة"
+
+msgid "Turn off the theme accent color to pick your own."
+msgstr "أوقف لون تمييز السمة لاختيار لونك الخاص."
+
+msgid "Unmute"
+msgstr "إلغاء كتم الصوت"
+
+msgid "Up next"
+msgstr "التالي في القائمة"
+
+msgid "URL"
+msgstr "الرابط"
+
+msgid "Use the theme accent color"
+msgstr "استخدام لون تمييز السمة"
+
+msgid "Use {}"
+msgstr "استخدام {}"
+
+msgid "Used while the desktop prefers dark."
+msgstr "تُستخدم عندما يفضّل سطح المكتب الوضع الداكن."
+
+msgid "Used while the desktop prefers light."
+msgstr "تُستخدم عندما يفضّل سطح المكتب الوضع الفاتح."
+
+msgid "Username"
+msgstr "اسم المستخدم"
+
+msgid "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Feishin deletes right after reading."
+msgstr "يستخدم جلسة YouTube الخاصة بك في هذا المتصفح لصفحة استكشاف رئيسية مخصصة وصوت Premium. ينسخ yt-dlp ملفات تعريف الارتباط الخاصة به إلى ملف مؤقت خاص يحذفه Feishin فور قراءته."
+
+msgid "Volume"
+msgstr "مستوى الصوت"
+
+msgid "Volume {}%"
+msgstr "مستوى الصوت {}%"
+
+msgid "XDG_RUNTIME_DIR is not set, so there is no private place for the cookies"
+msgstr "المتغير XDG_RUNTIME_DIR غير مضبوط، لذا لا يوجد مكان خاص لملفات تعريف الارتباط"
+
+msgid "Year"
+msgstr "السنة"
+
+msgid "You are here: {}"
+msgstr "أنت هنا: {}"
+
+msgid "Your user is not allowed to share on this server"
+msgstr "لا يُسمح لمستخدمك بالمشاركة على هذا الخادم"
+
+msgid "YouTube"
+msgstr "YouTube"
+
+msgid "YouTube albums are not in your library"
+msgstr "ألبومات YouTube ليست في مكتبتك"
+
+msgid "YouTube artists are not in your library"
+msgstr "فنانو YouTube ليسوا في مكتبتك"
+
+msgid "yt-dlp program"
+msgstr "برنامج yt-dlp"
+
+msgid "{n} album"
+msgid_plural "{n} albums"
+msgstr[0] "{n} ألبوم"
+msgstr[1] "ألبوم واحد"
+msgstr[2] "ألبومان"
+msgstr[3] "{n} ألبومات"
+msgstr[4] "{n} ألبومًا"
+msgstr[5] "{n} ألبوم"
+
+msgid "{n} folder"
+msgid_plural "{n} folders"
+msgstr[0] "{n} مجلد"
+msgstr[1] "مجلد واحد"
+msgstr[2] "مجلدان"
+msgstr[3] "{n} مجلدات"
+msgstr[4] "{n} مجلدًا"
+msgstr[5] "{n} مجلد"
+
+msgid "{n} item so far"
+msgid_plural "{n} items so far"
+msgstr[0] "{n} عنصر حتى الآن"
+msgstr[1] "عنصر واحد حتى الآن"
+msgstr[2] "عنصران حتى الآن"
+msgstr[3] "{n} عناصر حتى الآن"
+msgstr[4] "{n} عنصرًا حتى الآن"
+msgstr[5] "{n} عنصر حتى الآن"
+
+msgid "{n} minute"
+msgid_plural "{n} minutes"
+msgstr[0] "{n} دقيقة"
+msgstr[1] "دقيقة واحدة"
+msgstr[2] "دقيقتان"
+msgstr[3] "{n} دقائق"
+msgstr[4] "{n} دقيقة"
+msgstr[5] "{n} دقيقة"
+
+msgid "{n} selected"
+msgid_plural "{n} selected"
+msgstr[0] "المحدد: {n}"
+msgstr[1] "المحدد: {n}"
+msgstr[2] "المحدد: {n}"
+msgstr[3] "المحدد: {n}"
+msgstr[4] "المحدد: {n}"
+msgstr[5] "المحدد: {n}"
+
+msgid "{n} song"
+msgid_plural "{n} songs"
+msgstr[0] "{n} أغنية"
+msgstr[1] "أغنية واحدة"
+msgstr[2] "أغنيتان"
+msgstr[3] "{n} أغانٍ"
+msgstr[4] "{n} أغنية"
+msgstr[5] "{n} أغنية"
+
+msgid "{n} song from \"{}\" will play next"
+msgid_plural "{n} songs from \"{}\" will play next"
+msgstr[0] "سيتم تشغيل {n} أغنية من \"{}\" تاليًا"
+msgstr[1] "سيتم تشغيل أغنية واحدة من \"{}\" تاليًا"
+msgstr[2] "سيتم تشغيل أغنيتين من \"{}\" تاليًا"
+msgstr[3] "سيتم تشغيل {n} أغانٍ من \"{}\" تاليًا"
+msgstr[4] "سيتم تشغيل {n} أغنية من \"{}\" تاليًا"
+msgstr[5] "سيتم تشغيل {n} أغنية من \"{}\" تاليًا"
+
+msgid "{n} song on YouTube Music"
+msgid_plural "{n} songs on YouTube Music"
+msgstr[0] "{n} أغنية على YouTube Music"
+msgstr[1] "أغنية واحدة على YouTube Music"
+msgstr[2] "أغنيتان على YouTube Music"
+msgstr[3] "{n} أغانٍ على YouTube Music"
+msgstr[4] "{n} أغنية على YouTube Music"
+msgstr[5] "{n} أغنية على YouTube Music"
+
+msgid "{n} song will play next"
+msgid_plural "{n} songs will play next"
+msgstr[0] "سيتم تشغيل {n} أغنية تاليًا"
+msgstr[1] "سيتم تشغيل أغنية واحدة تاليًا"
+msgstr[2] "سيتم تشغيل أغنيتين تاليًا"
+msgstr[3] "سيتم تشغيل {n} أغانٍ تاليًا"
+msgstr[4] "سيتم تشغيل {n} أغنية تاليًا"
+msgstr[5] "سيتم تشغيل {n} أغنية تاليًا"
+
+msgid "{} (current theme)"
+msgstr "{} (السمة الحالية)"
+
+msgid "{} (unavailable)"
+msgstr "{} (غير متاح)"
+
+msgid "{} at {}"
+msgstr "{} على {}"
+
+msgid "{} cannot be played: its stream address is not an internet stream"
+msgstr "لا يمكن تشغيل {}: عنوان البث الخاص بها ليس بثًا عبر الإنترنت"
+
+msgid "{} is shown"
+msgstr "{} معروض"
+
+msgid "{} kbps"
+msgstr "{} kbps"
+
+msgid "{} s"
+msgstr "{} ث"
+
+msgid "{}: off"
+msgstr "{}: متوقف"
+
+msgid "{}: on"
+msgstr "{}: مفعّل"
+
+msgid "{}: {} (dark)"
+msgstr "{}: {} (داكن)"
+
+msgid "{}: {} (light)"
+msgstr "{}: {} (فاتح)"

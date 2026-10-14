@@ -49,9 +49,9 @@ impl SleepInhibitor {
     }
 
     pub fn set_inhibited(&self, inhibited: bool) -> Result<()> {
-        self.requests.send(inhibited).map_err(|_| {
-            PlatformError::SleepInhibitor("sleep inhibitor thread is gone".to_owned())
-        })
+        self.requests
+            .send(inhibited)
+            .map_err(|_| PlatformError::SleepInhibitor("sleep inhibitor thread is gone".to_owned()))
     }
 }
 

@@ -5,8 +5,6 @@ use crate::ui::{RadioRow, RadioSource};
 
 const MAX_DIRECTORY_RESULTS: usize = 500;
 const SHOWN_TAGS: usize = 3;
-const ON_SERVER: &str = "On the server";
-const ON_THIS_DEVICE: &str = "Saved on this device";
 
 #[derive(Default)]
 pub(super) struct RadioModel {
@@ -122,13 +120,13 @@ impl RadioModel {
 
     fn saved_row(&self, station: &RadioStation, source: RadioSource) -> RadioRow {
         let place = match source {
-            RadioSource::Server => ON_SERVER,
-            RadioSource::Favorite | RadioSource::Directory => ON_THIS_DEVICE,
+            RadioSource::Server => tr!("On the server"),
+            RadioSource::Favorite | RadioSource::Directory => tr!("Saved on this device"),
         };
         RadioRow {
             id: station.id.as_str().into(),
             name: station.name.as_str().into(),
-            details: saved_details(place, station).into(),
+            details: saved_details(&place, station).into(),
             source,
             favorite: source == RadioSource::Favorite,
             on_server: self.is_on_server(&station.stream_url),

@@ -11,12 +11,10 @@ use super::view::{Shared, View};
 use crate::controller::{Command, YouTubeCommand};
 use crate::ui::{AppWindow, Context, SettingsState};
 
-const NO_BROWSER_LABEL: &str = "None";
-
 pub(super) fn cookie_browser_choices(
     current: Option<CookieBrowser>,
 ) -> Choices<Option<CookieBrowser>> {
-    let options = std::iter::once((NO_BROWSER_LABEL.to_owned(), None))
+    let options = std::iter::once((tr!("None"), None))
         .chain(
             CookieBrowser::ALL
                 .into_iter()
@@ -31,7 +29,7 @@ pub(super) fn chart_country_choices(
     system: &SystemLocale,
 ) -> Choices<Option<String>> {
     let automatic = chart_country_or_fallback(&[system.region.as_deref()]);
-    let options = std::iter::once((format!("Automatic ({})", automatic.name), None))
+    let options = std::iter::once((tr!("Automatic ({})", automatic.name), None))
         .chain(
             CHART_COUNTRIES
                 .iter()

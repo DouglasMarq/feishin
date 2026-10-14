@@ -37,6 +37,9 @@ export global SettingsState {
     in property <[ServerRow]> servers;
     in property <string> switching;
     in-out property <bool> follow-current-song;
+    in property <[string]> languages;
+    in-out property <int> language-index;
+    callback language-changed();
     callback load(string);
     callback playback-changed();
     callback integrations-changed();
@@ -125,6 +128,15 @@ component ActionChip inherits Rectangle {
     in property <string> tooltip;
     in property <bool> enabled: true;
     callback clicked();
+    accessible-role: button;
+    accessible-label: root.text;
+    accessible-description: root.tooltip;
+    accessible-enabled: root.enabled;
+    accessible-action-default => {
+        if (root.enabled) {
+            root.clicked();
+        }
+    }
     height: 32px;
     width: label.preferred-width + 24px;
     border-radius: 16px;
@@ -155,11 +167,11 @@ component ActionChip inherits Rectangle {
 
 component YouTubeSection inherits Section {
     property <bool> has-link: SettingsState.youtube-link != "";
-    title: "YouTube";
+    title: @tr("YouTube");
 
     Option {
-        title: "yt-dlp program";
-        description: "Plays YouTube tracks. Leave empty to use yt-dlp from your PATH.";
+        title: @tr("yt-dlp program");
+        description: @tr("Plays YouTube tracks. Leave empty to use yt-dlp from your PATH.");
 
         path-edit := LineEdit {
             width: 220px;
@@ -177,8 +189,8 @@ component YouTubeSection inherits Section {
     }
 
     Option {
-        title: "Sign in with browser";
-        description: "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Feishin deletes right after reading.";
+        title: @tr("Sign in with browser");
+        description: @tr("Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Feishin deletes right after reading.");
 
         Picker {
             model: SettingsState.cookie-browsers;
@@ -190,8 +202,8 @@ component YouTubeSection inherits Section {
     }
 
     Option {
-        title: "Chart country";
-        description: "Default country for the Discover charts. Automatic follows your system region.";
+        title: @tr("Chart country");
+        description: @tr("Default country for the Discover charts. Automatic follows your system region.");
 
         Picker {
             model: SettingsState.chart-countries;
@@ -203,8 +215,8 @@ component YouTubeSection inherits Section {
     }
 
     Option {
-        title: "Play a YouTube link";
-        description: "Paste a YouTube or YouTube Music link to try yt-dlp.";
+        title: @tr("Play a YouTube link");
+        description: @tr("Paste a YouTube or YouTube Music link to try yt-dlp.");
 
         LineEdit {
             width: 220px;
@@ -216,27 +228,27 @@ component YouTubeSection inherits Section {
         }
 
         ActionChip {
-            text: "Play";
+            text: @tr("Play");
             enabled: root.has-link;
-            tooltip: root.has-link ? "Play this link now" : "Paste a link first";
+            tooltip: root.has-link ? @tr("Play this link now") : @tr("Paste a link first");
             clicked => {
                 SettingsState.play-youtube-link();
             }
         }
 
         ActionChip {
-            text: "Next";
+            text: @tr("Play next");
             enabled: root.has-link;
-            tooltip: root.has-link ? "Play this link after the current song" : "Paste a link first";
+            tooltip: root.has-link ? @tr("Play this link after the current song") : @tr("Paste a link first");
             clicked => {
                 SettingsState.play-youtube-link-next();
             }
         }
 
         ActionChip {
-            text: "Queue";
+            text: @tr("Add to queue");
             enabled: root.has-link;
-            tooltip: root.has-link ? "Add this link to the end of the queue" : "Paste a link first";
+            tooltip: root.has-link ? @tr("Add this link to the end of the queue") : @tr("Paste a link first");
             clicked => {
                 SettingsState.add-youtube-link();
             }
@@ -281,7 +293,7 @@ component LyricsSourceItem inherits Rectangle {
         IconButton {
             y: (parent.height - self.height) / 2;
             icon: Icons.arrow-up;
-            tooltip: "Move up";
+            tooltip: @tr("Move up");
             enabled: root.index > 0;
             clicked => {
                 SettingsState.move-lyrics-source(root.index, -1);
@@ -291,7 +303,7 @@ component LyricsSourceItem inherits Rectangle {
         IconButton {
             y: (parent.height - self.height) / 2;
             icon: Icons.arrow-down;
-            tooltip: "Move down";
+            tooltip: @tr("Move down");
             enabled: root.index < root.count - 1;
             clicked => {
                 SettingsState.move-lyrics-source(root.index, 1);
@@ -359,7 +371,7 @@ component ServerItem inherits Rectangle {
                     background: Theme.primary;
 
                     current-text := Text {
-                        text: "Current";
+                        text: @tr("Current");
                         color: Theme.on-primary;
                         font-size: 11px;
                         font-weight: 600;
@@ -376,7 +388,7 @@ component ServerItem inherits Rectangle {
         }
 
         if !root.server.current && !root.confirm: Button {
-            text: SettingsState.switching == root.server.id ? "Connecting..." : "Switch";
+            text: SettingsState.switching == root.server.id ? @tr("Connecting...") : @tr("Switch");
             enabled: !root.busy;
             clicked => {
                 SettingsState.switch-server(root.server.id);
@@ -384,7 +396,7 @@ component ServerItem inherits Rectangle {
         }
 
         if !root.confirm: Button {
-            text: "Remove";
+            text: @tr("Remove");
             enabled: !root.busy;
             clicked => {
                 root.confirming = root.server.id;
@@ -392,20 +404,20 @@ component ServerItem inherits Rectangle {
         }
 
         if root.confirm: Text {
-            text: root.server.current ? "Sign out and forget this server?" : "Forget this server?";
+            text: root.server.current ? @tr("Sign out and forget this server?") : @tr("Forget this server?");
             color: Theme.danger;
             vertical-alignment: center;
         }
 
         if root.confirm: Button {
-            text: "Cancel";
+            text: @tr("Cancel");
             clicked => {
                 root.confirming = "";
             }
         }
 
         if root.confirm: Button {
-            text: "Remove";
+            text: @tr("Remove");
             primary: true;
             clicked => {
                 root.confirming = "";
@@ -433,18 +445,18 @@ export component SettingsView inherits Rectangle {
             alignment: start;
 
             Text {
-                text: "Settings";
+                text: @tr("Settings");
                 color: Theme.foreground;
                 font-size: 24px;
                 font-weight: 700;
             }
 
             Section {
-                title: "Playback";
+                title: @tr("Playback");
 
                 Option {
-                    title: "Volume";
-                    description: "Starting volume, shared with the player bar.";
+                    title: @tr("Volume");
+                    description: @tr("Starting volume, shared with the player bar.");
 
                     VerticalLayout {
                         alignment: center;
@@ -453,7 +465,7 @@ export component SettingsView inherits Rectangle {
                             width: 160px;
                             value: PlayerState.volume / 100;
                             scroll-step: 0.05;
-                            tooltip: "Volume " + (self.adjusting ? Math.round(self.drag-preview * 100) : PlayerState.volume) + "%";
+                            tooltip: @tr("Volume {}%", self.adjusting ? Math.round(self.drag-preview * 100) : PlayerState.volume);
                             changed(value) => {
                                 PlayerState.set-volume(Math.round(value * 100));
                             }
@@ -470,11 +482,11 @@ export component SettingsView inherits Rectangle {
                 }
 
                 Option {
-                    title: "ReplayGain";
-                    description: "Normalize loudness using the track or album gain tags.";
+                    title: @tr("ReplayGain");
+                    description: @tr("Normalize loudness using the track or album gain tags.");
 
                     Picker {
-                        model: ["Off", "Track", "Album"];
+                        model: [@tr("Off"), @tr("Track"), @tr("Album")];
                         current-index <=> SettingsState.replay-gain;
                         selected => {
                             SettingsState.playback-changed();
@@ -483,8 +495,8 @@ export component SettingsView inherits Rectangle {
                 }
 
                 Option {
-                    title: "Gapless playback";
-                    description: "Preload the next song so it starts without a pause.";
+                    title: @tr("Gapless playback");
+                    description: @tr("Preload the next song so it starts without a pause.");
 
                     Switch {
                         checked <=> SettingsState.gapless;
@@ -495,10 +507,10 @@ export component SettingsView inherits Rectangle {
                 }
 
                 crossfade-option := Option {
-                    title: "Crossfade";
-                    description: "Fade the end of each song into the next one. Off keeps gapless playback.";
+                    title: @tr("Crossfade");
+                    description: @tr("Fade the end of each song into the next one. Off keeps gapless playback.");
                     property <int> shown-seconds: crossfade-bar.adjusting ? Math.round(crossfade-bar.drag-preview * SettingsState.max-crossfade-seconds) : SettingsState.crossfade-seconds;
-                    property <string> shown-label: self.shown-seconds == 0 ? "Off" : self.shown-seconds + " s";
+                    property <string> shown-label: self.shown-seconds == 0 ? @tr("Off") : @tr("{} s", self.shown-seconds);
 
                     VerticalLayout {
                         alignment: center;
@@ -507,7 +519,7 @@ export component SettingsView inherits Rectangle {
                             width: 160px;
                             value: SettingsState.crossfade-seconds / SettingsState.max-crossfade-seconds;
                             scroll-step: 1 / SettingsState.max-crossfade-seconds;
-                            tooltip: "Crossfade: " + crossfade-option.shown-label;
+                            tooltip: @tr("Crossfade: {}", crossfade-option.shown-label);
                             committed(value) => {
                                 SettingsState.crossfade-seconds = Math.round(value * SettingsState.max-crossfade-seconds);
                                 SettingsState.playback-changed();
@@ -525,8 +537,8 @@ export component SettingsView inherits Rectangle {
                 }
 
                 Option {
-                    title: "Audio device";
-                    description: "Output used by the player.";
+                    title: @tr("Audio device");
+                    description: @tr("Output used by the player.");
 
                     Picker {
                         model: SettingsState.devices;
@@ -538,8 +550,8 @@ export component SettingsView inherits Rectangle {
                 }
 
                 Option {
-                    title: "Maximum bitrate";
-                    description: "Ask the server to transcode down to this bitrate. Applies from the next song.";
+                    title: @tr("Maximum bitrate");
+                    description: @tr("Ask the server to transcode down to this bitrate. Applies from the next song.");
 
                     Picker {
                         model: SettingsState.bitrates;
@@ -551,8 +563,8 @@ export component SettingsView inherits Rectangle {
                 }
 
                 Option {
-                    title: "Transcode format";
-                    description: "Format the server should transcode to. Applies from the next song.";
+                    title: @tr("Transcode format");
+                    description: @tr("Format the server should transcode to. Applies from the next song.");
 
                     Picker {
                         model: SettingsState.formats;
@@ -564,8 +576,8 @@ export component SettingsView inherits Rectangle {
                 }
 
                 Option {
-                    title: "Scrobble";
-                    description: "Report what you play to the server.";
+                    title: @tr("Scrobble");
+                    description: @tr("Report what you play to the server.");
 
                     Switch {
                         checked <=> SettingsState.scrobble;
@@ -577,11 +589,11 @@ export component SettingsView inherits Rectangle {
             }
 
             Section {
-                title: "Integrations";
+                title: @tr("Integrations");
 
                 Option {
-                    title: "MPRIS";
-                    description: "Media keys and desktop media controls. Takes effect after a restart.";
+                    title: @tr("MPRIS");
+                    description: @tr("Media keys and desktop media controls. Takes effect after a restart.");
 
                     Switch {
                         checked <=> SettingsState.mpris;
@@ -592,8 +604,8 @@ export component SettingsView inherits Rectangle {
                 }
 
                 Option {
-                    title: "Discord Rich Presence";
-                    description: "Show the current song on your Discord profile.";
+                    title: @tr("Discord Rich Presence");
+                    description: @tr("Show the current song on your Discord profile.");
 
                     Switch {
                         checked <=> SettingsState.discord;
@@ -609,12 +621,12 @@ export component SettingsView inherits Rectangle {
                     spacing: 6px;
 
                     Text {
-                        text: "Lyrics sources";
+                        text: @tr("Lyrics sources");
                         color: Theme.foreground;
                     }
 
                     Text {
-                        text: "Searched from top to bottom until one has lyrics.";
+                        text: @tr("Searched from top to bottom until one has lyrics.");
                         color: Theme.muted;
                         font-size: 12px;
                     }
@@ -635,7 +647,7 @@ export component SettingsView inherits Rectangle {
             YouTubeSection { }
 
             Section {
-                title: "Servers";
+                title: @tr("Servers");
 
                 VerticalLayout {
                     spacing: 4px;
@@ -646,7 +658,7 @@ export component SettingsView inherits Rectangle {
                     }
 
                     if SettingsState.loaded && SettingsState.servers.length == 0: Text {
-                        text: "No saved servers.";
+                        text: @tr("No saved servers.");
                         color: Theme.muted;
                     }
                 }
@@ -656,7 +668,7 @@ export component SettingsView inherits Rectangle {
                     alignment: start;
 
                     Button {
-                        text: "Add server";
+                        text: @tr("Add server");
                         enabled: SettingsState.switching == "";
                         clicked => {
                             SettingsState.add-server();
@@ -664,7 +676,7 @@ export component SettingsView inherits Rectangle {
                     }
 
                     if !root.confirm-logout: Button {
-                        text: "Log out";
+                        text: @tr("Log out");
                         enabled: SettingsState.switching == "" && AppState.server-name != "";
                         clicked => {
                             root.confirm-logout = true;
@@ -672,20 +684,20 @@ export component SettingsView inherits Rectangle {
                     }
 
                     if root.confirm-logout: Text {
-                        text: "Sign out and forget this server's saved login?";
+                        text: @tr("Sign out and forget this server's saved login?");
                         color: Theme.danger;
                         vertical-alignment: center;
                     }
 
                     if root.confirm-logout: Button {
-                        text: "Cancel";
+                        text: @tr("Cancel");
                         clicked => {
                             root.confirm-logout = false;
                         }
                     }
 
                     if root.confirm-logout: Button {
-                        text: "Log out";
+                        text: @tr("Log out");
                         primary: true;
                         clicked => {
                             root.confirm-logout = false;
@@ -696,17 +708,30 @@ export component SettingsView inherits Rectangle {
             }
 
             Section {
-                title: "Appearance";
+                title: @tr("Appearance");
 
                 AppearanceOptions { }
             }
 
             Section {
-                title: "Interface";
+                title: @tr("Interface");
 
                 Option {
-                    title: "Open the queue panel";
-                    description: "Show the queue next to the library; remembered on the next start.";
+                    title: @tr("Language");
+                    description: @tr("System default follows the language of the desktop.");
+
+                    Picker {
+                        model: SettingsState.languages;
+                        current-index <=> SettingsState.language-index;
+                        selected => {
+                            SettingsState.language-changed();
+                        }
+                    }
+                }
+
+                Option {
+                    title: @tr("Open the queue panel");
+                    description: @tr("Show the queue next to the library; remembered on the next start.");
 
                     Switch {
                         checked <=> AppState.queue-open;
@@ -717,8 +742,8 @@ export component SettingsView inherits Rectangle {
                 }
 
                 Option {
-                    title: "Follow current song";
-                    description: "Scroll lists and the queue to the song that is playing.";
+                    title: @tr("Follow current song");
+                    description: @tr("Scroll lists and the queue to the song that is playing.");
 
                     Switch {
                         checked <=> SettingsState.follow-current-song;

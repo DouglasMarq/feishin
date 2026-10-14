@@ -27,7 +27,7 @@ impl SignIn {
     pub async fn auth_for(&self, settings: &YouTubeSettings) -> Result<MusicAuth, MusicError> {
         let browser = settings
             .cookies_from_browser
-            .ok_or_else(|| MusicError::SignIn("no browser is selected".to_owned()))?;
+            .ok_or_else(|| MusicError::SignIn(tr!("no browser is selected")))?;
         if let Some(auth) = self.current(settings) {
             return Ok(auth);
         }
@@ -36,10 +36,9 @@ impl SignIn {
             return Ok(auth);
         }
         let private_dir = self.private_dir.as_deref().ok_or_else(|| {
-            MusicError::SignIn(
+            MusicError::SignIn(tr!(
                 "XDG_RUNTIME_DIR is not set, so there is no private place for the cookies"
-                    .to_owned(),
-            )
+            ))
         })?;
         let auth = sign_in_with_browser(&yt_dlp_for(settings), private_dir).await?;
         self.remember(Some((browser, auth.clone())));

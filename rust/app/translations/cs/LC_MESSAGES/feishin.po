@@ -1,0 +1,1542 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: cs\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+
+msgid "\"{}\" plays next"
+msgstr "Jako další: „{}“"
+
+msgid "\"{}\" will play next"
+msgstr "„{}“ se přehraje jako další"
+
+msgid "1 star"
+msgstr "1 hvězdička"
+
+msgid "2 stars"
+msgstr "2 hvězdičky"
+
+msgid "3 stars"
+msgstr "3 hvězdičky"
+
+msgid "4 stars"
+msgstr "4 hvězdičky"
+
+msgid "5 stars"
+msgstr "5 hvězdiček"
+
+msgid "About {}"
+msgstr "O umělci {0}"
+
+msgid "Accent color"
+msgstr "Barva zvýraznění"
+
+msgid "Accent color not changed: {}."
+msgstr "Barva zvýraznění nezměněna: {}."
+
+msgid "Accent color {}"
+msgstr "Barva zvýraznění {}"
+
+msgid "Accent color {} (selected)"
+msgstr "Barva zvýraznění {} (vybráno)"
+
+msgid "Accent color {} (theme accent in use)"
+msgstr "Barva zvýraznění {} (používá se zvýraznění motivu)"
+
+msgid "Add a station by its stream URL"
+msgstr "Přidat stanici podle adresy streamu"
+
+msgid "Add all songs to the queue"
+msgstr "Přidat všechny skladby do fronty"
+
+msgid "Add server"
+msgstr "Přidat server"
+
+msgid "Add station"
+msgstr "Přidat stanici"
+
+msgid "Add this link to the end of the queue"
+msgstr "Přidat tento odkaz na konec fronty"
+
+msgid "Add this station to the server for every client"
+msgstr "Přidat tuto stanici na server pro všechny klienty"
+
+msgid "Add to favorites"
+msgstr "Přidat do oblíbených"
+
+msgid "Add to playlist"
+msgstr "Přidat do playlistu"
+
+msgid "Add to queue"
+msgstr "Přidat do fronty"
+
+msgid "Add to the server's stations"
+msgstr "Přidat ke stanicím serveru"
+
+msgid "Add {n} song to playlist"
+msgid_plural "Add {n} songs to playlist"
+msgstr[0] "Přidat {n} skladbu do playlistu"
+msgstr[1] "Přidat {n} skladby do playlistu"
+msgstr[2] "Přidat {n} skladeb do playlistu"
+
+msgid "Add {} to the queue"
+msgstr "Přidat {} do fronty"
+
+msgid "Added \"{}\" to the queue"
+msgstr "„{}“ přidáno do fronty"
+
+msgid "Added only {n} song to \"{}\": {}"
+msgid_plural "Added only {n} songs to \"{}\": {}"
+msgstr[0] "Do „{}“ byla přidána jen {n} skladba: {}"
+msgstr[1] "Do „{}“ byly přidány jen {n} skladby: {}"
+msgstr[2] "Do „{}“ bylo přidáno jen {n} skladeb: {}"
+
+msgid "Added {n} song from \"{}\" to the queue"
+msgid_plural "Added {n} songs from \"{}\" to the queue"
+msgstr[0] "Do fronty byla přidána {n} skladba z „{}“"
+msgstr[1] "Do fronty byly přidány {n} skladby z „{}“"
+msgstr[2] "Do fronty bylo přidáno {n} skladeb z „{}“"
+
+msgid "Added {n} song to \"{}\""
+msgid_plural "Added {n} songs to \"{}\""
+msgstr[0] "Do „{}“ byla přidána {n} skladba"
+msgstr[1] "Do „{}“ byly přidány {n} skladby"
+msgstr[2] "Do „{}“ bylo přidáno {n} skladeb"
+
+msgid "Added {n} song to the queue"
+msgid_plural "Added {n} songs to the queue"
+msgstr[0] "Do fronty byla přidána {n} skladba"
+msgstr[1] "Do fronty byly přidány {n} skladby"
+msgstr[2] "Do fronty bylo přidáno {n} skladeb"
+
+msgid "Adding to \"{}\": {} of {n} song"
+msgid_plural "Adding to \"{}\": {} of {n} songs"
+msgstr[0] "Přidávání do „{}“: {} z {n} skladby"
+msgstr[1] "Přidávání do „{}“: {} z {n} skladeb"
+msgstr[2] "Přidávání do „{}“: {} z {n} skladeb"
+
+msgid "ALBUM"
+msgstr "ALBUM"
+
+msgid "Album"
+msgstr "Album"
+
+msgid "album"
+msgstr "album"
+
+msgid "Album artist"
+msgstr "Umělec alba"
+
+msgid "Album count"
+msgstr "Počet alb"
+
+msgid "Album not found"
+msgstr "Album nenalezeno"
+
+msgid "Albums"
+msgstr "Alba"
+
+msgid "All genres"
+msgstr "Všechny žánry"
+
+msgid "Already at the end"
+msgstr "Už jste na konci"
+
+msgid "Already at the start"
+msgstr "Už jste na začátku"
+
+msgid "Already in \"{}\""
+msgstr "Už je v „{}“"
+
+msgid "Already on the server"
+msgstr "Už je na serveru"
+
+msgid "Amber"
+msgstr "Jantarová"
+
+msgid "Appearance"
+msgstr "Vzhled"
+
+msgid "ARTIST"
+msgstr "UMĚLEC"
+
+msgid "Artist"
+msgstr "Umělec"
+
+msgid "Artists"
+msgstr "Umělci"
+
+msgid "Ask the server to transcode down to this bitrate. Applies from the next song."
+msgstr "Požádat server o překódování na tento datový tok. Platí od další skladby."
+
+msgid "Audio device"
+msgstr "Zvukové zařízení"
+
+msgid "Automatic ({})"
+msgstr "Automaticky ({})"
+
+msgid "Back"
+msgstr "Zpět"
+
+msgid "Blue"
+msgstr "Modrá"
+
+msgid "by {}"
+msgstr "autor: {}"
+
+msgid "Cancel"
+msgstr "Zrušit"
+
+msgid "Cancel timer"
+msgstr "Zrušit časovač"
+
+msgid "Cannot share: {}"
+msgstr "Nelze sdílet: {}"
+
+msgid "Chart country"
+msgstr "Země žebříčků"
+
+msgid "Charts"
+msgstr "Žebříčky"
+
+msgid "Choose a browser under Settings, YouTube to sign in for a personalized home"
+msgstr "Pro přihlášení a přizpůsobenou domovskou stránku vyberte prohlížeč v Nastavení v části YouTube"
+
+msgid "Clear"
+msgstr "Vymazat"
+
+msgid "Clear filters"
+msgstr "Vymazat filtry"
+
+msgid "Clear rating"
+msgstr "Zrušit hodnocení"
+
+msgid "Clear the favorites and genre filters"
+msgstr "Zrušit filtry oblíbených a žánrů"
+
+msgid "Close"
+msgstr "Zavřít"
+
+msgid "Close now playing"
+msgstr "Zavřít Právě hraje"
+
+msgid "Close without saving"
+msgstr "Zavřít bez uložení"
+
+msgid "Colors used across the whole app."
+msgstr "Barvy používané v celé aplikaci."
+
+msgid "Connect to your music server"
+msgstr "Připojte se ke svému hudebnímu serveru"
+
+msgid "Connecting..."
+msgstr "Připojování..."
+
+msgid "Could not add to \"{}\": {}"
+msgstr "Nelze přidat do „{}“: {}"
+
+msgid "Could not add {} to the server"
+msgstr "Stanici {} nelze přidat na server"
+
+msgid "Could not create a share link: {}"
+msgstr "Nelze vytvořit odkaz ke sdílení: {}"
+
+msgid "Could not create the playlist: {}"
+msgstr "Nelze vytvořit playlist: {}"
+
+msgid "Could not delete the playlist: {}"
+msgstr "Nelze odstranit playlist: {}"
+
+msgid "Could not delete the station"
+msgstr "Stanici nelze odstranit"
+
+msgid "Could not load albums: {}"
+msgstr "Nelze načíst alba: {}"
+
+msgid "Could not load artists: {}"
+msgstr "Nelze načíst umělce: {}"
+
+msgid "Could not load Discover: {}"
+msgstr "Nelze načíst sekci Objevovat: {}"
+
+msgid "Could not load genres: {}"
+msgstr "Nelze načíst žánry: {}"
+
+msgid "Could not load it from YouTube Music: {}"
+msgstr "Nelze to načíst z YouTube Music: {}"
+
+msgid "Could not load lyrics"
+msgstr "Nelze načíst text"
+
+msgid "Could not load moods and genres: {}"
+msgstr "Nelze načíst nálady a žánry: {}"
+
+msgid "Could not load more results: {}"
+msgstr "Nelze načíst další výsledky: {}"
+
+msgid "Could not load new releases: {}"
+msgstr "Nelze načíst novinky: {}"
+
+msgid "Could not load playlists: {}"
+msgstr "Nelze načíst playlisty: {}"
+
+msgid "Could not load the album: {}"
+msgstr "Nelze načíst album: {}"
+
+msgid "Could not load the artist: {}"
+msgstr "Nelze načíst umělce: {}"
+
+msgid "Could not load the charts: {}"
+msgstr "Nelze načíst žebříčky: {}"
+
+msgid "Could not load the folder: {}"
+msgstr "Nelze načíst složku: {}"
+
+msgid "Could not load the list: {}"
+msgstr "Nelze načíst seznam: {}"
+
+msgid "Could not load the playlist: {}"
+msgstr "Nelze načíst playlist: {}"
+
+msgid "Could not load the radio stations: {}"
+msgstr "Nelze načíst rozhlasové stanice: {}"
+
+msgid "Could not load the selection: {}"
+msgstr "Nelze načíst výběr: {}"
+
+msgid "Could not load this page: {}"
+msgstr "Tuto stránku nelze načíst: {}"
+
+msgid "Could not load tracks: {}"
+msgstr "Nelze načíst skladby: {}"
+
+msgid "Could not load your home: {}"
+msgstr "Nelze načíst vaši domovskou stránku: {}"
+
+msgid "Could not open the folder: {}"
+msgstr "Nelze otevřít složku: {}"
+
+msgid "Could not open YouTube Music: {}"
+msgstr "Nelze otevřít YouTube Music: {}"
+
+msgid "Could not play \"{}\" from YouTube: {}"
+msgstr "„{}“ nelze přehrát z YouTube: {}"
+
+msgid "Could not play album: {}"
+msgstr "Nelze přehrát album: {}"
+
+msgid "Could not play from YouTube: {}"
+msgstr "Nelze přehrát z YouTube: {}"
+
+msgid "Could not play the album: {}"
+msgstr "Album nelze přehrát: {}"
+
+msgid "Could not remove songs: {}"
+msgstr "Nelze odebrat skladby: {}"
+
+msgid "Could not rescan the library: {}"
+msgstr "Nelze znovu prohledat knihovnu: {}"
+
+msgid "Could not set the rating: {}"
+msgstr "Nelze nastavit hodnocení: {}"
+
+msgid "Could not sign in to YouTube Music ({}). Showing general picks instead."
+msgstr "Nelze se přihlásit do YouTube Music ({}). Místo toho se zobrazují obecné tipy."
+
+msgid "Could not switch server: {}"
+msgstr "Nelze přepnout server: {}"
+
+msgid "Could not update favorite: {}"
+msgstr "Nelze změnit oblíbenou položku: {}"
+
+msgid "Could not update favorites: {}"
+msgstr "Nelze aktualizovat oblíbené: {}"
+
+msgid "Could not update rating: {}"
+msgstr "Nelze aktualizovat hodnocení: {}"
+
+msgid "Could not update the favorite: {}"
+msgstr "Oblíbenou položku nelze změnit: {}"
+
+msgid "Country"
+msgstr "Země"
+
+msgid "Create"
+msgstr "Vytvořit"
+
+msgid "Created \"{}\" with only {n} song: {}"
+msgid_plural "Created \"{}\" with only {n} songs: {}"
+msgstr[0] "Playlist „{}“ byl vytvořen jen s {n} skladbou: {}"
+msgstr[1] "Playlist „{}“ byl vytvořen jen s {n} skladbami: {}"
+msgstr[2] "Playlist „{}“ byl vytvořen jen s {n} skladbami: {}"
+
+msgid "Created \"{}\" with {n} song"
+msgid_plural "Created \"{}\" with {n} songs"
+msgstr[0] "Playlist „{}“ byl vytvořen s {n} skladbou"
+msgstr[1] "Playlist „{}“ byl vytvořen s {n} skladbami"
+msgstr[2] "Playlist „{}“ byl vytvořen s {n} skladbami"
+
+msgid "Created playlist \"{}\""
+msgstr "Playlist „{}“ vytvořen"
+
+msgid "Creating a share link..."
+msgstr "Vytváření odkazu ke sdílení..."
+
+msgid "Creating..."
+msgstr "Vytváření..."
+
+msgid "Crossfade"
+msgstr "Křížové prolnutí"
+
+msgid "Crossfade could not be changed: {}"
+msgstr "Křížové prolnutí nelze změnit: {}"
+
+msgid "Crossfade: {}"
+msgstr "Křížové prolnutí: {}"
+
+msgid "Current"
+msgstr "Aktuální"
+
+msgid "Custom accent color: {} (theme accent in use)"
+msgstr "Vlastní barva zvýraznění: {} (používá se zvýraznění motivu)"
+
+msgid "Custom accent color: {}, press Enter to apply"
+msgstr "Vlastní barva zvýraznění: {}, potvrďte klávesou Enter"
+
+msgid "Dark theme"
+msgstr "Tmavý motiv"
+
+msgid "DARK THEMES"
+msgstr "TMAVÉ MOTIVY"
+
+msgid "Default country for the Discover charts. Automatic follows your system region."
+msgstr "Výchozí země pro žebříčky v sekci Objevovat. Automaticky se řídí oblastí systému."
+
+msgid "Default Dark"
+msgstr "Výchozí tmavý"
+
+msgid "Default Light"
+msgstr "Výchozí světlý"
+
+msgid "Delete"
+msgstr "Odstranit"
+
+msgid "Delete \"{}\" from the server? This cannot be undone."
+msgstr "Odstranit „{}“ ze serveru? Tuto akci nelze vrátit zpět."
+
+msgid "Delete \"{}\"? This cannot be undone."
+msgstr "Odstranit „{}“? Tuto akci nelze vrátit zpět."
+
+msgid "Delete playlist"
+msgstr "Odstranit playlist"
+
+msgid "Delete station"
+msgstr "Odstranit stanici"
+
+msgid "Delete {} from the server"
+msgstr "Odstranit {} ze serveru"
+
+msgid "Deleted playlist \"{}\""
+msgstr "Playlist „{}“ odstraněn"
+
+msgid "Deleting..."
+msgstr "Odstraňování..."
+
+msgid "Demo mode: these picks are made up and play from your demo library"
+msgstr "Ukázkový režim: tyto tipy jsou smyšlené a přehrávají se z ukázkové knihovny"
+
+msgid "Directory"
+msgstr "Katalog"
+
+msgid "Disc {}"
+msgstr "Disk {}"
+
+msgid "Discord Rich Presence"
+msgstr "Discord Rich Presence"
+
+msgid "Discover"
+msgstr "Objevovat"
+
+msgid "Discover is open"
+msgstr "Sekce Objevovat je otevřená"
+
+msgid "Discover new music on YouTube Music"
+msgstr "Objevujte novou hudbu na YouTube Music"
+
+msgid "Duration"
+msgstr "Trvání"
+
+msgid "Edit station"
+msgstr "Upravit stanici"
+
+msgid "Edit {}"
+msgstr "Upravit {}"
+
+msgid "End of current track"
+msgstr "Konec aktuální skladby"
+
+msgid "End of track"
+msgstr "Konec skladby"
+
+msgid "Enter a name for the station"
+msgstr "Zadejte název stanice"
+
+msgid "Enter a name, country or tag to search"
+msgstr "Zadejte název, zemi nebo štítek, který chcete hledat"
+
+msgid "Enter a stream URL that starts with http:// or https://"
+msgstr "Zadejte adresu streamu začínající http:// nebo https://"
+
+msgid "Enter the server URL"
+msgstr "Zadejte adresu URL serveru"
+
+msgid "Fade the end of each song into the next one. Off keeps gapless playback."
+msgstr "Plynule prolne konec každé skladby do další. Při vypnutí zůstane zachováno přehrávání bez mezer."
+
+msgid "Favorite"
+msgstr "Oblíbený"
+
+msgid "Favorited"
+msgstr "Oblíbené"
+
+msgid "Favorites"
+msgstr "Oblíbené"
+
+msgid "Favorites only: off"
+msgstr "Pouze oblíbené: vypnuto"
+
+msgid "Favorites only: on"
+msgstr "Pouze oblíbené: zapnuto"
+
+msgid "Filter"
+msgstr "Filtr"
+
+msgid "Filter playlists"
+msgstr "Filtrovat playlisty"
+
+msgid "Find stations by name, country or tag"
+msgstr "Hledat stanice podle názvu, země nebo štítku"
+
+msgid "Find stations in the radio-browser.info directory"
+msgstr "Hledat stanice v katalogu radio-browser.info"
+
+msgid "Folder"
+msgstr "Složka"
+
+msgid "Folders"
+msgstr "Složky"
+
+msgid "Follow current song"
+msgstr "Následovat aktuální skladbu"
+
+msgid "Follow system color scheme"
+msgstr "Řídit se barevným schématem systému"
+
+msgid "For you"
+msgstr "Pro vás"
+
+msgid "Forget this server?"
+msgstr "Zapomenout tento server?"
+
+msgid "Format the server should transcode to. Applies from the next song."
+msgstr "Formát, do kterého má server překódovat. Platí od další skladby."
+
+msgid "Found {n} server in Feishin but it has no usable saved login"
+msgid_plural "Found {n} servers in Feishin but none with a usable saved login"
+msgstr[0] "V aplikaci Feishin byl nalezen {n} server, ale nemá použitelné uložené přihlášení"
+msgstr[1] "V aplikaci Feishin byly nalezeny {n} servery, ale žádný nemá použitelné uložené přihlášení"
+msgstr[2] "V aplikaci Feishin bylo nalezeno {n} serverů, ale žádný nemá použitelné uložené přihlášení"
+
+msgid "Gapless playback"
+msgstr "Přehrávání bez mezer"
+
+msgid "Genres"
+msgstr "Žánry"
+
+msgid "Go back to {}"
+msgstr "Zpět na {}"
+
+msgid "Go to album"
+msgstr "Přejít na album"
+
+msgid "Go to artist"
+msgstr "Přejít na umělce"
+
+msgid "Go to {}"
+msgstr "Přejít na {}"
+
+msgid "Green"
+msgstr "Zelená"
+
+msgid "Hide lyrics"
+msgstr "Skrýt text"
+
+msgid "Hide queue"
+msgstr "Skrýt frontu"
+
+msgid "High Contrast Dark"
+msgstr "Vysoký kontrast tmavý"
+
+msgid "High Contrast Light"
+msgstr "Vysoký kontrast světlý"
+
+msgid "Highlight with the color that comes with the theme."
+msgstr "Zvýrazňovat barvou, kterou přináší motiv."
+
+msgid "Home"
+msgstr "Domů"
+
+msgid "Homepage (optional)"
+msgstr "Domovská stránka (nepovinné)"
+
+msgid "Import from Feishin"
+msgstr "Importovat z Feishin"
+
+msgid "Install yt-dlp to play YouTube tracks"
+msgstr "Pro přehrávání skladeb z YouTube nainstalujte yt-dlp"
+
+msgid "Integrations"
+msgstr "Integrace"
+
+msgid "Interface"
+msgstr "Rozhraní"
+
+msgid "Internet radio"
+msgstr "Internetové rádio"
+
+msgid "item"
+msgstr "položka"
+
+msgid "Jellyfin has no public share links"
+msgstr "Jellyfin nemá veřejné odkazy ke sdílení"
+
+msgid "Keep this station in the favorites on this device"
+msgstr "Ponechat tuto stanici v oblíbených na tomto zařízení"
+
+msgid "Language"
+msgstr "Jazyk"
+
+msgid "LIBRARY"
+msgstr "KNIHOVNA"
+
+msgid "Library scan finished"
+msgstr "Prohledávání knihovny dokončeno"
+
+msgid "Library scan finished: {n} item"
+msgid_plural "Library scan finished: {n} items"
+msgstr[0] "Prohledávání knihovny dokončeno: {n} položka"
+msgstr[1] "Prohledávání knihovny dokončeno: {n} položky"
+msgstr[2] "Prohledávání knihovny dokončeno: {n} položek"
+
+msgid "Light theme"
+msgstr "Světlý motiv"
+
+msgid "LIGHT THEMES"
+msgstr "SVĚTLÉ MOTIVY"
+
+msgid "Listening to {}"
+msgstr "Posloucháte: {}"
+
+msgid "LIVE"
+msgstr "ŽIVĚ"
+
+msgid "Load more"
+msgstr "Načíst další"
+
+msgid "Load this section again"
+msgstr "Znovu načíst tuto sekci"
+
+msgid "Loading playlists..."
+msgstr "Načítání playlistů..."
+
+msgid "Loading similar songs..."
+msgstr "Načítání podobných skladeb..."
+
+msgid "Loading stations..."
+msgstr "Načítání stanic..."
+
+msgid "Loading the next page of stations"
+msgstr "Načítání další stránky stanic"
+
+msgid "Loading..."
+msgstr "Načítání..."
+
+msgid "Log out"
+msgstr "Odhlásit se"
+
+msgid "Looking up the YouTube link..."
+msgstr "Hledání odkazu na YouTube..."
+
+msgid "Lyrics"
+msgstr "Texty"
+
+msgid "Lyrics from {}"
+msgstr "Text z: {}"
+
+msgid "Lyrics sources"
+msgstr "Zdroje textů"
+
+msgid "Maximum bitrate"
+msgstr "Maximální datový tok"
+
+msgid "Media keys and desktop media controls. Takes effect after a restart."
+msgstr "Multimediální klávesy a ovládání médií v prostředí. Projeví se po restartu."
+
+msgid "Moods and genres"
+msgstr "Nálady a žánry"
+
+msgid "Most played"
+msgstr "Nejvíce přehráváno"
+
+msgid "Move down"
+msgstr "Posunout dolů"
+
+msgid "Move up"
+msgstr "Posunout nahoru"
+
+msgid "MPRIS"
+msgstr "MPRIS"
+
+msgid "Mute"
+msgstr "Ztlumit"
+
+msgid "Name"
+msgstr "Název"
+
+msgid "New playlist"
+msgstr "Nový playlist"
+
+msgid "New releases"
+msgstr "Novinky"
+
+msgid "Next"
+msgstr "Další"
+
+msgid "Next is unavailable while a radio station plays"
+msgstr "Další skladba není při přehrávání rozhlasové stanice k dispozici"
+
+msgid "No albums"
+msgstr "Žádná alba"
+
+msgid "No albums found"
+msgstr "Nenalezena žádná alba"
+
+msgid "No artists found"
+msgstr "Nenalezeni žádní umělci"
+
+msgid "no browser is selected"
+msgstr "není vybrán žádný prohlížeč"
+
+msgid "No favorite albums"
+msgstr "Žádná oblíbená alba"
+
+msgid "No favorite artists"
+msgstr "Žádní oblíbení umělci"
+
+msgid "No favorite tracks"
+msgstr "Žádné oblíbené skladby"
+
+msgid "No genres found"
+msgstr "Nenalezeny žádné žánry"
+
+msgid "No lyrics found"
+msgstr "Nenalezeny žádné texty"
+
+msgid "No playlists found"
+msgstr "Nenalezeny žádné playlisty"
+
+msgid "No playlists yet"
+msgstr "Zatím žádné playlisty"
+
+msgid "No rating"
+msgstr "Bez hodnocení"
+
+msgid "No results for \"{}\""
+msgstr "Žádné výsledky pro „{}“"
+
+msgid "No saved login for {}; remove it and add it again"
+msgstr "Pro {} není uložené přihlášení; odeberte ho a přidejte znovu"
+
+msgid "No saved servers."
+msgstr "Žádné uložené servery."
+
+msgid "No similar songs found"
+msgstr "Nenalezeny žádné podobné skladby"
+
+msgid "No songs here"
+msgstr "Nejsou tu žádné skladby"
+
+msgid "No stations found"
+msgstr "Nenalezeny žádné stanice"
+
+msgid "No stations yet. Add one or find one in the directory."
+msgstr "Zatím žádné stanice. Přidejte stanici nebo ji najděte v katalogu."
+
+msgid "No tracks found"
+msgstr "Nenalezeny žádné skladby"
+
+msgid "None"
+msgstr "Žádný"
+
+msgid "Normalize loudness using the track or album gain tags."
+msgstr "Normalizovat hlasitost pomocí značek zisku skladby nebo alba."
+
+msgid "Not connected to a server"
+msgstr "Nepřipojeno k serveru"
+
+msgid "Nothing is playing"
+msgstr "Nic se nepřehrává"
+
+msgid "Nothing to add yet"
+msgstr "Zatím není co přidat"
+
+msgid "Nothing to go back to"
+msgstr "Není kam se vrátit"
+
+msgid "Nothing to play here"
+msgstr "Není tu co přehrát"
+
+msgid "Nothing to play yet"
+msgstr "Zatím není co přehrát"
+
+msgid "Nothing to show here right now"
+msgstr "Teď tu není co zobrazit"
+
+msgid "Off"
+msgstr "Vypnuto"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "On the server"
+msgstr "Na serveru"
+
+msgid "Only a server admin can rescan the library"
+msgstr "Knihovnu může znovu prohledat jen správce serveru"
+
+msgid "Only loaded tracks can be shared: select fewer tracks or scroll through them first"
+msgstr "Sdílet lze jen načtené skladby: vyberte méně skladeb nebo je nejdřív projděte posouváním"
+
+msgid "Open"
+msgstr "Otevřít"
+
+msgid "Open in YouTube Music"
+msgstr "Otevřít v YouTube Music"
+
+msgid "Open now playing"
+msgstr "Otevřít Právě hraje"
+
+msgid "Open radio"
+msgstr "Otevřít rádio"
+
+msgid "Open the album \"{}\""
+msgstr "Otevřít album „{}“"
+
+msgid "Open the playlist \"{}\""
+msgstr "Otevřít playlist „{}“"
+
+msgid "Open the queue panel"
+msgstr "Otevřít panel fronty"
+
+msgid "Open {}"
+msgstr "Otevřít {}"
+
+msgid "Original"
+msgstr "Původní"
+
+msgid "Output used by the player."
+msgstr "Výstup používaný přehrávačem."
+
+msgid "Owner"
+msgstr "Vlastník"
+
+msgid "Password"
+msgstr "Heslo"
+
+msgid "Paste a link first"
+msgstr "Nejdřív vložte odkaz"
+
+msgid "Paste a YouTube or YouTube Music link first"
+msgstr "Nejdřív vložte odkaz na YouTube nebo YouTube Music"
+
+msgid "Paste a YouTube or YouTube Music link to try yt-dlp."
+msgstr "Vložte odkaz na YouTube nebo YouTube Music a vyzkoušejte yt-dlp."
+
+msgid "Pause"
+msgstr "Pozastavit"
+
+msgid "Pause the radio station"
+msgstr "Pozastavit rozhlasovou stanici"
+
+msgid "Personalized with your YouTube Music account from {}"
+msgstr "Přizpůsobeno podle vašeho účtu YouTube Music z prohlížeče {}"
+
+msgid "Pick a color, or type one as #rrggbb and press Enter."
+msgstr "Vyberte barvu nebo ji zadejte jako #rrggbb a stiskněte Enter."
+
+msgid "Pick a mood or genre to see its playlists"
+msgstr "Vyberte náladu nebo žánr a zobrazte jeho playlisty"
+
+msgid "Play"
+msgstr "Přehrát"
+
+msgid "Play \"{}\" and the rest of this shelf"
+msgstr "Přehrát „{}“ a zbytek této řady"
+
+msgid "Play a YouTube link"
+msgstr "Přehrát odkaz z YouTube"
+
+msgid "Play album"
+msgstr "Přehrát album"
+
+msgid "Play all"
+msgstr "Přehrát vše"
+
+msgid "Play all {n} song"
+msgid_plural "Play all {n} songs"
+msgstr[0] "Přehrát {n} skladbu"
+msgstr[1] "Přehrát všechny {n} skladby"
+msgstr[2] "Přehrát všech {n} skladeb"
+
+msgid "Play count"
+msgstr "Počet přehrání"
+
+msgid "Play every song in {} and its subfolders"
+msgstr "Přehrát všechny skladby ve složce {} a jejích podsložkách"
+
+msgid "Play from here"
+msgstr "Přehrát odsud"
+
+msgid "Play from this song"
+msgstr "Přehrát od této skladby"
+
+msgid "Play from {}"
+msgstr "Přehrát od: {}"
+
+msgid "Play next"
+msgstr "Přehrát jako další"
+
+msgid "Play the album"
+msgstr "Přehrát toto album"
+
+msgid "Play the playlist"
+msgstr "Přehrát tento playlist"
+
+msgid "Play the radio station"
+msgstr "Přehrát rozhlasovou stanici"
+
+msgid "Play this link after the current song"
+msgstr "Přehrát tento odkaz po aktuální skladbě"
+
+msgid "Play this link now"
+msgstr "Přehrát tento odkaz hned"
+
+msgid "Play {}"
+msgstr "Přehrát {}"
+
+msgid "Play {} next"
+msgstr "Přehrát {} jako další"
+
+msgid "Play {} with its subfolders"
+msgstr "Přehrát {} i s podsložkami"
+
+msgid "Playback"
+msgstr "Přehrávání"
+
+msgid "Playback failed: {}"
+msgstr "Přehrávání selhalo: {}"
+
+msgid "Playing {} failed: {}"
+msgstr "Přehrávání {} selhalo: {}"
+
+msgid "PLAYLIST"
+msgstr "PLAYLIST"
+
+msgid "Playlist"
+msgstr "Playlist"
+
+msgid "playlist"
+msgstr "playlist"
+
+msgid "Playlist name"
+msgstr "Název playlistu"
+
+msgid "Playlists"
+msgstr "Playlisty"
+
+msgid "Plays"
+msgstr "Přehrání"
+
+msgid "Plays YouTube tracks. Leave empty to use yt-dlp from your PATH."
+msgstr "Přehrává skladby z YouTube. Ponechte prázdné, chcete-li použít yt-dlp z PATH."
+
+msgid "Preload the next song so it starts without a pause."
+msgstr "Předem načíst další skladbu, aby začala bez pauzy."
+
+msgid "Previous"
+msgstr "Předchozí"
+
+msgid "Previous is unavailable while a radio station plays"
+msgstr "Předchozí skladba není při přehrávání rozhlasové stanice k dispozici"
+
+msgid "Purple"
+msgstr "Fialová"
+
+msgid "Queue"
+msgstr "Fronta"
+
+msgid "Radio"
+msgstr "Rádio"
+
+msgid "Random"
+msgstr "Náhodně"
+
+msgid "Rate {n} star"
+msgid_plural "Rate {n} stars"
+msgstr[0] "Ohodnotit {n} hvězdičkou"
+msgstr[1] "Ohodnotit {n} hvězdičkami"
+msgstr[2] "Ohodnotit {n} hvězdičkami"
+
+msgid "Rating"
+msgstr "Hodnocení"
+
+msgid "Recently added"
+msgstr "Nedávno přidáno"
+
+msgid "Recently played"
+msgstr "Nedávno přehráno"
+
+msgid "Red"
+msgstr "Červená"
+
+msgid "Refresh"
+msgstr "Obnovit"
+
+msgid "Refresh this section"
+msgstr "Obnovit tuto sekci"
+
+msgid "Release year"
+msgstr "Rok vydání"
+
+msgid "Remove"
+msgstr "Odstranit"
+
+msgid "Remove from favorites"
+msgstr "Odebrat z oblíbených"
+
+msgid "Remove from playlist"
+msgstr "Odebrat z playlistu"
+
+msgid "Remove from queue"
+msgstr "Odebrat z fronty"
+
+msgid "Removed {n} song from \"{}\""
+msgid_plural "Removed {n} songs from \"{}\""
+msgstr[0] "Z „{}“ byla odebrána {n} skladba"
+msgstr[1] "Z „{}“ byly odebrány {n} skladby"
+msgstr[2] "Z „{}“ bylo odebráno {n} skladeb"
+
+msgid "Removing..."
+msgstr "Odebírání..."
+
+msgid "Repeat: all"
+msgstr "Opakování: vše"
+
+msgid "Repeat: off"
+msgstr "Opakování: vypnuto"
+
+msgid "Repeat: one"
+msgstr "Opakování: jedna"
+
+msgid "ReplayGain"
+msgstr "ReplayGain"
+
+msgid "Report what you play to the server."
+msgstr "Hlásit serveru, co posloucháte."
+
+msgid "Rescan the library for new content"
+msgstr "Prohledat knihovnu a najít nový obsah"
+
+msgid "Resize column"
+msgstr "Změnit šířku sloupce"
+
+msgid "Save"
+msgstr "Uložit"
+
+msgid "Save on this device"
+msgstr "Uložit na tomto zařízení"
+
+msgid "Save the changes on the server"
+msgstr "Uložit změny na serveru"
+
+msgid "Save the changes on this device"
+msgstr "Uložit změny na tomto zařízení"
+
+msgid "Save to favorites on this device"
+msgstr "Uložit do oblíbených na tomto zařízení"
+
+msgid "Save to server"
+msgstr "Uložit na server"
+
+msgid "Saved on this device"
+msgstr "Uloženo na tomto zařízení"
+
+msgid "Saved on this device, click to remove"
+msgstr "Uloženo na tomto zařízení, kliknutím odeberete"
+
+msgid "Saving the station to the server..."
+msgstr "Ukládání stanice na server..."
+
+msgid "Saving to the server..."
+msgstr "Ukládání na server..."
+
+msgid "Saving..."
+msgstr "Ukládání..."
+
+msgid "Scanning the library for new content..."
+msgstr "Prohledávání knihovny a hledání nového obsahu..."
+
+msgid "Scanning the library: {}"
+msgstr "Prohledávání knihovny: {}"
+
+msgid "Scrobble"
+msgstr "Scrobblování"
+
+msgid "Scroll left"
+msgstr "Posunout doleva"
+
+msgid "Scroll lists and the queue to the song that is playing."
+msgstr "Posouvat seznamy a frontu na právě hranou skladbu."
+
+msgid "Scroll right"
+msgstr "Posunout doprava"
+
+msgid "Search"
+msgstr "Hledat"
+
+msgid "Search failed: {}"
+msgstr "Hledání selhalo: {}"
+
+msgid "SEARCH RESULTS"
+msgstr "VÝSLEDKY HLEDÁNÍ"
+
+msgid "Search songs on YouTube Music"
+msgstr "Hledat skladby na YouTube Music"
+
+msgid "Search songs, albums, artists"
+msgstr "Hledat skladby, alba, umělce"
+
+msgid "Search the radio-browser.info directory"
+msgstr "Prohledat katalog radio-browser.info"
+
+msgid "Search your library for songs, albums and artists"
+msgstr "Hledat v knihovně skladby, alba a umělce"
+
+msgid "Searched from top to bottom until one has lyrics."
+msgstr "Prohledávají se shora dolů, dokud některý nenajde text."
+
+msgid "Searching for lyrics..."
+msgstr "Hledání textu..."
+
+msgid "Searching the radio directory failed: {}"
+msgstr "Prohledávání katalogu rádií selhalo: {}"
+
+msgid "Searching the radio-browser.info directory"
+msgstr "Prohledávání katalogu radio-browser.info"
+
+msgid "Searching..."
+msgstr "Hledání..."
+
+msgid "Seeking is unavailable for live radio"
+msgstr "U živého rádia nelze přetáčet"
+
+msgid "Server"
+msgstr "Server"
+
+msgid "Server type"
+msgstr "Typ serveru"
+
+msgid "Servers"
+msgstr "Servery"
+
+msgid "Set rating"
+msgstr "Nastavit hodnocení"
+
+msgid "Settings"
+msgstr "Nastavení"
+
+msgid "Share"
+msgstr "Sdílet"
+
+msgid "Share ({})"
+msgstr "Sdílet ({})"
+
+msgid "Share link copied to the clipboard: {}"
+msgstr "Odkaz ke sdílení zkopírován do schránky: {}"
+
+msgid "Share this {}: copy a public link"
+msgstr "Sdílet ({}): zkopírovat veřejný odkaz"
+
+msgid "Sharing is unavailable: {}"
+msgstr "Sdílení není k dispozici: {}"
+
+msgid "SHOW LESS"
+msgstr "ZOBRAZIT MÉNĚ"
+
+msgid "Show lyrics"
+msgstr "Zobrazit text"
+
+msgid "SHOW MORE"
+msgstr "ZOBRAZIT VÍCE"
+
+msgid "Show more"
+msgstr "Zobrazit více"
+
+msgid "Show playlists for {}"
+msgstr "Zobrazit playlisty: {}"
+
+msgid "Show queue"
+msgstr "Zobrazit frontu"
+
+msgid "Show the current song on your Discord profile."
+msgstr "Zobrazovat aktuální skladbu ve vašem profilu Discord."
+
+msgid "Show the next page of stations"
+msgstr "Zobrazit další stránku stanic"
+
+msgid "Show the queue next to the library; remembered on the next start."
+msgstr "Zobrazovat frontu vedle knihovny; zapamatuje se pro další spuštění."
+
+msgid "Show the server and saved stations"
+msgstr "Zobrazit stanice serveru a uložené stanice"
+
+msgid "Show {}"
+msgstr "Zobrazit: {}"
+
+msgid "Showing playlists for {}"
+msgstr "Zobrazeny playlisty: {}"
+
+msgid "Showing the charts for {}"
+msgstr "Zobrazeny žebříčky: {}"
+
+msgid "Showing the radio-browser.info directory"
+msgstr "Zobrazuje se katalog radio-browser.info"
+
+msgid "Showing the server and saved stations"
+msgstr "Zobrazují se stanice serveru a uložené stanice"
+
+msgid "Shuffle"
+msgstr "Náhodně"
+
+msgid "Shuffle every song in {} and its subfolders"
+msgstr "Náhodně přehrát všechny skladby ve složce {} a jejích podsložkách"
+
+msgid "Shuffle play"
+msgstr "Přehrát náhodně"
+
+msgid "Shuffle: off"
+msgstr "Náhodně: vypnuto"
+
+msgid "Shuffle: on"
+msgstr "Náhodně: zapnuto"
+
+msgid "Sign in"
+msgstr "Přihlásit se"
+
+msgid "Sign in with browser"
+msgstr "Přihlásit se přes prohlížeč"
+
+msgid "Sign out and forget this server's saved login?"
+msgstr "Odhlásit se a zapomenout uložené přihlášení k tomuto serveru?"
+
+msgid "Sign out and forget this server?"
+msgstr "Odhlásit se a zapomenout tento server?"
+
+msgid "Similar"
+msgstr "Podobné"
+
+msgid "Similar songs come from your server, so YouTube tracks have none"
+msgstr "Podobné skladby pocházejí z vašeho serveru, takže skladby z YouTube žádné nemají"
+
+msgid "Sleep timer: off"
+msgstr "Časovač vypnutí: vypnuto"
+
+msgid "Sleep timer: {}"
+msgstr "Časovač vypnutí: {}"
+
+msgid "Song count"
+msgstr "Počet skladeb"
+
+msgid "Songs"
+msgstr "Skladby"
+
+msgid "Sort by {}"
+msgstr "Seřadit podle: {}"
+
+msgid "Sort by {}: ascending"
+msgstr "Seřadit podle: {}, vzestupně"
+
+msgid "Sort by {}: descending"
+msgstr "Seřadit podle: {}, sestupně"
+
+msgid "Sort: ascending"
+msgstr "Řazení: vzestupně"
+
+msgid "Sort: descending"
+msgstr "Řazení: sestupně"
+
+msgid "Starting volume, shared with the player bar."
+msgstr "Počáteční hlasitost, sdílená s lištou přehrávače."
+
+msgid "Station data from radio-browser.info"
+msgstr "Data stanic z radio-browser.info"
+
+msgid "Station name"
+msgstr "Název stanice"
+
+msgid "Stations"
+msgstr "Stanice"
+
+msgid "Stop {}"
+msgstr "Zastavit {}"
+
+msgid "Stream URL"
+msgstr "Adresa streamu"
+
+msgid "Switch"
+msgstr "Přepnout"
+
+msgid "Switch between a dark and a light theme with the desktop. {}"
+msgstr "Přepínat mezi tmavým a světlým motivem podle prostředí. {}"
+
+msgid "Switch to grid view"
+msgstr "Přepnout na zobrazení mřížky"
+
+msgid "Switch to list view"
+msgstr "Přepnout na zobrazení seznamu"
+
+msgid "System default"
+msgstr "Podle systému"
+
+msgid "System default follows the language of the desktop."
+msgstr "Podle systému znamená jazyk prostředí."
+
+msgid "Tag, for example jazz"
+msgstr "Štítek, například jazz"
+
+msgid "The desktop currently prefers dark."
+msgstr "Prostředí aktuálně upřednostňuje tmavý motiv."
+
+msgid "The desktop currently prefers light."
+msgstr "Prostředí aktuálně upřednostňuje světlý motiv."
+
+msgid "The desktop has no preference, so the dark theme is used."
+msgstr "Prostředí nemá žádnou preferenci, proto se použije tmavý motiv."
+
+msgid "The library scan is still running on the server"
+msgstr "Prohledávání knihovny na serveru stále probíhá"
+
+msgid "The queue is empty"
+msgstr "Fronta je prázdná"
+
+msgid "The queue is incomplete: loading the rest of the list failed ({})"
+msgstr "Fronta je neúplná: načtení zbytku seznamu selhalo ({})"
+
+msgid "The radio directory could not be reached"
+msgstr "Katalog rádií není dostupný"
+
+msgid "The radio station stopped streaming"
+msgstr "Rozhlasová stanice přestala vysílat"
+
+msgid "The server refused the station: {}"
+msgstr "Server stanici odmítl: {}"
+
+msgid "Theme"
+msgstr "Motiv"
+
+msgid "There is nothing to play in this list"
+msgstr "V tomto seznamu není co přehrát"
+
+msgid "This Discover page does not exist"
+msgstr "Tato stránka sekce Objevovat neexistuje"
+
+msgid "This folder is empty"
+msgstr "Tato složka je prázdná"
+
+msgid "This playlist is empty"
+msgstr "Tento playlist je prázdný"
+
+msgid "This server has no internet radio. Stations you add are saved on this device."
+msgstr "Tento server nemá internetové rádio. Přidané stanice se ukládají na tomto zařízení."
+
+msgid "this server has no public share links"
+msgstr "tento server nemá veřejné odkazy ke sdílení"
+
+msgid "Time"
+msgstr "Čas"
+
+msgid "Title"
+msgstr "Název"
+
+msgid "Top songs"
+msgstr "Nejlepší skladby"
+
+msgid "Track"
+msgstr "Skladba"
+
+msgid "Tracks"
+msgstr "Skladby"
+
+msgid "Transcode format"
+msgstr "Formát překódování"
+
+msgid "Try again"
+msgstr "Zkusit znovu"
+
+msgid "Turn off the theme accent color to pick your own."
+msgstr "Chcete-li vybrat vlastní barvu, vypněte barvu zvýraznění motivu."
+
+msgid "Unmute"
+msgstr "Zrušit ztlumení"
+
+msgid "Up next"
+msgstr "Další"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "Use the theme accent color"
+msgstr "Použít barvu zvýraznění motivu"
+
+msgid "Use {}"
+msgstr "Použít motiv {}"
+
+msgid "Used while the desktop prefers dark."
+msgstr "Použije se, když prostředí upřednostňuje tmavý motiv."
+
+msgid "Used while the desktop prefers light."
+msgstr "Použije se, když prostředí upřednostňuje světlý motiv."
+
+msgid "Username"
+msgstr "Uživatelské jméno"
+
+msgid "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Feishin deletes right after reading."
+msgstr "Používá vaši relaci YouTube v tomto prohlížeči pro přizpůsobenou domovskou stránku Objevovat a zvuk Premium. yt-dlp zkopíruje jeho soubory cookie do soukromého dočasného souboru, který Feishin hned po přečtení smaže."
+
+msgid "Volume"
+msgstr "Hlasitost"
+
+msgid "Volume {}%"
+msgstr "Hlasitost {} %"
+
+msgid "XDG_RUNTIME_DIR is not set, so there is no private place for the cookies"
+msgstr "Proměnná XDG_RUNTIME_DIR není nastavena, takže pro soubory cookie neexistuje soukromé místo"
+
+msgid "Year"
+msgstr "Rok"
+
+msgid "You are here: {}"
+msgstr "Jste zde: {}"
+
+msgid "Your user is not allowed to share on this server"
+msgstr "Váš uživatel nemá na tomto serveru oprávnění sdílet"
+
+msgid "YouTube"
+msgstr "YouTube"
+
+msgid "YouTube albums are not in your library"
+msgstr "Alba z YouTube nejsou ve vaší knihovně"
+
+msgid "YouTube artists are not in your library"
+msgstr "Umělci z YouTube nejsou ve vaší knihovně"
+
+msgid "yt-dlp program"
+msgstr "Program yt-dlp"
+
+msgid "{n} album"
+msgid_plural "{n} albums"
+msgstr[0] "{n} album"
+msgstr[1] "{n} alba"
+msgstr[2] "{n} alb"
+
+msgid "{n} folder"
+msgid_plural "{n} folders"
+msgstr[0] "{n} složka"
+msgstr[1] "{n} složky"
+msgstr[2] "{n} složek"
+
+msgid "{n} item so far"
+msgid_plural "{n} items so far"
+msgstr[0] "Zatím {n} položka"
+msgstr[1] "Zatím {n} položky"
+msgstr[2] "Zatím {n} položek"
+
+msgid "{n} minute"
+msgid_plural "{n} minutes"
+msgstr[0] "{n} minuta"
+msgstr[1] "{n} minuty"
+msgstr[2] "{n} minut"
+
+msgid "{n} selected"
+msgid_plural "{n} selected"
+msgstr[0] "{n} vybraná"
+msgstr[1] "{n} vybrané"
+msgstr[2] "{n} vybraných"
+
+msgid "{n} song"
+msgid_plural "{n} songs"
+msgstr[0] "{n} skladba"
+msgstr[1] "{n} skladby"
+msgstr[2] "{n} skladeb"
+
+msgid "{n} song from \"{}\" will play next"
+msgid_plural "{n} songs from \"{}\" will play next"
+msgstr[0] "{n} skladba z „{}“ se přehraje jako další"
+msgstr[1] "{n} skladby z „{}“ se přehrají jako další"
+msgstr[2] "{n} skladeb z „{}“ se přehraje jako další"
+
+msgid "{n} song on YouTube Music"
+msgid_plural "{n} songs on YouTube Music"
+msgstr[0] "{n} skladba na YouTube Music"
+msgstr[1] "{n} skladby na YouTube Music"
+msgstr[2] "{n} skladeb na YouTube Music"
+
+msgid "{n} song will play next"
+msgid_plural "{n} songs will play next"
+msgstr[0] "{n} skladba se přehraje jako další"
+msgstr[1] "{n} skladby se přehrají jako další"
+msgstr[2] "{n} skladeb se přehraje jako další"
+
+msgid "{} (current theme)"
+msgstr "{} (aktuální motiv)"
+
+msgid "{} (unavailable)"
+msgstr "{} (nedostupné)"
+
+msgid "{} at {}"
+msgstr "{} na {}"
+
+msgid "{} cannot be played: its stream address is not an internet stream"
+msgstr "{} nelze přehrát: adresa streamu není internetový stream"
+
+msgid "{} is shown"
+msgstr "Zobrazeno: {}"
+
+msgid "{} kbps"
+msgstr "{} kbps"
+
+msgid "{} s"
+msgstr "{} s"
+
+msgid "{}: off"
+msgstr "{}: vypnuto"
+
+msgid "{}: on"
+msgstr "{}: zapnuto"
+
+msgid "{}: {} (dark)"
+msgstr "{}: {} (tmavý)"
+
+msgid "{}: {} (light)"
+msgstr "{}: {} (světlý)"

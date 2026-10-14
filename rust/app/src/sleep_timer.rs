@@ -104,7 +104,7 @@ fn sleep_label(status: SleepStatus) -> String {
         SleepStatus::Remaining { remaining_ms } => {
             format_duration(remaining_ms.div_ceil(MS_PER_SECOND) * MS_PER_SECOND)
         }
-        SleepStatus::EndOfTrack => "End of track".into(),
+        SleepStatus::EndOfTrack => tr!("End of track"),
     }
 }
 

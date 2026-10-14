@@ -1,0 +1,1498 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: th\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+
+msgid "\"{}\" plays next"
+msgstr "\"{}\" จะเล่นเป็นเพลงถัดไป"
+
+msgid "\"{}\" will play next"
+msgstr "\"{}\" จะเล่นต่อจากนี้"
+
+msgid "1 star"
+msgstr "1 ดาว"
+
+msgid "2 stars"
+msgstr "2 ดาว"
+
+msgid "3 stars"
+msgstr "3 ดาว"
+
+msgid "4 stars"
+msgstr "4 ดาว"
+
+msgid "5 stars"
+msgstr "5 ดาว"
+
+msgid "About {}"
+msgstr "เกี่ยวกับ {}"
+
+msgid "Accent color"
+msgstr "สีเน้น"
+
+msgid "Accent color not changed: {}."
+msgstr "ไม่ได้เปลี่ยนสีเน้น: {}"
+
+msgid "Accent color {}"
+msgstr "สีเน้น {}"
+
+msgid "Accent color {} (selected)"
+msgstr "สีเน้น {} (เลือกอยู่)"
+
+msgid "Accent color {} (theme accent in use)"
+msgstr "สีเน้น {} (กำลังใช้สีเน้นของธีม)"
+
+msgid "Add a station by its stream URL"
+msgstr "เพิ่มสถานีด้วย URL สตรีม"
+
+msgid "Add all songs to the queue"
+msgstr "เพิ่มเพลงทั้งหมดลงในคิว"
+
+msgid "Add server"
+msgstr "เพิ่มเซิร์ฟเวอร์"
+
+msgid "Add station"
+msgstr "เพิ่มสถานี"
+
+msgid "Add this link to the end of the queue"
+msgstr "เพิ่มลิงก์นี้ไว้ท้ายคิว"
+
+msgid "Add this station to the server for every client"
+msgstr "เพิ่มสถานีนี้ลงในเซิร์ฟเวอร์เพื่อให้ใช้ได้กับทุกไคลเอนต์"
+
+msgid "Add to favorites"
+msgstr "เพิ่มในรายการโปรด"
+
+msgid "Add to playlist"
+msgstr "เพิ่มลงในเพลย์ลิสต์"
+
+msgid "Add to queue"
+msgstr "เพิ่มลงในคิว"
+
+msgid "Add to the server's stations"
+msgstr "เพิ่มลงในสถานีของเซิร์ฟเวอร์"
+
+msgid "Add {n} song to playlist"
+msgid_plural "Add {n} songs to playlist"
+msgstr[0] "เพิ่ม {n} เพลงลงในเพลย์ลิสต์"
+
+msgid "Add {} to the queue"
+msgstr "เพิ่ม {} ลงในคิว"
+
+msgid "Added \"{}\" to the queue"
+msgstr "เพิ่ม \"{}\" ลงในคิวแล้ว"
+
+msgid "Added only {n} song to \"{}\": {}"
+msgid_plural "Added only {n} songs to \"{}\": {}"
+msgstr[0] "เพิ่มลงใน \"{}\" ได้เพียง {n} เพลง: {}"
+
+msgid "Added {n} song from \"{}\" to the queue"
+msgid_plural "Added {n} songs from \"{}\" to the queue"
+msgstr[0] "เพิ่ม {n} เพลงจาก \"{}\" ลงในคิวแล้ว"
+
+msgid "Added {n} song to \"{}\""
+msgid_plural "Added {n} songs to \"{}\""
+msgstr[0] "เพิ่ม {n} เพลงลงใน \"{}\" แล้ว"
+
+msgid "Added {n} song to the queue"
+msgid_plural "Added {n} songs to the queue"
+msgstr[0] "เพิ่ม {n} เพลงลงในคิวแล้ว"
+
+msgid "Adding to \"{}\": {} of {n} song"
+msgid_plural "Adding to \"{}\": {} of {n} songs"
+msgstr[0] "กำลังเพิ่มลงใน \"{}\": {} จาก {n} เพลง"
+
+msgid "ALBUM"
+msgstr "อัลบั้ม"
+
+msgid "Album"
+msgstr "อัลบั้ม"
+
+msgid "album"
+msgstr "อัลบั้ม"
+
+msgid "Album artist"
+msgstr "ศิลปินอัลบั้ม"
+
+msgid "Album count"
+msgstr "จำนวนอัลบั้ม"
+
+msgid "Album not found"
+msgstr "ไม่พบอัลบั้ม"
+
+msgid "Albums"
+msgstr "อัลบั้ม"
+
+msgid "All genres"
+msgstr "ทุกแนวเพลง"
+
+msgid "Already at the end"
+msgstr "อยู่ที่ท้ายสุดแล้ว"
+
+msgid "Already at the start"
+msgstr "อยู่ที่ต้นสุดแล้ว"
+
+msgid "Already in \"{}\""
+msgstr "มีอยู่ใน \"{}\" แล้ว"
+
+msgid "Already on the server"
+msgstr "มีอยู่บนเซิร์ฟเวอร์แล้ว"
+
+msgid "Amber"
+msgstr "สีอำพัน"
+
+msgid "Appearance"
+msgstr "รูปลักษณ์"
+
+msgid "ARTIST"
+msgstr "ศิลปิน"
+
+msgid "Artist"
+msgstr "ศิลปิน"
+
+msgid "Artists"
+msgstr "ศิลปิน"
+
+msgid "Ask the server to transcode down to this bitrate. Applies from the next song."
+msgstr "ขอให้เซิร์ฟเวอร์แปลงไฟล์ลงมาที่บิตเรตนี้ มีผลตั้งแต่เพลงถัดไป"
+
+msgid "Audio device"
+msgstr "อุปกรณ์เสียง"
+
+msgid "Automatic ({})"
+msgstr "อัตโนมัติ ({})"
+
+msgid "Back"
+msgstr "ย้อนกลับ"
+
+msgid "Blue"
+msgstr "สีน้ำเงิน"
+
+msgid "by {}"
+msgstr "โดย {}"
+
+msgid "Cancel"
+msgstr "ยกเลิก"
+
+msgid "Cancel timer"
+msgstr "ยกเลิกตัวจับเวลา"
+
+msgid "Cannot share: {}"
+msgstr "แบ่งปันไม่ได้: {}"
+
+msgid "Chart country"
+msgstr "ประเทศของชาร์ต"
+
+msgid "Charts"
+msgstr "ชาร์ต"
+
+msgid "Choose a browser under Settings, YouTube to sign in for a personalized home"
+msgstr "เลือกเบราว์เซอร์ในการตั้งค่า > YouTube เพื่อลงชื่อเข้าใช้และรับหน้าแรกที่ปรับให้เหมาะกับคุณ"
+
+msgid "Clear"
+msgstr "ล้าง"
+
+msgid "Clear filters"
+msgstr "ล้างตัวกรอง"
+
+msgid "Clear rating"
+msgstr "ล้างคะแนน"
+
+msgid "Clear the favorites and genre filters"
+msgstr "ล้างตัวกรองรายการโปรดและแนวเพลง"
+
+msgid "Close"
+msgstr "ปิด"
+
+msgid "Close now playing"
+msgstr "ปิดหน้ากำลังเล่น"
+
+msgid "Close without saving"
+msgstr "ปิดโดยไม่บันทึก"
+
+msgid "Colors used across the whole app."
+msgstr "สีที่ใช้ทั่วทั้งแอป"
+
+msgid "Connect to your music server"
+msgstr "เชื่อมต่อกับเซิร์ฟเวอร์เพลงของคุณ"
+
+msgid "Connecting..."
+msgstr "กำลังเชื่อมต่อ..."
+
+msgid "Could not add to \"{}\": {}"
+msgstr "เพิ่มลงใน \"{}\" ไม่ได้: {}"
+
+msgid "Could not add {} to the server"
+msgstr "เพิ่ม {} ลงในเซิร์ฟเวอร์ไม่ได้"
+
+msgid "Could not create a share link: {}"
+msgstr "สร้างลิงก์แบ่งปันไม่ได้: {}"
+
+msgid "Could not create the playlist: {}"
+msgstr "สร้างเพลย์ลิสต์ไม่ได้: {}"
+
+msgid "Could not delete the playlist: {}"
+msgstr "ลบเพลย์ลิสต์ไม่ได้: {}"
+
+msgid "Could not delete the station"
+msgstr "ลบสถานีไม่ได้"
+
+msgid "Could not load albums: {}"
+msgstr "โหลดอัลบั้มไม่ได้: {}"
+
+msgid "Could not load artists: {}"
+msgstr "โหลดศิลปินไม่ได้: {}"
+
+msgid "Could not load Discover: {}"
+msgstr "โหลดหน้าสำรวจไม่ได้: {}"
+
+msgid "Could not load genres: {}"
+msgstr "โหลดแนวเพลงไม่ได้: {}"
+
+msgid "Could not load it from YouTube Music: {}"
+msgstr "โหลดจาก YouTube Music ไม่ได้: {}"
+
+msgid "Could not load lyrics"
+msgstr "โหลดเนื้อเพลงไม่ได้"
+
+msgid "Could not load moods and genres: {}"
+msgstr "โหลดอารมณ์และแนวเพลงไม่ได้: {}"
+
+msgid "Could not load more results: {}"
+msgstr "โหลดผลลัพธ์เพิ่มเติมไม่ได้: {}"
+
+msgid "Could not load new releases: {}"
+msgstr "โหลดเพลงใหม่ไม่ได้: {}"
+
+msgid "Could not load playlists: {}"
+msgstr "โหลดเพลย์ลิสต์ไม่ได้: {}"
+
+msgid "Could not load the album: {}"
+msgstr "โหลดอัลบั้มไม่ได้: {}"
+
+msgid "Could not load the artist: {}"
+msgstr "โหลดศิลปินไม่ได้: {}"
+
+msgid "Could not load the charts: {}"
+msgstr "โหลดชาร์ตไม่ได้: {}"
+
+msgid "Could not load the folder: {}"
+msgstr "โหลดโฟลเดอร์ไม่ได้: {}"
+
+msgid "Could not load the list: {}"
+msgstr "โหลดรายการไม่ได้: {}"
+
+msgid "Could not load the playlist: {}"
+msgstr "โหลดเพลย์ลิสต์ไม่ได้: {}"
+
+msgid "Could not load the radio stations: {}"
+msgstr "โหลดสถานีวิทยุไม่ได้: {}"
+
+msgid "Could not load the selection: {}"
+msgstr "โหลดรายการที่เลือกไม่ได้: {}"
+
+msgid "Could not load this page: {}"
+msgstr "โหลดหน้านี้ไม่ได้: {}"
+
+msgid "Could not load tracks: {}"
+msgstr "โหลดแทร็กไม่ได้: {}"
+
+msgid "Could not load your home: {}"
+msgstr "โหลดหน้าแรกไม่ได้: {}"
+
+msgid "Could not open the folder: {}"
+msgstr "เปิดโฟลเดอร์ไม่ได้: {}"
+
+msgid "Could not open YouTube Music: {}"
+msgstr "เปิด YouTube Music ไม่ได้: {}"
+
+msgid "Could not play \"{}\" from YouTube: {}"
+msgstr "เล่น \"{}\" จาก YouTube ไม่ได้: {}"
+
+msgid "Could not play album: {}"
+msgstr "เล่นอัลบั้มไม่ได้: {}"
+
+msgid "Could not play from YouTube: {}"
+msgstr "เล่นจาก YouTube ไม่ได้: {}"
+
+msgid "Could not play the album: {}"
+msgstr "เล่นอัลบั้มไม่ได้: {}"
+
+msgid "Could not remove songs: {}"
+msgstr "นำเพลงออกไม่ได้: {}"
+
+msgid "Could not rescan the library: {}"
+msgstr "สแกนคลังเพลงใหม่ไม่ได้: {}"
+
+msgid "Could not set the rating: {}"
+msgstr "ให้คะแนนไม่ได้: {}"
+
+msgid "Could not sign in to YouTube Music ({}). Showing general picks instead."
+msgstr "ลงชื่อเข้าใช้ YouTube Music ไม่ได้ ({}) จึงแสดงรายการแนะนำทั่วไปแทน"
+
+msgid "Could not switch server: {}"
+msgstr "สลับเซิร์ฟเวอร์ไม่ได้: {}"
+
+msgid "Could not update favorite: {}"
+msgstr "อัปเดตรายการโปรดไม่ได้: {}"
+
+msgid "Could not update favorites: {}"
+msgstr "อัปเดตรายการโปรดไม่ได้: {}"
+
+msgid "Could not update rating: {}"
+msgstr "อัปเดตคะแนนไม่ได้: {}"
+
+msgid "Could not update the favorite: {}"
+msgstr "อัปเดตรายการโปรดไม่ได้: {}"
+
+msgid "Country"
+msgstr "ประเทศ"
+
+msgid "Create"
+msgstr "สร้าง"
+
+msgid "Created \"{}\" with only {n} song: {}"
+msgid_plural "Created \"{}\" with only {n} songs: {}"
+msgstr[0] "สร้าง \"{}\" แล้ว แต่มีเพียง {n} เพลง: {}"
+
+msgid "Created \"{}\" with {n} song"
+msgid_plural "Created \"{}\" with {n} songs"
+msgstr[0] "สร้าง \"{}\" พร้อม {n} เพลงแล้ว"
+
+msgid "Created playlist \"{}\""
+msgstr "สร้างเพลย์ลิสต์ \"{}\" แล้ว"
+
+msgid "Creating a share link..."
+msgstr "กำลังสร้างลิงก์แบ่งปัน..."
+
+msgid "Creating..."
+msgstr "กำลังสร้าง..."
+
+msgid "Crossfade"
+msgstr "ครอสเฟด"
+
+msgid "Crossfade could not be changed: {}"
+msgstr "เปลี่ยนครอสเฟดไม่ได้: {}"
+
+msgid "Crossfade: {}"
+msgstr "ครอสเฟด: {}"
+
+msgid "Current"
+msgstr "ปัจจุบัน"
+
+msgid "Custom accent color: {} (theme accent in use)"
+msgstr "สีเน้นที่กำหนดเอง: {} (กำลังใช้สีเน้นของธีม)"
+
+msgid "Custom accent color: {}, press Enter to apply"
+msgstr "สีเน้นที่กำหนดเอง: {} กด Enter เพื่อใช้"
+
+msgid "Dark theme"
+msgstr "ธีมมืด"
+
+msgid "DARK THEMES"
+msgstr "ธีมมืด"
+
+msgid "Default country for the Discover charts. Automatic follows your system region."
+msgstr "ประเทศเริ่มต้นสำหรับชาร์ตในหน้าสำรวจ หากเป็นอัตโนมัติจะใช้ภูมิภาคของระบบ"
+
+msgid "Default Dark"
+msgstr "มืดเริ่มต้น"
+
+msgid "Default Light"
+msgstr "สว่างเริ่มต้น"
+
+msgid "Delete"
+msgstr "ลบ"
+
+msgid "Delete \"{}\" from the server? This cannot be undone."
+msgstr "ลบ \"{}\" ออกจากเซิร์ฟเวอร์ใช่ไหม การกระทำนี้ย้อนกลับไม่ได้"
+
+msgid "Delete \"{}\"? This cannot be undone."
+msgstr "ลบ \"{}\" ใช่ไหม การกระทำนี้ย้อนกลับไม่ได้"
+
+msgid "Delete playlist"
+msgstr "ลบเพลย์ลิสต์"
+
+msgid "Delete station"
+msgstr "ลบสถานี"
+
+msgid "Delete {} from the server"
+msgstr "ลบ {} ออกจากเซิร์ฟเวอร์"
+
+msgid "Deleted playlist \"{}\""
+msgstr "ลบเพลย์ลิสต์ \"{}\" แล้ว"
+
+msgid "Deleting..."
+msgstr "กำลังลบ..."
+
+msgid "Demo mode: these picks are made up and play from your demo library"
+msgstr "โหมดสาธิต: รายการแนะนำเหล่านี้เป็นข้อมูลสมมติและจะเล่นจากคลังเพลงสาธิต"
+
+msgid "Directory"
+msgstr "ไดเรกทอรี"
+
+msgid "Disc {}"
+msgstr "แผ่นที่ {}"
+
+msgid "Discord Rich Presence"
+msgstr "Discord Rich Presence"
+
+msgid "Discover"
+msgstr "สำรวจ"
+
+msgid "Discover is open"
+msgstr "เปิดหน้าสำรวจอยู่"
+
+msgid "Discover new music on YouTube Music"
+msgstr "ค้นพบเพลงใหม่บน YouTube Music"
+
+msgid "Duration"
+msgstr "ระยะเวลา"
+
+msgid "Edit station"
+msgstr "แก้ไขสถานี"
+
+msgid "Edit {}"
+msgstr "แก้ไข {}"
+
+msgid "End of current track"
+msgstr "เมื่อแทร็กปัจจุบันจบ"
+
+msgid "End of track"
+msgstr "เมื่อแทร็กจบ"
+
+msgid "Enter a name for the station"
+msgstr "ป้อนชื่อสถานี"
+
+msgid "Enter a name, country or tag to search"
+msgstr "ป้อนชื่อ ประเทศ หรือแท็กเพื่อค้นหา"
+
+msgid "Enter a stream URL that starts with http:// or https://"
+msgstr "ป้อน URL สตรีมที่ขึ้นต้นด้วย http:// หรือ https://"
+
+msgid "Enter the server URL"
+msgstr "ป้อน URL ของเซิร์ฟเวอร์"
+
+msgid "Fade the end of each song into the next one. Off keeps gapless playback."
+msgstr "เฟดท้ายเพลงแต่ละเพลงเข้าสู่เพลงถัดไป หากปิดจะเล่นต่อเนื่องไร้ช่องว่าง"
+
+msgid "Favorite"
+msgstr "รายการโปรด"
+
+msgid "Favorited"
+msgstr "รายการโปรด"
+
+msgid "Favorites"
+msgstr "รายการโปรด"
+
+msgid "Favorites only: off"
+msgstr "เฉพาะรายการโปรด: ปิด"
+
+msgid "Favorites only: on"
+msgstr "เฉพาะรายการโปรด: เปิด"
+
+msgid "Filter"
+msgstr "กรอง"
+
+msgid "Filter playlists"
+msgstr "กรองเพลย์ลิสต์"
+
+msgid "Find stations by name, country or tag"
+msgstr "ค้นหาสถานีตามชื่อ ประเทศ หรือแท็ก"
+
+msgid "Find stations in the radio-browser.info directory"
+msgstr "ค้นหาสถานีในไดเรกทอรี radio-browser.info"
+
+msgid "Folder"
+msgstr "โฟลเดอร์"
+
+msgid "Folders"
+msgstr "โฟลเดอร์"
+
+msgid "Follow current song"
+msgstr "ติดตามเพลงปัจจุบัน"
+
+msgid "Follow system color scheme"
+msgstr "ใช้ชุดสีตามระบบ"
+
+msgid "For you"
+msgstr "สำหรับคุณ"
+
+msgid "Forget this server?"
+msgstr "ลบเซิร์ฟเวอร์นี้ใช่ไหม"
+
+msgid "Format the server should transcode to. Applies from the next song."
+msgstr "รูปแบบที่ให้เซิร์ฟเวอร์แปลงไฟล์ มีผลตั้งแต่เพลงถัดไป"
+
+msgid "Found {n} server in Feishin but it has no usable saved login"
+msgid_plural "Found {n} servers in Feishin but none with a usable saved login"
+msgstr[0] "พบเซิร์ฟเวอร์ {n} รายการใน Feishin แต่ไม่มีข้อมูลเข้าสู่ระบบที่บันทึกไว้ซึ่งใช้งานได้"
+
+msgid "Gapless playback"
+msgstr "เล่นต่อเนื่องไร้ช่องว่าง"
+
+msgid "Genres"
+msgstr "แนวเพลง"
+
+msgid "Go back to {}"
+msgstr "กลับไปที่ {}"
+
+msgid "Go to album"
+msgstr "ไปที่อัลบั้ม"
+
+msgid "Go to artist"
+msgstr "ไปที่ศิลปิน"
+
+msgid "Go to {}"
+msgstr "ไปที่ {}"
+
+msgid "Green"
+msgstr "สีเขียว"
+
+msgid "Hide lyrics"
+msgstr "ซ่อนเนื้อเพลง"
+
+msgid "Hide queue"
+msgstr "ซ่อนคิว"
+
+msgid "High Contrast Dark"
+msgstr "คอนทราสต์สูงแบบมืด"
+
+msgid "High Contrast Light"
+msgstr "คอนทราสต์สูงแบบสว่าง"
+
+msgid "Highlight with the color that comes with the theme."
+msgstr "ไฮไลต์ด้วยสีที่มากับธีม"
+
+msgid "Home"
+msgstr "หน้าแรก"
+
+msgid "Homepage (optional)"
+msgstr "หน้าเว็บหลัก (ไม่บังคับ)"
+
+msgid "Import from Feishin"
+msgstr "นำเข้าจาก Feishin"
+
+msgid "Install yt-dlp to play YouTube tracks"
+msgstr "ติดตั้ง yt-dlp เพื่อเล่นแทร็กจาก YouTube"
+
+msgid "Integrations"
+msgstr "การเชื่อมต่อ"
+
+msgid "Interface"
+msgstr "อินเทอร์เฟซ"
+
+msgid "Internet radio"
+msgstr "วิทยุอินเทอร์เน็ต"
+
+msgid "item"
+msgstr "รายการ"
+
+msgid "Jellyfin has no public share links"
+msgstr "Jellyfin ไม่มีลิงก์แบ่งปันสาธารณะ"
+
+msgid "Keep this station in the favorites on this device"
+msgstr "เก็บสถานีนี้ไว้ในรายการโปรดบนอุปกรณ์นี้"
+
+msgid "Language"
+msgstr "ภาษา"
+
+msgid "LIBRARY"
+msgstr "คลังเพลง"
+
+msgid "Library scan finished"
+msgstr "สแกนคลังเพลงเสร็จแล้ว"
+
+msgid "Library scan finished: {n} item"
+msgid_plural "Library scan finished: {n} items"
+msgstr[0] "สแกนคลังเพลงเสร็จแล้ว: {n} รายการ"
+
+msgid "Light theme"
+msgstr "ธีมสว่าง"
+
+msgid "LIGHT THEMES"
+msgstr "ธีมสว่าง"
+
+msgid "Listening to {}"
+msgstr "กำลังฟัง {}"
+
+msgid "LIVE"
+msgstr "สด"
+
+msgid "Load more"
+msgstr "โหลดเพิ่ม"
+
+msgid "Load this section again"
+msgstr "โหลดส่วนนี้อีกครั้ง"
+
+msgid "Loading playlists..."
+msgstr "กำลังโหลดเพลย์ลิสต์..."
+
+msgid "Loading similar songs..."
+msgstr "กำลังโหลดเพลงที่คล้ายกัน..."
+
+msgid "Loading stations..."
+msgstr "กำลังโหลดสถานี..."
+
+msgid "Loading the next page of stations"
+msgstr "กำลังโหลดสถานีหน้าถัดไป"
+
+msgid "Loading..."
+msgstr "กำลังโหลด..."
+
+msgid "Log out"
+msgstr "ออกจากระบบ"
+
+msgid "Looking up the YouTube link..."
+msgstr "กำลังค้นหาลิงก์ YouTube..."
+
+msgid "Lyrics"
+msgstr "เนื้อเพลง"
+
+msgid "Lyrics from {}"
+msgstr "เนื้อเพลงจาก {}"
+
+msgid "Lyrics sources"
+msgstr "แหล่งเนื้อเพลง"
+
+msgid "Maximum bitrate"
+msgstr "บิตเรตสูงสุด"
+
+msgid "Media keys and desktop media controls. Takes effect after a restart."
+msgstr "ปุ่มมีเดียและตัวควบคุมสื่อบนเดสก์ท็อป มีผลหลังจากรีสตาร์ต"
+
+msgid "Moods and genres"
+msgstr "อารมณ์และแนวเพลง"
+
+msgid "Most played"
+msgstr "เล่นบ่อยที่สุด"
+
+msgid "Move down"
+msgstr "เลื่อนลง"
+
+msgid "Move up"
+msgstr "เลื่อนขึ้น"
+
+msgid "MPRIS"
+msgstr "MPRIS"
+
+msgid "Mute"
+msgstr "ปิดเสียง"
+
+msgid "Name"
+msgstr "ชื่อ"
+
+msgid "New playlist"
+msgstr "เพลย์ลิสต์ใหม่"
+
+msgid "New releases"
+msgstr "เพลงใหม่"
+
+msgid "Next"
+msgstr "ถัดไป"
+
+msgid "Next is unavailable while a radio station plays"
+msgstr "ข้ามไปถัดไปไม่ได้ขณะเล่นสถานีวิทยุ"
+
+msgid "No albums"
+msgstr "ไม่มีอัลบั้ม"
+
+msgid "No albums found"
+msgstr "ไม่พบอัลบั้ม"
+
+msgid "No artists found"
+msgstr "ไม่พบศิลปิน"
+
+msgid "no browser is selected"
+msgstr "ยังไม่ได้เลือกเบราว์เซอร์"
+
+msgid "No favorite albums"
+msgstr "ไม่มีอัลบั้มโปรด"
+
+msgid "No favorite artists"
+msgstr "ไม่มีศิลปินโปรด"
+
+msgid "No favorite tracks"
+msgstr "ไม่มีแทร็กโปรด"
+
+msgid "No genres found"
+msgstr "ไม่พบแนวเพลง"
+
+msgid "No lyrics found"
+msgstr "ไม่พบเนื้อเพลง"
+
+msgid "No playlists found"
+msgstr "ไม่พบเพลย์ลิสต์"
+
+msgid "No playlists yet"
+msgstr "ยังไม่มีเพลย์ลิสต์"
+
+msgid "No rating"
+msgstr "ไม่มีคะแนน"
+
+msgid "No results for \"{}\""
+msgstr "ไม่พบผลลัพธ์สำหรับ \"{}\""
+
+msgid "No saved login for {}; remove it and add it again"
+msgstr "ไม่มีข้อมูลเข้าสู่ระบบที่บันทึกไว้สำหรับ {} โปรดลบออกแล้วเพิ่มใหม่อีกครั้ง"
+
+msgid "No saved servers."
+msgstr "ไม่มีเซิร์ฟเวอร์ที่บันทึกไว้"
+
+msgid "No similar songs found"
+msgstr "ไม่พบเพลงที่คล้ายกัน"
+
+msgid "No songs here"
+msgstr "ไม่มีเพลงที่นี่"
+
+msgid "No stations found"
+msgstr "ไม่พบสถานี"
+
+msgid "No stations yet. Add one or find one in the directory."
+msgstr "ยังไม่มีสถานี เพิ่มสถานีหรือค้นหาในไดเรกทอรี"
+
+msgid "No tracks found"
+msgstr "ไม่พบแทร็ก"
+
+msgid "None"
+msgstr "ไม่มี"
+
+msgid "Normalize loudness using the track or album gain tags."
+msgstr "ปรับระดับความดังโดยใช้แท็กเกนของแทร็กหรืออัลบั้ม"
+
+msgid "Not connected to a server"
+msgstr "ไม่ได้เชื่อมต่อกับเซิร์ฟเวอร์"
+
+msgid "Nothing is playing"
+msgstr "ไม่มีเพลงที่กำลังเล่น"
+
+msgid "Nothing to add yet"
+msgstr "ยังไม่มีอะไรให้เพิ่ม"
+
+msgid "Nothing to go back to"
+msgstr "ไม่มีหน้าให้ย้อนกลับ"
+
+msgid "Nothing to play here"
+msgstr "ไม่มีอะไรให้เล่นที่นี่"
+
+msgid "Nothing to play yet"
+msgstr "ยังไม่มีอะไรให้เล่น"
+
+msgid "Nothing to show here right now"
+msgstr "ขณะนี้ไม่มีอะไรให้แสดง"
+
+msgid "Off"
+msgstr "ปิด"
+
+msgid "OK"
+msgstr "ตกลง"
+
+msgid "On the server"
+msgstr "บนเซิร์ฟเวอร์"
+
+msgid "Only a server admin can rescan the library"
+msgstr "เฉพาะผู้ดูแลเซิร์ฟเวอร์เท่านั้นที่สแกนคลังเพลงใหม่ได้"
+
+msgid "Only loaded tracks can be shared: select fewer tracks or scroll through them first"
+msgstr "แบ่งปันได้เฉพาะแทร็กที่โหลดแล้ว: เลือกแทร็กให้น้อยลงหรือเลื่อนดูให้โหลดก่อน"
+
+msgid "Open"
+msgstr "เปิด"
+
+msgid "Open in YouTube Music"
+msgstr "เปิดใน YouTube Music"
+
+msgid "Open now playing"
+msgstr "เปิดหน้ากำลังเล่น"
+
+msgid "Open radio"
+msgstr "เปิดวิทยุ"
+
+msgid "Open the album \"{}\""
+msgstr "เปิดอัลบั้ม \"{}\""
+
+msgid "Open the playlist \"{}\""
+msgstr "เปิดเพลย์ลิสต์ \"{}\""
+
+msgid "Open the queue panel"
+msgstr "เปิดแผงคิว"
+
+msgid "Open {}"
+msgstr "เปิด {}"
+
+msgid "Original"
+msgstr "ต้นฉบับ"
+
+msgid "Output used by the player."
+msgstr "อุปกรณ์เอาต์พุตที่เครื่องเล่นใช้"
+
+msgid "Owner"
+msgstr "เจ้าของ"
+
+msgid "Password"
+msgstr "รหัสผ่าน"
+
+msgid "Paste a link first"
+msgstr "วางลิงก์ก่อน"
+
+msgid "Paste a YouTube or YouTube Music link first"
+msgstr "วางลิงก์ YouTube หรือ YouTube Music ก่อน"
+
+msgid "Paste a YouTube or YouTube Music link to try yt-dlp."
+msgstr "วางลิงก์ YouTube หรือ YouTube Music เพื่อทดลองใช้ yt-dlp"
+
+msgid "Pause"
+msgstr "หยุดชั่วคราว"
+
+msgid "Pause the radio station"
+msgstr "หยุดสถานีวิทยุชั่วคราว"
+
+msgid "Personalized with your YouTube Music account from {}"
+msgstr "ปรับให้เหมาะกับคุณด้วยบัญชี YouTube Music จาก {}"
+
+msgid "Pick a color, or type one as #rrggbb and press Enter."
+msgstr "เลือกสี หรือพิมพ์ในรูปแบบ #rrggbb แล้วกด Enter"
+
+msgid "Pick a mood or genre to see its playlists"
+msgstr "เลือกอารมณ์หรือแนวเพลงเพื่อดูเพลย์ลิสต์"
+
+msgid "Play"
+msgstr "เล่น"
+
+msgid "Play \"{}\" and the rest of this shelf"
+msgstr "เล่น \"{}\" และเพลงที่เหลือในแถวนี้"
+
+msgid "Play a YouTube link"
+msgstr "เล่นลิงก์ YouTube"
+
+msgid "Play album"
+msgstr "เล่นอัลบั้ม"
+
+msgid "Play all"
+msgstr "เล่นทั้งหมด"
+
+msgid "Play all {n} song"
+msgid_plural "Play all {n} songs"
+msgstr[0] "เล่นทั้งหมด {n} เพลง"
+
+msgid "Play count"
+msgstr "จำนวนครั้งที่เล่น"
+
+msgid "Play every song in {} and its subfolders"
+msgstr "เล่นทุกเพลงใน {} และโฟลเดอร์ย่อย"
+
+msgid "Play from here"
+msgstr "เล่นจากตรงนี้"
+
+msgid "Play from this song"
+msgstr "เล่นจากเพลงนี้"
+
+msgid "Play from {}"
+msgstr "เล่นจาก {}"
+
+msgid "Play next"
+msgstr "เล่นถัดไป"
+
+msgid "Play the album"
+msgstr "เล่นอัลบั้ม"
+
+msgid "Play the playlist"
+msgstr "เล่นเพลย์ลิสต์"
+
+msgid "Play the radio station"
+msgstr "เล่นสถานีวิทยุ"
+
+msgid "Play this link after the current song"
+msgstr "เล่นลิงก์นี้ต่อจากเพลงปัจจุบัน"
+
+msgid "Play this link now"
+msgstr "เล่นลิงก์นี้ทันที"
+
+msgid "Play {}"
+msgstr "เล่น {}"
+
+msgid "Play {} next"
+msgstr "เล่น {} ถัดไป"
+
+msgid "Play {} with its subfolders"
+msgstr "เล่น {} พร้อมโฟลเดอร์ย่อย"
+
+msgid "Playback"
+msgstr "การเล่น"
+
+msgid "Playback failed: {}"
+msgstr "เล่นไม่สำเร็จ: {}"
+
+msgid "Playing {} failed: {}"
+msgstr "เล่น {} ไม่สำเร็จ: {}"
+
+msgid "PLAYLIST"
+msgstr "เพลย์ลิสต์"
+
+msgid "Playlist"
+msgstr "เพลย์ลิสต์"
+
+msgid "playlist"
+msgstr "เพลย์ลิสต์"
+
+msgid "Playlist name"
+msgstr "ชื่อเพลย์ลิสต์"
+
+msgid "Playlists"
+msgstr "เพลย์ลิสต์"
+
+msgid "Plays"
+msgstr "จำนวนครั้งที่เล่น"
+
+msgid "Plays YouTube tracks. Leave empty to use yt-dlp from your PATH."
+msgstr "ใช้เล่นแทร็กจาก YouTube เว้นว่างไว้เพื่อใช้ yt-dlp จาก PATH"
+
+msgid "Preload the next song so it starts without a pause."
+msgstr "โหลดเพลงถัดไปล่วงหน้าเพื่อให้เริ่มเล่นได้โดยไม่สะดุด"
+
+msgid "Previous"
+msgstr "ก่อนหน้า"
+
+msgid "Previous is unavailable while a radio station plays"
+msgstr "ย้อนกลับไปก่อนหน้าไม่ได้ขณะเล่นสถานีวิทยุ"
+
+msgid "Purple"
+msgstr "สีม่วง"
+
+msgid "Queue"
+msgstr "คิว"
+
+msgid "Radio"
+msgstr "วิทยุ"
+
+msgid "Random"
+msgstr "สุ่ม"
+
+msgid "Rate {n} star"
+msgid_plural "Rate {n} stars"
+msgstr[0] "ให้ {n} ดาว"
+
+msgid "Rating"
+msgstr "คะแนน"
+
+msgid "Recently added"
+msgstr "เพิ่มล่าสุด"
+
+msgid "Recently played"
+msgstr "เล่นล่าสุด"
+
+msgid "Red"
+msgstr "สีแดง"
+
+msgid "Refresh"
+msgstr "รีเฟรชข้อมูล"
+
+msgid "Refresh this section"
+msgstr "รีเฟรชส่วนนี้"
+
+msgid "Release year"
+msgstr "ปีที่วางจำหน่าย"
+
+msgid "Remove"
+msgstr "นำออก"
+
+msgid "Remove from favorites"
+msgstr "นำออกจากรายการโปรด"
+
+msgid "Remove from playlist"
+msgstr "นำออกจากเพลย์ลิสต์"
+
+msgid "Remove from queue"
+msgstr "ลบออกจากคิว"
+
+msgid "Removed {n} song from \"{}\""
+msgid_plural "Removed {n} songs from \"{}\""
+msgstr[0] "นำ {n} เพลงออกจาก \"{}\" แล้ว"
+
+msgid "Removing..."
+msgstr "กำลังนำออก..."
+
+msgid "Repeat: all"
+msgstr "เล่นซ้ำ: ทั้งหมด"
+
+msgid "Repeat: off"
+msgstr "เล่นซ้ำ: ปิด"
+
+msgid "Repeat: one"
+msgstr "เล่นซ้ำ: เพลงเดียว"
+
+msgid "ReplayGain"
+msgstr "ReplayGain"
+
+msgid "Report what you play to the server."
+msgstr "รายงานเพลงที่คุณเล่นไปยังเซิร์ฟเวอร์"
+
+msgid "Rescan the library for new content"
+msgstr "สแกนคลังเพลงใหม่เพื่อหาเนื้อหาใหม่"
+
+msgid "Resize column"
+msgstr "ปรับขนาดคอลัมน์"
+
+msgid "Save"
+msgstr "บันทึก"
+
+msgid "Save on this device"
+msgstr "บันทึกบนอุปกรณ์นี้"
+
+msgid "Save the changes on the server"
+msgstr "บันทึกการเปลี่ยนแปลงบนเซิร์ฟเวอร์"
+
+msgid "Save the changes on this device"
+msgstr "บันทึกการเปลี่ยนแปลงบนอุปกรณ์นี้"
+
+msgid "Save to favorites on this device"
+msgstr "บันทึกลงในรายการโปรดบนอุปกรณ์นี้"
+
+msgid "Save to server"
+msgstr "บันทึกลงเซิร์ฟเวอร์"
+
+msgid "Saved on this device"
+msgstr "บันทึกไว้บนอุปกรณ์นี้"
+
+msgid "Saved on this device, click to remove"
+msgstr "บันทึกไว้บนอุปกรณ์นี้ คลิกเพื่อนำออก"
+
+msgid "Saving the station to the server..."
+msgstr "กำลังบันทึกสถานีลงเซิร์ฟเวอร์..."
+
+msgid "Saving to the server..."
+msgstr "กำลังบันทึกลงเซิร์ฟเวอร์..."
+
+msgid "Saving..."
+msgstr "กำลังบันทึก..."
+
+msgid "Scanning the library for new content..."
+msgstr "กำลังสแกนคลังเพลงเพื่อหาเนื้อหาใหม่..."
+
+msgid "Scanning the library: {}"
+msgstr "กำลังสแกนคลังเพลง: {}"
+
+msgid "Scrobble"
+msgstr "สครอบเบิล"
+
+msgid "Scroll left"
+msgstr "เลื่อนไปทางซ้าย"
+
+msgid "Scroll lists and the queue to the song that is playing."
+msgstr "เลื่อนรายการและคิวไปยังเพลงที่กำลังเล่น"
+
+msgid "Scroll right"
+msgstr "เลื่อนไปทางขวา"
+
+msgid "Search"
+msgstr "ค้นหา"
+
+msgid "Search failed: {}"
+msgstr "ค้นหาไม่สำเร็จ: {}"
+
+msgid "SEARCH RESULTS"
+msgstr "ผลการค้นหา"
+
+msgid "Search songs on YouTube Music"
+msgstr "ค้นหาเพลงบน YouTube Music"
+
+msgid "Search songs, albums, artists"
+msgstr "ค้นหาเพลง อัลบั้ม ศิลปิน"
+
+msgid "Search the radio-browser.info directory"
+msgstr "ค้นหาในไดเรกทอรี radio-browser.info"
+
+msgid "Search your library for songs, albums and artists"
+msgstr "ค้นหาเพลง อัลบั้ม และศิลปินในคลังเพลงของคุณ"
+
+msgid "Searched from top to bottom until one has lyrics."
+msgstr "ค้นหาจากบนลงล่างจนกว่าจะพบเนื้อเพลง"
+
+msgid "Searching for lyrics..."
+msgstr "กำลังค้นหาเนื้อเพลง..."
+
+msgid "Searching the radio directory failed: {}"
+msgstr "ค้นหาในไดเรกทอรีวิทยุไม่สำเร็จ: {}"
+
+msgid "Searching the radio-browser.info directory"
+msgstr "กำลังค้นหาในไดเรกทอรี radio-browser.info"
+
+msgid "Searching..."
+msgstr "กำลังค้นหา..."
+
+msgid "Seeking is unavailable for live radio"
+msgstr "กรอเวลาไม่ได้สำหรับวิทยุสด"
+
+msgid "Server"
+msgstr "เซิร์ฟเวอร์"
+
+msgid "Server type"
+msgstr "ประเภทเซิร์ฟเวอร์"
+
+msgid "Servers"
+msgstr "เซิร์ฟเวอร์"
+
+msgid "Set rating"
+msgstr "ให้คะแนน"
+
+msgid "Settings"
+msgstr "การตั้งค่า"
+
+msgid "Share"
+msgstr "แบ่งปัน"
+
+msgid "Share ({})"
+msgstr "แบ่งปัน ({})"
+
+msgid "Share link copied to the clipboard: {}"
+msgstr "คัดลอกลิงก์แบ่งปันไปยังคลิปบอร์ดแล้ว: {}"
+
+msgid "Share this {}: copy a public link"
+msgstr "แบ่งปัน{}นี้: คัดลอกลิงก์สาธารณะ"
+
+msgid "Sharing is unavailable: {}"
+msgstr "แบ่งปันไม่ได้: {}"
+
+msgid "SHOW LESS"
+msgstr "แสดงน้อยลง"
+
+msgid "Show lyrics"
+msgstr "แสดงเนื้อเพลง"
+
+msgid "SHOW MORE"
+msgstr "แสดงเพิ่มเติม"
+
+msgid "Show more"
+msgstr "แสดงเพิ่มเติม"
+
+msgid "Show playlists for {}"
+msgstr "แสดงเพลย์ลิสต์สำหรับ {}"
+
+msgid "Show queue"
+msgstr "แสดงคิว"
+
+msgid "Show the current song on your Discord profile."
+msgstr "แสดงเพลงปัจจุบันบนโปรไฟล์ Discord ของคุณ"
+
+msgid "Show the next page of stations"
+msgstr "แสดงสถานีหน้าถัดไป"
+
+msgid "Show the queue next to the library; remembered on the next start."
+msgstr "แสดงคิวข้างคลังเพลง และจะจดจำไว้ในการเปิดครั้งถัดไป"
+
+msgid "Show the server and saved stations"
+msgstr "แสดงสถานีของเซิร์ฟเวอร์และสถานีที่บันทึกไว้"
+
+msgid "Show {}"
+msgstr "แสดง {}"
+
+msgid "Showing playlists for {}"
+msgstr "กำลังแสดงเพลย์ลิสต์สำหรับ {}"
+
+msgid "Showing the charts for {}"
+msgstr "กำลังแสดงชาร์ตของ {}"
+
+msgid "Showing the radio-browser.info directory"
+msgstr "กำลังแสดงไดเรกทอรี radio-browser.info"
+
+msgid "Showing the server and saved stations"
+msgstr "กำลังแสดงสถานีของเซิร์ฟเวอร์และสถานีที่บันทึกไว้"
+
+msgid "Shuffle"
+msgstr "เล่นแบบสุ่ม"
+
+msgid "Shuffle every song in {} and its subfolders"
+msgstr "สุ่มเล่นทุกเพลงใน {} และโฟลเดอร์ย่อย"
+
+msgid "Shuffle play"
+msgstr "เล่นแบบสุ่ม"
+
+msgid "Shuffle: off"
+msgstr "สุ่ม: ปิด"
+
+msgid "Shuffle: on"
+msgstr "สุ่ม: เปิด"
+
+msgid "Sign in"
+msgstr "ลงชื่อเข้าใช้"
+
+msgid "Sign in with browser"
+msgstr "ลงชื่อเข้าใช้ด้วยเบราว์เซอร์"
+
+msgid "Sign out and forget this server's saved login?"
+msgstr "ออกจากระบบและลบข้อมูลเข้าสู่ระบบที่บันทึกไว้ของเซิร์ฟเวอร์นี้ใช่ไหม"
+
+msgid "Sign out and forget this server?"
+msgstr "ออกจากระบบและลบเซิร์ฟเวอร์นี้ใช่ไหม"
+
+msgid "Similar"
+msgstr "เพลงที่คล้ายกัน"
+
+msgid "Similar songs come from your server, so YouTube tracks have none"
+msgstr "เพลงที่คล้ายกันมาจากเซิร์ฟเวอร์ของคุณ แทร็กจาก YouTube จึงไม่มี"
+
+msgid "Sleep timer: off"
+msgstr "ตั้งเวลาปิด: ปิด"
+
+msgid "Sleep timer: {}"
+msgstr "ตั้งเวลาปิด: {}"
+
+msgid "Song count"
+msgstr "จำนวนเพลง"
+
+msgid "Songs"
+msgstr "เพลง"
+
+msgid "Sort by {}"
+msgstr "เรียงตาม{}"
+
+msgid "Sort by {}: ascending"
+msgstr "เรียงตาม{}: น้อยไปมาก"
+
+msgid "Sort by {}: descending"
+msgstr "เรียงตาม{}: มากไปน้อย"
+
+msgid "Sort: ascending"
+msgstr "เรียง: น้อยไปมาก"
+
+msgid "Sort: descending"
+msgstr "เรียง: มากไปน้อย"
+
+msgid "Starting volume, shared with the player bar."
+msgstr "ระดับเสียงเริ่มต้น ใช้ร่วมกับแถบเครื่องเล่น"
+
+msgid "Station data from radio-browser.info"
+msgstr "ข้อมูลสถานีจาก radio-browser.info"
+
+msgid "Station name"
+msgstr "ชื่อสถานี"
+
+msgid "Stations"
+msgstr "สถานี"
+
+msgid "Stop {}"
+msgstr "หยุด {}"
+
+msgid "Stream URL"
+msgstr "URL สตรีม"
+
+msgid "Switch"
+msgstr "สลับ"
+
+msgid "Switch between a dark and a light theme with the desktop. {}"
+msgstr "สลับระหว่างธีมมืดและธีมสว่างตามเดสก์ท็อป {}"
+
+msgid "Switch to grid view"
+msgstr "สลับเป็นมุมมองตาราง"
+
+msgid "Switch to list view"
+msgstr "สลับเป็นมุมมองรายการ"
+
+msgid "System default"
+msgstr "ค่าเริ่มต้นของระบบ"
+
+msgid "System default follows the language of the desktop."
+msgstr "ค่าเริ่มต้นของระบบจะใช้ภาษาของเดสก์ท็อป"
+
+msgid "Tag, for example jazz"
+msgstr "แท็ก เช่น jazz"
+
+msgid "The desktop currently prefers dark."
+msgstr "ขณะนี้เดสก์ท็อปใช้โหมดมืด"
+
+msgid "The desktop currently prefers light."
+msgstr "ขณะนี้เดสก์ท็อปใช้โหมดสว่าง"
+
+msgid "The desktop has no preference, so the dark theme is used."
+msgstr "เดสก์ท็อปไม่ได้กำหนดค่าไว้ จึงใช้ธีมมืด"
+
+msgid "The library scan is still running on the server"
+msgstr "เซิร์ฟเวอร์ยังสแกนคลังเพลงอยู่"
+
+msgid "The queue is empty"
+msgstr "คิวว่างเปล่า"
+
+msgid "The queue is incomplete: loading the rest of the list failed ({})"
+msgstr "คิวไม่ครบ: โหลดส่วนที่เหลือของรายการไม่สำเร็จ ({})"
+
+msgid "The radio directory could not be reached"
+msgstr "เข้าถึงไดเรกทอรีวิทยุไม่ได้"
+
+msgid "The radio station stopped streaming"
+msgstr "สถานีวิทยุหยุดสตรีมแล้ว"
+
+msgid "The server refused the station: {}"
+msgstr "เซิร์ฟเวอร์ปฏิเสธสถานี: {}"
+
+msgid "Theme"
+msgstr "ธีม"
+
+msgid "There is nothing to play in this list"
+msgstr "ไม่มีอะไรให้เล่นในรายการนี้"
+
+msgid "This Discover page does not exist"
+msgstr "ไม่มีหน้าสำรวจนี้"
+
+msgid "This folder is empty"
+msgstr "โฟลเดอร์นี้ว่างเปล่า"
+
+msgid "This playlist is empty"
+msgstr "เพลย์ลิสต์นี้ว่างเปล่า"
+
+msgid "This server has no internet radio. Stations you add are saved on this device."
+msgstr "เซิร์ฟเวอร์นี้ไม่มีวิทยุอินเทอร์เน็ต สถานีที่คุณเพิ่มจะบันทึกไว้บนอุปกรณ์นี้"
+
+msgid "this server has no public share links"
+msgstr "เซิร์ฟเวอร์นี้ไม่มีลิงก์แบ่งปันสาธารณะ"
+
+msgid "Time"
+msgstr "เวลา"
+
+msgid "Title"
+msgstr "ชื่อเพลง"
+
+msgid "Top songs"
+msgstr "เพลงยอดนิยม"
+
+msgid "Track"
+msgstr "แทร็ก"
+
+msgid "Tracks"
+msgstr "แทร็ก"
+
+msgid "Transcode format"
+msgstr "รูปแบบการแปลงไฟล์"
+
+msgid "Try again"
+msgstr "ลองอีกครั้ง"
+
+msgid "Turn off the theme accent color to pick your own."
+msgstr "ปิดสีเน้นของธีมเพื่อเลือกสีเอง"
+
+msgid "Unmute"
+msgstr "เปิดเสียง"
+
+msgid "Up next"
+msgstr "ถัดไป"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "Use the theme accent color"
+msgstr "ใช้สีเน้นของธีม"
+
+msgid "Use {}"
+msgstr "ใช้ {}"
+
+msgid "Used while the desktop prefers dark."
+msgstr "ใช้เมื่อเดสก์ท็อปใช้โหมดมืด"
+
+msgid "Used while the desktop prefers light."
+msgstr "ใช้เมื่อเดสก์ท็อปใช้โหมดสว่าง"
+
+msgid "Username"
+msgstr "ชื่อผู้ใช้"
+
+msgid "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Feishin deletes right after reading."
+msgstr "ใช้เซสชัน YouTube ในเบราว์เซอร์นี้สำหรับหน้าสำรวจที่ปรับให้เหมาะกับคุณและเสียงคุณภาพ Premium โดย yt-dlp จะคัดลอกคุกกี้ไปยังไฟล์ชั่วคราวส่วนตัว ซึ่ง Feishin จะลบทันทีหลังจากอ่าน"
+
+msgid "Volume"
+msgstr "ระดับเสียง"
+
+msgid "Volume {}%"
+msgstr "ระดับเสียง {}%"
+
+msgid "XDG_RUNTIME_DIR is not set, so there is no private place for the cookies"
+msgstr "ไม่ได้ตั้งค่า XDG_RUNTIME_DIR จึงไม่มีที่ส่วนตัวสำหรับเก็บคุกกี้"
+
+msgid "Year"
+msgstr "ปี"
+
+msgid "You are here: {}"
+msgstr "คุณอยู่ที่: {}"
+
+msgid "Your user is not allowed to share on this server"
+msgstr "ผู้ใช้ของคุณไม่ได้รับอนุญาตให้แบ่งปันบนเซิร์ฟเวอร์นี้"
+
+msgid "YouTube"
+msgstr "YouTube"
+
+msgid "YouTube albums are not in your library"
+msgstr "อัลบั้มจาก YouTube ไม่ได้อยู่ในคลังเพลงของคุณ"
+
+msgid "YouTube artists are not in your library"
+msgstr "ศิลปินจาก YouTube ไม่ได้อยู่ในคลังเพลงของคุณ"
+
+msgid "yt-dlp program"
+msgstr "โปรแกรม yt-dlp"
+
+msgid "{n} album"
+msgid_plural "{n} albums"
+msgstr[0] "{n} อัลบั้ม"
+
+msgid "{n} folder"
+msgid_plural "{n} folders"
+msgstr[0] "{n} โฟลเดอร์"
+
+msgid "{n} item so far"
+msgid_plural "{n} items so far"
+msgstr[0] "{n} รายการแล้ว"
+
+msgid "{n} minute"
+msgid_plural "{n} minutes"
+msgstr[0] "{n} นาที"
+
+msgid "{n} selected"
+msgid_plural "{n} selected"
+msgstr[0] "เลือก {n} รายการ"
+
+msgid "{n} song"
+msgid_plural "{n} songs"
+msgstr[0] "{n} เพลง"
+
+msgid "{n} song from \"{}\" will play next"
+msgid_plural "{n} songs from \"{}\" will play next"
+msgstr[0] "{n} เพลงจาก \"{}\" จะเล่นถัดไป"
+
+msgid "{n} song on YouTube Music"
+msgid_plural "{n} songs on YouTube Music"
+msgstr[0] "{n} เพลงบน YouTube Music"
+
+msgid "{n} song will play next"
+msgid_plural "{n} songs will play next"
+msgstr[0] "{n} เพลงจะเล่นถัดไป"
+
+msgid "{} (current theme)"
+msgstr "{} (ธีมปัจจุบัน)"
+
+msgid "{} (unavailable)"
+msgstr "{} (ไม่พร้อมใช้งาน)"
+
+msgid "{} at {}"
+msgstr "{} ที่ {}"
+
+msgid "{} cannot be played: its stream address is not an internet stream"
+msgstr "เล่น {} ไม่ได้: ที่อยู่สตรีมไม่ใช่สตรีมอินเทอร์เน็ต"
+
+msgid "{} is shown"
+msgstr "กำลังแสดง {}"
+
+msgid "{} kbps"
+msgstr "{} kbps"
+
+msgid "{} s"
+msgstr "{} วินาที"
+
+msgid "{}: off"
+msgstr "{}: ปิด"
+
+msgid "{}: on"
+msgstr "{}: เปิด"
+
+msgid "{}: {} (dark)"
+msgstr "{}: {} (มืด)"
+
+msgid "{}: {} (light)"
+msgstr "{}: {} (สว่าง)"

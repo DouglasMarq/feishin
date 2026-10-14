@@ -13,7 +13,7 @@ export global ShareState {
     in property <bool> busy;
     in property <string> link;
     in property <int> copy-request;
-    out property <string> menu-title: ShareState.available ? "Share" : "Share (" + ShareState.unavailable-reason + ")";
+    out property <string> menu-title: ShareState.available ? @tr("Share") : @tr("Share ({})", ShareState.unavailable-reason);
     callback share(kind: ShareKind, id: string, name: string);
     callback share-selected-tracks();
 }
@@ -22,7 +22,7 @@ export component ShareButton inherits Rectangle {
     in property <ShareKind> kind;
     in property <string> item-id;
     in property <string> item-name;
-    in property <string> noun: "item";
+    in property <string> noun: @tr("item");
     property <bool> usable: ShareState.available && !ShareState.busy && root.item-id != "";
     width: 40px;
     height: 40px;
@@ -38,7 +38,7 @@ export component ShareButton inherits Rectangle {
     }
 
     TooltipAnchor {
-        text: !ShareState.available ? "Sharing is unavailable: " + ShareState.unavailable-reason : (ShareState.busy ? "Creating a share link..." : "Share this " + root.noun + ": copy a public link");
+        text: !ShareState.available ? @tr("Sharing is unavailable: {}", ShareState.unavailable-reason) : (ShareState.busy ? @tr("Creating a share link...") : @tr("Share this {}: copy a public link", root.noun));
         hovered: touch.has-hover;
     }
 

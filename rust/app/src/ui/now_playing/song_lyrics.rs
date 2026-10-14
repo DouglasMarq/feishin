@@ -10,8 +10,6 @@ use crate::controller::artist_names;
 
 static LYRICS_HTTP_CLIENT: LazyLock<reqwest::Client> = LazyLock::new(reqwest::Client::new);
 
-const SERVER_SOURCE_LABEL: &str = "Server";
-
 #[derive(Debug)]
 pub(super) enum LyricsLookupError {
     Server(ApiError),
@@ -37,20 +35,20 @@ fn source_label(source: LyricsSource) -> &'static str {
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub(super) struct SongLyrics {
-    pub(super) source: &'static str,
+    pub(super) source: String,
     pub(super) synced: bool,
     pub(super) lines: Vec<LyricLine>,
 }
 
 impl SongLyrics {
-    pub(super) fn from_text(source: &'static str, text: &str) -> Option<Self> {
+    pub(super) fn from_text(source: impl Into<String>, text: &str) -> Option<Self> {
         let lines = feishin_lyrics::parse_lrc(text);
         if lines.iter().all(|line| line.text.trim().is_empty()) {
             return None;
         }
         let synced = lines.iter().any(|line| line.time_ms.is_some());
         Some(Self {
-            source,
+            source: source.into(),
             synced,
             lines,
         })
@@ -84,7 +82,7 @@ async fn server_lyrics(
         tracing::debug!("server lyrics for {}: {error}", song.id);
         LyricsLookupError::Server(error)
     })?;
-    Ok(text.and_then(|text| SongLyrics::from_text(SERVER_SOURCE_LABEL, &text)))
+    Ok(text.and_then(|text| SongLyrics::from_text(tr!("Server"), &text)))
 }
 
 async fn remote_lyrics(
@@ -102,7 +100,7 @@ pub(super) async fn remote_lyrics_for(
         .await
         .map_err(LyricsLookupError::Remote)?;
     Ok(found.map(|found| SongLyrics {
-        source: source_label(found.source),
+        source: source_label(found.source).into(),
         synced: found.synced,
         lines: found.lines,
     }))

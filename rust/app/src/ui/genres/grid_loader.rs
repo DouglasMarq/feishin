@@ -84,7 +84,7 @@ fn apply_grid_page(
             let failed = with_grid(window, binding, |grid| grid.page_failed(generation, page));
             if failed == Some(true) {
                 (binding.loading)(window, false);
-                show_status(window, &format!("Could not load the list: {error}"));
+                show_status(window, &tr!("Could not load the list: {}", error));
             }
         }
     }

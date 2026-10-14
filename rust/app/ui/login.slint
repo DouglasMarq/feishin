@@ -49,7 +49,7 @@ export component LoginView inherits Rectangle {
                     }
 
                     Text {
-                        text: "Connect to your music server";
+                        text: @tr("Connect to your music server");
                         color: Theme.muted;
                     }
 
@@ -58,7 +58,7 @@ export component LoginView inherits Rectangle {
                     }
 
                     Label {
-                        text: "Server type";
+                        text: @tr("Server type");
                     }
 
                     ComboBox {
@@ -68,7 +68,7 @@ export component LoginView inherits Rectangle {
                     }
 
                     Label {
-                        text: "URL";
+                        text: @tr("URL");
                     }
 
                     LineEdit {
@@ -78,7 +78,7 @@ export component LoginView inherits Rectangle {
                     }
 
                     Label {
-                        text: "Username";
+                        text: @tr("Username");
                     }
 
                     LineEdit {
@@ -87,7 +87,7 @@ export component LoginView inherits Rectangle {
                     }
 
                     Label {
-                        text: "Password";
+                        text: @tr("Password");
                     }
 
                     LineEdit {
@@ -110,7 +110,7 @@ export component LoginView inherits Rectangle {
                     }
 
                     Button {
-                        text: LoginState.busy ? "Connecting..." : "Sign in";
+                        text: LoginState.busy ? @tr("Connecting...") : @tr("Sign in");
                         primary: true;
                         enabled: !LoginState.busy;
                         clicked => {
@@ -119,7 +119,7 @@ export component LoginView inherits Rectangle {
                     }
 
                     Button {
-                        text: "Import from Feishin";
+                        text: @tr("Import from Feishin");
                         enabled: !LoginState.busy;
                         clicked => {
                             LoginState.import-feishin();

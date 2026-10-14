@@ -2,8 +2,9 @@ use std::cell::RefCell;
 use std::iter;
 use std::rc::Rc;
 
-pub const ROOT_NAME: &str = "Folders";
-const UNKNOWN_FOLDER_NAME: &str = "Folder";
+pub fn root_name() -> String {
+    tr!("Folders")
+}
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Crumb {
@@ -20,7 +21,7 @@ impl Crumb {
     }
 
     fn root() -> Self {
-        Self::new("", ROOT_NAME)
+        Self::new("", &root_name())
     }
 }
 
@@ -40,7 +41,7 @@ impl Trail {
 
     pub fn path_to(&mut self, id: &str) -> Vec<Crumb> {
         let depth = self.depth_of(id).unwrap_or_else(|| {
-            self.opened = vec![Crumb::new(id, UNKNOWN_FOLDER_NAME)];
+            self.opened = vec![Crumb::new(id, &tr!("Folder"))];
             1
         });
         iter::once(Crumb::root())

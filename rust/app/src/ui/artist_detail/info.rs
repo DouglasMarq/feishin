@@ -2,7 +2,8 @@ use feishin_core::model::{Album, ArtistDetail};
 use slint::Image;
 
 use super::super::ArtistAlbumCard;
-use super::super::artists::count_label;
+use super::super::artists::song_count_label;
+use super::super::genres::album_count_label;
 
 fn album_count(detail: &ArtistDetail) -> Option<u32> {
     detail
@@ -20,8 +21,8 @@ fn song_count(detail: &ArtistDetail) -> Option<u32> {
 
 pub fn info_line(detail: &ArtistDetail) -> String {
     [
-        count_label(album_count(detail), "album", "albums"),
-        count_label(song_count(detail), "song", "songs"),
+        album_count_label(album_count(detail)),
+        song_count_label(song_count(detail)),
     ]
     .into_iter()
     .filter(|part| !part.is_empty())

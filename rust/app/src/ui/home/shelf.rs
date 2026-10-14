@@ -22,12 +22,12 @@ impl Shelf {
         Self::Random,
     ];
 
-    pub fn title(self) -> &'static str {
+    pub fn title(self) -> String {
         match self {
-            Self::RecentlyAdded => "Recently added",
-            Self::RecentlyPlayed => "Recently played",
-            Self::MostPlayed => "Most played",
-            Self::Random => "Random",
+            Self::RecentlyAdded => tr!("Recently added"),
+            Self::RecentlyPlayed => tr!("Recently played"),
+            Self::MostPlayed => tr!("Most played"),
+            Self::Random => tr!("Random"),
         }
     }
 

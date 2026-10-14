@@ -1,0 +1,1520 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: ta\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+
+msgid "\"{}\" plays next"
+msgstr "\"{}\" அடுத்து இயங்கும்"
+
+msgid "\"{}\" will play next"
+msgstr "\"{}\" அடுத்ததாக இயக்கப்படும்"
+
+msgid "1 star"
+msgstr "1 நட்சத்திரம்"
+
+msgid "2 stars"
+msgstr "2 நட்சத்திரங்கள்"
+
+msgid "3 stars"
+msgstr "3 நட்சத்திரங்கள்"
+
+msgid "4 stars"
+msgstr "4 நட்சத்திரங்கள்"
+
+msgid "5 stars"
+msgstr "5 நட்சத்திரங்கள்"
+
+msgid "About {}"
+msgstr "{0} பற்றி"
+
+msgid "Accent color"
+msgstr "உச்சரிப்பு நிறம்"
+
+msgid "Accent color not changed: {}."
+msgstr "உச்சரிப்பு நிறம் மாற்றப்படவில்லை: {}."
+
+msgid "Accent color {}"
+msgstr "உச்சரிப்பு நிறம் {}"
+
+msgid "Accent color {} (selected)"
+msgstr "உச்சரிப்பு நிறம் {} (தேர்ந்தெடுக்கப்பட்டது)"
+
+msgid "Accent color {} (theme accent in use)"
+msgstr "உச்சரிப்பு நிறம் {} (கருப்பொருளின் உச்சரிப்பு நிறம் பயன்பாட்டில் உள்ளது)"
+
+msgid "Add a station by its stream URL"
+msgstr "ஸ்ட்ரீம் முகவரி மூலம் நிலையத்தைச் சேர்"
+
+msgid "Add all songs to the queue"
+msgstr "எல்லாப் பாடல்களையும் வரிசையில் சேர்"
+
+msgid "Add server"
+msgstr "சேவையகத்தைச் சேர்க்கவும்"
+
+msgid "Add station"
+msgstr "நிலையத்தைச் சேர்"
+
+msgid "Add this link to the end of the queue"
+msgstr "இந்த இணைப்பை வரிசையின் இறுதியில் சேர்"
+
+msgid "Add this station to the server for every client"
+msgstr "எல்லா கிளையன்ட்களுக்கும் இந்த நிலையத்தைச் சேவையகத்தில் சேர்"
+
+msgid "Add to favorites"
+msgstr "பிடித்தவையில் சேர்"
+
+msgid "Add to playlist"
+msgstr "பிளேலிஸ்ட்டில் சேர்"
+
+msgid "Add to queue"
+msgstr "வரிசையில் சேர்"
+
+msgid "Add to the server's stations"
+msgstr "சேவையகத்தின் நிலையங்களில் சேர்"
+
+msgid "Add {n} song to playlist"
+msgid_plural "Add {n} songs to playlist"
+msgstr[0] "{n} பாடலைப் பிளேலிஸ்ட்டில் சேர்"
+msgstr[1] "{n} பாடல்களைப் பிளேலிஸ்ட்டில் சேர்"
+
+msgid "Add {} to the queue"
+msgstr "{}-ஐ வரிசையில் சேர்"
+
+msgid "Added \"{}\" to the queue"
+msgstr "\"{}\" வரிசையில் சேர்க்கப்பட்டது"
+
+msgid "Added only {n} song to \"{}\": {}"
+msgid_plural "Added only {n} songs to \"{}\": {}"
+msgstr[0] "\"{}\" இல் {n} பாடல் மட்டுமே சேர்க்கப்பட்டது: {}"
+msgstr[1] "\"{}\" இல் {n} பாடல்கள் மட்டுமே சேர்க்கப்பட்டன: {}"
+
+msgid "Added {n} song from \"{}\" to the queue"
+msgid_plural "Added {n} songs from \"{}\" to the queue"
+msgstr[0] "\"{}\" இலிருந்து {n} பாடல் வரிசையில் சேர்க்கப்பட்டது"
+msgstr[1] "\"{}\" இலிருந்து {n} பாடல்கள் வரிசையில் சேர்க்கப்பட்டன"
+
+msgid "Added {n} song to \"{}\""
+msgid_plural "Added {n} songs to \"{}\""
+msgstr[0] "\"{}\" இல் {n} பாடல் சேர்க்கப்பட்டது"
+msgstr[1] "\"{}\" இல் {n} பாடல்கள் சேர்க்கப்பட்டன"
+
+msgid "Added {n} song to the queue"
+msgid_plural "Added {n} songs to the queue"
+msgstr[0] "{n} பாடல் வரிசையில் சேர்க்கப்பட்டது"
+msgstr[1] "{n} பாடல்கள் வரிசையில் சேர்க்கப்பட்டன"
+
+msgid "Adding to \"{}\": {} of {n} song"
+msgid_plural "Adding to \"{}\": {} of {n} songs"
+msgstr[0] "\"{}\" இல் சேர்க்கப்படுகிறது: {n} பாடலில் {}"
+msgstr[1] "\"{}\" இல் சேர்க்கப்படுகிறது: {n} பாடல்களில் {}"
+
+msgid "ALBUM"
+msgstr "ஆல்பம்"
+
+msgid "Album"
+msgstr "ஆல்பம்"
+
+msgid "album"
+msgstr "ஆல்பம்"
+
+msgid "Album artist"
+msgstr "ஆல்பம் கலைஞர்"
+
+msgid "Album count"
+msgstr "ஆல்பம் எண்ணிக்கை"
+
+msgid "Album not found"
+msgstr "ஆல்பம் கிடைக்கவில்லை"
+
+msgid "Albums"
+msgstr "ஆல்பங்கள்"
+
+msgid "All genres"
+msgstr "அனைத்து வகைகளும்"
+
+msgid "Already at the end"
+msgstr "ஏற்கனவே இறுதியில் உள்ளது"
+
+msgid "Already at the start"
+msgstr "ஏற்கனவே தொடக்கத்தில் உள்ளது"
+
+msgid "Already in \"{}\""
+msgstr "ஏற்கனவே \"{}\" இல் உள்ளது"
+
+msgid "Already on the server"
+msgstr "ஏற்கனவே சேவையகத்தில் உள்ளது"
+
+msgid "Amber"
+msgstr "அம்பர்"
+
+msgid "Appearance"
+msgstr "தோற்றம்"
+
+msgid "ARTIST"
+msgstr "கலைஞர்"
+
+msgid "Artist"
+msgstr "கலைஞர்"
+
+msgid "Artists"
+msgstr "கலைஞர்கள்"
+
+msgid "Ask the server to transcode down to this bitrate. Applies from the next song."
+msgstr "இந்த பிட்ரேட்டுக்குக் குறைத்து டிரான்ஸ்கோட் செய்யுமாறு சேவையகத்தைக் கேட்கும். அடுத்த பாடலிலிருந்து பொருந்தும்."
+
+msgid "Audio device"
+msgstr "ஆடியோ சாதனம்"
+
+msgid "Automatic ({})"
+msgstr "தானியங்கு ({})"
+
+msgid "Back"
+msgstr "பின்செல்"
+
+msgid "Blue"
+msgstr "நீலம்"
+
+msgid "by {}"
+msgstr "{} உருவாக்கியது"
+
+msgid "Cancel"
+msgstr "ரத்துசெய்"
+
+msgid "Cancel timer"
+msgstr "நேரங்காட்டியை ரத்துசெய்"
+
+msgid "Cannot share: {}"
+msgstr "பகிர முடியவில்லை: {}"
+
+msgid "Chart country"
+msgstr "தரவரிசை நாடு"
+
+msgid "Charts"
+msgstr "தரவரிசைகள்"
+
+msgid "Choose a browser under Settings, YouTube to sign in for a personalized home"
+msgstr "தனிப்பயனாக்கப்பட்ட முகப்புக்கு உள்நுழைய அமைப்புகள், YouTube பகுதியில் ஓர் உலாவியைத் தேர்ந்தெடுக்கவும்"
+
+msgid "Clear"
+msgstr "அழி"
+
+msgid "Clear filters"
+msgstr "வடிகட்டிகளை அழி"
+
+msgid "Clear rating"
+msgstr "மதிப்பீட்டை அழி"
+
+msgid "Clear the favorites and genre filters"
+msgstr "பிடித்தவை மற்றும் வகை வடிகட்டிகளை அழி"
+
+msgid "Close"
+msgstr "மூடு"
+
+msgid "Close now playing"
+msgstr "இப்போது இயங்குவதை மூடு"
+
+msgid "Close without saving"
+msgstr "சேமிக்காமல் மூடு"
+
+msgid "Colors used across the whole app."
+msgstr "முழு பயன்பாட்டிலும் பயன்படுத்தப்படும் நிறங்கள்."
+
+msgid "Connect to your music server"
+msgstr "உங்கள் இசைச் சேவையகத்துடன் இணைக்கவும்"
+
+msgid "Connecting..."
+msgstr "இணைக்கிறது..."
+
+msgid "Could not add to \"{}\": {}"
+msgstr "\"{}\" இல் சேர்க்க முடியவில்லை: {}"
+
+msgid "Could not add {} to the server"
+msgstr "{}-ஐ சேவையகத்தில் சேர்க்க முடியவில்லை"
+
+msgid "Could not create a share link: {}"
+msgstr "பகிர்வு இணைப்பை உருவாக்க முடியவில்லை: {}"
+
+msgid "Could not create the playlist: {}"
+msgstr "பிளேலிஸ்ட்டை உருவாக்க முடியவில்லை: {}"
+
+msgid "Could not delete the playlist: {}"
+msgstr "பிளேலிஸ்ட்டை நீக்க முடியவில்லை: {}"
+
+msgid "Could not delete the station"
+msgstr "நிலையத்தை நீக்க முடியவில்லை"
+
+msgid "Could not load albums: {}"
+msgstr "ஆல்பங்களை ஏற்ற முடியவில்லை: {}"
+
+msgid "Could not load artists: {}"
+msgstr "கலைஞர்களை ஏற்ற முடியவில்லை: {}"
+
+msgid "Could not load Discover: {}"
+msgstr "கண்டறி பக்கத்தை ஏற்ற முடியவில்லை: {}"
+
+msgid "Could not load genres: {}"
+msgstr "வகைகளை ஏற்ற முடியவில்லை: {}"
+
+msgid "Could not load it from YouTube Music: {}"
+msgstr "அதை YouTube Music இலிருந்து ஏற்ற முடியவில்லை: {}"
+
+msgid "Could not load lyrics"
+msgstr "பாடல் வரிகளை ஏற்ற முடியவில்லை"
+
+msgid "Could not load moods and genres: {}"
+msgstr "மனநிலைகள் மற்றும் வகைகளை ஏற்ற முடியவில்லை: {}"
+
+msgid "Could not load more results: {}"
+msgstr "மேலும் முடிவுகளை ஏற்ற முடியவில்லை: {}"
+
+msgid "Could not load new releases: {}"
+msgstr "புதிய வெளியீடுகளை ஏற்ற முடியவில்லை: {}"
+
+msgid "Could not load playlists: {}"
+msgstr "பிளேலிஸ்ட்களை ஏற்ற முடியவில்லை: {}"
+
+msgid "Could not load the album: {}"
+msgstr "ஆல்பத்தை ஏற்ற முடியவில்லை: {}"
+
+msgid "Could not load the artist: {}"
+msgstr "கலைஞரை ஏற்ற முடியவில்லை: {}"
+
+msgid "Could not load the charts: {}"
+msgstr "தரவரிசைகளை ஏற்ற முடியவில்லை: {}"
+
+msgid "Could not load the folder: {}"
+msgstr "கோப்புறையை ஏற்ற முடியவில்லை: {}"
+
+msgid "Could not load the list: {}"
+msgstr "பட்டியலை ஏற்ற முடியவில்லை: {}"
+
+msgid "Could not load the playlist: {}"
+msgstr "பிளேலிஸ்ட்டை ஏற்ற முடியவில்லை: {}"
+
+msgid "Could not load the radio stations: {}"
+msgstr "வானொலி நிலையங்களை ஏற்ற முடியவில்லை: {}"
+
+msgid "Could not load the selection: {}"
+msgstr "தேர்வை ஏற்ற முடியவில்லை: {}"
+
+msgid "Could not load this page: {}"
+msgstr "இந்தப் பக்கத்தை ஏற்ற முடியவில்லை: {}"
+
+msgid "Could not load tracks: {}"
+msgstr "தடங்களை ஏற்ற முடியவில்லை: {}"
+
+msgid "Could not load your home: {}"
+msgstr "உங்கள் முகப்பை ஏற்ற முடியவில்லை: {}"
+
+msgid "Could not open the folder: {}"
+msgstr "கோப்புறையைத் திறக்க முடியவில்லை: {}"
+
+msgid "Could not open YouTube Music: {}"
+msgstr "YouTube Music ஐத் திறக்க முடியவில்லை: {}"
+
+msgid "Could not play \"{}\" from YouTube: {}"
+msgstr "YouTube இலிருந்து \"{}\" ஐ இயக்க முடியவில்லை: {}"
+
+msgid "Could not play album: {}"
+msgstr "ஆல்பத்தை இயக்க முடியவில்லை: {}"
+
+msgid "Could not play from YouTube: {}"
+msgstr "YouTube இலிருந்து இயக்க முடியவில்லை: {}"
+
+msgid "Could not play the album: {}"
+msgstr "ஆல்பத்தை இயக்க முடியவில்லை: {}"
+
+msgid "Could not remove songs: {}"
+msgstr "பாடல்களை அகற்ற முடியவில்லை: {}"
+
+msgid "Could not rescan the library: {}"
+msgstr "நூலகத்தை மீண்டும் ஸ்கேன் செய்ய முடியவில்லை: {}"
+
+msgid "Could not set the rating: {}"
+msgstr "மதிப்பீட்டை அமைக்க முடியவில்லை: {}"
+
+msgid "Could not sign in to YouTube Music ({}). Showing general picks instead."
+msgstr "YouTube Music இல் உள்நுழைய முடியவில்லை ({}). அதற்குப் பதிலாகப் பொதுவான தேர்வுகள் காட்டப்படுகின்றன."
+
+msgid "Could not switch server: {}"
+msgstr "சேவையகத்தை மாற்ற முடியவில்லை: {}"
+
+msgid "Could not update favorite: {}"
+msgstr "பிடித்ததைப் புதுப்பிக்க முடியவில்லை: {}"
+
+msgid "Could not update favorites: {}"
+msgstr "பிடித்தவற்றைப் புதுப்பிக்க முடியவில்லை: {}"
+
+msgid "Could not update rating: {}"
+msgstr "மதிப்பீட்டைப் புதுப்பிக்க முடியவில்லை: {}"
+
+msgid "Could not update the favorite: {}"
+msgstr "பிடித்ததைப் புதுப்பிக்க முடியவில்லை: {}"
+
+msgid "Country"
+msgstr "நாடு"
+
+msgid "Create"
+msgstr "உருவாக்கு"
+
+msgid "Created \"{}\" with only {n} song: {}"
+msgid_plural "Created \"{}\" with only {n} songs: {}"
+msgstr[0] "\"{}\" {n} பாடலுடன் மட்டுமே உருவாக்கப்பட்டது: {}"
+msgstr[1] "\"{}\" {n} பாடல்களுடன் மட்டுமே உருவாக்கப்பட்டது: {}"
+
+msgid "Created \"{}\" with {n} song"
+msgid_plural "Created \"{}\" with {n} songs"
+msgstr[0] "\"{}\" {n} பாடலுடன் உருவாக்கப்பட்டது"
+msgstr[1] "\"{}\" {n} பாடல்களுடன் உருவாக்கப்பட்டது"
+
+msgid "Created playlist \"{}\""
+msgstr "\"{}\" பிளேலிஸ்ட் உருவாக்கப்பட்டது"
+
+msgid "Creating a share link..."
+msgstr "பகிர்வு இணைப்பு உருவாக்கப்படுகிறது..."
+
+msgid "Creating..."
+msgstr "உருவாக்குகிறது..."
+
+msgid "Crossfade"
+msgstr "கிராஸ்ஃபேட்"
+
+msgid "Crossfade could not be changed: {}"
+msgstr "கிராஸ்ஃபேடை மாற்ற முடியவில்லை: {}"
+
+msgid "Crossfade: {}"
+msgstr "கிராஸ்ஃபேட்: {}"
+
+msgid "Current"
+msgstr "தற்போதையது"
+
+msgid "Custom accent color: {} (theme accent in use)"
+msgstr "தனிப்பயன் உச்சரிப்பு நிறம்: {} (கருப்பொருளின் உச்சரிப்பு நிறம் பயன்பாட்டில் உள்ளது)"
+
+msgid "Custom accent color: {}, press Enter to apply"
+msgstr "தனிப்பயன் உச்சரிப்பு நிறம்: {}, பயன்படுத்த Enter ஐ அழுத்தவும்"
+
+msgid "Dark theme"
+msgstr "இருண்ட கருப்பொருள்"
+
+msgid "DARK THEMES"
+msgstr "இருண்ட கருப்பொருள்கள்"
+
+msgid "Default country for the Discover charts. Automatic follows your system region."
+msgstr "கண்டறி தரவரிசைகளுக்கான இயல்பு நாடு. தானியங்கு உங்கள் கணினியின் பிராந்தியத்தைப் பின்பற்றும்."
+
+msgid "Default Dark"
+msgstr "இயல்பு இருண்டது"
+
+msgid "Default Light"
+msgstr "இயல்பு ஒளிர்வு"
+
+msgid "Delete"
+msgstr "நீக்கு"
+
+msgid "Delete \"{}\" from the server? This cannot be undone."
+msgstr "\"{}\" ஐ சேவையகத்திலிருந்து நீக்கவா? இதைச் செயல்தவிர்க்க முடியாது."
+
+msgid "Delete \"{}\"? This cannot be undone."
+msgstr "\"{}\" ஐ நீக்கவா? இதைச் செயல்தவிர்க்க முடியாது."
+
+msgid "Delete playlist"
+msgstr "பிளேலிஸ்ட்டை நீக்கு"
+
+msgid "Delete station"
+msgstr "நிலையத்தை நீக்கு"
+
+msgid "Delete {} from the server"
+msgstr "{}-ஐ சேவையகத்திலிருந்து நீக்கு"
+
+msgid "Deleted playlist \"{}\""
+msgstr "\"{}\" பிளேலிஸ்ட் நீக்கப்பட்டது"
+
+msgid "Deleting..."
+msgstr "நீக்குகிறது..."
+
+msgid "Demo mode: these picks are made up and play from your demo library"
+msgstr "டெமோ பயன்முறை: இந்தத் தேர்வுகள் கற்பனையானவை, உங்கள் டெமோ நூலகத்திலிருந்து இயங்கும்"
+
+msgid "Directory"
+msgstr "அடைவு"
+
+msgid "Disc {}"
+msgstr "வட்டு {}"
+
+msgid "Discord Rich Presence"
+msgstr "Discord Rich Presence"
+
+msgid "Discover"
+msgstr "கண்டறி"
+
+msgid "Discover is open"
+msgstr "கண்டறி திறந்துள்ளது"
+
+msgid "Discover new music on YouTube Music"
+msgstr "YouTube Music இல் புதிய இசையைக் கண்டறியுங்கள்"
+
+msgid "Duration"
+msgstr "காலம்"
+
+msgid "Edit station"
+msgstr "நிலையத்தைத் திருத்து"
+
+msgid "Edit {}"
+msgstr "{}-ஐத் திருத்து"
+
+msgid "End of current track"
+msgstr "தற்போதைய தடத்தின் முடிவு"
+
+msgid "End of track"
+msgstr "தடத்தின் முடிவு"
+
+msgid "Enter a name for the station"
+msgstr "நிலையத்துக்கு ஒரு பெயரை உள்ளிடவும்"
+
+msgid "Enter a name, country or tag to search"
+msgstr "தேட பெயர், நாடு அல்லது குறிச்சொல்லை உள்ளிடவும்"
+
+msgid "Enter a stream URL that starts with http:// or https://"
+msgstr "http:// அல்லது https:// இல் தொடங்கும் ஸ்ட்ரீம் முகவரியை உள்ளிடவும்"
+
+msgid "Enter the server URL"
+msgstr "சேவையக முகவரியை உள்ளிடவும்"
+
+msgid "Fade the end of each song into the next one. Off keeps gapless playback."
+msgstr "ஒவ்வொரு பாடலின் முடிவையும் அடுத்த பாடலுக்குள் மங்கச் செய்யும். ஆஃப் நிலையில் இடைவெளியற்ற இயக்கம் தொடரும்."
+
+msgid "Favorite"
+msgstr "பிடித்த"
+
+msgid "Favorited"
+msgstr "பிடித்தது"
+
+msgid "Favorites"
+msgstr "பிடித்தவை"
+
+msgid "Favorites only: off"
+msgstr "பிடித்தவை மட்டும்: ஆஃப்"
+
+msgid "Favorites only: on"
+msgstr "பிடித்தவை மட்டும்: ஆன்"
+
+msgid "Filter"
+msgstr "வடிப்பி"
+
+msgid "Filter playlists"
+msgstr "பிளேலிஸ்ட்களை வடிகட்டு"
+
+msgid "Find stations by name, country or tag"
+msgstr "பெயர், நாடு அல்லது குறிச்சொல் மூலம் நிலையங்களைக் கண்டறி"
+
+msgid "Find stations in the radio-browser.info directory"
+msgstr "radio-browser.info அடைவில் நிலையங்களைக் கண்டறி"
+
+msgid "Folder"
+msgstr "கோப்புறை"
+
+msgid "Folders"
+msgstr "கோப்புறைகள்"
+
+msgid "Follow current song"
+msgstr "தற்போதைய பாடலைப் பின்பற்றவும்"
+
+msgid "Follow system color scheme"
+msgstr "கணினியின் வண்ணத் திட்டத்தைப் பின்பற்று"
+
+msgid "For you"
+msgstr "உங்களுக்காக"
+
+msgid "Forget this server?"
+msgstr "இந்தச் சேவையகத்தை மறக்கவா?"
+
+msgid "Format the server should transcode to. Applies from the next song."
+msgstr "சேவையகம் டிரான்ஸ்கோட் செய்ய வேண்டிய வடிவம். அடுத்த பாடலிலிருந்து பொருந்தும்."
+
+msgid "Found {n} server in Feishin but it has no usable saved login"
+msgid_plural "Found {n} servers in Feishin but none with a usable saved login"
+msgstr[0] "Feishin இல் {n} சேவையகம் கிடைத்தது, ஆனால் அதில் பயன்படுத்தக்கூடிய சேமித்த உள்நுழைவு இல்லை"
+msgstr[1] "Feishin இல் {n} சேவையகங்கள் கிடைத்தன, ஆனால் எதிலும் பயன்படுத்தக்கூடிய சேமித்த உள்நுழைவு இல்லை"
+
+msgid "Gapless playback"
+msgstr "இடைவெளியற்ற இயக்கம்"
+
+msgid "Genres"
+msgstr "வகைகள்"
+
+msgid "Go back to {}"
+msgstr "{}-க்குத் திரும்பு"
+
+msgid "Go to album"
+msgstr "ஆல்பத்துக்குச் செல்"
+
+msgid "Go to artist"
+msgstr "கலைஞருக்குச் செல்"
+
+msgid "Go to {}"
+msgstr "{}-க்குச் செல்"
+
+msgid "Green"
+msgstr "பச்சை"
+
+msgid "Hide lyrics"
+msgstr "பாடல் வரிகளை மறை"
+
+msgid "Hide queue"
+msgstr "வரிசையை மறை"
+
+msgid "High Contrast Dark"
+msgstr "அதிக மாறுபாடு இருண்டது"
+
+msgid "High Contrast Light"
+msgstr "அதிக மாறுபாடு ஒளிர்வு"
+
+msgid "Highlight with the color that comes with the theme."
+msgstr "கருப்பொருளுடன் வரும் நிறத்தால் முன்னிலைப்படுத்து."
+
+msgid "Home"
+msgstr "முகப்பு"
+
+msgid "Homepage (optional)"
+msgstr "இணையதளம் (விருப்பத்தேர்வு)"
+
+msgid "Import from Feishin"
+msgstr "Feishin இலிருந்து இறக்குமதி செய்"
+
+msgid "Install yt-dlp to play YouTube tracks"
+msgstr "YouTube தடங்களை இயக்க yt-dlp ஐ நிறுவவும்"
+
+msgid "Integrations"
+msgstr "ஒருங்கிணைப்புகள்"
+
+msgid "Interface"
+msgstr "இடைமுகம்"
+
+msgid "Internet radio"
+msgstr "இணைய வானொலி"
+
+msgid "item"
+msgstr "உருப்படி"
+
+msgid "Jellyfin has no public share links"
+msgstr "Jellyfin இல் பொதுப் பகிர்வு இணைப்புகள் இல்லை"
+
+msgid "Keep this station in the favorites on this device"
+msgstr "இந்தச் சாதனத்தில் இந்த நிலையத்தைப் பிடித்தவையில் வைத்திரு"
+
+msgid "Language"
+msgstr "மொழி"
+
+msgid "LIBRARY"
+msgstr "நூலகம்"
+
+msgid "Library scan finished"
+msgstr "நூலக ஸ்கேன் முடிந்தது"
+
+msgid "Library scan finished: {n} item"
+msgid_plural "Library scan finished: {n} items"
+msgstr[0] "நூலக ஸ்கேன் முடிந்தது: {n} உருப்படி"
+msgstr[1] "நூலக ஸ்கேன் முடிந்தது: {n} உருப்படிகள்"
+
+msgid "Light theme"
+msgstr "ஒளிர்வு கருப்பொருள்"
+
+msgid "LIGHT THEMES"
+msgstr "ஒளிர்வு கருப்பொருள்கள்"
+
+msgid "Listening to {}"
+msgstr "{}-ஐக் கேட்கிறீர்கள்"
+
+msgid "LIVE"
+msgstr "நேரலை"
+
+msgid "Load more"
+msgstr "மேலும் ஏற்று"
+
+msgid "Load this section again"
+msgstr "இந்தப் பகுதியை மீண்டும் ஏற்று"
+
+msgid "Loading playlists..."
+msgstr "பிளேலிஸ்ட்கள் ஏற்றப்படுகின்றன..."
+
+msgid "Loading similar songs..."
+msgstr "ஒத்த பாடல்கள் ஏற்றப்படுகின்றன..."
+
+msgid "Loading stations..."
+msgstr "நிலையங்கள் ஏற்றப்படுகின்றன..."
+
+msgid "Loading the next page of stations"
+msgstr "நிலையங்களின் அடுத்த பக்கம் ஏற்றப்படுகிறது"
+
+msgid "Loading..."
+msgstr "ஏற்றுகிறது..."
+
+msgid "Log out"
+msgstr "வெளியேறு"
+
+msgid "Looking up the YouTube link..."
+msgstr "YouTube இணைப்பு தேடப்படுகிறது..."
+
+msgid "Lyrics"
+msgstr "பாடல் வரிகள்"
+
+msgid "Lyrics from {}"
+msgstr "{} இலிருந்து பாடல் வரிகள்"
+
+msgid "Lyrics sources"
+msgstr "பாடல் வரி மூலங்கள்"
+
+msgid "Maximum bitrate"
+msgstr "அதிகபட்ச பிட்ரேட்"
+
+msgid "Media keys and desktop media controls. Takes effect after a restart."
+msgstr "மீடியா விசைகள் மற்றும் டெஸ்க்டாப் மீடியா கட்டுப்பாடுகள். மறுதொடக்கத்துக்குப் பிறகு நடைமுறைக்கு வரும்."
+
+msgid "Moods and genres"
+msgstr "மனநிலைகள் மற்றும் வகைகள்"
+
+msgid "Most played"
+msgstr "அதிகம் இயக்கப்பட்டவை"
+
+msgid "Move down"
+msgstr "கீழே நகர்த்து"
+
+msgid "Move up"
+msgstr "மேலே நகர்த்து"
+
+msgid "MPRIS"
+msgstr "MPRIS"
+
+msgid "Mute"
+msgstr "ஒலிமுடக்கு"
+
+msgid "Name"
+msgstr "பெயர்"
+
+msgid "New playlist"
+msgstr "புதிய பிளேலிஸ்ட்"
+
+msgid "New releases"
+msgstr "புதிய வெளியீடுகள்"
+
+msgid "Next"
+msgstr "அடுத்தது"
+
+msgid "Next is unavailable while a radio station plays"
+msgstr "வானொலி நிலையம் இயங்கும்போது அடுத்தது கிடைக்காது"
+
+msgid "No albums"
+msgstr "ஆல்பங்கள் இல்லை"
+
+msgid "No albums found"
+msgstr "ஆல்பங்கள் எதுவும் கிடைக்கவில்லை"
+
+msgid "No artists found"
+msgstr "கலைஞர்கள் எதுவும் கிடைக்கவில்லை"
+
+msgid "no browser is selected"
+msgstr "உலாவி எதுவும் தேர்ந்தெடுக்கப்படவில்லை"
+
+msgid "No favorite albums"
+msgstr "பிடித்த ஆல்பங்கள் இல்லை"
+
+msgid "No favorite artists"
+msgstr "பிடித்த கலைஞர்கள் இல்லை"
+
+msgid "No favorite tracks"
+msgstr "பிடித்த தடங்கள் இல்லை"
+
+msgid "No genres found"
+msgstr "வகைகள் எதுவும் கிடைக்கவில்லை"
+
+msgid "No lyrics found"
+msgstr "பாடல் வரிகள் இல்லை"
+
+msgid "No playlists found"
+msgstr "பிளேலிஸ்ட்கள் எதுவும் கிடைக்கவில்லை"
+
+msgid "No playlists yet"
+msgstr "இன்னும் பிளேலிஸ்ட்கள் இல்லை"
+
+msgid "No rating"
+msgstr "மதிப்பீடு இல்லை"
+
+msgid "No results for \"{}\""
+msgstr "\"{}\" க்கு முடிவுகள் இல்லை"
+
+msgid "No saved login for {}; remove it and add it again"
+msgstr "{} க்குச் சேமித்த உள்நுழைவு இல்லை; அதை அகற்றி மீண்டும் சேர்க்கவும்"
+
+msgid "No saved servers."
+msgstr "சேமித்த சேவையகங்கள் இல்லை."
+
+msgid "No similar songs found"
+msgstr "ஒத்த பாடல்கள் எதுவும் கிடைக்கவில்லை"
+
+msgid "No songs here"
+msgstr "இங்கே பாடல்கள் இல்லை"
+
+msgid "No stations found"
+msgstr "நிலையங்கள் எதுவும் கிடைக்கவில்லை"
+
+msgid "No stations yet. Add one or find one in the directory."
+msgstr "இன்னும் நிலையங்கள் இல்லை. ஒன்றைச் சேர்க்கவும் அல்லது அடைவில் கண்டறியவும்."
+
+msgid "No tracks found"
+msgstr "தடங்கள் எதுவும் கிடைக்கவில்லை"
+
+msgid "None"
+msgstr "எதுவுமில்லை"
+
+msgid "Normalize loudness using the track or album gain tags."
+msgstr "தடம் அல்லது ஆல்பம் ஈட்டக் குறிச்சொற்களைப் பயன்படுத்தி ஒலியளவைச் சீராக்கு."
+
+msgid "Not connected to a server"
+msgstr "சேவையகத்துடன் இணைக்கப்படவில்லை"
+
+msgid "Nothing is playing"
+msgstr "எதுவும் இயங்கவில்லை"
+
+msgid "Nothing to add yet"
+msgstr "இன்னும் சேர்க்க எதுவும் இல்லை"
+
+msgid "Nothing to go back to"
+msgstr "திரும்பிச் செல்ல எதுவும் இல்லை"
+
+msgid "Nothing to play here"
+msgstr "இங்கே இயக்க எதுவும் இல்லை"
+
+msgid "Nothing to play yet"
+msgstr "இன்னும் இயக்க எதுவும் இல்லை"
+
+msgid "Nothing to show here right now"
+msgstr "இப்போது இங்கே காட்ட எதுவும் இல்லை"
+
+msgid "Off"
+msgstr "ஆஃப்"
+
+msgid "OK"
+msgstr "சரி"
+
+msgid "On the server"
+msgstr "சேவையகத்தில்"
+
+msgid "Only a server admin can rescan the library"
+msgstr "சேவையக நிர்வாகி மட்டுமே நூலகத்தை மீண்டும் ஸ்கேன் செய்ய முடியும்"
+
+msgid "Only loaded tracks can be shared: select fewer tracks or scroll through them first"
+msgstr "ஏற்றப்பட்ட தடங்களை மட்டுமே பகிர முடியும்: குறைவான தடங்களைத் தேர்ந்தெடுக்கவும் அல்லது முதலில் அவற்றை உருட்டிப் பார்க்கவும்"
+
+msgid "Open"
+msgstr "திற"
+
+msgid "Open in YouTube Music"
+msgstr "YouTube Music இல் திற"
+
+msgid "Open now playing"
+msgstr "இப்போது இயங்குவதைத் திற"
+
+msgid "Open radio"
+msgstr "வானொலியைத் திற"
+
+msgid "Open the album \"{}\""
+msgstr "\"{}\" ஆல்பத்தைத் திற"
+
+msgid "Open the playlist \"{}\""
+msgstr "\"{}\" பிளேலிஸ்ட்டைத் திற"
+
+msgid "Open the queue panel"
+msgstr "வரிசைப் பலகத்தைத் திற"
+
+msgid "Open {}"
+msgstr "{}-ஐத் திற"
+
+msgid "Original"
+msgstr "அசல்"
+
+msgid "Output used by the player."
+msgstr "பிளேயர் பயன்படுத்தும் வெளியீடு."
+
+msgid "Owner"
+msgstr "உரிமையாளர்"
+
+msgid "Password"
+msgstr "கடவுச்சொல்"
+
+msgid "Paste a link first"
+msgstr "முதலில் ஓர் இணைப்பை ஒட்டவும்"
+
+msgid "Paste a YouTube or YouTube Music link first"
+msgstr "முதலில் YouTube அல்லது YouTube Music இணைப்பை ஒட்டவும்"
+
+msgid "Paste a YouTube or YouTube Music link to try yt-dlp."
+msgstr "yt-dlp ஐ முயற்சிக்க YouTube அல்லது YouTube Music இணைப்பை ஒட்டவும்."
+
+msgid "Pause"
+msgstr "இடைநிறுத்து"
+
+msgid "Pause the radio station"
+msgstr "வானொலி நிலையத்தை இடைநிறுத்து"
+
+msgid "Personalized with your YouTube Music account from {}"
+msgstr "{} இலிருந்து உங்கள் YouTube Music கணக்குடன் தனிப்பயனாக்கப்பட்டது"
+
+msgid "Pick a color, or type one as #rrggbb and press Enter."
+msgstr "ஒரு நிறத்தைத் தேர்ந்தெடுக்கவும், அல்லது #rrggbb வடிவில் தட்டச்சு செய்து Enter ஐ அழுத்தவும்."
+
+msgid "Pick a mood or genre to see its playlists"
+msgstr "பிளேலிஸ்ட்களைக் காண ஒரு மனநிலை அல்லது வகையைத் தேர்ந்தெடுக்கவும்"
+
+msgid "Play"
+msgstr "இயக்கு"
+
+msgid "Play \"{}\" and the rest of this shelf"
+msgstr "\"{}\" மற்றும் இந்த அடுக்கின் மீதியை இயக்கு"
+
+msgid "Play a YouTube link"
+msgstr "YouTube இணைப்பை இயக்கு"
+
+msgid "Play album"
+msgstr "ஆல்பத்தை இயக்கு"
+
+msgid "Play all"
+msgstr "அனைத்தையும் இயக்கு"
+
+msgid "Play all {n} song"
+msgid_plural "Play all {n} songs"
+msgstr[0] "{n} பாடலையும் இயக்கு"
+msgstr[1] "அனைத்து {n} பாடல்களையும் இயக்கு"
+
+msgid "Play count"
+msgstr "இயக்க எண்ணிக்கை"
+
+msgid "Play every song in {} and its subfolders"
+msgstr "{} மற்றும் அதன் துணைக்கோப்புறைகளில் உள்ள எல்லாப் பாடல்களையும் இயக்கு"
+
+msgid "Play from here"
+msgstr "இங்கிருந்து இயக்கு"
+
+msgid "Play from this song"
+msgstr "இந்தப் பாடலிலிருந்து இயக்கு"
+
+msgid "Play from {}"
+msgstr "{} இலிருந்து இயக்கு"
+
+msgid "Play next"
+msgstr "அடுத்ததாக இயக்கு"
+
+msgid "Play the album"
+msgstr "ஆல்பத்தை இயக்கு"
+
+msgid "Play the playlist"
+msgstr "பிளேலிஸ்ட்டை இயக்கு"
+
+msgid "Play the radio station"
+msgstr "வானொலி நிலையத்தை இயக்கு"
+
+msgid "Play this link after the current song"
+msgstr "தற்போதைய பாடலுக்குப் பிறகு இந்த இணைப்பை இயக்கு"
+
+msgid "Play this link now"
+msgstr "இந்த இணைப்பை இப்போது இயக்கு"
+
+msgid "Play {}"
+msgstr "{}-ஐ இயக்கு"
+
+msgid "Play {} next"
+msgstr "{}-ஐ அடுத்ததாக இயக்கு"
+
+msgid "Play {} with its subfolders"
+msgstr "{}-ஐ அதன் துணைக்கோப்புறைகளுடன் இயக்கு"
+
+msgid "Playback"
+msgstr "இயக்கம்"
+
+msgid "Playback failed: {}"
+msgstr "இயக்கம் தோல்வியடைந்தது: {}"
+
+msgid "Playing {} failed: {}"
+msgstr "{}-ஐ இயக்குவது தோல்வியடைந்தது: {}"
+
+msgid "PLAYLIST"
+msgstr "பிளேலிஸ்ட்"
+
+msgid "Playlist"
+msgstr "பிளேலிஸ்ட்"
+
+msgid "playlist"
+msgstr "பிளேலிஸ்ட்"
+
+msgid "Playlist name"
+msgstr "பிளேலிஸ்ட் பெயர்"
+
+msgid "Playlists"
+msgstr "பிளேலிஸ்ட்கள்"
+
+msgid "Plays"
+msgstr "இயக்கங்கள்"
+
+msgid "Plays YouTube tracks. Leave empty to use yt-dlp from your PATH."
+msgstr "YouTube தடங்களை இயக்கும். உங்கள் PATH இல் உள்ள yt-dlp ஐப் பயன்படுத்த காலியாக விடவும்."
+
+msgid "Preload the next song so it starts without a pause."
+msgstr "இடைநிறுத்தமின்றித் தொடங்க அடுத்த பாடலை முன்கூட்டியே ஏற்று."
+
+msgid "Previous"
+msgstr "முந்தைய"
+
+msgid "Previous is unavailable while a radio station plays"
+msgstr "வானொலி நிலையம் இயங்கும்போது முந்தையது கிடைக்காது"
+
+msgid "Purple"
+msgstr "ஊதா"
+
+msgid "Queue"
+msgstr "வரிசை"
+
+msgid "Radio"
+msgstr "வானொலி"
+
+msgid "Random"
+msgstr "சீரற்ற"
+
+msgid "Rate {n} star"
+msgid_plural "Rate {n} stars"
+msgstr[0] "{n} நட்சத்திரம் கொடு"
+msgstr[1] "{n} நட்சத்திரங்கள் கொடு"
+
+msgid "Rating"
+msgstr "மதிப்பீடு"
+
+msgid "Recently added"
+msgstr "அண்மைக் காலத்தில் சேர்க்கப்பட்டது"
+
+msgid "Recently played"
+msgstr "அண்மையில் இயக்கப்பட்டவை"
+
+msgid "Red"
+msgstr "சிவப்பு"
+
+msgid "Refresh"
+msgstr "புதுப்பிப்பு"
+
+msgid "Refresh this section"
+msgstr "இந்தப் பகுதியைப் புதுப்பி"
+
+msgid "Release year"
+msgstr "வெளியீட்டு ஆண்டு"
+
+msgid "Remove"
+msgstr "அகற்று"
+
+msgid "Remove from favorites"
+msgstr "பிடித்தவையிலிருந்து அகற்று"
+
+msgid "Remove from playlist"
+msgstr "பிளேலிஸ்ட்டிலிருந்து அகற்று"
+
+msgid "Remove from queue"
+msgstr "வரிசையிலிருந்து அகற்று"
+
+msgid "Removed {n} song from \"{}\""
+msgid_plural "Removed {n} songs from \"{}\""
+msgstr[0] "\"{}\" இலிருந்து {n} பாடல் அகற்றப்பட்டது"
+msgstr[1] "\"{}\" இலிருந்து {n} பாடல்கள் அகற்றப்பட்டன"
+
+msgid "Removing..."
+msgstr "அகற்றுகிறது..."
+
+msgid "Repeat: all"
+msgstr "மீண்டும் இயக்கு: அனைத்தும்"
+
+msgid "Repeat: off"
+msgstr "மீண்டும் இயக்கு: ஆஃப்"
+
+msgid "Repeat: one"
+msgstr "மீண்டும் இயக்கு: ஒன்று"
+
+msgid "ReplayGain"
+msgstr "ReplayGain"
+
+msgid "Report what you play to the server."
+msgstr "நீங்கள் இயக்குவதைச் சேவையகத்துக்குத் தெரிவி."
+
+msgid "Rescan the library for new content"
+msgstr "புதிய உள்ளடக்கத்துக்காக நூலகத்தை மீண்டும் ஸ்கேன் செய்"
+
+msgid "Resize column"
+msgstr "நெடுவரிசையின் அளவை மாற்று"
+
+msgid "Save"
+msgstr "சேமி"
+
+msgid "Save on this device"
+msgstr "இந்தச் சாதனத்தில் சேமி"
+
+msgid "Save the changes on the server"
+msgstr "மாற்றங்களைச் சேவையகத்தில் சேமி"
+
+msgid "Save the changes on this device"
+msgstr "மாற்றங்களை இந்தச் சாதனத்தில் சேமி"
+
+msgid "Save to favorites on this device"
+msgstr "இந்தச் சாதனத்தில் பிடித்தவையில் சேமி"
+
+msgid "Save to server"
+msgstr "சேவையகத்தில் சேமி"
+
+msgid "Saved on this device"
+msgstr "இந்தச் சாதனத்தில் சேமிக்கப்பட்டது"
+
+msgid "Saved on this device, click to remove"
+msgstr "இந்தச் சாதனத்தில் சேமிக்கப்பட்டது, அகற்ற கிளிக் செய்யவும்"
+
+msgid "Saving the station to the server..."
+msgstr "நிலையம் சேவையகத்தில் சேமிக்கப்படுகிறது..."
+
+msgid "Saving to the server..."
+msgstr "சேவையகத்தில் சேமிக்கப்படுகிறது..."
+
+msgid "Saving..."
+msgstr "சேமிக்கிறது..."
+
+msgid "Scanning the library for new content..."
+msgstr "புதிய உள்ளடக்கத்துக்காக நூலகம் ஸ்கேன் செய்யப்படுகிறது..."
+
+msgid "Scanning the library: {}"
+msgstr "நூலகம் ஸ்கேன் செய்யப்படுகிறது: {}"
+
+msgid "Scrobble"
+msgstr "ஸ்க்ரோபிள்"
+
+msgid "Scroll left"
+msgstr "இடப்புறம் உருட்டு"
+
+msgid "Scroll lists and the queue to the song that is playing."
+msgstr "இயங்கும் பாடலுக்குப் பட்டியல்களையும் வரிசையையும் உருட்டு."
+
+msgid "Scroll right"
+msgstr "வலப்புறம் உருட்டு"
+
+msgid "Search"
+msgstr "தேடல்"
+
+msgid "Search failed: {}"
+msgstr "தேடல் தோல்வியடைந்தது: {}"
+
+msgid "SEARCH RESULTS"
+msgstr "தேடல் முடிவுகள்"
+
+msgid "Search songs on YouTube Music"
+msgstr "YouTube Music இல் பாடல்களைத் தேடு"
+
+msgid "Search songs, albums, artists"
+msgstr "பாடல்கள், ஆல்பங்கள், கலைஞர்களைத் தேடு"
+
+msgid "Search the radio-browser.info directory"
+msgstr "radio-browser.info அடைவில் தேடு"
+
+msgid "Search your library for songs, albums and artists"
+msgstr "உங்கள் நூலகத்தில் பாடல்கள், ஆல்பங்கள் மற்றும் கலைஞர்களைத் தேடு"
+
+msgid "Searched from top to bottom until one has lyrics."
+msgstr "ஏதேனும் ஒன்றில் பாடல் வரிகள் கிடைக்கும் வரை மேலிருந்து கீழாகத் தேடப்படும்."
+
+msgid "Searching for lyrics..."
+msgstr "பாடல் வரிகள் தேடப்படுகின்றன..."
+
+msgid "Searching the radio directory failed: {}"
+msgstr "வானொலி அடைவில் தேடுவது தோல்வியடைந்தது: {}"
+
+msgid "Searching the radio-browser.info directory"
+msgstr "radio-browser.info அடைவில் தேடப்படுகிறது"
+
+msgid "Searching..."
+msgstr "தேடுகிறது..."
+
+msgid "Seeking is unavailable for live radio"
+msgstr "நேரலை வானொலியில் முன்னோக்கி/பின்னோக்கி நகர்த்த முடியாது"
+
+msgid "Server"
+msgstr "சேவையகம்"
+
+msgid "Server type"
+msgstr "சேவையக வகை"
+
+msgid "Servers"
+msgstr "சேவையகங்கள்"
+
+msgid "Set rating"
+msgstr "மதிப்பீட்டை அமைக்கவும்"
+
+msgid "Settings"
+msgstr "அமைப்புகள்"
+
+msgid "Share"
+msgstr "பகிர்"
+
+msgid "Share ({})"
+msgstr "பகிர் ({})"
+
+msgid "Share link copied to the clipboard: {}"
+msgstr "பகிர்வு இணைப்பு கிளிப்போர்டுக்கு நகலெடுக்கப்பட்டது: {}"
+
+msgid "Share this {}: copy a public link"
+msgstr "இந்த {}-ஐப் பகிர்: பொது இணைப்பை நகலெடு"
+
+msgid "Sharing is unavailable: {}"
+msgstr "பகிர்வு கிடைக்கவில்லை: {}"
+
+msgid "SHOW LESS"
+msgstr "குறைவாகக் காட்டு"
+
+msgid "Show lyrics"
+msgstr "பாடல் வரிகளைக் காட்டு"
+
+msgid "SHOW MORE"
+msgstr "மேலும் காட்டு"
+
+msgid "Show more"
+msgstr "மேலும் காட்டு"
+
+msgid "Show playlists for {}"
+msgstr "{} க்கான பிளேலிஸ்ட்களைக் காட்டு"
+
+msgid "Show queue"
+msgstr "வரிசையைக் காட்டு"
+
+msgid "Show the current song on your Discord profile."
+msgstr "தற்போதைய பாடலை உங்கள் Discord சுயவிவரத்தில் காட்டு."
+
+msgid "Show the next page of stations"
+msgstr "நிலையங்களின் அடுத்த பக்கத்தைக் காட்டு"
+
+msgid "Show the queue next to the library; remembered on the next start."
+msgstr "நூலகத்துக்கு அருகில் வரிசையைக் காட்டு; அடுத்த தொடக்கத்தில் நினைவில் வைக்கப்படும்."
+
+msgid "Show the server and saved stations"
+msgstr "சேவையகம் மற்றும் சேமித்த நிலையங்களைக் காட்டு"
+
+msgid "Show {}"
+msgstr "{}-ஐக் காட்டு"
+
+msgid "Showing playlists for {}"
+msgstr "{} க்கான பிளேலிஸ்ட்கள் காட்டப்படுகின்றன"
+
+msgid "Showing the charts for {}"
+msgstr "{} க்கான தரவரிசைகள் காட்டப்படுகின்றன"
+
+msgid "Showing the radio-browser.info directory"
+msgstr "radio-browser.info அடைவு காட்டப்படுகிறது"
+
+msgid "Showing the server and saved stations"
+msgstr "சேவையகம் மற்றும் சேமித்த நிலையங்கள் காட்டப்படுகின்றன"
+
+msgid "Shuffle"
+msgstr "கலக்கு"
+
+msgid "Shuffle every song in {} and its subfolders"
+msgstr "{} மற்றும் அதன் துணைக்கோப்புறைகளில் உள்ள எல்லாப் பாடல்களையும் கலக்கி இயக்கு"
+
+msgid "Shuffle play"
+msgstr "கலக்கி இயக்கு"
+
+msgid "Shuffle: off"
+msgstr "கலக்கு: ஆஃப்"
+
+msgid "Shuffle: on"
+msgstr "கலக்கு: ஆன்"
+
+msgid "Sign in"
+msgstr "உள்நுழை"
+
+msgid "Sign in with browser"
+msgstr "உலாவி மூலம் உள்நுழை"
+
+msgid "Sign out and forget this server's saved login?"
+msgstr "வெளியேறி இந்தச் சேவையகத்தின் சேமித்த உள்நுழைவை மறக்கவா?"
+
+msgid "Sign out and forget this server?"
+msgstr "வெளியேறி இந்தச் சேவையகத்தை மறக்கவா?"
+
+msgid "Similar"
+msgstr "ஒத்தவை"
+
+msgid "Similar songs come from your server, so YouTube tracks have none"
+msgstr "ஒத்த பாடல்கள் உங்கள் சேவையகத்திலிருந்து வருகின்றன, எனவே YouTube தடங்களுக்கு அவை இல்லை"
+
+msgid "Sleep timer: off"
+msgstr "உறக்க நேரங்காட்டி: ஆஃப்"
+
+msgid "Sleep timer: {}"
+msgstr "உறக்க நேரங்காட்டி: {}"
+
+msgid "Song count"
+msgstr "பாடல் எண்ணிக்கை"
+
+msgid "Songs"
+msgstr "பாடல்கள்"
+
+msgid "Sort by {}"
+msgstr "{} படி வரிசைப்படுத்து"
+
+msgid "Sort by {}: ascending"
+msgstr "{} படி வரிசைப்படுத்து: ஏறுவரிசை"
+
+msgid "Sort by {}: descending"
+msgstr "{} படி வரிசைப்படுத்து: இறங்குவரிசை"
+
+msgid "Sort: ascending"
+msgstr "வரிசைப்படுத்து: ஏறுவரிசை"
+
+msgid "Sort: descending"
+msgstr "வரிசைப்படுத்து: இறங்குவரிசை"
+
+msgid "Starting volume, shared with the player bar."
+msgstr "தொடக்க ஒலியளவு, பிளேயர் பட்டையுடன் பகிரப்படுகிறது."
+
+msgid "Station data from radio-browser.info"
+msgstr "radio-browser.info இலிருந்து நிலையத் தரவு"
+
+msgid "Station name"
+msgstr "நிலையப் பெயர்"
+
+msgid "Stations"
+msgstr "நிலையங்கள்"
+
+msgid "Stop {}"
+msgstr "{}-ஐ நிறுத்து"
+
+msgid "Stream URL"
+msgstr "ஸ்ட்ரீம் முகவரி"
+
+msgid "Switch"
+msgstr "மாற்று"
+
+msgid "Switch between a dark and a light theme with the desktop. {}"
+msgstr "டெஸ்க்டாப்புடன் இருண்ட மற்றும் ஒளிர்வு கருப்பொருளுக்கு இடையே மாறு. {}"
+
+msgid "Switch to grid view"
+msgstr "கட்டக் காட்சிக்கு மாறு"
+
+msgid "Switch to list view"
+msgstr "பட்டியல் காட்சிக்கு மாறு"
+
+msgid "System default"
+msgstr "கணினி இயல்பு"
+
+msgid "System default follows the language of the desktop."
+msgstr "கணினி இயல்பு டெஸ்க்டாப்பின் மொழியைப் பின்பற்றும்."
+
+msgid "Tag, for example jazz"
+msgstr "குறிச்சொல், எடுத்துக்காட்டாக jazz"
+
+msgid "The desktop currently prefers dark."
+msgstr "டெஸ்க்டாப் தற்போது இருண்டதை விரும்புகிறது."
+
+msgid "The desktop currently prefers light."
+msgstr "டெஸ்க்டாப் தற்போது ஒளிர்வை விரும்புகிறது."
+
+msgid "The desktop has no preference, so the dark theme is used."
+msgstr "டெஸ்க்டாப்புக்கு விருப்பம் இல்லை, எனவே இருண்ட கருப்பொருள் பயன்படுத்தப்படுகிறது."
+
+msgid "The library scan is still running on the server"
+msgstr "நூலக ஸ்கேன் இன்னும் சேவையகத்தில் நடைபெறுகிறது"
+
+msgid "The queue is empty"
+msgstr "வரிசை காலியாக உள்ளது"
+
+msgid "The queue is incomplete: loading the rest of the list failed ({})"
+msgstr "வரிசை முழுமையடையவில்லை: பட்டியலின் மீதியை ஏற்றுவது தோல்வியடைந்தது ({})"
+
+msgid "The radio directory could not be reached"
+msgstr "வானொலி அடைவை அணுக முடியவில்லை"
+
+msgid "The radio station stopped streaming"
+msgstr "வானொலி நிலையம் ஒலிபரப்பை நிறுத்தியது"
+
+msgid "The server refused the station: {}"
+msgstr "சேவையகம் நிலையத்தை மறுத்தது: {}"
+
+msgid "Theme"
+msgstr "கருப்பொருள்"
+
+msgid "There is nothing to play in this list"
+msgstr "இந்தப் பட்டியலில் இயக்க எதுவும் இல்லை"
+
+msgid "This Discover page does not exist"
+msgstr "இந்தக் கண்டறி பக்கம் இல்லை"
+
+msgid "This folder is empty"
+msgstr "இந்தக் கோப்புறை காலியாக உள்ளது"
+
+msgid "This playlist is empty"
+msgstr "இந்த பிளேலிஸ்ட் காலியாக உள்ளது"
+
+msgid "This server has no internet radio. Stations you add are saved on this device."
+msgstr "இந்தச் சேவையகத்தில் இணைய வானொலி இல்லை. நீங்கள் சேர்க்கும் நிலையங்கள் இந்தச் சாதனத்தில் சேமிக்கப்படும்."
+
+msgid "this server has no public share links"
+msgstr "இந்தச் சேவையகத்தில் பொதுப் பகிர்வு இணைப்புகள் இல்லை"
+
+msgid "Time"
+msgstr "நேரம்"
+
+msgid "Title"
+msgstr "தலைப்பு"
+
+msgid "Top songs"
+msgstr "சிறந்த பாடல்கள்"
+
+msgid "Track"
+msgstr "தடம்"
+
+msgid "Tracks"
+msgstr "தடங்கள்"
+
+msgid "Transcode format"
+msgstr "டிரான்ஸ்கோட் வடிவம்"
+
+msgid "Try again"
+msgstr "மீண்டும் முயல்க"
+
+msgid "Turn off the theme accent color to pick your own."
+msgstr "உங்கள் சொந்த நிறத்தைத் தேர்ந்தெடுக்க கருப்பொருளின் உச்சரிப்பு நிறத்தை அணைக்கவும்."
+
+msgid "Unmute"
+msgstr "ஒலி இயக்கு"
+
+msgid "Up next"
+msgstr "அடுத்து"
+
+msgid "URL"
+msgstr "முகவரி"
+
+msgid "Use the theme accent color"
+msgstr "கருப்பொருளின் உச்சரிப்பு நிறத்தைப் பயன்படுத்து"
+
+msgid "Use {}"
+msgstr "{}-ஐப் பயன்படுத்து"
+
+msgid "Used while the desktop prefers dark."
+msgstr "டெஸ்க்டாப் இருண்டதை விரும்பும்போது பயன்படுத்தப்படும்."
+
+msgid "Used while the desktop prefers light."
+msgstr "டெஸ்க்டாப் ஒளிர்வை விரும்பும்போது பயன்படுத்தப்படும்."
+
+msgid "Username"
+msgstr "பயனர்பெயர்"
+
+msgid "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Feishin deletes right after reading."
+msgstr "தனிப்பயனாக்கப்பட்ட கண்டறி முகப்பு மற்றும் Premium ஆடியோவுக்காக இந்த உலாவியில் உள்ள உங்கள் YouTube அமர்வைப் பயன்படுத்துகிறது. yt-dlp அதன் குக்கீகளை ஒரு தனிப்பட்ட தற்காலிகக் கோப்பில் நகலெடுக்கிறது, அதை Feishin படித்தவுடன் நீக்கிவிடும்."
+
+msgid "Volume"
+msgstr "ஒலியளவு"
+
+msgid "Volume {}%"
+msgstr "ஒலியளவு {}%"
+
+msgid "XDG_RUNTIME_DIR is not set, so there is no private place for the cookies"
+msgstr "XDG_RUNTIME_DIR அமைக்கப்படவில்லை, எனவே குக்கீகளுக்குத் தனிப்பட்ட இடம் இல்லை"
+
+msgid "Year"
+msgstr "ஆண்டு"
+
+msgid "You are here: {}"
+msgstr "நீங்கள் இங்கே உள்ளீர்கள்: {}"
+
+msgid "Your user is not allowed to share on this server"
+msgstr "இந்தச் சேவையகத்தில் பகிர உங்கள் பயனருக்கு அனுமதி இல்லை"
+
+msgid "YouTube"
+msgstr "YouTube"
+
+msgid "YouTube albums are not in your library"
+msgstr "YouTube ஆல்பங்கள் உங்கள் நூலகத்தில் இல்லை"
+
+msgid "YouTube artists are not in your library"
+msgstr "YouTube கலைஞர்கள் உங்கள் நூலகத்தில் இல்லை"
+
+msgid "yt-dlp program"
+msgstr "yt-dlp நிரல்"
+
+msgid "{n} album"
+msgid_plural "{n} albums"
+msgstr[0] "{n} ஆல்பம்"
+msgstr[1] "{n} ஆல்பங்கள்"
+
+msgid "{n} folder"
+msgid_plural "{n} folders"
+msgstr[0] "{n} கோப்புறை"
+msgstr[1] "{n} கோப்புறைகள்"
+
+msgid "{n} item so far"
+msgid_plural "{n} items so far"
+msgstr[0] "இதுவரை {n} உருப்படி"
+msgstr[1] "இதுவரை {n} உருப்படிகள்"
+
+msgid "{n} minute"
+msgid_plural "{n} minutes"
+msgstr[0] "{n} நிமிடம்"
+msgstr[1] "{n} நிமிடங்கள்"
+
+msgid "{n} selected"
+msgid_plural "{n} selected"
+msgstr[0] "{n} தேர்ந்தெடுக்கப்பட்டது"
+msgstr[1] "{n} தேர்ந்தெடுக்கப்பட்டன"
+
+msgid "{n} song"
+msgid_plural "{n} songs"
+msgstr[0] "{n} பாடல்"
+msgstr[1] "{n} பாடல்கள்"
+
+msgid "{n} song from \"{}\" will play next"
+msgid_plural "{n} songs from \"{}\" will play next"
+msgstr[0] "\"{}\" இலிருந்து {n} பாடல் அடுத்ததாக இயங்கும்"
+msgstr[1] "\"{}\" இலிருந்து {n} பாடல்கள் அடுத்ததாக இயங்கும்"
+
+msgid "{n} song on YouTube Music"
+msgid_plural "{n} songs on YouTube Music"
+msgstr[0] "YouTube Music இல் {n} பாடல்"
+msgstr[1] "YouTube Music இல் {n} பாடல்கள்"
+
+msgid "{n} song will play next"
+msgid_plural "{n} songs will play next"
+msgstr[0] "{n} பாடல் அடுத்ததாக இயங்கும்"
+msgstr[1] "{n} பாடல்கள் அடுத்ததாக இயங்கும்"
+
+msgid "{} (current theme)"
+msgstr "{} (தற்போதைய கருப்பொருள்)"
+
+msgid "{} (unavailable)"
+msgstr "{} (கிடைக்கவில்லை)"
+
+msgid "{} at {}"
+msgstr "{1} இல் {0}"
+
+msgid "{} cannot be played: its stream address is not an internet stream"
+msgstr "{}-ஐ இயக்க முடியாது: அதன் ஸ்ட்ரீம் முகவரி இணைய ஸ்ட்ரீம் அல்ல"
+
+msgid "{} is shown"
+msgstr "{} காட்டப்படுகிறது"
+
+msgid "{} kbps"
+msgstr "{} kbps"
+
+msgid "{} s"
+msgstr "{} வி"
+
+msgid "{}: off"
+msgstr "{}: ஆஃப்"
+
+msgid "{}: on"
+msgstr "{}: ஆன்"
+
+msgid "{}: {} (dark)"
+msgstr "{}: {} (இருண்டது)"
+
+msgid "{}: {} (light)"
+msgstr "{}: {} (ஒளிர்வு)"

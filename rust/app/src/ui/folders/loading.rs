@@ -5,7 +5,7 @@ use feishin_core::model::{Folder, FolderId, Page, Song};
 use slint::{ComponentHandle, ModelRc, VecModel};
 
 use super::binding::{first_song_page, with_model};
-use super::trail::{Crumb, ROOT_NAME, SharedTrail};
+use super::trail::{Crumb, SharedTrail, root_name};
 use crate::ui::{
     AppState, AppWindow, Context, FolderCrumb, FoldersState, Route, on_ui, show_status,
 };
@@ -62,7 +62,9 @@ fn show_crumbs(window: &AppWindow, detail_id: &str, crumbs: &[Crumb]) {
             name: crumb.name.as_str().into(),
         })
         .collect();
-    let name = crumbs.last().map_or(ROOT_NAME, |crumb| crumb.name.as_str());
+    let name = crumbs
+        .last()
+        .map_or_else(root_name, |crumb| crumb.name.clone());
     state.set_name(name.into());
     state.set_folder_id(detail_id.into());
     state.set_crumbs(ModelRc::new(VecModel::from(rows)));
@@ -77,7 +79,7 @@ fn apply_loaded(window: &AppWindow, loaded: Loaded) {
     let (folders, page) = match (loaded.folders, loaded.songs) {
         (Ok(folders), Ok(page)) => (folders, page),
         (Err(error), _) | (_, Err(error)) => {
-            let message = format!("Could not open the folder: {error}");
+            let message = tr!("Could not open the folder: {}", error);
             state.set_error(message.as_str().into());
             show_status(window, &message);
             return;
@@ -92,14 +94,9 @@ fn apply_loaded(window: &AppWindow, loaded: Loaded) {
 }
 
 fn summary(folder_count: usize, song_count: usize) -> String {
-    let count = |amount: usize, singular: &str, plural: &str| match amount {
-        0 => None,
-        1 => Some(format!("1 {singular}")),
-        _ => Some(format!("{amount} {plural}")),
-    };
     [
-        count(folder_count, "folder", "folders"),
-        count(song_count, "song", "songs"),
+        (folder_count > 0).then(|| tr_plural!("{n} folder", "{n} folders", folder_count)),
+        (song_count > 0).then(|| tr_plural!("{n} song", "{n} songs", song_count)),
     ]
     .into_iter()
     .flatten()

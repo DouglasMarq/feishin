@@ -5,6 +5,7 @@ use super::{AppWindow, Context};
 mod callbacks;
 mod choices;
 mod display;
+mod language;
 mod loading;
 mod lyrics_sources;
 mod servers;

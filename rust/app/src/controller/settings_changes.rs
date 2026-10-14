@@ -59,8 +59,9 @@ impl Controller {
             && let Err(error) = audio.set_crossfade(next.crossfade())
         {
             tracing::warn!("changing the crossfade failed: {error:#}");
-            self.deps.ui.send(UiUpdate::Error(format!(
-                "Crossfade could not be changed: {error:#}"
+            self.deps.ui.send(UiUpdate::Error(tr!(
+                "Crossfade could not be changed: {}",
+                format!("{error:#}")
             )));
         }
     }
@@ -73,6 +74,11 @@ impl Controller {
     pub(super) fn save_interface(&mut self, queue_panel_open: bool, follow_current_song: bool) {
         self.settings.ui.queue_panel_open = queue_panel_open;
         self.settings.ui.follow_current_song = follow_current_song;
+        self.save_settings();
+    }
+
+    pub(super) fn save_language(&mut self, language: Option<String>) {
+        self.settings.ui.language = language;
         self.save_settings();
     }
 

@@ -78,7 +78,7 @@ async fn fetch_page(
         }
         Err(error) => {
             with_model(window, locate, |model| model.page_failed(generation, page));
-            show_status(window, &format!("Could not load albums: {error}"));
+            show_status(window, &tr!("Could not load albums: {}", error));
         }
     });
 }

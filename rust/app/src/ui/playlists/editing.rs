@@ -21,11 +21,11 @@ pub fn create_playlist(window: &AppWindow, ctx: &Context, name: &SharedString) {
             match result {
                 Ok(playlist) => {
                     state.set_creating(false);
-                    show_status(window, &format!("Created playlist \"{}\"", playlist.name));
+                    show_status(window, &tr!("Created playlist \"{}\"", playlist.name));
                     refresh(window);
                 }
                 Err(error) => {
-                    show_status(window, &format!("Could not create the playlist: {error}"));
+                    show_status(window, &tr!("Could not create the playlist: {}", error));
                 }
             }
         });
@@ -48,11 +48,11 @@ pub fn delete_playlist(window: &AppWindow, ctx: &Context, id: SharedString) {
             state.set_delete_id("".into());
             match result {
                 Ok(()) => {
-                    show_status(window, &format!("Deleted playlist \"{name}\""));
+                    show_status(window, &tr!("Deleted playlist \"{}\"", name));
                     refresh(window);
                 }
                 Err(error) => {
-                    show_status(window, &format!("Could not delete the playlist: {error}"));
+                    show_status(window, &tr!("Could not delete the playlist: {}", error));
                 }
             }
         });

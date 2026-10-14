@@ -72,6 +72,7 @@ pub enum Command {
         queue_panel_open: bool,
         follow_current_song: bool,
     },
+    SaveLanguage(Option<String>),
     SaveAppearance(AppearanceSettings),
     RemoveServer(String),
     Radio(RadioCommand),

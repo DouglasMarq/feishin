@@ -17,11 +17,7 @@ fn total_duration_ms(detail: &AlbumDetail) -> u64 {
 }
 
 fn song_count_label(count: usize) -> String {
-    let noun = match count {
-        1 => "song",
-        _ => "songs",
-    };
-    format!("{count} {noun}")
+    tr_plural!("{n} song", "{n} songs", count)
 }
 
 pub fn album_info(detail: &AlbumDetail) -> String {

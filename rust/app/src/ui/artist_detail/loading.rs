@@ -41,7 +41,7 @@ fn show_result(
             update_current(|current| current.id.clear());
             let state = window.global::<ArtistDetailState>();
             state.set_loading(false);
-            state.set_error(format!("Could not load the artist: {error}").into());
+            state.set_error(tr!("Could not load the artist: {}", error).into());
         }
     }
 }

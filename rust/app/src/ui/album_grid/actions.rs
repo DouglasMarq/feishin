@@ -53,7 +53,10 @@ pub fn album_action(window: &AppWindow, ctx: &Context, album_id: String, action:
         match album_songs(server.as_ref(), &album_id).await {
             Ok(songs) => run_action(&ctx, &weak_window, songs, action),
             Err(error) => on_ui(&weak_window, move |window| {
-                show_status(window, &format!("Could not load the album: {error:#}"));
+                show_status(
+                    window,
+                    &tr!("Could not load the album: {}", format!("{error:#}")),
+                );
             }),
         }
     });

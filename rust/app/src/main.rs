@@ -1,3 +1,6 @@
+#[macro_use]
+mod i18n;
+
 mod app;
 mod audio;
 mod cli;

@@ -125,7 +125,7 @@ fn apply_genres(
             show_filtered_genres(window, list);
             show_genre(window, list);
         }
-        Err(error) => show_status(window, &format!("Could not load genres: {error}")),
+        Err(error) => show_status(window, &tr!("Could not load genres: {}", error)),
     }
 }
 

@@ -48,7 +48,7 @@ export component TracksView inherits Rectangle {
                 row-menu := ContextMenuArea {
                     Menu {
                         MenuItem {
-                            title: "Play";
+                            title: @tr("Play");
                             enabled: TracksState.selected-count > 0;
                             activated => {
                                 TracksState.play-selected();
@@ -56,7 +56,7 @@ export component TracksView inherits Rectangle {
                         }
 
                         MenuItem {
-                            title: "Play next";
+                            title: @tr("Play next");
                             enabled: TracksState.selected-count > 0;
                             activated => {
                                 TracksState.queue-selected(true);
@@ -64,7 +64,7 @@ export component TracksView inherits Rectangle {
                         }
 
                         MenuItem {
-                            title: "Add to queue";
+                            title: @tr("Add to queue");
                             enabled: TracksState.selected-count > 0;
                             activated => {
                                 TracksState.queue-selected(false);
@@ -74,7 +74,7 @@ export component TracksView inherits Rectangle {
                         MenuSeparator { }
 
                         MenuItem {
-                            title: "Add to playlist";
+                            title: @tr("Add to playlist");
                             enabled: TracksState.selected-count > 0;
                             activated => {
                                 TracksState.add-selected-to-playlist();
@@ -92,7 +92,7 @@ export component TracksView inherits Rectangle {
                         MenuSeparator { }
 
                         MenuItem {
-                            title: "Add to favorites";
+                            title: @tr("Add to favorites");
                             enabled: TracksState.selected-count > 0;
                             activated => {
                                 TracksState.favorite-selected(true);
@@ -100,7 +100,7 @@ export component TracksView inherits Rectangle {
                         }
 
                         MenuItem {
-                            title: "Remove from favorites";
+                            title: @tr("Remove from favorites");
                             enabled: TracksState.selected-count > 0;
                             activated => {
                                 TracksState.favorite-selected(false);
@@ -108,46 +108,46 @@ export component TracksView inherits Rectangle {
                         }
 
                         Menu {
-                            title: "Set rating";
+                            title: @tr("Set rating");
                             enabled: TracksState.selected-count > 0;
 
                             MenuItem {
-                                title: "No rating";
+                                title: @tr("No rating");
                                 activated => {
                                     TracksState.rate-selected(0);
                                 }
                             }
 
                             MenuItem {
-                                title: "1 star";
+                                title: @tr("1 star");
                                 activated => {
                                     TracksState.rate-selected(1);
                                 }
                             }
 
                             MenuItem {
-                                title: "2 stars";
+                                title: @tr("2 stars");
                                 activated => {
                                     TracksState.rate-selected(2);
                                 }
                             }
 
                             MenuItem {
-                                title: "3 stars";
+                                title: @tr("3 stars");
                                 activated => {
                                     TracksState.rate-selected(3);
                                 }
                             }
 
                             MenuItem {
-                                title: "4 stars";
+                                title: @tr("4 stars");
                                 activated => {
                                     TracksState.rate-selected(4);
                                 }
                             }
 
                             MenuItem {
-                                title: "5 stars";
+                                title: @tr("5 stars");
                                 activated => {
                                     TracksState.rate-selected(5);
                                 }
@@ -157,7 +157,7 @@ export component TracksView inherits Rectangle {
                         MenuSeparator { }
 
                         MenuItem {
-                            title: "Go to album";
+                            title: @tr("Go to album");
                             enabled: TracksState.selected-count == 1;
                             activated => {
                                 TracksState.go-to-album();
@@ -165,7 +165,7 @@ export component TracksView inherits Rectangle {
                         }
 
                         MenuItem {
-                            title: "Go to artist";
+                            title: @tr("Go to artist");
                             enabled: TracksState.selected-count == 1;
                             activated => {
                                 TracksState.go-to-artist();
@@ -202,7 +202,7 @@ export component TracksView inherits Rectangle {
                 }
 
                 if !TracksState.loading && TracksState.total == 0: Text {
-                    text: "No tracks found";
+                    text: @tr("No tracks found");
                     color: Theme.muted;
                     horizontal-alignment: center;
                     vertical-alignment: center;

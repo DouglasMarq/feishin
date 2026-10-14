@@ -9,25 +9,42 @@ use super::{AlbumGridRow, AlbumsState, AppWindow, Context, clamp_i32, show_statu
 
 const SEARCH_DEBOUNCE: Duration = Duration::from_millis(300);
 
-pub const SORTS: [(AlbumSort, &str); 11] = [
-    (AlbumSort::Name, "Name"),
-    (AlbumSort::AlbumArtist, "Album artist"),
-    (AlbumSort::Year, "Release year"),
-    (AlbumSort::RecentlyAdded, "Recently added"),
-    (AlbumSort::RecentlyPlayed, "Recently played"),
-    (AlbumSort::PlayCount, "Play count"),
-    (AlbumSort::Rating, "Rating"),
-    (AlbumSort::Favorited, "Favorited"),
-    (AlbumSort::SongCount, "Song count"),
-    (AlbumSort::Duration, "Duration"),
-    (AlbumSort::Random, "Random"),
+pub const SORTS: [AlbumSort; 11] = [
+    AlbumSort::Name,
+    AlbumSort::AlbumArtist,
+    AlbumSort::Year,
+    AlbumSort::RecentlyAdded,
+    AlbumSort::RecentlyPlayed,
+    AlbumSort::PlayCount,
+    AlbumSort::Rating,
+    AlbumSort::Favorited,
+    AlbumSort::SongCount,
+    AlbumSort::Duration,
+    AlbumSort::Random,
 ];
+
+fn sort_label(sort: AlbumSort) -> String {
+    match sort {
+        AlbumSort::Name => tr!("Name"),
+        AlbumSort::AlbumArtist => tr!("Album artist"),
+        AlbumSort::Year => tr!("Release year"),
+        AlbumSort::RecentlyAdded => tr!("Recently added"),
+        AlbumSort::RecentlyPlayed => tr!("Recently played"),
+        AlbumSort::PlayCount => tr!("Play count"),
+        AlbumSort::Rating => tr!("Rating"),
+        AlbumSort::Favorited => tr!("Favorited"),
+        AlbumSort::SongCount => tr!("Song count"),
+        AlbumSort::Duration => tr!("Duration"),
+        AlbumSort::Random => tr!("Random"),
+    }
+}
 
 fn sort_at(sort_index: i32) -> AlbumSort {
     usize::try_from(sort_index)
         .ok()
         .and_then(|index| SORTS.get(index))
-        .map_or(AlbumSort::Name, |(sort, _)| *sort)
+        .copied()
+        .unwrap_or(AlbumSort::Name)
 }
 
 fn sort_order(descending: bool) -> SortOrder {
@@ -80,13 +97,16 @@ fn on_count(window: &AppWindow, result: anyhow::Result<usize>) {
         Ok(total) => state.set_total(clamp_i32(total as u64)),
         Err(error) => {
             state.set_total(0);
-            show_status(window, &format!("Could not load albums: {error:#}"));
+            show_status(
+                window,
+                &tr!("Could not load albums: {}", format!("{error:#}")),
+            );
         }
     }
 }
 
-fn install_sort_options(window: &AppWindow) {
-    let labels: Vec<SharedString> = SORTS.iter().map(|(_, label)| (*label).into()).collect();
+pub fn show_sort_options(window: &AppWindow) {
+    let labels: Vec<SharedString> = SORTS.iter().map(|sort| sort_label(*sort).into()).collect();
     window
         .global::<AlbumsState>()
         .set_sort_options(ModelRc::new(VecModel::from(labels)));
@@ -161,7 +181,7 @@ fn install_album_actions(window: &AppWindow, ctx: &Context) {
 }
 
 pub fn install(window: &AppWindow, ctx: &Context) {
-    install_sort_options(window);
+    show_sort_options(window);
     install_grid_model(window, ctx);
     install_reload_triggers(window);
     install_columns_changed(window);

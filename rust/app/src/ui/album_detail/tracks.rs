@@ -113,7 +113,7 @@ fn ordered(mut songs: Vec<Song>) -> Vec<Song> {
 
 fn disc_header(disc: u32, placed: PlacedRow) -> AlbumDetailTrack {
     AlbumDetailTrack {
-        disc_header: format!("Disc {disc}").into(),
+        disc_header: tr!("Disc {}", disc).into(),
         top: placed.top,
         height: placed.height,
         ..AlbumDetailTrack::default()

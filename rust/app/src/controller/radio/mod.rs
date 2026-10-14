@@ -78,7 +78,7 @@ impl Controller {
 
     fn play_station(&mut self, station: RadioStation) {
         if !station.has_network_stream_url() {
-            self.deps.ui.send(UiUpdate::Error(format!(
+            self.deps.ui.send(UiUpdate::Error(tr!(
                 "{} cannot be played: its stream address is not an internet stream",
                 station.name
             )));

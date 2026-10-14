@@ -11,7 +11,7 @@ use crate::ui::{AppWindow, DiscoverState, on_ui, show_status};
 
 pub fn open_page(window: &AppWindow, deps: &DiscoverDeps, detail_id: &str) {
     let Some(target) = PageTarget::parse(detail_id) else {
-        show_status(window, "This Discover page does not exist");
+        show_status(window, &tr!("This Discover page does not exist"));
         return;
     };
     let generation = with_discover(window, |model| {
@@ -73,7 +73,7 @@ fn page_loaded(window: &AppWindow, deps: &DiscoverDeps, generation: u64, applied
         return;
     };
     if let Some(error) = error {
-        show_status(window, &format!("Could not load this page: {error}"));
+        show_status(window, &tr!("Could not load this page: {}", error));
     }
     if let Some(url) = thumbnail_url {
         load_page_cover(window, deps, generation, url);

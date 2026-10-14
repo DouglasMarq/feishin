@@ -62,7 +62,7 @@ export component Modal inherits Rectangle {
 }
 
 export component DialogButtons inherits HorizontalLayout {
-    in property <string> confirm-text: "OK";
+    in property <string> confirm-text: @tr("OK");
     in property <bool> confirm-enabled: true;
     in property <bool> danger;
     callback confirm();
@@ -71,7 +71,7 @@ export component DialogButtons inherits HorizontalLayout {
     alignment: end;
 
     Button {
-        text: "Cancel";
+        text: @tr("Cancel");
         clicked => {
             root.cancel();
         }
@@ -104,14 +104,14 @@ export component NameDialog inherits Modal {
     in property <string> initial-name;
     in property <bool> busy;
     callback submit(string);
-    title: "New playlist";
+    title: @tr("New playlist");
 
     init => {
         name-edit.focus();
     }
 
     name-edit := LineEdit {
-        placeholder-text: "Playlist name";
+        placeholder-text: @tr("Playlist name");
         text: root.initial-name;
         accepted(text) => {
             if (!root.busy && text != "") {
@@ -121,7 +121,7 @@ export component NameDialog inherits Modal {
     }
 
     DialogButtons {
-        confirm-text: root.busy ? "Creating..." : "Create";
+        confirm-text: root.busy ? @tr("Creating...") : @tr("Create");
         confirm-enabled: !root.busy && name-edit.text != "";
         cancel => {
             root.cancel();
@@ -196,7 +196,7 @@ component PickerItem inherits Rectangle {
 }
 
 component PickerList inherits Modal {
-    title: PlaylistPickerState.song-count == 1 ? "Add 1 song to playlist" : "Add " + PlaylistPickerState.song-count + " songs to playlist";
+    title: @tr("Add {n} song to playlist" | "Add {n} songs to playlist" % PlaylistPickerState.song-count);
     card-width: 460px;
 
     init => {
@@ -204,7 +204,7 @@ component PickerList inherits Modal {
     }
 
     filter-edit := LineEdit {
-        placeholder-text: "Filter playlists";
+        placeholder-text: @tr("Filter playlists");
         text: PlaylistPickerState.filter;
         edited(text) => {
             PlaylistPickerState.filter = text;
@@ -219,7 +219,7 @@ component PickerList inherits Modal {
 
     PickerItem {
         icon: Icons.playlist;
-        name: "New playlist";
+        name: @tr("New playlist");
         enabled: !PlaylistPickerState.busy;
         clicked => {
             PlaylistPickerState.creating = true;
@@ -247,7 +247,7 @@ component PickerList inherits Modal {
         }
 
         if PlaylistPickerState.rows.length == 0: Text {
-            text: PlaylistPickerState.loading ? "Loading playlists..." : "No playlists found";
+            text: PlaylistPickerState.loading ? @tr("Loading playlists...") : @tr("No playlists found");
             color: Theme.muted;
             horizontal-alignment: center;
             vertical-alignment: center;
@@ -258,7 +258,7 @@ component PickerList inherits Modal {
         alignment: end;
 
         Button {
-            text: "Cancel";
+            text: @tr("Cancel");
             clicked => {
                 PlaylistPickerState.cancel();
             }

@@ -4,8 +4,6 @@ use feishin_player::PlayerEvent;
 use super::RADIO_STREAM_UID;
 use crate::controller::{Controller, UiUpdate};
 
-const STREAM_ENDED: &str = "The radio station stopped streaming";
-
 impl Controller {
     pub(in crate::controller) fn on_radio_player_event(&mut self, event: PlayerEvent) {
         match event {
@@ -42,7 +40,7 @@ impl Controller {
 
     fn on_station_ended(&mut self, uid: Uid) {
         if uid == RADIO_STREAM_UID && self.loaded == Some(uid) {
-            self.lose_station(STREAM_ENDED.to_owned());
+            self.lose_station(tr!("The radio station stopped streaming"));
         }
     }
 
@@ -55,7 +53,7 @@ impl Controller {
             .as_ref()
             .map(|radio| radio.station.name.clone())
             .unwrap_or_default();
-        self.lose_station(format!("Playing {station_name} failed: {message}"));
+        self.lose_station(tr!("Playing {} failed: {}", station_name, message));
     }
 
     fn on_station_idle(&mut self) {

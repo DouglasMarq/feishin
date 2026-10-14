@@ -28,3 +28,4 @@ These apply to everything under `rust/`. Clippy enforces the mechanical ones (`c
 
 - Refactors keep behaviour identical; the tests are the contract. Add tests when changing logic.
 - Every clickable or draggable control has a tooltip; stateful controls show their state.
+- User-visible text is translatable: `@tr(...)` in Slint, `tr!`/`tr_plural!` in Rust, with every value passed as a placeholder argument and never concatenated into a sentence. Logs, identifiers and server data stay untranslated. Run `scripts/translations.py`, translate the new entries of every catalog and make `scripts/translations.py check` pass.

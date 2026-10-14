@@ -77,7 +77,7 @@ pub(super) fn set_favorite(window: &AppWindow, ctx: &Context, ids: Vec<String>, 
                     model.update_songs(&ids, |song| song.favorite = favorite);
                 });
             }
-            Err(error) => show_status(window, &format!("Could not update favorites: {error}")),
+            Err(error) => show_status(window, &tr!("Could not update favorites: {}", error)),
         });
     });
 }
@@ -113,7 +113,7 @@ pub(super) fn set_rating(window: &AppWindow, ctx: &Context, ids: Vec<String>, ra
                 model.update_songs(&rated, |song| song.user_rating = user_rating);
             });
             if let Some(error) = failure {
-                show_status(window, &format!("Could not set the rating: {error}"));
+                show_status(window, &tr!("Could not set the rating: {}", error));
             }
         });
     });
@@ -160,7 +160,7 @@ fn with_first_song(
                     use_song(window, song);
                 }
             }
-            Err(error) => show_status(window, &format!("Could not load the selection: {error}")),
+            Err(error) => show_status(window, &tr!("Could not load the selection: {}", error)),
         });
     });
 }

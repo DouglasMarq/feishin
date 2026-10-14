@@ -51,10 +51,13 @@ pub(super) fn move_lyrics_source(sources: &mut [LyricsSource], index: usize, del
 }
 
 pub(super) fn lyrics_source_name(id: &str) -> String {
-    KNOWN_LYRICS_SOURCES
-        .iter()
-        .find(|(known, _)| *known == id)
-        .map_or_else(|| id.to_owned(), |(_, name)| (*name).to_owned())
+    match id {
+        "server" => tr!("Server"),
+        _ => KNOWN_LYRICS_SOURCES
+            .iter()
+            .find(|(known, _)| *known == id)
+            .map_or_else(|| id.to_owned(), |(_, name)| (*name).to_owned()),
+    }
 }
 
 #[cfg(test)]

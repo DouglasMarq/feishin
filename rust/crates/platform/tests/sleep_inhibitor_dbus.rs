@@ -131,10 +131,7 @@ fn inhibits_once_while_playing_and_releases_on_stop() {
     inhibitor.set_inhibited(true).unwrap();
     assert_eq!(
         sorted_calls(&calls, 2),
-        vec![
-            inhibit_call("PowerManagement"),
-            inhibit_call("ScreenSaver")
-        ]
+        vec![inhibit_call("PowerManagement"), inhibit_call("ScreenSaver")]
     );
     assert!(calls.recv_timeout(QUIET_PERIOD).is_err());
 

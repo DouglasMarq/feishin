@@ -263,6 +263,9 @@ async fn interface_and_integrations_are_saved_and_survive_shutdown() {
         queue_panel_open: true,
         follow_current_song: true,
     });
+    harness
+        .controller
+        .handle(Command::SaveLanguage(Some("de".into())));
     let integrations = IntegrationSettings {
         discord_rich_presence: true,
         lyrics_sources: vec!["genius".into()],
@@ -284,6 +287,7 @@ async fn interface_and_integrations_are_saved_and_survive_shutdown() {
     });
     let saved = harness.saved();
     assert!(saved.ui.follow_current_song);
+    assert_eq!(saved.ui.language.as_deref(), Some("de"));
     assert!(!saved.ui.queue_panel_open);
     assert_eq!(saved.integrations, integrations);
 }

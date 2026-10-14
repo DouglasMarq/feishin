@@ -19,11 +19,11 @@ export global AppearanceState {
     in-out property <string> accent-text: "#3574fc";
     in property <SystemScheme> system-scheme;
     out property <[AccentPreset]> accent-presets: [
-        { swatch: #3574fc, name: "Blue" },
-        { swatch: #f0aa16, name: "Amber" },
-        { swatch: #1db954, name: "Green" },
-        { swatch: #d6513f, name: "Red" },
-        { swatch: #aa6ed8, name: "Purple" },
+        { swatch: #3574fc, name: @tr("Blue") },
+        { swatch: #f0aa16, name: @tr("Amber") },
+        { swatch: #1db954, name: @tr("Green") },
+        { swatch: #d6513f, name: @tr("Red") },
+        { swatch: #aa6ed8, name: @tr("Purple") },
     ];
     callback changed();
     callback accent-entered(text: string);
@@ -75,7 +75,7 @@ component ThemeListItem inherits Rectangle {
     }
 
     TooltipAnchor {
-        text: root.current ? root.palette.name + " (current theme)" : "Use " + root.palette.name;
+        text: root.current ? @tr("{} (current theme)", root.palette.name) : @tr("Use {}", root.palette.name);
         hovered: touch.has-hover;
     }
 
@@ -134,7 +134,7 @@ export component ThemePicker inherits Rectangle {
     }
 
     TooltipAnchor {
-        text: root.label + ": " + root.palette.name + (root.palette.dark ? " (dark)" : " (light)");
+        text: root.palette.dark ? @tr("{}: {} (dark)", root.label, root.palette.name) : @tr("{}: {} (light)", root.label, root.palette.name);
         hovered: touch.has-hover;
     }
 
@@ -165,12 +165,12 @@ export component ThemePicker inherits Rectangle {
                 padding: 6px;
 
                 GroupHeading {
-                    text: "DARK THEMES";
+                    text: @tr("DARK THEMES");
                 }
 
                 for entry[index] in Palettes.all: VerticalLayout {
                     if index > 0 && !entry.dark && Palettes.all[index - 1].dark: GroupHeading {
-                        text: "LIGHT THEMES";
+                        text: @tr("LIGHT THEMES");
                     }
 
                     ThemeListItem {
@@ -205,7 +205,7 @@ export component ToggleSwitch inherits Rectangle {
     }
 
     TooltipAnchor {
-        text: root.label + ": " + (root.checked ? "on" : "off");
+        text: root.checked ? @tr("{}: on", root.label) : @tr("{}: off", root.label);
         hovered: hover.has-hover;
     }
 }
@@ -224,7 +224,7 @@ component AccentSwatch inherits Rectangle {
     opacity: root.enabled ? 1 : 0.4;
 
     TooltipAnchor {
-        text: "Accent color " + root.preset.name + (root.current ? " (selected)" : (root.enabled ? "" : " (theme accent in use)"));
+        text: root.current ? @tr("Accent color {} (selected)", root.preset.name) : (root.enabled ? @tr("Accent color {}", root.preset.name) : @tr("Accent color {} (theme accent in use)", root.preset.name));
         hovered: touch.has-hover;
     }
 
@@ -254,7 +254,7 @@ component AccentInput inherits Rectangle {
     }
 
     TooltipAnchor {
-        text: AppearanceState.use-theme-accent ? "Custom accent color: " + AppearanceState.accent-text + " (theme accent in use)" : "Custom accent color: " + AppearanceState.accent-text + ", press Enter to apply";
+        text: AppearanceState.use-theme-accent ? @tr("Custom accent color: {} (theme accent in use)", AppearanceState.accent-text) : @tr("Custom accent color: {}, press Enter to apply", AppearanceState.accent-text);
         hovered: hover.has-hover;
     }
 }
@@ -296,15 +296,15 @@ component SettingRow inherits HorizontalLayout {
 }
 
 export component AppearanceOptions inherits VerticalLayout {
-    property <string> system-description: AppearanceState.system-scheme == SystemScheme.light ? "The desktop currently prefers light." : (AppearanceState.system-scheme == SystemScheme.dark ? "The desktop currently prefers dark." : "The desktop has no preference, so the dark theme is used.");
+    property <string> system-description: AppearanceState.system-scheme == SystemScheme.light ? @tr("The desktop currently prefers light.") : (AppearanceState.system-scheme == SystemScheme.dark ? @tr("The desktop currently prefers dark.") : @tr("The desktop has no preference, so the dark theme is used."));
     spacing: 18px;
 
     SettingRow {
-        title: "Follow system color scheme";
-        description: "Switch between a dark and a light theme with the desktop. " + root.system-description;
+        title: @tr("Follow system color scheme");
+        description: @tr("Switch between a dark and a light theme with the desktop. {}", root.system-description);
 
         ToggleSwitch {
-            label: "Follow system color scheme";
+            label: @tr("Follow system color scheme");
             checked <=> AppearanceState.follow-system;
             toggled => {
                 AppearanceState.changed();
@@ -313,11 +313,11 @@ export component AppearanceOptions inherits VerticalLayout {
     }
 
     if !AppearanceState.follow-system: SettingRow {
-        title: "Theme";
-        description: "Colors used across the whole app.";
+        title: @tr("Theme");
+        description: @tr("Colors used across the whole app.");
 
         ThemePicker {
-            label: "Theme";
+            label: @tr("Theme");
             selected <=> AppearanceState.theme-index;
             chosen => {
                 AppearanceState.changed();
@@ -326,11 +326,11 @@ export component AppearanceOptions inherits VerticalLayout {
     }
 
     if AppearanceState.follow-system: SettingRow {
-        title: "Dark theme";
-        description: "Used while the desktop prefers dark.";
+        title: @tr("Dark theme");
+        description: @tr("Used while the desktop prefers dark.");
 
         ThemePicker {
-            label: "Dark theme";
+            label: @tr("Dark theme");
             selected <=> AppearanceState.dark-theme-index;
             chosen => {
                 AppearanceState.changed();
@@ -339,11 +339,11 @@ export component AppearanceOptions inherits VerticalLayout {
     }
 
     if AppearanceState.follow-system: SettingRow {
-        title: "Light theme";
-        description: "Used while the desktop prefers light.";
+        title: @tr("Light theme");
+        description: @tr("Used while the desktop prefers light.");
 
         ThemePicker {
-            label: "Light theme";
+            label: @tr("Light theme");
             selected <=> AppearanceState.light-theme-index;
             chosen => {
                 AppearanceState.changed();
@@ -352,11 +352,11 @@ export component AppearanceOptions inherits VerticalLayout {
     }
 
     SettingRow {
-        title: "Use the theme accent color";
-        description: "Highlight with the color that comes with the theme.";
+        title: @tr("Use the theme accent color");
+        description: @tr("Highlight with the color that comes with the theme.");
 
         ToggleSwitch {
-            label: "Use the theme accent color";
+            label: @tr("Use the theme accent color");
             checked <=> AppearanceState.use-theme-accent;
             toggled => {
                 AppearanceState.changed();
@@ -365,8 +365,8 @@ export component AppearanceOptions inherits VerticalLayout {
     }
 
     SettingRow {
-        title: "Accent color";
-        description: AppearanceState.use-theme-accent ? "Turn off the theme accent color to pick your own." : "Pick a color, or type one as #rrggbb and press Enter.";
+        title: @tr("Accent color");
+        description: AppearanceState.use-theme-accent ? @tr("Turn off the theme accent color to pick your own.") : @tr("Pick a color, or type one as #rrggbb and press Enter.");
 
         for preset in AppearanceState.accent-presets: AccentSwatch {
             y: (parent.height - self.height) / 2;

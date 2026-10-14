@@ -34,7 +34,7 @@ export component FavoritesView inherits Rectangle {
             spacing: 12px;
 
             Text {
-                text: "Favorites";
+                text: @tr("Favorites");
                 font-size: 24px;
                 font-weight: 700;
                 color: Theme.foreground;
@@ -47,7 +47,7 @@ export component FavoritesView inherits Rectangle {
 
             Tab {
                 y: (parent.height - self.height) / 2;
-                text: "Tracks";
+                text: @tr("Tracks");
                 count: FavoritesState.tracks-loading ? "" : FavoritesState.tracks.length;
                 active: FavoritesState.tab == 0;
                 clicked => {
@@ -57,7 +57,7 @@ export component FavoritesView inherits Rectangle {
 
             Tab {
                 y: (parent.height - self.height) / 2;
-                text: "Albums";
+                text: @tr("Albums");
                 active: FavoritesState.tab == 1;
                 clicked => {
                     FavoritesState.tab = 1;
@@ -66,7 +66,7 @@ export component FavoritesView inherits Rectangle {
 
             Tab {
                 y: (parent.height - self.height) / 2;
-                text: "Artists";
+                text: @tr("Artists");
                 active: FavoritesState.tab == 2;
                 clicked => {
                     FavoritesState.tab = 2;
@@ -79,7 +79,7 @@ export component FavoritesView inherits Rectangle {
                 rows: FavoritesState.tracks;
                 loading: FavoritesState.tracks-loading;
                 show-favorite: true;
-                empty-text: "No favorite tracks";
+                empty-text: @tr("No favorite tracks");
                 play(index) => {
                     FavoritesState.play-track(index);
                 }
@@ -92,7 +92,7 @@ export component FavoritesView inherits Rectangle {
                 rows: FavoritesState.albums;
                 loading: FavoritesState.albums-loading;
                 show-favorite: true;
-                empty-text: "No favorite albums";
+                empty-text: @tr("No favorite albums");
                 columns-changed(columns) => {
                     FavoritesState.album-columns(columns);
                 }
@@ -109,7 +109,7 @@ export component FavoritesView inherits Rectangle {
                 loading: FavoritesState.artists-loading;
                 round: true;
                 show-favorite: true;
-                empty-text: "No favorite artists";
+                empty-text: @tr("No favorite artists");
                 columns-changed(columns) => {
                     FavoritesState.artist-columns(columns);
                 }

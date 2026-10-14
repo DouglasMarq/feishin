@@ -1,0 +1,1520 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: fa\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+
+msgid "\"{}\" plays next"
+msgstr "\"{}\" بعدی پخش می‌شود"
+
+msgid "\"{}\" will play next"
+msgstr "\"{}\" در نوبت بعد پخش خواهد شد"
+
+msgid "1 star"
+msgstr "۱ ستاره"
+
+msgid "2 stars"
+msgstr "۲ ستاره"
+
+msgid "3 stars"
+msgstr "۳ ستاره"
+
+msgid "4 stars"
+msgstr "۴ ستاره"
+
+msgid "5 stars"
+msgstr "۵ ستاره"
+
+msgid "About {}"
+msgstr "درباره‌ی {0}"
+
+msgid "Accent color"
+msgstr "رنگ شاخص"
+
+msgid "Accent color not changed: {}."
+msgstr "رنگ شاخص تغییر نکرد: {}."
+
+msgid "Accent color {}"
+msgstr "رنگ شاخص {}"
+
+msgid "Accent color {} (selected)"
+msgstr "رنگ شاخص {} (انتخاب‌شده)"
+
+msgid "Accent color {} (theme accent in use)"
+msgstr "رنگ شاخص {} (رنگ شاخص تم در حال استفاده است)"
+
+msgid "Add a station by its stream URL"
+msgstr "افزودن ایستگاه با نشانی جریان آن"
+
+msgid "Add all songs to the queue"
+msgstr "افزودن همه‌ی آهنگ‌ها به صف"
+
+msgid "Add server"
+msgstr "افزودن سرور"
+
+msgid "Add station"
+msgstr "افزودن ایستگاه"
+
+msgid "Add this link to the end of the queue"
+msgstr "افزودن این پیوند به انتهای صف"
+
+msgid "Add this station to the server for every client"
+msgstr "افزودن این ایستگاه به سرور برای همه‌ی کلاینت‌ها"
+
+msgid "Add to favorites"
+msgstr "افزودن به علاقه‌مندی‌ها"
+
+msgid "Add to playlist"
+msgstr "افزودن به فهرست پخش"
+
+msgid "Add to queue"
+msgstr "افزودن به صف"
+
+msgid "Add to the server's stations"
+msgstr "افزودن به ایستگاه‌های سرور"
+
+msgid "Add {n} song to playlist"
+msgid_plural "Add {n} songs to playlist"
+msgstr[0] "افزودن {n} آهنگ به فهرست پخش"
+msgstr[1] "افزودن {n} آهنگ به فهرست پخش"
+
+msgid "Add {} to the queue"
+msgstr "افزودن {} به صف"
+
+msgid "Added \"{}\" to the queue"
+msgstr "\"{}\" به صف افزوده شد"
+
+msgid "Added only {n} song to \"{}\": {}"
+msgid_plural "Added only {n} songs to \"{}\": {}"
+msgstr[0] "فقط {n} آهنگ به \"{}\" افزوده شد: {}"
+msgstr[1] "فقط {n} آهنگ به \"{}\" افزوده شد: {}"
+
+msgid "Added {n} song from \"{}\" to the queue"
+msgid_plural "Added {n} songs from \"{}\" to the queue"
+msgstr[0] "{n} آهنگ از \"{}\" به صف افزوده شد"
+msgstr[1] "{n} آهنگ از \"{}\" به صف افزوده شد"
+
+msgid "Added {n} song to \"{}\""
+msgid_plural "Added {n} songs to \"{}\""
+msgstr[0] "{n} آهنگ به \"{}\" افزوده شد"
+msgstr[1] "{n} آهنگ به \"{}\" افزوده شد"
+
+msgid "Added {n} song to the queue"
+msgid_plural "Added {n} songs to the queue"
+msgstr[0] "{n} آهنگ به صف افزوده شد"
+msgstr[1] "{n} آهنگ به صف افزوده شد"
+
+msgid "Adding to \"{}\": {} of {n} song"
+msgid_plural "Adding to \"{}\": {} of {n} songs"
+msgstr[0] "در حال افزودن به \"{}\": {} از {n} آهنگ"
+msgstr[1] "در حال افزودن به \"{}\": {} از {n} آهنگ"
+
+msgid "ALBUM"
+msgstr "آلبوم"
+
+msgid "Album"
+msgstr "آلبوم"
+
+msgid "album"
+msgstr "آلبوم"
+
+msgid "Album artist"
+msgstr "هنرمند آلبوم"
+
+msgid "Album count"
+msgstr "تعداد آلبوم"
+
+msgid "Album not found"
+msgstr "آلبوم پیدا نشد"
+
+msgid "Albums"
+msgstr "آلبوم‌ها"
+
+msgid "All genres"
+msgstr "همه‌ی ژانرها"
+
+msgid "Already at the end"
+msgstr "از قبل در انتها است"
+
+msgid "Already at the start"
+msgstr "از قبل در ابتدا است"
+
+msgid "Already in \"{}\""
+msgstr "از قبل در \"{}\" وجود دارد"
+
+msgid "Already on the server"
+msgstr "از قبل روی سرور وجود دارد"
+
+msgid "Amber"
+msgstr "کهربایی"
+
+msgid "Appearance"
+msgstr "ظاهر"
+
+msgid "ARTIST"
+msgstr "هنرمند"
+
+msgid "Artist"
+msgstr "هنرمند"
+
+msgid "Artists"
+msgstr "هنرمندان"
+
+msgid "Ask the server to transcode down to this bitrate. Applies from the next song."
+msgstr "از سرور می‌خواهد که حداکثر با این نرخ بیت تبدیل کند. از آهنگ بعدی اعمال می‌شود."
+
+msgid "Audio device"
+msgstr "دستگاه صوتی"
+
+msgid "Automatic ({})"
+msgstr "خودکار ({})"
+
+msgid "Back"
+msgstr "بازگشت"
+
+msgid "Blue"
+msgstr "آبی"
+
+msgid "by {}"
+msgstr "توسط {}"
+
+msgid "Cancel"
+msgstr "لغو"
+
+msgid "Cancel timer"
+msgstr "لغو زمان‌سنج"
+
+msgid "Cannot share: {}"
+msgstr "اشتراک‌گذاری ممکن نیست: {}"
+
+msgid "Chart country"
+msgstr "کشور چارت‌ها"
+
+msgid "Charts"
+msgstr "چارت‌ها"
+
+msgid "Choose a browser under Settings, YouTube to sign in for a personalized home"
+msgstr "برای صفحه‌ی خانه‌ی شخصی‌سازی‌شده، در تنظیمات، بخش YouTube یک مرورگر برای ورود انتخاب کنید"
+
+msgid "Clear"
+msgstr "پاک کردن"
+
+msgid "Clear filters"
+msgstr "پاک کردن پالایش‌ها"
+
+msgid "Clear rating"
+msgstr "پاک کردن امتیاز"
+
+msgid "Clear the favorites and genre filters"
+msgstr "پاک کردن پالایش‌های علاقه‌مندی و ژانر"
+
+msgid "Close"
+msgstr "بستن"
+
+msgid "Close now playing"
+msgstr "بستن صفحه‌ی در حال پخش"
+
+msgid "Close without saving"
+msgstr "بستن بدون ذخیره"
+
+msgid "Colors used across the whole app."
+msgstr "رنگ‌هایی که در کل برنامه به کار می‌روند."
+
+msgid "Connect to your music server"
+msgstr "به سرور موسیقی خود متصل شوید"
+
+msgid "Connecting..."
+msgstr "در حال اتصال..."
+
+msgid "Could not add to \"{}\": {}"
+msgstr "افزودن به \"{}\" ممکن نشد: {}"
+
+msgid "Could not add {} to the server"
+msgstr "افزودن {} به سرور ممکن نشد"
+
+msgid "Could not create a share link: {}"
+msgstr "ساخت پیوند اشتراک‌گذاری ممکن نشد: {}"
+
+msgid "Could not create the playlist: {}"
+msgstr "ساخت فهرست پخش ممکن نشد: {}"
+
+msgid "Could not delete the playlist: {}"
+msgstr "حذف فهرست پخش ممکن نشد: {}"
+
+msgid "Could not delete the station"
+msgstr "حذف ایستگاه ممکن نشد"
+
+msgid "Could not load albums: {}"
+msgstr "بارگذاری آلبوم‌ها ممکن نشد: {}"
+
+msgid "Could not load artists: {}"
+msgstr "بارگذاری هنرمندان ممکن نشد: {}"
+
+msgid "Could not load Discover: {}"
+msgstr "بارگذاری کاوش ممکن نشد: {}"
+
+msgid "Could not load genres: {}"
+msgstr "بارگذاری ژانرها ممکن نشد: {}"
+
+msgid "Could not load it from YouTube Music: {}"
+msgstr "بارگذاری آن از YouTube Music ممکن نشد: {}"
+
+msgid "Could not load lyrics"
+msgstr "بارگذاری متن شعر ممکن نشد"
+
+msgid "Could not load moods and genres: {}"
+msgstr "بارگذاری حال‌وهواها و ژانرها ممکن نشد: {}"
+
+msgid "Could not load more results: {}"
+msgstr "بارگذاری نتایج بیشتر ممکن نشد: {}"
+
+msgid "Could not load new releases: {}"
+msgstr "بارگذاری انتشارهای جدید ممکن نشد: {}"
+
+msgid "Could not load playlists: {}"
+msgstr "بارگذاری فهرست‌های پخش ممکن نشد: {}"
+
+msgid "Could not load the album: {}"
+msgstr "بارگذاری آلبوم ممکن نشد: {}"
+
+msgid "Could not load the artist: {}"
+msgstr "بارگذاری هنرمند ممکن نشد: {}"
+
+msgid "Could not load the charts: {}"
+msgstr "بارگذاری چارت‌ها ممکن نشد: {}"
+
+msgid "Could not load the folder: {}"
+msgstr "بارگذاری پوشه ممکن نشد: {}"
+
+msgid "Could not load the list: {}"
+msgstr "بارگذاری فهرست ممکن نشد: {}"
+
+msgid "Could not load the playlist: {}"
+msgstr "بارگذاری فهرست پخش ممکن نشد: {}"
+
+msgid "Could not load the radio stations: {}"
+msgstr "بارگذاری ایستگاه‌های رادیو ممکن نشد: {}"
+
+msgid "Could not load the selection: {}"
+msgstr "بارگذاری موارد انتخاب‌شده ممکن نشد: {}"
+
+msgid "Could not load this page: {}"
+msgstr "بارگذاری این صفحه ممکن نشد: {}"
+
+msgid "Could not load tracks: {}"
+msgstr "بارگذاری قطعه‌ها ممکن نشد: {}"
+
+msgid "Could not load your home: {}"
+msgstr "بارگذاری صفحه‌ی خانه‌ی شما ممکن نشد: {}"
+
+msgid "Could not open the folder: {}"
+msgstr "باز کردن پوشه ممکن نشد: {}"
+
+msgid "Could not open YouTube Music: {}"
+msgstr "باز کردن YouTube Music ممکن نشد: {}"
+
+msgid "Could not play \"{}\" from YouTube: {}"
+msgstr "پخش \"{}\" از YouTube ممکن نشد: {}"
+
+msgid "Could not play album: {}"
+msgstr "پخش آلبوم ممکن نشد: {}"
+
+msgid "Could not play from YouTube: {}"
+msgstr "پخش از YouTube ممکن نشد: {}"
+
+msgid "Could not play the album: {}"
+msgstr "پخش آلبوم ممکن نشد: {}"
+
+msgid "Could not remove songs: {}"
+msgstr "حذف آهنگ‌ها ممکن نشد: {}"
+
+msgid "Could not rescan the library: {}"
+msgstr "اسکن دوباره‌ی کتابخانه ممکن نشد: {}"
+
+msgid "Could not set the rating: {}"
+msgstr "تعیین امتیاز ممکن نشد: {}"
+
+msgid "Could not sign in to YouTube Music ({}). Showing general picks instead."
+msgstr "ورود به YouTube Music ممکن نشد ({}). به جای آن پیشنهادهای عمومی نمایش داده می‌شود."
+
+msgid "Could not switch server: {}"
+msgstr "تعویض سرور ممکن نشد: {}"
+
+msgid "Could not update favorite: {}"
+msgstr "به‌روزرسانی علاقه‌مندی ممکن نشد: {}"
+
+msgid "Could not update favorites: {}"
+msgstr "به‌روزرسانی علاقه‌مندی‌ها ممکن نشد: {}"
+
+msgid "Could not update rating: {}"
+msgstr "به‌روزرسانی امتیاز ممکن نشد: {}"
+
+msgid "Could not update the favorite: {}"
+msgstr "به‌روزرسانی علاقه‌مندی ممکن نشد: {}"
+
+msgid "Country"
+msgstr "کشور"
+
+msgid "Create"
+msgstr "ساختن"
+
+msgid "Created \"{}\" with only {n} song: {}"
+msgid_plural "Created \"{}\" with only {n} songs: {}"
+msgstr[0] "\"{}\" فقط با {n} آهنگ ساخته شد: {}"
+msgstr[1] "\"{}\" فقط با {n} آهنگ ساخته شد: {}"
+
+msgid "Created \"{}\" with {n} song"
+msgid_plural "Created \"{}\" with {n} songs"
+msgstr[0] "\"{}\" با {n} آهنگ ساخته شد"
+msgstr[1] "\"{}\" با {n} آهنگ ساخته شد"
+
+msgid "Created playlist \"{}\""
+msgstr "فهرست پخش \"{}\" ساخته شد"
+
+msgid "Creating a share link..."
+msgstr "در حال ساخت پیوند اشتراک‌گذاری..."
+
+msgid "Creating..."
+msgstr "در حال ساخت..."
+
+msgid "Crossfade"
+msgstr "محوشدگی متقاطع"
+
+msgid "Crossfade could not be changed: {}"
+msgstr "تغییر محوشدگی متقاطع ممکن نشد: {}"
+
+msgid "Crossfade: {}"
+msgstr "محوشدگی متقاطع: {}"
+
+msgid "Current"
+msgstr "فعلی"
+
+msgid "Custom accent color: {} (theme accent in use)"
+msgstr "رنگ شاخص سفارشی: {} (رنگ شاخص تم در حال استفاده است)"
+
+msgid "Custom accent color: {}, press Enter to apply"
+msgstr "رنگ شاخص سفارشی: {}، برای اعمال Enter را بزنید"
+
+msgid "Dark theme"
+msgstr "تم تیره"
+
+msgid "DARK THEMES"
+msgstr "تم‌های تیره"
+
+msgid "Default country for the Discover charts. Automatic follows your system region."
+msgstr "کشور پیش‌فرض برای چارت‌های کاوش. حالت خودکار از منطقه‌ی سیستم شما پیروی می‌کند."
+
+msgid "Default Dark"
+msgstr "تیره‌ی پیش‌فرض"
+
+msgid "Default Light"
+msgstr "روشن پیش‌فرض"
+
+msgid "Delete"
+msgstr "حذف"
+
+msgid "Delete \"{}\" from the server? This cannot be undone."
+msgstr "\"{}\" از سرور حذف شود؟ این کار برگشت‌پذیر نیست."
+
+msgid "Delete \"{}\"? This cannot be undone."
+msgstr "\"{}\" حذف شود؟ این کار برگشت‌پذیر نیست."
+
+msgid "Delete playlist"
+msgstr "حذف فهرست پخش"
+
+msgid "Delete station"
+msgstr "حذف ایستگاه"
+
+msgid "Delete {} from the server"
+msgstr "حذف {} از سرور"
+
+msgid "Deleted playlist \"{}\""
+msgstr "فهرست پخش \"{}\" حذف شد"
+
+msgid "Deleting..."
+msgstr "در حال حذف..."
+
+msgid "Demo mode: these picks are made up and play from your demo library"
+msgstr "حالت نمایشی: این پیشنهادها ساختگی‌اند و از کتابخانه‌ی نمایشی شما پخش می‌شوند"
+
+msgid "Directory"
+msgstr "دایرکتوری"
+
+msgid "Disc {}"
+msgstr "دیسک {}"
+
+msgid "Discord Rich Presence"
+msgstr "Discord Rich Presence"
+
+msgid "Discover"
+msgstr "کاوش"
+
+msgid "Discover is open"
+msgstr "کاوش باز است"
+
+msgid "Discover new music on YouTube Music"
+msgstr "موسیقی تازه را در YouTube Music کشف کنید"
+
+msgid "Duration"
+msgstr "مدت"
+
+msgid "Edit station"
+msgstr "ویرایش ایستگاه"
+
+msgid "Edit {}"
+msgstr "ویرایش {}"
+
+msgid "End of current track"
+msgstr "پایان قطعه‌ی کنونی"
+
+msgid "End of track"
+msgstr "پایان قطعه"
+
+msgid "Enter a name for the station"
+msgstr "نامی برای ایستگاه وارد کنید"
+
+msgid "Enter a name, country or tag to search"
+msgstr "برای جست‌وجو نام، کشور یا برچسب وارد کنید"
+
+msgid "Enter a stream URL that starts with http:// or https://"
+msgstr "نشانی جریانی وارد کنید که با http:// یا https:// شروع شود"
+
+msgid "Enter the server URL"
+msgstr "نشانی سرور را وارد کنید"
+
+msgid "Fade the end of each song into the next one. Off keeps gapless playback."
+msgstr "پایان هر آهنگ را در آهنگ بعدی محو می‌کند. حالت خاموش پخش بی‌وقفه را حفظ می‌کند."
+
+msgid "Favorite"
+msgstr "موردعلاقه"
+
+msgid "Favorited"
+msgstr "موردعلاقه"
+
+msgid "Favorites"
+msgstr "علاقه‌مندی‌ها"
+
+msgid "Favorites only: off"
+msgstr "فقط علاقه‌مندی‌ها: خاموش"
+
+msgid "Favorites only: on"
+msgstr "فقط علاقه‌مندی‌ها: روشن"
+
+msgid "Filter"
+msgstr "پالایش"
+
+msgid "Filter playlists"
+msgstr "پالایش فهرست‌های پخش"
+
+msgid "Find stations by name, country or tag"
+msgstr "یافتن ایستگاه‌ها بر اساس نام، کشور یا برچسب"
+
+msgid "Find stations in the radio-browser.info directory"
+msgstr "یافتن ایستگاه‌ها در دایرکتوری radio-browser.info"
+
+msgid "Folder"
+msgstr "پوشه"
+
+msgid "Folders"
+msgstr "پوشه‌ها"
+
+msgid "Follow current song"
+msgstr "آهنگ کنونی را دنبال کن"
+
+msgid "Follow system color scheme"
+msgstr "پیروی از طرح رنگ سیستم"
+
+msgid "For you"
+msgstr "برای شما"
+
+msgid "Forget this server?"
+msgstr "این سرور فراموش شود؟"
+
+msgid "Format the server should transcode to. Applies from the next song."
+msgstr "قالبی که سرور باید به آن تبدیل کند. از آهنگ بعدی اعمال می‌شود."
+
+msgid "Found {n} server in Feishin but it has no usable saved login"
+msgid_plural "Found {n} servers in Feishin but none with a usable saved login"
+msgstr[0] "{n} سرور در Feishin پیدا شد اما ورود ذخیره‌شده‌ی قابل استفاده‌ای ندارد"
+msgstr[1] "{n} سرور در Feishin پیدا شد اما هیچ‌کدام ورود ذخیره‌شده‌ی قابل استفاده‌ای ندارند"
+
+msgid "Gapless playback"
+msgstr "پخش بی‌وقفه"
+
+msgid "Genres"
+msgstr "ژانرها"
+
+msgid "Go back to {}"
+msgstr "بازگشت به {}"
+
+msgid "Go to album"
+msgstr "رفتن به آلبوم"
+
+msgid "Go to artist"
+msgstr "رفتن به هنرمند"
+
+msgid "Go to {}"
+msgstr "رفتن به {}"
+
+msgid "Green"
+msgstr "سبز"
+
+msgid "Hide lyrics"
+msgstr "پنهان کردن متن شعر"
+
+msgid "Hide queue"
+msgstr "پنهان کردن صف"
+
+msgid "High Contrast Dark"
+msgstr "تیره با کنتراست بالا"
+
+msgid "High Contrast Light"
+msgstr "روشن با کنتراست بالا"
+
+msgid "Highlight with the color that comes with the theme."
+msgstr "برجسته‌سازی با رنگی که همراه تم است."
+
+msgid "Home"
+msgstr "خانه"
+
+msgid "Homepage (optional)"
+msgstr "وب‌سایت (اختیاری)"
+
+msgid "Import from Feishin"
+msgstr "وارد کردن از Feishin"
+
+msgid "Install yt-dlp to play YouTube tracks"
+msgstr "برای پخش قطعه‌های YouTube، yt-dlp را نصب کنید"
+
+msgid "Integrations"
+msgstr "یکپارچه‌سازی‌ها"
+
+msgid "Interface"
+msgstr "رابط کاربری"
+
+msgid "Internet radio"
+msgstr "رادیوی اینترنتی"
+
+msgid "item"
+msgstr "مورد"
+
+msgid "Jellyfin has no public share links"
+msgstr "Jellyfin پیوند اشتراک‌گذاری عمومی ندارد"
+
+msgid "Keep this station in the favorites on this device"
+msgstr "نگه‌داشتن این ایستگاه در علاقه‌مندی‌ها روی این دستگاه"
+
+msgid "Language"
+msgstr "زبان"
+
+msgid "LIBRARY"
+msgstr "کتابخانه"
+
+msgid "Library scan finished"
+msgstr "اسکن کتابخانه تمام شد"
+
+msgid "Library scan finished: {n} item"
+msgid_plural "Library scan finished: {n} items"
+msgstr[0] "اسکن کتابخانه تمام شد: {n} مورد"
+msgstr[1] "اسکن کتابخانه تمام شد: {n} مورد"
+
+msgid "Light theme"
+msgstr "تم روشن"
+
+msgid "LIGHT THEMES"
+msgstr "تم‌های روشن"
+
+msgid "Listening to {}"
+msgstr "در حال گوش دادن به {}"
+
+msgid "LIVE"
+msgstr "زنده"
+
+msgid "Load more"
+msgstr "بارگذاری بیشتر"
+
+msgid "Load this section again"
+msgstr "بارگذاری دوباره‌ی این بخش"
+
+msgid "Loading playlists..."
+msgstr "در حال بارگذاری فهرست‌های پخش..."
+
+msgid "Loading similar songs..."
+msgstr "در حال بارگذاری آهنگ‌های مشابه..."
+
+msgid "Loading stations..."
+msgstr "در حال بارگذاری ایستگاه‌ها..."
+
+msgid "Loading the next page of stations"
+msgstr "در حال بارگذاری صفحه‌ی بعدی ایستگاه‌ها"
+
+msgid "Loading..."
+msgstr "در حال بارگذاری..."
+
+msgid "Log out"
+msgstr "خروج از حساب"
+
+msgid "Looking up the YouTube link..."
+msgstr "در حال یافتن پیوند YouTube..."
+
+msgid "Lyrics"
+msgstr "متن شعر"
+
+msgid "Lyrics from {}"
+msgstr "متن شعر از {}"
+
+msgid "Lyrics sources"
+msgstr "منابع متن شعر"
+
+msgid "Maximum bitrate"
+msgstr "حداکثر نرخ بیت"
+
+msgid "Media keys and desktop media controls. Takes effect after a restart."
+msgstr "کلیدهای رسانه و کنترل‌های رسانه‌ی میزکار. پس از راه‌اندازی دوباره اعمال می‌شود."
+
+msgid "Moods and genres"
+msgstr "حال‌وهواها و ژانرها"
+
+msgid "Most played"
+msgstr "بیشتر پخش شده"
+
+msgid "Move down"
+msgstr "انتقال به پایین"
+
+msgid "Move up"
+msgstr "انتقال به بالا"
+
+msgid "MPRIS"
+msgstr "MPRIS"
+
+msgid "Mute"
+msgstr "بی‌صدا کردن"
+
+msgid "Name"
+msgstr "نام"
+
+msgid "New playlist"
+msgstr "فهرست پخش جدید"
+
+msgid "New releases"
+msgstr "انتشارهای جدید"
+
+msgid "Next"
+msgstr "بعدی"
+
+msgid "Next is unavailable while a radio station plays"
+msgstr "هنگام پخش ایستگاه رادیو، بعدی در دسترس نیست"
+
+msgid "No albums"
+msgstr "آلبومی نیست"
+
+msgid "No albums found"
+msgstr "آلبومی پیدا نشد"
+
+msgid "No artists found"
+msgstr "هنرمندی پیدا نشد"
+
+msgid "no browser is selected"
+msgstr "هیچ مرورگری انتخاب نشده است"
+
+msgid "No favorite albums"
+msgstr "آلبوم موردعلاقه‌ای نیست"
+
+msgid "No favorite artists"
+msgstr "هنرمند موردعلاقه‌ای نیست"
+
+msgid "No favorite tracks"
+msgstr "قطعه‌ی موردعلاقه‌ای نیست"
+
+msgid "No genres found"
+msgstr "ژانری پیدا نشد"
+
+msgid "No lyrics found"
+msgstr "هیچ متن شعری پیدا نشد"
+
+msgid "No playlists found"
+msgstr "فهرست پخشی پیدا نشد"
+
+msgid "No playlists yet"
+msgstr "هنوز فهرست پخشی نیست"
+
+msgid "No rating"
+msgstr "بدون امتیاز"
+
+msgid "No results for \"{}\""
+msgstr "نتیجه‌ای برای \"{}\" نیست"
+
+msgid "No saved login for {}; remove it and add it again"
+msgstr "ورود ذخیره‌شده‌ای برای {} نیست؛ آن را حذف و دوباره اضافه کنید"
+
+msgid "No saved servers."
+msgstr "سرور ذخیره‌شده‌ای نیست."
+
+msgid "No similar songs found"
+msgstr "آهنگ مشابهی پیدا نشد"
+
+msgid "No songs here"
+msgstr "آهنگی اینجا نیست"
+
+msgid "No stations found"
+msgstr "ایستگاهی پیدا نشد"
+
+msgid "No stations yet. Add one or find one in the directory."
+msgstr "هنوز ایستگاهی نیست. یکی اضافه کنید یا در دایرکتوری پیدا کنید."
+
+msgid "No tracks found"
+msgstr "قطعه‌ای پیدا نشد"
+
+msgid "None"
+msgstr "هیچ"
+
+msgid "Normalize loudness using the track or album gain tags."
+msgstr "یکسان‌سازی بلندی صدا با برچسب‌های بهره‌ی قطعه یا آلبوم."
+
+msgid "Not connected to a server"
+msgstr "به سروری متصل نیست"
+
+msgid "Nothing is playing"
+msgstr "چیزی در حال پخش نیست"
+
+msgid "Nothing to add yet"
+msgstr "هنوز چیزی برای افزودن نیست"
+
+msgid "Nothing to go back to"
+msgstr "جایی برای بازگشت نیست"
+
+msgid "Nothing to play here"
+msgstr "چیزی برای پخش اینجا نیست"
+
+msgid "Nothing to play yet"
+msgstr "هنوز چیزی برای پخش نیست"
+
+msgid "Nothing to show here right now"
+msgstr "فعلاً چیزی برای نمایش اینجا نیست"
+
+msgid "Off"
+msgstr "خاموش"
+
+msgid "OK"
+msgstr "باشه"
+
+msgid "On the server"
+msgstr "روی سرور"
+
+msgid "Only a server admin can rescan the library"
+msgstr "فقط مدیر سرور می‌تواند کتابخانه را دوباره اسکن کند"
+
+msgid "Only loaded tracks can be shared: select fewer tracks or scroll through them first"
+msgstr "فقط قطعه‌های بارگذاری‌شده قابل اشتراک‌گذاری‌اند: قطعه‌های کمتری انتخاب کنید یا ابتدا آن‌ها را پیمایش کنید"
+
+msgid "Open"
+msgstr "باز کردن"
+
+msgid "Open in YouTube Music"
+msgstr "باز کردن در YouTube Music"
+
+msgid "Open now playing"
+msgstr "باز کردن صفحه‌ی در حال پخش"
+
+msgid "Open radio"
+msgstr "باز کردن رادیو"
+
+msgid "Open the album \"{}\""
+msgstr "باز کردن آلبوم \"{}\""
+
+msgid "Open the playlist \"{}\""
+msgstr "باز کردن فهرست پخش \"{}\""
+
+msgid "Open the queue panel"
+msgstr "باز کردن پنل صف"
+
+msgid "Open {}"
+msgstr "باز کردن {}"
+
+msgid "Original"
+msgstr "اصلی"
+
+msgid "Output used by the player."
+msgstr "خروجی مورد استفاده‌ی پخش‌کننده."
+
+msgid "Owner"
+msgstr "مالک"
+
+msgid "Password"
+msgstr "رمز عبور"
+
+msgid "Paste a link first"
+msgstr "ابتدا یک پیوند جای‌گذاری کنید"
+
+msgid "Paste a YouTube or YouTube Music link first"
+msgstr "ابتدا یک پیوند YouTube یا YouTube Music جای‌گذاری کنید"
+
+msgid "Paste a YouTube or YouTube Music link to try yt-dlp."
+msgstr "برای امتحان yt-dlp یک پیوند YouTube یا YouTube Music جای‌گذاری کنید."
+
+msgid "Pause"
+msgstr "مکث"
+
+msgid "Pause the radio station"
+msgstr "مکث ایستگاه رادیو"
+
+msgid "Personalized with your YouTube Music account from {}"
+msgstr "شخصی‌سازی‌شده با حساب YouTube Music شما از {}"
+
+msgid "Pick a color, or type one as #rrggbb and press Enter."
+msgstr "رنگی انتخاب کنید، یا آن را به شکل #rrggbb بنویسید و Enter را بزنید."
+
+msgid "Pick a mood or genre to see its playlists"
+msgstr "یک حال‌وهوا یا ژانر انتخاب کنید تا فهرست‌های پخش آن را ببینید"
+
+msgid "Play"
+msgstr "پخش"
+
+msgid "Play \"{}\" and the rest of this shelf"
+msgstr "پخش \"{}\" و بقیه‌ی این قفسه"
+
+msgid "Play a YouTube link"
+msgstr "پخش پیوند YouTube"
+
+msgid "Play album"
+msgstr "پخش آلبوم"
+
+msgid "Play all"
+msgstr "پخش همه"
+
+msgid "Play all {n} song"
+msgid_plural "Play all {n} songs"
+msgstr[0] "پخش همه‌ی {n} آهنگ"
+msgstr[1] "پخش همه‌ی {n} آهنگ"
+
+msgid "Play count"
+msgstr "تعداد پخش"
+
+msgid "Play every song in {} and its subfolders"
+msgstr "پخش همه‌ی آهنگ‌های {} و زیرپوشه‌هایش"
+
+msgid "Play from here"
+msgstr "پخش از اینجا"
+
+msgid "Play from this song"
+msgstr "پخش از این آهنگ"
+
+msgid "Play from {}"
+msgstr "پخش از {}"
+
+msgid "Play next"
+msgstr "پخش در نوبت بعد"
+
+msgid "Play the album"
+msgstr "پخش آلبوم"
+
+msgid "Play the playlist"
+msgstr "پخش فهرست پخش"
+
+msgid "Play the radio station"
+msgstr "پخش ایستگاه رادیو"
+
+msgid "Play this link after the current song"
+msgstr "پخش این پیوند پس از آهنگ کنونی"
+
+msgid "Play this link now"
+msgstr "پخش این پیوند همین حالا"
+
+msgid "Play {}"
+msgstr "پخش {}"
+
+msgid "Play {} next"
+msgstr "پخش {} در نوبت بعد"
+
+msgid "Play {} with its subfolders"
+msgstr "پخش {} با زیرپوشه‌هایش"
+
+msgid "Playback"
+msgstr "پخش"
+
+msgid "Playback failed: {}"
+msgstr "پخش ناموفق بود: {}"
+
+msgid "Playing {} failed: {}"
+msgstr "پخش {} ناموفق بود: {}"
+
+msgid "PLAYLIST"
+msgstr "فهرست پخش"
+
+msgid "Playlist"
+msgstr "فهرست پخش"
+
+msgid "playlist"
+msgstr "فهرست پخش"
+
+msgid "Playlist name"
+msgstr "نام فهرست پخش"
+
+msgid "Playlists"
+msgstr "فهرست‌های پخش"
+
+msgid "Plays"
+msgstr "تعداد پخش"
+
+msgid "Plays YouTube tracks. Leave empty to use yt-dlp from your PATH."
+msgstr "قطعه‌های YouTube را پخش می‌کند. برای استفاده از yt-dlp موجود در PATH خالی بگذارید."
+
+msgid "Preload the next song so it starts without a pause."
+msgstr "آهنگ بعدی را از پیش بارگذاری می‌کند تا بدون مکث شروع شود."
+
+msgid "Previous"
+msgstr "پیشین"
+
+msgid "Previous is unavailable while a radio station plays"
+msgstr "هنگام پخش ایستگاه رادیو، پیشین در دسترس نیست"
+
+msgid "Purple"
+msgstr "بنفش"
+
+msgid "Queue"
+msgstr "صف"
+
+msgid "Radio"
+msgstr "رادیو"
+
+msgid "Random"
+msgstr "تصادفی"
+
+msgid "Rate {n} star"
+msgid_plural "Rate {n} stars"
+msgstr[0] "امتیاز {n} ستاره"
+msgstr[1] "امتیاز {n} ستاره"
+
+msgid "Rating"
+msgstr "امتیاز"
+
+msgid "Recently added"
+msgstr "به تازگی افزوده شده"
+
+msgid "Recently played"
+msgstr "به تازگی پخش شده"
+
+msgid "Red"
+msgstr "قرمز"
+
+msgid "Refresh"
+msgstr "تازه‌سازی"
+
+msgid "Refresh this section"
+msgstr "تازه‌سازی این بخش"
+
+msgid "Release year"
+msgstr "سال انتشار"
+
+msgid "Remove"
+msgstr "حذف"
+
+msgid "Remove from favorites"
+msgstr "حذف از علاقه‌مندی‌ها"
+
+msgid "Remove from playlist"
+msgstr "حذف از فهرست پخش"
+
+msgid "Remove from queue"
+msgstr "حذف از صف"
+
+msgid "Removed {n} song from \"{}\""
+msgid_plural "Removed {n} songs from \"{}\""
+msgstr[0] "{n} آهنگ از \"{}\" حذف شد"
+msgstr[1] "{n} آهنگ از \"{}\" حذف شد"
+
+msgid "Removing..."
+msgstr "در حال حذف..."
+
+msgid "Repeat: all"
+msgstr "تکرار: همه"
+
+msgid "Repeat: off"
+msgstr "تکرار: خاموش"
+
+msgid "Repeat: one"
+msgstr "تکرار: یکی"
+
+msgid "ReplayGain"
+msgstr "ReplayGain"
+
+msgid "Report what you play to the server."
+msgstr "آنچه پخش می‌کنید را به سرور گزارش می‌دهد."
+
+msgid "Rescan the library for new content"
+msgstr "اسکن دوباره‌ی کتابخانه برای محتوای جدید"
+
+msgid "Resize column"
+msgstr "تغییر اندازه‌ی ستون"
+
+msgid "Save"
+msgstr "ذخیره"
+
+msgid "Save on this device"
+msgstr "ذخیره روی این دستگاه"
+
+msgid "Save the changes on the server"
+msgstr "ذخیره‌ی تغییرات روی سرور"
+
+msgid "Save the changes on this device"
+msgstr "ذخیره‌ی تغییرات روی این دستگاه"
+
+msgid "Save to favorites on this device"
+msgstr "ذخیره در علاقه‌مندی‌ها روی این دستگاه"
+
+msgid "Save to server"
+msgstr "ذخیره روی سرور"
+
+msgid "Saved on this device"
+msgstr "روی این دستگاه ذخیره شده"
+
+msgid "Saved on this device, click to remove"
+msgstr "روی این دستگاه ذخیره شده، برای حذف کلیک کنید"
+
+msgid "Saving the station to the server..."
+msgstr "در حال ذخیره‌ی ایستگاه روی سرور..."
+
+msgid "Saving to the server..."
+msgstr "در حال ذخیره روی سرور..."
+
+msgid "Saving..."
+msgstr "در حال ذخیره..."
+
+msgid "Scanning the library for new content..."
+msgstr "در حال اسکن کتابخانه برای محتوای جدید..."
+
+msgid "Scanning the library: {}"
+msgstr "در حال اسکن کتابخانه: {}"
+
+msgid "Scrobble"
+msgstr "اسکراب"
+
+msgid "Scroll left"
+msgstr "پیمایش به چپ"
+
+msgid "Scroll lists and the queue to the song that is playing."
+msgstr "فهرست‌ها و صف را تا آهنگ در حال پخش پیمایش می‌کند."
+
+msgid "Scroll right"
+msgstr "پیمایش به راست"
+
+msgid "Search"
+msgstr "جست‌وجو"
+
+msgid "Search failed: {}"
+msgstr "جست‌وجو ناموفق بود: {}"
+
+msgid "SEARCH RESULTS"
+msgstr "نتایج جست‌وجو"
+
+msgid "Search songs on YouTube Music"
+msgstr "جست‌وجوی آهنگ در YouTube Music"
+
+msgid "Search songs, albums, artists"
+msgstr "جست‌وجوی آهنگ، آلبوم، هنرمند"
+
+msgid "Search the radio-browser.info directory"
+msgstr "جست‌وجو در دایرکتوری radio-browser.info"
+
+msgid "Search your library for songs, albums and artists"
+msgstr "جست‌وجوی آهنگ، آلبوم و هنرمند در کتابخانه‌ی شما"
+
+msgid "Searched from top to bottom until one has lyrics."
+msgstr "از بالا به پایین جست‌وجو می‌شود تا یکی متن شعر داشته باشد."
+
+msgid "Searching for lyrics..."
+msgstr "در حال جست‌وجوی متن شعر..."
+
+msgid "Searching the radio directory failed: {}"
+msgstr "جست‌وجو در دایرکتوری رادیو ناموفق بود: {}"
+
+msgid "Searching the radio-browser.info directory"
+msgstr "در حال جست‌وجو در دایرکتوری radio-browser.info"
+
+msgid "Searching..."
+msgstr "در حال جست‌وجو..."
+
+msgid "Seeking is unavailable for live radio"
+msgstr "جابه‌جایی در رادیوی زنده ممکن نیست"
+
+msgid "Server"
+msgstr "سرور"
+
+msgid "Server type"
+msgstr "نوع سرور"
+
+msgid "Servers"
+msgstr "سرورها"
+
+msgid "Set rating"
+msgstr "تعیین امتیاز"
+
+msgid "Settings"
+msgstr "تنظیمات"
+
+msgid "Share"
+msgstr "اشتراک‌گذاری"
+
+msgid "Share ({})"
+msgstr "اشتراک‌گذاری ({})"
+
+msgid "Share link copied to the clipboard: {}"
+msgstr "پیوند اشتراک‌گذاری در کلیپ‌بورد کپی شد: {}"
+
+msgid "Share this {}: copy a public link"
+msgstr "اشتراک‌گذاری این {}: کپی پیوند عمومی"
+
+msgid "Sharing is unavailable: {}"
+msgstr "اشتراک‌گذاری در دسترس نیست: {}"
+
+msgid "SHOW LESS"
+msgstr "نمایش کمتر"
+
+msgid "Show lyrics"
+msgstr "نمایش متن شعر"
+
+msgid "SHOW MORE"
+msgstr "نمایش بیشتر"
+
+msgid "Show more"
+msgstr "نمایش بیشتر"
+
+msgid "Show playlists for {}"
+msgstr "نمایش فهرست‌های پخش {}"
+
+msgid "Show queue"
+msgstr "نمایش صف"
+
+msgid "Show the current song on your Discord profile."
+msgstr "آهنگ کنونی را در نمایه‌ی Discord شما نشان می‌دهد."
+
+msgid "Show the next page of stations"
+msgstr "نمایش صفحه‌ی بعدی ایستگاه‌ها"
+
+msgid "Show the queue next to the library; remembered on the next start."
+msgstr "صف را کنار کتابخانه نشان می‌دهد؛ برای اجرای بعدی به خاطر سپرده می‌شود."
+
+msgid "Show the server and saved stations"
+msgstr "نمایش ایستگاه‌های سرور و ذخیره‌شده"
+
+msgid "Show {}"
+msgstr "نمایش {}"
+
+msgid "Showing playlists for {}"
+msgstr "در حال نمایش فهرست‌های پخش {}"
+
+msgid "Showing the charts for {}"
+msgstr "در حال نمایش چارت‌های {}"
+
+msgid "Showing the radio-browser.info directory"
+msgstr "در حال نمایش دایرکتوری radio-browser.info"
+
+msgid "Showing the server and saved stations"
+msgstr "در حال نمایش ایستگاه‌های سرور و ذخیره‌شده"
+
+msgid "Shuffle"
+msgstr "درهم"
+
+msgid "Shuffle every song in {} and its subfolders"
+msgstr "پخش درهم همه‌ی آهنگ‌های {} و زیرپوشه‌هایش"
+
+msgid "Shuffle play"
+msgstr "پخش درهم"
+
+msgid "Shuffle: off"
+msgstr "درهم: خاموش"
+
+msgid "Shuffle: on"
+msgstr "درهم: روشن"
+
+msgid "Sign in"
+msgstr "ورود"
+
+msgid "Sign in with browser"
+msgstr "ورود با مرورگر"
+
+msgid "Sign out and forget this server's saved login?"
+msgstr "از حساب خارج شوید و ورود ذخیره‌شده‌ی این سرور فراموش شود؟"
+
+msgid "Sign out and forget this server?"
+msgstr "از حساب خارج شوید و این سرور فراموش شود؟"
+
+msgid "Similar"
+msgstr "مشابه"
+
+msgid "Similar songs come from your server, so YouTube tracks have none"
+msgstr "آهنگ‌های مشابه از سرور شما می‌آیند، بنابراین قطعه‌های YouTube آهنگ مشابهی ندارند"
+
+msgid "Sleep timer: off"
+msgstr "زمان‌سنج خواب: خاموش"
+
+msgid "Sleep timer: {}"
+msgstr "زمان‌سنج خواب: {}"
+
+msgid "Song count"
+msgstr "تعداد آهنگ"
+
+msgid "Songs"
+msgstr "آهنگ‌ها"
+
+msgid "Sort by {}"
+msgstr "مرتب‌سازی بر اساس {}"
+
+msgid "Sort by {}: ascending"
+msgstr "مرتب‌سازی بر اساس {}: صعودی"
+
+msgid "Sort by {}: descending"
+msgstr "مرتب‌سازی بر اساس {}: نزولی"
+
+msgid "Sort: ascending"
+msgstr "مرتب‌سازی: صعودی"
+
+msgid "Sort: descending"
+msgstr "مرتب‌سازی: نزولی"
+
+msgid "Starting volume, shared with the player bar."
+msgstr "بلندی صدای آغازین، مشترک با نوار پخش‌کننده."
+
+msgid "Station data from radio-browser.info"
+msgstr "داده‌های ایستگاه از radio-browser.info"
+
+msgid "Station name"
+msgstr "نام ایستگاه"
+
+msgid "Stations"
+msgstr "ایستگاه‌ها"
+
+msgid "Stop {}"
+msgstr "توقف {}"
+
+msgid "Stream URL"
+msgstr "نشانی جریان"
+
+msgid "Switch"
+msgstr "تعویض"
+
+msgid "Switch between a dark and a light theme with the desktop. {}"
+msgstr "جابه‌جایی بین تم تیره و روشن همراه با میزکار. {}"
+
+msgid "Switch to grid view"
+msgstr "تغییر به نمای شبکه‌ای"
+
+msgid "Switch to list view"
+msgstr "تغییر به نمای فهرستی"
+
+msgid "System default"
+msgstr "پیش‌فرض سیستم"
+
+msgid "System default follows the language of the desktop."
+msgstr "پیش‌فرض سیستم از زبان میزکار پیروی می‌کند."
+
+msgid "Tag, for example jazz"
+msgstr "برچسب، برای مثال jazz"
+
+msgid "The desktop currently prefers dark."
+msgstr "میزکار در حال حاضر حالت تیره را ترجیح می‌دهد."
+
+msgid "The desktop currently prefers light."
+msgstr "میزکار در حال حاضر حالت روشن را ترجیح می‌دهد."
+
+msgid "The desktop has no preference, so the dark theme is used."
+msgstr "میزکار ترجیحی ندارد، بنابراین تم تیره استفاده می‌شود."
+
+msgid "The library scan is still running on the server"
+msgstr "اسکن کتابخانه هنوز روی سرور در حال اجراست"
+
+msgid "The queue is empty"
+msgstr "صف خالی است"
+
+msgid "The queue is incomplete: loading the rest of the list failed ({})"
+msgstr "صف ناقص است: بارگذاری بقیه‌ی فهرست ناموفق بود ({})"
+
+msgid "The radio directory could not be reached"
+msgstr "دسترسی به دایرکتوری رادیو ممکن نشد"
+
+msgid "The radio station stopped streaming"
+msgstr "ایستگاه رادیو پخش را متوقف کرد"
+
+msgid "The server refused the station: {}"
+msgstr "سرور ایستگاه را نپذیرفت: {}"
+
+msgid "Theme"
+msgstr "تم"
+
+msgid "There is nothing to play in this list"
+msgstr "چیزی برای پخش در این فهرست نیست"
+
+msgid "This Discover page does not exist"
+msgstr "این صفحه‌ی کاوش وجود ندارد"
+
+msgid "This folder is empty"
+msgstr "این پوشه خالی است"
+
+msgid "This playlist is empty"
+msgstr "این فهرست پخش خالی است"
+
+msgid "This server has no internet radio. Stations you add are saved on this device."
+msgstr "این سرور رادیوی اینترنتی ندارد. ایستگاه‌هایی که اضافه می‌کنید روی این دستگاه ذخیره می‌شوند."
+
+msgid "this server has no public share links"
+msgstr "این سرور پیوند اشتراک‌گذاری عمومی ندارد"
+
+msgid "Time"
+msgstr "زمان"
+
+msgid "Title"
+msgstr "عنوان"
+
+msgid "Top songs"
+msgstr "آهنگ‌های برتر"
+
+msgid "Track"
+msgstr "قطعه"
+
+msgid "Tracks"
+msgstr "قطعه‌ها"
+
+msgid "Transcode format"
+msgstr "قالب تبدیل"
+
+msgid "Try again"
+msgstr "تلاش دوباره"
+
+msgid "Turn off the theme accent color to pick your own."
+msgstr "برای انتخاب رنگ دلخواه، رنگ شاخص تم را خاموش کنید."
+
+msgid "Unmute"
+msgstr "صدادار کردن"
+
+msgid "Up next"
+msgstr "در ادامه"
+
+msgid "URL"
+msgstr "نشانی"
+
+msgid "Use the theme accent color"
+msgstr "استفاده از رنگ شاخص تم"
+
+msgid "Use {}"
+msgstr "استفاده از {}"
+
+msgid "Used while the desktop prefers dark."
+msgstr "هنگامی که میزکار حالت تیره را ترجیح می‌دهد استفاده می‌شود."
+
+msgid "Used while the desktop prefers light."
+msgstr "هنگامی که میزکار حالت روشن را ترجیح می‌دهد استفاده می‌شود."
+
+msgid "Username"
+msgstr "نام کاربری"
+
+msgid "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Feishin deletes right after reading."
+msgstr "از نشست YouTube شما در این مرورگر برای صفحه‌ی خانه‌ی شخصی‌سازی‌شده‌ی کاوش و صدای Premium استفاده می‌کند. yt-dlp کوکی‌های آن را در یک فایل موقت خصوصی کپی می‌کند که Feishin بلافاصله پس از خواندن حذف می‌کند."
+
+msgid "Volume"
+msgstr "بلندی صدا"
+
+msgid "Volume {}%"
+msgstr "بلندی صدا {}%"
+
+msgid "XDG_RUNTIME_DIR is not set, so there is no private place for the cookies"
+msgstr "XDG_RUNTIME_DIR تنظیم نشده است، بنابراین جای خصوصی برای کوکی‌ها وجود ندارد"
+
+msgid "Year"
+msgstr "سال"
+
+msgid "You are here: {}"
+msgstr "اینجا هستید: {}"
+
+msgid "Your user is not allowed to share on this server"
+msgstr "کاربر شما اجازه‌ی اشتراک‌گذاری در این سرور را ندارد"
+
+msgid "YouTube"
+msgstr "YouTube"
+
+msgid "YouTube albums are not in your library"
+msgstr "آلبوم‌های YouTube در کتابخانه‌ی شما نیستند"
+
+msgid "YouTube artists are not in your library"
+msgstr "هنرمندان YouTube در کتابخانه‌ی شما نیستند"
+
+msgid "yt-dlp program"
+msgstr "برنامه‌ی yt-dlp"
+
+msgid "{n} album"
+msgid_plural "{n} albums"
+msgstr[0] "{n} آلبوم"
+msgstr[1] "{n} آلبوم"
+
+msgid "{n} folder"
+msgid_plural "{n} folders"
+msgstr[0] "{n} پوشه"
+msgstr[1] "{n} پوشه"
+
+msgid "{n} item so far"
+msgid_plural "{n} items so far"
+msgstr[0] "تاکنون {n} مورد"
+msgstr[1] "تاکنون {n} مورد"
+
+msgid "{n} minute"
+msgid_plural "{n} minutes"
+msgstr[0] "{n} دقیقه"
+msgstr[1] "{n} دقیقه"
+
+msgid "{n} selected"
+msgid_plural "{n} selected"
+msgstr[0] "{n} انتخاب‌شده"
+msgstr[1] "{n} انتخاب‌شده"
+
+msgid "{n} song"
+msgid_plural "{n} songs"
+msgstr[0] "{n} آهنگ"
+msgstr[1] "{n} آهنگ"
+
+msgid "{n} song from \"{}\" will play next"
+msgid_plural "{n} songs from \"{}\" will play next"
+msgstr[0] "{n} آهنگ از \"{}\" در نوبت بعد پخش خواهد شد"
+msgstr[1] "{n} آهنگ از \"{}\" در نوبت بعد پخش خواهد شد"
+
+msgid "{n} song on YouTube Music"
+msgid_plural "{n} songs on YouTube Music"
+msgstr[0] "{n} آهنگ در YouTube Music"
+msgstr[1] "{n} آهنگ در YouTube Music"
+
+msgid "{n} song will play next"
+msgid_plural "{n} songs will play next"
+msgstr[0] "{n} آهنگ در نوبت بعد پخش خواهد شد"
+msgstr[1] "{n} آهنگ در نوبت بعد پخش خواهد شد"
+
+msgid "{} (current theme)"
+msgstr "{} (تم کنونی)"
+
+msgid "{} (unavailable)"
+msgstr "{} (در دسترس نیست)"
+
+msgid "{} at {}"
+msgstr "{} در {}"
+
+msgid "{} cannot be played: its stream address is not an internet stream"
+msgstr "{} قابل پخش نیست: نشانی جریان آن یک جریان اینترنتی نیست"
+
+msgid "{} is shown"
+msgstr "{} نمایش داده می‌شود"
+
+msgid "{} kbps"
+msgstr "{} kbps"
+
+msgid "{} s"
+msgstr "{} ث"
+
+msgid "{}: off"
+msgstr "{}: خاموش"
+
+msgid "{}: on"
+msgstr "{}: روشن"
+
+msgid "{}: {} (dark)"
+msgstr "{}: {} (تیره)"
+
+msgid "{}: {} (light)"
+msgstr "{}: {} (روشن)"

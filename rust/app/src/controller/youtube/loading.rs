@@ -9,8 +9,8 @@ const MAX_CONSECUTIVE_FAILURES: usize = 5;
 
 fn failure_message(title: &str, error: &YouTubeError) -> String {
     match error {
-        YouTubeError::NotInstalled => error.user_message(),
-        other => format!("Could not play \"{title}\" from YouTube: {other}"),
+        YouTubeError::NotInstalled => tr!("Install yt-dlp to play YouTube tracks"),
+        other => tr!("Could not play \"{}\" from YouTube: {}", title, other),
     }
 }
 

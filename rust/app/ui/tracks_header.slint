@@ -15,43 +15,43 @@ export component TracksHeader inherits Rectangle {
     header-menu := ContextMenuArea {
         Menu {
             MenuItem {
-                title: "Artist";
+                title: @tr("Artist");
                 checkable: true;
                 checked <=> TracksState.show-artist;
             }
 
             MenuItem {
-                title: "Album";
+                title: @tr("Album");
                 checkable: true;
                 checked <=> TracksState.show-album;
             }
 
             MenuItem {
-                title: "Year";
+                title: @tr("Year");
                 checkable: true;
                 checked <=> TracksState.show-year;
             }
 
             MenuItem {
-                title: "Plays";
+                title: @tr("Plays");
                 checkable: true;
                 checked <=> TracksState.show-plays;
             }
 
             MenuItem {
-                title: "Time";
+                title: @tr("Time");
                 checkable: true;
                 checked <=> TracksState.show-duration;
             }
 
             MenuItem {
-                title: "Favorite";
+                title: @tr("Favorite");
                 checkable: true;
                 checked <=> TracksState.show-favorite;
             }
 
             MenuItem {
-                title: "Rating";
+                title: @tr("Rating");
                 checkable: true;
                 checked <=> TracksState.show-rating;
             }
@@ -72,7 +72,7 @@ export component TracksHeader inherits Rectangle {
             }
 
             HeaderCell {
-                text: "Title";
+                text: @tr("Title");
                 column: "title";
                 column-width <=> TracksState.w-title;
                 context-menu(window-x, window-y) => {
@@ -81,7 +81,7 @@ export component TracksHeader inherits Rectangle {
             }
 
             if TracksState.show-artist: HeaderCell {
-                text: "Artist";
+                text: @tr("Artist");
                 column: "artist";
                 column-width <=> TracksState.w-artist;
                 context-menu(window-x, window-y) => {
@@ -90,7 +90,7 @@ export component TracksHeader inherits Rectangle {
             }
 
             if TracksState.show-album: HeaderCell {
-                text: "Album";
+                text: @tr("Album");
                 column: "album";
                 column-width <=> TracksState.w-album;
                 context-menu(window-x, window-y) => {
@@ -99,7 +99,7 @@ export component TracksHeader inherits Rectangle {
             }
 
             if TracksState.show-year: HeaderCell {
-                text: "Year";
+                text: @tr("Year");
                 column: "year";
                 column-width <=> TracksState.w-year;
                 context-menu(window-x, window-y) => {
@@ -108,7 +108,7 @@ export component TracksHeader inherits Rectangle {
             }
 
             if TracksState.show-plays: HeaderCell {
-                text: "Plays";
+                text: @tr("Plays");
                 column: "plays";
                 column-width <=> TracksState.w-plays;
                 context-menu(window-x, window-y) => {
@@ -117,7 +117,7 @@ export component TracksHeader inherits Rectangle {
             }
 
             if TracksState.show-duration: HeaderCell {
-                text: "Time";
+                text: @tr("Time");
                 column: "duration";
                 column-width <=> TracksState.w-duration;
                 context-menu(window-x, window-y) => {
@@ -126,7 +126,7 @@ export component TracksHeader inherits Rectangle {
             }
 
             if TracksState.show-favorite: HeaderCell {
-                text: "Favorite";
+                text: @tr("Favorite");
                 icon: Icons.heart;
                 column: "favorite";
                 column-width <=> TracksState.w-favorite;
@@ -136,7 +136,7 @@ export component TracksHeader inherits Rectangle {
             }
 
             if TracksState.show-rating: HeaderCell {
-                text: "Rating";
+                text: @tr("Rating");
                 column: "rating";
                 column-width <=> TracksState.w-rating;
                 context-menu(window-x, window-y) => {

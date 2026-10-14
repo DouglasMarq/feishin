@@ -73,7 +73,7 @@ component Rating inherits HorizontalLayout {
         }
 
         TooltipAnchor {
-            text: star-index + 1 == root.value ? "Clear rating" : star-index == 0 ? "Rate 1 star" : "Rate " + (star-index + 1) + " stars";
+            text: star-index + 1 == root.value ? @tr("Clear rating") : @tr("Rate {n} star" | "Rate {n} stars" % (star-index + 1));
             hovered: touch.has-hover;
         }
 
@@ -120,22 +120,22 @@ component TrackHeader inherits Rectangle {
 
         Cell {
             horizontal-stretch: 2;
-            text: "Title";
+            text: @tr("Title");
         }
 
         Cell {
             horizontal-stretch: 1;
-            text: "Artist";
+            text: @tr("Artist");
         }
 
         Cell {
             width: 64px;
-            text: "Plays";
+            text: @tr("Plays");
         }
 
         Cell {
             width: 72px;
-            text: "Time";
+            text: @tr("Time");
         }
     }
 
@@ -164,21 +164,21 @@ component AlbumTrackRowView inherits Rectangle {
     if root.track.disc-header == "": ContextMenuArea {
         Menu {
             MenuItem {
-                title: "Play";
+                title: @tr("Play");
                 activated => {
                     AlbumDetailState.play-track(root.track.id);
                 }
             }
 
             MenuItem {
-                title: "Play next";
+                title: @tr("Play next");
                 activated => {
                     AlbumDetailState.play-next(root.track.id);
                 }
             }
 
             MenuItem {
-                title: "Add to queue";
+                title: @tr("Add to queue");
                 activated => {
                     AlbumDetailState.add-to-queue(root.track.id);
                 }
@@ -187,7 +187,7 @@ component AlbumTrackRowView inherits Rectangle {
             MenuSeparator { }
 
             MenuItem {
-                title: "Add to playlist";
+                title: @tr("Add to playlist");
                 activated => {
                     Actions.add-to-playlist([root.track.id]);
                 }
@@ -202,7 +202,7 @@ component AlbumTrackRowView inherits Rectangle {
             }
 
             MenuItem {
-                title: "Go to artist";
+                title: @tr("Go to artist");
                 enabled: root.track.artist-id != "";
                 activated => {
                     AppState.navigate(Route.artist-detail, root.track.artist-id);
@@ -257,7 +257,7 @@ component AlbumTrackRowView inherits Rectangle {
                             }
 
                             TooltipAnchor {
-                                text: "Play";
+                                text: @tr("Play");
                                 hovered: play-touch.has-hover;
                             }
 
@@ -387,7 +387,7 @@ export component AlbumDetailView inherits Rectangle {
                     horizontal-stretch: 1;
 
                     Text {
-                        text: "ALBUM";
+                        text: @tr("ALBUM");
                         color: Theme.muted;
                         font-size: 11px;
                         font-weight: 600;
@@ -457,7 +457,7 @@ export component AlbumDetailView inherits Rectangle {
                     }
 
                     TooltipAnchor {
-                        text: "Play";
+                        text: @tr("Play");
                         hovered: play-touch.has-hover;
                     }
 
@@ -475,7 +475,7 @@ export component AlbumDetailView inherits Rectangle {
                     height: 40px;
                     icon: Icons.shuffle;
                     icon-size: 24px;
-                    tooltip: "Shuffle";
+                    tooltip: @tr("Shuffle");
                     clicked => {
                         AlbumDetailState.shuffle();
                     }
@@ -488,7 +488,7 @@ export component AlbumDetailView inherits Rectangle {
                     icon: Icons.heart;
                     icon-size: 24px;
                     icon-color: AlbumDetailState.favorite ? Theme.danger : Theme.muted;
-                    tooltip: AlbumDetailState.favorite ? "Remove from favorites" : "Add to favorites";
+                    tooltip: AlbumDetailState.favorite ? @tr("Remove from favorites") : @tr("Add to favorites");
                     clicked => {
                         AlbumDetailState.toggle-favorite();
                     }
@@ -499,7 +499,7 @@ export component AlbumDetailView inherits Rectangle {
                     kind: ShareKind.album;
                     item-id: AlbumDetailState.album-id;
                     item-name: AlbumDetailState.name;
-                    noun: "album";
+                    noun: @tr("album");
                 }
 
                 Rectangle {

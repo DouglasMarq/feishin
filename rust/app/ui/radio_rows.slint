@@ -28,7 +28,7 @@ export global RadioState {
     in property <[RadioRow]> results;
     in property <bool> searching;
     in property <bool> has-more;
-    in property <string> results-message: "Find stations by name, country or tag";
+    in property <string> results-message: @tr("Find stations by name, country or tag");
     in-out property <string> search-name;
     in-out property <string> search-country;
     in-out property <string> search-tag;
@@ -59,7 +59,7 @@ component PlayStationButton inherits IconButton {
     property <bool> playing: RadioState.active && RadioState.playing-id == root.item.id;
     icon: root.playing ? RadioIcons.stop : Icons.play;
     active: root.playing;
-    tooltip: root.playing ? "Stop " + root.item.name : "Play " + root.item.name;
+    tooltip: root.playing ? @tr("Stop {}", root.item.name) : @tr("Play {}", root.item.name);
     clicked => {
         if (root.playing) {
             RadioState.stop();
@@ -85,7 +85,7 @@ component StationActions inherits HorizontalLayout {
         icon: root.item.favorite ? Icons.heart : RadioIcons.heart-outline;
         icon-size: 18px;
         active: root.item.favorite;
-        tooltip: root.item.favorite ? "Saved on this device, click to remove" : "Save to favorites on this device";
+        tooltip: root.item.favorite ? @tr("Saved on this device, click to remove") : @tr("Save to favorites on this device");
         clicked => {
             RadioState.toggle-favorite(root.item.source, root.item.id);
         }
@@ -96,7 +96,7 @@ component StationActions inherits HorizontalLayout {
         icon: RadioIcons.upload;
         icon-size: 18px;
         enabled: !root.item.on-server && !RadioState.busy;
-        tooltip: root.item.on-server ? "Already on the server" : RadioState.busy ? "Saving to the server..." : "Add to the server's stations";
+        tooltip: root.item.on-server ? @tr("Already on the server") : RadioState.busy ? @tr("Saving to the server...") : @tr("Add to the server's stations");
         clicked => {
             RadioState.save-to-server(root.item.source, root.item.id);
         }
@@ -106,7 +106,7 @@ component StationActions inherits HorizontalLayout {
         y: (parent.height - self.height) / 2;
         icon: RadioIcons.edit;
         icon-size: 18px;
-        tooltip: "Edit " + root.item.name;
+        tooltip: @tr("Edit {}", root.item.name);
         clicked => {
             RadioState.edit(root.item.source, root.item.id);
         }
@@ -116,7 +116,7 @@ component StationActions inherits HorizontalLayout {
         y: (parent.height - self.height) / 2;
         icon: Icons.close;
         icon-size: 18px;
-        tooltip: "Delete " + root.item.name + " from the server";
+        tooltip: @tr("Delete {} from the server", root.item.name);
         clicked => {
             RadioState.delete-name = root.item.name;
             RadioState.delete-id = root.item.id;

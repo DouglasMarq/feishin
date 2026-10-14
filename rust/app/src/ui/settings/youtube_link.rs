@@ -1,7 +1,7 @@
 use std::sync::Arc;
 
 use feishin_core::queue::QueueTrack;
-use feishin_youtube::video_id_from_link;
+use feishin_youtube::{YouTubeError, video_id_from_link};
 use slint::ComponentHandle;
 
 use super::view::Shared;
@@ -31,19 +31,19 @@ fn command_for(placement: LinkPlacement, track: QueueTrack) -> Command {
 fn added_message(placement: LinkPlacement, title: &str) -> Option<String> {
     match placement {
         LinkPlacement::PlayNow => None,
-        LinkPlacement::Next => Some(format!("\"{title}\" plays next")),
-        LinkPlacement::Last => Some(format!("Added \"{title}\" to the queue")),
+        LinkPlacement::Next => Some(tr!("\"{}\" plays next", title)),
+        LinkPlacement::Last => Some(tr!("Added \"{}\" to the queue", title)),
     }
 }
 
 fn enqueue_link(window: &AppWindow, ctx: &Context, shared: &Arc<Shared>, placement: LinkPlacement) {
     let state = window.global::<SettingsState>();
     let Some(video_id) = video_id_from_link(&state.get_youtube_link()) else {
-        show_status(window, "Paste a YouTube or YouTube Music link first");
+        show_status(window, &tr!("Paste a YouTube or YouTube Music link first"));
         return;
     };
     let yt_dlp = yt_dlp_for(&youtube_form(&state, &shared.view()));
-    show_status(window, "Looking up the YouTube link...");
+    show_status(window, &tr!("Looking up the YouTube link..."));
     let weak_window = window.as_weak();
     let commands_ctx = ctx.clone();
     ctx.rt.spawn(async move {
@@ -52,12 +52,19 @@ fn enqueue_link(window: &AppWindow, ctx: &Context, shared: &Arc<Shared>, placeme
                 commands_ctx.send(command_for(placement, queue_track_of(&video)));
                 added_message(placement, &video.title)
             }
-            Err(error) => Some(error.user_message()),
+            Err(error) => Some(link_failure_message(&error)),
         };
         if let Some(message) = message {
             on_ui(&weak_window, move |window| show_status(window, &message));
         }
     });
+}
+
+fn link_failure_message(error: &YouTubeError) -> String {
+    match error {
+        YouTubeError::NotInstalled => tr!("Install yt-dlp to play YouTube tracks"),
+        other => tr!("Could not play from YouTube: {}", other),
+    }
 }
 
 pub(super) fn play_link(window: &AppWindow, ctx: &Context, shared: &Arc<Shared>) {

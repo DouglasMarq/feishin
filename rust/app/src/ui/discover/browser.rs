@@ -24,7 +24,7 @@ pub fn open_in_browser(window: &AppWindow, deps: &DiscoverDeps, url: String) {
         };
         tracing::warn!("opening {url} failed: {failure}");
         on_ui(&weak_window, move |window| {
-            show_status(window, &format!("Could not open YouTube Music: {failure}"));
+            show_status(window, &tr!("Could not open YouTube Music: {}", failure));
         });
     });
 }

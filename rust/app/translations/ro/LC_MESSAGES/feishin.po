@@ -1,0 +1,1542 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: ro\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n==0 || (n%100>0 && n%100<20)) ? 1 : 2;\n"
+
+
+msgid "\"{}\" plays next"
+msgstr "„{}” urmează"
+
+msgid "\"{}\" will play next"
+msgstr "„{}” va fi redată în continuare"
+
+msgid "1 star"
+msgstr "1 stea"
+
+msgid "2 stars"
+msgstr "2 stele"
+
+msgid "3 stars"
+msgstr "3 stele"
+
+msgid "4 stars"
+msgstr "4 stele"
+
+msgid "5 stars"
+msgstr "5 stele"
+
+msgid "About {}"
+msgstr "Despre {}"
+
+msgid "Accent color"
+msgstr "Culoare de accent"
+
+msgid "Accent color not changed: {}."
+msgstr "Culoarea de accent nu a fost schimbată: {}."
+
+msgid "Accent color {}"
+msgstr "Culoare de accent {}"
+
+msgid "Accent color {} (selected)"
+msgstr "Culoare de accent {} (selectată)"
+
+msgid "Accent color {} (theme accent in use)"
+msgstr "Culoare de accent {} (se folosește accentul temei)"
+
+msgid "Add a station by its stream URL"
+msgstr "Adaugă un post după URL-ul fluxului"
+
+msgid "Add all songs to the queue"
+msgstr "Adaugă toate melodiile în coadă"
+
+msgid "Add server"
+msgstr "Adaugă server"
+
+msgid "Add station"
+msgstr "Adaugă post"
+
+msgid "Add this link to the end of the queue"
+msgstr "Adaugă acest link la finalul cozii"
+
+msgid "Add this station to the server for every client"
+msgstr "Adaugă acest post pe server pentru toți clienții"
+
+msgid "Add to favorites"
+msgstr "Adaugă la favorite"
+
+msgid "Add to playlist"
+msgstr "Adaugă în playlist"
+
+msgid "Add to queue"
+msgstr "Adaugă în coadă"
+
+msgid "Add to the server's stations"
+msgstr "Adaugă la posturile serverului"
+
+msgid "Add {n} song to playlist"
+msgid_plural "Add {n} songs to playlist"
+msgstr[0] "Adaugă {n} melodie în playlist"
+msgstr[1] "Adaugă {n} melodii în playlist"
+msgstr[2] "Adaugă {n} de melodii în playlist"
+
+msgid "Add {} to the queue"
+msgstr "Adaugă {} în coadă"
+
+msgid "Added \"{}\" to the queue"
+msgstr "„{}” a fost adăugat în coadă"
+
+msgid "Added only {n} song to \"{}\": {}"
+msgid_plural "Added only {n} songs to \"{}\": {}"
+msgstr[0] "S-a adăugat doar {n} melodie în „{}”: {}"
+msgstr[1] "S-au adăugat doar {n} melodii în „{}”: {}"
+msgstr[2] "S-au adăugat doar {n} de melodii în „{}”: {}"
+
+msgid "Added {n} song from \"{}\" to the queue"
+msgid_plural "Added {n} songs from \"{}\" to the queue"
+msgstr[0] "S-a adăugat {n} melodie din „{}” în coadă"
+msgstr[1] "S-au adăugat {n} melodii din „{}” în coadă"
+msgstr[2] "S-au adăugat {n} de melodii din „{}” în coadă"
+
+msgid "Added {n} song to \"{}\""
+msgid_plural "Added {n} songs to \"{}\""
+msgstr[0] "S-a adăugat {n} melodie în „{}”"
+msgstr[1] "S-au adăugat {n} melodii în „{}”"
+msgstr[2] "S-au adăugat {n} de melodii în „{}”"
+
+msgid "Added {n} song to the queue"
+msgid_plural "Added {n} songs to the queue"
+msgstr[0] "S-a adăugat {n} melodie în coadă"
+msgstr[1] "S-au adăugat {n} melodii în coadă"
+msgstr[2] "S-au adăugat {n} de melodii în coadă"
+
+msgid "Adding to \"{}\": {} of {n} song"
+msgid_plural "Adding to \"{}\": {} of {n} songs"
+msgstr[0] "Se adaugă în „{}”: {} din {n} melodie"
+msgstr[1] "Se adaugă în „{}”: {} din {n} melodii"
+msgstr[2] "Se adaugă în „{}”: {} din {n} de melodii"
+
+msgid "ALBUM"
+msgstr "ALBUM"
+
+msgid "Album"
+msgstr "Album"
+
+msgid "album"
+msgstr "albumul"
+
+msgid "Album artist"
+msgstr "Artistul albumului"
+
+msgid "Album count"
+msgstr "Număr de albume"
+
+msgid "Album not found"
+msgstr "Albumul nu a fost găsit"
+
+msgid "Albums"
+msgstr "Albume"
+
+msgid "All genres"
+msgstr "Toate genurile"
+
+msgid "Already at the end"
+msgstr "Ești deja la final"
+
+msgid "Already at the start"
+msgstr "Ești deja la început"
+
+msgid "Already in \"{}\""
+msgstr "Deja în „{}”"
+
+msgid "Already on the server"
+msgstr "Deja pe server"
+
+msgid "Amber"
+msgstr "Chihlimbar"
+
+msgid "Appearance"
+msgstr "Aspect"
+
+msgid "ARTIST"
+msgstr "ARTIST"
+
+msgid "Artist"
+msgstr "Artist"
+
+msgid "Artists"
+msgstr "Artiști"
+
+msgid "Ask the server to transcode down to this bitrate. Applies from the next song."
+msgstr "Cere serverului să transcodeze la acest bitrate. Se aplică de la următoarea melodie."
+
+msgid "Audio device"
+msgstr "Dispozitiv audio"
+
+msgid "Automatic ({})"
+msgstr "Automat ({})"
+
+msgid "Back"
+msgstr "Înapoi"
+
+msgid "Blue"
+msgstr "Albastru"
+
+msgid "by {}"
+msgstr "de {}"
+
+msgid "Cancel"
+msgstr "Anulează"
+
+msgid "Cancel timer"
+msgstr "Anulează temporizatorul"
+
+msgid "Cannot share: {}"
+msgstr "Nu se poate partaja: {}"
+
+msgid "Chart country"
+msgstr "Țara topurilor"
+
+msgid "Charts"
+msgstr "Topuri"
+
+msgid "Choose a browser under Settings, YouTube to sign in for a personalized home"
+msgstr "Alege un browser în Setări, YouTube, pentru a te conecta și a avea o pagină principală personalizată"
+
+msgid "Clear"
+msgstr "Golește"
+
+msgid "Clear filters"
+msgstr "Golește filtrele"
+
+msgid "Clear rating"
+msgstr "Șterge evaluarea"
+
+msgid "Clear the favorites and genre filters"
+msgstr "Golește filtrele de favorite și gen"
+
+msgid "Close"
+msgstr "Închide"
+
+msgid "Close now playing"
+msgstr "Închide redarea curentă"
+
+msgid "Close without saving"
+msgstr "Închide fără a salva"
+
+msgid "Colors used across the whole app."
+msgstr "Culorile folosite în întreaga aplicație."
+
+msgid "Connect to your music server"
+msgstr "Conectează-te la serverul tău de muzică"
+
+msgid "Connecting..."
+msgstr "Se conectează..."
+
+msgid "Could not add to \"{}\": {}"
+msgstr "Nu s-a putut adăuga în „{}”: {}"
+
+msgid "Could not add {} to the server"
+msgstr "Nu s-a putut adăuga {} pe server"
+
+msgid "Could not create a share link: {}"
+msgstr "Nu s-a putut crea un link de partajare: {}"
+
+msgid "Could not create the playlist: {}"
+msgstr "Nu s-a putut crea playlistul: {}"
+
+msgid "Could not delete the playlist: {}"
+msgstr "Nu s-a putut șterge playlistul: {}"
+
+msgid "Could not delete the station"
+msgstr "Nu s-a putut șterge postul"
+
+msgid "Could not load albums: {}"
+msgstr "Nu s-au putut încărca albumele: {}"
+
+msgid "Could not load artists: {}"
+msgstr "Nu s-au putut încărca artiștii: {}"
+
+msgid "Could not load Discover: {}"
+msgstr "Nu s-a putut încărca Descoperă: {}"
+
+msgid "Could not load genres: {}"
+msgstr "Nu s-au putut încărca genurile: {}"
+
+msgid "Could not load it from YouTube Music: {}"
+msgstr "Nu s-a putut încărca din YouTube Music: {}"
+
+msgid "Could not load lyrics"
+msgstr "Nu s-au putut încărca versurile"
+
+msgid "Could not load moods and genres: {}"
+msgstr "Nu s-au putut încărca stările și genurile: {}"
+
+msgid "Could not load more results: {}"
+msgstr "Nu s-au putut încărca mai multe rezultate: {}"
+
+msgid "Could not load new releases: {}"
+msgstr "Nu s-au putut încărca noutățile: {}"
+
+msgid "Could not load playlists: {}"
+msgstr "Nu s-au putut încărca playlisturile: {}"
+
+msgid "Could not load the album: {}"
+msgstr "Nu s-a putut încărca albumul: {}"
+
+msgid "Could not load the artist: {}"
+msgstr "Nu s-a putut încărca artistul: {}"
+
+msgid "Could not load the charts: {}"
+msgstr "Nu s-au putut încărca topurile: {}"
+
+msgid "Could not load the folder: {}"
+msgstr "Nu s-a putut încărca dosarul: {}"
+
+msgid "Could not load the list: {}"
+msgstr "Nu s-a putut încărca lista: {}"
+
+msgid "Could not load the playlist: {}"
+msgstr "Nu s-a putut încărca playlistul: {}"
+
+msgid "Could not load the radio stations: {}"
+msgstr "Nu s-au putut încărca posturile de radio: {}"
+
+msgid "Could not load the selection: {}"
+msgstr "Nu s-a putut încărca selecția: {}"
+
+msgid "Could not load this page: {}"
+msgstr "Nu s-a putut încărca această pagină: {}"
+
+msgid "Could not load tracks: {}"
+msgstr "Nu s-au putut încărca piesele: {}"
+
+msgid "Could not load your home: {}"
+msgstr "Nu s-a putut încărca pagina ta principală: {}"
+
+msgid "Could not open the folder: {}"
+msgstr "Nu s-a putut deschide dosarul: {}"
+
+msgid "Could not open YouTube Music: {}"
+msgstr "Nu s-a putut deschide YouTube Music: {}"
+
+msgid "Could not play \"{}\" from YouTube: {}"
+msgstr "Nu s-a putut reda „{}” de pe YouTube: {}"
+
+msgid "Could not play album: {}"
+msgstr "Nu s-a putut reda albumul: {}"
+
+msgid "Could not play from YouTube: {}"
+msgstr "Nu s-a putut reda de pe YouTube: {}"
+
+msgid "Could not play the album: {}"
+msgstr "Nu s-a putut reda albumul: {}"
+
+msgid "Could not remove songs: {}"
+msgstr "Nu s-au putut elimina melodiile: {}"
+
+msgid "Could not rescan the library: {}"
+msgstr "Nu s-a putut rescana biblioteca: {}"
+
+msgid "Could not set the rating: {}"
+msgstr "Nu s-a putut seta evaluarea: {}"
+
+msgid "Could not sign in to YouTube Music ({}). Showing general picks instead."
+msgstr "Nu s-a putut face conectarea la YouTube Music ({}). Se afișează recomandări generale."
+
+msgid "Could not switch server: {}"
+msgstr "Nu s-a putut schimba serverul: {}"
+
+msgid "Could not update favorite: {}"
+msgstr "Nu s-a putut actualiza favoritul: {}"
+
+msgid "Could not update favorites: {}"
+msgstr "Nu s-au putut actualiza favoritele: {}"
+
+msgid "Could not update rating: {}"
+msgstr "Nu s-a putut actualiza evaluarea: {}"
+
+msgid "Could not update the favorite: {}"
+msgstr "Nu s-a putut actualiza favoritul: {}"
+
+msgid "Country"
+msgstr "Țară"
+
+msgid "Create"
+msgstr "Creează"
+
+msgid "Created \"{}\" with only {n} song: {}"
+msgid_plural "Created \"{}\" with only {n} songs: {}"
+msgstr[0] "„{}” a fost creat cu doar {n} melodie: {}"
+msgstr[1] "„{}” a fost creat cu doar {n} melodii: {}"
+msgstr[2] "„{}” a fost creat cu doar {n} de melodii: {}"
+
+msgid "Created \"{}\" with {n} song"
+msgid_plural "Created \"{}\" with {n} songs"
+msgstr[0] "„{}” a fost creat cu {n} melodie"
+msgstr[1] "„{}” a fost creat cu {n} melodii"
+msgstr[2] "„{}” a fost creat cu {n} de melodii"
+
+msgid "Created playlist \"{}\""
+msgstr "Playlistul „{}” a fost creat"
+
+msgid "Creating a share link..."
+msgstr "Se creează un link de partajare..."
+
+msgid "Creating..."
+msgstr "Se creează..."
+
+msgid "Crossfade"
+msgstr "Tranziție"
+
+msgid "Crossfade could not be changed: {}"
+msgstr "Tranziția nu a putut fi schimbată: {}"
+
+msgid "Crossfade: {}"
+msgstr "Tranziție: {}"
+
+msgid "Current"
+msgstr "Curent"
+
+msgid "Custom accent color: {} (theme accent in use)"
+msgstr "Culoare de accent personalizată: {} (se folosește accentul temei)"
+
+msgid "Custom accent color: {}, press Enter to apply"
+msgstr "Culoare de accent personalizată: {}, apasă Enter pentru a aplica"
+
+msgid "Dark theme"
+msgstr "Temă întunecată"
+
+msgid "DARK THEMES"
+msgstr "TEME ÎNTUNECATE"
+
+msgid "Default country for the Discover charts. Automatic follows your system region."
+msgstr "Țara implicită pentru topurile din Descoperă. Automat urmează regiunea sistemului."
+
+msgid "Default Dark"
+msgstr "Întunecat implicit"
+
+msgid "Default Light"
+msgstr "Luminos implicit"
+
+msgid "Delete"
+msgstr "Șterge"
+
+msgid "Delete \"{}\" from the server? This cannot be undone."
+msgstr "Ștergi „{}” de pe server? Acțiunea nu poate fi anulată."
+
+msgid "Delete \"{}\"? This cannot be undone."
+msgstr "Ștergi „{}”? Acțiunea nu poate fi anulată."
+
+msgid "Delete playlist"
+msgstr "Șterge playlistul"
+
+msgid "Delete station"
+msgstr "Șterge postul"
+
+msgid "Delete {} from the server"
+msgstr "Șterge {} de pe server"
+
+msgid "Deleted playlist \"{}\""
+msgstr "Playlistul „{}” a fost șters"
+
+msgid "Deleting..."
+msgstr "Se șterge..."
+
+msgid "Demo mode: these picks are made up and play from your demo library"
+msgstr "Mod demo: aceste recomandări sunt inventate și se redau din biblioteca demo"
+
+msgid "Directory"
+msgstr "Catalog"
+
+msgid "Disc {}"
+msgstr "Discul {}"
+
+msgid "Discord Rich Presence"
+msgstr "Discord Rich Presence"
+
+msgid "Discover"
+msgstr "Descoperă"
+
+msgid "Discover is open"
+msgstr "Descoperă este deschis"
+
+msgid "Discover new music on YouTube Music"
+msgstr "Descoperă muzică nouă pe YouTube Music"
+
+msgid "Duration"
+msgstr "Durată"
+
+msgid "Edit station"
+msgstr "Editează postul"
+
+msgid "Edit {}"
+msgstr "Editează {}"
+
+msgid "End of current track"
+msgstr "Sfârșitul piesei curente"
+
+msgid "End of track"
+msgstr "Sfârșitul piesei"
+
+msgid "Enter a name for the station"
+msgstr "Introdu un nume pentru post"
+
+msgid "Enter a name, country or tag to search"
+msgstr "Introdu un nume, o țară sau o etichetă pentru căutare"
+
+msgid "Enter a stream URL that starts with http:// or https://"
+msgstr "Introdu un URL de flux care începe cu http:// sau https://"
+
+msgid "Enter the server URL"
+msgstr "Introdu URL-ul serverului"
+
+msgid "Fade the end of each song into the next one. Off keeps gapless playback."
+msgstr "Estompează finalul fiecărei melodii în următoarea. Dezactivat păstrează redarea fără pauze."
+
+msgid "Favorite"
+msgstr "Favorit"
+
+msgid "Favorited"
+msgstr "Favorite"
+
+msgid "Favorites"
+msgstr "Favorite"
+
+msgid "Favorites only: off"
+msgstr "Doar favorite: dezactivat"
+
+msgid "Favorites only: on"
+msgstr "Doar favorite: activat"
+
+msgid "Filter"
+msgstr "Filtrează"
+
+msgid "Filter playlists"
+msgstr "Filtrează playlisturile"
+
+msgid "Find stations by name, country or tag"
+msgstr "Găsește posturi după nume, țară sau etichetă"
+
+msgid "Find stations in the radio-browser.info directory"
+msgstr "Găsește posturi în catalogul radio-browser.info"
+
+msgid "Folder"
+msgstr "Dosar"
+
+msgid "Folders"
+msgstr "Dosare"
+
+msgid "Follow current song"
+msgstr "Urmărește melodia curentă"
+
+msgid "Follow system color scheme"
+msgstr "Urmează schema de culori a sistemului"
+
+msgid "For you"
+msgstr "Pentru tine"
+
+msgid "Forget this server?"
+msgstr "Uiți acest server?"
+
+msgid "Format the server should transcode to. Applies from the next song."
+msgstr "Formatul în care serverul ar trebui să transcodeze. Se aplică de la următoarea melodie."
+
+msgid "Found {n} server in Feishin but it has no usable saved login"
+msgid_plural "Found {n} servers in Feishin but none with a usable saved login"
+msgstr[0] "S-a găsit {n} server în Feishin, dar nu are date de autentificare salvate utilizabile"
+msgstr[1] "S-au găsit {n} servere în Feishin, dar niciunul nu are date de autentificare salvate utilizabile"
+msgstr[2] "S-au găsit {n} de servere în Feishin, dar niciunul nu are date de autentificare salvate utilizabile"
+
+msgid "Gapless playback"
+msgstr "Redare fără pauze"
+
+msgid "Genres"
+msgstr "Genuri"
+
+msgid "Go back to {}"
+msgstr "Înapoi la {}"
+
+msgid "Go to album"
+msgstr "Mergi la album"
+
+msgid "Go to artist"
+msgstr "Mergi la artist"
+
+msgid "Go to {}"
+msgstr "Mergi la {}"
+
+msgid "Green"
+msgstr "Verde"
+
+msgid "Hide lyrics"
+msgstr "Ascunde versurile"
+
+msgid "Hide queue"
+msgstr "Ascunde coada"
+
+msgid "High Contrast Dark"
+msgstr "Contrast ridicat întunecat"
+
+msgid "High Contrast Light"
+msgstr "Contrast ridicat luminos"
+
+msgid "Highlight with the color that comes with the theme."
+msgstr "Evidențiază cu culoarea care vine cu tema."
+
+msgid "Home"
+msgstr "Acasă"
+
+msgid "Homepage (optional)"
+msgstr "Pagină web (opțional)"
+
+msgid "Import from Feishin"
+msgstr "Importă din Feishin"
+
+msgid "Install yt-dlp to play YouTube tracks"
+msgstr "Instalează yt-dlp pentru a reda piese de pe YouTube"
+
+msgid "Integrations"
+msgstr "Integrări"
+
+msgid "Interface"
+msgstr "Interfață"
+
+msgid "Internet radio"
+msgstr "Radio pe internet"
+
+msgid "item"
+msgstr "elementul"
+
+msgid "Jellyfin has no public share links"
+msgstr "Jellyfin nu are linkuri publice de partajare"
+
+msgid "Keep this station in the favorites on this device"
+msgstr "Păstrează acest post la favorite pe acest dispozitiv"
+
+msgid "Language"
+msgstr "Limbă"
+
+msgid "LIBRARY"
+msgstr "BIBLIOTECĂ"
+
+msgid "Library scan finished"
+msgstr "Scanarea bibliotecii s-a încheiat"
+
+msgid "Library scan finished: {n} item"
+msgid_plural "Library scan finished: {n} items"
+msgstr[0] "Scanarea bibliotecii s-a încheiat: {n} element"
+msgstr[1] "Scanarea bibliotecii s-a încheiat: {n} elemente"
+msgstr[2] "Scanarea bibliotecii s-a încheiat: {n} de elemente"
+
+msgid "Light theme"
+msgstr "Temă luminoasă"
+
+msgid "LIGHT THEMES"
+msgstr "TEME LUMINOASE"
+
+msgid "Listening to {}"
+msgstr "Asculți {}"
+
+msgid "LIVE"
+msgstr "LIVE"
+
+msgid "Load more"
+msgstr "Încarcă mai multe"
+
+msgid "Load this section again"
+msgstr "Reîncarcă această secțiune"
+
+msgid "Loading playlists..."
+msgstr "Se încarcă playlisturile..."
+
+msgid "Loading similar songs..."
+msgstr "Se încarcă melodii similare..."
+
+msgid "Loading stations..."
+msgstr "Se încarcă posturile..."
+
+msgid "Loading the next page of stations"
+msgstr "Se încarcă următoarea pagină de posturi"
+
+msgid "Loading..."
+msgstr "Se încarcă..."
+
+msgid "Log out"
+msgstr "Deconectare"
+
+msgid "Looking up the YouTube link..."
+msgstr "Se caută linkul YouTube..."
+
+msgid "Lyrics"
+msgstr "Versuri"
+
+msgid "Lyrics from {}"
+msgstr "Versuri de la {}"
+
+msgid "Lyrics sources"
+msgstr "Surse de versuri"
+
+msgid "Maximum bitrate"
+msgstr "Bitrate maxim"
+
+msgid "Media keys and desktop media controls. Takes effect after a restart."
+msgstr "Taste media și controale media ale desktopului. Intră în vigoare după repornire."
+
+msgid "Moods and genres"
+msgstr "Stări și genuri"
+
+msgid "Most played"
+msgstr "Cele mai redate"
+
+msgid "Move down"
+msgstr "Mută în jos"
+
+msgid "Move up"
+msgstr "Mută în sus"
+
+msgid "MPRIS"
+msgstr "MPRIS"
+
+msgid "Mute"
+msgstr "Dezactivează sunetul"
+
+msgid "Name"
+msgstr "Nume"
+
+msgid "New playlist"
+msgstr "Playlist nou"
+
+msgid "New releases"
+msgstr "Noutăți"
+
+msgid "Next"
+msgstr "Următorul"
+
+msgid "Next is unavailable while a radio station plays"
+msgstr "Următorul nu este disponibil cât timp se redă un post de radio"
+
+msgid "No albums"
+msgstr "Niciun album"
+
+msgid "No albums found"
+msgstr "Nu s-au găsit albume"
+
+msgid "No artists found"
+msgstr "Nu s-au găsit artiști"
+
+msgid "no browser is selected"
+msgstr "niciun browser nu este selectat"
+
+msgid "No favorite albums"
+msgstr "Niciun album favorit"
+
+msgid "No favorite artists"
+msgstr "Niciun artist favorit"
+
+msgid "No favorite tracks"
+msgstr "Nicio piesă favorită"
+
+msgid "No genres found"
+msgstr "Nu s-au găsit genuri"
+
+msgid "No lyrics found"
+msgstr "Nu s-au găsit versuri"
+
+msgid "No playlists found"
+msgstr "Nu s-au găsit playlisturi"
+
+msgid "No playlists yet"
+msgstr "Încă nu există playlisturi"
+
+msgid "No rating"
+msgstr "Fără evaluare"
+
+msgid "No results for \"{}\""
+msgstr "Niciun rezultat pentru „{}”"
+
+msgid "No saved login for {}; remove it and add it again"
+msgstr "Nu există date de autentificare salvate pentru {}; elimină-l și adaugă-l din nou"
+
+msgid "No saved servers."
+msgstr "Niciun server salvat."
+
+msgid "No similar songs found"
+msgstr "Nu s-au găsit melodii similare"
+
+msgid "No songs here"
+msgstr "Nicio melodie aici"
+
+msgid "No stations found"
+msgstr "Nu s-au găsit posturi"
+
+msgid "No stations yet. Add one or find one in the directory."
+msgstr "Încă nu există posturi. Adaugă unul sau găsește unul în catalog."
+
+msgid "No tracks found"
+msgstr "Nu s-au găsit piese"
+
+msgid "None"
+msgstr "Niciunul"
+
+msgid "Normalize loudness using the track or album gain tags."
+msgstr "Normalizează volumul folosind etichetele de câștig ale piesei sau albumului."
+
+msgid "Not connected to a server"
+msgstr "Nu ești conectat la un server"
+
+msgid "Nothing is playing"
+msgstr "Nu se redă nimic"
+
+msgid "Nothing to add yet"
+msgstr "Încă nu este nimic de adăugat"
+
+msgid "Nothing to go back to"
+msgstr "Nu ai unde să te întorci"
+
+msgid "Nothing to play here"
+msgstr "Nimic de redat aici"
+
+msgid "Nothing to play yet"
+msgstr "Încă nu este nimic de redat"
+
+msgid "Nothing to show here right now"
+msgstr "Nimic de afișat aici deocamdată"
+
+msgid "Off"
+msgstr "Dezactivat"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "On the server"
+msgstr "Pe server"
+
+msgid "Only a server admin can rescan the library"
+msgstr "Doar un administrator al serverului poate rescana biblioteca"
+
+msgid "Only loaded tracks can be shared: select fewer tracks or scroll through them first"
+msgstr "Doar piesele încărcate pot fi partajate: selectează mai puține piese sau derulează mai întâi prin ele"
+
+msgid "Open"
+msgstr "Deschide"
+
+msgid "Open in YouTube Music"
+msgstr "Deschide în YouTube Music"
+
+msgid "Open now playing"
+msgstr "Deschide redarea curentă"
+
+msgid "Open radio"
+msgstr "Deschide radioul"
+
+msgid "Open the album \"{}\""
+msgstr "Deschide albumul „{}”"
+
+msgid "Open the playlist \"{}\""
+msgstr "Deschide playlistul „{}”"
+
+msgid "Open the queue panel"
+msgstr "Deschide panoul cozii"
+
+msgid "Open {}"
+msgstr "Deschide {}"
+
+msgid "Original"
+msgstr "Original"
+
+msgid "Output used by the player."
+msgstr "Ieșirea folosită de player."
+
+msgid "Owner"
+msgstr "Proprietar"
+
+msgid "Password"
+msgstr "Parolă"
+
+msgid "Paste a link first"
+msgstr "Lipește mai întâi un link"
+
+msgid "Paste a YouTube or YouTube Music link first"
+msgstr "Lipește mai întâi un link YouTube sau YouTube Music"
+
+msgid "Paste a YouTube or YouTube Music link to try yt-dlp."
+msgstr "Lipește un link YouTube sau YouTube Music pentru a încerca yt-dlp."
+
+msgid "Pause"
+msgstr "Pauză"
+
+msgid "Pause the radio station"
+msgstr "Pune pe pauză postul de radio"
+
+msgid "Personalized with your YouTube Music account from {}"
+msgstr "Personalizat cu contul tău YouTube Music din {}"
+
+msgid "Pick a color, or type one as #rrggbb and press Enter."
+msgstr "Alege o culoare sau scrie una ca #rrggbb și apasă Enter."
+
+msgid "Pick a mood or genre to see its playlists"
+msgstr "Alege o stare sau un gen pentru a-i vedea playlisturile"
+
+msgid "Play"
+msgstr "Redă"
+
+msgid "Play \"{}\" and the rest of this shelf"
+msgstr "Redă „{}” și restul acestui raft"
+
+msgid "Play a YouTube link"
+msgstr "Redă un link YouTube"
+
+msgid "Play album"
+msgstr "Redă albumul"
+
+msgid "Play all"
+msgstr "Redă tot"
+
+msgid "Play all {n} song"
+msgid_plural "Play all {n} songs"
+msgstr[0] "Redă {n} melodie"
+msgstr[1] "Redă toate cele {n} melodii"
+msgstr[2] "Redă toate cele {n} de melodii"
+
+msgid "Play count"
+msgstr "Număr de redări"
+
+msgid "Play every song in {} and its subfolders"
+msgstr "Redă fiecare melodie din {} și din subdosarele sale"
+
+msgid "Play from here"
+msgstr "Redă de aici"
+
+msgid "Play from this song"
+msgstr "Redă de la această melodie"
+
+msgid "Play from {}"
+msgstr "Redă de la {}"
+
+msgid "Play next"
+msgstr "Redă în continuare"
+
+msgid "Play the album"
+msgstr "Redă albumul"
+
+msgid "Play the playlist"
+msgstr "Redă playlistul"
+
+msgid "Play the radio station"
+msgstr "Redă postul de radio"
+
+msgid "Play this link after the current song"
+msgstr "Redă acest link după melodia curentă"
+
+msgid "Play this link now"
+msgstr "Redă acest link acum"
+
+msgid "Play {}"
+msgstr "Redă {}"
+
+msgid "Play {} next"
+msgstr "Redă {} în continuare"
+
+msgid "Play {} with its subfolders"
+msgstr "Redă {} cu subdosarele sale"
+
+msgid "Playback"
+msgstr "Redare"
+
+msgid "Playback failed: {}"
+msgstr "Redarea a eșuat: {}"
+
+msgid "Playing {} failed: {}"
+msgstr "Redarea {} a eșuat: {}"
+
+msgid "PLAYLIST"
+msgstr "PLAYLIST"
+
+msgid "Playlist"
+msgstr "Playlist"
+
+msgid "playlist"
+msgstr "playlistul"
+
+msgid "Playlist name"
+msgstr "Numele playlistului"
+
+msgid "Playlists"
+msgstr "Playlisturi"
+
+msgid "Plays"
+msgstr "Redări"
+
+msgid "Plays YouTube tracks. Leave empty to use yt-dlp from your PATH."
+msgstr "Redă piese de pe YouTube. Lasă gol pentru a folosi yt-dlp din PATH."
+
+msgid "Preload the next song so it starts without a pause."
+msgstr "Preîncarcă următoarea melodie ca să înceapă fără pauză."
+
+msgid "Previous"
+msgstr "Anterioara"
+
+msgid "Previous is unavailable while a radio station plays"
+msgstr "Anterioara nu este disponibilă cât timp se redă un post de radio"
+
+msgid "Purple"
+msgstr "Mov"
+
+msgid "Queue"
+msgstr "Coadă"
+
+msgid "Radio"
+msgstr "Radio"
+
+msgid "Random"
+msgstr "Aleatoriu"
+
+msgid "Rate {n} star"
+msgid_plural "Rate {n} stars"
+msgstr[0] "Evaluează cu {n} stea"
+msgstr[1] "Evaluează cu {n} stele"
+msgstr[2] "Evaluează cu {n} de stele"
+
+msgid "Rating"
+msgstr "Evaluare"
+
+msgid "Recently added"
+msgstr "Adăugate recent"
+
+msgid "Recently played"
+msgstr "Redate recent"
+
+msgid "Red"
+msgstr "Roșu"
+
+msgid "Refresh"
+msgstr "Reîmprospătează"
+
+msgid "Refresh this section"
+msgstr "Reîmprospătează această secțiune"
+
+msgid "Release year"
+msgstr "Anul lansării"
+
+msgid "Remove"
+msgstr "Elimină"
+
+msgid "Remove from favorites"
+msgstr "Elimină de la favorite"
+
+msgid "Remove from playlist"
+msgstr "Elimină din playlist"
+
+msgid "Remove from queue"
+msgstr "Elimină din coadă"
+
+msgid "Removed {n} song from \"{}\""
+msgid_plural "Removed {n} songs from \"{}\""
+msgstr[0] "S-a eliminat {n} melodie din „{}”"
+msgstr[1] "S-au eliminat {n} melodii din „{}”"
+msgstr[2] "S-au eliminat {n} de melodii din „{}”"
+
+msgid "Removing..."
+msgstr "Se elimină..."
+
+msgid "Repeat: all"
+msgstr "Repetare: toate"
+
+msgid "Repeat: off"
+msgstr "Repetare: dezactivată"
+
+msgid "Repeat: one"
+msgstr "Repetare: una"
+
+msgid "ReplayGain"
+msgstr "ReplayGain"
+
+msgid "Report what you play to the server."
+msgstr "Raportează serverului ce asculți."
+
+msgid "Rescan the library for new content"
+msgstr "Rescanează biblioteca pentru conținut nou"
+
+msgid "Resize column"
+msgstr "Redimensionează coloana"
+
+msgid "Save"
+msgstr "Salvează"
+
+msgid "Save on this device"
+msgstr "Salvează pe acest dispozitiv"
+
+msgid "Save the changes on the server"
+msgstr "Salvează modificările pe server"
+
+msgid "Save the changes on this device"
+msgstr "Salvează modificările pe acest dispozitiv"
+
+msgid "Save to favorites on this device"
+msgstr "Salvează la favorite pe acest dispozitiv"
+
+msgid "Save to server"
+msgstr "Salvează pe server"
+
+msgid "Saved on this device"
+msgstr "Salvat pe acest dispozitiv"
+
+msgid "Saved on this device, click to remove"
+msgstr "Salvat pe acest dispozitiv, fă clic pentru a elimina"
+
+msgid "Saving the station to the server..."
+msgstr "Se salvează postul pe server..."
+
+msgid "Saving to the server..."
+msgstr "Se salvează pe server..."
+
+msgid "Saving..."
+msgstr "Se salvează..."
+
+msgid "Scanning the library for new content..."
+msgstr "Se scanează biblioteca pentru conținut nou..."
+
+msgid "Scanning the library: {}"
+msgstr "Se scanează biblioteca: {}"
+
+msgid "Scrobble"
+msgstr "Scrobble"
+
+msgid "Scroll left"
+msgstr "Derulează la stânga"
+
+msgid "Scroll lists and the queue to the song that is playing."
+msgstr "Derulează listele și coada la melodia care se redă."
+
+msgid "Scroll right"
+msgstr "Derulează la dreapta"
+
+msgid "Search"
+msgstr "Caută"
+
+msgid "Search failed: {}"
+msgstr "Căutarea a eșuat: {}"
+
+msgid "SEARCH RESULTS"
+msgstr "REZULTATELE CĂUTĂRII"
+
+msgid "Search songs on YouTube Music"
+msgstr "Caută melodii pe YouTube Music"
+
+msgid "Search songs, albums, artists"
+msgstr "Caută melodii, albume, artiști"
+
+msgid "Search the radio-browser.info directory"
+msgstr "Caută în catalogul radio-browser.info"
+
+msgid "Search your library for songs, albums and artists"
+msgstr "Caută în biblioteca ta melodii, albume și artiști"
+
+msgid "Searched from top to bottom until one has lyrics."
+msgstr "Se caută de sus în jos până când una are versuri."
+
+msgid "Searching for lyrics..."
+msgstr "Se caută versurile..."
+
+msgid "Searching the radio directory failed: {}"
+msgstr "Căutarea în catalogul radio a eșuat: {}"
+
+msgid "Searching the radio-browser.info directory"
+msgstr "Se caută în catalogul radio-browser.info"
+
+msgid "Searching..."
+msgstr "Se caută..."
+
+msgid "Seeking is unavailable for live radio"
+msgstr "Derularea nu este disponibilă pentru radio în direct"
+
+msgid "Server"
+msgstr "Server"
+
+msgid "Server type"
+msgstr "Tipul serverului"
+
+msgid "Servers"
+msgstr "Servere"
+
+msgid "Set rating"
+msgstr "Setează evaluarea"
+
+msgid "Settings"
+msgstr "Setări"
+
+msgid "Share"
+msgstr "Partajează"
+
+msgid "Share ({})"
+msgstr "Partajează ({})"
+
+msgid "Share link copied to the clipboard: {}"
+msgstr "Linkul de partajare a fost copiat în clipboard: {}"
+
+msgid "Share this {}: copy a public link"
+msgstr "Partajează {}: copiază un link public"
+
+msgid "Sharing is unavailable: {}"
+msgstr "Partajarea nu este disponibilă: {}"
+
+msgid "SHOW LESS"
+msgstr "AFIȘEAZĂ MAI PUȚIN"
+
+msgid "Show lyrics"
+msgstr "Afișează versurile"
+
+msgid "SHOW MORE"
+msgstr "AFIȘEAZĂ MAI MULT"
+
+msgid "Show more"
+msgstr "Afișează mai mult"
+
+msgid "Show playlists for {}"
+msgstr "Afișează playlisturile pentru {}"
+
+msgid "Show queue"
+msgstr "Afișează coada"
+
+msgid "Show the current song on your Discord profile."
+msgstr "Afișează melodia curentă în profilul tău Discord."
+
+msgid "Show the next page of stations"
+msgstr "Afișează următoarea pagină de posturi"
+
+msgid "Show the queue next to the library; remembered on the next start."
+msgstr "Afișează coada lângă bibliotecă; este reținută la următoarea pornire."
+
+msgid "Show the server and saved stations"
+msgstr "Afișează posturile serverului și pe cele salvate"
+
+msgid "Show {}"
+msgstr "Afișează {}"
+
+msgid "Showing playlists for {}"
+msgstr "Se afișează playlisturile pentru {}"
+
+msgid "Showing the charts for {}"
+msgstr "Se afișează topurile pentru {}"
+
+msgid "Showing the radio-browser.info directory"
+msgstr "Se afișează catalogul radio-browser.info"
+
+msgid "Showing the server and saved stations"
+msgstr "Se afișează posturile serverului și cele salvate"
+
+msgid "Shuffle"
+msgstr "Amestecă"
+
+msgid "Shuffle every song in {} and its subfolders"
+msgstr "Amestecă toate melodiile din {} și din subdosarele sale"
+
+msgid "Shuffle play"
+msgstr "Redare aleatorie"
+
+msgid "Shuffle: off"
+msgstr "Amestecare: dezactivată"
+
+msgid "Shuffle: on"
+msgstr "Amestecare: activată"
+
+msgid "Sign in"
+msgstr "Conectează-te"
+
+msgid "Sign in with browser"
+msgstr "Conectează-te prin browser"
+
+msgid "Sign out and forget this server's saved login?"
+msgstr "Te deconectezi și uiți datele de autentificare salvate ale acestui server?"
+
+msgid "Sign out and forget this server?"
+msgstr "Te deconectezi și uiți acest server?"
+
+msgid "Similar"
+msgstr "Similare"
+
+msgid "Similar songs come from your server, so YouTube tracks have none"
+msgstr "Melodiile similare vin de la serverul tău, deci piesele de pe YouTube nu au"
+
+msgid "Sleep timer: off"
+msgstr "Temporizator de oprire: dezactivat"
+
+msgid "Sleep timer: {}"
+msgstr "Temporizator de oprire: {}"
+
+msgid "Song count"
+msgstr "Număr de melodii"
+
+msgid "Songs"
+msgstr "Melodii"
+
+msgid "Sort by {}"
+msgstr "Sortează după {}"
+
+msgid "Sort by {}: ascending"
+msgstr "Sortează după {}: crescător"
+
+msgid "Sort by {}: descending"
+msgstr "Sortează după {}: descrescător"
+
+msgid "Sort: ascending"
+msgstr "Sortare: crescătoare"
+
+msgid "Sort: descending"
+msgstr "Sortare: descrescătoare"
+
+msgid "Starting volume, shared with the player bar."
+msgstr "Volumul de pornire, comun cu bara playerului."
+
+msgid "Station data from radio-browser.info"
+msgstr "Date despre posturi de la radio-browser.info"
+
+msgid "Station name"
+msgstr "Numele postului"
+
+msgid "Stations"
+msgstr "Posturi"
+
+msgid "Stop {}"
+msgstr "Oprește {}"
+
+msgid "Stream URL"
+msgstr "URL-ul fluxului"
+
+msgid "Switch"
+msgstr "Comută"
+
+msgid "Switch between a dark and a light theme with the desktop. {}"
+msgstr "Comută între o temă întunecată și una luminoasă odată cu desktopul. {}"
+
+msgid "Switch to grid view"
+msgstr "Comută la vizualizarea grilă"
+
+msgid "Switch to list view"
+msgstr "Comută la vizualizarea listă"
+
+msgid "System default"
+msgstr "Implicit sistem"
+
+msgid "System default follows the language of the desktop."
+msgstr "Implicit sistem urmează limba desktopului."
+
+msgid "Tag, for example jazz"
+msgstr "Etichetă, de exemplu jazz"
+
+msgid "The desktop currently prefers dark."
+msgstr "Desktopul preferă în prezent tema întunecată."
+
+msgid "The desktop currently prefers light."
+msgstr "Desktopul preferă în prezent tema luminoasă."
+
+msgid "The desktop has no preference, so the dark theme is used."
+msgstr "Desktopul nu are nicio preferință, așa că se folosește tema întunecată."
+
+msgid "The library scan is still running on the server"
+msgstr "Scanarea bibliotecii încă rulează pe server"
+
+msgid "The queue is empty"
+msgstr "Coada este goală"
+
+msgid "The queue is incomplete: loading the rest of the list failed ({})"
+msgstr "Coada este incompletă: încărcarea restului listei a eșuat ({})"
+
+msgid "The radio directory could not be reached"
+msgstr "Catalogul radio nu a putut fi accesat"
+
+msgid "The radio station stopped streaming"
+msgstr "Postul de radio a oprit transmisia"
+
+msgid "The server refused the station: {}"
+msgstr "Serverul a refuzat postul: {}"
+
+msgid "Theme"
+msgstr "Temă"
+
+msgid "There is nothing to play in this list"
+msgstr "Nu este nimic de redat în această listă"
+
+msgid "This Discover page does not exist"
+msgstr "Această pagină Descoperă nu există"
+
+msgid "This folder is empty"
+msgstr "Acest dosar este gol"
+
+msgid "This playlist is empty"
+msgstr "Acest playlist este gol"
+
+msgid "This server has no internet radio. Stations you add are saved on this device."
+msgstr "Acest server nu are radio pe internet. Posturile pe care le adaugi sunt salvate pe acest dispozitiv."
+
+msgid "this server has no public share links"
+msgstr "acest server nu are linkuri publice de partajare"
+
+msgid "Time"
+msgstr "Durată"
+
+msgid "Title"
+msgstr "Titlu"
+
+msgid "Top songs"
+msgstr "Melodii de top"
+
+msgid "Track"
+msgstr "Piesă"
+
+msgid "Tracks"
+msgstr "Piese"
+
+msgid "Transcode format"
+msgstr "Format de transcodare"
+
+msgid "Try again"
+msgstr "Încearcă din nou"
+
+msgid "Turn off the theme accent color to pick your own."
+msgstr "Dezactivează culoarea de accent a temei pentru a o alege pe a ta."
+
+msgid "Unmute"
+msgstr "Activează sunetul"
+
+msgid "Up next"
+msgstr "Urmează"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "Use the theme accent color"
+msgstr "Folosește culoarea de accent a temei"
+
+msgid "Use {}"
+msgstr "Folosește {}"
+
+msgid "Used while the desktop prefers dark."
+msgstr "Folosită cât timp desktopul preferă tema întunecată."
+
+msgid "Used while the desktop prefers light."
+msgstr "Folosită cât timp desktopul preferă tema luminoasă."
+
+msgid "Username"
+msgstr "Nume de utilizator"
+
+msgid "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Feishin deletes right after reading."
+msgstr "Folosește sesiunea ta YouTube din acest browser pentru o pagină Descoperă personalizată și audio Premium. yt-dlp copiază cookie-urile într-un fișier temporar privat pe care Feishin îl șterge imediat după citire."
+
+msgid "Volume"
+msgstr "Volum"
+
+msgid "Volume {}%"
+msgstr "Volum {}%"
+
+msgid "XDG_RUNTIME_DIR is not set, so there is no private place for the cookies"
+msgstr "XDG_RUNTIME_DIR nu este setat, deci nu există un loc privat pentru cookie-uri"
+
+msgid "Year"
+msgstr "An"
+
+msgid "You are here: {}"
+msgstr "Te afli aici: {}"
+
+msgid "Your user is not allowed to share on this server"
+msgstr "Utilizatorul tău nu are permisiunea de a partaja pe acest server"
+
+msgid "YouTube"
+msgstr "YouTube"
+
+msgid "YouTube albums are not in your library"
+msgstr "Albumele YouTube nu sunt în biblioteca ta"
+
+msgid "YouTube artists are not in your library"
+msgstr "Artiștii YouTube nu sunt în biblioteca ta"
+
+msgid "yt-dlp program"
+msgstr "Programul yt-dlp"
+
+msgid "{n} album"
+msgid_plural "{n} albums"
+msgstr[0] "{n} album"
+msgstr[1] "{n} albume"
+msgstr[2] "{n} de albume"
+
+msgid "{n} folder"
+msgid_plural "{n} folders"
+msgstr[0] "{n} dosar"
+msgstr[1] "{n} dosare"
+msgstr[2] "{n} de dosare"
+
+msgid "{n} item so far"
+msgid_plural "{n} items so far"
+msgstr[0] "{n} element până acum"
+msgstr[1] "{n} elemente până acum"
+msgstr[2] "{n} de elemente până acum"
+
+msgid "{n} minute"
+msgid_plural "{n} minutes"
+msgstr[0] "{n} minut"
+msgstr[1] "{n} minute"
+msgstr[2] "{n} de minute"
+
+msgid "{n} selected"
+msgid_plural "{n} selected"
+msgstr[0] "{n} selectat"
+msgstr[1] "{n} selectate"
+msgstr[2] "{n} selectate"
+
+msgid "{n} song"
+msgid_plural "{n} songs"
+msgstr[0] "{n} melodie"
+msgstr[1] "{n} melodii"
+msgstr[2] "{n} de melodii"
+
+msgid "{n} song from \"{}\" will play next"
+msgid_plural "{n} songs from \"{}\" will play next"
+msgstr[0] "{n} melodie din „{}” va fi redată în continuare"
+msgstr[1] "{n} melodii din „{}” vor fi redate în continuare"
+msgstr[2] "{n} de melodii din „{}” vor fi redate în continuare"
+
+msgid "{n} song on YouTube Music"
+msgid_plural "{n} songs on YouTube Music"
+msgstr[0] "{n} melodie pe YouTube Music"
+msgstr[1] "{n} melodii pe YouTube Music"
+msgstr[2] "{n} de melodii pe YouTube Music"
+
+msgid "{n} song will play next"
+msgid_plural "{n} songs will play next"
+msgstr[0] "{n} melodie va fi redată în continuare"
+msgstr[1] "{n} melodii vor fi redate în continuare"
+msgstr[2] "{n} de melodii vor fi redate în continuare"
+
+msgid "{} (current theme)"
+msgstr "{} (tema curentă)"
+
+msgid "{} (unavailable)"
+msgstr "{} (indisponibil)"
+
+msgid "{} at {}"
+msgstr "{} la {}"
+
+msgid "{} cannot be played: its stream address is not an internet stream"
+msgstr "{} nu poate fi redat: adresa fluxului nu este un flux de internet"
+
+msgid "{} is shown"
+msgstr "{} este afișat"
+
+msgid "{} kbps"
+msgstr "{} kbps"
+
+msgid "{} s"
+msgstr "{} s"
+
+msgid "{}: off"
+msgstr "{}: dezactivat"
+
+msgid "{}: on"
+msgstr "{}: activat"
+
+msgid "{}: {} (dark)"
+msgstr "{}: {} (întunecată)"
+
+msgid "{}: {} (light)"
+msgstr "{}: {} (luminoasă)"

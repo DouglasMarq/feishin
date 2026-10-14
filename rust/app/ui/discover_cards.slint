@@ -42,7 +42,7 @@ export component DiscoverCardView inherits Rectangle {
     in property <bool> on-screen;
     property <bool> is-song: root.card.kind == DiscoverCardKind.song;
     property <bool> wants-cover: root.on-screen && !root.card.has-cover && root.card.can-load-cover;
-    property <string> kind-name: root.card.kind == DiscoverCardKind.album ? "album" : "playlist";
+    property <bool> is-album: root.card.kind == DiscoverCardKind.album;
     width: 160px;
     height: 214px;
 
@@ -74,28 +74,28 @@ export component DiscoverCardView inherits Rectangle {
     menu := ContextMenuArea {
         Menu {
             if !root.is-song: MenuItem {
-                title: "Open";
+                title: @tr("Open");
                 activated => {
                     AppState.navigate(Route.discover, root.card.id);
                 }
             }
 
             MenuItem {
-                title: "Play";
+                title: @tr("Play");
                 activated => {
                     DiscoverState.play-card(root.shelf-index, root.card-index);
                 }
             }
 
             MenuItem {
-                title: "Play next";
+                title: @tr("Play next");
                 activated => {
                     DiscoverState.play-card-next(root.shelf-index, root.card-index);
                 }
             }
 
             MenuItem {
-                title: "Add to queue";
+                title: @tr("Add to queue");
                 activated => {
                     DiscoverState.queue-card(root.shelf-index, root.card-index);
                 }
@@ -104,7 +104,7 @@ export component DiscoverCardView inherits Rectangle {
             MenuSeparator { }
 
             MenuItem {
-                title: "Open in YouTube Music";
+                title: @tr("Open in YouTube Music");
                 activated => {
                     DiscoverState.open-card-in-browser(root.shelf-index, root.card-index);
                 }
@@ -125,7 +125,7 @@ export component DiscoverCardView inherits Rectangle {
     }
 
     TooltipAnchor {
-        text: root.is-song ? "Play \"" + root.card.title + "\" and the rest of this shelf" : "Open the " + root.kind-name + " \"" + root.card.title + "\"";
+        text: root.is-song ? @tr("Play \"{}\" and the rest of this shelf", root.card.title) : root.is-album ? @tr("Open the album \"{}\"", root.card.title) : @tr("Open the playlist \"{}\"", root.card.title);
         hovered: card-touch.has-hover && !play-button.hovered;
     }
 
@@ -159,7 +159,7 @@ export component DiscoverCardView inherits Rectangle {
             x: parent.width - self.width - 10px;
             y: parent.height - self.height - 10px;
             shown: card-touch.has-hover;
-            tooltip: root.is-song ? "Play from here" : "Play the " + root.kind-name;
+            tooltip: root.is-song ? @tr("Play from here") : root.is-album ? @tr("Play the album") : @tr("Play the playlist");
             clicked => {
                 if (root.is-song) {
                     DiscoverState.play-from-card(root.shelf-index, root.card-index);
@@ -272,7 +272,7 @@ export component DiscoverShelfView inherits VerticalLayout {
         IconButton {
             icon: DiscoverIcons.left;
             enabled: strip.content-x < 0;
-            tooltip: self.enabled ? "Scroll left" : "Already at the start";
+            tooltip: self.enabled ? @tr("Scroll left") : @tr("Already at the start");
             clicked => {
                 strip.content-x = min(0px, strip.content-x + strip.width * 0.8);
             }
@@ -281,7 +281,7 @@ export component DiscoverShelfView inherits VerticalLayout {
         IconButton {
             icon: DiscoverIcons.right;
             enabled: -strip.content-x < root.max-scroll;
-            tooltip: self.enabled ? "Scroll right" : "Already at the end";
+            tooltip: self.enabled ? @tr("Scroll right") : @tr("Already at the end");
             clicked => {
                 strip.content-x = max(-root.max-scroll, strip.content-x - strip.width * 0.8);
             }
@@ -338,7 +338,7 @@ export component MoodGrid inherits Rectangle {
         }
 
         TooltipAnchor {
-            text: mood-index == root.selected ? "Showing playlists for " + mood : "Show playlists for " + mood;
+            text: mood-index == root.selected ? @tr("Showing playlists for {}", mood) : @tr("Show playlists for {}", mood);
             hovered: mood-touch.has-hover;
         }
 

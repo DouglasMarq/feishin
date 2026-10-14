@@ -70,7 +70,7 @@ fn fetch_feed(
 fn apply_feed(window: &AppWindow, request: FeedRequest, result: Result<DiscoverFeed, String>) {
     let message = match &result {
         Ok(feed) => feed.notice.is_warning().then(|| feed.notice.message()),
-        Err(error) => Some(format!("Could not load Discover: {error}")),
+        Err(error) => Some(tr!("Could not load Discover: {}", error)),
     };
     let wanted = with_discover(window, |model| {
         let mut sections = model.sections.borrow_mut();

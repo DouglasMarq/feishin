@@ -1,0 +1,1520 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: eu\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+
+msgid "\"{}\" plays next"
+msgstr "\"{}\" hurrengoa da"
+
+msgid "\"{}\" will play next"
+msgstr "\"{}\" hurrengo erreproduzituko da"
+
+msgid "1 star"
+msgstr "Izar 1"
+
+msgid "2 stars"
+msgstr "2 izar"
+
+msgid "3 stars"
+msgstr "3 izar"
+
+msgid "4 stars"
+msgstr "4 izar"
+
+msgid "5 stars"
+msgstr "5 izar"
+
+msgid "About {}"
+msgstr "{0}-(r)i buruz"
+
+msgid "Accent color"
+msgstr "Azentu-kolorea"
+
+msgid "Accent color not changed: {}."
+msgstr "Ez da azentu-kolorea aldatu: {}."
+
+msgid "Accent color {}"
+msgstr "Azentu-kolorea: {}"
+
+msgid "Accent color {} (selected)"
+msgstr "Azentu-kolorea: {} (hautatuta)"
+
+msgid "Accent color {} (theme accent in use)"
+msgstr "Azentu-kolorea: {} (gaiaren azentua erabiltzen ari da)"
+
+msgid "Add a station by its stream URL"
+msgstr "Gehitu irrati bat bere jarioaren URLa erabiliz"
+
+msgid "Add all songs to the queue"
+msgstr "Gehitu abesti guztiak ilarara"
+
+msgid "Add server"
+msgstr "Zerbitzaria gehitu"
+
+msgid "Add station"
+msgstr "Gehitu irratia"
+
+msgid "Add this link to the end of the queue"
+msgstr "Gehitu esteka hau ilararen amaieran"
+
+msgid "Add this station to the server for every client"
+msgstr "Gehitu irrati hau zerbitzarira bezero guztientzat"
+
+msgid "Add to favorites"
+msgstr "Gehitu gogokoetara"
+
+msgid "Add to playlist"
+msgstr "Gehitu erreprodukzio-zerrendara"
+
+msgid "Add to queue"
+msgstr "Gehitu ilarara"
+
+msgid "Add to the server's stations"
+msgstr "Gehitu zerbitzariaren irratietara"
+
+msgid "Add {n} song to playlist"
+msgid_plural "Add {n} songs to playlist"
+msgstr[0] "Gehitu {n} abesti erreprodukzio-zerrendara"
+msgstr[1] "Gehitu {n} abesti erreprodukzio-zerrendara"
+
+msgid "Add {} to the queue"
+msgstr "Gehitu {} ilarara"
+
+msgid "Added \"{}\" to the queue"
+msgstr "\"{}\" ilarara gehitu da"
+
+msgid "Added only {n} song to \"{}\": {}"
+msgid_plural "Added only {n} songs to \"{}\": {}"
+msgstr[0] "{n} abesti bakarrik gehitu da \"{}\" zerrendara: {}"
+msgstr[1] "{n} abesti bakarrik gehitu dira \"{}\" zerrendara: {}"
+
+msgid "Added {n} song from \"{}\" to the queue"
+msgid_plural "Added {n} songs from \"{}\" to the queue"
+msgstr[0] "\"{}\": {n} abesti gehitu da ilarara"
+msgstr[1] "\"{}\": {n} abesti gehitu dira ilarara"
+
+msgid "Added {n} song to \"{}\""
+msgid_plural "Added {n} songs to \"{}\""
+msgstr[0] "{n} abesti gehitu da \"{}\" zerrendara"
+msgstr[1] "{n} abesti gehitu dira \"{}\" zerrendara"
+
+msgid "Added {n} song to the queue"
+msgid_plural "Added {n} songs to the queue"
+msgstr[0] "{n} abesti gehitu da ilarara"
+msgstr[1] "{n} abesti gehitu dira ilarara"
+
+msgid "Adding to \"{}\": {} of {n} song"
+msgid_plural "Adding to \"{}\": {} of {n} songs"
+msgstr[0] "\"{}\" zerrendara gehitzen: {}/{n} abesti"
+msgstr[1] "\"{}\" zerrendara gehitzen: {}/{n} abesti"
+
+msgid "ALBUM"
+msgstr "ALBUMA"
+
+msgid "Album"
+msgstr "Albuma"
+
+msgid "album"
+msgstr "albuma"
+
+msgid "Album artist"
+msgstr "Albumeko artista"
+
+msgid "Album count"
+msgstr "Album kopurua"
+
+msgid "Album not found"
+msgstr "Ez da albuma aurkitu"
+
+msgid "Albums"
+msgstr "Albumak"
+
+msgid "All genres"
+msgstr "Genero guztiak"
+
+msgid "Already at the end"
+msgstr "Dagoeneko amaieran zaude"
+
+msgid "Already at the start"
+msgstr "Dagoeneko hasieran zaude"
+
+msgid "Already in \"{}\""
+msgstr "Dagoeneko \"{}\" zerrendan dago"
+
+msgid "Already on the server"
+msgstr "Dagoeneko zerbitzarian dago"
+
+msgid "Amber"
+msgstr "Anbarra"
+
+msgid "Appearance"
+msgstr "Itxura"
+
+msgid "ARTIST"
+msgstr "ARTISTA"
+
+msgid "Artist"
+msgstr "Artista"
+
+msgid "Artists"
+msgstr "Artistak"
+
+msgid "Ask the server to transcode down to this bitrate. Applies from the next song."
+msgstr "Eskatu zerbitzariari bit-tasa honetara arte transkodetzeko. Hurrengo abestitik aurrera aplikatzen da."
+
+msgid "Audio device"
+msgstr "Audio gailua"
+
+msgid "Automatic ({})"
+msgstr "Automatikoa ({})"
+
+msgid "Back"
+msgstr "Atzera"
+
+msgid "Blue"
+msgstr "Urdina"
+
+msgid "by {}"
+msgstr "egilea: {}"
+
+msgid "Cancel"
+msgstr "Utzi"
+
+msgid "Cancel timer"
+msgstr "Utzi tenporizadorea"
+
+msgid "Cannot share: {}"
+msgstr "Ezin da partekatu: {}"
+
+msgid "Chart country"
+msgstr "Sailkapenen herrialdea"
+
+msgid "Charts"
+msgstr "Sailkapenak"
+
+msgid "Choose a browser under Settings, YouTube to sign in for a personalized home"
+msgstr "Aukeratu nabigatzaile bat Ezarpenak, YouTube atalean saioa hasteko eta hasiera pertsonalizatua izateko"
+
+msgid "Clear"
+msgstr "Garbitu"
+
+msgid "Clear filters"
+msgstr "Garbitu iragazkiak"
+
+msgid "Clear rating"
+msgstr "Kendu balorazioa"
+
+msgid "Clear the favorites and genre filters"
+msgstr "Garbitu gogokoen eta generoen iragazkiak"
+
+msgid "Close"
+msgstr "Itxi"
+
+msgid "Close now playing"
+msgstr "Itxi \"Orain erreproduzitzen\""
+
+msgid "Close without saving"
+msgstr "Itxi gorde gabe"
+
+msgid "Colors used across the whole app."
+msgstr "Aplikazio osoan erabilitako koloreak."
+
+msgid "Connect to your music server"
+msgstr "Konektatu zure musika-zerbitzarira"
+
+msgid "Connecting..."
+msgstr "Konektatzen..."
+
+msgid "Could not add to \"{}\": {}"
+msgstr "Ezin izan da \"{}\" zerrendara gehitu: {}"
+
+msgid "Could not add {} to the server"
+msgstr "Ezin izan da {} zerbitzarira gehitu"
+
+msgid "Could not create a share link: {}"
+msgstr "Ezin izan da partekatzeko esteka sortu: {}"
+
+msgid "Could not create the playlist: {}"
+msgstr "Ezin izan da erreprodukzio-zerrenda sortu: {}"
+
+msgid "Could not delete the playlist: {}"
+msgstr "Ezin izan da erreprodukzio-zerrenda ezabatu: {}"
+
+msgid "Could not delete the station"
+msgstr "Ezin izan da irratia ezabatu"
+
+msgid "Could not load albums: {}"
+msgstr "Ezin izan dira albumak kargatu: {}"
+
+msgid "Could not load artists: {}"
+msgstr "Ezin izan dira artistak kargatu: {}"
+
+msgid "Could not load Discover: {}"
+msgstr "Ezin izan da Aurkitu kargatu: {}"
+
+msgid "Could not load genres: {}"
+msgstr "Ezin izan dira generoak kargatu: {}"
+
+msgid "Could not load it from YouTube Music: {}"
+msgstr "Ezin izan da YouTube Music-etik kargatu: {}"
+
+msgid "Could not load lyrics"
+msgstr "Ezin izan dira letrak kargatu"
+
+msgid "Could not load moods and genres: {}"
+msgstr "Ezin izan dira aldarteak eta generoak kargatu: {}"
+
+msgid "Could not load more results: {}"
+msgstr "Ezin izan dira emaitza gehiago kargatu: {}"
+
+msgid "Could not load new releases: {}"
+msgstr "Ezin izan dira argitalpen berriak kargatu: {}"
+
+msgid "Could not load playlists: {}"
+msgstr "Ezin izan dira erreprodukzio-zerrendak kargatu: {}"
+
+msgid "Could not load the album: {}"
+msgstr "Ezin izan da albuma kargatu: {}"
+
+msgid "Could not load the artist: {}"
+msgstr "Ezin izan da artista kargatu: {}"
+
+msgid "Could not load the charts: {}"
+msgstr "Ezin izan dira sailkapenak kargatu: {}"
+
+msgid "Could not load the folder: {}"
+msgstr "Ezin izan da karpeta kargatu: {}"
+
+msgid "Could not load the list: {}"
+msgstr "Ezin izan da zerrenda kargatu: {}"
+
+msgid "Could not load the playlist: {}"
+msgstr "Ezin izan da erreprodukzio-zerrenda kargatu: {}"
+
+msgid "Could not load the radio stations: {}"
+msgstr "Ezin izan dira irratiak kargatu: {}"
+
+msgid "Could not load the selection: {}"
+msgstr "Ezin izan da hautapena kargatu: {}"
+
+msgid "Could not load this page: {}"
+msgstr "Ezin izan da orri hau kargatu: {}"
+
+msgid "Could not load tracks: {}"
+msgstr "Ezin izan dira pistak kargatu: {}"
+
+msgid "Could not load your home: {}"
+msgstr "Ezin izan da zure hasiera kargatu: {}"
+
+msgid "Could not open the folder: {}"
+msgstr "Ezin izan da karpeta ireki: {}"
+
+msgid "Could not open YouTube Music: {}"
+msgstr "Ezin izan da YouTube Music ireki: {}"
+
+msgid "Could not play \"{}\" from YouTube: {}"
+msgstr "Ezin izan da \"{}\" YouTube-tik erreproduzitu: {}"
+
+msgid "Could not play album: {}"
+msgstr "Ezin izan da albuma erreproduzitu: {}"
+
+msgid "Could not play from YouTube: {}"
+msgstr "Ezin izan da YouTube-tik erreproduzitu: {}"
+
+msgid "Could not play the album: {}"
+msgstr "Ezin izan da albuma erreproduzitu: {}"
+
+msgid "Could not remove songs: {}"
+msgstr "Ezin izan dira abestiak kendu: {}"
+
+msgid "Could not rescan the library: {}"
+msgstr "Ezin izan da liburutegia berriro eskaneatu: {}"
+
+msgid "Could not set the rating: {}"
+msgstr "Ezin izan da balorazioa ezarri: {}"
+
+msgid "Could not sign in to YouTube Music ({}). Showing general picks instead."
+msgstr "Ezin izan da YouTube Music-en saioa hasi ({}). Hautaketa orokorrak erakusten dira horren ordez."
+
+msgid "Could not switch server: {}"
+msgstr "Ezin izan da zerbitzariz aldatu: {}"
+
+msgid "Could not update favorite: {}"
+msgstr "Ezin izan da gogokoa eguneratu: {}"
+
+msgid "Could not update favorites: {}"
+msgstr "Ezin izan dira gogokoak eguneratu: {}"
+
+msgid "Could not update rating: {}"
+msgstr "Ezin izan da balorazioa eguneratu: {}"
+
+msgid "Could not update the favorite: {}"
+msgstr "Ezin izan da gogokoa eguneratu: {}"
+
+msgid "Country"
+msgstr "Herrialdea"
+
+msgid "Create"
+msgstr "Sortu"
+
+msgid "Created \"{}\" with only {n} song: {}"
+msgid_plural "Created \"{}\" with only {n} songs: {}"
+msgstr[0] "\"{}\" sortu da, {n} abesti bakarrik duela: {}"
+msgstr[1] "\"{}\" sortu da, {n} abesti bakarrik dituela: {}"
+
+msgid "Created \"{}\" with {n} song"
+msgid_plural "Created \"{}\" with {n} songs"
+msgstr[0] "\"{}\" sortu da, {n} abestirekin"
+msgstr[1] "\"{}\" sortu da, {n} abestirekin"
+
+msgid "Created playlist \"{}\""
+msgstr "\"{}\" erreprodukzio-zerrenda sortu da"
+
+msgid "Creating a share link..."
+msgstr "Partekatzeko esteka sortzen..."
+
+msgid "Creating..."
+msgstr "Sortzen..."
+
+msgid "Crossfade"
+msgstr "Iraungitze gurutzatua"
+
+msgid "Crossfade could not be changed: {}"
+msgstr "Ezin izan da iraungitze gurutzatua aldatu: {}"
+
+msgid "Crossfade: {}"
+msgstr "Iraungitze gurutzatua: {}"
+
+msgid "Current"
+msgstr "Unekoa"
+
+msgid "Custom accent color: {} (theme accent in use)"
+msgstr "Azentu-kolore pertsonalizatua: {} (gaiaren azentua erabiltzen ari da)"
+
+msgid "Custom accent color: {}, press Enter to apply"
+msgstr "Azentu-kolore pertsonalizatua: {}, sakatu Enter aplikatzeko"
+
+msgid "Dark theme"
+msgstr "Gai iluna"
+
+msgid "DARK THEMES"
+msgstr "GAI ILUNAK"
+
+msgid "Default country for the Discover charts. Automatic follows your system region."
+msgstr "Aurkitu ataleko sailkapenen herrialde lehenetsia. Automatikoak sistemaren eskualdeari jarraitzen dio."
+
+msgid "Default Dark"
+msgstr "Ilun lehenetsia"
+
+msgid "Default Light"
+msgstr "Argi lehenetsia"
+
+msgid "Delete"
+msgstr "Ezabatu"
+
+msgid "Delete \"{}\" from the server? This cannot be undone."
+msgstr "\"{}\" zerbitzaritik ezabatu? Ezin da desegin."
+
+msgid "Delete \"{}\"? This cannot be undone."
+msgstr "\"{}\" ezabatu? Ezin da desegin."
+
+msgid "Delete playlist"
+msgstr "Ezabatu erreprodukzio-zerrenda"
+
+msgid "Delete station"
+msgstr "Ezabatu irratia"
+
+msgid "Delete {} from the server"
+msgstr "Ezabatu {} zerbitzaritik"
+
+msgid "Deleted playlist \"{}\""
+msgstr "\"{}\" erreprodukzio-zerrenda ezabatu da"
+
+msgid "Deleting..."
+msgstr "Ezabatzen..."
+
+msgid "Demo mode: these picks are made up and play from your demo library"
+msgstr "Demo modua: hautaketa hauek asmatuak dira eta zure demo-liburutegitik erreproduzitzen dira"
+
+msgid "Directory"
+msgstr "Direktorioa"
+
+msgid "Disc {}"
+msgstr "{}. diskoa"
+
+msgid "Discord Rich Presence"
+msgstr "Discord Rich Presence"
+
+msgid "Discover"
+msgstr "Aurkitu"
+
+msgid "Discover is open"
+msgstr "Aurkitu irekita dago"
+
+msgid "Discover new music on YouTube Music"
+msgstr "Aurkitu musika berria YouTube Music-en"
+
+msgid "Duration"
+msgstr "Iraupena"
+
+msgid "Edit station"
+msgstr "Editatu irratia"
+
+msgid "Edit {}"
+msgstr "Editatu {}"
+
+msgid "End of current track"
+msgstr "Uneko pistaren amaiera"
+
+msgid "End of track"
+msgstr "Pistaren amaiera"
+
+msgid "Enter a name for the station"
+msgstr "Idatzi irratiaren izena"
+
+msgid "Enter a name, country or tag to search"
+msgstr "Idatzi izen, herrialde edo etiketa bat bilatzeko"
+
+msgid "Enter a stream URL that starts with http:// or https://"
+msgstr "Idatzi http:// edo https:// aurrizkiarekin hasten den jario-URL bat"
+
+msgid "Enter the server URL"
+msgstr "Idatzi zerbitzariaren URLa"
+
+msgid "Fade the end of each song into the next one. Off keeps gapless playback."
+msgstr "Abesti bakoitzaren amaiera hurrengoarekin nahasten du. Desaktibatuta, etenik gabeko erreprodukzioa mantentzen da."
+
+msgid "Favorite"
+msgstr "Gogokoa"
+
+msgid "Favorited"
+msgstr "Gogoko gisa markatua"
+
+msgid "Favorites"
+msgstr "Gogokoak"
+
+msgid "Favorites only: off"
+msgstr "Gogokoak soilik: desaktibatuta"
+
+msgid "Favorites only: on"
+msgstr "Gogokoak soilik: aktibatuta"
+
+msgid "Filter"
+msgstr "Iragazkia"
+
+msgid "Filter playlists"
+msgstr "Iragazi erreprodukzio-zerrendak"
+
+msgid "Find stations by name, country or tag"
+msgstr "Bilatu irratiak izenaren, herrialdearen edo etiketaren arabera"
+
+msgid "Find stations in the radio-browser.info directory"
+msgstr "Bilatu irratiak radio-browser.info direktorioan"
+
+msgid "Folder"
+msgstr "Karpeta"
+
+msgid "Folders"
+msgstr "Karpetak"
+
+msgid "Follow current song"
+msgstr "Jarraitu uneko abestia"
+
+msgid "Follow system color scheme"
+msgstr "Jarraitu sistemaren kolore-eskemari"
+
+msgid "For you"
+msgstr "Zuretzat"
+
+msgid "Forget this server?"
+msgstr "Zerbitzari hau ahaztu?"
+
+msgid "Format the server should transcode to. Applies from the next song."
+msgstr "Zerbitzariak transkodetzeko erabili behar duen formatua. Hurrengo abestitik aurrera aplikatzen da."
+
+msgid "Found {n} server in Feishin but it has no usable saved login"
+msgid_plural "Found {n} servers in Feishin but none with a usable saved login"
+msgstr[0] "{n} zerbitzari aurkitu da Feishin-en, baina ez du gordetako saio-hasiera erabilgarririk"
+msgstr[1] "{n} zerbitzari aurkitu dira Feishin-en, baina bakar batek ere ez du gordetako saio-hasiera erabilgarririk"
+
+msgid "Gapless playback"
+msgstr "Etenik gabeko erreprodukzioa"
+
+msgid "Genres"
+msgstr "Generoak"
+
+msgid "Go back to {}"
+msgstr "Itzuli hona: {}"
+
+msgid "Go to album"
+msgstr "Joan albumera"
+
+msgid "Go to artist"
+msgstr "Joan artistara"
+
+msgid "Go to {}"
+msgstr "Joan hona: {}"
+
+msgid "Green"
+msgstr "Berdea"
+
+msgid "Hide lyrics"
+msgstr "Ezkutatu letrak"
+
+msgid "Hide queue"
+msgstr "Ezkutatu ilara"
+
+msgid "High Contrast Dark"
+msgstr "Kontraste handiko iluna"
+
+msgid "High Contrast Light"
+msgstr "Kontraste handiko argia"
+
+msgid "Highlight with the color that comes with the theme."
+msgstr "Nabarmendu gaiarekin datorren kolorearekin."
+
+msgid "Home"
+msgstr "Hasiera"
+
+msgid "Homepage (optional)"
+msgstr "Webgune nagusia (aukerakoa)"
+
+msgid "Import from Feishin"
+msgstr "Inportatu Feishin-etik"
+
+msgid "Install yt-dlp to play YouTube tracks"
+msgstr "Instalatu yt-dlp YouTube-ko pistak erreproduzitzeko"
+
+msgid "Integrations"
+msgstr "Integrazioak"
+
+msgid "Interface"
+msgstr "Interfazea"
+
+msgid "Internet radio"
+msgstr "Interneteko irratia"
+
+msgid "item"
+msgstr "elementua"
+
+msgid "Jellyfin has no public share links"
+msgstr "Jellyfin-ek ez du partekatzeko esteka publikorik"
+
+msgid "Keep this station in the favorites on this device"
+msgstr "Gorde irrati hau gailu honetako gogokoetan"
+
+msgid "Language"
+msgstr "Hizkuntza"
+
+msgid "LIBRARY"
+msgstr "LIBURUTEGIA"
+
+msgid "Library scan finished"
+msgstr "Liburutegiaren eskaneatzea amaitu da"
+
+msgid "Library scan finished: {n} item"
+msgid_plural "Library scan finished: {n} items"
+msgstr[0] "Liburutegiaren eskaneatzea amaitu da: {n} elementu"
+msgstr[1] "Liburutegiaren eskaneatzea amaitu da: {n} elementu"
+
+msgid "Light theme"
+msgstr "Gai argia"
+
+msgid "LIGHT THEMES"
+msgstr "GAI ARGIAK"
+
+msgid "Listening to {}"
+msgstr "Entzuten: {}"
+
+msgid "LIVE"
+msgstr "ZUZENEAN"
+
+msgid "Load more"
+msgstr "Kargatu gehiago"
+
+msgid "Load this section again"
+msgstr "Kargatu berriro atal hau"
+
+msgid "Loading playlists..."
+msgstr "Erreprodukzio-zerrendak kargatzen..."
+
+msgid "Loading similar songs..."
+msgstr "Antzeko abestiak kargatzen..."
+
+msgid "Loading stations..."
+msgstr "Irratiak kargatzen..."
+
+msgid "Loading the next page of stations"
+msgstr "Irratien hurrengo orria kargatzen"
+
+msgid "Loading..."
+msgstr "Kargatzen..."
+
+msgid "Log out"
+msgstr "Amaitu saioa"
+
+msgid "Looking up the YouTube link..."
+msgstr "YouTube-ko esteka bilatzen..."
+
+msgid "Lyrics"
+msgstr "Letrak"
+
+msgid "Lyrics from {}"
+msgstr "Letren iturria: {}"
+
+msgid "Lyrics sources"
+msgstr "Letren iturriak"
+
+msgid "Maximum bitrate"
+msgstr "Gehienezko bit-tasa"
+
+msgid "Media keys and desktop media controls. Takes effect after a restart."
+msgstr "Multimedia-teklak eta mahaigaineko multimedia-kontrolak. Berrabiarazi ondoren aplikatuko da."
+
+msgid "Moods and genres"
+msgstr "Aldarteak eta generoak"
+
+msgid "Most played"
+msgstr "Gehien entzundakoa"
+
+msgid "Move down"
+msgstr "Mugitu beherantz"
+
+msgid "Move up"
+msgstr "Mugitu gorantz"
+
+msgid "MPRIS"
+msgstr "MPRIS"
+
+msgid "Mute"
+msgstr "Isilarazi"
+
+msgid "Name"
+msgstr "Izena"
+
+msgid "New playlist"
+msgstr "Erreprodukzio-zerrenda berria"
+
+msgid "New releases"
+msgstr "Argitalpen berriak"
+
+msgid "Next"
+msgstr "Hurrengoa"
+
+msgid "Next is unavailable while a radio station plays"
+msgstr "Hurrengoa ez dago erabilgarri irrati bat entzuten ari den bitartean"
+
+msgid "No albums"
+msgstr "Ez dago albumik"
+
+msgid "No albums found"
+msgstr "Ez da albumik aurkitu"
+
+msgid "No artists found"
+msgstr "Ez da artistarik aurkitu"
+
+msgid "no browser is selected"
+msgstr "ez dago nabigatzailerik hautatuta"
+
+msgid "No favorite albums"
+msgstr "Ez dago album gogokorik"
+
+msgid "No favorite artists"
+msgstr "Ez dago artista gogokorik"
+
+msgid "No favorite tracks"
+msgstr "Ez dago pista gogokorik"
+
+msgid "No genres found"
+msgstr "Ez da generorik aurkitu"
+
+msgid "No lyrics found"
+msgstr "Ez da letrarik aurkitu"
+
+msgid "No playlists found"
+msgstr "Ez da erreprodukzio-zerrendarik aurkitu"
+
+msgid "No playlists yet"
+msgstr "Oraindik ez dago erreprodukzio-zerrendarik"
+
+msgid "No rating"
+msgstr "Baloraziorik ez"
+
+msgid "No results for \"{}\""
+msgstr "Ez dago emaitzarik \"{}\" bilaketarako"
+
+msgid "No saved login for {}; remove it and add it again"
+msgstr "Ez dago gordetako saio-hasierarik honentzat: {}; kendu eta gehitu berriro"
+
+msgid "No saved servers."
+msgstr "Ez dago gordetako zerbitzaririk."
+
+msgid "No similar songs found"
+msgstr "Ez da antzeko abestirik aurkitu"
+
+msgid "No songs here"
+msgstr "Ez dago abestirik hemen"
+
+msgid "No stations found"
+msgstr "Ez da irratirik aurkitu"
+
+msgid "No stations yet. Add one or find one in the directory."
+msgstr "Oraindik ez dago irratirik. Gehitu bat edo bilatu bat direktorioan."
+
+msgid "No tracks found"
+msgstr "Ez da pistarik aurkitu"
+
+msgid "None"
+msgstr "Bat ere ez"
+
+msgid "Normalize loudness using the track or album gain tags."
+msgstr "Normalizatu ozentasuna pistaren edo albumaren irabazi-etiketak erabiliz."
+
+msgid "Not connected to a server"
+msgstr "Ez dago zerbitzari batera konektatuta"
+
+msgid "Nothing is playing"
+msgstr "Ez da ezer erreproduzitzen ari"
+
+msgid "Nothing to add yet"
+msgstr "Oraindik ez dago gehitzeko ezer"
+
+msgid "Nothing to go back to"
+msgstr "Ez dago atzera egiteko ezer"
+
+msgid "Nothing to play here"
+msgstr "Ez dago erreproduzitzeko ezer hemen"
+
+msgid "Nothing to play yet"
+msgstr "Oraindik ez dago erreproduzitzeko ezer"
+
+msgid "Nothing to show here right now"
+msgstr "Une honetan ez dago hemen erakusteko ezer"
+
+msgid "Off"
+msgstr "Desaktibatuta"
+
+msgid "OK"
+msgstr "ADOS"
+
+msgid "On the server"
+msgstr "Zerbitzarian"
+
+msgid "Only a server admin can rescan the library"
+msgstr "Zerbitzariko administratzaile batek bakarrik eskanea dezake berriro liburutegia"
+
+msgid "Only loaded tracks can be shared: select fewer tracks or scroll through them first"
+msgstr "Kargatutako pistak bakarrik parteka daitezke: hautatu pista gutxiago edo korritu haietan zehar lehenik"
+
+msgid "Open"
+msgstr "Ireki"
+
+msgid "Open in YouTube Music"
+msgstr "Ireki YouTube Music-en"
+
+msgid "Open now playing"
+msgstr "Ireki \"Orain erreproduzitzen\""
+
+msgid "Open radio"
+msgstr "Ireki irratia"
+
+msgid "Open the album \"{}\""
+msgstr "Ireki \"{}\" albuma"
+
+msgid "Open the playlist \"{}\""
+msgstr "Ireki \"{}\" erreprodukzio-zerrenda"
+
+msgid "Open the queue panel"
+msgstr "Ireki ilararen panela"
+
+msgid "Open {}"
+msgstr "Ireki {}"
+
+msgid "Original"
+msgstr "Jatorrizkoa"
+
+msgid "Output used by the player."
+msgstr "Erreproduzigailuak erabiltzen duen irteera."
+
+msgid "Owner"
+msgstr "Jabea"
+
+msgid "Password"
+msgstr "Pasahitza"
+
+msgid "Paste a link first"
+msgstr "Itsatsi esteka bat lehenik"
+
+msgid "Paste a YouTube or YouTube Music link first"
+msgstr "Itsatsi YouTube edo YouTube Music esteka bat lehenik"
+
+msgid "Paste a YouTube or YouTube Music link to try yt-dlp."
+msgstr "Itsatsi YouTube edo YouTube Music esteka bat yt-dlp probatzeko."
+
+msgid "Pause"
+msgstr "Pausatu"
+
+msgid "Pause the radio station"
+msgstr "Pausatu irratia"
+
+msgid "Personalized with your YouTube Music account from {}"
+msgstr "{} nabigatzaileko zure YouTube Music kontuarekin pertsonalizatua"
+
+msgid "Pick a color, or type one as #rrggbb and press Enter."
+msgstr "Aukeratu kolore bat, edo idatzi #rrggbb formatuan eta sakatu Enter."
+
+msgid "Pick a mood or genre to see its playlists"
+msgstr "Aukeratu aldarte edo genero bat haren erreprodukzio-zerrendak ikusteko"
+
+msgid "Play"
+msgstr "Erreproduzitu"
+
+msgid "Play \"{}\" and the rest of this shelf"
+msgstr "Erreproduzitu \"{}\" eta apal honetako gainerakoak"
+
+msgid "Play a YouTube link"
+msgstr "Erreproduzitu YouTube esteka bat"
+
+msgid "Play album"
+msgstr "Erreproduzitu albuma"
+
+msgid "Play all"
+msgstr "Erreproduzitu dena"
+
+msgid "Play all {n} song"
+msgid_plural "Play all {n} songs"
+msgstr[0] "Erreproduzitu {n} abestia"
+msgstr[1] "Erreproduzitu {n} abesti guztiak"
+
+msgid "Play count"
+msgstr "Erreprodukzio kopurua"
+
+msgid "Play every song in {} and its subfolders"
+msgstr "Erreproduzitu {} karpetako eta haren azpikarpetetako abesti guztiak"
+
+msgid "Play from here"
+msgstr "Erreproduzitu hemendik aurrera"
+
+msgid "Play from this song"
+msgstr "Erreproduzitu abesti honetatik aurrera"
+
+msgid "Play from {}"
+msgstr "Erreproduzitu {} abestitik aurrera"
+
+msgid "Play next"
+msgstr "Erreproduzitu hurrengo"
+
+msgid "Play the album"
+msgstr "Erreproduzitu albuma"
+
+msgid "Play the playlist"
+msgstr "Erreproduzitu erreprodukzio-zerrenda"
+
+msgid "Play the radio station"
+msgstr "Erreproduzitu irratia"
+
+msgid "Play this link after the current song"
+msgstr "Erreproduzitu esteka hau uneko abestiaren ondoren"
+
+msgid "Play this link now"
+msgstr "Erreproduzitu esteka hau orain"
+
+msgid "Play {}"
+msgstr "Erreproduzitu {}"
+
+msgid "Play {} next"
+msgstr "Erreproduzitu {} hurrengo"
+
+msgid "Play {} with its subfolders"
+msgstr "Erreproduzitu {} bere azpikarpetekin"
+
+msgid "Playback"
+msgstr "Erreprodukzioa"
+
+msgid "Playback failed: {}"
+msgstr "Erreprodukzioak huts egin du: {}"
+
+msgid "Playing {} failed: {}"
+msgstr "Ezin izan da {} erreproduzitu: {}"
+
+msgid "PLAYLIST"
+msgstr "ERREPRODUKZIO-ZERRENDA"
+
+msgid "Playlist"
+msgstr "Erreprodukzio-zerrenda"
+
+msgid "playlist"
+msgstr "erreprodukzio-zerrenda"
+
+msgid "Playlist name"
+msgstr "Erreprodukzio-zerrendaren izena"
+
+msgid "Playlists"
+msgstr "Erreprodukzio-zerrendak"
+
+msgid "Plays"
+msgstr "Erreprodukzioak"
+
+msgid "Plays YouTube tracks. Leave empty to use yt-dlp from your PATH."
+msgstr "YouTube-ko pistak erreproduzitzen ditu. Utzi hutsik PATH-eko yt-dlp erabiltzeko."
+
+msgid "Preload the next song so it starts without a pause."
+msgstr "Aurrez kargatu hurrengo abestia etenik gabe has dadin."
+
+msgid "Previous"
+msgstr "Aurrekoa"
+
+msgid "Previous is unavailable while a radio station plays"
+msgstr "Aurrekoa ez dago erabilgarri irrati bat entzuten ari den bitartean"
+
+msgid "Purple"
+msgstr "Morea"
+
+msgid "Queue"
+msgstr "Ilara"
+
+msgid "Radio"
+msgstr "Irratia"
+
+msgid "Random"
+msgstr "Ausazkoa"
+
+msgid "Rate {n} star"
+msgid_plural "Rate {n} stars"
+msgstr[0] "Baloratu {n} izarrekin"
+msgstr[1] "Baloratu {n} izarrekin"
+
+msgid "Rating"
+msgstr "Balorazioa"
+
+msgid "Recently added"
+msgstr "Duela gutxi gehitutakoa"
+
+msgid "Recently played"
+msgstr "Duela gutxi entzundakoa"
+
+msgid "Red"
+msgstr "Gorria"
+
+msgid "Refresh"
+msgstr "Freskatu"
+
+msgid "Refresh this section"
+msgstr "Freskatu atal hau"
+
+msgid "Release year"
+msgstr "Argitalpen urtea"
+
+msgid "Remove"
+msgstr "Kendu"
+
+msgid "Remove from favorites"
+msgstr "Kendu gogokoetatik"
+
+msgid "Remove from playlist"
+msgstr "Kendu erreprodukzio-zerrendatik"
+
+msgid "Remove from queue"
+msgstr "Kendu ilaratik"
+
+msgid "Removed {n} song from \"{}\""
+msgid_plural "Removed {n} songs from \"{}\""
+msgstr[0] "{n} abesti kendu da \"{}\" zerrendatik"
+msgstr[1] "{n} abesti kendu dira \"{}\" zerrendatik"
+
+msgid "Removing..."
+msgstr "Kentzen..."
+
+msgid "Repeat: all"
+msgstr "Errepikatu: guztiak"
+
+msgid "Repeat: off"
+msgstr "Errepikatu: desaktibatuta"
+
+msgid "Repeat: one"
+msgstr "Errepikatu: bat"
+
+msgid "ReplayGain"
+msgstr "ReplayGain"
+
+msgid "Report what you play to the server."
+msgstr "Jakinarazi zerbitzariari zer erreproduzitzen duzun."
+
+msgid "Rescan the library for new content"
+msgstr "Eskaneatu berriro liburutegia eduki berria bilatzeko"
+
+msgid "Resize column"
+msgstr "Aldatu zutabearen tamaina"
+
+msgid "Save"
+msgstr "Gorde"
+
+msgid "Save on this device"
+msgstr "Gorde gailu honetan"
+
+msgid "Save the changes on the server"
+msgstr "Gorde aldaketak zerbitzarian"
+
+msgid "Save the changes on this device"
+msgstr "Gorde aldaketak gailu honetan"
+
+msgid "Save to favorites on this device"
+msgstr "Gorde gailu honetako gogokoetan"
+
+msgid "Save to server"
+msgstr "Gorde zerbitzarian"
+
+msgid "Saved on this device"
+msgstr "Gailu honetan gordeta"
+
+msgid "Saved on this device, click to remove"
+msgstr "Gailu honetan gordeta, egin klik kentzeko"
+
+msgid "Saving the station to the server..."
+msgstr "Irratia zerbitzarian gordetzen..."
+
+msgid "Saving to the server..."
+msgstr "Zerbitzarian gordetzen..."
+
+msgid "Saving..."
+msgstr "Gordetzen..."
+
+msgid "Scanning the library for new content..."
+msgstr "Liburutegian eduki berria bilatzen..."
+
+msgid "Scanning the library: {}"
+msgstr "Liburutegia eskaneatzen: {}"
+
+msgid "Scrobble"
+msgstr "Scrobble"
+
+msgid "Scroll left"
+msgstr "Korritu ezkerrera"
+
+msgid "Scroll lists and the queue to the song that is playing."
+msgstr "Korritu zerrendak eta ilara erreproduzitzen ari den abestiraino."
+
+msgid "Scroll right"
+msgstr "Korritu eskuinera"
+
+msgid "Search"
+msgstr "Bilatu"
+
+msgid "Search failed: {}"
+msgstr "Bilaketak huts egin du: {}"
+
+msgid "SEARCH RESULTS"
+msgstr "BILAKETAREN EMAITZAK"
+
+msgid "Search songs on YouTube Music"
+msgstr "Bilatu abestiak YouTube Music-en"
+
+msgid "Search songs, albums, artists"
+msgstr "Bilatu abestiak, albumak, artistak"
+
+msgid "Search the radio-browser.info directory"
+msgstr "Bilatu radio-browser.info direktorioan"
+
+msgid "Search your library for songs, albums and artists"
+msgstr "Bilatu abestiak, albumak eta artistak zure liburutegian"
+
+msgid "Searched from top to bottom until one has lyrics."
+msgstr "Goitik behera bilatzen da letrak dituen bat aurkitu arte."
+
+msgid "Searching for lyrics..."
+msgstr "Letrak bilatzen..."
+
+msgid "Searching the radio directory failed: {}"
+msgstr "Irrati-direktorioko bilaketak huts egin du: {}"
+
+msgid "Searching the radio-browser.info directory"
+msgstr "radio-browser.info direktorioan bilatzen"
+
+msgid "Searching..."
+msgstr "Bilatzen..."
+
+msgid "Seeking is unavailable for live radio"
+msgstr "Ezin da posizioz aldatu zuzeneko irratian"
+
+msgid "Server"
+msgstr "Zerbitzaria"
+
+msgid "Server type"
+msgstr "Zerbitzari mota"
+
+msgid "Servers"
+msgstr "Zerbitzariak"
+
+msgid "Set rating"
+msgstr "Ezarri balorazioa"
+
+msgid "Settings"
+msgstr "Ezarpenak"
+
+msgid "Share"
+msgstr "Partekatu"
+
+msgid "Share ({})"
+msgstr "Partekatu ({})"
+
+msgid "Share link copied to the clipboard: {}"
+msgstr "Partekatzeko esteka arbelean kopiatu da: {}"
+
+msgid "Share this {}: copy a public link"
+msgstr "Partekatu {}: kopiatu esteka publiko bat"
+
+msgid "Sharing is unavailable: {}"
+msgstr "Partekatzea ez dago erabilgarri: {}"
+
+msgid "SHOW LESS"
+msgstr "ERAKUTSI GUTXIAGO"
+
+msgid "Show lyrics"
+msgstr "Erakutsi letrak"
+
+msgid "SHOW MORE"
+msgstr "ERAKUTSI GEHIAGO"
+
+msgid "Show more"
+msgstr "Erakutsi gehiago"
+
+msgid "Show playlists for {}"
+msgstr "Erakutsi erreprodukzio-zerrendak: {}"
+
+msgid "Show queue"
+msgstr "Erakutsi ilara"
+
+msgid "Show the current song on your Discord profile."
+msgstr "Erakutsi uneko abestia zure Discord profilean."
+
+msgid "Show the next page of stations"
+msgstr "Erakutsi irratien hurrengo orria"
+
+msgid "Show the queue next to the library; remembered on the next start."
+msgstr "Erakutsi ilara liburutegiaren ondoan; hurrengo abiaraztean gogoratuko da."
+
+msgid "Show the server and saved stations"
+msgstr "Erakutsi zerbitzariko eta gordetako irratiak"
+
+msgid "Show {}"
+msgstr "Erakutsi {}"
+
+msgid "Showing playlists for {}"
+msgstr "Erreprodukzio-zerrendak erakusten: {}"
+
+msgid "Showing the charts for {}"
+msgstr "Sailkapenak erakusten: {}"
+
+msgid "Showing the radio-browser.info directory"
+msgstr "radio-browser.info direktorioa erakusten"
+
+msgid "Showing the server and saved stations"
+msgstr "Zerbitzariko eta gordetako irratiak erakusten"
+
+msgid "Shuffle"
+msgstr "Nahastu"
+
+msgid "Shuffle every song in {} and its subfolders"
+msgstr "Nahastu {} karpetako eta haren azpikarpetetako abesti guztiak"
+
+msgid "Shuffle play"
+msgstr "Ausaz erreproduzitu"
+
+msgid "Shuffle: off"
+msgstr "Nahastea: desaktibatuta"
+
+msgid "Shuffle: on"
+msgstr "Nahastea: aktibatuta"
+
+msgid "Sign in"
+msgstr "Hasi saioa"
+
+msgid "Sign in with browser"
+msgstr "Hasi saioa nabigatzailearekin"
+
+msgid "Sign out and forget this server's saved login?"
+msgstr "Saioa amaitu eta zerbitzari honen gordetako saio-hasiera ahaztu?"
+
+msgid "Sign out and forget this server?"
+msgstr "Saioa amaitu eta zerbitzari hau ahaztu?"
+
+msgid "Similar"
+msgstr "Antzekoak"
+
+msgid "Similar songs come from your server, so YouTube tracks have none"
+msgstr "Antzeko abestiak zure zerbitzaritik datoz; beraz, YouTube-ko pistek ez dute halakorik"
+
+msgid "Sleep timer: off"
+msgstr "Lo-tenporizadorea: desaktibatuta"
+
+msgid "Sleep timer: {}"
+msgstr "Lo-tenporizadorea: {}"
+
+msgid "Song count"
+msgstr "Abesti kopurua"
+
+msgid "Songs"
+msgstr "Abestiak"
+
+msgid "Sort by {}"
+msgstr "Ordenatu: {}"
+
+msgid "Sort by {}: ascending"
+msgstr "Ordenatu: {} (gorantz)"
+
+msgid "Sort by {}: descending"
+msgstr "Ordenatu: {} (beherantz)"
+
+msgid "Sort: ascending"
+msgstr "Ordena: gorantz"
+
+msgid "Sort: descending"
+msgstr "Ordena: beherantz"
+
+msgid "Starting volume, shared with the player bar."
+msgstr "Hasierako bolumena, erreprodukzio-barrarekin partekatua."
+
+msgid "Station data from radio-browser.info"
+msgstr "Irratien datuen iturria: radio-browser.info"
+
+msgid "Station name"
+msgstr "Irratiaren izena"
+
+msgid "Stations"
+msgstr "Irratiak"
+
+msgid "Stop {}"
+msgstr "Gelditu {}"
+
+msgid "Stream URL"
+msgstr "Jarioaren URLa"
+
+msgid "Switch"
+msgstr "Aldatu"
+
+msgid "Switch between a dark and a light theme with the desktop. {}"
+msgstr "Aldatu gai ilun eta argiaren artean mahaigainarekin batera. {}"
+
+msgid "Switch to grid view"
+msgstr "Aldatu sareta-ikuspegira"
+
+msgid "Switch to list view"
+msgstr "Aldatu zerrenda-ikuspegira"
+
+msgid "System default"
+msgstr "Sistemaren lehenetsia"
+
+msgid "System default follows the language of the desktop."
+msgstr "Sistemaren lehenetsiak mahaigainaren hizkuntzari jarraitzen dio."
+
+msgid "Tag, for example jazz"
+msgstr "Etiketa, adibidez jazz"
+
+msgid "The desktop currently prefers dark."
+msgstr "Mahaigainak gai iluna nahiago du une honetan."
+
+msgid "The desktop currently prefers light."
+msgstr "Mahaigainak gai argia nahiago du une honetan."
+
+msgid "The desktop has no preference, so the dark theme is used."
+msgstr "Mahaigainak ez du hobespenik; beraz, gai iluna erabiltzen da."
+
+msgid "The library scan is still running on the server"
+msgstr "Liburutegiaren eskaneatzea oraindik martxan dago zerbitzarian"
+
+msgid "The queue is empty"
+msgstr "Ilara hutsik dago"
+
+msgid "The queue is incomplete: loading the rest of the list failed ({})"
+msgstr "Ilara osatu gabe dago: zerrendaren gainerakoa kargatzeak huts egin du ({})"
+
+msgid "The radio directory could not be reached"
+msgstr "Ezin izan da irrati-direktoriora konektatu"
+
+msgid "The radio station stopped streaming"
+msgstr "Irratiak igorpena eten du"
+
+msgid "The server refused the station: {}"
+msgstr "Zerbitzariak irratia baztertu du: {}"
+
+msgid "Theme"
+msgstr "Gaia"
+
+msgid "There is nothing to play in this list"
+msgstr "Ez dago erreproduzitzeko ezer zerrenda honetan"
+
+msgid "This Discover page does not exist"
+msgstr "Aurkitu orri hau ez dago"
+
+msgid "This folder is empty"
+msgstr "Karpeta hau hutsik dago"
+
+msgid "This playlist is empty"
+msgstr "Erreprodukzio-zerrenda hau hutsik dago"
+
+msgid "This server has no internet radio. Stations you add are saved on this device."
+msgstr "Zerbitzari honek ez du Interneteko irratirik. Gehitzen dituzun irratiak gailu honetan gordetzen dira."
+
+msgid "this server has no public share links"
+msgstr "zerbitzari honek ez du partekatzeko esteka publikorik"
+
+msgid "Time"
+msgstr "Iraupena"
+
+msgid "Title"
+msgstr "Izenburua"
+
+msgid "Top songs"
+msgstr "Abesti nagusiak"
+
+msgid "Track"
+msgstr "Pista"
+
+msgid "Tracks"
+msgstr "Pistak"
+
+msgid "Transcode format"
+msgstr "Transkodetze-formatua"
+
+msgid "Try again"
+msgstr "Saiatu berriro"
+
+msgid "Turn off the theme accent color to pick your own."
+msgstr "Desaktibatu gaiaren azentu-kolorea zurea aukeratzeko."
+
+msgid "Unmute"
+msgstr "Aktibatu soinua"
+
+msgid "Up next"
+msgstr "Hurrengoak"
+
+msgid "URL"
+msgstr "URLa"
+
+msgid "Use the theme accent color"
+msgstr "Erabili gaiaren azentu-kolorea"
+
+msgid "Use {}"
+msgstr "Erabili {}"
+
+msgid "Used while the desktop prefers dark."
+msgstr "Mahaigainak iluna nahiago duenean erabiltzen da."
+
+msgid "Used while the desktop prefers light."
+msgstr "Mahaigainak argia nahiago duenean erabiltzen da."
+
+msgid "Username"
+msgstr "Erabiltzaile-izena"
+
+msgid "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Feishin deletes right after reading."
+msgstr "Nabigatzaile honetako zure YouTube saioa erabiltzen du Aurkitu ataleko hasiera pertsonalizatua eta Premium audioa izateko. yt-dlp-k bere cookieak aldi baterako fitxategi pribatu batera kopiatzen ditu, eta Feishin-ek irakurri eta berehala ezabatzen du."
+
+msgid "Volume"
+msgstr "Bolumena"
+
+msgid "Volume {}%"
+msgstr "Bolumena: %{}"
+
+msgid "XDG_RUNTIME_DIR is not set, so there is no private place for the cookies"
+msgstr "XDG_RUNTIME_DIR ez dago ezarrita; beraz, ez dago cookientzako leku pribaturik"
+
+msgid "Year"
+msgstr "Urtea"
+
+msgid "You are here: {}"
+msgstr "Hemen zaude: {}"
+
+msgid "Your user is not allowed to share on this server"
+msgstr "Zure erabiltzaileak ez du baimenik zerbitzari honetan partekatzeko"
+
+msgid "YouTube"
+msgstr "YouTube"
+
+msgid "YouTube albums are not in your library"
+msgstr "YouTube-ko albumak ez daude zure liburutegian"
+
+msgid "YouTube artists are not in your library"
+msgstr "YouTube-ko artistak ez daude zure liburutegian"
+
+msgid "yt-dlp program"
+msgstr "yt-dlp programa"
+
+msgid "{n} album"
+msgid_plural "{n} albums"
+msgstr[0] "{n} album"
+msgstr[1] "{n} album"
+
+msgid "{n} folder"
+msgid_plural "{n} folders"
+msgstr[0] "{n} karpeta"
+msgstr[1] "{n} karpeta"
+
+msgid "{n} item so far"
+msgid_plural "{n} items so far"
+msgstr[0] "{n} elementu orain arte"
+msgstr[1] "{n} elementu orain arte"
+
+msgid "{n} minute"
+msgid_plural "{n} minutes"
+msgstr[0] "{n} minutu"
+msgstr[1] "{n} minutu"
+
+msgid "{n} selected"
+msgid_plural "{n} selected"
+msgstr[0] "{n} hautatuta"
+msgstr[1] "{n} hautatuta"
+
+msgid "{n} song"
+msgid_plural "{n} songs"
+msgstr[0] "{n} abesti"
+msgstr[1] "{n} abesti"
+
+msgid "{n} song from \"{}\" will play next"
+msgid_plural "{n} songs from \"{}\" will play next"
+msgstr[0] "\"{}\": {n} abesti hurrengo erreproduzituko da"
+msgstr[1] "\"{}\": {n} abesti hurrengo erreproduzituko dira"
+
+msgid "{n} song on YouTube Music"
+msgid_plural "{n} songs on YouTube Music"
+msgstr[0] "{n} abesti YouTube Music-en"
+msgstr[1] "{n} abesti YouTube Music-en"
+
+msgid "{n} song will play next"
+msgid_plural "{n} songs will play next"
+msgstr[0] "{n} abesti hurrengo erreproduzituko da"
+msgstr[1] "{n} abesti hurrengo erreproduzituko dira"
+
+msgid "{} (current theme)"
+msgstr "{} (uneko gaia)"
+
+msgid "{} (unavailable)"
+msgstr "{} (ez dago erabilgarri)"
+
+msgid "{} at {}"
+msgstr "{0}, {1} zerbitzarian"
+
+msgid "{} cannot be played: its stream address is not an internet stream"
+msgstr "Ezin da {} erreproduzitu: bere jario-helbidea ez da Interneteko jario bat"
+
+msgid "{} is shown"
+msgstr "{} ikusgai dago"
+
+msgid "{} kbps"
+msgstr "{} kbps"
+
+msgid "{} s"
+msgstr "{} s"
+
+msgid "{}: off"
+msgstr "{}: desaktibatuta"
+
+msgid "{}: on"
+msgstr "{}: aktibatuta"
+
+msgid "{}: {} (dark)"
+msgstr "{}: {} (iluna)"
+
+msgid "{}: {} (light)"
+msgstr "{}: {} (argia)"

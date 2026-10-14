@@ -34,21 +34,21 @@ export component AlbumGridCardView inherits Rectangle {
 
         Menu {
             MenuItem {
-                title: "Play";
+                title: @tr("Play");
                 activated => {
                     root.play();
                 }
             }
 
             MenuItem {
-                title: "Play next";
+                title: @tr("Play next");
                 activated => {
                     root.play-next();
                 }
             }
 
             MenuItem {
-                title: "Add to queue";
+                title: @tr("Add to queue");
                 activated => {
                     root.add-to-queue();
                 }
@@ -57,7 +57,7 @@ export component AlbumGridCardView inherits Rectangle {
             MenuSeparator { }
 
             MenuItem {
-                title: "Add to playlist";
+                title: @tr("Add to playlist");
                 activated => {
                     root.add-to-playlist();
                 }
@@ -72,7 +72,7 @@ export component AlbumGridCardView inherits Rectangle {
             }
 
             MenuItem {
-                title: "Go to artist";
+                title: @tr("Go to artist");
                 enabled: root.card.artist-id != "";
                 activated => {
                     root.open-artist();
@@ -131,7 +131,7 @@ export component AlbumGridCardView inherits Rectangle {
                             }
 
                             TooltipAnchor {
-                                text: "Play";
+                                text: @tr("Play");
                                 hovered: play-touch.has-hover;
                             }
 

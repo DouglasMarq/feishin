@@ -27,21 +27,17 @@ impl FeedNotice {
     pub fn message(&self) -> String {
         match self {
             Self::None => String::new(),
-            Self::Demo => {
-                "Demo mode: these picks are made up and play from your demo library".to_owned()
-            }
+            Self::Demo => tr!("Demo mode: these picks are made up and play from your demo library"),
             Self::SignInHint => {
-                "Choose a browser under Settings, YouTube to sign in for a personalized home"
-                    .to_owned()
+                tr!("Choose a browser under Settings, YouTube to sign in for a personalized home")
             }
-            Self::Personalized(browser) => {
-                format!(
-                    "Personalized with your YouTube Music account from {}",
-                    browser.label()
-                )
-            }
-            Self::SignInFailed(reason) => format!(
-                "Could not sign in to YouTube Music ({reason}). Showing general picks instead."
+            Self::Personalized(browser) => tr!(
+                "Personalized with your YouTube Music account from {}",
+                browser.label()
+            ),
+            Self::SignInFailed(reason) => tr!(
+                "Could not sign in to YouTube Music ({}). Showing general picks instead.",
+                reason
             ),
         }
     }

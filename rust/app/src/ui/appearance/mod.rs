@@ -65,7 +65,7 @@ fn enter_accent(window: &AppWindow, ctx: &Context, text: &SharedString) {
         Err(error) => {
             let (_, settings) = current_settings(window);
             form::show_accent(&state, settings.accent);
-            show_status(window, &format!("Accent color not changed: {error}."));
+            show_status(window, &tr!("Accent color not changed: {}.", error));
         }
     }
 }

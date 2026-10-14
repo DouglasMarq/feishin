@@ -87,10 +87,7 @@ impl RadioView {
             return;
         }
         if let Some(error) = failure {
-            show_status(
-                window,
-                &format!("Could not load the radio stations: {error}"),
-            );
+            show_status(window, &tr!("Could not load the radio stations: {}", error));
         }
         window.global::<RadioState>().set_stations_loading(false);
         self.render(window);

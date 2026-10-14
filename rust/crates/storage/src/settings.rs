@@ -82,6 +82,7 @@ pub struct UiSettings {
     pub sidebar_width: Option<f32>,
     pub queue_panel_open: bool,
     pub follow_current_song: bool,
+    pub language: Option<String>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -181,6 +182,7 @@ mod tests {
                 sidebar_width: Some(220.0),
                 queue_panel_open: true,
                 follow_current_song: true,
+                language: Some("pt-BR".into()),
             },
             integrations: IntegrationSettings {
                 discord_rich_presence: true,

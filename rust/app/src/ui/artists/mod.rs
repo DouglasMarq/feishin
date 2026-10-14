@@ -14,10 +14,10 @@ use slint::{ComponentHandle, ModelRc, SharedString, Timer, TimerMode, VecModel};
 use super::artist_detail::play_artist;
 use super::{AppWindow, ArtistsState, Context};
 pub use cover_lru::CoverLru;
-pub use item::count_label;
+pub use item::song_count_label;
 use list::ArtistList;
 use models::{GridModel, ListModel};
-use query::SORTS;
+use query::{SORTS, sort_label};
 use requests::{reload, spawn_request, with_list};
 
 const SEARCH_DEBOUNCE: Duration = Duration::from_millis(300);
@@ -41,9 +41,15 @@ fn install_models(window: &AppWindow, ctx: &Context) -> Rc<ArtistList> {
     state.set_grid_rows(ModelRc::new(GridModel {
         list: Rc::clone(&list),
     }));
-    let options: Vec<SharedString> = SORTS.iter().map(|(label, _)| (*label).into()).collect();
-    state.set_sort_options(ModelRc::new(VecModel::from(options)));
+    show_sort_options(window);
     list
+}
+
+pub fn show_sort_options(window: &AppWindow) {
+    let options: Vec<SharedString> = SORTS.iter().map(|sort| sort_label(*sort).into()).collect();
+    window
+        .global::<ArtistsState>()
+        .set_sort_options(ModelRc::new(VecModel::from(options)));
 }
 
 fn install_load(window: &AppWindow, ctx: &Context, list: Rc<ArtistList>, search: SearchText) {

@@ -55,7 +55,7 @@ fn apply_page_result(
         Err(error) => {
             if list.page_failed(generation) {
                 finish_loading(window, &list);
-                show_status(window, &format!("Could not load artists: {error}"));
+                show_status(window, &tr!("Could not load artists: {}", error));
             }
         }
     }

@@ -1,0 +1,1542 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: sk\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+
+msgid "\"{}\" plays next"
+msgstr "Ako ďalšie: „{}“"
+
+msgid "\"{}\" will play next"
+msgstr "„{}“ sa prehrá ako ďalšie"
+
+msgid "1 star"
+msgstr "1 hviezdička"
+
+msgid "2 stars"
+msgstr "2 hviezdičky"
+
+msgid "3 stars"
+msgstr "3 hviezdičky"
+
+msgid "4 stars"
+msgstr "4 hviezdičky"
+
+msgid "5 stars"
+msgstr "5 hviezdičiek"
+
+msgid "About {}"
+msgstr "O {0}"
+
+msgid "Accent color"
+msgstr "Farba zvýraznenia"
+
+msgid "Accent color not changed: {}."
+msgstr "Farba zvýraznenia nebola zmenená: {}."
+
+msgid "Accent color {}"
+msgstr "Farba zvýraznenia {}"
+
+msgid "Accent color {} (selected)"
+msgstr "Farba zvýraznenia {} (vybraná)"
+
+msgid "Accent color {} (theme accent in use)"
+msgstr "Farba zvýraznenia {} (používa sa zvýraznenie témy)"
+
+msgid "Add a station by its stream URL"
+msgstr "Pridať stanicu podľa adresy streamu"
+
+msgid "Add all songs to the queue"
+msgstr "Pridať všetky skladby do fronty"
+
+msgid "Add server"
+msgstr "Pridať server"
+
+msgid "Add station"
+msgstr "Pridať stanicu"
+
+msgid "Add this link to the end of the queue"
+msgstr "Pridať tento odkaz na koniec fronty"
+
+msgid "Add this station to the server for every client"
+msgstr "Pridať túto stanicu na server pre všetkých klientov"
+
+msgid "Add to favorites"
+msgstr "Pridať do obľúbených"
+
+msgid "Add to playlist"
+msgstr "Pridať do playlistu"
+
+msgid "Add to queue"
+msgstr "Pridať do fronty"
+
+msgid "Add to the server's stations"
+msgstr "Pridať k staniciam servera"
+
+msgid "Add {n} song to playlist"
+msgid_plural "Add {n} songs to playlist"
+msgstr[0] "Pridať {n} skladbu do playlistu"
+msgstr[1] "Pridať {n} skladby do playlistu"
+msgstr[2] "Pridať {n} skladieb do playlistu"
+
+msgid "Add {} to the queue"
+msgstr "Pridať {} do fronty"
+
+msgid "Added \"{}\" to the queue"
+msgstr "„{}“ pridané do fronty"
+
+msgid "Added only {n} song to \"{}\": {}"
+msgid_plural "Added only {n} songs to \"{}\": {}"
+msgstr[0] "Do „{}“ bola pridaná len {n} skladba: {}"
+msgstr[1] "Do „{}“ boli pridané len {n} skladby: {}"
+msgstr[2] "Do „{}“ bolo pridaných len {n} skladieb: {}"
+
+msgid "Added {n} song from \"{}\" to the queue"
+msgid_plural "Added {n} songs from \"{}\" to the queue"
+msgstr[0] "Do fronty bola pridaná {n} skladba z „{}“"
+msgstr[1] "Do fronty boli pridané {n} skladby z „{}“"
+msgstr[2] "Do fronty bolo pridaných {n} skladieb z „{}“"
+
+msgid "Added {n} song to \"{}\""
+msgid_plural "Added {n} songs to \"{}\""
+msgstr[0] "Do „{}“ bola pridaná {n} skladba"
+msgstr[1] "Do „{}“ boli pridané {n} skladby"
+msgstr[2] "Do „{}“ bolo pridaných {n} skladieb"
+
+msgid "Added {n} song to the queue"
+msgid_plural "Added {n} songs to the queue"
+msgstr[0] "Do fronty bola pridaná {n} skladba"
+msgstr[1] "Do fronty boli pridané {n} skladby"
+msgstr[2] "Do fronty bolo pridaných {n} skladieb"
+
+msgid "Adding to \"{}\": {} of {n} song"
+msgid_plural "Adding to \"{}\": {} of {n} songs"
+msgstr[0] "Pridávanie do „{}“: {} z {n} skladby"
+msgstr[1] "Pridávanie do „{}“: {} z {n} skladieb"
+msgstr[2] "Pridávanie do „{}“: {} z {n} skladieb"
+
+msgid "ALBUM"
+msgstr "ALBUM"
+
+msgid "Album"
+msgstr "Album"
+
+msgid "album"
+msgstr "album"
+
+msgid "Album artist"
+msgstr "Interpret albumu"
+
+msgid "Album count"
+msgstr "Počet albumov"
+
+msgid "Album not found"
+msgstr "Album sa nenašiel"
+
+msgid "Albums"
+msgstr "Albumy"
+
+msgid "All genres"
+msgstr "Všetky žánre"
+
+msgid "Already at the end"
+msgstr "Už ste na konci"
+
+msgid "Already at the start"
+msgstr "Už ste na začiatku"
+
+msgid "Already in \"{}\""
+msgstr "Už je v „{}“"
+
+msgid "Already on the server"
+msgstr "Už je na serveri"
+
+msgid "Amber"
+msgstr "Jantárová"
+
+msgid "Appearance"
+msgstr "Vzhľad"
+
+msgid "ARTIST"
+msgstr "INTERPRET"
+
+msgid "Artist"
+msgstr "Interpret"
+
+msgid "Artists"
+msgstr "Interpreti"
+
+msgid "Ask the server to transcode down to this bitrate. Applies from the next song."
+msgstr "Požiadať server o prekódovanie na tento dátový tok. Platí od nasledujúcej skladby."
+
+msgid "Audio device"
+msgstr "Zvukové zariadenie"
+
+msgid "Automatic ({})"
+msgstr "Automaticky ({})"
+
+msgid "Back"
+msgstr "Späť"
+
+msgid "Blue"
+msgstr "Modrá"
+
+msgid "by {}"
+msgstr "autor: {}"
+
+msgid "Cancel"
+msgstr "Zrušiť"
+
+msgid "Cancel timer"
+msgstr "Zrušiť časovač"
+
+msgid "Cannot share: {}"
+msgstr "Nedá sa zdieľať: {}"
+
+msgid "Chart country"
+msgstr "Krajina rebríčkov"
+
+msgid "Charts"
+msgstr "Rebríčky"
+
+msgid "Choose a browser under Settings, YouTube to sign in for a personalized home"
+msgstr "Na prihlásenie a prispôsobenú domovskú stránku vyberte prehliadač v Nastaveniach v časti YouTube"
+
+msgid "Clear"
+msgstr "Vymazať"
+
+msgid "Clear filters"
+msgstr "Vymazať filtre"
+
+msgid "Clear rating"
+msgstr "Zrušiť hodnotenie"
+
+msgid "Clear the favorites and genre filters"
+msgstr "Vymazať filtre obľúbených a žánrov"
+
+msgid "Close"
+msgstr "Zavrieť"
+
+msgid "Close now playing"
+msgstr "Zavrieť Práve hrá"
+
+msgid "Close without saving"
+msgstr "Zavrieť bez uloženia"
+
+msgid "Colors used across the whole app."
+msgstr "Farby používané v celej aplikácii."
+
+msgid "Connect to your music server"
+msgstr "Pripojte sa k svojmu hudobnému serveru"
+
+msgid "Connecting..."
+msgstr "Pripája sa..."
+
+msgid "Could not add to \"{}\": {}"
+msgstr "Nedá sa pridať do „{}“: {}"
+
+msgid "Could not add {} to the server"
+msgstr "Stanicu {} sa nepodarilo pridať na server"
+
+msgid "Could not create a share link: {}"
+msgstr "Nepodarilo sa vytvoriť odkaz na zdieľanie: {}"
+
+msgid "Could not create the playlist: {}"
+msgstr "Nepodarilo sa vytvoriť playlist: {}"
+
+msgid "Could not delete the playlist: {}"
+msgstr "Nepodarilo sa odstrániť playlist: {}"
+
+msgid "Could not delete the station"
+msgstr "Stanicu sa nepodarilo odstrániť"
+
+msgid "Could not load albums: {}"
+msgstr "Nepodarilo sa načítať albumy: {}"
+
+msgid "Could not load artists: {}"
+msgstr "Nepodarilo sa načítať interpretov: {}"
+
+msgid "Could not load Discover: {}"
+msgstr "Nepodarilo sa načítať sekciu Objavovať: {}"
+
+msgid "Could not load genres: {}"
+msgstr "Nepodarilo sa načítať žánre: {}"
+
+msgid "Could not load it from YouTube Music: {}"
+msgstr "Nepodarilo sa to načítať z YouTube Music: {}"
+
+msgid "Could not load lyrics"
+msgstr "Nepodarilo sa načítať text"
+
+msgid "Could not load moods and genres: {}"
+msgstr "Nepodarilo sa načítať nálady a žánre: {}"
+
+msgid "Could not load more results: {}"
+msgstr "Nepodarilo sa načítať ďalšie výsledky: {}"
+
+msgid "Could not load new releases: {}"
+msgstr "Nepodarilo sa načítať novinky: {}"
+
+msgid "Could not load playlists: {}"
+msgstr "Nepodarilo sa načítať playlisty: {}"
+
+msgid "Could not load the album: {}"
+msgstr "Nepodarilo sa načítať album: {}"
+
+msgid "Could not load the artist: {}"
+msgstr "Nepodarilo sa načítať interpreta: {}"
+
+msgid "Could not load the charts: {}"
+msgstr "Nepodarilo sa načítať rebríčky: {}"
+
+msgid "Could not load the folder: {}"
+msgstr "Nepodarilo sa načítať priečinok: {}"
+
+msgid "Could not load the list: {}"
+msgstr "Nepodarilo sa načítať zoznam: {}"
+
+msgid "Could not load the playlist: {}"
+msgstr "Nepodarilo sa načítať playlist: {}"
+
+msgid "Could not load the radio stations: {}"
+msgstr "Nepodarilo sa načítať rozhlasové stanice: {}"
+
+msgid "Could not load the selection: {}"
+msgstr "Nepodarilo sa načítať výber: {}"
+
+msgid "Could not load this page: {}"
+msgstr "Túto stránku sa nepodarilo načítať: {}"
+
+msgid "Could not load tracks: {}"
+msgstr "Nepodarilo sa načítať skladby: {}"
+
+msgid "Could not load your home: {}"
+msgstr "Nepodarilo sa načítať vašu domovskú stránku: {}"
+
+msgid "Could not open the folder: {}"
+msgstr "Nepodarilo sa otvoriť priečinok: {}"
+
+msgid "Could not open YouTube Music: {}"
+msgstr "Nepodarilo sa otvoriť YouTube Music: {}"
+
+msgid "Could not play \"{}\" from YouTube: {}"
+msgstr "„{}“ sa nepodarilo prehrať z YouTube: {}"
+
+msgid "Could not play album: {}"
+msgstr "Nepodarilo sa prehrať album: {}"
+
+msgid "Could not play from YouTube: {}"
+msgstr "Nepodarilo sa prehrať z YouTube: {}"
+
+msgid "Could not play the album: {}"
+msgstr "Album sa nepodarilo prehrať: {}"
+
+msgid "Could not remove songs: {}"
+msgstr "Nepodarilo sa odstrániť skladby: {}"
+
+msgid "Could not rescan the library: {}"
+msgstr "Nepodarilo sa znova prehľadať knižnicu: {}"
+
+msgid "Could not set the rating: {}"
+msgstr "Nepodarilo sa nastaviť hodnotenie: {}"
+
+msgid "Could not sign in to YouTube Music ({}). Showing general picks instead."
+msgstr "Nepodarilo sa prihlásiť do YouTube Music ({}). Namiesto toho sa zobrazujú všeobecné tipy."
+
+msgid "Could not switch server: {}"
+msgstr "Nepodarilo sa prepnúť server: {}"
+
+msgid "Could not update favorite: {}"
+msgstr "Nepodarilo sa zmeniť obľúbenú položku: {}"
+
+msgid "Could not update favorites: {}"
+msgstr "Nepodarilo sa aktualizovať obľúbené: {}"
+
+msgid "Could not update rating: {}"
+msgstr "Nepodarilo sa aktualizovať hodnotenie: {}"
+
+msgid "Could not update the favorite: {}"
+msgstr "Obľúbenú položku sa nepodarilo zmeniť: {}"
+
+msgid "Country"
+msgstr "Krajina"
+
+msgid "Create"
+msgstr "Vytvoriť"
+
+msgid "Created \"{}\" with only {n} song: {}"
+msgid_plural "Created \"{}\" with only {n} songs: {}"
+msgstr[0] "Playlist „{}“ bol vytvorený len s {n} skladbou: {}"
+msgstr[1] "Playlist „{}“ bol vytvorený len s {n} skladbami: {}"
+msgstr[2] "Playlist „{}“ bol vytvorený len s {n} skladbami: {}"
+
+msgid "Created \"{}\" with {n} song"
+msgid_plural "Created \"{}\" with {n} songs"
+msgstr[0] "Playlist „{}“ bol vytvorený s {n} skladbou"
+msgstr[1] "Playlist „{}“ bol vytvorený s {n} skladbami"
+msgstr[2] "Playlist „{}“ bol vytvorený s {n} skladbami"
+
+msgid "Created playlist \"{}\""
+msgstr "Playlist „{}“ bol vytvorený"
+
+msgid "Creating a share link..."
+msgstr "Vytvára sa odkaz na zdieľanie..."
+
+msgid "Creating..."
+msgstr "Vytvára sa..."
+
+msgid "Crossfade"
+msgstr "Prelínanie"
+
+msgid "Crossfade could not be changed: {}"
+msgstr "Prelínanie sa nepodarilo zmeniť: {}"
+
+msgid "Crossfade: {}"
+msgstr "Prelínanie: {}"
+
+msgid "Current"
+msgstr "Aktuálny"
+
+msgid "Custom accent color: {} (theme accent in use)"
+msgstr "Vlastná farba zvýraznenia: {} (používa sa zvýraznenie témy)"
+
+msgid "Custom accent color: {}, press Enter to apply"
+msgstr "Vlastná farba zvýraznenia: {}, potvrďte klávesom Enter"
+
+msgid "Dark theme"
+msgstr "Tmavá téma"
+
+msgid "DARK THEMES"
+msgstr "TMAVÉ TÉMY"
+
+msgid "Default country for the Discover charts. Automatic follows your system region."
+msgstr "Predvolená krajina pre rebríčky v sekcii Objavovať. Automaticky sa riadi oblasťou systému."
+
+msgid "Default Dark"
+msgstr "Predvolená tmavá"
+
+msgid "Default Light"
+msgstr "Predvolená svetlá"
+
+msgid "Delete"
+msgstr "Zmazať"
+
+msgid "Delete \"{}\" from the server? This cannot be undone."
+msgstr "Odstrániť „{}“ zo servera? Túto akciu nie je možné vrátiť späť."
+
+msgid "Delete \"{}\"? This cannot be undone."
+msgstr "Odstrániť „{}“? Túto akciu nie je možné vrátiť späť."
+
+msgid "Delete playlist"
+msgstr "Odstrániť playlist"
+
+msgid "Delete station"
+msgstr "Odstrániť stanicu"
+
+msgid "Delete {} from the server"
+msgstr "Odstrániť {} zo servera"
+
+msgid "Deleted playlist \"{}\""
+msgstr "Playlist „{}“ bol odstránený"
+
+msgid "Deleting..."
+msgstr "Odstraňuje sa..."
+
+msgid "Demo mode: these picks are made up and play from your demo library"
+msgstr "Ukážkový režim: tieto tipy sú vymyslené a prehrávajú sa z ukážkovej knižnice"
+
+msgid "Directory"
+msgstr "Katalóg"
+
+msgid "Disc {}"
+msgstr "Disk {}"
+
+msgid "Discord Rich Presence"
+msgstr "Discord Rich Presence"
+
+msgid "Discover"
+msgstr "Objavovať"
+
+msgid "Discover is open"
+msgstr "Sekcia Objavovať je otvorená"
+
+msgid "Discover new music on YouTube Music"
+msgstr "Objavujte novú hudbu na YouTube Music"
+
+msgid "Duration"
+msgstr "Dĺžka"
+
+msgid "Edit station"
+msgstr "Upraviť stanicu"
+
+msgid "Edit {}"
+msgstr "Upraviť {}"
+
+msgid "End of current track"
+msgstr "Koniec aktuálnej skladby"
+
+msgid "End of track"
+msgstr "Koniec skladby"
+
+msgid "Enter a name for the station"
+msgstr "Zadajte názov stanice"
+
+msgid "Enter a name, country or tag to search"
+msgstr "Zadajte názov, krajinu alebo štítok, ktorý chcete hľadať"
+
+msgid "Enter a stream URL that starts with http:// or https://"
+msgstr "Zadajte adresu streamu začínajúcu http:// alebo https://"
+
+msgid "Enter the server URL"
+msgstr "Zadajte adresu URL servera"
+
+msgid "Fade the end of each song into the next one. Off keeps gapless playback."
+msgstr "Plynulo prelína koniec každej skladby do nasledujúcej. Po vypnutí zostane zachované prehrávanie bez medzier."
+
+msgid "Favorite"
+msgstr "Obľúbené"
+
+msgid "Favorited"
+msgstr "Obľúbené"
+
+msgid "Favorites"
+msgstr "Obľúbené"
+
+msgid "Favorites only: off"
+msgstr "Iba obľúbené: vypnuté"
+
+msgid "Favorites only: on"
+msgstr "Iba obľúbené: zapnuté"
+
+msgid "Filter"
+msgstr "Filter"
+
+msgid "Filter playlists"
+msgstr "Filtrovať playlisty"
+
+msgid "Find stations by name, country or tag"
+msgstr "Hľadať stanice podľa názvu, krajiny alebo štítku"
+
+msgid "Find stations in the radio-browser.info directory"
+msgstr "Hľadať stanice v katalógu radio-browser.info"
+
+msgid "Folder"
+msgstr "Priečinok"
+
+msgid "Folders"
+msgstr "Priečinky"
+
+msgid "Follow current song"
+msgstr "Nasledovať aktuálnu skladbu"
+
+msgid "Follow system color scheme"
+msgstr "Riadiť sa farebnou schémou systému"
+
+msgid "For you"
+msgstr "Pre vás"
+
+msgid "Forget this server?"
+msgstr "Zabudnúť tento server?"
+
+msgid "Format the server should transcode to. Applies from the next song."
+msgstr "Formát, do ktorého má server prekódovať. Platí od nasledujúcej skladby."
+
+msgid "Found {n} server in Feishin but it has no usable saved login"
+msgid_plural "Found {n} servers in Feishin but none with a usable saved login"
+msgstr[0] "V aplikácii Feishin sa našiel {n} server, ale nemá použiteľné uložené prihlásenie"
+msgstr[1] "V aplikácii Feishin sa našli {n} servery, ale žiadny nemá použiteľné uložené prihlásenie"
+msgstr[2] "V aplikácii Feishin sa našlo {n} serverov, ale žiadny nemá použiteľné uložené prihlásenie"
+
+msgid "Gapless playback"
+msgstr "Prehrávanie bez medzier"
+
+msgid "Genres"
+msgstr "Žánre"
+
+msgid "Go back to {}"
+msgstr "Späť na {}"
+
+msgid "Go to album"
+msgstr "Prejsť na album"
+
+msgid "Go to artist"
+msgstr "Prejsť na interpreta"
+
+msgid "Go to {}"
+msgstr "Prejsť na {}"
+
+msgid "Green"
+msgstr "Zelená"
+
+msgid "Hide lyrics"
+msgstr "Skryť text"
+
+msgid "Hide queue"
+msgstr "Skryť frontu"
+
+msgid "High Contrast Dark"
+msgstr "Vysoký kontrast tmavá"
+
+msgid "High Contrast Light"
+msgstr "Vysoký kontrast svetlá"
+
+msgid "Highlight with the color that comes with the theme."
+msgstr "Zvýrazňovať farbou, ktorú prináša téma."
+
+msgid "Home"
+msgstr "Domov"
+
+msgid "Homepage (optional)"
+msgstr "Domovská stránka (nepovinné)"
+
+msgid "Import from Feishin"
+msgstr "Importovať z Feishin"
+
+msgid "Install yt-dlp to play YouTube tracks"
+msgstr "Na prehrávanie skladieb z YouTube nainštalujte yt-dlp"
+
+msgid "Integrations"
+msgstr "Integrácie"
+
+msgid "Interface"
+msgstr "Rozhranie"
+
+msgid "Internet radio"
+msgstr "Internetové rádio"
+
+msgid "item"
+msgstr "položka"
+
+msgid "Jellyfin has no public share links"
+msgstr "Jellyfin nemá verejné odkazy na zdieľanie"
+
+msgid "Keep this station in the favorites on this device"
+msgstr "Ponechať túto stanicu v obľúbených na tomto zariadení"
+
+msgid "Language"
+msgstr "Jazyk"
+
+msgid "LIBRARY"
+msgstr "KNIŽNICA"
+
+msgid "Library scan finished"
+msgstr "Prehľadávanie knižnice dokončené"
+
+msgid "Library scan finished: {n} item"
+msgid_plural "Library scan finished: {n} items"
+msgstr[0] "Prehľadávanie knižnice dokončené: {n} položka"
+msgstr[1] "Prehľadávanie knižnice dokončené: {n} položky"
+msgstr[2] "Prehľadávanie knižnice dokončené: {n} položiek"
+
+msgid "Light theme"
+msgstr "Svetlá téma"
+
+msgid "LIGHT THEMES"
+msgstr "SVETLÉ TÉMY"
+
+msgid "Listening to {}"
+msgstr "Počúvate: {}"
+
+msgid "LIVE"
+msgstr "NAŽIVO"
+
+msgid "Load more"
+msgstr "Načítať ďalšie"
+
+msgid "Load this section again"
+msgstr "Znova načítať túto sekciu"
+
+msgid "Loading playlists..."
+msgstr "Načítavajú sa playlisty..."
+
+msgid "Loading similar songs..."
+msgstr "Načítavajú sa podobné skladby..."
+
+msgid "Loading stations..."
+msgstr "Načítavajú sa stanice..."
+
+msgid "Loading the next page of stations"
+msgstr "Načítava sa ďalšia stránka staníc"
+
+msgid "Loading..."
+msgstr "Načítava sa..."
+
+msgid "Log out"
+msgstr "Odhlásiť sa"
+
+msgid "Looking up the YouTube link..."
+msgstr "Hľadá sa odkaz na YouTube..."
+
+msgid "Lyrics"
+msgstr "Texty skladieb"
+
+msgid "Lyrics from {}"
+msgstr "Text z: {}"
+
+msgid "Lyrics sources"
+msgstr "Zdroje textov"
+
+msgid "Maximum bitrate"
+msgstr "Maximálny dátový tok"
+
+msgid "Media keys and desktop media controls. Takes effect after a restart."
+msgstr "Multimediálne klávesy a ovládanie médií v prostredí. Prejaví sa po reštarte."
+
+msgid "Moods and genres"
+msgstr "Nálady a žánre"
+
+msgid "Most played"
+msgstr "Najprehrávanejšie"
+
+msgid "Move down"
+msgstr "Posunúť nadol"
+
+msgid "Move up"
+msgstr "Posunúť nahor"
+
+msgid "MPRIS"
+msgstr "MPRIS"
+
+msgid "Mute"
+msgstr "Stíšiť"
+
+msgid "Name"
+msgstr "Názov"
+
+msgid "New playlist"
+msgstr "Nový playlist"
+
+msgid "New releases"
+msgstr "Novinky"
+
+msgid "Next"
+msgstr "Nasledujúca"
+
+msgid "Next is unavailable while a radio station plays"
+msgstr "Nasledujúca skladba nie je počas prehrávania rozhlasovej stanice dostupná"
+
+msgid "No albums"
+msgstr "Žiadne albumy"
+
+msgid "No albums found"
+msgstr "Nenašli sa žiadne albumy"
+
+msgid "No artists found"
+msgstr "Nenašli sa žiadni interpreti"
+
+msgid "no browser is selected"
+msgstr "nie je vybraný žiadny prehliadač"
+
+msgid "No favorite albums"
+msgstr "Žiadne obľúbené albumy"
+
+msgid "No favorite artists"
+msgstr "Žiadni obľúbení interpreti"
+
+msgid "No favorite tracks"
+msgstr "Žiadne obľúbené skladby"
+
+msgid "No genres found"
+msgstr "Nenašli sa žiadne žánre"
+
+msgid "No lyrics found"
+msgstr "Nenašli sa žiadne texty"
+
+msgid "No playlists found"
+msgstr "Nenašli sa žiadne playlisty"
+
+msgid "No playlists yet"
+msgstr "Zatiaľ žiadne playlisty"
+
+msgid "No rating"
+msgstr "Bez hodnotenia"
+
+msgid "No results for \"{}\""
+msgstr "Žiadne výsledky pre „{}“"
+
+msgid "No saved login for {}; remove it and add it again"
+msgstr "Pre {} nie je uložené prihlásenie; odstráňte ho a pridajte znova"
+
+msgid "No saved servers."
+msgstr "Žiadne uložené servery."
+
+msgid "No similar songs found"
+msgstr "Nenašli sa žiadne podobné skladby"
+
+msgid "No songs here"
+msgstr "Nie sú tu žiadne skladby"
+
+msgid "No stations found"
+msgstr "Nenašli sa žiadne stanice"
+
+msgid "No stations yet. Add one or find one in the directory."
+msgstr "Zatiaľ žiadne stanice. Pridajte stanicu alebo ju nájdite v katalógu."
+
+msgid "No tracks found"
+msgstr "Nenašli sa žiadne skladby"
+
+msgid "None"
+msgstr "Žiadny"
+
+msgid "Normalize loudness using the track or album gain tags."
+msgstr "Normalizovať hlasitosť pomocou značiek zosilnenia skladby alebo albumu."
+
+msgid "Not connected to a server"
+msgstr "Nepripojené k serveru"
+
+msgid "Nothing is playing"
+msgstr "Nič sa neprehráva"
+
+msgid "Nothing to add yet"
+msgstr "Zatiaľ nie je čo pridať"
+
+msgid "Nothing to go back to"
+msgstr "Nie je kam sa vrátiť"
+
+msgid "Nothing to play here"
+msgstr "Nie je tu čo prehrať"
+
+msgid "Nothing to play yet"
+msgstr "Zatiaľ nie je čo prehrať"
+
+msgid "Nothing to show here right now"
+msgstr "Teraz tu nie je čo zobraziť"
+
+msgid "Off"
+msgstr "Vypnuté"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "On the server"
+msgstr "Na serveri"
+
+msgid "Only a server admin can rescan the library"
+msgstr "Knižnicu môže znova prehľadať iba správca servera"
+
+msgid "Only loaded tracks can be shared: select fewer tracks or scroll through them first"
+msgstr "Zdieľať sa dajú iba načítané skladby: vyberte menej skladieb alebo ich najprv prejdite posúvaním"
+
+msgid "Open"
+msgstr "Otvoriť"
+
+msgid "Open in YouTube Music"
+msgstr "Otvoriť v YouTube Music"
+
+msgid "Open now playing"
+msgstr "Otvoriť Práve hrá"
+
+msgid "Open radio"
+msgstr "Otvoriť rádio"
+
+msgid "Open the album \"{}\""
+msgstr "Otvoriť album „{}“"
+
+msgid "Open the playlist \"{}\""
+msgstr "Otvoriť playlist „{}“"
+
+msgid "Open the queue panel"
+msgstr "Otvoriť panel fronty"
+
+msgid "Open {}"
+msgstr "Otvoriť {}"
+
+msgid "Original"
+msgstr "Pôvodný"
+
+msgid "Output used by the player."
+msgstr "Výstup používaný prehrávačom."
+
+msgid "Owner"
+msgstr "Majiteľ"
+
+msgid "Password"
+msgstr "Heslo"
+
+msgid "Paste a link first"
+msgstr "Najprv vložte odkaz"
+
+msgid "Paste a YouTube or YouTube Music link first"
+msgstr "Najprv vložte odkaz na YouTube alebo YouTube Music"
+
+msgid "Paste a YouTube or YouTube Music link to try yt-dlp."
+msgstr "Vložte odkaz na YouTube alebo YouTube Music a vyskúšajte yt-dlp."
+
+msgid "Pause"
+msgstr "Pozastaviť"
+
+msgid "Pause the radio station"
+msgstr "Pozastaviť rozhlasovú stanicu"
+
+msgid "Personalized with your YouTube Music account from {}"
+msgstr "Prispôsobené podľa vášho účtu YouTube Music z prehliadača {}"
+
+msgid "Pick a color, or type one as #rrggbb and press Enter."
+msgstr "Vyberte farbu alebo ju zadajte ako #rrggbb a stlačte Enter."
+
+msgid "Pick a mood or genre to see its playlists"
+msgstr "Vyberte náladu alebo žáner a zobrazte jeho playlisty"
+
+msgid "Play"
+msgstr "Prehrať"
+
+msgid "Play \"{}\" and the rest of this shelf"
+msgstr "Prehrať „{}“ a zvyšok tohto radu"
+
+msgid "Play a YouTube link"
+msgstr "Prehrať odkaz z YouTube"
+
+msgid "Play album"
+msgstr "Prehrať album"
+
+msgid "Play all"
+msgstr "Prehrať všetko"
+
+msgid "Play all {n} song"
+msgid_plural "Play all {n} songs"
+msgstr[0] "Prehrať {n} skladbu"
+msgstr[1] "Prehrať všetky {n} skladby"
+msgstr[2] "Prehrať všetkých {n} skladieb"
+
+msgid "Play count"
+msgstr "Počet prehraní"
+
+msgid "Play every song in {} and its subfolders"
+msgstr "Prehrať všetky skladby v priečinku {} a jeho podpriečinkoch"
+
+msgid "Play from here"
+msgstr "Prehrať odtiaľto"
+
+msgid "Play from this song"
+msgstr "Prehrať od tejto skladby"
+
+msgid "Play from {}"
+msgstr "Prehrať od: {}"
+
+msgid "Play next"
+msgstr "Prehrať ako ďalšie"
+
+msgid "Play the album"
+msgstr "Prehrať tento album"
+
+msgid "Play the playlist"
+msgstr "Prehrať tento playlist"
+
+msgid "Play the radio station"
+msgstr "Prehrať rozhlasovú stanicu"
+
+msgid "Play this link after the current song"
+msgstr "Prehrať tento odkaz po aktuálnej skladbe"
+
+msgid "Play this link now"
+msgstr "Prehrať tento odkaz hneď"
+
+msgid "Play {}"
+msgstr "Prehrať {}"
+
+msgid "Play {} next"
+msgstr "Prehrať {} ako ďalšie"
+
+msgid "Play {} with its subfolders"
+msgstr "Prehrať {} aj s podpriečinkami"
+
+msgid "Playback"
+msgstr "Prehrávanie"
+
+msgid "Playback failed: {}"
+msgstr "Prehrávanie zlyhalo: {}"
+
+msgid "Playing {} failed: {}"
+msgstr "Prehrávanie {} zlyhalo: {}"
+
+msgid "PLAYLIST"
+msgstr "PLAYLIST"
+
+msgid "Playlist"
+msgstr "Playlist"
+
+msgid "playlist"
+msgstr "playlist"
+
+msgid "Playlist name"
+msgstr "Názov playlistu"
+
+msgid "Playlists"
+msgstr "Playlisty"
+
+msgid "Plays"
+msgstr "Prehrania"
+
+msgid "Plays YouTube tracks. Leave empty to use yt-dlp from your PATH."
+msgstr "Prehráva skladby z YouTube. Ak chcete použiť yt-dlp z PATH, nechajte prázdne."
+
+msgid "Preload the next song so it starts without a pause."
+msgstr "Vopred načítať nasledujúcu skladbu, aby začala bez pauzy."
+
+msgid "Previous"
+msgstr "Predchádzajúca"
+
+msgid "Previous is unavailable while a radio station plays"
+msgstr "Predchádzajúca skladba nie je počas prehrávania rozhlasovej stanice dostupná"
+
+msgid "Purple"
+msgstr "Fialová"
+
+msgid "Queue"
+msgstr "Fronta"
+
+msgid "Radio"
+msgstr "Rádio"
+
+msgid "Random"
+msgstr "Náhodne"
+
+msgid "Rate {n} star"
+msgid_plural "Rate {n} stars"
+msgstr[0] "Ohodnotiť {n} hviezdičkou"
+msgstr[1] "Ohodnotiť {n} hviezdičkami"
+msgstr[2] "Ohodnotiť {n} hviezdičkami"
+
+msgid "Rating"
+msgstr "Hodnotenie"
+
+msgid "Recently added"
+msgstr "Nedávno pridané"
+
+msgid "Recently played"
+msgstr "Nedávno prehrávané"
+
+msgid "Red"
+msgstr "Červená"
+
+msgid "Refresh"
+msgstr "Obnoviť"
+
+msgid "Refresh this section"
+msgstr "Obnoviť túto sekciu"
+
+msgid "Release year"
+msgstr "Rok vydania"
+
+msgid "Remove"
+msgstr "Odstrániť"
+
+msgid "Remove from favorites"
+msgstr "Odstrániť z obľúbených"
+
+msgid "Remove from playlist"
+msgstr "Odstrániť z playlistu"
+
+msgid "Remove from queue"
+msgstr "Odstrániť z fronty"
+
+msgid "Removed {n} song from \"{}\""
+msgid_plural "Removed {n} songs from \"{}\""
+msgstr[0] "Z „{}“ bola odstránená {n} skladba"
+msgstr[1] "Z „{}“ boli odstránené {n} skladby"
+msgstr[2] "Z „{}“ bolo odstránených {n} skladieb"
+
+msgid "Removing..."
+msgstr "Odstraňuje sa..."
+
+msgid "Repeat: all"
+msgstr "Opakovanie: všetko"
+
+msgid "Repeat: off"
+msgstr "Opakovanie: vypnuté"
+
+msgid "Repeat: one"
+msgstr "Opakovanie: jedna"
+
+msgid "ReplayGain"
+msgstr "ReplayGain"
+
+msgid "Report what you play to the server."
+msgstr "Hlásiť serveru, čo počúvate."
+
+msgid "Rescan the library for new content"
+msgstr "Prehľadať knižnicu a nájsť nový obsah"
+
+msgid "Resize column"
+msgstr "Zmeniť šírku stĺpca"
+
+msgid "Save"
+msgstr "Uložiť"
+
+msgid "Save on this device"
+msgstr "Uložiť v tomto zariadení"
+
+msgid "Save the changes on the server"
+msgstr "Uložiť zmeny na serveri"
+
+msgid "Save the changes on this device"
+msgstr "Uložiť zmeny v tomto zariadení"
+
+msgid "Save to favorites on this device"
+msgstr "Uložiť do obľúbených v tomto zariadení"
+
+msgid "Save to server"
+msgstr "Uložiť na server"
+
+msgid "Saved on this device"
+msgstr "Uložené v tomto zariadení"
+
+msgid "Saved on this device, click to remove"
+msgstr "Uložené v tomto zariadení, kliknutím odstránite"
+
+msgid "Saving the station to the server..."
+msgstr "Stanica sa ukladá na server..."
+
+msgid "Saving to the server..."
+msgstr "Ukladá sa na server..."
+
+msgid "Saving..."
+msgstr "Ukladá sa..."
+
+msgid "Scanning the library for new content..."
+msgstr "Knižnica sa prehľadáva a hľadá sa nový obsah..."
+
+msgid "Scanning the library: {}"
+msgstr "Prehľadávanie knižnice: {}"
+
+msgid "Scrobble"
+msgstr "Skroblovať"
+
+msgid "Scroll left"
+msgstr "Posunúť doľava"
+
+msgid "Scroll lists and the queue to the song that is playing."
+msgstr "Posúvať zoznamy a frontu na práve prehrávanú skladbu."
+
+msgid "Scroll right"
+msgstr "Posunúť doprava"
+
+msgid "Search"
+msgstr "Vyhľadať"
+
+msgid "Search failed: {}"
+msgstr "Vyhľadávanie zlyhalo: {}"
+
+msgid "SEARCH RESULTS"
+msgstr "VÝSLEDKY VYHĽADÁVANIA"
+
+msgid "Search songs on YouTube Music"
+msgstr "Hľadať skladby na YouTube Music"
+
+msgid "Search songs, albums, artists"
+msgstr "Hľadať skladby, albumy, interpretov"
+
+msgid "Search the radio-browser.info directory"
+msgstr "Prehľadať katalóg radio-browser.info"
+
+msgid "Search your library for songs, albums and artists"
+msgstr "Hľadať v knižnici skladby, albumy a interpretov"
+
+msgid "Searched from top to bottom until one has lyrics."
+msgstr "Prehľadávajú sa zhora nadol, kým niektorý nenájde text."
+
+msgid "Searching for lyrics..."
+msgstr "Hľadá sa text..."
+
+msgid "Searching the radio directory failed: {}"
+msgstr "Prehľadávanie katalógu rádií zlyhalo: {}"
+
+msgid "Searching the radio-browser.info directory"
+msgstr "Prehľadáva sa katalóg radio-browser.info"
+
+msgid "Searching..."
+msgstr "Hľadá sa..."
+
+msgid "Seeking is unavailable for live radio"
+msgstr "Pri živom rádiu sa nedá pretáčať"
+
+msgid "Server"
+msgstr "Server"
+
+msgid "Server type"
+msgstr "Typ servera"
+
+msgid "Servers"
+msgstr "Servery"
+
+msgid "Set rating"
+msgstr "Ohodnotiť"
+
+msgid "Settings"
+msgstr "Nastavenia"
+
+msgid "Share"
+msgstr "Zdieľať"
+
+msgid "Share ({})"
+msgstr "Zdieľať ({})"
+
+msgid "Share link copied to the clipboard: {}"
+msgstr "Odkaz na zdieľanie bol skopírovaný do schránky: {}"
+
+msgid "Share this {}: copy a public link"
+msgstr "Zdieľať ({}): skopírovať verejný odkaz"
+
+msgid "Sharing is unavailable: {}"
+msgstr "Zdieľanie nie je dostupné: {}"
+
+msgid "SHOW LESS"
+msgstr "ZOBRAZIŤ MENEJ"
+
+msgid "Show lyrics"
+msgstr "Zobraziť text"
+
+msgid "SHOW MORE"
+msgstr "ZOBRAZIŤ VIAC"
+
+msgid "Show more"
+msgstr "Zobraziť viac"
+
+msgid "Show playlists for {}"
+msgstr "Zobraziť playlisty: {}"
+
+msgid "Show queue"
+msgstr "Zobraziť frontu"
+
+msgid "Show the current song on your Discord profile."
+msgstr "Zobrazovať aktuálnu skladbu vo vašom profile Discord."
+
+msgid "Show the next page of stations"
+msgstr "Zobraziť ďalšiu stránku staníc"
+
+msgid "Show the queue next to the library; remembered on the next start."
+msgstr "Zobrazovať frontu vedľa knižnice; zapamätá sa pre ďalšie spustenie."
+
+msgid "Show the server and saved stations"
+msgstr "Zobraziť stanice servera a uložené stanice"
+
+msgid "Show {}"
+msgstr "Zobraziť: {}"
+
+msgid "Showing playlists for {}"
+msgstr "Zobrazené playlisty: {}"
+
+msgid "Showing the charts for {}"
+msgstr "Zobrazené rebríčky: {}"
+
+msgid "Showing the radio-browser.info directory"
+msgstr "Zobrazuje sa katalóg radio-browser.info"
+
+msgid "Showing the server and saved stations"
+msgstr "Zobrazujú sa stanice servera a uložené stanice"
+
+msgid "Shuffle"
+msgstr "Náhodne"
+
+msgid "Shuffle every song in {} and its subfolders"
+msgstr "Náhodne prehrať všetky skladby v priečinku {} a jeho podpriečinkoch"
+
+msgid "Shuffle play"
+msgstr "Prehrať náhodne"
+
+msgid "Shuffle: off"
+msgstr "Náhodne: vypnuté"
+
+msgid "Shuffle: on"
+msgstr "Náhodne: zapnuté"
+
+msgid "Sign in"
+msgstr "Prihlásiť sa"
+
+msgid "Sign in with browser"
+msgstr "Prihlásiť sa cez prehliadač"
+
+msgid "Sign out and forget this server's saved login?"
+msgstr "Odhlásiť sa a zabudnúť uložené prihlásenie k tomuto serveru?"
+
+msgid "Sign out and forget this server?"
+msgstr "Odhlásiť sa a zabudnúť tento server?"
+
+msgid "Similar"
+msgstr "Podobné"
+
+msgid "Similar songs come from your server, so YouTube tracks have none"
+msgstr "Podobné skladby pochádzajú z vášho servera, takže skladby z YouTube žiadne nemajú"
+
+msgid "Sleep timer: off"
+msgstr "Časovač vypnutia: vypnutý"
+
+msgid "Sleep timer: {}"
+msgstr "Časovač vypnutia: {}"
+
+msgid "Song count"
+msgstr "Počet skladieb"
+
+msgid "Songs"
+msgstr "Skladby"
+
+msgid "Sort by {}"
+msgstr "Zoradiť podľa: {}"
+
+msgid "Sort by {}: ascending"
+msgstr "Zoradiť podľa: {}, vzostupne"
+
+msgid "Sort by {}: descending"
+msgstr "Zoradiť podľa: {}, zostupne"
+
+msgid "Sort: ascending"
+msgstr "Zoradenie: vzostupne"
+
+msgid "Sort: descending"
+msgstr "Zoradenie: zostupne"
+
+msgid "Starting volume, shared with the player bar."
+msgstr "Počiatočná hlasitosť, zdieľaná s lištou prehrávača."
+
+msgid "Station data from radio-browser.info"
+msgstr "Údaje o staniciach z radio-browser.info"
+
+msgid "Station name"
+msgstr "Názov stanice"
+
+msgid "Stations"
+msgstr "Stanice"
+
+msgid "Stop {}"
+msgstr "Zastaviť {}"
+
+msgid "Stream URL"
+msgstr "Adresa streamu"
+
+msgid "Switch"
+msgstr "Prepnúť"
+
+msgid "Switch between a dark and a light theme with the desktop. {}"
+msgstr "Prepínať medzi tmavou a svetlou témou podľa prostredia. {}"
+
+msgid "Switch to grid view"
+msgstr "Prepnúť na zobrazenie mriežky"
+
+msgid "Switch to list view"
+msgstr "Prepnúť na zobrazenie zoznamu"
+
+msgid "System default"
+msgstr "Podľa systému"
+
+msgid "System default follows the language of the desktop."
+msgstr "Podľa systému znamená jazyk prostredia."
+
+msgid "Tag, for example jazz"
+msgstr "Štítok, napríklad jazz"
+
+msgid "The desktop currently prefers dark."
+msgstr "Prostredie momentálne uprednostňuje tmavú tému."
+
+msgid "The desktop currently prefers light."
+msgstr "Prostredie momentálne uprednostňuje svetlú tému."
+
+msgid "The desktop has no preference, so the dark theme is used."
+msgstr "Prostredie nemá žiadnu preferenciu, preto sa použije tmavá téma."
+
+msgid "The library scan is still running on the server"
+msgstr "Prehľadávanie knižnice na serveri stále prebieha"
+
+msgid "The queue is empty"
+msgstr "Fronta je prázdna"
+
+msgid "The queue is incomplete: loading the rest of the list failed ({})"
+msgstr "Fronta je neúplná: načítanie zvyšku zoznamu zlyhalo ({})"
+
+msgid "The radio directory could not be reached"
+msgstr "Katalóg rádií nie je dostupný"
+
+msgid "The radio station stopped streaming"
+msgstr "Rozhlasová stanica prestala vysielať"
+
+msgid "The server refused the station: {}"
+msgstr "Server stanicu odmietol: {}"
+
+msgid "Theme"
+msgstr "Téma"
+
+msgid "There is nothing to play in this list"
+msgstr "V tomto zozname nie je čo prehrať"
+
+msgid "This Discover page does not exist"
+msgstr "Táto stránka sekcie Objavovať neexistuje"
+
+msgid "This folder is empty"
+msgstr "Tento priečinok je prázdny"
+
+msgid "This playlist is empty"
+msgstr "Tento playlist je prázdny"
+
+msgid "This server has no internet radio. Stations you add are saved on this device."
+msgstr "Tento server nemá internetové rádio. Pridané stanice sa ukladajú v tomto zariadení."
+
+msgid "this server has no public share links"
+msgstr "tento server nemá verejné odkazy na zdieľanie"
+
+msgid "Time"
+msgstr "Čas"
+
+msgid "Title"
+msgstr "Názov"
+
+msgid "Top songs"
+msgstr "Top skladby"
+
+msgid "Track"
+msgstr "Skladba"
+
+msgid "Tracks"
+msgstr "Skladby"
+
+msgid "Transcode format"
+msgstr "Formát prekódovania"
+
+msgid "Try again"
+msgstr "Skúsiť znova"
+
+msgid "Turn off the theme accent color to pick your own."
+msgstr "Ak chcete vybrať vlastnú farbu, vypnite farbu zvýraznenia témy."
+
+msgid "Unmute"
+msgstr "Zrušiť stíšenie"
+
+msgid "Up next"
+msgstr "Nasleduje"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "Use the theme accent color"
+msgstr "Použiť farbu zvýraznenia témy"
+
+msgid "Use {}"
+msgstr "Použiť tému {}"
+
+msgid "Used while the desktop prefers dark."
+msgstr "Použije sa, keď prostredie uprednostňuje tmavú tému."
+
+msgid "Used while the desktop prefers light."
+msgstr "Použije sa, keď prostredie uprednostňuje svetlú tému."
+
+msgid "Username"
+msgstr "Používateľské meno"
+
+msgid "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Feishin deletes right after reading."
+msgstr "Používa vašu reláciu YouTube v tomto prehliadači na prispôsobenú domovskú stránku Objavovať a zvuk Premium. yt-dlp skopíruje jeho súbory cookie do súkromného dočasného súboru, ktorý Feishin hneď po prečítaní odstráni."
+
+msgid "Volume"
+msgstr "Hlasitosť"
+
+msgid "Volume {}%"
+msgstr "Hlasitosť {} %"
+
+msgid "XDG_RUNTIME_DIR is not set, so there is no private place for the cookies"
+msgstr "Premenná XDG_RUNTIME_DIR nie je nastavená, takže pre súbory cookie neexistuje súkromné miesto"
+
+msgid "Year"
+msgstr "Rok"
+
+msgid "You are here: {}"
+msgstr "Ste tu: {}"
+
+msgid "Your user is not allowed to share on this server"
+msgstr "Váš používateľ nemá na tomto serveri povolenie zdieľať"
+
+msgid "YouTube"
+msgstr "YouTube"
+
+msgid "YouTube albums are not in your library"
+msgstr "Albumy z YouTube nie sú vo vašej knižnici"
+
+msgid "YouTube artists are not in your library"
+msgstr "Interpreti z YouTube nie sú vo vašej knižnici"
+
+msgid "yt-dlp program"
+msgstr "Program yt-dlp"
+
+msgid "{n} album"
+msgid_plural "{n} albums"
+msgstr[0] "{n} album"
+msgstr[1] "{n} albumy"
+msgstr[2] "{n} albumov"
+
+msgid "{n} folder"
+msgid_plural "{n} folders"
+msgstr[0] "{n} priečinok"
+msgstr[1] "{n} priečinky"
+msgstr[2] "{n} priečinkov"
+
+msgid "{n} item so far"
+msgid_plural "{n} items so far"
+msgstr[0] "Zatiaľ {n} položka"
+msgstr[1] "Zatiaľ {n} položky"
+msgstr[2] "Zatiaľ {n} položiek"
+
+msgid "{n} minute"
+msgid_plural "{n} minutes"
+msgstr[0] "{n} minúta"
+msgstr[1] "{n} minúty"
+msgstr[2] "{n} minút"
+
+msgid "{n} selected"
+msgid_plural "{n} selected"
+msgstr[0] "{n} vybraná"
+msgstr[1] "{n} vybrané"
+msgstr[2] "{n} vybraných"
+
+msgid "{n} song"
+msgid_plural "{n} songs"
+msgstr[0] "{n} skladba"
+msgstr[1] "{n} skladby"
+msgstr[2] "{n} skladieb"
+
+msgid "{n} song from \"{}\" will play next"
+msgid_plural "{n} songs from \"{}\" will play next"
+msgstr[0] "{n} skladba z „{}“ sa prehrá ako ďalšia"
+msgstr[1] "{n} skladby z „{}“ sa prehrajú ako ďalšie"
+msgstr[2] "{n} skladieb z „{}“ sa prehrá ako ďalšie"
+
+msgid "{n} song on YouTube Music"
+msgid_plural "{n} songs on YouTube Music"
+msgstr[0] "{n} skladba na YouTube Music"
+msgstr[1] "{n} skladby na YouTube Music"
+msgstr[2] "{n} skladieb na YouTube Music"
+
+msgid "{n} song will play next"
+msgid_plural "{n} songs will play next"
+msgstr[0] "{n} skladba sa prehrá ako ďalšia"
+msgstr[1] "{n} skladby sa prehrajú ako ďalšie"
+msgstr[2] "{n} skladieb sa prehrá ako ďalšie"
+
+msgid "{} (current theme)"
+msgstr "{} (aktuálna téma)"
+
+msgid "{} (unavailable)"
+msgstr "{} (nedostupné)"
+
+msgid "{} at {}"
+msgstr "{} na {}"
+
+msgid "{} cannot be played: its stream address is not an internet stream"
+msgstr "{} sa nedá prehrať: adresa streamu nie je internetový stream"
+
+msgid "{} is shown"
+msgstr "Zobrazené: {}"
+
+msgid "{} kbps"
+msgstr "{} kbps"
+
+msgid "{} s"
+msgstr "{} s"
+
+msgid "{}: off"
+msgstr "{}: vypnuté"
+
+msgid "{}: on"
+msgstr "{}: zapnuté"
+
+msgid "{}: {} (dark)"
+msgstr "{}: {} (tmavá)"
+
+msgid "{}: {} (light)"
+msgstr "{}: {} (svetlá)"

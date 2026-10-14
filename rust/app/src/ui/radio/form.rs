@@ -1,7 +1,12 @@
 use feishin_core::model::RadioStationDraft;
 
-const MISSING_NAME: &str = "Enter a name for the station";
-const INVALID_STREAM_URL: &str = "Enter a stream URL that starts with http:// or https://";
+fn missing_name() -> String {
+    tr!("Enter a name for the station")
+}
+
+fn invalid_stream_url() -> String {
+    tr!("Enter a stream URL that starts with http:// or https://")
+}
 
 fn is_web_url(url: &str) -> bool {
     ["http://", "https://"]
@@ -13,15 +18,15 @@ pub(super) fn draft_from_form(
     name: &str,
     stream_url: &str,
     homepage_url: &str,
-) -> Result<RadioStationDraft, &'static str> {
+) -> Result<RadioStationDraft, String> {
     let name = name.trim();
     let stream_url = stream_url.trim();
     let homepage_url = homepage_url.trim();
     if name.is_empty() {
-        return Err(MISSING_NAME);
+        return Err(missing_name());
     }
     if !is_web_url(stream_url) {
-        return Err(INVALID_STREAM_URL);
+        return Err(invalid_stream_url());
     }
     Ok(RadioStationDraft {
         name: name.to_owned(),
@@ -49,8 +54,14 @@ mod tests {
 
     #[test]
     fn names_and_web_stream_urls_are_required() {
-        assert_eq!(draft_from_form("", "http://a", ""), Err(MISSING_NAME));
-        assert_eq!(draft_from_form("A", "ftp://a", ""), Err(INVALID_STREAM_URL));
-        assert_eq!(draft_from_form("A", "http://", ""), Err(INVALID_STREAM_URL));
+        assert_eq!(draft_from_form("", "http://a", ""), Err(missing_name()));
+        assert_eq!(
+            draft_from_form("A", "ftp://a", ""),
+            Err(invalid_stream_url())
+        );
+        assert_eq!(
+            draft_from_form("A", "http://", ""),
+            Err(invalid_stream_url())
+        );
     }
 }

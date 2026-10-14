@@ -56,10 +56,10 @@ component TracksFilters inherits HorizontalLayout {
 
     FilterChip {
         y: (parent.height - self.height) / 2;
-        text: "Favorites";
+        text: @tr("Favorites");
         icon: Icons.heart;
         active: TracksState.filter-favorite;
-        tooltip: TracksState.filter-favorite ? "Favorites only: on" : "Favorites only: off";
+        tooltip: TracksState.filter-favorite ? @tr("Favorites only: on") : @tr("Favorites only: off");
         clicked => {
             TracksState.filter-favorite = !TracksState.filter-favorite;
             TracksState.filters-changed(false);
@@ -81,8 +81,8 @@ component TracksFilters inherits HorizontalLayout {
 
     if root.filtered: FilterChip {
         y: (parent.height - self.height) / 2;
-        text: root.compact ? "Clear" : "Clear filters";
-        tooltip: "Clear the favorites and genre filters";
+        text: root.compact ? @tr("Clear") : @tr("Clear filters");
+        tooltip: @tr("Clear the favorites and genre filters");
         clicked => {
             TracksState.filter-favorite = false;
             TracksState.genre-index = 0;
@@ -108,7 +108,7 @@ export component TracksToolbar inherits VerticalLayout {
         height: 44px;
 
         Text {
-            text: "Tracks";
+            text: @tr("Tracks");
             font-size: 24px;
             font-weight: 700;
             color: Theme.foreground;
@@ -139,7 +139,7 @@ export component TracksToolbar inherits VerticalLayout {
             preferred-width: 280px;
             max-width: 280px;
             horizontal-stretch: 1;
-            placeholder-text: "Search";
+            placeholder-text: @tr("Search");
             text <=> TracksState.search-text;
             edited(text) => {
                 TracksState.search-edited(text);

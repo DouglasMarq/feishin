@@ -57,6 +57,13 @@ export component Tab inherits Rectangle {
     in property <string> count;
     in property <bool> active;
     callback clicked();
+    accessible-role: button;
+    accessible-label: root.text;
+    accessible-checkable: true;
+    accessible-checked: root.active;
+    accessible-action-default => {
+        root.clicked();
+    }
     width: layout.preferred-width;
     height: 32px;
     border-radius: 16px;
@@ -92,6 +99,11 @@ export component Tab inherits Rectangle {
 export component FavoriteButton inherits Rectangle {
     in property <bool> favorite;
     callback clicked();
+    accessible-role: button;
+    accessible-label: root.favorite ? @tr("Remove from favorites") : @tr("Add to favorites");
+    accessible-action-default => {
+        root.clicked();
+    }
     width: 28px;
     height: 28px;
     border-radius: 14px;
@@ -105,7 +117,7 @@ export component FavoriteButton inherits Rectangle {
     }
 
     TooltipAnchor {
-        text: root.favorite ? "Remove from favorites" : "Add to favorites";
+        text: root.favorite ? @tr("Remove from favorites") : @tr("Add to favorites");
         hovered: touch.has-hover;
     }
 
@@ -265,7 +277,7 @@ export component TrackTable inherits Rectangle {
     in property <[TrackItem]> rows;
     in property <bool> loading;
     in property <bool> show-favorite;
-    in property <string> empty-text: "No tracks found";
+    in property <string> empty-text: @tr("No tracks found");
     callback play(int);
     callback toggle-favorite(int);
     min-width: 320px;
@@ -287,37 +299,37 @@ export component TrackTable inherits Rectangle {
                 }
 
                 HeaderCell {
-                    text: "Title";
+                    text: @tr("Title");
                     sortable: false;
                     column-width <=> TracksState.w-title;
                 }
 
                 HeaderCell {
-                    text: "Artist";
+                    text: @tr("Artist");
                     sortable: false;
                     column-width <=> TracksState.w-artist;
                 }
 
                 HeaderCell {
-                    text: "Album";
+                    text: @tr("Album");
                     sortable: false;
                     column-width <=> TracksState.w-album;
                 }
 
                 HeaderCell {
-                    text: "Year";
+                    text: @tr("Year");
                     sortable: false;
                     column-width <=> TracksState.w-year;
                 }
 
                 HeaderCell {
-                    text: "Plays";
+                    text: @tr("Plays");
                     sortable: false;
                     column-width <=> TracksState.w-plays;
                 }
 
                 HeaderCell {
-                    text: "Time";
+                    text: @tr("Time");
                     sortable: false;
                     column-width <=> TracksState.w-duration;
                 }
@@ -385,7 +397,7 @@ component GenreList inherits VerticalLayout {
         spacing: 12px;
 
         Text {
-            text: "Genres";
+            text: @tr("Genres");
             font-size: 24px;
             font-weight: 700;
             color: Theme.foreground;
@@ -407,7 +419,7 @@ component GenreList inherits VerticalLayout {
             preferred-width: 280px;
             max-width: 280px;
             horizontal-stretch: 1;
-            placeholder-text: "Filter";
+            placeholder-text: @tr("Filter");
             edited(text) => {
                 GenresState.filter-edited(text);
             }
@@ -422,7 +434,7 @@ component GenreList inherits VerticalLayout {
             padding-right: 20px;
 
             Text {
-                text: "Name";
+                text: @tr("Name");
                 color: Theme.muted;
                 font-size: 12px;
                 font-weight: 600;
@@ -432,7 +444,7 @@ component GenreList inherits VerticalLayout {
 
             Text {
                 width: 100px;
-                text: "Albums";
+                text: @tr("Albums");
                 color: Theme.muted;
                 font-size: 12px;
                 font-weight: 600;
@@ -442,7 +454,7 @@ component GenreList inherits VerticalLayout {
 
             Text {
                 width: 100px;
-                text: "Tracks";
+                text: @tr("Tracks");
                 color: Theme.muted;
                 font-size: 12px;
                 font-weight: 600;
@@ -512,7 +524,7 @@ component GenreList inherits VerticalLayout {
         }
 
         if !GenresState.genres-loading && GenresState.genres.length == 0: Text {
-            text: "No genres found";
+            text: @tr("No genres found");
             color: Theme.muted;
             horizontal-alignment: center;
             vertical-alignment: center;
@@ -529,7 +541,7 @@ component GenreDetail inherits VerticalLayout {
         if AppState.can-go-back: IconButton {
             y: (parent.height - self.height) / 2;
             icon: LibraryIcons.arrow-back;
-            tooltip: "Back";
+            tooltip: @tr("Back");
             clicked => {
                 AppState.back();
             }
@@ -550,7 +562,7 @@ component GenreDetail inherits VerticalLayout {
 
         Tab {
             y: (parent.height - self.height) / 2;
-            text: "Albums";
+            text: @tr("Albums");
             count: GenresState.album-count;
             active: GenresState.tab == 0;
             clicked => {
@@ -560,7 +572,7 @@ component GenreDetail inherits VerticalLayout {
 
         Tab {
             y: (parent.height - self.height) / 2;
-            text: "Tracks";
+            text: @tr("Tracks");
             count: GenresState.track-count;
             active: GenresState.tab == 1;
             clicked => {
@@ -573,7 +585,7 @@ component GenreDetail inherits VerticalLayout {
         if GenresState.tab == 0: CardGrid {
             rows: GenresState.albums;
             loading: GenresState.albums-loading;
-            empty-text: "No albums found";
+            empty-text: @tr("No albums found");
             columns-changed(columns) => {
                 GenresState.album-columns(columns);
             }

@@ -32,13 +32,13 @@ impl ListedEdit {
                     Ok(()) => (song_ids, None),
                     Err(error) => (
                         Vec::new(),
-                        Some(format!("Could not update favorites: {error}")),
+                        Some(tr!("Could not update favorites: {}", error)),
                     ),
                 }
             }
             Self::Rate(rating) => {
                 let (rated, failure) = rate_until_failure(server, song_ids, rating).await;
-                let message = failure.map(|error| format!("Could not set the rating: {error}"));
+                let message = failure.map(|error| tr!("Could not set the rating: {}", error));
                 (rated, message)
             }
         }
@@ -105,7 +105,7 @@ async fn edit_listed(
         let song_ids = match chunks.next_ids(server.as_ref()).await {
             Ok(Some(song_ids)) => song_ids,
             Ok(None) => return None,
-            Err(error) => return Some(format!("Could not load the selection: {error}")),
+            Err(error) => return Some(tr!("Could not load the selection: {}", error)),
         };
         let (edited, failure) = edit.apply(Arc::clone(&server), song_ids).await;
         show_edited(weak, edit, edited);

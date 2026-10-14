@@ -31,21 +31,21 @@ component SongRowView inherits Rectangle {
     menu := ContextMenuArea {
         Menu {
             MenuItem {
-                title: "Play";
+                title: @tr("Play");
                 activated => {
                     DiscoverState.play-song(root.position);
                 }
             }
 
             MenuItem {
-                title: "Play next";
+                title: @tr("Play next");
                 activated => {
                     DiscoverState.play-song-next(root.position);
                 }
             }
 
             MenuItem {
-                title: "Add to queue";
+                title: @tr("Add to queue");
                 activated => {
                     DiscoverState.queue-song(root.position);
                 }
@@ -54,7 +54,7 @@ component SongRowView inherits Rectangle {
             MenuSeparator { }
 
             MenuItem {
-                title: "Open in YouTube Music";
+                title: @tr("Open in YouTube Music");
                 activated => {
                     DiscoverState.open-song-in-browser(root.position);
                 }
@@ -110,7 +110,7 @@ component SongRowView inherits Rectangle {
                         }
 
                         TooltipAnchor {
-                            text: "Play from this song";
+                            text: @tr("Play from this song");
                             hovered: play-touch.has-hover;
                         }
 
@@ -247,7 +247,7 @@ component PageHeader inherits HorizontalLayout {
         horizontal-stretch: 1;
 
         Text {
-            text: DiscoverState.page-kind;
+            text: DiscoverState.page-kind == "SEARCH RESULTS" ? @tr("SEARCH RESULTS") : (DiscoverState.page-kind == "ALBUM" ? @tr("ALBUM") : @tr("PLAYLIST"));
             color: Theme.muted;
             font-size: 11px;
             font-weight: 600;
@@ -299,7 +299,7 @@ component PageActions inherits HorizontalLayout {
         }
 
         TooltipAnchor {
-            text: root.has-songs ? "Play all " + DiscoverState.songs.length + " songs" : "Nothing to play yet";
+            text: root.has-songs ? @tr("Play all {n} song" | "Play all {n} songs" % DiscoverState.songs.length) : @tr("Nothing to play yet");
             hovered: play-touch.has-hover;
         }
 
@@ -319,7 +319,7 @@ component PageActions inherits HorizontalLayout {
         icon: Icons.queue;
         icon-size: 24px;
         enabled: root.has-songs;
-        tooltip: root.has-songs ? "Add all songs to the queue" : "Nothing to add yet";
+        tooltip: root.has-songs ? @tr("Add all songs to the queue") : @tr("Nothing to add yet");
         clicked => {
             DiscoverState.queue-page();
         }
@@ -331,7 +331,7 @@ component PageActions inherits HorizontalLayout {
         height: 40px;
         icon: DiscoverIcons.open-external;
         icon-size: 22px;
-        tooltip: "Open in YouTube Music";
+        tooltip: @tr("Open in YouTube Music");
         clicked => {
             DiscoverState.open-page-in-browser();
         }
@@ -355,7 +355,7 @@ export component DiscoverCollectionPage inherits Rectangle {
                 IconButton {
                     icon: DiscoverIcons.back;
                     enabled: AppState.can-go-back;
-                    tooltip: AppState.can-go-back ? "Back" : "Nothing to go back to";
+                    tooltip: AppState.can-go-back ? @tr("Back") : @tr("Nothing to go back to");
                     clicked => {
                         AppState.back();
                     }
@@ -381,7 +381,7 @@ export component DiscoverCollectionPage inherits Rectangle {
                 padding-left: 24px;
 
                 Text {
-                    text: "No songs here";
+                    text: @tr("No songs here");
                     color: Theme.muted;
                 }
             }

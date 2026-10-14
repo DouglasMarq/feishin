@@ -20,10 +20,7 @@ pub async fn fetch_all(server: &dyn MusicServer) -> feishin_api::Result<Vec<Play
 }
 
 pub fn song_count_label(count: usize) -> String {
-    match count {
-        1 => "1 song".to_owned(),
-        count => format!("{count} songs"),
-    }
+    tr_plural!("{n} song", "{n} songs", count)
 }
 
 #[cfg(test)]

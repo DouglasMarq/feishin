@@ -25,7 +25,7 @@ component SectionTab inherits Rectangle {
     }
 
     TooltipAnchor {
-        text: root.active ? root.text + " is shown" : "Show " + root.text;
+        text: root.active ? @tr("{} is shown", root.text) : @tr("Show {}", root.text);
         hovered: touch.has-hover;
     }
 
@@ -73,7 +73,7 @@ component CountryPicker inherits HorizontalLayout {
     alignment: start;
 
     Text {
-        text: "Country";
+        text: @tr("Country");
         color: Theme.muted;
         vertical-alignment: center;
     }
@@ -92,7 +92,7 @@ component CountryPicker inherits HorizontalLayout {
         }
 
         TooltipAnchor {
-            text: "Showing the charts for " + root.country;
+            text: @tr("Showing the charts for {}", root.country);
             hovered: hover.has-hover;
         }
     }
@@ -105,7 +105,7 @@ component SectionHeader inherits VerticalLayout {
         spacing: 12px;
 
         Text {
-            text: "Discover";
+            text: @tr("Discover");
             font-size: 24px;
             font-weight: 700;
             color: Theme.foreground;
@@ -115,7 +115,7 @@ component SectionHeader inherits VerticalLayout {
 
         search := LineEdit {
             width: 280px;
-            placeholder-text: "Search songs on YouTube Music";
+            placeholder-text: @tr("Search songs on YouTube Music");
             text <=> DiscoverState.search-text;
             accepted => {
                 DiscoverState.search(self.text);
@@ -126,7 +126,7 @@ component SectionHeader inherits VerticalLayout {
             y: (parent.height - self.height) / 2;
             icon: DiscoverIcons.refresh;
             enabled: !DiscoverState.loading;
-            tooltip: DiscoverState.loading ? "Loading..." : "Refresh this section";
+            tooltip: DiscoverState.loading ? @tr("Loading...") : @tr("Refresh this section");
             clicked => {
                 DiscoverState.refresh();
             }
@@ -138,22 +138,22 @@ component SectionHeader inherits VerticalLayout {
         alignment: start;
 
         SectionTab {
-            text: "For you";
+            text: @tr("For you");
             section: DiscoverSection.for-you;
         }
 
         SectionTab {
-            text: "New releases";
+            text: @tr("New releases");
             section: DiscoverSection.new-releases;
         }
 
         SectionTab {
-            text: "Charts";
+            text: @tr("Charts");
             section: DiscoverSection.charts;
         }
 
         SectionTab {
-            text: "Moods and genres";
+            text: @tr("Moods and genres");
             section: DiscoverSection.moods;
         }
     }
@@ -206,8 +206,8 @@ component SectionsPage inherits Rectangle {
                     alignment: start;
 
                     ActionChip {
-                        text: "Try again";
-                        tooltip: "Load this section again";
+                        text: @tr("Try again");
+                        tooltip: @tr("Load this section again");
                         clicked => {
                             DiscoverState.refresh();
                         }
@@ -222,12 +222,12 @@ component SectionsPage inherits Rectangle {
             }
 
             if root.empty && root.showing-moods && DiscoverState.mood-index < 0 && DiscoverState.moods.length > 0: Text {
-                text: "Pick a mood or genre to see its playlists";
+                text: @tr("Pick a mood or genre to see its playlists");
                 color: Theme.muted;
             }
 
             if root.empty && !(root.showing-moods && DiscoverState.mood-index < 0): Text {
-                text: "Nothing to show here right now";
+                text: @tr("Nothing to show here right now");
                 color: Theme.muted;
             }
 

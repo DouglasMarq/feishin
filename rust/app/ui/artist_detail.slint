@@ -93,7 +93,7 @@ component AlbumTile inherits Rectangle {
     if touch.has-hover: PlayOverlay {
         x: art.x + art.width - self.width - 8px;
         y: art.y + art.height - self.height - 8px;
-        tooltip: "Play album";
+        tooltip: @tr("Play album");
         clicked => {
             ArtistDetailState.play-album(root.album.id);
         }
@@ -168,7 +168,7 @@ export component ArtistDetailView inherits Rectangle {
                     spacing: 8px;
 
                     Text {
-                        text: "ARTIST";
+                        text: @tr("ARTIST");
                         color: Theme.muted;
                         font-size: 12px;
                         font-weight: 700;
@@ -201,7 +201,7 @@ export component ArtistDetailView inherits Rectangle {
                         PlayOverlay {
                             width: 48px;
                             height: 48px;
-                            tooltip: "Play all";
+                            tooltip: @tr("Play all");
                             clicked => {
                                 ArtistDetailState.play(false);
                             }
@@ -212,7 +212,7 @@ export component ArtistDetailView inherits Rectangle {
                             width: 40px;
                             height: 40px;
                             icon: Icons.shuffle;
-                            tooltip: "Shuffle play";
+                            tooltip: @tr("Shuffle play");
                             icon-size: 22px;
                             clicked => {
                                 ArtistDetailState.play(true);
@@ -227,7 +227,7 @@ export component ArtistDetailView inherits Rectangle {
                             icon-color: ArtistDetailState.favorite ? Theme.danger : Theme.muted;
                             icon-size: 22px;
                             enabled: ArtistDetailState.name != "";
-                            tooltip: ArtistDetailState.favorite ? "Remove from favorites" : "Add to favorites";
+                            tooltip: ArtistDetailState.favorite ? @tr("Remove from favorites") : @tr("Add to favorites");
                             clicked => {
                                 ArtistDetailState.toggle-favorite();
                             }
@@ -242,7 +242,7 @@ export component ArtistDetailView inherits Rectangle {
                 spacing: 8px;
 
                 SectionTitle {
-                    text: "About " + ArtistDetailState.name;
+                    text: @tr("About {}", ArtistDetailState.name);
                 }
 
                 Rectangle {
@@ -259,7 +259,7 @@ export component ArtistDetailView inherits Rectangle {
                 }
 
                 if bio.preferred-height > root.bio-collapsed: LinkText {
-                    text: ArtistDetailState.bio-expanded ? "SHOW LESS" : "SHOW MORE";
+                    text: ArtistDetailState.bio-expanded ? @tr("SHOW LESS") : @tr("SHOW MORE");
                     clicked => {
                         ArtistDetailState.bio-expanded = !ArtistDetailState.bio-expanded;
                     }
@@ -275,7 +275,7 @@ export component ArtistDetailView inherits Rectangle {
                     spacing: 12px;
 
                     SectionTitle {
-                        text: "Top songs";
+                        text: @tr("Top songs");
                     }
 
                     Rectangle {
@@ -283,7 +283,7 @@ export component ArtistDetailView inherits Rectangle {
                     }
 
                     if ArtistDetailState.top-songs.length > 5: LinkText {
-                        text: ArtistDetailState.top-expanded ? "SHOW LESS" : "SHOW MORE";
+                        text: ArtistDetailState.top-expanded ? @tr("SHOW LESS") : @tr("SHOW MORE");
                         vertical-alignment: center;
                         clicked => {
                             ArtistDetailState.top-expanded = !ArtistDetailState.top-expanded;
@@ -313,7 +313,7 @@ export component ArtistDetailView inherits Rectangle {
                 spacing: 12px;
 
                 SectionTitle {
-                    text: "Albums";
+                    text: @tr("Albums");
                 }
 
                 Text {

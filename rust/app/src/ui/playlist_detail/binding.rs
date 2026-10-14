@@ -53,7 +53,7 @@ fn show_page(window: &AppWindow, request: &PageRequest, result: feishin_api::Res
         Err(error) => {
             let current = with_model(window, |model| model.page_failed(request));
             if current == Some(true) {
-                show_status(window, &format!("Could not load the playlist: {error}"));
+                show_status(window, &tr!("Could not load the playlist: {}", error));
             }
         }
     }

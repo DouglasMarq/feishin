@@ -64,8 +64,13 @@ export component ArtistImage inherits Rectangle {
 }
 
 export component PlayOverlay inherits Rectangle {
-    in property <string> tooltip: "Play";
+    in property <string> tooltip: @tr("Play");
     callback clicked();
+    accessible-role: button;
+    accessible-label: root.tooltip;
+    accessible-action-default => {
+        root.clicked();
+    }
     width: 40px;
     height: 40px;
     border-radius: self.width / 2;
@@ -177,7 +182,7 @@ component ArtistRowView inherits Rectangle {
                     x: parent.width - self.width;
                     icon: Icons.play;
                     icon-color: Theme.foreground;
-                    tooltip: "Play";
+                    tooltip: @tr("Play");
                     clicked => {
                         ArtistsState.play(root.card.id);
                     }
@@ -242,7 +247,7 @@ component ArtistsControls inherits HorizontalLayout {
     IconButton {
         y: (parent.height - self.height) / 2;
         icon: ArtistsState.descending ? Icons.arrow-down : Icons.arrow-up;
-        tooltip: ArtistsState.descending ? "Sort: descending" : "Sort: ascending";
+        tooltip: ArtistsState.descending ? @tr("Sort: descending") : @tr("Sort: ascending");
         clicked => {
             ArtistsState.descending = !ArtistsState.descending;
             ArtistsState.query-changed();
@@ -253,7 +258,7 @@ component ArtistsControls inherits HorizontalLayout {
         y: (parent.height - self.height) / 2;
         icon: ArtistsState.favorites-only ? Icons.heart : ArtistIcons.heart-outline;
         active: ArtistsState.favorites-only;
-        tooltip: ArtistsState.favorites-only ? "Favorites only: on" : "Favorites only: off";
+        tooltip: ArtistsState.favorites-only ? @tr("Favorites only: on") : @tr("Favorites only: off");
         clicked => {
             ArtistsState.favorites-only = !ArtistsState.favorites-only;
             ArtistsState.query-changed();
@@ -263,7 +268,7 @@ component ArtistsControls inherits HorizontalLayout {
     IconButton {
         y: (parent.height - self.height) / 2;
         icon: ArtistsState.grid ? ArtistIcons.list : ArtistIcons.grid;
-        tooltip: ArtistsState.grid ? "Switch to list view" : "Switch to grid view";
+        tooltip: ArtistsState.grid ? @tr("Switch to list view") : @tr("Switch to grid view");
         clicked => {
             ArtistsState.grid = !ArtistsState.grid;
         }
@@ -274,7 +279,7 @@ component ArtistsControls inherits HorizontalLayout {
         preferred-width: 240px;
         max-width: root.search-max-width;
         horizontal-stretch: 1;
-        placeholder-text: "Search";
+        placeholder-text: @tr("Search");
         edited(text) => {
             ArtistsState.search-edited(text);
         }
@@ -310,7 +315,7 @@ export component ArtistsView inherits Rectangle {
                 spacing: 8px;
 
                 Text {
-                    text: "Artists";
+                    text: @tr("Artists");
                     font-size: 24px;
                     font-weight: 700;
                     color: Theme.foreground;
@@ -372,17 +377,17 @@ export component ArtistsView inherits Rectangle {
 
                         Cell {
                             horizontal-stretch: 1;
-                            text: "Name";
+                            text: @tr("Name");
                         }
 
                         Cell {
                             width: 120px;
-                            text: "Albums";
+                            text: @tr("Albums");
                         }
 
                         Cell {
                             width: 120px;
-                            text: "Songs";
+                            text: @tr("Songs");
                         }
 
                         Rectangle {
@@ -416,7 +421,7 @@ export component ArtistsView inherits Rectangle {
             }
 
             if !ArtistsState.loading && ArtistsState.complete && ArtistsState.items.length == 0: Text {
-                text: "No artists found";
+                text: @tr("No artists found");
                 color: Theme.muted;
                 horizontal-alignment: center;
                 vertical-alignment: center;

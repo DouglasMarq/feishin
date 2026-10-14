@@ -20,7 +20,7 @@ export component HeaderCell inherits Rectangle {
     height: 32px;
 
     TooltipAnchor {
-        text: root.sortable ? "Sort by " + root.text + (root.sorted ? (TracksState.sort-desc ? ": descending" : ": ascending") : "") : "";
+        text: !root.sortable ? "" : !root.sorted ? @tr("Sort by {}", root.text) : TracksState.sort-desc ? @tr("Sort by {}: descending", root.text) : @tr("Sort by {}: ascending", root.text);
         hovered: sort-touch.has-hover;
     }
 
@@ -81,7 +81,7 @@ export component HeaderCell inherits Rectangle {
         mouse-cursor: col-resize;
 
         TooltipAnchor {
-            text: "Resize column";
+            text: @tr("Resize column");
             hovered: resize-touch.has-hover;
         }
 
@@ -155,7 +155,7 @@ export component FavoriteCell inherits Rectangle {
     TooltipAnchor {
         x: 4px;
         width: 24px;
-        text: root.favorite ? "Remove from favorites" : "Add to favorites";
+        text: root.favorite ? @tr("Remove from favorites") : @tr("Add to favorites");
         hovered: touch.has-hover;
     }
 
@@ -195,7 +195,7 @@ export component RatingCell inherits Rectangle {
             }
 
             TooltipAnchor {
-                text: star-index + 1 == root.rating ? "Clear rating" : (star-index == 0 ? "Rate 1 star" : "Rate \{star-index + 1} stars");
+                text: star-index + 1 == root.rating ? @tr("Clear rating") : @tr("Rate {n} star" | "Rate {n} stars" % (star-index + 1));
                 hovered: star-touch.has-hover;
             }
 

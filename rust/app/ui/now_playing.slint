@@ -126,13 +126,13 @@ component LyricsPanel inherits Rectangle {
     }
 
     if NowPlayingState.lyrics-status == LyricsStatus.loading: Placeholder {
-        text: "Searching for lyrics...";
+        text: @tr("Searching for lyrics...");
     }
     if NowPlayingState.lyrics-status == LyricsStatus.missing: Placeholder {
-        text: "No lyrics found";
+        text: @tr("No lyrics found");
     }
     if NowPlayingState.lyrics-status == LyricsStatus.failed: Placeholder {
-        text: "Could not load lyrics";
+        text: @tr("Could not load lyrics");
     }
 
     lyrics-scroller := Flickable {
@@ -201,7 +201,7 @@ component LyricsPanel inherits Rectangle {
         y: parent.height - self.height;
         height: NowPlayingState.lyrics-status == LyricsStatus.found ? 28px : 0px;
         visible: NowPlayingState.lyrics-status == LyricsStatus.found;
-        text: "Lyrics from " + NowPlayingState.lyrics-source;
+        text: @tr("Lyrics from {}", NowPlayingState.lyrics-source);
         color: Theme.muted;
         font-size: 11px;
         horizontal-alignment: center;
@@ -211,7 +211,7 @@ component LyricsPanel inherits Rectangle {
 
 component UpNextPanel inherits Rectangle {
     if NowPlayingState.up-next.length == 0: Placeholder {
-        text: "The queue is empty";
+        text: @tr("The queue is empty");
     }
 
     ListView {
@@ -280,10 +280,10 @@ component UpNextPanel inherits Rectangle {
 
 component SimilarPanel inherits Rectangle {
     if NowPlayingState.similar-loading: Placeholder {
-        text: "Loading similar songs...";
+        text: @tr("Loading similar songs...");
     }
     if !NowPlayingState.similar-loading && NowPlayingState.similar.length == 0: Placeholder {
-        text: NowPlayingState.external ? "Similar songs come from your server, so YouTube tracks have none" : "No similar songs found";
+        text: NowPlayingState.external ? @tr("Similar songs come from your server, so YouTube tracks have none") : @tr("No similar songs found");
     }
 
     ListView {
@@ -318,7 +318,7 @@ component SimilarPanel inherits Rectangle {
                         icon-size: 18px;
                         width: 24px;
                         height: 24px;
-                        tooltip: "Play";
+                        tooltip: @tr("Play");
                         clicked => {
                             NowPlayingState.play-similar(track.id);
                         }
@@ -387,7 +387,7 @@ export component NowPlayingView inherits Rectangle {
     }
 
     if !PlayerState.has-song: Placeholder {
-        text: "Nothing is playing";
+        text: @tr("Nothing is playing");
         font-size: 16px;
     }
 
@@ -395,7 +395,7 @@ export component NowPlayingView inherits Rectangle {
         x: parent.width - self.width - 16px;
         y: 16px;
         icon: Icons.close;
-        tooltip: "Close";
+        tooltip: @tr("Close");
         clicked => {
             if (AppState.can-go-back) {
                 AppState.back();
@@ -472,7 +472,7 @@ export component NowPlayingView inherits Rectangle {
                             text: artist.name;
                             font-size: 16px;
                             enabled: artist.id != "";
-                            tooltip: NowPlayingState.external ? "YouTube artists are not in your library" : (artist.id != "" ? "Go to " + artist.name : "");
+                            tooltip: NowPlayingState.external ? @tr("YouTube artists are not in your library") : (artist.id != "" ? @tr("Go to {}", artist.name) : "");
                             clicked => {
                                 AppState.navigate(Route.artist-detail, artist.id);
                             }
@@ -487,7 +487,7 @@ export component NowPlayingView inherits Rectangle {
                         text: PlayerState.album;
                         font-size: 14px;
                         enabled: NowPlayingState.album-id != "";
-                        tooltip: NowPlayingState.external ? "YouTube albums are not in your library" : (NowPlayingState.album-id != "" ? "Go to album" : "");
+                        tooltip: NowPlayingState.external ? @tr("YouTube albums are not in your library") : (NowPlayingState.album-id != "" ? @tr("Go to album") : "");
                         clicked => {
                             AppState.navigate(Route.album-detail, NowPlayingState.album-id);
                         }
@@ -505,7 +505,7 @@ export component NowPlayingView inherits Rectangle {
                 spacing: 24px;
 
                 TabButton {
-                    text: "Lyrics";
+                    text: @tr("Lyrics");
                     active: NowPlayingState.tab == NowPlayingTab.lyrics;
                     clicked => {
                         NowPlayingState.tab = NowPlayingTab.lyrics;
@@ -513,7 +513,7 @@ export component NowPlayingView inherits Rectangle {
                 }
 
                 TabButton {
-                    text: "Up next";
+                    text: @tr("Up next");
                     active: NowPlayingState.tab == NowPlayingTab.up-next;
                     clicked => {
                         NowPlayingState.tab = NowPlayingTab.up-next;
@@ -522,7 +522,7 @@ export component NowPlayingView inherits Rectangle {
                 }
 
                 TabButton {
-                    text: "Similar";
+                    text: @tr("Similar");
                     active: NowPlayingState.tab == NowPlayingTab.similar;
                     clicked => {
                         NowPlayingState.tab = NowPlayingTab.similar;

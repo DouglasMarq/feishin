@@ -1,0 +1,1520 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: tl\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+
+msgid "\"{}\" plays next"
+msgstr "Susunod na tutugtog ang \"{}\""
+
+msgid "\"{}\" will play next"
+msgstr "Susunod na tutugtugin ang \"{}\""
+
+msgid "1 star"
+msgstr "1 bituin"
+
+msgid "2 stars"
+msgstr "2 bituin"
+
+msgid "3 stars"
+msgstr "3 bituin"
+
+msgid "4 stars"
+msgstr "4 bituin"
+
+msgid "5 stars"
+msgstr "5 bituin"
+
+msgid "About {}"
+msgstr "Tungkol sa {}"
+
+msgid "Accent color"
+msgstr "Kulay ng accent"
+
+msgid "Accent color not changed: {}."
+msgstr "Hindi napalitan ang kulay ng accent: {}."
+
+msgid "Accent color {}"
+msgstr "Kulay ng accent na {}"
+
+msgid "Accent color {} (selected)"
+msgstr "Kulay ng accent na {} (napili)"
+
+msgid "Accent color {} (theme accent in use)"
+msgstr "Kulay ng accent na {} (accent ng tema ang ginagamit)"
+
+msgid "Add a station by its stream URL"
+msgstr "Magdagdag ng istasyon gamit ang stream URL nito"
+
+msgid "Add all songs to the queue"
+msgstr "Idagdag ang lahat ng kanta sa pila"
+
+msgid "Add server"
+msgstr "Magdagdag ng server"
+
+msgid "Add station"
+msgstr "Magdagdag ng istasyon"
+
+msgid "Add this link to the end of the queue"
+msgstr "Idagdag ang link na ito sa dulo ng pila"
+
+msgid "Add this station to the server for every client"
+msgstr "Idagdag ang istasyong ito sa server para sa lahat ng client"
+
+msgid "Add to favorites"
+msgstr "Idagdag sa mga paborito"
+
+msgid "Add to playlist"
+msgstr "Idagdag sa playlist"
+
+msgid "Add to queue"
+msgstr "Idagdag sa pila"
+
+msgid "Add to the server's stations"
+msgstr "Idagdag sa mga istasyon ng server"
+
+msgid "Add {n} song to playlist"
+msgid_plural "Add {n} songs to playlist"
+msgstr[0] "Idagdag ang {n} kanta sa playlist"
+msgstr[1] "Idagdag ang {n} na kanta sa playlist"
+
+msgid "Add {} to the queue"
+msgstr "Idagdag ang {} sa pila"
+
+msgid "Added \"{}\" to the queue"
+msgstr "Naidagdag ang \"{}\" sa pila"
+
+msgid "Added only {n} song to \"{}\": {}"
+msgid_plural "Added only {n} songs to \"{}\": {}"
+msgstr[0] "{n} kanta lang ang naidagdag sa \"{}\": {}"
+msgstr[1] "{n} na kanta lang ang naidagdag sa \"{}\": {}"
+
+msgid "Added {n} song from \"{}\" to the queue"
+msgid_plural "Added {n} songs from \"{}\" to the queue"
+msgstr[0] "Naidagdag sa pila ang {n} kanta mula sa \"{}\""
+msgstr[1] "Naidagdag sa pila ang {n} na kanta mula sa \"{}\""
+
+msgid "Added {n} song to \"{}\""
+msgid_plural "Added {n} songs to \"{}\""
+msgstr[0] "Naidagdag ang {n} kanta sa \"{}\""
+msgstr[1] "Naidagdag ang {n} na kanta sa \"{}\""
+
+msgid "Added {n} song to the queue"
+msgid_plural "Added {n} songs to the queue"
+msgstr[0] "Naidagdag ang {n} kanta sa pila"
+msgstr[1] "Naidagdag ang {n} na kanta sa pila"
+
+msgid "Adding to \"{}\": {} of {n} song"
+msgid_plural "Adding to \"{}\": {} of {n} songs"
+msgstr[0] "Idinadagdag sa \"{}\": {} sa {n} kanta"
+msgstr[1] "Idinadagdag sa \"{}\": {} sa {n} na kanta"
+
+msgid "ALBUM"
+msgstr "ALBUM"
+
+msgid "Album"
+msgstr "Album"
+
+msgid "album"
+msgstr "album"
+
+msgid "Album artist"
+msgstr "Artist ng album"
+
+msgid "Album count"
+msgstr "Bilang ng album"
+
+msgid "Album not found"
+msgstr "Hindi nahanap ang album"
+
+msgid "Albums"
+msgstr "Mga album"
+
+msgid "All genres"
+msgstr "Lahat ng genre"
+
+msgid "Already at the end"
+msgstr "Nasa dulo na"
+
+msgid "Already at the start"
+msgstr "Nasa simula na"
+
+msgid "Already in \"{}\""
+msgstr "Nasa \"{}\" na"
+
+msgid "Already on the server"
+msgstr "Nasa server na"
+
+msgid "Amber"
+msgstr "Amber"
+
+msgid "Appearance"
+msgstr "Itsura"
+
+msgid "ARTIST"
+msgstr "ARTIST"
+
+msgid "Artist"
+msgstr "Artist"
+
+msgid "Artists"
+msgstr "Mga artist"
+
+msgid "Ask the server to transcode down to this bitrate. Applies from the next song."
+msgstr "Hilingin sa server na i-transcode pababa sa bitrate na ito. Ilalapat simula sa susunod na kanta."
+
+msgid "Audio device"
+msgstr "Audio device"
+
+msgid "Automatic ({})"
+msgstr "Awtomatiko ({})"
+
+msgid "Back"
+msgstr "Bumalik"
+
+msgid "Blue"
+msgstr "Asul"
+
+msgid "by {}"
+msgstr "ni {}"
+
+msgid "Cancel"
+msgstr "Kanselahin"
+
+msgid "Cancel timer"
+msgstr "Kanselahin ang timer"
+
+msgid "Cannot share: {}"
+msgstr "Hindi maibahagi: {}"
+
+msgid "Chart country"
+msgstr "Bansa ng chart"
+
+msgid "Charts"
+msgstr "Mga chart"
+
+msgid "Choose a browser under Settings, YouTube to sign in for a personalized home"
+msgstr "Pumili ng browser sa Mga Setting, YouTube para mag-sign in at magkaroon ng personalized na home"
+
+msgid "Clear"
+msgstr "I-clear"
+
+msgid "Clear filters"
+msgstr "I-clear ang mga filter"
+
+msgid "Clear rating"
+msgstr "I-clear ang rating"
+
+msgid "Clear the favorites and genre filters"
+msgstr "I-clear ang mga filter ng paborito at genre"
+
+msgid "Close"
+msgstr "Isara"
+
+msgid "Close now playing"
+msgstr "Isara ang now playing"
+
+msgid "Close without saving"
+msgstr "Isara nang hindi sine-save"
+
+msgid "Colors used across the whole app."
+msgstr "Mga kulay na ginagamit sa buong app."
+
+msgid "Connect to your music server"
+msgstr "Kumonekta sa iyong music server"
+
+msgid "Connecting..."
+msgstr "Kumokonekta..."
+
+msgid "Could not add to \"{}\": {}"
+msgstr "Hindi maidagdag sa \"{}\": {}"
+
+msgid "Could not add {} to the server"
+msgstr "Hindi maidagdag ang {} sa server"
+
+msgid "Could not create a share link: {}"
+msgstr "Hindi makagawa ng share link: {}"
+
+msgid "Could not create the playlist: {}"
+msgstr "Hindi magawa ang playlist: {}"
+
+msgid "Could not delete the playlist: {}"
+msgstr "Hindi mabura ang playlist: {}"
+
+msgid "Could not delete the station"
+msgstr "Hindi mabura ang istasyon"
+
+msgid "Could not load albums: {}"
+msgstr "Hindi ma-load ang mga album: {}"
+
+msgid "Could not load artists: {}"
+msgstr "Hindi ma-load ang mga artist: {}"
+
+msgid "Could not load Discover: {}"
+msgstr "Hindi ma-load ang Tuklasin: {}"
+
+msgid "Could not load genres: {}"
+msgstr "Hindi ma-load ang mga genre: {}"
+
+msgid "Could not load it from YouTube Music: {}"
+msgstr "Hindi ito ma-load mula sa YouTube Music: {}"
+
+msgid "Could not load lyrics"
+msgstr "Hindi ma-load ang liriko"
+
+msgid "Could not load moods and genres: {}"
+msgstr "Hindi ma-load ang mga mood at genre: {}"
+
+msgid "Could not load more results: {}"
+msgstr "Hindi ma-load ang iba pang resulta: {}"
+
+msgid "Could not load new releases: {}"
+msgstr "Hindi ma-load ang mga bagong labas: {}"
+
+msgid "Could not load playlists: {}"
+msgstr "Hindi ma-load ang mga playlist: {}"
+
+msgid "Could not load the album: {}"
+msgstr "Hindi ma-load ang album: {}"
+
+msgid "Could not load the artist: {}"
+msgstr "Hindi ma-load ang artist: {}"
+
+msgid "Could not load the charts: {}"
+msgstr "Hindi ma-load ang mga chart: {}"
+
+msgid "Could not load the folder: {}"
+msgstr "Hindi ma-load ang folder: {}"
+
+msgid "Could not load the list: {}"
+msgstr "Hindi ma-load ang listahan: {}"
+
+msgid "Could not load the playlist: {}"
+msgstr "Hindi ma-load ang playlist: {}"
+
+msgid "Could not load the radio stations: {}"
+msgstr "Hindi ma-load ang mga istasyon ng radyo: {}"
+
+msgid "Could not load the selection: {}"
+msgstr "Hindi ma-load ang napili: {}"
+
+msgid "Could not load this page: {}"
+msgstr "Hindi ma-load ang pahinang ito: {}"
+
+msgid "Could not load tracks: {}"
+msgstr "Hindi ma-load ang mga track: {}"
+
+msgid "Could not load your home: {}"
+msgstr "Hindi ma-load ang iyong home: {}"
+
+msgid "Could not open the folder: {}"
+msgstr "Hindi mabuksan ang folder: {}"
+
+msgid "Could not open YouTube Music: {}"
+msgstr "Hindi mabuksan ang YouTube Music: {}"
+
+msgid "Could not play \"{}\" from YouTube: {}"
+msgstr "Hindi ma-play ang \"{}\" mula sa YouTube: {}"
+
+msgid "Could not play album: {}"
+msgstr "Hindi ma-play ang album: {}"
+
+msgid "Could not play from YouTube: {}"
+msgstr "Hindi ma-play mula sa YouTube: {}"
+
+msgid "Could not play the album: {}"
+msgstr "Hindi ma-play ang album: {}"
+
+msgid "Could not remove songs: {}"
+msgstr "Hindi maalis ang mga kanta: {}"
+
+msgid "Could not rescan the library: {}"
+msgstr "Hindi ma-rescan ang library: {}"
+
+msgid "Could not set the rating: {}"
+msgstr "Hindi maitakda ang rating: {}"
+
+msgid "Could not sign in to YouTube Music ({}). Showing general picks instead."
+msgstr "Hindi makapag-sign in sa YouTube Music ({}). Mga pangkalahatang mungkahi ang ipinapakita sa halip."
+
+msgid "Could not switch server: {}"
+msgstr "Hindi makalipat ng server: {}"
+
+msgid "Could not update favorite: {}"
+msgstr "Hindi ma-update ang paborito: {}"
+
+msgid "Could not update favorites: {}"
+msgstr "Hindi ma-update ang mga paborito: {}"
+
+msgid "Could not update rating: {}"
+msgstr "Hindi ma-update ang rating: {}"
+
+msgid "Could not update the favorite: {}"
+msgstr "Hindi ma-update ang paborito: {}"
+
+msgid "Country"
+msgstr "Bansa"
+
+msgid "Create"
+msgstr "Gumawa"
+
+msgid "Created \"{}\" with only {n} song: {}"
+msgid_plural "Created \"{}\" with only {n} songs: {}"
+msgstr[0] "Nagawa ang \"{}\" na may {n} kanta lang: {}"
+msgstr[1] "Nagawa ang \"{}\" na may {n} na kanta lang: {}"
+
+msgid "Created \"{}\" with {n} song"
+msgid_plural "Created \"{}\" with {n} songs"
+msgstr[0] "Nagawa ang \"{}\" na may {n} kanta"
+msgstr[1] "Nagawa ang \"{}\" na may {n} na kanta"
+
+msgid "Created playlist \"{}\""
+msgstr "Nagawa ang playlist na \"{}\""
+
+msgid "Creating a share link..."
+msgstr "Gumagawa ng share link..."
+
+msgid "Creating..."
+msgstr "Ginagawa..."
+
+msgid "Crossfade"
+msgstr "Crossfade"
+
+msgid "Crossfade could not be changed: {}"
+msgstr "Hindi mapalitan ang crossfade: {}"
+
+msgid "Crossfade: {}"
+msgstr "Crossfade: {}"
+
+msgid "Current"
+msgstr "Kasalukuyan"
+
+msgid "Custom accent color: {} (theme accent in use)"
+msgstr "Custom na kulay ng accent: {} (accent ng tema ang ginagamit)"
+
+msgid "Custom accent color: {}, press Enter to apply"
+msgstr "Custom na kulay ng accent: {}, pindutin ang Enter para ilapat"
+
+msgid "Dark theme"
+msgstr "Madilim na tema"
+
+msgid "DARK THEMES"
+msgstr "MGA MADILIM NA TEMA"
+
+msgid "Default country for the Discover charts. Automatic follows your system region."
+msgstr "Default na bansa para sa mga chart ng Tuklasin. Sinusunod ng Awtomatiko ang rehiyon ng iyong system."
+
+msgid "Default Dark"
+msgstr "Default na Madilim"
+
+msgid "Default Light"
+msgstr "Default na Maliwanag"
+
+msgid "Delete"
+msgstr "Burahin"
+
+msgid "Delete \"{}\" from the server? This cannot be undone."
+msgstr "Burahin ang \"{}\" sa server? Hindi na ito maibabalik."
+
+msgid "Delete \"{}\"? This cannot be undone."
+msgstr "Burahin ang \"{}\"? Hindi na ito maibabalik."
+
+msgid "Delete playlist"
+msgstr "Burahin ang playlist"
+
+msgid "Delete station"
+msgstr "Burahin ang istasyon"
+
+msgid "Delete {} from the server"
+msgstr "Burahin ang {} sa server"
+
+msgid "Deleted playlist \"{}\""
+msgstr "Nabura ang playlist na \"{}\""
+
+msgid "Deleting..."
+msgstr "Binubura..."
+
+msgid "Demo mode: these picks are made up and play from your demo library"
+msgstr "Demo mode: gawa-gawa lang ang mga mungkahing ito at tumutugtog mula sa iyong demo library"
+
+msgid "Directory"
+msgstr "Direktoryo"
+
+msgid "Disc {}"
+msgstr "Disc {}"
+
+msgid "Discord Rich Presence"
+msgstr "Discord Rich Presence"
+
+msgid "Discover"
+msgstr "Tuklasin"
+
+msgid "Discover is open"
+msgstr "Bukas ang Tuklasin"
+
+msgid "Discover new music on YouTube Music"
+msgstr "Tumuklas ng bagong musika sa YouTube Music"
+
+msgid "Duration"
+msgstr "Haba"
+
+msgid "Edit station"
+msgstr "I-edit ang istasyon"
+
+msgid "Edit {}"
+msgstr "I-edit ang {}"
+
+msgid "End of current track"
+msgstr "Pagtapos ng kasalukuyang track"
+
+msgid "End of track"
+msgstr "Pagtapos ng track"
+
+msgid "Enter a name for the station"
+msgstr "Maglagay ng pangalan para sa istasyon"
+
+msgid "Enter a name, country or tag to search"
+msgstr "Maglagay ng pangalan, bansa o tag para maghanap"
+
+msgid "Enter a stream URL that starts with http:// or https://"
+msgstr "Maglagay ng stream URL na nagsisimula sa http:// o https://"
+
+msgid "Enter the server URL"
+msgstr "Ilagay ang URL ng server"
+
+msgid "Fade the end of each song into the next one. Off keeps gapless playback."
+msgstr "Unti-unting ihalo ang dulo ng bawat kanta sa susunod. Kapag naka-off, mananatili ang gapless na pag-play."
+
+msgid "Favorite"
+msgstr "Paborito"
+
+msgid "Favorited"
+msgstr "Mga paborito"
+
+msgid "Favorites"
+msgstr "Mga paborito"
+
+msgid "Favorites only: off"
+msgstr "Mga paborito lang: naka-off"
+
+msgid "Favorites only: on"
+msgstr "Mga paborito lang: naka-on"
+
+msgid "Filter"
+msgstr "I-filter"
+
+msgid "Filter playlists"
+msgstr "I-filter ang mga playlist"
+
+msgid "Find stations by name, country or tag"
+msgstr "Maghanap ng istasyon ayon sa pangalan, bansa o tag"
+
+msgid "Find stations in the radio-browser.info directory"
+msgstr "Maghanap ng istasyon sa direktoryo ng radio-browser.info"
+
+msgid "Folder"
+msgstr "Folder"
+
+msgid "Folders"
+msgstr "Mga folder"
+
+msgid "Follow current song"
+msgstr "Sundan ang kasalukuyang kanta"
+
+msgid "Follow system color scheme"
+msgstr "Sundin ang color scheme ng system"
+
+msgid "For you"
+msgstr "Para sa iyo"
+
+msgid "Forget this server?"
+msgstr "Kalimutan ang server na ito?"
+
+msgid "Format the server should transcode to. Applies from the next song."
+msgstr "Format na pagta-transcode-an ng server. Ilalapat simula sa susunod na kanta."
+
+msgid "Found {n} server in Feishin but it has no usable saved login"
+msgid_plural "Found {n} servers in Feishin but none with a usable saved login"
+msgstr[0] "May nahanap na {n} server sa Feishin pero wala itong magagamit na naka-save na login"
+msgstr[1] "May nahanap na {n} na server sa Feishin pero wala sa mga ito ang may magagamit na naka-save na login"
+
+msgid "Gapless playback"
+msgstr "Gapless na pag-play"
+
+msgid "Genres"
+msgstr "Mga genre"
+
+msgid "Go back to {}"
+msgstr "Bumalik sa {}"
+
+msgid "Go to album"
+msgstr "Pumunta sa album"
+
+msgid "Go to artist"
+msgstr "Pumunta sa artist"
+
+msgid "Go to {}"
+msgstr "Pumunta sa {}"
+
+msgid "Green"
+msgstr "Berde"
+
+msgid "Hide lyrics"
+msgstr "Itago ang liriko"
+
+msgid "Hide queue"
+msgstr "Itago ang pila"
+
+msgid "High Contrast Dark"
+msgstr "Madilim na High Contrast"
+
+msgid "High Contrast Light"
+msgstr "Maliwanag na High Contrast"
+
+msgid "Highlight with the color that comes with the theme."
+msgstr "Mag-highlight gamit ang kulay na kasama ng tema."
+
+msgid "Home"
+msgstr "Home"
+
+msgid "Homepage (optional)"
+msgstr "Homepage (opsyonal)"
+
+msgid "Import from Feishin"
+msgstr "Mag-import mula sa Feishin"
+
+msgid "Install yt-dlp to play YouTube tracks"
+msgstr "I-install ang yt-dlp para ma-play ang mga track sa YouTube"
+
+msgid "Integrations"
+msgstr "Mga integration"
+
+msgid "Interface"
+msgstr "Interface"
+
+msgid "Internet radio"
+msgstr "Internet radio"
+
+msgid "item"
+msgstr "item"
+
+msgid "Jellyfin has no public share links"
+msgstr "Walang pampublikong share link ang Jellyfin"
+
+msgid "Keep this station in the favorites on this device"
+msgstr "Itago ang istasyong ito sa mga paborito sa device na ito"
+
+msgid "Language"
+msgstr "Wika"
+
+msgid "LIBRARY"
+msgstr "LIBRARY"
+
+msgid "Library scan finished"
+msgstr "Tapos na ang pag-scan ng library"
+
+msgid "Library scan finished: {n} item"
+msgid_plural "Library scan finished: {n} items"
+msgstr[0] "Tapos na ang pag-scan ng library: {n} item"
+msgstr[1] "Tapos na ang pag-scan ng library: {n} na item"
+
+msgid "Light theme"
+msgstr "Maliwanag na tema"
+
+msgid "LIGHT THEMES"
+msgstr "MGA MALIWANAG NA TEMA"
+
+msgid "Listening to {}"
+msgstr "Nakikinig sa {}"
+
+msgid "LIVE"
+msgstr "LIVE"
+
+msgid "Load more"
+msgstr "Mag-load pa"
+
+msgid "Load this section again"
+msgstr "I-load muli ang seksyong ito"
+
+msgid "Loading playlists..."
+msgstr "Nilo-load ang mga playlist..."
+
+msgid "Loading similar songs..."
+msgstr "Nilo-load ang mga katulad na kanta..."
+
+msgid "Loading stations..."
+msgstr "Nilo-load ang mga istasyon..."
+
+msgid "Loading the next page of stations"
+msgstr "Nilo-load ang susunod na pahina ng mga istasyon"
+
+msgid "Loading..."
+msgstr "Nilo-load..."
+
+msgid "Log out"
+msgstr "Mag-log out"
+
+msgid "Looking up the YouTube link..."
+msgstr "Hinahanap ang YouTube link..."
+
+msgid "Lyrics"
+msgstr "Liriko"
+
+msgid "Lyrics from {}"
+msgstr "Liriko mula sa {}"
+
+msgid "Lyrics sources"
+msgstr "Mga pinagkukunan ng liriko"
+
+msgid "Maximum bitrate"
+msgstr "Pinakamataas na bitrate"
+
+msgid "Media keys and desktop media controls. Takes effect after a restart."
+msgstr "Mga media key at media control ng desktop. Magkakabisa pagkatapos mag-restart."
+
+msgid "Moods and genres"
+msgstr "Mga mood at genre"
+
+msgid "Most played"
+msgstr "Pinakamadalas i-play"
+
+msgid "Move down"
+msgstr "Ibaba"
+
+msgid "Move up"
+msgstr "Itaas"
+
+msgid "MPRIS"
+msgstr "MPRIS"
+
+msgid "Mute"
+msgstr "I-mute"
+
+msgid "Name"
+msgstr "Pangalan"
+
+msgid "New playlist"
+msgstr "Bagong playlist"
+
+msgid "New releases"
+msgstr "Mga bagong labas"
+
+msgid "Next"
+msgstr "Susunod"
+
+msgid "Next is unavailable while a radio station plays"
+msgstr "Hindi magagamit ang Susunod habang tumutugtog ang istasyon ng radyo"
+
+msgid "No albums"
+msgstr "Walang album"
+
+msgid "No albums found"
+msgstr "Walang nahanap na album"
+
+msgid "No artists found"
+msgstr "Walang nahanap na artist"
+
+msgid "no browser is selected"
+msgstr "walang napiling browser"
+
+msgid "No favorite albums"
+msgstr "Walang paboritong album"
+
+msgid "No favorite artists"
+msgstr "Walang paboritong artist"
+
+msgid "No favorite tracks"
+msgstr "Walang paboritong track"
+
+msgid "No genres found"
+msgstr "Walang nahanap na genre"
+
+msgid "No lyrics found"
+msgstr "Walang nahanap na liriko"
+
+msgid "No playlists found"
+msgstr "Walang nahanap na playlist"
+
+msgid "No playlists yet"
+msgstr "Wala pang playlist"
+
+msgid "No rating"
+msgstr "Walang rating"
+
+msgid "No results for \"{}\""
+msgstr "Walang resulta para sa \"{}\""
+
+msgid "No saved login for {}; remove it and add it again"
+msgstr "Walang naka-save na login para sa {}; alisin ito at idagdag muli"
+
+msgid "No saved servers."
+msgstr "Walang naka-save na server."
+
+msgid "No similar songs found"
+msgstr "Walang nahanap na katulad na kanta"
+
+msgid "No songs here"
+msgstr "Walang kanta rito"
+
+msgid "No stations found"
+msgstr "Walang nahanap na istasyon"
+
+msgid "No stations yet. Add one or find one in the directory."
+msgstr "Wala pang istasyon. Magdagdag ng isa o maghanap sa direktoryo."
+
+msgid "No tracks found"
+msgstr "Walang nahanap na track"
+
+msgid "None"
+msgstr "Wala"
+
+msgid "Normalize loudness using the track or album gain tags."
+msgstr "I-normalize ang lakas ng tunog gamit ang mga gain tag ng track o album."
+
+msgid "Not connected to a server"
+msgstr "Hindi nakakonekta sa server"
+
+msgid "Nothing is playing"
+msgstr "Walang tumutugtog"
+
+msgid "Nothing to add yet"
+msgstr "Wala pang maidadagdag"
+
+msgid "Nothing to go back to"
+msgstr "Walang mababalikan"
+
+msgid "Nothing to play here"
+msgstr "Walang mapapatugtog dito"
+
+msgid "Nothing to play yet"
+msgstr "Wala pang mapapatugtog"
+
+msgid "Nothing to show here right now"
+msgstr "Walang maipapakita rito sa ngayon"
+
+msgid "Off"
+msgstr "Naka-off"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "On the server"
+msgstr "Nasa server"
+
+msgid "Only a server admin can rescan the library"
+msgstr "Admin lang ng server ang makakapag-rescan ng library"
+
+msgid "Only loaded tracks can be shared: select fewer tracks or scroll through them first"
+msgstr "Ang mga na-load na track lang ang maibabahagi: pumili ng mas kaunting track o i-scroll muna ang mga ito"
+
+msgid "Open"
+msgstr "Buksan"
+
+msgid "Open in YouTube Music"
+msgstr "Buksan sa YouTube Music"
+
+msgid "Open now playing"
+msgstr "Buksan ang now playing"
+
+msgid "Open radio"
+msgstr "Buksan ang radyo"
+
+msgid "Open the album \"{}\""
+msgstr "Buksan ang album na \"{}\""
+
+msgid "Open the playlist \"{}\""
+msgstr "Buksan ang playlist na \"{}\""
+
+msgid "Open the queue panel"
+msgstr "Buksan ang panel ng pila"
+
+msgid "Open {}"
+msgstr "Buksan ang {}"
+
+msgid "Original"
+msgstr "Orihinal"
+
+msgid "Output used by the player."
+msgstr "Output na ginagamit ng player."
+
+msgid "Owner"
+msgstr "May-ari"
+
+msgid "Password"
+msgstr "Password"
+
+msgid "Paste a link first"
+msgstr "Mag-paste muna ng link"
+
+msgid "Paste a YouTube or YouTube Music link first"
+msgstr "Mag-paste muna ng link ng YouTube o YouTube Music"
+
+msgid "Paste a YouTube or YouTube Music link to try yt-dlp."
+msgstr "Mag-paste ng link ng YouTube o YouTube Music para subukan ang yt-dlp."
+
+msgid "Pause"
+msgstr "I-pause"
+
+msgid "Pause the radio station"
+msgstr "I-pause ang istasyon ng radyo"
+
+msgid "Personalized with your YouTube Music account from {}"
+msgstr "Naka-personalize gamit ang iyong YouTube Music account mula sa {}"
+
+msgid "Pick a color, or type one as #rrggbb and press Enter."
+msgstr "Pumili ng kulay, o mag-type ng isa bilang #rrggbb at pindutin ang Enter."
+
+msgid "Pick a mood or genre to see its playlists"
+msgstr "Pumili ng mood o genre para makita ang mga playlist nito"
+
+msgid "Play"
+msgstr "I-play"
+
+msgid "Play \"{}\" and the rest of this shelf"
+msgstr "I-play ang \"{}\" at ang iba pa sa shelf na ito"
+
+msgid "Play a YouTube link"
+msgstr "Mag-play ng YouTube link"
+
+msgid "Play album"
+msgstr "I-play ang album"
+
+msgid "Play all"
+msgstr "I-play lahat"
+
+msgid "Play all {n} song"
+msgid_plural "Play all {n} songs"
+msgstr[0] "I-play ang {n} kanta"
+msgstr[1] "I-play ang lahat ng {n} na kanta"
+
+msgid "Play count"
+msgstr "Bilang ng pag-play"
+
+msgid "Play every song in {} and its subfolders"
+msgstr "I-play ang bawat kanta sa {} at sa mga subfolder nito"
+
+msgid "Play from here"
+msgstr "I-play mula rito"
+
+msgid "Play from this song"
+msgstr "I-play mula sa kantang ito"
+
+msgid "Play from {}"
+msgstr "I-play mula sa {}"
+
+msgid "Play next"
+msgstr "I-play nang susunod"
+
+msgid "Play the album"
+msgstr "I-play ang album"
+
+msgid "Play the playlist"
+msgstr "I-play ang playlist"
+
+msgid "Play the radio station"
+msgstr "I-play ang istasyon ng radyo"
+
+msgid "Play this link after the current song"
+msgstr "I-play ang link na ito pagkatapos ng kasalukuyang kanta"
+
+msgid "Play this link now"
+msgstr "I-play ang link na ito ngayon"
+
+msgid "Play {}"
+msgstr "I-play ang {}"
+
+msgid "Play {} next"
+msgstr "I-play nang susunod ang {}"
+
+msgid "Play {} with its subfolders"
+msgstr "I-play ang {} kasama ang mga subfolder nito"
+
+msgid "Playback"
+msgstr "Pag-play"
+
+msgid "Playback failed: {}"
+msgstr "Nabigo ang pag-play: {}"
+
+msgid "Playing {} failed: {}"
+msgstr "Nabigo ang pag-play ng {}: {}"
+
+msgid "PLAYLIST"
+msgstr "PLAYLIST"
+
+msgid "Playlist"
+msgstr "Playlist"
+
+msgid "playlist"
+msgstr "playlist"
+
+msgid "Playlist name"
+msgstr "Pangalan ng playlist"
+
+msgid "Playlists"
+msgstr "Mga playlist"
+
+msgid "Plays"
+msgstr "Mga pag-play"
+
+msgid "Plays YouTube tracks. Leave empty to use yt-dlp from your PATH."
+msgstr "Nagpe-play ng mga track sa YouTube. Iwanang blangko para gamitin ang yt-dlp mula sa iyong PATH."
+
+msgid "Preload the next song so it starts without a pause."
+msgstr "I-preload ang susunod na kanta para magsimula ito nang walang patlang."
+
+msgid "Previous"
+msgstr "Nakaraan"
+
+msgid "Previous is unavailable while a radio station plays"
+msgstr "Hindi magagamit ang Nakaraan habang tumutugtog ang istasyon ng radyo"
+
+msgid "Purple"
+msgstr "Lila"
+
+msgid "Queue"
+msgstr "Pila"
+
+msgid "Radio"
+msgstr "Radyo"
+
+msgid "Random"
+msgstr "Random"
+
+msgid "Rate {n} star"
+msgid_plural "Rate {n} stars"
+msgstr[0] "I-rate ng {n} bituin"
+msgstr[1] "I-rate ng {n} na bituin"
+
+msgid "Rating"
+msgstr "Rating"
+
+msgid "Recently added"
+msgstr "Kamakailang idinagdag"
+
+msgid "Recently played"
+msgstr "Kamakailang pinatugtog"
+
+msgid "Red"
+msgstr "Pula"
+
+msgid "Refresh"
+msgstr "I-refresh"
+
+msgid "Refresh this section"
+msgstr "I-refresh ang seksyong ito"
+
+msgid "Release year"
+msgstr "Taon ng paglabas"
+
+msgid "Remove"
+msgstr "Alisin"
+
+msgid "Remove from favorites"
+msgstr "Alisin sa mga paborito"
+
+msgid "Remove from playlist"
+msgstr "Alisin sa playlist"
+
+msgid "Remove from queue"
+msgstr "Alisin sa pila"
+
+msgid "Removed {n} song from \"{}\""
+msgid_plural "Removed {n} songs from \"{}\""
+msgstr[0] "Naalis ang {n} kanta sa \"{}\""
+msgstr[1] "Naalis ang {n} na kanta sa \"{}\""
+
+msgid "Removing..."
+msgstr "Inaalis..."
+
+msgid "Repeat: all"
+msgstr "Ulitin: lahat"
+
+msgid "Repeat: off"
+msgstr "Ulitin: naka-off"
+
+msgid "Repeat: one"
+msgstr "Ulitin: isa"
+
+msgid "ReplayGain"
+msgstr "ReplayGain"
+
+msgid "Report what you play to the server."
+msgstr "Iulat sa server ang mga pinapatugtog mo."
+
+msgid "Rescan the library for new content"
+msgstr "I-rescan ang library para sa bagong content"
+
+msgid "Resize column"
+msgstr "Baguhin ang laki ng column"
+
+msgid "Save"
+msgstr "I-save"
+
+msgid "Save on this device"
+msgstr "I-save sa device na ito"
+
+msgid "Save the changes on the server"
+msgstr "I-save ang mga pagbabago sa server"
+
+msgid "Save the changes on this device"
+msgstr "I-save ang mga pagbabago sa device na ito"
+
+msgid "Save to favorites on this device"
+msgstr "I-save sa mga paborito sa device na ito"
+
+msgid "Save to server"
+msgstr "I-save sa server"
+
+msgid "Saved on this device"
+msgstr "Naka-save sa device na ito"
+
+msgid "Saved on this device, click to remove"
+msgstr "Naka-save sa device na ito, i-click para alisin"
+
+msgid "Saving the station to the server..."
+msgstr "Sine-save ang istasyon sa server..."
+
+msgid "Saving to the server..."
+msgstr "Sine-save sa server..."
+
+msgid "Saving..."
+msgstr "Sine-save..."
+
+msgid "Scanning the library for new content..."
+msgstr "Ini-scan ang library para sa bagong content..."
+
+msgid "Scanning the library: {}"
+msgstr "Ini-scan ang library: {}"
+
+msgid "Scrobble"
+msgstr "Scrobble"
+
+msgid "Scroll left"
+msgstr "Mag-scroll pakaliwa"
+
+msgid "Scroll lists and the queue to the song that is playing."
+msgstr "I-scroll ang mga listahan at ang pila sa kantang tumutugtog."
+
+msgid "Scroll right"
+msgstr "Mag-scroll pakanan"
+
+msgid "Search"
+msgstr "Maghanap"
+
+msgid "Search failed: {}"
+msgstr "Nabigo ang paghahanap: {}"
+
+msgid "SEARCH RESULTS"
+msgstr "MGA RESULTA NG PAGHAHANAP"
+
+msgid "Search songs on YouTube Music"
+msgstr "Maghanap ng mga kanta sa YouTube Music"
+
+msgid "Search songs, albums, artists"
+msgstr "Maghanap ng kanta, album, artist"
+
+msgid "Search the radio-browser.info directory"
+msgstr "Maghanap sa direktoryo ng radio-browser.info"
+
+msgid "Search your library for songs, albums and artists"
+msgstr "Maghanap ng mga kanta, album at artist sa iyong library"
+
+msgid "Searched from top to bottom until one has lyrics."
+msgstr "Hinahanap mula itaas pababa hanggang may isang may liriko."
+
+msgid "Searching for lyrics..."
+msgstr "Hinahanap ang liriko..."
+
+msgid "Searching the radio directory failed: {}"
+msgstr "Nabigo ang paghahanap sa direktoryo ng radyo: {}"
+
+msgid "Searching the radio-browser.info directory"
+msgstr "Hinahanap sa direktoryo ng radio-browser.info"
+
+msgid "Searching..."
+msgstr "Naghahanap..."
+
+msgid "Seeking is unavailable for live radio"
+msgstr "Hindi magagamit ang pag-seek sa live na radyo"
+
+msgid "Server"
+msgstr "Server"
+
+msgid "Server type"
+msgstr "Uri ng server"
+
+msgid "Servers"
+msgstr "Mga server"
+
+msgid "Set rating"
+msgstr "Itakda ang rating"
+
+msgid "Settings"
+msgstr "Mga Setting"
+
+msgid "Share"
+msgstr "Ibahagi"
+
+msgid "Share ({})"
+msgstr "Ibahagi ({})"
+
+msgid "Share link copied to the clipboard: {}"
+msgstr "Nakopya sa clipboard ang share link: {}"
+
+msgid "Share this {}: copy a public link"
+msgstr "Ibahagi ang {} na ito: kopyahin ang pampublikong link"
+
+msgid "Sharing is unavailable: {}"
+msgstr "Hindi magagamit ang pagbabahagi: {}"
+
+msgid "SHOW LESS"
+msgstr "IPAKITA ANG MAS KAUNTI"
+
+msgid "Show lyrics"
+msgstr "Ipakita ang liriko"
+
+msgid "SHOW MORE"
+msgstr "IPAKITA ANG MARAMI PA"
+
+msgid "Show more"
+msgstr "Ipakita ang marami pa"
+
+msgid "Show playlists for {}"
+msgstr "Ipakita ang mga playlist para sa {}"
+
+msgid "Show queue"
+msgstr "Ipakita ang pila"
+
+msgid "Show the current song on your Discord profile."
+msgstr "Ipakita ang kasalukuyang kanta sa iyong Discord profile."
+
+msgid "Show the next page of stations"
+msgstr "Ipakita ang susunod na pahina ng mga istasyon"
+
+msgid "Show the queue next to the library; remembered on the next start."
+msgstr "Ipakita ang pila sa tabi ng library; tatandaan sa susunod na pagbukas."
+
+msgid "Show the server and saved stations"
+msgstr "Ipakita ang server at mga naka-save na istasyon"
+
+msgid "Show {}"
+msgstr "Ipakita ang {}"
+
+msgid "Showing playlists for {}"
+msgstr "Ipinapakita ang mga playlist para sa {}"
+
+msgid "Showing the charts for {}"
+msgstr "Ipinapakita ang mga chart para sa {}"
+
+msgid "Showing the radio-browser.info directory"
+msgstr "Ipinapakita ang direktoryo ng radio-browser.info"
+
+msgid "Showing the server and saved stations"
+msgstr "Ipinapakita ang server at mga naka-save na istasyon"
+
+msgid "Shuffle"
+msgstr "I-shuffle"
+
+msgid "Shuffle every song in {} and its subfolders"
+msgstr "I-shuffle ang bawat kanta sa {} at sa mga subfolder nito"
+
+msgid "Shuffle play"
+msgstr "I-shuffle play"
+
+msgid "Shuffle: off"
+msgstr "Shuffle: naka-off"
+
+msgid "Shuffle: on"
+msgstr "Shuffle: naka-on"
+
+msgid "Sign in"
+msgstr "Mag-sign in"
+
+msgid "Sign in with browser"
+msgstr "Mag-sign in gamit ang browser"
+
+msgid "Sign out and forget this server's saved login?"
+msgstr "Mag-sign out at kalimutan ang naka-save na login ng server na ito?"
+
+msgid "Sign out and forget this server?"
+msgstr "Mag-sign out at kalimutan ang server na ito?"
+
+msgid "Similar"
+msgstr "Katulad"
+
+msgid "Similar songs come from your server, so YouTube tracks have none"
+msgstr "Galing sa iyong server ang mga katulad na kanta, kaya wala nito ang mga track sa YouTube"
+
+msgid "Sleep timer: off"
+msgstr "Sleep timer: naka-off"
+
+msgid "Sleep timer: {}"
+msgstr "Sleep timer: {}"
+
+msgid "Song count"
+msgstr "Bilang ng kanta"
+
+msgid "Songs"
+msgstr "Mga kanta"
+
+msgid "Sort by {}"
+msgstr "Ayusin ayon sa {}"
+
+msgid "Sort by {}: ascending"
+msgstr "Ayusin ayon sa {}: pataas"
+
+msgid "Sort by {}: descending"
+msgstr "Ayusin ayon sa {}: pababa"
+
+msgid "Sort: ascending"
+msgstr "Ayos: pataas"
+
+msgid "Sort: descending"
+msgstr "Ayos: pababa"
+
+msgid "Starting volume, shared with the player bar."
+msgstr "Panimulang volume, kapareho ng nasa player bar."
+
+msgid "Station data from radio-browser.info"
+msgstr "Datos ng istasyon mula sa radio-browser.info"
+
+msgid "Station name"
+msgstr "Pangalan ng istasyon"
+
+msgid "Stations"
+msgstr "Mga istasyon"
+
+msgid "Stop {}"
+msgstr "Ihinto ang {}"
+
+msgid "Stream URL"
+msgstr "Stream URL"
+
+msgid "Switch"
+msgstr "Lumipat"
+
+msgid "Switch between a dark and a light theme with the desktop. {}"
+msgstr "Lumipat sa pagitan ng madilim at maliwanag na tema kasabay ng desktop. {}"
+
+msgid "Switch to grid view"
+msgstr "Lumipat sa grid view"
+
+msgid "Switch to list view"
+msgstr "Lumipat sa list view"
+
+msgid "System default"
+msgstr "Default ng system"
+
+msgid "System default follows the language of the desktop."
+msgstr "Sinusunod ng default ng system ang wika ng desktop."
+
+msgid "Tag, for example jazz"
+msgstr "Tag, halimbawa jazz"
+
+msgid "The desktop currently prefers dark."
+msgstr "Madilim ang kasalukuyang gusto ng desktop."
+
+msgid "The desktop currently prefers light."
+msgstr "Maliwanag ang kasalukuyang gusto ng desktop."
+
+msgid "The desktop has no preference, so the dark theme is used."
+msgstr "Walang kagustuhan ang desktop, kaya madilim na tema ang ginagamit."
+
+msgid "The library scan is still running on the server"
+msgstr "Tumatakbo pa ang pag-scan ng library sa server"
+
+msgid "The queue is empty"
+msgstr "Walang laman ang pila"
+
+msgid "The queue is incomplete: loading the rest of the list failed ({})"
+msgstr "Kulang ang pila: nabigo ang pag-load ng natitirang bahagi ng listahan ({})"
+
+msgid "The radio directory could not be reached"
+msgstr "Hindi maabot ang direktoryo ng radyo"
+
+msgid "The radio station stopped streaming"
+msgstr "Huminto sa pag-stream ang istasyon ng radyo"
+
+msgid "The server refused the station: {}"
+msgstr "Tinanggihan ng server ang istasyon: {}"
+
+msgid "Theme"
+msgstr "Tema"
+
+msgid "There is nothing to play in this list"
+msgstr "Walang mapapatugtog sa listahang ito"
+
+msgid "This Discover page does not exist"
+msgstr "Hindi umiiral ang pahinang ito ng Tuklasin"
+
+msgid "This folder is empty"
+msgstr "Walang laman ang folder na ito"
+
+msgid "This playlist is empty"
+msgstr "Walang laman ang playlist na ito"
+
+msgid "This server has no internet radio. Stations you add are saved on this device."
+msgstr "Walang internet radio ang server na ito. Sine-save sa device na ito ang mga istasyong idaragdag mo."
+
+msgid "this server has no public share links"
+msgstr "walang pampublikong share link ang server na ito"
+
+msgid "Time"
+msgstr "Oras"
+
+msgid "Title"
+msgstr "Pamagat"
+
+msgid "Top songs"
+msgstr "Mga nangungunang kanta"
+
+msgid "Track"
+msgstr "Track"
+
+msgid "Tracks"
+msgstr "Mga track"
+
+msgid "Transcode format"
+msgstr "Format ng transcode"
+
+msgid "Try again"
+msgstr "Subukang muli"
+
+msgid "Turn off the theme accent color to pick your own."
+msgstr "I-off ang kulay ng accent ng tema para pumili ng sarili mo."
+
+msgid "Unmute"
+msgstr "I-unmute"
+
+msgid "Up next"
+msgstr "Susunod"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "Use the theme accent color"
+msgstr "Gamitin ang kulay ng accent ng tema"
+
+msgid "Use {}"
+msgstr "Gamitin ang {}"
+
+msgid "Used while the desktop prefers dark."
+msgstr "Ginagamit habang madilim ang gusto ng desktop."
+
+msgid "Used while the desktop prefers light."
+msgstr "Ginagamit habang maliwanag ang gusto ng desktop."
+
+msgid "Username"
+msgstr "Username"
+
+msgid "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Feishin deletes right after reading."
+msgstr "Ginagamit ang iyong YouTube session sa browser na ito para sa personalized na home ng Tuklasin at Premium na audio. Kinokopya ng yt-dlp ang mga cookie nito sa isang pribadong pansamantalang file na agad binubura ng Feishin pagkatapos basahin."
+
+msgid "Volume"
+msgstr "Volume"
+
+msgid "Volume {}%"
+msgstr "Volume {}%"
+
+msgid "XDG_RUNTIME_DIR is not set, so there is no private place for the cookies"
+msgstr "Hindi naka-set ang XDG_RUNTIME_DIR, kaya walang pribadong lugar para sa mga cookie"
+
+msgid "Year"
+msgstr "Taon"
+
+msgid "You are here: {}"
+msgstr "Nandito ka: {}"
+
+msgid "Your user is not allowed to share on this server"
+msgstr "Hindi pinapayagang magbahagi ang iyong user sa server na ito"
+
+msgid "YouTube"
+msgstr "YouTube"
+
+msgid "YouTube albums are not in your library"
+msgstr "Wala sa iyong library ang mga album sa YouTube"
+
+msgid "YouTube artists are not in your library"
+msgstr "Wala sa iyong library ang mga artist sa YouTube"
+
+msgid "yt-dlp program"
+msgstr "Program na yt-dlp"
+
+msgid "{n} album"
+msgid_plural "{n} albums"
+msgstr[0] "{n} album"
+msgstr[1] "{n} na album"
+
+msgid "{n} folder"
+msgid_plural "{n} folders"
+msgstr[0] "{n} folder"
+msgstr[1] "{n} na folder"
+
+msgid "{n} item so far"
+msgid_plural "{n} items so far"
+msgstr[0] "{n} item sa ngayon"
+msgstr[1] "{n} na item sa ngayon"
+
+msgid "{n} minute"
+msgid_plural "{n} minutes"
+msgstr[0] "{n} minuto"
+msgstr[1] "{n} na minuto"
+
+msgid "{n} selected"
+msgid_plural "{n} selected"
+msgstr[0] "{n} ang napili"
+msgstr[1] "{n} ang napili"
+
+msgid "{n} song"
+msgid_plural "{n} songs"
+msgstr[0] "{n} kanta"
+msgstr[1] "{n} na kanta"
+
+msgid "{n} song from \"{}\" will play next"
+msgid_plural "{n} songs from \"{}\" will play next"
+msgstr[0] "Susunod na tutugtugin ang {n} kanta mula sa \"{}\""
+msgstr[1] "Susunod na tutugtugin ang {n} na kanta mula sa \"{}\""
+
+msgid "{n} song on YouTube Music"
+msgid_plural "{n} songs on YouTube Music"
+msgstr[0] "{n} kanta sa YouTube Music"
+msgstr[1] "{n} na kanta sa YouTube Music"
+
+msgid "{n} song will play next"
+msgid_plural "{n} songs will play next"
+msgstr[0] "Susunod na tutugtugin ang {n} kanta"
+msgstr[1] "Susunod na tutugtugin ang {n} na kanta"
+
+msgid "{} (current theme)"
+msgstr "{} (kasalukuyang tema)"
+
+msgid "{} (unavailable)"
+msgstr "{} (hindi magagamit)"
+
+msgid "{} at {}"
+msgstr "{} sa {}"
+
+msgid "{} cannot be played: its stream address is not an internet stream"
+msgstr "Hindi ma-play ang {}: hindi internet stream ang stream address nito"
+
+msgid "{} is shown"
+msgstr "Ipinapakita ang {}"
+
+msgid "{} kbps"
+msgstr "{} kbps"
+
+msgid "{} s"
+msgstr "{} s"
+
+msgid "{}: off"
+msgstr "{}: naka-off"
+
+msgid "{}: on"
+msgstr "{}: naka-on"
+
+msgid "{}: {} (dark)"
+msgstr "{}: {} (madilim)"
+
+msgid "{}: {} (light)"
+msgstr "{}: {} (maliwanag)"

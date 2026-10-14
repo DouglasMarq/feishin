@@ -1,0 +1,1520 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: hu\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+
+msgid "\"{}\" plays next"
+msgstr "„{}” következik"
+
+msgid "\"{}\" will play next"
+msgstr "„{}” következik a lejátszásban"
+
+msgid "1 star"
+msgstr "1 csillag"
+
+msgid "2 stars"
+msgstr "2 csillag"
+
+msgid "3 stars"
+msgstr "3 csillag"
+
+msgid "4 stars"
+msgstr "4 csillag"
+
+msgid "5 stars"
+msgstr "5 csillag"
+
+msgid "About {}"
+msgstr "Névjegy: {}"
+
+msgid "Accent color"
+msgstr "Kiemelő szín"
+
+msgid "Accent color not changed: {}."
+msgstr "A kiemelő szín nem változott: {}."
+
+msgid "Accent color {}"
+msgstr "Kiemelő szín: {}"
+
+msgid "Accent color {} (selected)"
+msgstr "Kiemelő szín: {} (kiválasztva)"
+
+msgid "Accent color {} (theme accent in use)"
+msgstr "Kiemelő szín: {} (a téma kiemelő színe van használatban)"
+
+msgid "Add a station by its stream URL"
+msgstr "Állomás hozzáadása a stream URL-je alapján"
+
+msgid "Add all songs to the queue"
+msgstr "Az összes dal hozzáadása a lejátszási sorhoz"
+
+msgid "Add server"
+msgstr "Szerver hozzáadása"
+
+msgid "Add station"
+msgstr "Állomás hozzáadása"
+
+msgid "Add this link to the end of the queue"
+msgstr "A hivatkozás hozzáadása a lejátszási sor végéhez"
+
+msgid "Add this station to the server for every client"
+msgstr "Az állomás hozzáadása a szerverhez minden kliens számára"
+
+msgid "Add to favorites"
+msgstr "Hozzáadás a kedvencekhez"
+
+msgid "Add to playlist"
+msgstr "Hozzáadás lejátszási listához"
+
+msgid "Add to queue"
+msgstr "Hozzáadás a lejátszási sorhoz"
+
+msgid "Add to the server's stations"
+msgstr "Hozzáadás a szerver állomásaihoz"
+
+msgid "Add {n} song to playlist"
+msgid_plural "Add {n} songs to playlist"
+msgstr[0] "{n} dal hozzáadása lejátszási listához"
+msgstr[1] "{n} dal hozzáadása lejátszási listához"
+
+msgid "Add {} to the queue"
+msgstr "{} hozzáadása a lejátszási sorhoz"
+
+msgid "Added \"{}\" to the queue"
+msgstr "„{}” hozzáadva a lejátszási sorhoz"
+
+msgid "Added only {n} song to \"{}\": {}"
+msgid_plural "Added only {n} songs to \"{}\": {}"
+msgstr[0] "Csak {n} dal lett hozzáadva ehhez: „{}”: {}"
+msgstr[1] "Csak {n} dal lett hozzáadva ehhez: „{}”: {}"
+
+msgid "Added {n} song from \"{}\" to the queue"
+msgid_plural "Added {n} songs from \"{}\" to the queue"
+msgstr[0] "{n} dal hozzáadva a lejátszási sorhoz innen: „{}”"
+msgstr[1] "{n} dal hozzáadva a lejátszási sorhoz innen: „{}”"
+
+msgid "Added {n} song to \"{}\""
+msgid_plural "Added {n} songs to \"{}\""
+msgstr[0] "{n} dal hozzáadva ehhez: „{}”"
+msgstr[1] "{n} dal hozzáadva ehhez: „{}”"
+
+msgid "Added {n} song to the queue"
+msgid_plural "Added {n} songs to the queue"
+msgstr[0] "{n} dal hozzáadva a lejátszási sorhoz"
+msgstr[1] "{n} dal hozzáadva a lejátszási sorhoz"
+
+msgid "Adding to \"{}\": {} of {n} song"
+msgid_plural "Adding to \"{}\": {} of {n} songs"
+msgstr[0] "Hozzáadás ehhez: „{}”: {} / {n} dal"
+msgstr[1] "Hozzáadás ehhez: „{}”: {} / {n} dal"
+
+msgid "ALBUM"
+msgstr "ALBUM"
+
+msgid "Album"
+msgstr "Album"
+
+msgid "album"
+msgstr "album"
+
+msgid "Album artist"
+msgstr "Albumelőadó"
+
+msgid "Album count"
+msgstr "Albumok száma"
+
+msgid "Album not found"
+msgstr "Az album nem található"
+
+msgid "Albums"
+msgstr "Albumok"
+
+msgid "All genres"
+msgstr "Minden műfaj"
+
+msgid "Already at the end"
+msgstr "Már a végén van"
+
+msgid "Already at the start"
+msgstr "Már az elején van"
+
+msgid "Already in \"{}\""
+msgstr "Már szerepel itt: „{}”"
+
+msgid "Already on the server"
+msgstr "Már a szerveren van"
+
+msgid "Amber"
+msgstr "Borostyán"
+
+msgid "Appearance"
+msgstr "Megjelenés"
+
+msgid "ARTIST"
+msgstr "ELŐADÓ"
+
+msgid "Artist"
+msgstr "Előadó"
+
+msgid "Artists"
+msgstr "Előadók"
+
+msgid "Ask the server to transcode down to this bitrate. Applies from the next song."
+msgstr "A szerver erre a bitrátára kódolja át a zenét. A következő daltól érvényes."
+
+msgid "Audio device"
+msgstr "Hangeszköz"
+
+msgid "Automatic ({})"
+msgstr "Automatikus ({})"
+
+msgid "Back"
+msgstr "Vissza"
+
+msgid "Blue"
+msgstr "Kék"
+
+msgid "by {}"
+msgstr "készítette: {}"
+
+msgid "Cancel"
+msgstr "Mégse"
+
+msgid "Cancel timer"
+msgstr "Időzítő leállítása"
+
+msgid "Cannot share: {}"
+msgstr "A megosztás nem lehetséges: {}"
+
+msgid "Chart country"
+msgstr "Toplisták országa"
+
+msgid "Charts"
+msgstr "Toplisták"
+
+msgid "Choose a browser under Settings, YouTube to sign in for a personalized home"
+msgstr "Válassz böngészőt a Beállítások, YouTube részben a bejelentkezéshez és a személyre szabott kezdőoldalhoz"
+
+msgid "Clear"
+msgstr "Törlés"
+
+msgid "Clear filters"
+msgstr "Szűrők törlése"
+
+msgid "Clear rating"
+msgstr "Értékelés törlése"
+
+msgid "Clear the favorites and genre filters"
+msgstr "A kedvencek- és műfajszűrők törlése"
+
+msgid "Close"
+msgstr "Bezárás"
+
+msgid "Close now playing"
+msgstr "Most játszott bezárása"
+
+msgid "Close without saving"
+msgstr "Bezárás mentés nélkül"
+
+msgid "Colors used across the whole app."
+msgstr "Az egész alkalmazásban használt színek."
+
+msgid "Connect to your music server"
+msgstr "Csatlakozás a zeneszerveredhez"
+
+msgid "Connecting..."
+msgstr "Csatlakozás..."
+
+msgid "Could not add to \"{}\": {}"
+msgstr "Nem sikerült hozzáadni ehhez: „{}”: {}"
+
+msgid "Could not add {} to the server"
+msgstr "Nem sikerült hozzáadni a szerverhez: {}"
+
+msgid "Could not create a share link: {}"
+msgstr "Nem sikerült megosztási hivatkozást létrehozni: {}"
+
+msgid "Could not create the playlist: {}"
+msgstr "Nem sikerült létrehozni a lejátszási listát: {}"
+
+msgid "Could not delete the playlist: {}"
+msgstr "Nem sikerült törölni a lejátszási listát: {}"
+
+msgid "Could not delete the station"
+msgstr "Nem sikerült törölni az állomást"
+
+msgid "Could not load albums: {}"
+msgstr "Nem sikerült betölteni az albumokat: {}"
+
+msgid "Could not load artists: {}"
+msgstr "Nem sikerült betölteni az előadókat: {}"
+
+msgid "Could not load Discover: {}"
+msgstr "Nem sikerült betölteni a Felfedezés oldalt: {}"
+
+msgid "Could not load genres: {}"
+msgstr "Nem sikerült betölteni a műfajokat: {}"
+
+msgid "Could not load it from YouTube Music: {}"
+msgstr "Nem sikerült betölteni a YouTube Musicról: {}"
+
+msgid "Could not load lyrics"
+msgstr "Nem sikerült betölteni a dalszöveget"
+
+msgid "Could not load moods and genres: {}"
+msgstr "Nem sikerült betölteni a hangulatokat és műfajokat: {}"
+
+msgid "Could not load more results: {}"
+msgstr "Nem sikerült további találatokat betölteni: {}"
+
+msgid "Could not load new releases: {}"
+msgstr "Nem sikerült betölteni az új megjelenéseket: {}"
+
+msgid "Could not load playlists: {}"
+msgstr "Nem sikerült betölteni a lejátszási listákat: {}"
+
+msgid "Could not load the album: {}"
+msgstr "Nem sikerült betölteni az albumot: {}"
+
+msgid "Could not load the artist: {}"
+msgstr "Nem sikerült betölteni az előadót: {}"
+
+msgid "Could not load the charts: {}"
+msgstr "Nem sikerült betölteni a toplistákat: {}"
+
+msgid "Could not load the folder: {}"
+msgstr "Nem sikerült betölteni a mappát: {}"
+
+msgid "Could not load the list: {}"
+msgstr "Nem sikerült betölteni a listát: {}"
+
+msgid "Could not load the playlist: {}"
+msgstr "Nem sikerült betölteni a lejátszási listát: {}"
+
+msgid "Could not load the radio stations: {}"
+msgstr "Nem sikerült betölteni a rádióállomásokat: {}"
+
+msgid "Could not load the selection: {}"
+msgstr "Nem sikerült betölteni a kijelölést: {}"
+
+msgid "Could not load this page: {}"
+msgstr "Nem sikerült betölteni ezt az oldalt: {}"
+
+msgid "Could not load tracks: {}"
+msgstr "Nem sikerült betölteni a számokat: {}"
+
+msgid "Could not load your home: {}"
+msgstr "Nem sikerült betölteni a kezdőoldaladat: {}"
+
+msgid "Could not open the folder: {}"
+msgstr "Nem sikerült megnyitni a mappát: {}"
+
+msgid "Could not open YouTube Music: {}"
+msgstr "Nem sikerült megnyitni a YouTube Musicot: {}"
+
+msgid "Could not play \"{}\" from YouTube: {}"
+msgstr "Nem sikerült lejátszani a YouTube-ról: „{}”: {}"
+
+msgid "Could not play album: {}"
+msgstr "Nem sikerült lejátszani az albumot: {}"
+
+msgid "Could not play from YouTube: {}"
+msgstr "Nem sikerült lejátszani a YouTube-ról: {}"
+
+msgid "Could not play the album: {}"
+msgstr "Nem sikerült lejátszani az albumot: {}"
+
+msgid "Could not remove songs: {}"
+msgstr "Nem sikerült eltávolítani a dalokat: {}"
+
+msgid "Could not rescan the library: {}"
+msgstr "Nem sikerült újraolvasni a könyvtárat: {}"
+
+msgid "Could not set the rating: {}"
+msgstr "Nem sikerült beállítani az értékelést: {}"
+
+msgid "Could not sign in to YouTube Music ({}). Showing general picks instead."
+msgstr "Nem sikerült bejelentkezni a YouTube Musicba ({}). Helyette általános ajánlások láthatók."
+
+msgid "Could not switch server: {}"
+msgstr "Nem sikerült szervert váltani: {}"
+
+msgid "Could not update favorite: {}"
+msgstr "Nem sikerült frissíteni a kedvencet: {}"
+
+msgid "Could not update favorites: {}"
+msgstr "Nem sikerült frissíteni a kedvenceket: {}"
+
+msgid "Could not update rating: {}"
+msgstr "Nem sikerült frissíteni az értékelést: {}"
+
+msgid "Could not update the favorite: {}"
+msgstr "Nem sikerült frissíteni a kedvencet: {}"
+
+msgid "Country"
+msgstr "Ország"
+
+msgid "Create"
+msgstr "Létrehozás"
+
+msgid "Created \"{}\" with only {n} song: {}"
+msgid_plural "Created \"{}\" with only {n} songs: {}"
+msgstr[0] "„{}” létrehozva, de csak {n} dallal: {}"
+msgstr[1] "„{}” létrehozva, de csak {n} dallal: {}"
+
+msgid "Created \"{}\" with {n} song"
+msgid_plural "Created \"{}\" with {n} songs"
+msgstr[0] "„{}” létrehozva {n} dallal"
+msgstr[1] "„{}” létrehozva {n} dallal"
+
+msgid "Created playlist \"{}\""
+msgstr "Lejátszási lista létrehozva: „{}”"
+
+msgid "Creating a share link..."
+msgstr "Megosztási hivatkozás létrehozása..."
+
+msgid "Creating..."
+msgstr "Létrehozás..."
+
+msgid "Crossfade"
+msgstr "Átúsztatás"
+
+msgid "Crossfade could not be changed: {}"
+msgstr "Az átúsztatást nem sikerült módosítani: {}"
+
+msgid "Crossfade: {}"
+msgstr "Átúsztatás: {}"
+
+msgid "Current"
+msgstr "Jelenlegi"
+
+msgid "Custom accent color: {} (theme accent in use)"
+msgstr "Egyéni kiemelő szín: {} (a téma kiemelő színe van használatban)"
+
+msgid "Custom accent color: {}, press Enter to apply"
+msgstr "Egyéni kiemelő szín: {}, az alkalmazáshoz nyomj Entert"
+
+msgid "Dark theme"
+msgstr "Sötét téma"
+
+msgid "DARK THEMES"
+msgstr "SÖTÉT TÉMÁK"
+
+msgid "Default country for the Discover charts. Automatic follows your system region."
+msgstr "A Felfedezés toplistáinak alapértelmezett országa. Az Automatikus a rendszer régióját követi."
+
+msgid "Default Dark"
+msgstr "Alapértelmezett sötét"
+
+msgid "Default Light"
+msgstr "Alapértelmezett világos"
+
+msgid "Delete"
+msgstr "Törlés"
+
+msgid "Delete \"{}\" from the server? This cannot be undone."
+msgstr "Törlöd a(z) „{}” elemet a szerverről? Ez nem vonható vissza."
+
+msgid "Delete \"{}\"? This cannot be undone."
+msgstr "Törlöd: „{}”? Ez nem vonható vissza."
+
+msgid "Delete playlist"
+msgstr "Lejátszási lista törlése"
+
+msgid "Delete station"
+msgstr "Állomás törlése"
+
+msgid "Delete {} from the server"
+msgstr "{} törlése a szerverről"
+
+msgid "Deleted playlist \"{}\""
+msgstr "Lejátszási lista törölve: „{}”"
+
+msgid "Deleting..."
+msgstr "Törlés..."
+
+msgid "Demo mode: these picks are made up and play from your demo library"
+msgstr "Bemutató mód: ezek az ajánlások kitaláltak, és a bemutató könyvtáradból szólnak"
+
+msgid "Directory"
+msgstr "Katalógus"
+
+msgid "Disc {}"
+msgstr "{}. lemez"
+
+msgid "Discord Rich Presence"
+msgstr "Discord Rich Presence"
+
+msgid "Discover"
+msgstr "Felfedezés"
+
+msgid "Discover is open"
+msgstr "A Felfedezés meg van nyitva"
+
+msgid "Discover new music on YouTube Music"
+msgstr "Fedezz fel új zenéket a YouTube Musicon"
+
+msgid "Duration"
+msgstr "Hossz"
+
+msgid "Edit station"
+msgstr "Állomás szerkesztése"
+
+msgid "Edit {}"
+msgstr "{} szerkesztése"
+
+msgid "End of current track"
+msgstr "Az aktuális szám végén"
+
+msgid "End of track"
+msgstr "A szám végén"
+
+msgid "Enter a name for the station"
+msgstr "Add meg az állomás nevét"
+
+msgid "Enter a name, country or tag to search"
+msgstr "Adj meg egy nevet, országot vagy címkét a kereséshez"
+
+msgid "Enter a stream URL that starts with http:// or https://"
+msgstr "Adj meg egy http:// vagy https:// kezdetű stream URL-t"
+
+msgid "Enter the server URL"
+msgstr "Add meg a szerver URL-jét"
+
+msgid "Fade the end of each song into the next one. Off keeps gapless playback."
+msgstr "Minden dal végét átúsztatja a következőbe. Kikapcsolva a szünetmentes lejátszás marad."
+
+msgid "Favorite"
+msgstr "Kedvenc"
+
+msgid "Favorited"
+msgstr "Kedvelt"
+
+msgid "Favorites"
+msgstr "Kedvencek"
+
+msgid "Favorites only: off"
+msgstr "Csak kedvencek: ki"
+
+msgid "Favorites only: on"
+msgstr "Csak kedvencek: be"
+
+msgid "Filter"
+msgstr "Szűrő"
+
+msgid "Filter playlists"
+msgstr "Lejátszási listák szűrése"
+
+msgid "Find stations by name, country or tag"
+msgstr "Állomások keresése név, ország vagy címke szerint"
+
+msgid "Find stations in the radio-browser.info directory"
+msgstr "Állomások keresése a radio-browser.info katalógusban"
+
+msgid "Folder"
+msgstr "Mappa"
+
+msgid "Folders"
+msgstr "Mappák"
+
+msgid "Follow current song"
+msgstr "Aktuális dal követése"
+
+msgid "Follow system color scheme"
+msgstr "A rendszer színsémájának követése"
+
+msgid "For you"
+msgstr "Neked"
+
+msgid "Forget this server?"
+msgstr "Elfelejted ezt a szervert?"
+
+msgid "Format the server should transcode to. Applies from the next song."
+msgstr "A formátum, amelyre a szerver átkódol. A következő daltól érvényes."
+
+msgid "Found {n} server in Feishin but it has no usable saved login"
+msgid_plural "Found {n} servers in Feishin but none with a usable saved login"
+msgstr[0] "{n} szerver található a Feishinben, de nincs használható mentett bejelentkezése"
+msgstr[1] "{n} szerver található a Feishinben, de egyiknek sincs használható mentett bejelentkezése"
+
+msgid "Gapless playback"
+msgstr "Szünetmentes lejátszás"
+
+msgid "Genres"
+msgstr "Műfajok"
+
+msgid "Go back to {}"
+msgstr "Vissza ide: {}"
+
+msgid "Go to album"
+msgstr "Ugrás az albumra"
+
+msgid "Go to artist"
+msgstr "Ugrás az előadóra"
+
+msgid "Go to {}"
+msgstr "Ugrás ide: {}"
+
+msgid "Green"
+msgstr "Zöld"
+
+msgid "Hide lyrics"
+msgstr "Dalszöveg elrejtése"
+
+msgid "Hide queue"
+msgstr "Lejátszási sor elrejtése"
+
+msgid "High Contrast Dark"
+msgstr "Nagy kontrasztú sötét"
+
+msgid "High Contrast Light"
+msgstr "Nagy kontrasztú világos"
+
+msgid "Highlight with the color that comes with the theme."
+msgstr "Kiemelés a témához tartozó színnel."
+
+msgid "Home"
+msgstr "Főoldal"
+
+msgid "Homepage (optional)"
+msgstr "Honlap (nem kötelező)"
+
+msgid "Import from Feishin"
+msgstr "Importálás a Feishinből"
+
+msgid "Install yt-dlp to play YouTube tracks"
+msgstr "A YouTube-számok lejátszásához telepítsd a yt-dlp-t"
+
+msgid "Integrations"
+msgstr "Integrációk"
+
+msgid "Interface"
+msgstr "Felület"
+
+msgid "Internet radio"
+msgstr "Internetes rádió"
+
+msgid "item"
+msgstr "elem"
+
+msgid "Jellyfin has no public share links"
+msgstr "A Jellyfin nem támogat nyilvános megosztási hivatkozásokat"
+
+msgid "Keep this station in the favorites on this device"
+msgstr "Az állomás megtartása a kedvencek között ezen az eszközön"
+
+msgid "Language"
+msgstr "Nyelv"
+
+msgid "LIBRARY"
+msgstr "KÖNYVTÁR"
+
+msgid "Library scan finished"
+msgstr "A könyvtár beolvasása befejeződött"
+
+msgid "Library scan finished: {n} item"
+msgid_plural "Library scan finished: {n} items"
+msgstr[0] "A könyvtár beolvasása befejeződött: {n} elem"
+msgstr[1] "A könyvtár beolvasása befejeződött: {n} elem"
+
+msgid "Light theme"
+msgstr "Világos téma"
+
+msgid "LIGHT THEMES"
+msgstr "VILÁGOS TÉMÁK"
+
+msgid "Listening to {}"
+msgstr "Most szól: {}"
+
+msgid "LIVE"
+msgstr "ÉLŐ"
+
+msgid "Load more"
+msgstr "Továbbiak betöltése"
+
+msgid "Load this section again"
+msgstr "A szakasz újbóli betöltése"
+
+msgid "Loading playlists..."
+msgstr "Lejátszási listák betöltése..."
+
+msgid "Loading similar songs..."
+msgstr "Hasonló dalok betöltése..."
+
+msgid "Loading stations..."
+msgstr "Állomások betöltése..."
+
+msgid "Loading the next page of stations"
+msgstr "Az állomások következő oldalának betöltése"
+
+msgid "Loading..."
+msgstr "Betöltés..."
+
+msgid "Log out"
+msgstr "Kijelentkezés"
+
+msgid "Looking up the YouTube link..."
+msgstr "A YouTube-hivatkozás keresése..."
+
+msgid "Lyrics"
+msgstr "Dalszöveg"
+
+msgid "Lyrics from {}"
+msgstr "Dalszöveg forrása: {}"
+
+msgid "Lyrics sources"
+msgstr "Dalszövegforrások"
+
+msgid "Maximum bitrate"
+msgstr "Maximális bitráta"
+
+msgid "Media keys and desktop media controls. Takes effect after a restart."
+msgstr "Médiabillentyűk és asztali médiavezérlők. Újraindítás után lép életbe."
+
+msgid "Moods and genres"
+msgstr "Hangulatok és műfajok"
+
+msgid "Most played"
+msgstr "Legtöbbször lejátszott"
+
+msgid "Move down"
+msgstr "Mozgatás le"
+
+msgid "Move up"
+msgstr "Mozgatás fel"
+
+msgid "MPRIS"
+msgstr "MPRIS"
+
+msgid "Mute"
+msgstr "Némítás"
+
+msgid "Name"
+msgstr "Név"
+
+msgid "New playlist"
+msgstr "Új lejátszási lista"
+
+msgid "New releases"
+msgstr "Új megjelenések"
+
+msgid "Next"
+msgstr "Következő"
+
+msgid "Next is unavailable while a radio station plays"
+msgstr "Rádióállomás lejátszása közben nincs következő szám"
+
+msgid "No albums"
+msgstr "Nincsenek albumok"
+
+msgid "No albums found"
+msgstr "Nem található album"
+
+msgid "No artists found"
+msgstr "Nem található előadó"
+
+msgid "no browser is selected"
+msgstr "nincs kiválasztva böngésző"
+
+msgid "No favorite albums"
+msgstr "Nincsenek kedvenc albumok"
+
+msgid "No favorite artists"
+msgstr "Nincsenek kedvenc előadók"
+
+msgid "No favorite tracks"
+msgstr "Nincsenek kedvenc számok"
+
+msgid "No genres found"
+msgstr "Nem található műfaj"
+
+msgid "No lyrics found"
+msgstr "Nem található dalszöveg"
+
+msgid "No playlists found"
+msgstr "Nem található lejátszási lista"
+
+msgid "No playlists yet"
+msgstr "Még nincsenek lejátszási listák"
+
+msgid "No rating"
+msgstr "Nincs értékelés"
+
+msgid "No results for \"{}\""
+msgstr "Nincs találat erre: „{}”"
+
+msgid "No saved login for {}; remove it and add it again"
+msgstr "Nincs mentett bejelentkezés ehhez: {}; távolítsd el, és add hozzá újra"
+
+msgid "No saved servers."
+msgstr "Nincsenek mentett szerverek."
+
+msgid "No similar songs found"
+msgstr "Nem található hasonló dal"
+
+msgid "No songs here"
+msgstr "Itt nincsenek dalok"
+
+msgid "No stations found"
+msgstr "Nem található állomás"
+
+msgid "No stations yet. Add one or find one in the directory."
+msgstr "Még nincsenek állomások. Adj hozzá egyet, vagy keress egyet a katalógusban."
+
+msgid "No tracks found"
+msgstr "Nem található szám"
+
+msgid "None"
+msgstr "Egyik sem"
+
+msgid "Normalize loudness using the track or album gain tags."
+msgstr "Hangerő-kiegyenlítés a szám vagy az album erősítéscímkéi alapján."
+
+msgid "Not connected to a server"
+msgstr "Nincs kapcsolat szerverrel"
+
+msgid "Nothing is playing"
+msgstr "Semmi sem szól"
+
+msgid "Nothing to add yet"
+msgstr "Még nincs mit hozzáadni"
+
+msgid "Nothing to go back to"
+msgstr "Nincs hová visszalépni"
+
+msgid "Nothing to play here"
+msgstr "Itt nincs mit lejátszani"
+
+msgid "Nothing to play yet"
+msgstr "Még nincs mit lejátszani"
+
+msgid "Nothing to show here right now"
+msgstr "Itt most nincs mit megjeleníteni"
+
+msgid "Off"
+msgstr "Ki"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "On the server"
+msgstr "A szerveren"
+
+msgid "Only a server admin can rescan the library"
+msgstr "Csak a szerver rendszergazdája olvashatja be újra a könyvtárat"
+
+msgid "Only loaded tracks can be shared: select fewer tracks or scroll through them first"
+msgstr "Csak a betöltött számok oszthatók meg: jelölj ki kevesebb számot, vagy előbb görgesd végig őket"
+
+msgid "Open"
+msgstr "Megnyitás"
+
+msgid "Open in YouTube Music"
+msgstr "Megnyitás a YouTube Musicban"
+
+msgid "Open now playing"
+msgstr "Most játszott megnyitása"
+
+msgid "Open radio"
+msgstr "Rádió megnyitása"
+
+msgid "Open the album \"{}\""
+msgstr "A(z) „{}” album megnyitása"
+
+msgid "Open the playlist \"{}\""
+msgstr "A(z) „{}” lejátszási lista megnyitása"
+
+msgid "Open the queue panel"
+msgstr "A lejátszási sor paneljének megnyitása"
+
+msgid "Open {}"
+msgstr "{} megnyitása"
+
+msgid "Original"
+msgstr "Eredeti"
+
+msgid "Output used by the player."
+msgstr "A lejátszó által használt kimenet."
+
+msgid "Owner"
+msgstr "Tulajdonos"
+
+msgid "Password"
+msgstr "Jelszó"
+
+msgid "Paste a link first"
+msgstr "Előbb illessz be egy hivatkozást"
+
+msgid "Paste a YouTube or YouTube Music link first"
+msgstr "Előbb illessz be egy YouTube- vagy YouTube Music-hivatkozást"
+
+msgid "Paste a YouTube or YouTube Music link to try yt-dlp."
+msgstr "Illessz be egy YouTube- vagy YouTube Music-hivatkozást a yt-dlp kipróbálásához."
+
+msgid "Pause"
+msgstr "Szünet"
+
+msgid "Pause the radio station"
+msgstr "A rádióállomás szüneteltetése"
+
+msgid "Personalized with your YouTube Music account from {}"
+msgstr "Személyre szabva a YouTube Music-fiókoddal innen: {}"
+
+msgid "Pick a color, or type one as #rrggbb and press Enter."
+msgstr "Válassz színt, vagy írd be #rrggbb formában, és nyomj Entert."
+
+msgid "Pick a mood or genre to see its playlists"
+msgstr "Válassz hangulatot vagy műfajt a lejátszási listák megtekintéséhez"
+
+msgid "Play"
+msgstr "Lejátszás"
+
+msgid "Play \"{}\" and the rest of this shelf"
+msgstr "„{}” és a polc többi elemének lejátszása"
+
+msgid "Play a YouTube link"
+msgstr "YouTube-hivatkozás lejátszása"
+
+msgid "Play album"
+msgstr "Album lejátszása"
+
+msgid "Play all"
+msgstr "Összes lejátszása"
+
+msgid "Play all {n} song"
+msgid_plural "Play all {n} songs"
+msgstr[0] "Mind a(z) {n} dal lejátszása"
+msgstr[1] "Mind a(z) {n} dal lejátszása"
+
+msgid "Play count"
+msgstr "Lejátszások száma"
+
+msgid "Play every song in {} and its subfolders"
+msgstr "A(z) {} és almappái összes dalának lejátszása"
+
+msgid "Play from here"
+msgstr "Lejátszás innen"
+
+msgid "Play from this song"
+msgstr "Lejátszás ettől a daltól"
+
+msgid "Play from {}"
+msgstr "Lejátszás innen: {}"
+
+msgid "Play next"
+msgstr "Lejátszás következőként"
+
+msgid "Play the album"
+msgstr "Az album lejátszása"
+
+msgid "Play the playlist"
+msgstr "A lejátszási lista lejátszása"
+
+msgid "Play the radio station"
+msgstr "A rádióállomás lejátszása"
+
+msgid "Play this link after the current song"
+msgstr "A hivatkozás lejátszása az aktuális dal után"
+
+msgid "Play this link now"
+msgstr "A hivatkozás lejátszása most"
+
+msgid "Play {}"
+msgstr "{} lejátszása"
+
+msgid "Play {} next"
+msgstr "{} lejátszása következőként"
+
+msgid "Play {} with its subfolders"
+msgstr "{} lejátszása az almappáival együtt"
+
+msgid "Playback"
+msgstr "Lejátszás"
+
+msgid "Playback failed: {}"
+msgstr "A lejátszás sikertelen: {}"
+
+msgid "Playing {} failed: {}"
+msgstr "{} lejátszása sikertelen: {}"
+
+msgid "PLAYLIST"
+msgstr "LEJÁTSZÁSI LISTA"
+
+msgid "Playlist"
+msgstr "Lejátszási lista"
+
+msgid "playlist"
+msgstr "lejátszási lista"
+
+msgid "Playlist name"
+msgstr "Lejátszási lista neve"
+
+msgid "Playlists"
+msgstr "Lejátszási listák"
+
+msgid "Plays"
+msgstr "Lejátszások"
+
+msgid "Plays YouTube tracks. Leave empty to use yt-dlp from your PATH."
+msgstr "Ez játssza le a YouTube-számokat. Hagyd üresen a PATH-ban lévő yt-dlp használatához."
+
+msgid "Preload the next song so it starts without a pause."
+msgstr "A következő dal előtöltése, hogy szünet nélkül induljon."
+
+msgid "Previous"
+msgstr "Előző"
+
+msgid "Previous is unavailable while a radio station plays"
+msgstr "Rádióállomás lejátszása közben nincs előző szám"
+
+msgid "Purple"
+msgstr "Lila"
+
+msgid "Queue"
+msgstr "Lejátszási sor"
+
+msgid "Radio"
+msgstr "Rádió"
+
+msgid "Random"
+msgstr "Véletlenszerű"
+
+msgid "Rate {n} star"
+msgid_plural "Rate {n} stars"
+msgstr[0] "Értékelés: {n} csillag"
+msgstr[1] "Értékelés: {n} csillag"
+
+msgid "Rating"
+msgstr "Értékelés"
+
+msgid "Recently added"
+msgstr "Nemrég hozzáadott"
+
+msgid "Recently played"
+msgstr "Nemrég lejátszott"
+
+msgid "Red"
+msgstr "Piros"
+
+msgid "Refresh"
+msgstr "Frissítés"
+
+msgid "Refresh this section"
+msgstr "A szakasz frissítése"
+
+msgid "Release year"
+msgstr "Megjelenés éve"
+
+msgid "Remove"
+msgstr "Eltávolítás"
+
+msgid "Remove from favorites"
+msgstr "Eltávolítás a kedvencek közül"
+
+msgid "Remove from playlist"
+msgstr "Eltávolítás a lejátszási listáról"
+
+msgid "Remove from queue"
+msgstr "Eltávolítás a lejátszási sorból"
+
+msgid "Removed {n} song from \"{}\""
+msgid_plural "Removed {n} songs from \"{}\""
+msgstr[0] "{n} dal eltávolítva innen: „{}”"
+msgstr[1] "{n} dal eltávolítva innen: „{}”"
+
+msgid "Removing..."
+msgstr "Eltávolítás..."
+
+msgid "Repeat: all"
+msgstr "Ismétlés: összes"
+
+msgid "Repeat: off"
+msgstr "Ismétlés: ki"
+
+msgid "Repeat: one"
+msgstr "Ismétlés: egy"
+
+msgid "ReplayGain"
+msgstr "ReplayGain"
+
+msgid "Report what you play to the server."
+msgstr "A lejátszott zenék jelentése a szervernek."
+
+msgid "Rescan the library for new content"
+msgstr "A könyvtár újbóli beolvasása új tartalomért"
+
+msgid "Resize column"
+msgstr "Oszlop átméretezése"
+
+msgid "Save"
+msgstr "Mentés"
+
+msgid "Save on this device"
+msgstr "Mentés ezen az eszközön"
+
+msgid "Save the changes on the server"
+msgstr "A módosítások mentése a szerveren"
+
+msgid "Save the changes on this device"
+msgstr "A módosítások mentése ezen az eszközön"
+
+msgid "Save to favorites on this device"
+msgstr "Mentés a kedvencek közé ezen az eszközön"
+
+msgid "Save to server"
+msgstr "Mentés a szerverre"
+
+msgid "Saved on this device"
+msgstr "Mentve ezen az eszközön"
+
+msgid "Saved on this device, click to remove"
+msgstr "Mentve ezen az eszközön, kattints az eltávolításhoz"
+
+msgid "Saving the station to the server..."
+msgstr "Az állomás mentése a szerverre..."
+
+msgid "Saving to the server..."
+msgstr "Mentés a szerverre..."
+
+msgid "Saving..."
+msgstr "Mentés..."
+
+msgid "Scanning the library for new content..."
+msgstr "A könyvtár beolvasása új tartalomért..."
+
+msgid "Scanning the library: {}"
+msgstr "A könyvtár beolvasása: {}"
+
+msgid "Scrobble"
+msgstr "Scrobble"
+
+msgid "Scroll left"
+msgstr "Görgetés balra"
+
+msgid "Scroll lists and the queue to the song that is playing."
+msgstr "A listák és a lejátszási sor görgetése az éppen szóló dalhoz."
+
+msgid "Scroll right"
+msgstr "Görgetés jobbra"
+
+msgid "Search"
+msgstr "Keresés"
+
+msgid "Search failed: {}"
+msgstr "A keresés sikertelen: {}"
+
+msgid "SEARCH RESULTS"
+msgstr "KERESÉSI TALÁLATOK"
+
+msgid "Search songs on YouTube Music"
+msgstr "Dalok keresése a YouTube Musicon"
+
+msgid "Search songs, albums, artists"
+msgstr "Dalok, albumok, előadók keresése"
+
+msgid "Search the radio-browser.info directory"
+msgstr "Keresés a radio-browser.info katalógusban"
+
+msgid "Search your library for songs, albums and artists"
+msgstr "Dalok, albumok és előadók keresése a könyvtáradban"
+
+msgid "Searched from top to bottom until one has lyrics."
+msgstr "Fentről lefelé keres, amíg valamelyik forrásban nem talál dalszöveget."
+
+msgid "Searching for lyrics..."
+msgstr "Dalszöveg keresése..."
+
+msgid "Searching the radio directory failed: {}"
+msgstr "A rádiókatalógusban való keresés sikertelen: {}"
+
+msgid "Searching the radio-browser.info directory"
+msgstr "Keresés a radio-browser.info katalógusban"
+
+msgid "Searching..."
+msgstr "Keresés..."
+
+msgid "Seeking is unavailable for live radio"
+msgstr "Élő rádiónál nem lehet tekerni"
+
+msgid "Server"
+msgstr "Szerver"
+
+msgid "Server type"
+msgstr "Szerver típusa"
+
+msgid "Servers"
+msgstr "Szerverek"
+
+msgid "Set rating"
+msgstr "Értékelés"
+
+msgid "Settings"
+msgstr "Beállítások"
+
+msgid "Share"
+msgstr "Megosztás"
+
+msgid "Share ({})"
+msgstr "Megosztás ({})"
+
+msgid "Share link copied to the clipboard: {}"
+msgstr "Megosztási hivatkozás a vágólapra másolva: {}"
+
+msgid "Share this {}: copy a public link"
+msgstr "A(z) {} megosztása: nyilvános hivatkozás másolása"
+
+msgid "Sharing is unavailable: {}"
+msgstr "A megosztás nem érhető el: {}"
+
+msgid "SHOW LESS"
+msgstr "KEVESEBB"
+
+msgid "Show lyrics"
+msgstr "Dalszöveg megjelenítése"
+
+msgid "SHOW MORE"
+msgstr "TÖBB"
+
+msgid "Show more"
+msgstr "Több megjelenítése"
+
+msgid "Show playlists for {}"
+msgstr "Lejátszási listák megjelenítése: {}"
+
+msgid "Show queue"
+msgstr "Lejátszási sor megjelenítése"
+
+msgid "Show the current song on your Discord profile."
+msgstr "Az aktuális dal megjelenítése a Discord-profilodon."
+
+msgid "Show the next page of stations"
+msgstr "Az állomások következő oldalának megjelenítése"
+
+msgid "Show the queue next to the library; remembered on the next start."
+msgstr "A lejátszási sor megjelenítése a könyvtár mellett; a következő indításkor is megmarad."
+
+msgid "Show the server and saved stations"
+msgstr "A szerver és a mentett állomások megjelenítése"
+
+msgid "Show {}"
+msgstr "{} megjelenítése"
+
+msgid "Showing playlists for {}"
+msgstr "Lejátszási listák: {}"
+
+msgid "Showing the charts for {}"
+msgstr "Toplisták: {}"
+
+msgid "Showing the radio-browser.info directory"
+msgstr "A radio-browser.info katalógus látható"
+
+msgid "Showing the server and saved stations"
+msgstr "A szerver és a mentett állomások láthatók"
+
+msgid "Shuffle"
+msgstr "Keverés"
+
+msgid "Shuffle every song in {} and its subfolders"
+msgstr "A(z) {} és almappái összes dalának keverése"
+
+msgid "Shuffle play"
+msgstr "Keveréses lejátszás"
+
+msgid "Shuffle: off"
+msgstr "Keverés: ki"
+
+msgid "Shuffle: on"
+msgstr "Keverés: be"
+
+msgid "Sign in"
+msgstr "Bejelentkezés"
+
+msgid "Sign in with browser"
+msgstr "Bejelentkezés böngészővel"
+
+msgid "Sign out and forget this server's saved login?"
+msgstr "Kijelentkezel, és elfelejted a szerver mentett bejelentkezését?"
+
+msgid "Sign out and forget this server?"
+msgstr "Kijelentkezel, és elfelejted ezt a szervert?"
+
+msgid "Similar"
+msgstr "Hasonlók"
+
+msgid "Similar songs come from your server, so YouTube tracks have none"
+msgstr "A hasonló dalok a szerveredről származnak, ezért a YouTube-számokhoz nincsenek"
+
+msgid "Sleep timer: off"
+msgstr "Elalvási időzítő: ki"
+
+msgid "Sleep timer: {}"
+msgstr "Elalvási időzítő: {}"
+
+msgid "Song count"
+msgstr "Dalok száma"
+
+msgid "Songs"
+msgstr "Dalok"
+
+msgid "Sort by {}"
+msgstr "Rendezés: {}"
+
+msgid "Sort by {}: ascending"
+msgstr "Rendezés: {}, növekvő"
+
+msgid "Sort by {}: descending"
+msgstr "Rendezés: {}, csökkenő"
+
+msgid "Sort: ascending"
+msgstr "Rendezés: növekvő"
+
+msgid "Sort: descending"
+msgstr "Rendezés: csökkenő"
+
+msgid "Starting volume, shared with the player bar."
+msgstr "Kezdő hangerő, a lejátszósávval közös."
+
+msgid "Station data from radio-browser.info"
+msgstr "Állomásadatok forrása: radio-browser.info"
+
+msgid "Station name"
+msgstr "Állomás neve"
+
+msgid "Stations"
+msgstr "Állomások"
+
+msgid "Stop {}"
+msgstr "{} leállítása"
+
+msgid "Stream URL"
+msgstr "Stream URL"
+
+msgid "Switch"
+msgstr "Váltás"
+
+msgid "Switch between a dark and a light theme with the desktop. {}"
+msgstr "Váltás sötét és világos téma között az asztallal együtt. {}"
+
+msgid "Switch to grid view"
+msgstr "Váltás rácsnézetre"
+
+msgid "Switch to list view"
+msgstr "Váltás listanézetre"
+
+msgid "System default"
+msgstr "Rendszer alapértelmezése"
+
+msgid "System default follows the language of the desktop."
+msgstr "A rendszer alapértelmezése az asztal nyelvét követi."
+
+msgid "Tag, for example jazz"
+msgstr "Címke, például jazz"
+
+msgid "The desktop currently prefers dark."
+msgstr "Az asztal jelenleg a sötétet részesíti előnyben."
+
+msgid "The desktop currently prefers light."
+msgstr "Az asztal jelenleg a világosat részesíti előnyben."
+
+msgid "The desktop has no preference, so the dark theme is used."
+msgstr "Az asztalnak nincs preferenciája, ezért a sötét téma van használatban."
+
+msgid "The library scan is still running on the server"
+msgstr "A könyvtár beolvasása még fut a szerveren"
+
+msgid "The queue is empty"
+msgstr "A lejátszási sor üres"
+
+msgid "The queue is incomplete: loading the rest of the list failed ({})"
+msgstr "A lejátszási sor hiányos: a lista többi részének betöltése sikertelen ({})"
+
+msgid "The radio directory could not be reached"
+msgstr "A rádiókatalógus nem érhető el"
+
+msgid "The radio station stopped streaming"
+msgstr "A rádióállomás leállította a közvetítést"
+
+msgid "The server refused the station: {}"
+msgstr "A szerver elutasította az állomást: {}"
+
+msgid "Theme"
+msgstr "Téma"
+
+msgid "There is nothing to play in this list"
+msgstr "Ebben a listában nincs mit lejátszani"
+
+msgid "This Discover page does not exist"
+msgstr "Ez a Felfedezés oldal nem létezik"
+
+msgid "This folder is empty"
+msgstr "Ez a mappa üres"
+
+msgid "This playlist is empty"
+msgstr "Ez a lejátszási lista üres"
+
+msgid "This server has no internet radio. Stations you add are saved on this device."
+msgstr "Ezen a szerveren nincs internetes rádió. A hozzáadott állomások ezen az eszközön lesznek mentve."
+
+msgid "this server has no public share links"
+msgstr "ez a szerver nem támogat nyilvános megosztási hivatkozásokat"
+
+msgid "Time"
+msgstr "Idő"
+
+msgid "Title"
+msgstr "Cím"
+
+msgid "Top songs"
+msgstr "Legnépszerűbb dalok"
+
+msgid "Track"
+msgstr "Szám"
+
+msgid "Tracks"
+msgstr "Számok"
+
+msgid "Transcode format"
+msgstr "Átkódolási formátum"
+
+msgid "Try again"
+msgstr "Újrapróbálás"
+
+msgid "Turn off the theme accent color to pick your own."
+msgstr "Kapcsold ki a téma kiemelő színét, hogy sajátot választhass."
+
+msgid "Unmute"
+msgstr "Némítás feloldása"
+
+msgid "Up next"
+msgstr "Következik"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "Use the theme accent color"
+msgstr "A téma kiemelő színének használata"
+
+msgid "Use {}"
+msgstr "{} használata"
+
+msgid "Used while the desktop prefers dark."
+msgstr "Akkor használatos, ha az asztal a sötétet részesíti előnyben."
+
+msgid "Used while the desktop prefers light."
+msgstr "Akkor használatos, ha az asztal a világosat részesíti előnyben."
+
+msgid "Username"
+msgstr "Felhasználónév"
+
+msgid "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Feishin deletes right after reading."
+msgstr "A böngészőben lévő YouTube-munkamenetedet használja a személyre szabott Felfedezés kezdőoldalhoz és a Premium hanghoz. A yt-dlp a sütiket egy privát ideiglenes fájlba másolja, amelyet a Feishin a beolvasás után azonnal töröl."
+
+msgid "Volume"
+msgstr "Hangerő"
+
+msgid "Volume {}%"
+msgstr "Hangerő: {}%"
+
+msgid "XDG_RUNTIME_DIR is not set, so there is no private place for the cookies"
+msgstr "Az XDG_RUNTIME_DIR nincs beállítva, így nincs privát hely a sütik számára"
+
+msgid "Year"
+msgstr "Év"
+
+msgid "You are here: {}"
+msgstr "Itt vagy: {}"
+
+msgid "Your user is not allowed to share on this server"
+msgstr "A felhasználódnak nincs megosztási joga ezen a szerveren"
+
+msgid "YouTube"
+msgstr "YouTube"
+
+msgid "YouTube albums are not in your library"
+msgstr "A YouTube-albumok nincsenek a könyvtáradban"
+
+msgid "YouTube artists are not in your library"
+msgstr "A YouTube-előadók nincsenek a könyvtáradban"
+
+msgid "yt-dlp program"
+msgstr "yt-dlp program"
+
+msgid "{n} album"
+msgid_plural "{n} albums"
+msgstr[0] "{n} album"
+msgstr[1] "{n} album"
+
+msgid "{n} folder"
+msgid_plural "{n} folders"
+msgstr[0] "{n} mappa"
+msgstr[1] "{n} mappa"
+
+msgid "{n} item so far"
+msgid_plural "{n} items so far"
+msgstr[0] "Eddig {n} elem"
+msgstr[1] "Eddig {n} elem"
+
+msgid "{n} minute"
+msgid_plural "{n} minutes"
+msgstr[0] "{n} perc"
+msgstr[1] "{n} perc"
+
+msgid "{n} selected"
+msgid_plural "{n} selected"
+msgstr[0] "{n} kijelölve"
+msgstr[1] "{n} kijelölve"
+
+msgid "{n} song"
+msgid_plural "{n} songs"
+msgstr[0] "{n} dal"
+msgstr[1] "{n} dal"
+
+msgid "{n} song from \"{}\" will play next"
+msgid_plural "{n} songs from \"{}\" will play next"
+msgstr[0] "{n} dal következik innen: „{}”"
+msgstr[1] "{n} dal következik innen: „{}”"
+
+msgid "{n} song on YouTube Music"
+msgid_plural "{n} songs on YouTube Music"
+msgstr[0] "{n} dal a YouTube Musicon"
+msgstr[1] "{n} dal a YouTube Musicon"
+
+msgid "{n} song will play next"
+msgid_plural "{n} songs will play next"
+msgstr[0] "{n} dal következik"
+msgstr[1] "{n} dal következik"
+
+msgid "{} (current theme)"
+msgstr "{} (jelenlegi téma)"
+
+msgid "{} (unavailable)"
+msgstr "{} (nem érhető el)"
+
+msgid "{} at {}"
+msgstr "{0} @ {1}"
+
+msgid "{} cannot be played: its stream address is not an internet stream"
+msgstr "{} nem játszható le: a stream címe nem internetes stream"
+
+msgid "{} is shown"
+msgstr "{} látható"
+
+msgid "{} kbps"
+msgstr "{} kbps"
+
+msgid "{} s"
+msgstr "{} mp"
+
+msgid "{}: off"
+msgstr "{}: ki"
+
+msgid "{}: on"
+msgstr "{}: be"
+
+msgid "{}: {} (dark)"
+msgstr "{}: {} (sötét)"
+
+msgid "{}: {} (light)"
+msgstr "{}: {} (világos)"

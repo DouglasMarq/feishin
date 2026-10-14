@@ -49,7 +49,7 @@ fn show_count(window: &AppWindow, generation: u64, result: feishin_api::Result<u
     state.set_total(clamp_i32(total as u64));
     state.set_loading(false);
     if let Err(error) = result {
-        show_status(window, &format!("Could not load tracks: {error}"));
+        show_status(window, &tr!("Could not load tracks: {}", error));
     }
 }
 
@@ -85,7 +85,7 @@ fn show_page(
         }
         Err(error) => {
             with_model(window, |model| model.page_failed(generation, page));
-            show_status(window, &format!("Could not load tracks: {error}"));
+            show_status(window, &tr!("Could not load tracks: {}", error));
         }
     }
 }

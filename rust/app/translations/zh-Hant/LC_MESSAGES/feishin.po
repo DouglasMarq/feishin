@@ -1,0 +1,1498 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: zh-Hant\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+
+msgid "\"{}\" plays next"
+msgstr "「{}」將在下一首播放"
+
+msgid "\"{}\" will play next"
+msgstr "「{}」將接著播放"
+
+msgid "1 star"
+msgstr "1 星"
+
+msgid "2 stars"
+msgstr "2 星"
+
+msgid "3 stars"
+msgstr "3 星"
+
+msgid "4 stars"
+msgstr "4 星"
+
+msgid "5 stars"
+msgstr "5 星"
+
+msgid "About {}"
+msgstr "關於 {0}"
+
+msgid "Accent color"
+msgstr "強調色"
+
+msgid "Accent color not changed: {}."
+msgstr "強調色未變更：{}。"
+
+msgid "Accent color {}"
+msgstr "強調色 {}"
+
+msgid "Accent color {} (selected)"
+msgstr "強調色 {}（已選取）"
+
+msgid "Accent color {} (theme accent in use)"
+msgstr "強調色 {}（正在使用主題強調色）"
+
+msgid "Add a station by its stream URL"
+msgstr "透過串流 URL 新增電台"
+
+msgid "Add all songs to the queue"
+msgstr "將所有歌曲加入佇列"
+
+msgid "Add server"
+msgstr "新增伺服器"
+
+msgid "Add station"
+msgstr "新增電台"
+
+msgid "Add this link to the end of the queue"
+msgstr "將此連結加入佇列結尾"
+
+msgid "Add this station to the server for every client"
+msgstr "將此電台新增至伺服器，供所有用戶端使用"
+
+msgid "Add to favorites"
+msgstr "加入收藏"
+
+msgid "Add to playlist"
+msgstr "加入播放清單"
+
+msgid "Add to queue"
+msgstr "加入佇列"
+
+msgid "Add to the server's stations"
+msgstr "新增至伺服器電台"
+
+msgid "Add {n} song to playlist"
+msgid_plural "Add {n} songs to playlist"
+msgstr[0] "將 {n} 首歌曲加入播放清單"
+
+msgid "Add {} to the queue"
+msgstr "將 {} 加入佇列"
+
+msgid "Added \"{}\" to the queue"
+msgstr "已將「{}」加入佇列"
+
+msgid "Added only {n} song to \"{}\": {}"
+msgid_plural "Added only {n} songs to \"{}\": {}"
+msgstr[0] "僅將 {n} 首歌曲加入「{}」：{}"
+
+msgid "Added {n} song from \"{}\" to the queue"
+msgid_plural "Added {n} songs from \"{}\" to the queue"
+msgstr[0] "已將「{}」中的 {n} 首歌曲加入佇列"
+
+msgid "Added {n} song to \"{}\""
+msgid_plural "Added {n} songs to \"{}\""
+msgstr[0] "已將 {n} 首歌曲加入「{}」"
+
+msgid "Added {n} song to the queue"
+msgid_plural "Added {n} songs to the queue"
+msgstr[0] "已將 {n} 首歌曲加入佇列"
+
+msgid "Adding to \"{}\": {} of {n} song"
+msgid_plural "Adding to \"{}\": {} of {n} songs"
+msgstr[0] "正在加入「{}」：{} / {n} 首歌曲"
+
+msgid "ALBUM"
+msgstr "專輯"
+
+msgid "Album"
+msgstr "專輯"
+
+msgid "album"
+msgstr "專輯"
+
+msgid "Album artist"
+msgstr "專輯藝人"
+
+msgid "Album count"
+msgstr "專輯數量"
+
+msgid "Album not found"
+msgstr "找不到專輯"
+
+msgid "Albums"
+msgstr "專輯"
+
+msgid "All genres"
+msgstr "所有曲風"
+
+msgid "Already at the end"
+msgstr "已經是最後一項"
+
+msgid "Already at the start"
+msgstr "已經是第一項"
+
+msgid "Already in \"{}\""
+msgstr "已在「{}」中"
+
+msgid "Already on the server"
+msgstr "已在伺服器上"
+
+msgid "Amber"
+msgstr "琥珀色"
+
+msgid "Appearance"
+msgstr "外觀"
+
+msgid "ARTIST"
+msgstr "藝人"
+
+msgid "Artist"
+msgstr "藝人"
+
+msgid "Artists"
+msgstr "藝人"
+
+msgid "Ask the server to transcode down to this bitrate. Applies from the next song."
+msgstr "要求伺服器轉碼至不超過此位元率。從下一首歌曲開始生效。"
+
+msgid "Audio device"
+msgstr "音訊裝置"
+
+msgid "Automatic ({})"
+msgstr "自動（{}）"
+
+msgid "Back"
+msgstr "返回"
+
+msgid "Blue"
+msgstr "藍色"
+
+msgid "by {}"
+msgstr "建立者：{}"
+
+msgid "Cancel"
+msgstr "取消"
+
+msgid "Cancel timer"
+msgstr "取消計時器"
+
+msgid "Cannot share: {}"
+msgstr "無法分享：{}"
+
+msgid "Chart country"
+msgstr "排行榜國家/地區"
+
+msgid "Charts"
+msgstr "排行榜"
+
+msgid "Choose a browser under Settings, YouTube to sign in for a personalized home"
+msgstr "在「設定 > YouTube」中選擇瀏覽器並登入，即可取得個人化首頁"
+
+msgid "Clear"
+msgstr "清空"
+
+msgid "Clear filters"
+msgstr "清除篩選"
+
+msgid "Clear rating"
+msgstr "清除評分"
+
+msgid "Clear the favorites and genre filters"
+msgstr "清除收藏與曲風篩選"
+
+msgid "Close"
+msgstr "關閉"
+
+msgid "Close now playing"
+msgstr "關閉正在播放"
+
+msgid "Close without saving"
+msgstr "關閉且不儲存"
+
+msgid "Colors used across the whole app."
+msgstr "整個應用程式使用的顏色。"
+
+msgid "Connect to your music server"
+msgstr "連線至你的音樂伺服器"
+
+msgid "Connecting..."
+msgstr "連線中..."
+
+msgid "Could not add to \"{}\": {}"
+msgstr "無法加入「{}」：{}"
+
+msgid "Could not add {} to the server"
+msgstr "無法將 {} 新增至伺服器"
+
+msgid "Could not create a share link: {}"
+msgstr "無法建立分享連結：{}"
+
+msgid "Could not create the playlist: {}"
+msgstr "無法建立播放清單：{}"
+
+msgid "Could not delete the playlist: {}"
+msgstr "無法刪除播放清單：{}"
+
+msgid "Could not delete the station"
+msgstr "無法刪除電台"
+
+msgid "Could not load albums: {}"
+msgstr "無法載入專輯：{}"
+
+msgid "Could not load artists: {}"
+msgstr "無法載入藝人：{}"
+
+msgid "Could not load Discover: {}"
+msgstr "無法載入「探索」：{}"
+
+msgid "Could not load genres: {}"
+msgstr "無法載入曲風：{}"
+
+msgid "Could not load it from YouTube Music: {}"
+msgstr "無法從 YouTube Music 載入：{}"
+
+msgid "Could not load lyrics"
+msgstr "無法載入歌詞"
+
+msgid "Could not load moods and genres: {}"
+msgstr "無法載入心情與曲風：{}"
+
+msgid "Could not load more results: {}"
+msgstr "無法載入更多結果：{}"
+
+msgid "Could not load new releases: {}"
+msgstr "無法載入新發行：{}"
+
+msgid "Could not load playlists: {}"
+msgstr "無法載入播放清單：{}"
+
+msgid "Could not load the album: {}"
+msgstr "無法載入專輯：{}"
+
+msgid "Could not load the artist: {}"
+msgstr "無法載入藝人：{}"
+
+msgid "Could not load the charts: {}"
+msgstr "無法載入排行榜：{}"
+
+msgid "Could not load the folder: {}"
+msgstr "無法載入資料夾：{}"
+
+msgid "Could not load the list: {}"
+msgstr "無法載入清單：{}"
+
+msgid "Could not load the playlist: {}"
+msgstr "無法載入播放清單：{}"
+
+msgid "Could not load the radio stations: {}"
+msgstr "無法載入電台：{}"
+
+msgid "Could not load the selection: {}"
+msgstr "無法載入所選項目：{}"
+
+msgid "Could not load this page: {}"
+msgstr "無法載入此頁面：{}"
+
+msgid "Could not load tracks: {}"
+msgstr "無法載入曲目：{}"
+
+msgid "Could not load your home: {}"
+msgstr "無法載入首頁：{}"
+
+msgid "Could not open the folder: {}"
+msgstr "無法開啟資料夾：{}"
+
+msgid "Could not open YouTube Music: {}"
+msgstr "無法開啟 YouTube Music：{}"
+
+msgid "Could not play \"{}\" from YouTube: {}"
+msgstr "無法從 YouTube 播放「{}」：{}"
+
+msgid "Could not play album: {}"
+msgstr "無法播放專輯：{}"
+
+msgid "Could not play from YouTube: {}"
+msgstr "無法從 YouTube 播放：{}"
+
+msgid "Could not play the album: {}"
+msgstr "無法播放專輯：{}"
+
+msgid "Could not remove songs: {}"
+msgstr "無法移除歌曲：{}"
+
+msgid "Could not rescan the library: {}"
+msgstr "無法重新掃描媒體庫：{}"
+
+msgid "Could not set the rating: {}"
+msgstr "無法設定評分：{}"
+
+msgid "Could not sign in to YouTube Music ({}). Showing general picks instead."
+msgstr "無法登入 YouTube Music（{}）。將改為顯示一般推薦。"
+
+msgid "Could not switch server: {}"
+msgstr "無法切換伺服器：{}"
+
+msgid "Could not update favorite: {}"
+msgstr "無法更新收藏：{}"
+
+msgid "Could not update favorites: {}"
+msgstr "無法更新收藏：{}"
+
+msgid "Could not update rating: {}"
+msgstr "無法更新評分：{}"
+
+msgid "Could not update the favorite: {}"
+msgstr "無法更新收藏：{}"
+
+msgid "Country"
+msgstr "國家/地區"
+
+msgid "Create"
+msgstr "建立"
+
+msgid "Created \"{}\" with only {n} song: {}"
+msgid_plural "Created \"{}\" with only {n} songs: {}"
+msgstr[0] "已建立「{}」，但僅加入 {n} 首歌曲：{}"
+
+msgid "Created \"{}\" with {n} song"
+msgid_plural "Created \"{}\" with {n} songs"
+msgstr[0] "已建立「{}」，包含 {n} 首歌曲"
+
+msgid "Created playlist \"{}\""
+msgstr "已建立播放清單「{}」"
+
+msgid "Creating a share link..."
+msgstr "正在建立分享連結..."
+
+msgid "Creating..."
+msgstr "建立中..."
+
+msgid "Crossfade"
+msgstr "淡入淡出"
+
+msgid "Crossfade could not be changed: {}"
+msgstr "無法變更淡入淡出：{}"
+
+msgid "Crossfade: {}"
+msgstr "淡入淡出：{}"
+
+msgid "Current"
+msgstr "目前"
+
+msgid "Custom accent color: {} (theme accent in use)"
+msgstr "自訂強調色：{}（正在使用主題強調色）"
+
+msgid "Custom accent color: {}, press Enter to apply"
+msgstr "自訂強調色：{}，按 Enter 套用"
+
+msgid "Dark theme"
+msgstr "深色主題"
+
+msgid "DARK THEMES"
+msgstr "深色主題"
+
+msgid "Default country for the Discover charts. Automatic follows your system region."
+msgstr "「探索」排行榜的預設國家/地區。「自動」會依照系統地區。"
+
+msgid "Default Dark"
+msgstr "預設深色"
+
+msgid "Default Light"
+msgstr "預設淺色"
+
+msgid "Delete"
+msgstr "刪除"
+
+msgid "Delete \"{}\" from the server? This cannot be undone."
+msgstr "要從伺服器刪除「{}」嗎？此操作無法復原。"
+
+msgid "Delete \"{}\"? This cannot be undone."
+msgstr "要刪除「{}」嗎？此操作無法復原。"
+
+msgid "Delete playlist"
+msgstr "刪除播放清單"
+
+msgid "Delete station"
+msgstr "刪除電台"
+
+msgid "Delete {} from the server"
+msgstr "從伺服器刪除 {}"
+
+msgid "Deleted playlist \"{}\""
+msgstr "已刪除播放清單「{}」"
+
+msgid "Deleting..."
+msgstr "刪除中..."
+
+msgid "Demo mode: these picks are made up and play from your demo library"
+msgstr "示範模式：這些推薦是虛構的，將從示範媒體庫播放"
+
+msgid "Directory"
+msgstr "目錄"
+
+msgid "Disc {}"
+msgstr "光碟 {}"
+
+msgid "Discord Rich Presence"
+msgstr "Discord Rich Presence"
+
+msgid "Discover"
+msgstr "探索"
+
+msgid "Discover is open"
+msgstr "「探索」已開啟"
+
+msgid "Discover new music on YouTube Music"
+msgstr "在 YouTube Music 上探索新音樂"
+
+msgid "Duration"
+msgstr "時長"
+
+msgid "Edit station"
+msgstr "編輯電台"
+
+msgid "Edit {}"
+msgstr "編輯 {}"
+
+msgid "End of current track"
+msgstr "目前曲目結束時"
+
+msgid "End of track"
+msgstr "曲目結束時"
+
+msgid "Enter a name for the station"
+msgstr "輸入電台名稱"
+
+msgid "Enter a name, country or tag to search"
+msgstr "輸入名稱、國家/地區或標籤進行搜尋"
+
+msgid "Enter a stream URL that starts with http:// or https://"
+msgstr "輸入以 http:// 或 https:// 開頭的串流 URL"
+
+msgid "Enter the server URL"
+msgstr "輸入伺服器 URL"
+
+msgid "Fade the end of each song into the next one. Off keeps gapless playback."
+msgstr "讓每首歌曲的結尾淡入下一首。關閉時保持無縫播放。"
+
+msgid "Favorite"
+msgstr "收藏"
+
+msgid "Favorited"
+msgstr "已收藏"
+
+msgid "Favorites"
+msgstr "收藏"
+
+msgid "Favorites only: off"
+msgstr "僅限收藏：關"
+
+msgid "Favorites only: on"
+msgstr "僅限收藏：開"
+
+msgid "Filter"
+msgstr "篩選"
+
+msgid "Filter playlists"
+msgstr "篩選播放清單"
+
+msgid "Find stations by name, country or tag"
+msgstr "依名稱、國家/地區或標籤尋找電台"
+
+msgid "Find stations in the radio-browser.info directory"
+msgstr "在 radio-browser.info 目錄中尋找電台"
+
+msgid "Folder"
+msgstr "資料夾"
+
+msgid "Folders"
+msgstr "資料夾"
+
+msgid "Follow current song"
+msgstr "跟隨當前歌曲"
+
+msgid "Follow system color scheme"
+msgstr "跟隨系統色彩配置"
+
+msgid "For you"
+msgstr "為你推薦"
+
+msgid "Forget this server?"
+msgstr "要移除此伺服器嗎？"
+
+msgid "Format the server should transcode to. Applies from the next song."
+msgstr "伺服器轉碼的目標格式。從下一首歌曲開始生效。"
+
+msgid "Found {n} server in Feishin but it has no usable saved login"
+msgid_plural "Found {n} servers in Feishin but none with a usable saved login"
+msgstr[0] "在 Feishin 中找到 {n} 個伺服器，但沒有可用的已儲存登入資訊"
+
+msgid "Gapless playback"
+msgstr "無縫播放"
+
+msgid "Genres"
+msgstr "曲風"
+
+msgid "Go back to {}"
+msgstr "返回 {}"
+
+msgid "Go to album"
+msgstr "前往專輯"
+
+msgid "Go to artist"
+msgstr "前往藝人"
+
+msgid "Go to {}"
+msgstr "前往 {}"
+
+msgid "Green"
+msgstr "綠色"
+
+msgid "Hide lyrics"
+msgstr "隱藏歌詞"
+
+msgid "Hide queue"
+msgstr "隱藏佇列"
+
+msgid "High Contrast Dark"
+msgstr "高對比深色"
+
+msgid "High Contrast Light"
+msgstr "高對比淺色"
+
+msgid "Highlight with the color that comes with the theme."
+msgstr "使用主題內建的顏色來醒目提示。"
+
+msgid "Home"
+msgstr "首頁"
+
+msgid "Homepage (optional)"
+msgstr "首頁（選填）"
+
+msgid "Import from Feishin"
+msgstr "從 Feishin 匯入"
+
+msgid "Install yt-dlp to play YouTube tracks"
+msgstr "安裝 yt-dlp 以播放 YouTube 曲目"
+
+msgid "Integrations"
+msgstr "整合"
+
+msgid "Interface"
+msgstr "介面"
+
+msgid "Internet radio"
+msgstr "網路電台"
+
+msgid "item"
+msgstr "項目"
+
+msgid "Jellyfin has no public share links"
+msgstr "Jellyfin 不支援公開分享連結"
+
+msgid "Keep this station in the favorites on this device"
+msgstr "在此裝置的收藏中保留此電台"
+
+msgid "Language"
+msgstr "語言"
+
+msgid "LIBRARY"
+msgstr "媒體庫"
+
+msgid "Library scan finished"
+msgstr "媒體庫掃描完成"
+
+msgid "Library scan finished: {n} item"
+msgid_plural "Library scan finished: {n} items"
+msgstr[0] "媒體庫掃描完成：{n} 個項目"
+
+msgid "Light theme"
+msgstr "淺色主題"
+
+msgid "LIGHT THEMES"
+msgstr "淺色主題"
+
+msgid "Listening to {}"
+msgstr "正在收聽 {}"
+
+msgid "LIVE"
+msgstr "直播"
+
+msgid "Load more"
+msgstr "載入更多"
+
+msgid "Load this section again"
+msgstr "重新載入此區塊"
+
+msgid "Loading playlists..."
+msgstr "正在載入播放清單..."
+
+msgid "Loading similar songs..."
+msgstr "正在載入相似歌曲..."
+
+msgid "Loading stations..."
+msgstr "正在載入電台..."
+
+msgid "Loading the next page of stations"
+msgstr "正在載入下一頁電台"
+
+msgid "Loading..."
+msgstr "載入中..."
+
+msgid "Log out"
+msgstr "登出"
+
+msgid "Looking up the YouTube link..."
+msgstr "正在查詢 YouTube 連結..."
+
+msgid "Lyrics"
+msgstr "歌詞"
+
+msgid "Lyrics from {}"
+msgstr "歌詞來源：{}"
+
+msgid "Lyrics sources"
+msgstr "歌詞來源"
+
+msgid "Maximum bitrate"
+msgstr "最高位元率"
+
+msgid "Media keys and desktop media controls. Takes effect after a restart."
+msgstr "媒體鍵與桌面媒體控制項。重新啟動後生效。"
+
+msgid "Moods and genres"
+msgstr "心情與曲風"
+
+msgid "Most played"
+msgstr "播放最多"
+
+msgid "Move down"
+msgstr "向下移動"
+
+msgid "Move up"
+msgstr "向上移動"
+
+msgid "MPRIS"
+msgstr "MPRIS"
+
+msgid "Mute"
+msgstr "靜音"
+
+msgid "Name"
+msgstr "名稱"
+
+msgid "New playlist"
+msgstr "新增播放清單"
+
+msgid "New releases"
+msgstr "新發行"
+
+msgid "Next"
+msgstr "下一首"
+
+msgid "Next is unavailable while a radio station plays"
+msgstr "播放電台時無法切換至下一首"
+
+msgid "No albums"
+msgstr "沒有專輯"
+
+msgid "No albums found"
+msgstr "找不到專輯"
+
+msgid "No artists found"
+msgstr "找不到藝人"
+
+msgid "no browser is selected"
+msgstr "未選擇瀏覽器"
+
+msgid "No favorite albums"
+msgstr "沒有收藏的專輯"
+
+msgid "No favorite artists"
+msgstr "沒有收藏的藝人"
+
+msgid "No favorite tracks"
+msgstr "沒有收藏的曲目"
+
+msgid "No genres found"
+msgstr "找不到曲風"
+
+msgid "No lyrics found"
+msgstr "未找到歌詞"
+
+msgid "No playlists found"
+msgstr "找不到播放清單"
+
+msgid "No playlists yet"
+msgstr "還沒有播放清單"
+
+msgid "No rating"
+msgstr "無評分"
+
+msgid "No results for \"{}\""
+msgstr "找不到「{}」的相關結果"
+
+msgid "No saved login for {}; remove it and add it again"
+msgstr "沒有 {} 的已儲存登入資訊；請移除後重新新增"
+
+msgid "No saved servers."
+msgstr "沒有已儲存的伺服器。"
+
+msgid "No similar songs found"
+msgstr "找不到相似歌曲"
+
+msgid "No songs here"
+msgstr "這裡沒有歌曲"
+
+msgid "No stations found"
+msgstr "找不到電台"
+
+msgid "No stations yet. Add one or find one in the directory."
+msgstr "還沒有電台。請新增一個，或在目錄中尋找。"
+
+msgid "No tracks found"
+msgstr "找不到曲目"
+
+msgid "None"
+msgstr "無"
+
+msgid "Normalize loudness using the track or album gain tags."
+msgstr "使用曲目或專輯的增益標籤將響度標準化。"
+
+msgid "Not connected to a server"
+msgstr "未連線至伺服器"
+
+msgid "Nothing is playing"
+msgstr "目前沒有播放任何內容"
+
+msgid "Nothing to add yet"
+msgstr "目前沒有可加入的內容"
+
+msgid "Nothing to go back to"
+msgstr "沒有可返回的位置"
+
+msgid "Nothing to play here"
+msgstr "這裡沒有可播放的內容"
+
+msgid "Nothing to play yet"
+msgstr "目前沒有可播放的內容"
+
+msgid "Nothing to show here right now"
+msgstr "目前沒有可顯示的內容"
+
+msgid "Off"
+msgstr "關閉"
+
+msgid "OK"
+msgstr "確定"
+
+msgid "On the server"
+msgstr "在伺服器上"
+
+msgid "Only a server admin can rescan the library"
+msgstr "只有伺服器管理員才能重新掃描媒體庫"
+
+msgid "Only loaded tracks can be shared: select fewer tracks or scroll through them first"
+msgstr "只能分享已載入的曲目：請減少選取的曲目，或先捲動瀏覽以載入它們"
+
+msgid "Open"
+msgstr "開啟"
+
+msgid "Open in YouTube Music"
+msgstr "在 YouTube Music 中開啟"
+
+msgid "Open now playing"
+msgstr "開啟正在播放"
+
+msgid "Open radio"
+msgstr "開啟電台"
+
+msgid "Open the album \"{}\""
+msgstr "開啟專輯「{}」"
+
+msgid "Open the playlist \"{}\""
+msgstr "開啟播放清單「{}」"
+
+msgid "Open the queue panel"
+msgstr "開啟佇列面板"
+
+msgid "Open {}"
+msgstr "開啟 {}"
+
+msgid "Original"
+msgstr "原始"
+
+msgid "Output used by the player."
+msgstr "播放器使用的輸出裝置。"
+
+msgid "Owner"
+msgstr "擁有者"
+
+msgid "Password"
+msgstr "密碼"
+
+msgid "Paste a link first"
+msgstr "請先貼上連結"
+
+msgid "Paste a YouTube or YouTube Music link first"
+msgstr "請先貼上 YouTube 或 YouTube Music 連結"
+
+msgid "Paste a YouTube or YouTube Music link to try yt-dlp."
+msgstr "貼上 YouTube 或 YouTube Music 連結以試用 yt-dlp。"
+
+msgid "Pause"
+msgstr "暫停"
+
+msgid "Pause the radio station"
+msgstr "暫停電台"
+
+msgid "Personalized with your YouTube Music account from {}"
+msgstr "已依據 {} 中的 YouTube Music 帳號個人化"
+
+msgid "Pick a color, or type one as #rrggbb and press Enter."
+msgstr "選擇一種顏色，或以 #rrggbb 格式輸入後按 Enter。"
+
+msgid "Pick a mood or genre to see its playlists"
+msgstr "選擇心情或曲風以查看其播放清單"
+
+msgid "Play"
+msgstr "播放"
+
+msgid "Play \"{}\" and the rest of this shelf"
+msgstr "播放「{}」及此區塊的其餘內容"
+
+msgid "Play a YouTube link"
+msgstr "播放 YouTube 連結"
+
+msgid "Play album"
+msgstr "播放專輯"
+
+msgid "Play all"
+msgstr "全部播放"
+
+msgid "Play all {n} song"
+msgid_plural "Play all {n} songs"
+msgstr[0] "播放全部 {n} 首歌曲"
+
+msgid "Play count"
+msgstr "播放次數"
+
+msgid "Play every song in {} and its subfolders"
+msgstr "播放 {} 及其子資料夾中的所有歌曲"
+
+msgid "Play from here"
+msgstr "從這裡播放"
+
+msgid "Play from this song"
+msgstr "從這首歌開始播放"
+
+msgid "Play from {}"
+msgstr "從 {} 開始播放"
+
+msgid "Play next"
+msgstr "下一首播放"
+
+msgid "Play the album"
+msgstr "播放專輯"
+
+msgid "Play the playlist"
+msgstr "播放此播放清單"
+
+msgid "Play the radio station"
+msgstr "播放電台"
+
+msgid "Play this link after the current song"
+msgstr "在目前歌曲之後播放此連結"
+
+msgid "Play this link now"
+msgstr "立即播放此連結"
+
+msgid "Play {}"
+msgstr "播放 {}"
+
+msgid "Play {} next"
+msgstr "下一首播放 {}"
+
+msgid "Play {} with its subfolders"
+msgstr "播放 {} 及其子資料夾"
+
+msgid "Playback"
+msgstr "播放"
+
+msgid "Playback failed: {}"
+msgstr "播放失敗：{}"
+
+msgid "Playing {} failed: {}"
+msgstr "播放 {} 失敗：{}"
+
+msgid "PLAYLIST"
+msgstr "播放清單"
+
+msgid "Playlist"
+msgstr "播放清單"
+
+msgid "playlist"
+msgstr "播放清單"
+
+msgid "Playlist name"
+msgstr "播放清單名稱"
+
+msgid "Playlists"
+msgstr "播放清單"
+
+msgid "Plays"
+msgstr "播放次數"
+
+msgid "Plays YouTube tracks. Leave empty to use yt-dlp from your PATH."
+msgstr "用於播放 YouTube 曲目。留空則使用 PATH 中的 yt-dlp。"
+
+msgid "Preload the next song so it starts without a pause."
+msgstr "預先載入下一首歌曲，讓它無停頓地開始播放。"
+
+msgid "Previous"
+msgstr "上一首"
+
+msgid "Previous is unavailable while a radio station plays"
+msgstr "播放電台時無法切換至上一首"
+
+msgid "Purple"
+msgstr "紫色"
+
+msgid "Queue"
+msgstr "佇列"
+
+msgid "Radio"
+msgstr "電台"
+
+msgid "Random"
+msgstr "隨機"
+
+msgid "Rate {n} star"
+msgid_plural "Rate {n} stars"
+msgstr[0] "評為 {n} 星"
+
+msgid "Rating"
+msgstr "評分"
+
+msgid "Recently added"
+msgstr "最近新增"
+
+msgid "Recently played"
+msgstr "最近播放"
+
+msgid "Red"
+msgstr "紅色"
+
+msgid "Refresh"
+msgstr "重新整理"
+
+msgid "Refresh this section"
+msgstr "重新整理此區塊"
+
+msgid "Release year"
+msgstr "發行年份"
+
+msgid "Remove"
+msgstr "移除"
+
+msgid "Remove from favorites"
+msgstr "從收藏中移除"
+
+msgid "Remove from playlist"
+msgstr "從播放清單中移除"
+
+msgid "Remove from queue"
+msgstr "從佇列中移除"
+
+msgid "Removed {n} song from \"{}\""
+msgid_plural "Removed {n} songs from \"{}\""
+msgstr[0] "已從「{}」中移除 {n} 首歌曲"
+
+msgid "Removing..."
+msgstr "移除中..."
+
+msgid "Repeat: all"
+msgstr "重複：全部"
+
+msgid "Repeat: off"
+msgstr "重複：關"
+
+msgid "Repeat: one"
+msgstr "重複：單曲"
+
+msgid "ReplayGain"
+msgstr "ReplayGain"
+
+msgid "Report what you play to the server."
+msgstr "將播放紀錄回報給伺服器。"
+
+msgid "Rescan the library for new content"
+msgstr "重新掃描媒體庫以尋找新內容"
+
+msgid "Resize column"
+msgstr "調整欄寬"
+
+msgid "Save"
+msgstr "儲存"
+
+msgid "Save on this device"
+msgstr "儲存在此裝置上"
+
+msgid "Save the changes on the server"
+msgstr "將變更儲存至伺服器"
+
+msgid "Save the changes on this device"
+msgstr "將變更儲存在此裝置上"
+
+msgid "Save to favorites on this device"
+msgstr "儲存至此裝置的收藏"
+
+msgid "Save to server"
+msgstr "儲存至伺服器"
+
+msgid "Saved on this device"
+msgstr "已儲存在此裝置上"
+
+msgid "Saved on this device, click to remove"
+msgstr "已儲存在此裝置上，按一下即可移除"
+
+msgid "Saving the station to the server..."
+msgstr "正在將電台儲存至伺服器..."
+
+msgid "Saving to the server..."
+msgstr "正在儲存至伺服器..."
+
+msgid "Saving..."
+msgstr "儲存中..."
+
+msgid "Scanning the library for new content..."
+msgstr "正在掃描媒體庫以尋找新內容..."
+
+msgid "Scanning the library: {}"
+msgstr "正在掃描媒體庫：{}"
+
+msgid "Scrobble"
+msgstr "記錄播放資訊"
+
+msgid "Scroll left"
+msgstr "向左捲動"
+
+msgid "Scroll lists and the queue to the song that is playing."
+msgstr "將清單與佇列捲動至正在播放的歌曲。"
+
+msgid "Scroll right"
+msgstr "向右捲動"
+
+msgid "Search"
+msgstr "搜尋"
+
+msgid "Search failed: {}"
+msgstr "搜尋失敗：{}"
+
+msgid "SEARCH RESULTS"
+msgstr "搜尋結果"
+
+msgid "Search songs on YouTube Music"
+msgstr "在 YouTube Music 上搜尋歌曲"
+
+msgid "Search songs, albums, artists"
+msgstr "搜尋歌曲、專輯、藝人"
+
+msgid "Search the radio-browser.info directory"
+msgstr "搜尋 radio-browser.info 目錄"
+
+msgid "Search your library for songs, albums and artists"
+msgstr "在媒體庫中搜尋歌曲、專輯和藝人"
+
+msgid "Searched from top to bottom until one has lyrics."
+msgstr "由上而下依序搜尋，直到找到歌詞。"
+
+msgid "Searching for lyrics..."
+msgstr "正在搜尋歌詞..."
+
+msgid "Searching the radio directory failed: {}"
+msgstr "搜尋電台目錄失敗：{}"
+
+msgid "Searching the radio-browser.info directory"
+msgstr "正在搜尋 radio-browser.info 目錄"
+
+msgid "Searching..."
+msgstr "搜尋中..."
+
+msgid "Seeking is unavailable for live radio"
+msgstr "直播電台無法跳轉進度"
+
+msgid "Server"
+msgstr "伺服器"
+
+msgid "Server type"
+msgstr "伺服器類型"
+
+msgid "Servers"
+msgstr "伺服器"
+
+msgid "Set rating"
+msgstr "設定評分"
+
+msgid "Settings"
+msgstr "設定"
+
+msgid "Share"
+msgstr "分享"
+
+msgid "Share ({})"
+msgstr "分享（{}）"
+
+msgid "Share link copied to the clipboard: {}"
+msgstr "分享連結已複製到剪貼簿：{}"
+
+msgid "Share this {}: copy a public link"
+msgstr "分享此{}：複製公開連結"
+
+msgid "Sharing is unavailable: {}"
+msgstr "無法分享：{}"
+
+msgid "SHOW LESS"
+msgstr "收合"
+
+msgid "Show lyrics"
+msgstr "顯示歌詞"
+
+msgid "SHOW MORE"
+msgstr "顯示更多"
+
+msgid "Show more"
+msgstr "顯示更多"
+
+msgid "Show playlists for {}"
+msgstr "顯示 {} 的播放清單"
+
+msgid "Show queue"
+msgstr "顯示佇列"
+
+msgid "Show the current song on your Discord profile."
+msgstr "在你的 Discord 個人檔案中顯示目前歌曲。"
+
+msgid "Show the next page of stations"
+msgstr "顯示下一頁電台"
+
+msgid "Show the queue next to the library; remembered on the next start."
+msgstr "在媒體庫旁顯示佇列；下次啟動時仍會保留。"
+
+msgid "Show the server and saved stations"
+msgstr "顯示伺服器電台與已儲存的電台"
+
+msgid "Show {}"
+msgstr "顯示 {}"
+
+msgid "Showing playlists for {}"
+msgstr "正在顯示 {} 的播放清單"
+
+msgid "Showing the charts for {}"
+msgstr "正在顯示 {} 的排行榜"
+
+msgid "Showing the radio-browser.info directory"
+msgstr "正在顯示 radio-browser.info 目錄"
+
+msgid "Showing the server and saved stations"
+msgstr "正在顯示伺服器電台與已儲存的電台"
+
+msgid "Shuffle"
+msgstr "隨機播放"
+
+msgid "Shuffle every song in {} and its subfolders"
+msgstr "隨機播放 {} 及其子資料夾中的所有歌曲"
+
+msgid "Shuffle play"
+msgstr "隨機播放"
+
+msgid "Shuffle: off"
+msgstr "隨機播放：關"
+
+msgid "Shuffle: on"
+msgstr "隨機播放：開"
+
+msgid "Sign in"
+msgstr "登入"
+
+msgid "Sign in with browser"
+msgstr "透過瀏覽器登入"
+
+msgid "Sign out and forget this server's saved login?"
+msgstr "要登出並移除此伺服器的已儲存登入資訊嗎？"
+
+msgid "Sign out and forget this server?"
+msgstr "要登出並移除此伺服器嗎？"
+
+msgid "Similar"
+msgstr "相似"
+
+msgid "Similar songs come from your server, so YouTube tracks have none"
+msgstr "相似歌曲來自你的伺服器，因此 YouTube 曲目沒有相似歌曲"
+
+msgid "Sleep timer: off"
+msgstr "睡眠計時器：關"
+
+msgid "Sleep timer: {}"
+msgstr "睡眠計時器：{}"
+
+msgid "Song count"
+msgstr "曲目數"
+
+msgid "Songs"
+msgstr "歌曲"
+
+msgid "Sort by {}"
+msgstr "依{}排序"
+
+msgid "Sort by {}: ascending"
+msgstr "依{}排序：遞增"
+
+msgid "Sort by {}: descending"
+msgstr "依{}排序：遞減"
+
+msgid "Sort: ascending"
+msgstr "排序：遞增"
+
+msgid "Sort: descending"
+msgstr "排序：遞減"
+
+msgid "Starting volume, shared with the player bar."
+msgstr "起始音量，與播放列共用。"
+
+msgid "Station data from radio-browser.info"
+msgstr "電台資料來自 radio-browser.info"
+
+msgid "Station name"
+msgstr "電台名稱"
+
+msgid "Stations"
+msgstr "電台"
+
+msgid "Stop {}"
+msgstr "停止 {}"
+
+msgid "Stream URL"
+msgstr "串流 URL"
+
+msgid "Switch"
+msgstr "切換"
+
+msgid "Switch between a dark and a light theme with the desktop. {}"
+msgstr "跟隨桌面在深色與淺色主題之間切換。{}"
+
+msgid "Switch to grid view"
+msgstr "切換為格狀檢視"
+
+msgid "Switch to list view"
+msgstr "切換為清單檢視"
+
+msgid "System default"
+msgstr "系統預設"
+
+msgid "System default follows the language of the desktop."
+msgstr "「系統預設」會跟隨桌面語言。"
+
+msgid "Tag, for example jazz"
+msgstr "標籤，例如 jazz"
+
+msgid "The desktop currently prefers dark."
+msgstr "桌面目前偏好深色。"
+
+msgid "The desktop currently prefers light."
+msgstr "桌面目前偏好淺色。"
+
+msgid "The desktop has no preference, so the dark theme is used."
+msgstr "桌面沒有偏好設定，因此使用深色主題。"
+
+msgid "The library scan is still running on the server"
+msgstr "伺服器上的媒體庫掃描仍在進行中"
+
+msgid "The queue is empty"
+msgstr "佇列是空的"
+
+msgid "The queue is incomplete: loading the rest of the list failed ({})"
+msgstr "佇列不完整：載入清單其餘部分失敗（{}）"
+
+msgid "The radio directory could not be reached"
+msgstr "無法連線至電台目錄"
+
+msgid "The radio station stopped streaming"
+msgstr "電台已停止串流"
+
+msgid "The server refused the station: {}"
+msgstr "伺服器拒絕了該電台：{}"
+
+msgid "Theme"
+msgstr "主題"
+
+msgid "There is nothing to play in this list"
+msgstr "此清單中沒有可播放的內容"
+
+msgid "This Discover page does not exist"
+msgstr "此「探索」頁面不存在"
+
+msgid "This folder is empty"
+msgstr "此資料夾是空的"
+
+msgid "This playlist is empty"
+msgstr "此播放清單是空的"
+
+msgid "This server has no internet radio. Stations you add are saved on this device."
+msgstr "此伺服器不支援網路電台。你新增的電台將儲存在此裝置上。"
+
+msgid "this server has no public share links"
+msgstr "此伺服器不支援公開分享連結"
+
+msgid "Time"
+msgstr "時長"
+
+msgid "Title"
+msgstr "標題"
+
+msgid "Top songs"
+msgstr "熱門歌曲"
+
+msgid "Track"
+msgstr "曲目"
+
+msgid "Tracks"
+msgstr "曲目"
+
+msgid "Transcode format"
+msgstr "轉碼格式"
+
+msgid "Try again"
+msgstr "重試"
+
+msgid "Turn off the theme accent color to pick your own."
+msgstr "關閉主題強調色後即可自選顏色。"
+
+msgid "Unmute"
+msgstr "取消靜音"
+
+msgid "Up next"
+msgstr "即將播放"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "Use the theme accent color"
+msgstr "使用主題強調色"
+
+msgid "Use {}"
+msgstr "使用 {}"
+
+msgid "Used while the desktop prefers dark."
+msgstr "在桌面偏好深色時使用。"
+
+msgid "Used while the desktop prefers light."
+msgstr "在桌面偏好淺色時使用。"
+
+msgid "Username"
+msgstr "使用者名稱"
+
+msgid "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Feishin deletes right after reading."
+msgstr "使用此瀏覽器中的 YouTube 工作階段，提供個人化的「探索」首頁與 Premium 音質。yt-dlp 會將其 Cookie 複製到一個私人暫存檔，Feishin 讀取後會立即刪除該檔案。"
+
+msgid "Volume"
+msgstr "音量"
+
+msgid "Volume {}%"
+msgstr "音量 {}%"
+
+msgid "XDG_RUNTIME_DIR is not set, so there is no private place for the cookies"
+msgstr "未設定 XDG_RUNTIME_DIR，因此沒有存放 Cookie 的私人位置"
+
+msgid "Year"
+msgstr "年份"
+
+msgid "You are here: {}"
+msgstr "目前位置：{}"
+
+msgid "Your user is not allowed to share on this server"
+msgstr "你的使用者無權在此伺服器上分享"
+
+msgid "YouTube"
+msgstr "YouTube"
+
+msgid "YouTube albums are not in your library"
+msgstr "YouTube 專輯不在你的媒體庫中"
+
+msgid "YouTube artists are not in your library"
+msgstr "YouTube 藝人不在你的媒體庫中"
+
+msgid "yt-dlp program"
+msgstr "yt-dlp 程式"
+
+msgid "{n} album"
+msgid_plural "{n} albums"
+msgstr[0] "{n} 張專輯"
+
+msgid "{n} folder"
+msgid_plural "{n} folders"
+msgstr[0] "{n} 個資料夾"
+
+msgid "{n} item so far"
+msgid_plural "{n} items so far"
+msgstr[0] "目前已有 {n} 個項目"
+
+msgid "{n} minute"
+msgid_plural "{n} minutes"
+msgstr[0] "{n} 分鐘"
+
+msgid "{n} selected"
+msgid_plural "{n} selected"
+msgstr[0] "已選取 {n} 項"
+
+msgid "{n} song"
+msgid_plural "{n} songs"
+msgstr[0] "{n} 首歌曲"
+
+msgid "{n} song from \"{}\" will play next"
+msgid_plural "{n} songs from \"{}\" will play next"
+msgstr[0] "「{}」中的 {n} 首歌曲將在下一首播放"
+
+msgid "{n} song on YouTube Music"
+msgid_plural "{n} songs on YouTube Music"
+msgstr[0] "YouTube Music 上的 {n} 首歌曲"
+
+msgid "{n} song will play next"
+msgid_plural "{n} songs will play next"
+msgstr[0] "{n} 首歌曲將在下一首播放"
+
+msgid "{} (current theme)"
+msgstr "{}（目前主題）"
+
+msgid "{} (unavailable)"
+msgstr "{}（無法使用）"
+
+msgid "{} at {}"
+msgstr "{1} 上的 {0}"
+
+msgid "{} cannot be played: its stream address is not an internet stream"
+msgstr "無法播放 {}：其串流位址不是網路串流"
+
+msgid "{} is shown"
+msgstr "已顯示 {}"
+
+msgid "{} kbps"
+msgstr "{} kbps"
+
+msgid "{} s"
+msgstr "{} 秒"
+
+msgid "{}: off"
+msgstr "{}：關"
+
+msgid "{}: on"
+msgstr "{}：開"
+
+msgid "{}: {} (dark)"
+msgstr "{}：{}（深色）"
+
+msgid "{}: {} (light)"
+msgstr "{}：{}（淺色）"

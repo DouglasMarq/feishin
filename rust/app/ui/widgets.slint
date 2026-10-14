@@ -129,6 +129,14 @@ export component IconButton inherits Rectangle {
     in property <length> icon-size: 20px;
     in property <color> icon-color: root.active ? Theme.primary : (touch.has-hover && root.enabled ? Theme.foreground : Theme.muted);
     callback clicked();
+    accessible-role: button;
+    accessible-label: root.tooltip;
+    accessible-enabled: root.enabled;
+    accessible-action-default => {
+        if (root.enabled) {
+            root.clicked();
+        }
+    }
     width: 32px;
     height: 32px;
     border-radius: self.height / 2;
@@ -174,7 +182,28 @@ export component Bar inherits Rectangle {
     property <float> shown: root.dragging || root.settling ? root.drag-value : root.value;
     callback changed(value: float);
     callback committed(value: float);
+    accessible-role: slider;
+    accessible-label: root.tooltip;
+    accessible-enabled: root.enabled;
+    accessible-value: Math.round(root.value * 100) + "%";
+    accessible-value-minimum: 0;
+    accessible-value-maximum: 1;
+    accessible-value-step: root.scroll-step;
+    accessible-action-increment => {
+        root.step-by(root.scroll-step);
+    }
+    accessible-action-decrement => {
+        root.step-by(-root.scroll-step);
+    }
     height: 16px;
+
+
+    function step-by(delta: float) {
+        if (root.enabled) {
+            root.changed(max(0, min(1, root.value + delta)));
+            root.committed(max(0, min(1, root.value + delta)));
+        }
+    }
 
     track := Rectangle {
         y: (parent.height - self.height) / 2;

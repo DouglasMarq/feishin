@@ -9,7 +9,6 @@ use super::dialog::close;
 use super::listed_requests::{PickedPlaylist, add_listed, create_listed};
 use super::picker::{PendingRequest, PickedSongs, SharedPicker, lock};
 use super::playlist_writes::exclusive_playlist_write;
-use crate::ui::playlists::song_count_label;
 use crate::ui::{
     AppWindow, Context, PlaylistPickerState, on_ui, playlist_detail, playlists, show_status,
 };
@@ -116,11 +115,14 @@ fn finish_pick(
     let name = &picked.name;
     let changed = matches!(outcome, Ok(added) if added > 0);
     let outcome = match outcome {
-        Ok(0) => RequestOutcome::Succeeded(format!("Already in \"{name}\"")),
-        Ok(added) => {
-            RequestOutcome::Succeeded(format!("Added {} to \"{name}\"", song_count_label(added)))
-        }
-        Err(error) => RequestOutcome::Failed(format!("Could not add to \"{name}\": {error}")),
+        Ok(0) => RequestOutcome::Succeeded(tr!("Already in \"{}\"", name)),
+        Ok(added) => RequestOutcome::Succeeded(tr_plural!(
+            "Added {n} song to \"{}\"",
+            "Added {n} songs to \"{}\"",
+            added,
+            name
+        )),
+        Err(error) => RequestOutcome::Failed(tr!("Could not add to \"{}\": {}", name, error)),
     };
     finish_request(window, shared, generation, outcome);
     if changed {
@@ -179,12 +181,13 @@ fn finish_create(
 ) {
     let created = result.is_ok();
     let outcome = match result {
-        Ok(playlist) => RequestOutcome::Succeeded(format!(
-            "Created \"{}\" with {}",
-            playlist.name,
-            song_count_label(song_count)
+        Ok(playlist) => RequestOutcome::Succeeded(tr_plural!(
+            "Created \"{}\" with {n} song",
+            "Created \"{}\" with {n} songs",
+            song_count,
+            playlist.name
         )),
-        Err(error) => RequestOutcome::Failed(format!("Could not create the playlist: {error}")),
+        Err(error) => RequestOutcome::Failed(tr!("Could not create the playlist: {}", error)),
     };
     finish_request(window, shared, generation, outcome);
     if created {

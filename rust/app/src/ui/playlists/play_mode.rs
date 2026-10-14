@@ -42,11 +42,11 @@ pub fn play(ctx: &Context, window: &AppWindow, id: &str, mode: PlayMode) {
     ctx.rt.spawn(async move {
         match server.playlist_songs(&id).await {
             Ok(songs) if songs.is_empty() => on_ui(&weak, |window| {
-                show_status(window, "This playlist is empty");
+                show_status(window, &tr!("This playlist is empty"));
             }),
             Ok(songs) => task_ctx.send(mode.command(songs)),
             Err(error) => on_ui(&weak, move |window| {
-                show_status(window, &format!("Could not load the playlist: {error}"));
+                show_status(window, &tr!("Could not load the playlist: {}", error));
             }),
         }
     });

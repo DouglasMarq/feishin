@@ -37,7 +37,7 @@ pub fn load_shelf(window: &AppWindow, ctx: &Context, shelf: usize) {
                 let is_current_fetch =
                     with_home_model(window, |model| model.fetch_failed(shelf, generation));
                 if is_current_fetch == Some(true) {
-                    show_status(window, &format!("Could not load albums: {error}"));
+                    show_status(window, &tr!("Could not load albums: {}", error));
                 }
             }
         });
@@ -90,7 +90,7 @@ pub fn play_album(
             }
             Ok(_) => {}
             Err(error) => on_ui(&weak_window, move |window| {
-                show_status(window, &format!("Could not play album: {error}"));
+                show_status(window, &tr!("Could not play album: {}", error));
             }),
         }
     });

@@ -1,0 +1,1520 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: bg\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+
+msgid "\"{}\" plays next"
+msgstr "„{}“ звучи следващ"
+
+msgid "\"{}\" will play next"
+msgstr "„{}“ ще се възпроизведе следващ"
+
+msgid "1 star"
+msgstr "1 звезда"
+
+msgid "2 stars"
+msgstr "2 звезди"
+
+msgid "3 stars"
+msgstr "3 звезди"
+
+msgid "4 stars"
+msgstr "4 звезди"
+
+msgid "5 stars"
+msgstr "5 звезди"
+
+msgid "About {}"
+msgstr "За {}"
+
+msgid "Accent color"
+msgstr "Акцентен цвят"
+
+msgid "Accent color not changed: {}."
+msgstr "Акцентният цвят не е променен: {}."
+
+msgid "Accent color {}"
+msgstr "Акцентен цвят {}"
+
+msgid "Accent color {} (selected)"
+msgstr "Акцентен цвят {} (избран)"
+
+msgid "Accent color {} (theme accent in use)"
+msgstr "Акцентен цвят {} (използва се акцентът на темата)"
+
+msgid "Add a station by its stream URL"
+msgstr "Добавяне на станция по URL адреса на потока"
+
+msgid "Add all songs to the queue"
+msgstr "Добавяне на всички песни в опашката"
+
+msgid "Add server"
+msgstr "Добавяне на сървър"
+
+msgid "Add station"
+msgstr "Добавяне на станция"
+
+msgid "Add this link to the end of the queue"
+msgstr "Добавяне на тази връзка в края на опашката"
+
+msgid "Add this station to the server for every client"
+msgstr "Добавяне на тази станция в сървъра за всички клиенти"
+
+msgid "Add to favorites"
+msgstr "Добавяне в любими"
+
+msgid "Add to playlist"
+msgstr "Добавяне в плейлист"
+
+msgid "Add to queue"
+msgstr "Добавяне в опашката"
+
+msgid "Add to the server's stations"
+msgstr "Добавяне към станциите на сървъра"
+
+msgid "Add {n} song to playlist"
+msgid_plural "Add {n} songs to playlist"
+msgstr[0] "Добавяне на {n} песен в плейлист"
+msgstr[1] "Добавяне на {n} песни в плейлист"
+
+msgid "Add {} to the queue"
+msgstr "Добавяне на {} в опашката"
+
+msgid "Added \"{}\" to the queue"
+msgstr "„{}“ е добавен в опашката"
+
+msgid "Added only {n} song to \"{}\": {}"
+msgid_plural "Added only {n} songs to \"{}\": {}"
+msgstr[0] "В „{}“ е добавена само {n} песен: {}"
+msgstr[1] "В „{}“ са добавени само {n} песни: {}"
+
+msgid "Added {n} song from \"{}\" to the queue"
+msgid_plural "Added {n} songs from \"{}\" to the queue"
+msgstr[0] "Добавена е {n} песен от „{}“ в опашката"
+msgstr[1] "Добавени са {n} песни от „{}“ в опашката"
+
+msgid "Added {n} song to \"{}\""
+msgid_plural "Added {n} songs to \"{}\""
+msgstr[0] "Добавена е {n} песен в „{}“"
+msgstr[1] "Добавени са {n} песни в „{}“"
+
+msgid "Added {n} song to the queue"
+msgid_plural "Added {n} songs to the queue"
+msgstr[0] "Добавена е {n} песен в опашката"
+msgstr[1] "Добавени са {n} песни в опашката"
+
+msgid "Adding to \"{}\": {} of {n} song"
+msgid_plural "Adding to \"{}\": {} of {n} songs"
+msgstr[0] "Добавяне в „{}“: {} от {n} песен"
+msgstr[1] "Добавяне в „{}“: {} от {n} песни"
+
+msgid "ALBUM"
+msgstr "АЛБУМ"
+
+msgid "Album"
+msgstr "Албум"
+
+msgid "album"
+msgstr "албум"
+
+msgid "Album artist"
+msgstr "Изпълнител на албума"
+
+msgid "Album count"
+msgstr "Брой албуми"
+
+msgid "Album not found"
+msgstr "Албумът не е намерен"
+
+msgid "Albums"
+msgstr "Албуми"
+
+msgid "All genres"
+msgstr "Всички жанрове"
+
+msgid "Already at the end"
+msgstr "Вече е в края"
+
+msgid "Already at the start"
+msgstr "Вече е в началото"
+
+msgid "Already in \"{}\""
+msgstr "Вече е в „{}“"
+
+msgid "Already on the server"
+msgstr "Вече е в сървъра"
+
+msgid "Amber"
+msgstr "Кехлибарено"
+
+msgid "Appearance"
+msgstr "Външен вид"
+
+msgid "ARTIST"
+msgstr "ИЗПЪЛНИТЕЛ"
+
+msgid "Artist"
+msgstr "Изпълнител"
+
+msgid "Artists"
+msgstr "Изпълнители"
+
+msgid "Ask the server to transcode down to this bitrate. Applies from the next song."
+msgstr "Сървърът ще прекодира до този битрейт. Важи от следващата песен."
+
+msgid "Audio device"
+msgstr "Аудио устройство"
+
+msgid "Automatic ({})"
+msgstr "Автоматично ({})"
+
+msgid "Back"
+msgstr "Назад"
+
+msgid "Blue"
+msgstr "Синьо"
+
+msgid "by {}"
+msgstr "от {}"
+
+msgid "Cancel"
+msgstr "Отказ"
+
+msgid "Cancel timer"
+msgstr "Отмяна на таймера"
+
+msgid "Cannot share: {}"
+msgstr "Не може да се сподели: {}"
+
+msgid "Chart country"
+msgstr "Държава за класациите"
+
+msgid "Charts"
+msgstr "Класации"
+
+msgid "Choose a browser under Settings, YouTube to sign in for a personalized home"
+msgstr "Изберете браузър в Настройки, YouTube, за да влезете и да получите персонализирана начална страница"
+
+msgid "Clear"
+msgstr "Изчистване"
+
+msgid "Clear filters"
+msgstr "Изчистване на филтрите"
+
+msgid "Clear rating"
+msgstr "Изчистване на оценката"
+
+msgid "Clear the favorites and genre filters"
+msgstr "Изчистване на филтрите за любими и жанр"
+
+msgid "Close"
+msgstr "Затваряне"
+
+msgid "Close now playing"
+msgstr "Затваряне на „Сега звучи“"
+
+msgid "Close without saving"
+msgstr "Затваряне без запазване"
+
+msgid "Colors used across the whole app."
+msgstr "Цветове, използвани в цялото приложение."
+
+msgid "Connect to your music server"
+msgstr "Свържете се с вашия музикален сървър"
+
+msgid "Connecting..."
+msgstr "Свързване..."
+
+msgid "Could not add to \"{}\": {}"
+msgstr "Неуспешно добавяне в „{}“: {}"
+
+msgid "Could not add {} to the server"
+msgstr "Неуспешно добавяне на {} в сървъра"
+
+msgid "Could not create a share link: {}"
+msgstr "Неуспешно създаване на връзка за споделяне: {}"
+
+msgid "Could not create the playlist: {}"
+msgstr "Неуспешно създаване на плейлиста: {}"
+
+msgid "Could not delete the playlist: {}"
+msgstr "Неуспешно изтриване на плейлиста: {}"
+
+msgid "Could not delete the station"
+msgstr "Неуспешно изтриване на станцията"
+
+msgid "Could not load albums: {}"
+msgstr "Неуспешно зареждане на албумите: {}"
+
+msgid "Could not load artists: {}"
+msgstr "Неуспешно зареждане на изпълнителите: {}"
+
+msgid "Could not load Discover: {}"
+msgstr "Неуспешно зареждане на „Откриване“: {}"
+
+msgid "Could not load genres: {}"
+msgstr "Неуспешно зареждане на жанровете: {}"
+
+msgid "Could not load it from YouTube Music: {}"
+msgstr "Неуспешно зареждане от YouTube Music: {}"
+
+msgid "Could not load lyrics"
+msgstr "Неуспешно зареждане на текста"
+
+msgid "Could not load moods and genres: {}"
+msgstr "Неуспешно зареждане на настроенията и жанровете: {}"
+
+msgid "Could not load more results: {}"
+msgstr "Неуспешно зареждане на още резултати: {}"
+
+msgid "Could not load new releases: {}"
+msgstr "Неуспешно зареждане на новите издания: {}"
+
+msgid "Could not load playlists: {}"
+msgstr "Неуспешно зареждане на плейлистите: {}"
+
+msgid "Could not load the album: {}"
+msgstr "Неуспешно зареждане на албума: {}"
+
+msgid "Could not load the artist: {}"
+msgstr "Неуспешно зареждане на изпълнителя: {}"
+
+msgid "Could not load the charts: {}"
+msgstr "Неуспешно зареждане на класациите: {}"
+
+msgid "Could not load the folder: {}"
+msgstr "Неуспешно зареждане на папката: {}"
+
+msgid "Could not load the list: {}"
+msgstr "Неуспешно зареждане на списъка: {}"
+
+msgid "Could not load the playlist: {}"
+msgstr "Неуспешно зареждане на плейлиста: {}"
+
+msgid "Could not load the radio stations: {}"
+msgstr "Неуспешно зареждане на радиостанциите: {}"
+
+msgid "Could not load the selection: {}"
+msgstr "Неуспешно зареждане на избраното: {}"
+
+msgid "Could not load this page: {}"
+msgstr "Неуспешно зареждане на тази страница: {}"
+
+msgid "Could not load tracks: {}"
+msgstr "Неуспешно зареждане на песните: {}"
+
+msgid "Could not load your home: {}"
+msgstr "Неуспешно зареждане на началната страница: {}"
+
+msgid "Could not open the folder: {}"
+msgstr "Неуспешно отваряне на папката: {}"
+
+msgid "Could not open YouTube Music: {}"
+msgstr "Неуспешно отваряне на YouTube Music: {}"
+
+msgid "Could not play \"{}\" from YouTube: {}"
+msgstr "Неуспешно възпроизвеждане на „{}“ от YouTube: {}"
+
+msgid "Could not play album: {}"
+msgstr "Неуспешно възпроизвеждане на албума: {}"
+
+msgid "Could not play from YouTube: {}"
+msgstr "Неуспешно възпроизвеждане от YouTube: {}"
+
+msgid "Could not play the album: {}"
+msgstr "Неуспешно възпроизвеждане на албума: {}"
+
+msgid "Could not remove songs: {}"
+msgstr "Неуспешно премахване на песните: {}"
+
+msgid "Could not rescan the library: {}"
+msgstr "Неуспешно повторно сканиране на библиотеката: {}"
+
+msgid "Could not set the rating: {}"
+msgstr "Неуспешно задаване на оценката: {}"
+
+msgid "Could not sign in to YouTube Music ({}). Showing general picks instead."
+msgstr "Неуспешно влизане в YouTube Music ({}). Вместо това се показват общи предложения."
+
+msgid "Could not switch server: {}"
+msgstr "Неуспешна смяна на сървъра: {}"
+
+msgid "Could not update favorite: {}"
+msgstr "Неуспешно обновяване на любимото: {}"
+
+msgid "Could not update favorites: {}"
+msgstr "Неуспешно обновяване на любимите: {}"
+
+msgid "Could not update rating: {}"
+msgstr "Неуспешно обновяване на оценката: {}"
+
+msgid "Could not update the favorite: {}"
+msgstr "Неуспешно обновяване на любимото: {}"
+
+msgid "Country"
+msgstr "Държава"
+
+msgid "Create"
+msgstr "Създаване"
+
+msgid "Created \"{}\" with only {n} song: {}"
+msgid_plural "Created \"{}\" with only {n} songs: {}"
+msgstr[0] "Създаден е „{}“ само с {n} песен: {}"
+msgstr[1] "Създаден е „{}“ само с {n} песни: {}"
+
+msgid "Created \"{}\" with {n} song"
+msgid_plural "Created \"{}\" with {n} songs"
+msgstr[0] "Създаден е „{}“ с {n} песен"
+msgstr[1] "Създаден е „{}“ с {n} песни"
+
+msgid "Created playlist \"{}\""
+msgstr "Създаден е плейлист „{}“"
+
+msgid "Creating a share link..."
+msgstr "Създаване на връзка за споделяне..."
+
+msgid "Creating..."
+msgstr "Създаване..."
+
+msgid "Crossfade"
+msgstr "Плавен преход"
+
+msgid "Crossfade could not be changed: {}"
+msgstr "Плавният преход не може да бъде променен: {}"
+
+msgid "Crossfade: {}"
+msgstr "Плавен преход: {}"
+
+msgid "Current"
+msgstr "Текущ"
+
+msgid "Custom accent color: {} (theme accent in use)"
+msgstr "Собствен акцентен цвят: {} (използва се акцентът на темата)"
+
+msgid "Custom accent color: {}, press Enter to apply"
+msgstr "Собствен акцентен цвят: {}, натиснете Enter за прилагане"
+
+msgid "Dark theme"
+msgstr "Тъмна тема"
+
+msgid "DARK THEMES"
+msgstr "ТЪМНИ ТЕМИ"
+
+msgid "Default country for the Discover charts. Automatic follows your system region."
+msgstr "Държава по подразбиране за класациите в „Откриване“. „Автоматично“ следва региона на системата."
+
+msgid "Default Dark"
+msgstr "Тъмна по подразбиране"
+
+msgid "Default Light"
+msgstr "Светла по подразбиране"
+
+msgid "Delete"
+msgstr "Изтриване"
+
+msgid "Delete \"{}\" from the server? This cannot be undone."
+msgstr "Да се изтрие ли „{}“ от сървъра? Това не може да бъде отменено."
+
+msgid "Delete \"{}\"? This cannot be undone."
+msgstr "Да се изтрие ли „{}“? Това не може да бъде отменено."
+
+msgid "Delete playlist"
+msgstr "Изтриване на плейлиста"
+
+msgid "Delete station"
+msgstr "Изтриване на станцията"
+
+msgid "Delete {} from the server"
+msgstr "Изтриване на {} от сървъра"
+
+msgid "Deleted playlist \"{}\""
+msgstr "Плейлистът „{}“ е изтрит"
+
+msgid "Deleting..."
+msgstr "Изтриване..."
+
+msgid "Demo mode: these picks are made up and play from your demo library"
+msgstr "Демо режим: тези предложения са измислени и се възпроизвеждат от демо библиотеката"
+
+msgid "Directory"
+msgstr "Каталог"
+
+msgid "Disc {}"
+msgstr "Диск {}"
+
+msgid "Discord Rich Presence"
+msgstr "Discord Rich Presence"
+
+msgid "Discover"
+msgstr "Откриване"
+
+msgid "Discover is open"
+msgstr "„Откриване“ е отворено"
+
+msgid "Discover new music on YouTube Music"
+msgstr "Открийте нова музика в YouTube Music"
+
+msgid "Duration"
+msgstr "Продължителност"
+
+msgid "Edit station"
+msgstr "Редактиране на станцията"
+
+msgid "Edit {}"
+msgstr "Редактиране на {}"
+
+msgid "End of current track"
+msgstr "Края на текущата песен"
+
+msgid "End of track"
+msgstr "Край на песента"
+
+msgid "Enter a name for the station"
+msgstr "Въведете име на станцията"
+
+msgid "Enter a name, country or tag to search"
+msgstr "Въведете име, държава или етикет за търсене"
+
+msgid "Enter a stream URL that starts with http:// or https://"
+msgstr "Въведете URL адрес на поток, започващ с http:// или https://"
+
+msgid "Enter the server URL"
+msgstr "Въведете URL адреса на сървъра"
+
+msgid "Fade the end of each song into the next one. Off keeps gapless playback."
+msgstr "Плавно преливане на края на всяка песен в следващата. „Изкл.“ запазва възпроизвеждането без паузи."
+
+msgid "Favorite"
+msgstr "Любими"
+
+msgid "Favorited"
+msgstr "Добавени в любими"
+
+msgid "Favorites"
+msgstr "Любими"
+
+msgid "Favorites only: off"
+msgstr "Само любими: изкл."
+
+msgid "Favorites only: on"
+msgstr "Само любими: вкл."
+
+msgid "Filter"
+msgstr "Филтър"
+
+msgid "Filter playlists"
+msgstr "Филтриране на плейлистите"
+
+msgid "Find stations by name, country or tag"
+msgstr "Търсене на станции по име, държава или етикет"
+
+msgid "Find stations in the radio-browser.info directory"
+msgstr "Търсене на станции в каталога radio-browser.info"
+
+msgid "Folder"
+msgstr "Папка"
+
+msgid "Folders"
+msgstr "Папки"
+
+msgid "Follow current song"
+msgstr "Следване на текущата песен"
+
+msgid "Follow system color scheme"
+msgstr "Следване на цветовата схема на системата"
+
+msgid "For you"
+msgstr "За вас"
+
+msgid "Forget this server?"
+msgstr "Да се забрави ли този сървър?"
+
+msgid "Format the server should transcode to. Applies from the next song."
+msgstr "Формат, в който сървърът да прекодира. Важи от следващата песен."
+
+msgid "Found {n} server in Feishin but it has no usable saved login"
+msgid_plural "Found {n} servers in Feishin but none with a usable saved login"
+msgstr[0] "Намерен е {n} сървър във Feishin, но няма използваем запазен вход"
+msgstr[1] "Намерени са {n} сървъра във Feishin, но никой няма използваем запазен вход"
+
+msgid "Gapless playback"
+msgstr "Възпроизвеждане без паузи"
+
+msgid "Genres"
+msgstr "Жанрове"
+
+msgid "Go back to {}"
+msgstr "Обратно към {}"
+
+msgid "Go to album"
+msgstr "Към албума"
+
+msgid "Go to artist"
+msgstr "Към изпълнителя"
+
+msgid "Go to {}"
+msgstr "Към {}"
+
+msgid "Green"
+msgstr "Зелено"
+
+msgid "Hide lyrics"
+msgstr "Скриване на текста"
+
+msgid "Hide queue"
+msgstr "Скриване на опашката"
+
+msgid "High Contrast Dark"
+msgstr "Тъмна с висок контраст"
+
+msgid "High Contrast Light"
+msgstr "Светла с висок контраст"
+
+msgid "Highlight with the color that comes with the theme."
+msgstr "Открояване с цвета, който идва с темата."
+
+msgid "Home"
+msgstr "Начало"
+
+msgid "Homepage (optional)"
+msgstr "Уебсайт (по избор)"
+
+msgid "Import from Feishin"
+msgstr "Импортиране от Feishin"
+
+msgid "Install yt-dlp to play YouTube tracks"
+msgstr "Инсталирайте yt-dlp, за да възпроизвеждате песни от YouTube"
+
+msgid "Integrations"
+msgstr "Интеграции"
+
+msgid "Interface"
+msgstr "Интерфейс"
+
+msgid "Internet radio"
+msgstr "Интернет радио"
+
+msgid "item"
+msgstr "елемент"
+
+msgid "Jellyfin has no public share links"
+msgstr "Jellyfin няма публични връзки за споделяне"
+
+msgid "Keep this station in the favorites on this device"
+msgstr "Запазване на тази станция в любимите на това устройство"
+
+msgid "Language"
+msgstr "Език"
+
+msgid "LIBRARY"
+msgstr "БИБЛИОТЕКА"
+
+msgid "Library scan finished"
+msgstr "Сканирането на библиотеката приключи"
+
+msgid "Library scan finished: {n} item"
+msgid_plural "Library scan finished: {n} items"
+msgstr[0] "Сканирането на библиотеката приключи: {n} елемент"
+msgstr[1] "Сканирането на библиотеката приключи: {n} елемента"
+
+msgid "Light theme"
+msgstr "Светла тема"
+
+msgid "LIGHT THEMES"
+msgstr "СВЕТЛИ ТЕМИ"
+
+msgid "Listening to {}"
+msgstr "Слушате {}"
+
+msgid "LIVE"
+msgstr "НА ЖИВО"
+
+msgid "Load more"
+msgstr "Зареждане на още"
+
+msgid "Load this section again"
+msgstr "Повторно зареждане на този раздел"
+
+msgid "Loading playlists..."
+msgstr "Зареждане на плейлистите..."
+
+msgid "Loading similar songs..."
+msgstr "Зареждане на подобни песни..."
+
+msgid "Loading stations..."
+msgstr "Зареждане на станциите..."
+
+msgid "Loading the next page of stations"
+msgstr "Зареждане на следващата страница със станции"
+
+msgid "Loading..."
+msgstr "Зареждане..."
+
+msgid "Log out"
+msgstr "Изход"
+
+msgid "Looking up the YouTube link..."
+msgstr "Търсене на връзката в YouTube..."
+
+msgid "Lyrics"
+msgstr "Текст"
+
+msgid "Lyrics from {}"
+msgstr "Текст от {}"
+
+msgid "Lyrics sources"
+msgstr "Източници на текстове"
+
+msgid "Maximum bitrate"
+msgstr "Максимален битрейт"
+
+msgid "Media keys and desktop media controls. Takes effect after a restart."
+msgstr "Мултимедийни клавиши и мултимедийни контроли на работния плот. Влиза в сила след рестарт."
+
+msgid "Moods and genres"
+msgstr "Настроения и жанрове"
+
+msgid "Most played"
+msgstr "Най-слушани"
+
+msgid "Move down"
+msgstr "Преместване надолу"
+
+msgid "Move up"
+msgstr "Преместване нагоре"
+
+msgid "MPRIS"
+msgstr "MPRIS"
+
+msgid "Mute"
+msgstr "Без звук"
+
+msgid "Name"
+msgstr "Име"
+
+msgid "New playlist"
+msgstr "Нов плейлист"
+
+msgid "New releases"
+msgstr "Нови издания"
+
+msgid "Next"
+msgstr "Следваща"
+
+msgid "Next is unavailable while a radio station plays"
+msgstr "„Следваща“ не е достъпно, докато звучи радиостанция"
+
+msgid "No albums"
+msgstr "Няма албуми"
+
+msgid "No albums found"
+msgstr "Не са намерени албуми"
+
+msgid "No artists found"
+msgstr "Не са намерени изпълнители"
+
+msgid "no browser is selected"
+msgstr "не е избран браузър"
+
+msgid "No favorite albums"
+msgstr "Няма любими албуми"
+
+msgid "No favorite artists"
+msgstr "Няма любими изпълнители"
+
+msgid "No favorite tracks"
+msgstr "Няма любими песни"
+
+msgid "No genres found"
+msgstr "Не са намерени жанрове"
+
+msgid "No lyrics found"
+msgstr "Не е намерен текст"
+
+msgid "No playlists found"
+msgstr "Не са намерени плейлисти"
+
+msgid "No playlists yet"
+msgstr "Все още няма плейлисти"
+
+msgid "No rating"
+msgstr "Без оценка"
+
+msgid "No results for \"{}\""
+msgstr "Няма резултати за „{}“"
+
+msgid "No saved login for {}; remove it and add it again"
+msgstr "Няма запазен вход за {}; премахнете го и го добавете отново"
+
+msgid "No saved servers."
+msgstr "Няма запазени сървъри."
+
+msgid "No similar songs found"
+msgstr "Не са намерени подобни песни"
+
+msgid "No songs here"
+msgstr "Тук няма песни"
+
+msgid "No stations found"
+msgstr "Не са намерени станции"
+
+msgid "No stations yet. Add one or find one in the directory."
+msgstr "Все още няма станции. Добавете или намерете станция в каталога."
+
+msgid "No tracks found"
+msgstr "Не са намерени песни"
+
+msgid "None"
+msgstr "Няма"
+
+msgid "Normalize loudness using the track or album gain tags."
+msgstr "Нормализиране на силата на звука чрез таговете за усилване на песента или албума."
+
+msgid "Not connected to a server"
+msgstr "Няма връзка със сървър"
+
+msgid "Nothing is playing"
+msgstr "Нищо не се възпроизвежда"
+
+msgid "Nothing to add yet"
+msgstr "Все още няма какво да се добави"
+
+msgid "Nothing to go back to"
+msgstr "Няма към какво да се върнете"
+
+msgid "Nothing to play here"
+msgstr "Тук няма нищо за възпроизвеждане"
+
+msgid "Nothing to play yet"
+msgstr "Все още няма нищо за възпроизвеждане"
+
+msgid "Nothing to show here right now"
+msgstr "В момента тук няма нищо за показване"
+
+msgid "Off"
+msgstr "Изкл."
+
+msgid "OK"
+msgstr "OK"
+
+msgid "On the server"
+msgstr "В сървъра"
+
+msgid "Only a server admin can rescan the library"
+msgstr "Само администратор на сървъра може да сканира отново библиотеката"
+
+msgid "Only loaded tracks can be shared: select fewer tracks or scroll through them first"
+msgstr "Могат да се споделят само заредени песни: изберете по-малко песни или първо превъртете през тях"
+
+msgid "Open"
+msgstr "Отваряне"
+
+msgid "Open in YouTube Music"
+msgstr "Отваряне в YouTube Music"
+
+msgid "Open now playing"
+msgstr "Отваряне на „Сега звучи“"
+
+msgid "Open radio"
+msgstr "Отваряне на радиото"
+
+msgid "Open the album \"{}\""
+msgstr "Отваряне на албума „{}“"
+
+msgid "Open the playlist \"{}\""
+msgstr "Отваряне на плейлиста „{}“"
+
+msgid "Open the queue panel"
+msgstr "Отваряне на панела с опашката"
+
+msgid "Open {}"
+msgstr "Отваряне на {}"
+
+msgid "Original"
+msgstr "Оригинал"
+
+msgid "Output used by the player."
+msgstr "Изход, използван от плейъра."
+
+msgid "Owner"
+msgstr "Собственик"
+
+msgid "Password"
+msgstr "Парола"
+
+msgid "Paste a link first"
+msgstr "Първо поставете връзка"
+
+msgid "Paste a YouTube or YouTube Music link first"
+msgstr "Първо поставете връзка от YouTube или YouTube Music"
+
+msgid "Paste a YouTube or YouTube Music link to try yt-dlp."
+msgstr "Поставете връзка от YouTube или YouTube Music, за да изпробвате yt-dlp."
+
+msgid "Pause"
+msgstr "Пауза"
+
+msgid "Pause the radio station"
+msgstr "Пауза на радиостанцията"
+
+msgid "Personalized with your YouTube Music account from {}"
+msgstr "Персонализирано с вашия акаунт в YouTube Music от {}"
+
+msgid "Pick a color, or type one as #rrggbb and press Enter."
+msgstr "Изберете цвят или въведете такъв във формат #rrggbb и натиснете Enter."
+
+msgid "Pick a mood or genre to see its playlists"
+msgstr "Изберете настроение или жанр, за да видите плейлистите му"
+
+msgid "Play"
+msgstr "Възпроизвеждане"
+
+msgid "Play \"{}\" and the rest of this shelf"
+msgstr "Възпроизвеждане на „{}“ и останалото от този рафт"
+
+msgid "Play a YouTube link"
+msgstr "Възпроизвеждане на връзка от YouTube"
+
+msgid "Play album"
+msgstr "Възпроизвеждане на албума"
+
+msgid "Play all"
+msgstr "Възпроизвеждане на всички"
+
+msgid "Play all {n} song"
+msgid_plural "Play all {n} songs"
+msgstr[0] "Възпроизвеждане на {n} песен"
+msgstr[1] "Възпроизвеждане на всички {n} песни"
+
+msgid "Play count"
+msgstr "Брой възпроизвеждания"
+
+msgid "Play every song in {} and its subfolders"
+msgstr "Възпроизвеждане на всички песни в {} и подпапките ѝ"
+
+msgid "Play from here"
+msgstr "Възпроизвеждане оттук"
+
+msgid "Play from this song"
+msgstr "Възпроизвеждане от тази песен"
+
+msgid "Play from {}"
+msgstr "Възпроизвеждане от {}"
+
+msgid "Play next"
+msgstr "Възпроизвеждане следващ"
+
+msgid "Play the album"
+msgstr "Възпроизвеждане на албума"
+
+msgid "Play the playlist"
+msgstr "Възпроизвеждане на плейлиста"
+
+msgid "Play the radio station"
+msgstr "Възпроизвеждане на радиостанцията"
+
+msgid "Play this link after the current song"
+msgstr "Възпроизвеждане на тази връзка след текущата песен"
+
+msgid "Play this link now"
+msgstr "Възпроизвеждане на тази връзка сега"
+
+msgid "Play {}"
+msgstr "Възпроизвеждане на {}"
+
+msgid "Play {} next"
+msgstr "Възпроизвеждане на {} следващ"
+
+msgid "Play {} with its subfolders"
+msgstr "Възпроизвеждане на {} с подпапките ѝ"
+
+msgid "Playback"
+msgstr "Възпроизвеждане"
+
+msgid "Playback failed: {}"
+msgstr "Неуспешно възпроизвеждане: {}"
+
+msgid "Playing {} failed: {}"
+msgstr "Неуспешно възпроизвеждане на {}: {}"
+
+msgid "PLAYLIST"
+msgstr "ПЛЕЙЛИСТ"
+
+msgid "Playlist"
+msgstr "Плейлист"
+
+msgid "playlist"
+msgstr "плейлист"
+
+msgid "Playlist name"
+msgstr "Име на плейлиста"
+
+msgid "Playlists"
+msgstr "Плейлисти"
+
+msgid "Plays"
+msgstr "Възпроизвеждания"
+
+msgid "Plays YouTube tracks. Leave empty to use yt-dlp from your PATH."
+msgstr "Възпроизвежда песни от YouTube. Оставете празно, за да се използва yt-dlp от PATH."
+
+msgid "Preload the next song so it starts without a pause."
+msgstr "Предварително зареждане на следващата песен, за да започне без пауза."
+
+msgid "Previous"
+msgstr "Предишна"
+
+msgid "Previous is unavailable while a radio station plays"
+msgstr "„Предишна“ не е достъпно, докато звучи радиостанция"
+
+msgid "Purple"
+msgstr "Лилаво"
+
+msgid "Queue"
+msgstr "Опашка"
+
+msgid "Radio"
+msgstr "Радио"
+
+msgid "Random"
+msgstr "Случайно"
+
+msgid "Rate {n} star"
+msgid_plural "Rate {n} stars"
+msgstr[0] "Оценка {n} звезда"
+msgstr[1] "Оценка {n} звезди"
+
+msgid "Rating"
+msgstr "Оценка"
+
+msgid "Recently added"
+msgstr "Наскоро добавени"
+
+msgid "Recently played"
+msgstr "Наскоро слушани"
+
+msgid "Red"
+msgstr "Червено"
+
+msgid "Refresh"
+msgstr "Опресняване"
+
+msgid "Refresh this section"
+msgstr "Опресняване на този раздел"
+
+msgid "Release year"
+msgstr "Година на издаване"
+
+msgid "Remove"
+msgstr "Премахване"
+
+msgid "Remove from favorites"
+msgstr "Премахване от любими"
+
+msgid "Remove from playlist"
+msgstr "Премахване от плейлиста"
+
+msgid "Remove from queue"
+msgstr "Премахване от опашката"
+
+msgid "Removed {n} song from \"{}\""
+msgid_plural "Removed {n} songs from \"{}\""
+msgstr[0] "Премахната е {n} песен от „{}“"
+msgstr[1] "Премахнати са {n} песни от „{}“"
+
+msgid "Removing..."
+msgstr "Премахване..."
+
+msgid "Repeat: all"
+msgstr "Повторение: всички"
+
+msgid "Repeat: off"
+msgstr "Повторение: изкл."
+
+msgid "Repeat: one"
+msgstr "Повторение: една"
+
+msgid "ReplayGain"
+msgstr "ReplayGain"
+
+msgid "Report what you play to the server."
+msgstr "Изпращане на информация към сървъра какво слушате."
+
+msgid "Rescan the library for new content"
+msgstr "Повторно сканиране на библиотеката за ново съдържание"
+
+msgid "Resize column"
+msgstr "Преоразмеряване на колоната"
+
+msgid "Save"
+msgstr "Запазване"
+
+msgid "Save on this device"
+msgstr "Запазване на това устройство"
+
+msgid "Save the changes on the server"
+msgstr "Запазване на промените в сървъра"
+
+msgid "Save the changes on this device"
+msgstr "Запазване на промените на това устройство"
+
+msgid "Save to favorites on this device"
+msgstr "Запазване в любими на това устройство"
+
+msgid "Save to server"
+msgstr "Запазване в сървъра"
+
+msgid "Saved on this device"
+msgstr "Запазено на това устройство"
+
+msgid "Saved on this device, click to remove"
+msgstr "Запазено на това устройство, щракнете за премахване"
+
+msgid "Saving the station to the server..."
+msgstr "Запазване на станцията в сървъра..."
+
+msgid "Saving to the server..."
+msgstr "Запазване в сървъра..."
+
+msgid "Saving..."
+msgstr "Запазване..."
+
+msgid "Scanning the library for new content..."
+msgstr "Сканиране на библиотеката за ново съдържание..."
+
+msgid "Scanning the library: {}"
+msgstr "Сканиране на библиотеката: {}"
+
+msgid "Scrobble"
+msgstr "Скробъл"
+
+msgid "Scroll left"
+msgstr "Превъртане наляво"
+
+msgid "Scroll lists and the queue to the song that is playing."
+msgstr "Превъртане на списъците и опашката до песента, която звучи."
+
+msgid "Scroll right"
+msgstr "Превъртане надясно"
+
+msgid "Search"
+msgstr "Търсене"
+
+msgid "Search failed: {}"
+msgstr "Неуспешно търсене: {}"
+
+msgid "SEARCH RESULTS"
+msgstr "РЕЗУЛТАТИ ОТ ТЪРСЕНЕТО"
+
+msgid "Search songs on YouTube Music"
+msgstr "Търсене на песни в YouTube Music"
+
+msgid "Search songs, albums, artists"
+msgstr "Търсене на песни, албуми, изпълнители"
+
+msgid "Search the radio-browser.info directory"
+msgstr "Търсене в каталога radio-browser.info"
+
+msgid "Search your library for songs, albums and artists"
+msgstr "Търсене на песни, албуми и изпълнители в библиотеката"
+
+msgid "Searched from top to bottom until one has lyrics."
+msgstr "Търсят се отгоре надолу, докато някой не върне текст."
+
+msgid "Searching for lyrics..."
+msgstr "Търсене на текст..."
+
+msgid "Searching the radio directory failed: {}"
+msgstr "Неуспешно търсене в радиокаталога: {}"
+
+msgid "Searching the radio-browser.info directory"
+msgstr "Търсене в каталога radio-browser.info"
+
+msgid "Searching..."
+msgstr "Търсене..."
+
+msgid "Seeking is unavailable for live radio"
+msgstr "Превъртането не е достъпно при радио на живо"
+
+msgid "Server"
+msgstr "Сървър"
+
+msgid "Server type"
+msgstr "Тип сървър"
+
+msgid "Servers"
+msgstr "Сървъри"
+
+msgid "Set rating"
+msgstr "Задаване на оценка"
+
+msgid "Settings"
+msgstr "Настройки"
+
+msgid "Share"
+msgstr "Споделяне"
+
+msgid "Share ({})"
+msgstr "Споделяне ({})"
+
+msgid "Share link copied to the clipboard: {}"
+msgstr "Връзката за споделяне е копирана в клипборда: {}"
+
+msgid "Share this {}: copy a public link"
+msgstr "Споделяне на този {}: копиране на публична връзка"
+
+msgid "Sharing is unavailable: {}"
+msgstr "Споделянето не е достъпно: {}"
+
+msgid "SHOW LESS"
+msgstr "ПОКАЖИ ПО-МАЛКО"
+
+msgid "Show lyrics"
+msgstr "Показване на текста"
+
+msgid "SHOW MORE"
+msgstr "ПОКАЖИ ОЩЕ"
+
+msgid "Show more"
+msgstr "Покажи още"
+
+msgid "Show playlists for {}"
+msgstr "Показване на плейлистите за {}"
+
+msgid "Show queue"
+msgstr "Показване на опашката"
+
+msgid "Show the current song on your Discord profile."
+msgstr "Показване на текущата песен в профила ви в Discord."
+
+msgid "Show the next page of stations"
+msgstr "Показване на следващата страница със станции"
+
+msgid "Show the queue next to the library; remembered on the next start."
+msgstr "Показване на опашката до библиотеката; запомня се при следващото стартиране."
+
+msgid "Show the server and saved stations"
+msgstr "Показване на станциите от сървъра и запазените станции"
+
+msgid "Show {}"
+msgstr "Показване на {}"
+
+msgid "Showing playlists for {}"
+msgstr "Показват се плейлистите за {}"
+
+msgid "Showing the charts for {}"
+msgstr "Показват се класациите за {}"
+
+msgid "Showing the radio-browser.info directory"
+msgstr "Показва се каталогът radio-browser.info"
+
+msgid "Showing the server and saved stations"
+msgstr "Показват се станциите от сървъра и запазените станции"
+
+msgid "Shuffle"
+msgstr "Разбъркване"
+
+msgid "Shuffle every song in {} and its subfolders"
+msgstr "Разбъркано възпроизвеждане на всички песни в {} и подпапките ѝ"
+
+msgid "Shuffle play"
+msgstr "Разбъркано възпроизвеждане"
+
+msgid "Shuffle: off"
+msgstr "Разбъркване: изкл."
+
+msgid "Shuffle: on"
+msgstr "Разбъркване: вкл."
+
+msgid "Sign in"
+msgstr "Вход"
+
+msgid "Sign in with browser"
+msgstr "Вход чрез браузър"
+
+msgid "Sign out and forget this server's saved login?"
+msgstr "Да се излезе ли и да се забрави запазеният вход за този сървър?"
+
+msgid "Sign out and forget this server?"
+msgstr "Да се излезе ли и да се забрави този сървър?"
+
+msgid "Similar"
+msgstr "Подобни"
+
+msgid "Similar songs come from your server, so YouTube tracks have none"
+msgstr "Подобните песни идват от сървъра, затова песните от YouTube нямат такива"
+
+msgid "Sleep timer: off"
+msgstr "Таймер за заспиване: изкл."
+
+msgid "Sleep timer: {}"
+msgstr "Таймер за заспиване: {}"
+
+msgid "Song count"
+msgstr "Брой песни"
+
+msgid "Songs"
+msgstr "Песни"
+
+msgid "Sort by {}"
+msgstr "Сортиране по {}"
+
+msgid "Sort by {}: ascending"
+msgstr "Сортиране по {}: възходящо"
+
+msgid "Sort by {}: descending"
+msgstr "Сортиране по {}: низходящо"
+
+msgid "Sort: ascending"
+msgstr "Сортиране: възходящо"
+
+msgid "Sort: descending"
+msgstr "Сортиране: низходящо"
+
+msgid "Starting volume, shared with the player bar."
+msgstr "Начална сила на звука, обща с лентата на плейъра."
+
+msgid "Station data from radio-browser.info"
+msgstr "Данни за станциите от radio-browser.info"
+
+msgid "Station name"
+msgstr "Име на станцията"
+
+msgid "Stations"
+msgstr "Станции"
+
+msgid "Stop {}"
+msgstr "Спиране на {}"
+
+msgid "Stream URL"
+msgstr "URL адрес на потока"
+
+msgid "Switch"
+msgstr "Превключване"
+
+msgid "Switch between a dark and a light theme with the desktop. {}"
+msgstr "Превключване между тъмна и светла тема заедно с работния плот. {}"
+
+msgid "Switch to grid view"
+msgstr "Изглед с мрежа"
+
+msgid "Switch to list view"
+msgstr "Изглед със списък"
+
+msgid "System default"
+msgstr "По подразбиране за системата"
+
+msgid "System default follows the language of the desktop."
+msgstr "„По подразбиране за системата“ следва езика на работния плот."
+
+msgid "Tag, for example jazz"
+msgstr "Етикет, например jazz"
+
+msgid "The desktop currently prefers dark."
+msgstr "В момента работният плот предпочита тъмна тема."
+
+msgid "The desktop currently prefers light."
+msgstr "В момента работният плот предпочита светла тема."
+
+msgid "The desktop has no preference, so the dark theme is used."
+msgstr "Работният плот няма предпочитание, затова се използва тъмната тема."
+
+msgid "The library scan is still running on the server"
+msgstr "Сканирането на библиотеката все още се изпълнява на сървъра"
+
+msgid "The queue is empty"
+msgstr "Опашката е празна"
+
+msgid "The queue is incomplete: loading the rest of the list failed ({})"
+msgstr "Опашката е непълна: неуспешно зареждане на останалата част от списъка ({})"
+
+msgid "The radio directory could not be reached"
+msgstr "Радиокаталогът е недостъпен"
+
+msgid "The radio station stopped streaming"
+msgstr "Радиостанцията спря да излъчва"
+
+msgid "The server refused the station: {}"
+msgstr "Сървърът отказа станцията: {}"
+
+msgid "Theme"
+msgstr "Тема"
+
+msgid "There is nothing to play in this list"
+msgstr "В този списък няма нищо за възпроизвеждане"
+
+msgid "This Discover page does not exist"
+msgstr "Тази страница от „Откриване“ не съществува"
+
+msgid "This folder is empty"
+msgstr "Тази папка е празна"
+
+msgid "This playlist is empty"
+msgstr "Този плейлист е празен"
+
+msgid "This server has no internet radio. Stations you add are saved on this device."
+msgstr "Този сървър няма интернет радио. Добавените станции се запазват на това устройство."
+
+msgid "this server has no public share links"
+msgstr "този сървър няма публични връзки за споделяне"
+
+msgid "Time"
+msgstr "Време"
+
+msgid "Title"
+msgstr "Заглавие"
+
+msgid "Top songs"
+msgstr "Най-популярни песни"
+
+msgid "Track"
+msgstr "Песен"
+
+msgid "Tracks"
+msgstr "Песни"
+
+msgid "Transcode format"
+msgstr "Формат за прекодиране"
+
+msgid "Try again"
+msgstr "Опитайте отново"
+
+msgid "Turn off the theme accent color to pick your own."
+msgstr "Изключете акцентния цвят на темата, за да изберете собствен."
+
+msgid "Unmute"
+msgstr "Включване на звука"
+
+msgid "Up next"
+msgstr "Следват"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "Use the theme accent color"
+msgstr "Използване на акцентния цвят на темата"
+
+msgid "Use {}"
+msgstr "Използване на {}"
+
+msgid "Used while the desktop prefers dark."
+msgstr "Използва се, когато работният плот предпочита тъмна тема."
+
+msgid "Used while the desktop prefers light."
+msgstr "Използва се, когато работният плот предпочита светла тема."
+
+msgid "Username"
+msgstr "Потребителско име"
+
+msgid "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Feishin deletes right after reading."
+msgstr "Използва сесията ви в YouTube в този браузър за персонализирана начална страница в „Откриване“ и Premium аудио. yt-dlp копира бисквитките ѝ във временен личен файл, който Feishin изтрива веднага след прочитането."
+
+msgid "Volume"
+msgstr "Сила на звука"
+
+msgid "Volume {}%"
+msgstr "Сила на звука {}%"
+
+msgid "XDG_RUNTIME_DIR is not set, so there is no private place for the cookies"
+msgstr "XDG_RUNTIME_DIR не е зададена, затова няма лично място за бисквитките"
+
+msgid "Year"
+msgstr "Година"
+
+msgid "You are here: {}"
+msgstr "Вие сте тук: {}"
+
+msgid "Your user is not allowed to share on this server"
+msgstr "Потребителят ви няма право да споделя в този сървър"
+
+msgid "YouTube"
+msgstr "YouTube"
+
+msgid "YouTube albums are not in your library"
+msgstr "Албумите от YouTube не са в библиотеката ви"
+
+msgid "YouTube artists are not in your library"
+msgstr "Изпълнителите от YouTube не са в библиотеката ви"
+
+msgid "yt-dlp program"
+msgstr "Програма yt-dlp"
+
+msgid "{n} album"
+msgid_plural "{n} albums"
+msgstr[0] "{n} албум"
+msgstr[1] "{n} албума"
+
+msgid "{n} folder"
+msgid_plural "{n} folders"
+msgstr[0] "{n} папка"
+msgstr[1] "{n} папки"
+
+msgid "{n} item so far"
+msgid_plural "{n} items so far"
+msgstr[0] "{n} елемент досега"
+msgstr[1] "{n} елемента досега"
+
+msgid "{n} minute"
+msgid_plural "{n} minutes"
+msgstr[0] "{n} минута"
+msgstr[1] "{n} минути"
+
+msgid "{n} selected"
+msgid_plural "{n} selected"
+msgstr[0] "{n} избран"
+msgstr[1] "{n} избрани"
+
+msgid "{n} song"
+msgid_plural "{n} songs"
+msgstr[0] "{n} песен"
+msgstr[1] "{n} песни"
+
+msgid "{n} song from \"{}\" will play next"
+msgid_plural "{n} songs from \"{}\" will play next"
+msgstr[0] "{n} песен от „{}“ ще се възпроизведе след текущата"
+msgstr[1] "{n} песни от „{}“ ще се възпроизведат след текущата"
+
+msgid "{n} song on YouTube Music"
+msgid_plural "{n} songs on YouTube Music"
+msgstr[0] "{n} песен в YouTube Music"
+msgstr[1] "{n} песни в YouTube Music"
+
+msgid "{n} song will play next"
+msgid_plural "{n} songs will play next"
+msgstr[0] "{n} песен ще се възпроизведе след текущата"
+msgstr[1] "{n} песни ще се възпроизведат след текущата"
+
+msgid "{} (current theme)"
+msgstr "{} (текуща тема)"
+
+msgid "{} (unavailable)"
+msgstr "{} (недостъпно)"
+
+msgid "{} at {}"
+msgstr "{} на {}"
+
+msgid "{} cannot be played: its stream address is not an internet stream"
+msgstr "{} не може да се възпроизведе: адресът на потока не е интернет поток"
+
+msgid "{} is shown"
+msgstr "Показва се {}"
+
+msgid "{} kbps"
+msgstr "{} kbps"
+
+msgid "{} s"
+msgstr "{} с"
+
+msgid "{}: off"
+msgstr "{}: изкл."
+
+msgid "{}: on"
+msgstr "{}: вкл."
+
+msgid "{}: {} (dark)"
+msgstr "{}: {} (тъмна)"
+
+msgid "{}: {} (light)"
+msgstr "{}: {} (светла)"

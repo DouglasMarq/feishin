@@ -80,7 +80,7 @@ component MoreButton inherits Rectangle {
         background: touch.has-hover && !root.busy ? Theme.hover : transparent;
 
         label := Text {
-            text: root.busy ? "Loading..." : "Show more";
+            text: root.busy ? @tr("Loading...") : @tr("Show more");
             color: touch.has-hover ? Theme.foreground : Theme.muted;
             font-weight: 600;
         }
@@ -107,21 +107,21 @@ component SongRow inherits Rectangle {
     menu := ContextMenuArea {
         Menu {
             MenuItem {
-                title: "Play";
+                title: @tr("Play");
                 activated => {
                     SearchState.play-only(root.position);
                 }
             }
 
             MenuItem {
-                title: "Play next";
+                title: @tr("Play next");
                 activated => {
                     SearchState.play-next(root.position);
                 }
             }
 
             MenuItem {
-                title: "Add to queue";
+                title: @tr("Add to queue");
                 activated => {
                     SearchState.add-to-queue(root.position);
                 }
@@ -130,7 +130,7 @@ component SongRow inherits Rectangle {
             MenuSeparator { }
 
             MenuItem {
-                title: "Add to playlist";
+                title: @tr("Add to playlist");
                 activated => {
                     Actions.add-to-playlist([root.track.id]);
                 }
@@ -190,7 +190,7 @@ component SongRow inherits Rectangle {
                         }
 
                         TooltipAnchor {
-                            text: "Play";
+                            text: @tr("Play");
                             hovered: play-touch.has-hover;
                         }
 
@@ -394,7 +394,7 @@ export component SearchView inherits Rectangle {
             spacing: 12px;
 
             Text {
-                text: "Search";
+                text: @tr("Search");
                 font-size: 24px;
                 font-weight: 700;
                 color: Theme.foreground;
@@ -410,7 +410,7 @@ export component SearchView inherits Rectangle {
                 preferred-width: 320px;
                 max-width: 320px;
                 horizontal-stretch: 1;
-                placeholder-text: "Search songs, albums, artists";
+                placeholder-text: @tr("Search songs, albums, artists");
                 text <=> SearchState.query;
                 edited(text) => {
                     SearchState.edited(text);
@@ -436,7 +436,7 @@ export component SearchView inherits Rectangle {
 
                     if SearchState.songs.length > 0: VerticalLayout {
                         SectionTitle {
-                            text: "Songs";
+                            text: @tr("Songs");
                             count: SearchState.songs.length;
                             more: SearchState.songs-more;
                         }
@@ -453,25 +453,25 @@ export component SearchView inherits Rectangle {
                                 }
 
                                 HeaderCell {
-                                    text: "Title";
+                                    text: @tr("Title");
                                     sortable: false;
                                     column-width: root.title-width;
                                 }
 
                                 HeaderCell {
-                                    text: "Artist";
+                                    text: @tr("Artist");
                                     sortable: false;
                                     column-width: root.artist-width;
                                 }
 
                                 HeaderCell {
-                                    text: "Album";
+                                    text: @tr("Album");
                                     sortable: false;
                                     column-width: root.album-width;
                                 }
 
                                 HeaderCell {
-                                    text: "Time";
+                                    text: @tr("Time");
                                     sortable: false;
                                     column-width: 72px;
                                 }
@@ -504,7 +504,7 @@ export component SearchView inherits Rectangle {
 
                     if SearchState.albums.length > 0: VerticalLayout {
                         SectionTitle {
-                            text: "Albums";
+                            text: @tr("Albums");
                             count: SearchState.albums.length;
                             more: SearchState.albums-more;
                         }
@@ -529,7 +529,7 @@ export component SearchView inherits Rectangle {
 
                     if SearchState.artists.length > 0: VerticalLayout {
                         SectionTitle {
-                            text: "Artists";
+                            text: @tr("Artists");
                             count: SearchState.artists.length;
                             more: SearchState.artists-more;
                         }
@@ -568,7 +568,7 @@ export component SearchView inherits Rectangle {
                 }
 
                 Text {
-                    text: SearchState.loading ? "Searching..." : SearchState.query.is-empty ? "Search your library for songs, albums and artists" : "No results for \"\{SearchState.query}\"";
+                    text: SearchState.loading ? @tr("Searching...") : SearchState.query.is-empty ? @tr("Search your library for songs, albums and artists") : @tr("No results for \"{}\"", SearchState.query);
                     color: Theme.muted;
                     horizontal-alignment: center;
                 }

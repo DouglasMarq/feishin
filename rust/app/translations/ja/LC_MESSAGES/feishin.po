@@ -1,0 +1,1498 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: ja\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+
+msgid "\"{}\" plays next"
+msgstr "「{}」を次に再生します"
+
+msgid "\"{}\" will play next"
+msgstr "「{}」が次に再生されます"
+
+msgid "1 star"
+msgstr "星 1 つ"
+
+msgid "2 stars"
+msgstr "星 2 つ"
+
+msgid "3 stars"
+msgstr "星 3 つ"
+
+msgid "4 stars"
+msgstr "星 4 つ"
+
+msgid "5 stars"
+msgstr "星 5 つ"
+
+msgid "About {}"
+msgstr "{0} について"
+
+msgid "Accent color"
+msgstr "アクセント カラー"
+
+msgid "Accent color not changed: {}."
+msgstr "アクセント カラーは変更されませんでした: {}。"
+
+msgid "Accent color {}"
+msgstr "アクセント カラー {}"
+
+msgid "Accent color {} (selected)"
+msgstr "アクセント カラー {} (選択中)"
+
+msgid "Accent color {} (theme accent in use)"
+msgstr "アクセント カラー {} (テーマのアクセントを使用中)"
+
+msgid "Add a station by its stream URL"
+msgstr "ストリーム URL でステーションを追加"
+
+msgid "Add all songs to the queue"
+msgstr "すべての曲をキューに追加"
+
+msgid "Add server"
+msgstr "サーバーを追加"
+
+msgid "Add station"
+msgstr "ステーションを追加"
+
+msgid "Add this link to the end of the queue"
+msgstr "このリンクをキューの最後に追加"
+
+msgid "Add this station to the server for every client"
+msgstr "このステーションをサーバーに追加して、すべてのクライアントで使えるようにする"
+
+msgid "Add to favorites"
+msgstr "お気に入りに追加"
+
+msgid "Add to playlist"
+msgstr "プレイリストに追加"
+
+msgid "Add to queue"
+msgstr "キューに追加"
+
+msgid "Add to the server's stations"
+msgstr "サーバーのステーションに追加"
+
+msgid "Add {n} song to playlist"
+msgid_plural "Add {n} songs to playlist"
+msgstr[0] "{n} 曲をプレイリストに追加"
+
+msgid "Add {} to the queue"
+msgstr "{} をキューに追加"
+
+msgid "Added \"{}\" to the queue"
+msgstr "「{}」をキューに追加しました"
+
+msgid "Added only {n} song to \"{}\": {}"
+msgid_plural "Added only {n} songs to \"{}\": {}"
+msgstr[0] "「{}」に追加できたのは {n} 曲のみです: {}"
+
+msgid "Added {n} song from \"{}\" to the queue"
+msgid_plural "Added {n} songs from \"{}\" to the queue"
+msgstr[0] "「{}」から {n} 曲をキューに追加しました"
+
+msgid "Added {n} song to \"{}\""
+msgid_plural "Added {n} songs to \"{}\""
+msgstr[0] "「{}」に {n} 曲を追加しました"
+
+msgid "Added {n} song to the queue"
+msgid_plural "Added {n} songs to the queue"
+msgstr[0] "{n} 曲をキューに追加しました"
+
+msgid "Adding to \"{}\": {} of {n} song"
+msgid_plural "Adding to \"{}\": {} of {n} songs"
+msgstr[0] "「{}」に追加中: {n} 曲中 {} 曲"
+
+msgid "ALBUM"
+msgstr "アルバム"
+
+msgid "Album"
+msgstr "アルバム"
+
+msgid "album"
+msgstr "アルバム"
+
+msgid "Album artist"
+msgstr "アルバムアーティスト"
+
+msgid "Album count"
+msgstr "アルバム数"
+
+msgid "Album not found"
+msgstr "アルバムが見つかりません"
+
+msgid "Albums"
+msgstr "アルバム"
+
+msgid "All genres"
+msgstr "すべてのジャンル"
+
+msgid "Already at the end"
+msgstr "すでに最後です"
+
+msgid "Already at the start"
+msgstr "すでに最初です"
+
+msgid "Already in \"{}\""
+msgstr "すでに「{}」にあります"
+
+msgid "Already on the server"
+msgstr "すでにサーバーにあります"
+
+msgid "Amber"
+msgstr "アンバー"
+
+msgid "Appearance"
+msgstr "外観"
+
+msgid "ARTIST"
+msgstr "アーティスト"
+
+msgid "Artist"
+msgstr "アーティスト"
+
+msgid "Artists"
+msgstr "アーティスト"
+
+msgid "Ask the server to transcode down to this bitrate. Applies from the next song."
+msgstr "このビットレート以下にトランスコードするようサーバーに要求します。次の曲から適用されます。"
+
+msgid "Audio device"
+msgstr "オーディオ デバイス"
+
+msgid "Automatic ({})"
+msgstr "自動 ({})"
+
+msgid "Back"
+msgstr "戻る"
+
+msgid "Blue"
+msgstr "ブルー"
+
+msgid "by {}"
+msgstr "作成者: {}"
+
+msgid "Cancel"
+msgstr "キャンセル"
+
+msgid "Cancel timer"
+msgstr "タイマーをキャンセル"
+
+msgid "Cannot share: {}"
+msgstr "共有できません: {}"
+
+msgid "Chart country"
+msgstr "チャートの国"
+
+msgid "Charts"
+msgstr "チャート"
+
+msgid "Choose a browser under Settings, YouTube to sign in for a personalized home"
+msgstr "パーソナライズされたホームを表示するには、設定の YouTube でブラウザーを選んでサインインしてください"
+
+msgid "Clear"
+msgstr "クリア"
+
+msgid "Clear filters"
+msgstr "フィルターを削除"
+
+msgid "Clear rating"
+msgstr "評価をクリア"
+
+msgid "Clear the favorites and genre filters"
+msgstr "お気に入りとジャンルのフィルターをクリア"
+
+msgid "Close"
+msgstr "閉じる"
+
+msgid "Close now playing"
+msgstr "再生中の画面を閉じる"
+
+msgid "Close without saving"
+msgstr "保存せずに閉じる"
+
+msgid "Colors used across the whole app."
+msgstr "アプリ全体で使われる色です。"
+
+msgid "Connect to your music server"
+msgstr "音楽サーバーに接続"
+
+msgid "Connecting..."
+msgstr "接続中..."
+
+msgid "Could not add to \"{}\": {}"
+msgstr "「{}」に追加できませんでした: {}"
+
+msgid "Could not add {} to the server"
+msgstr "{} をサーバーに追加できませんでした"
+
+msgid "Could not create a share link: {}"
+msgstr "共有リンクを作成できませんでした: {}"
+
+msgid "Could not create the playlist: {}"
+msgstr "プレイリストを作成できませんでした: {}"
+
+msgid "Could not delete the playlist: {}"
+msgstr "プレイリストを削除できませんでした: {}"
+
+msgid "Could not delete the station"
+msgstr "ステーションを削除できませんでした"
+
+msgid "Could not load albums: {}"
+msgstr "アルバムを読み込めませんでした: {}"
+
+msgid "Could not load artists: {}"
+msgstr "アーティストを読み込めませんでした: {}"
+
+msgid "Could not load Discover: {}"
+msgstr "ディスカバーを読み込めませんでした: {}"
+
+msgid "Could not load genres: {}"
+msgstr "ジャンルを読み込めませんでした: {}"
+
+msgid "Could not load it from YouTube Music: {}"
+msgstr "YouTube Music から読み込めませんでした: {}"
+
+msgid "Could not load lyrics"
+msgstr "歌詞を読み込めませんでした"
+
+msgid "Could not load moods and genres: {}"
+msgstr "ムードとジャンルを読み込めませんでした: {}"
+
+msgid "Could not load more results: {}"
+msgstr "さらに結果を読み込めませんでした: {}"
+
+msgid "Could not load new releases: {}"
+msgstr "新作を読み込めませんでした: {}"
+
+msgid "Could not load playlists: {}"
+msgstr "プレイリストを読み込めませんでした: {}"
+
+msgid "Could not load the album: {}"
+msgstr "アルバムを読み込めませんでした: {}"
+
+msgid "Could not load the artist: {}"
+msgstr "アーティストを読み込めませんでした: {}"
+
+msgid "Could not load the charts: {}"
+msgstr "チャートを読み込めませんでした: {}"
+
+msgid "Could not load the folder: {}"
+msgstr "フォルダーを読み込めませんでした: {}"
+
+msgid "Could not load the list: {}"
+msgstr "リストを読み込めませんでした: {}"
+
+msgid "Could not load the playlist: {}"
+msgstr "プレイリストを読み込めませんでした: {}"
+
+msgid "Could not load the radio stations: {}"
+msgstr "ラジオ ステーションを読み込めませんでした: {}"
+
+msgid "Could not load the selection: {}"
+msgstr "選択した項目を読み込めませんでした: {}"
+
+msgid "Could not load this page: {}"
+msgstr "このページを読み込めませんでした: {}"
+
+msgid "Could not load tracks: {}"
+msgstr "トラックを読み込めませんでした: {}"
+
+msgid "Could not load your home: {}"
+msgstr "ホームを読み込めませんでした: {}"
+
+msgid "Could not open the folder: {}"
+msgstr "フォルダーを開けませんでした: {}"
+
+msgid "Could not open YouTube Music: {}"
+msgstr "YouTube Music を開けませんでした: {}"
+
+msgid "Could not play \"{}\" from YouTube: {}"
+msgstr "YouTube から「{}」を再生できませんでした: {}"
+
+msgid "Could not play album: {}"
+msgstr "アルバムを再生できませんでした: {}"
+
+msgid "Could not play from YouTube: {}"
+msgstr "YouTube から再生できませんでした: {}"
+
+msgid "Could not play the album: {}"
+msgstr "アルバムを再生できませんでした: {}"
+
+msgid "Could not remove songs: {}"
+msgstr "曲を削除できませんでした: {}"
+
+msgid "Could not rescan the library: {}"
+msgstr "ライブラリを再スキャンできませんでした: {}"
+
+msgid "Could not set the rating: {}"
+msgstr "評価を設定できませんでした: {}"
+
+msgid "Could not sign in to YouTube Music ({}). Showing general picks instead."
+msgstr "YouTube Music にサインインできませんでした ({})。代わりに一般的なおすすめを表示しています。"
+
+msgid "Could not switch server: {}"
+msgstr "サーバーを切り替えられませんでした: {}"
+
+msgid "Could not update favorite: {}"
+msgstr "お気に入りを更新できませんでした: {}"
+
+msgid "Could not update favorites: {}"
+msgstr "お気に入りを更新できませんでした: {}"
+
+msgid "Could not update rating: {}"
+msgstr "評価を更新できませんでした: {}"
+
+msgid "Could not update the favorite: {}"
+msgstr "お気に入りを更新できませんでした: {}"
+
+msgid "Country"
+msgstr "国"
+
+msgid "Create"
+msgstr "作成"
+
+msgid "Created \"{}\" with only {n} song: {}"
+msgid_plural "Created \"{}\" with only {n} songs: {}"
+msgstr[0] "「{}」を作成しましたが、追加できたのは {n} 曲のみです: {}"
+
+msgid "Created \"{}\" with {n} song"
+msgid_plural "Created \"{}\" with {n} songs"
+msgstr[0] "{n} 曲で「{}」を作成しました"
+
+msgid "Created playlist \"{}\""
+msgstr "プレイリスト「{}」を作成しました"
+
+msgid "Creating a share link..."
+msgstr "共有リンクを作成中..."
+
+msgid "Creating..."
+msgstr "作成中..."
+
+msgid "Crossfade"
+msgstr "クロスフェード"
+
+msgid "Crossfade could not be changed: {}"
+msgstr "クロスフェードを変更できませんでした: {}"
+
+msgid "Crossfade: {}"
+msgstr "クロスフェード: {}"
+
+msgid "Current"
+msgstr "使用中"
+
+msgid "Custom accent color: {} (theme accent in use)"
+msgstr "カスタム アクセント カラー: {} (テーマのアクセントを使用中)"
+
+msgid "Custom accent color: {}, press Enter to apply"
+msgstr "カスタム アクセント カラー: {}、Enter キーで適用"
+
+msgid "Dark theme"
+msgstr "ダーク テーマ"
+
+msgid "DARK THEMES"
+msgstr "ダーク テーマ"
+
+msgid "Default country for the Discover charts. Automatic follows your system region."
+msgstr "ディスカバーのチャートで使う既定の国です。自動の場合はシステムの地域に従います。"
+
+msgid "Default Dark"
+msgstr "デフォルト ダーク"
+
+msgid "Default Light"
+msgstr "デフォルト ライト"
+
+msgid "Delete"
+msgstr "削除"
+
+msgid "Delete \"{}\" from the server? This cannot be undone."
+msgstr "サーバーから「{}」を削除しますか？この操作は元に戻せません。"
+
+msgid "Delete \"{}\"? This cannot be undone."
+msgstr "「{}」を削除しますか？この操作は元に戻せません。"
+
+msgid "Delete playlist"
+msgstr "プレイリストを削除"
+
+msgid "Delete station"
+msgstr "ステーションを削除"
+
+msgid "Delete {} from the server"
+msgstr "サーバーから {} を削除"
+
+msgid "Deleted playlist \"{}\""
+msgstr "プレイリスト「{}」を削除しました"
+
+msgid "Deleting..."
+msgstr "削除中..."
+
+msgid "Demo mode: these picks are made up and play from your demo library"
+msgstr "デモ モード: これらのおすすめは架空のもので、デモ ライブラリから再生されます"
+
+msgid "Directory"
+msgstr "ディレクトリ"
+
+msgid "Disc {}"
+msgstr "ディスク {}"
+
+msgid "Discord Rich Presence"
+msgstr "Discord Rich Presence"
+
+msgid "Discover"
+msgstr "ディスカバー"
+
+msgid "Discover is open"
+msgstr "ディスカバーを表示中"
+
+msgid "Discover new music on YouTube Music"
+msgstr "YouTube Music で新しい音楽を見つける"
+
+msgid "Duration"
+msgstr "長さ"
+
+msgid "Edit station"
+msgstr "ステーションを編集"
+
+msgid "Edit {}"
+msgstr "{} を編集"
+
+msgid "End of current track"
+msgstr "現在のトラックの終わり"
+
+msgid "End of track"
+msgstr "トラックの終わり"
+
+msgid "Enter a name for the station"
+msgstr "ステーションの名前を入力してください"
+
+msgid "Enter a name, country or tag to search"
+msgstr "名前、国、タグを入力して検索"
+
+msgid "Enter a stream URL that starts with http:// or https://"
+msgstr "http:// または https:// で始まるストリーム URL を入力してください"
+
+msgid "Enter the server URL"
+msgstr "サーバーの URL を入力してください"
+
+msgid "Fade the end of each song into the next one. Off keeps gapless playback."
+msgstr "各曲の終わりを次の曲へフェードさせます。オフにするとギャップレス再生のままです。"
+
+msgid "Favorite"
+msgstr "お気に入り"
+
+msgid "Favorited"
+msgstr "お気に入り"
+
+msgid "Favorites"
+msgstr "お気に入り"
+
+msgid "Favorites only: off"
+msgstr "お気に入りのみ: オフ"
+
+msgid "Favorites only: on"
+msgstr "お気に入りのみ: オン"
+
+msgid "Filter"
+msgstr "フィルター"
+
+msgid "Filter playlists"
+msgstr "プレイリストを絞り込む"
+
+msgid "Find stations by name, country or tag"
+msgstr "名前、国、タグでステーションを探す"
+
+msgid "Find stations in the radio-browser.info directory"
+msgstr "radio-browser.info のディレクトリでステーションを探す"
+
+msgid "Folder"
+msgstr "フォルダー"
+
+msgid "Folders"
+msgstr "フォルダー"
+
+msgid "Follow current song"
+msgstr "現在の曲を追跡"
+
+msgid "Follow system color scheme"
+msgstr "システムのカラー スキームに従う"
+
+msgid "For you"
+msgstr "あなたへのおすすめ"
+
+msgid "Forget this server?"
+msgstr "このサーバーを削除しますか？"
+
+msgid "Format the server should transcode to. Applies from the next song."
+msgstr "サーバーがトランスコードする形式です。次の曲から適用されます。"
+
+msgid "Found {n} server in Feishin but it has no usable saved login"
+msgid_plural "Found {n} servers in Feishin but none with a usable saved login"
+msgstr[0] "Feishin に {n} 件のサーバーが見つかりましたが、使用できる保存済みログインがありません"
+
+msgid "Gapless playback"
+msgstr "ギャップレス再生"
+
+msgid "Genres"
+msgstr "ジャンル"
+
+msgid "Go back to {}"
+msgstr "{} に戻る"
+
+msgid "Go to album"
+msgstr "アルバムへ移動"
+
+msgid "Go to artist"
+msgstr "アーティストへ移動"
+
+msgid "Go to {}"
+msgstr "{} へ移動"
+
+msgid "Green"
+msgstr "グリーン"
+
+msgid "Hide lyrics"
+msgstr "歌詞を隠す"
+
+msgid "Hide queue"
+msgstr "キューを隠す"
+
+msgid "High Contrast Dark"
+msgstr "ハイコントラスト ダーク"
+
+msgid "High Contrast Light"
+msgstr "ハイコントラスト ライト"
+
+msgid "Highlight with the color that comes with the theme."
+msgstr "テーマに付属する色で強調表示します。"
+
+msgid "Home"
+msgstr "ホーム"
+
+msgid "Homepage (optional)"
+msgstr "ホームページ (任意)"
+
+msgid "Import from Feishin"
+msgstr "Feishin からインポート"
+
+msgid "Install yt-dlp to play YouTube tracks"
+msgstr "YouTube のトラックを再生するには yt-dlp をインストールしてください"
+
+msgid "Integrations"
+msgstr "連携"
+
+msgid "Interface"
+msgstr "インターフェース"
+
+msgid "Internet radio"
+msgstr "インターネット ラジオ"
+
+msgid "item"
+msgstr "アイテム"
+
+msgid "Jellyfin has no public share links"
+msgstr "Jellyfin には公開共有リンクがありません"
+
+msgid "Keep this station in the favorites on this device"
+msgstr "このステーションをこのデバイスのお気に入りに保存"
+
+msgid "Language"
+msgstr "言語"
+
+msgid "LIBRARY"
+msgstr "ライブラリ"
+
+msgid "Library scan finished"
+msgstr "ライブラリのスキャンが完了しました"
+
+msgid "Library scan finished: {n} item"
+msgid_plural "Library scan finished: {n} items"
+msgstr[0] "ライブラリのスキャンが完了しました: {n} 件"
+
+msgid "Light theme"
+msgstr "ライト テーマ"
+
+msgid "LIGHT THEMES"
+msgstr "ライト テーマ"
+
+msgid "Listening to {}"
+msgstr "{} を再生中"
+
+msgid "LIVE"
+msgstr "ライブ"
+
+msgid "Load more"
+msgstr "さらに読み込む"
+
+msgid "Load this section again"
+msgstr "このセクションを再読み込み"
+
+msgid "Loading playlists..."
+msgstr "プレイリストを読み込み中..."
+
+msgid "Loading similar songs..."
+msgstr "類似曲を読み込み中..."
+
+msgid "Loading stations..."
+msgstr "ステーションを読み込み中..."
+
+msgid "Loading the next page of stations"
+msgstr "ステーションの次のページを読み込み中"
+
+msgid "Loading..."
+msgstr "読み込み中..."
+
+msgid "Log out"
+msgstr "ログアウト"
+
+msgid "Looking up the YouTube link..."
+msgstr "YouTube のリンクを検索中..."
+
+msgid "Lyrics"
+msgstr "歌詞"
+
+msgid "Lyrics from {}"
+msgstr "歌詞の提供元: {}"
+
+msgid "Lyrics sources"
+msgstr "歌詞のソース"
+
+msgid "Maximum bitrate"
+msgstr "最大ビットレート"
+
+msgid "Media keys and desktop media controls. Takes effect after a restart."
+msgstr "メディア キーとデスクトップのメディア コントロール。再起動後に有効になります。"
+
+msgid "Moods and genres"
+msgstr "ムードとジャンル"
+
+msgid "Most played"
+msgstr "最も多く再生"
+
+msgid "Move down"
+msgstr "下に移動"
+
+msgid "Move up"
+msgstr "上に移動"
+
+msgid "MPRIS"
+msgstr "MPRIS"
+
+msgid "Mute"
+msgstr "ミュート"
+
+msgid "Name"
+msgstr "名前"
+
+msgid "New playlist"
+msgstr "新規プレイリスト"
+
+msgid "New releases"
+msgstr "新作"
+
+msgid "Next"
+msgstr "次へ"
+
+msgid "Next is unavailable while a radio station plays"
+msgstr "ラジオの再生中は次へ進めません"
+
+msgid "No albums"
+msgstr "アルバムがありません"
+
+msgid "No albums found"
+msgstr "アルバムが見つかりません"
+
+msgid "No artists found"
+msgstr "アーティストが見つかりません"
+
+msgid "no browser is selected"
+msgstr "ブラウザーが選択されていません"
+
+msgid "No favorite albums"
+msgstr "お気に入りのアルバムはありません"
+
+msgid "No favorite artists"
+msgstr "お気に入りのアーティストはいません"
+
+msgid "No favorite tracks"
+msgstr "お気に入りのトラックはありません"
+
+msgid "No genres found"
+msgstr "ジャンルが見つかりません"
+
+msgid "No lyrics found"
+msgstr "歌詞が見つかりません"
+
+msgid "No playlists found"
+msgstr "プレイリストが見つかりません"
+
+msgid "No playlists yet"
+msgstr "プレイリストはまだありません"
+
+msgid "No rating"
+msgstr "評価なし"
+
+msgid "No results for \"{}\""
+msgstr "「{}」の検索結果はありません"
+
+msgid "No saved login for {}; remove it and add it again"
+msgstr "{} の保存済みログインがありません。削除してからもう一度追加してください"
+
+msgid "No saved servers."
+msgstr "保存済みのサーバーはありません。"
+
+msgid "No similar songs found"
+msgstr "類似曲が見つかりません"
+
+msgid "No songs here"
+msgstr "ここには曲がありません"
+
+msgid "No stations found"
+msgstr "ステーションが見つかりません"
+
+msgid "No stations yet. Add one or find one in the directory."
+msgstr "ステーションはまだありません。追加するか、ディレクトリで探してください。"
+
+msgid "No tracks found"
+msgstr "トラックが見つかりません"
+
+msgid "None"
+msgstr "なし"
+
+msgid "Normalize loudness using the track or album gain tags."
+msgstr "トラックまたはアルバムのゲイン タグで音量を正規化します。"
+
+msgid "Not connected to a server"
+msgstr "サーバーに接続されていません"
+
+msgid "Nothing is playing"
+msgstr "再生中の曲はありません"
+
+msgid "Nothing to add yet"
+msgstr "まだ追加できるものがありません"
+
+msgid "Nothing to go back to"
+msgstr "戻る先がありません"
+
+msgid "Nothing to play here"
+msgstr "ここには再生できるものがありません"
+
+msgid "Nothing to play yet"
+msgstr "まだ再生できるものがありません"
+
+msgid "Nothing to show here right now"
+msgstr "現在表示するものはありません"
+
+msgid "Off"
+msgstr "オフ"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "On the server"
+msgstr "サーバー上"
+
+msgid "Only a server admin can rescan the library"
+msgstr "ライブラリを再スキャンできるのはサーバー管理者のみです"
+
+msgid "Only loaded tracks can be shared: select fewer tracks or scroll through them first"
+msgstr "共有できるのは読み込み済みのトラックのみです。選択するトラックを減らすか、先にスクロールして読み込んでください"
+
+msgid "Open"
+msgstr "開く"
+
+msgid "Open in YouTube Music"
+msgstr "YouTube Music で開く"
+
+msgid "Open now playing"
+msgstr "再生中の画面を開く"
+
+msgid "Open radio"
+msgstr "ラジオを開く"
+
+msgid "Open the album \"{}\""
+msgstr "アルバム「{}」を開く"
+
+msgid "Open the playlist \"{}\""
+msgstr "プレイリスト「{}」を開く"
+
+msgid "Open the queue panel"
+msgstr "キュー パネルを開く"
+
+msgid "Open {}"
+msgstr "{} を開く"
+
+msgid "Original"
+msgstr "オリジナル"
+
+msgid "Output used by the player."
+msgstr "プレーヤーが使用する出力です。"
+
+msgid "Owner"
+msgstr "所有者"
+
+msgid "Password"
+msgstr "パスワード"
+
+msgid "Paste a link first"
+msgstr "先にリンクを貼り付けてください"
+
+msgid "Paste a YouTube or YouTube Music link first"
+msgstr "先に YouTube または YouTube Music のリンクを貼り付けてください"
+
+msgid "Paste a YouTube or YouTube Music link to try yt-dlp."
+msgstr "YouTube または YouTube Music のリンクを貼り付けて yt-dlp を試してください。"
+
+msgid "Pause"
+msgstr "一時停止"
+
+msgid "Pause the radio station"
+msgstr "ラジオ ステーションを一時停止"
+
+msgid "Personalized with your YouTube Music account from {}"
+msgstr "{} の YouTube Music アカウントでパーソナライズ済み"
+
+msgid "Pick a color, or type one as #rrggbb and press Enter."
+msgstr "色を選ぶか、#rrggbb 形式で入力して Enter キーを押してください。"
+
+msgid "Pick a mood or genre to see its playlists"
+msgstr "ムードやジャンルを選ぶとプレイリストが表示されます"
+
+msgid "Play"
+msgstr "再生"
+
+msgid "Play \"{}\" and the rest of this shelf"
+msgstr "「{}」とこのセクションの残りを再生"
+
+msgid "Play a YouTube link"
+msgstr "YouTube のリンクを再生"
+
+msgid "Play album"
+msgstr "アルバムを再生"
+
+msgid "Play all"
+msgstr "すべて再生"
+
+msgid "Play all {n} song"
+msgid_plural "Play all {n} songs"
+msgstr[0] "全 {n} 曲を再生"
+
+msgid "Play count"
+msgstr "再生回数"
+
+msgid "Play every song in {} and its subfolders"
+msgstr "{} とそのサブフォルダー内のすべての曲を再生"
+
+msgid "Play from here"
+msgstr "ここから再生"
+
+msgid "Play from this song"
+msgstr "この曲から再生"
+
+msgid "Play from {}"
+msgstr "{} から再生"
+
+msgid "Play next"
+msgstr "次に再生"
+
+msgid "Play the album"
+msgstr "アルバムを再生"
+
+msgid "Play the playlist"
+msgstr "プレイリストを再生"
+
+msgid "Play the radio station"
+msgstr "ラジオ ステーションを再生"
+
+msgid "Play this link after the current song"
+msgstr "このリンクを現在の曲の次に再生"
+
+msgid "Play this link now"
+msgstr "このリンクを今すぐ再生"
+
+msgid "Play {}"
+msgstr "{} を再生"
+
+msgid "Play {} next"
+msgstr "{} を次に再生"
+
+msgid "Play {} with its subfolders"
+msgstr "{} をサブフォルダーごと再生"
+
+msgid "Playback"
+msgstr "再生"
+
+msgid "Playback failed: {}"
+msgstr "再生に失敗しました: {}"
+
+msgid "Playing {} failed: {}"
+msgstr "{} の再生に失敗しました: {}"
+
+msgid "PLAYLIST"
+msgstr "プレイリスト"
+
+msgid "Playlist"
+msgstr "プレイリスト"
+
+msgid "playlist"
+msgstr "プレイリスト"
+
+msgid "Playlist name"
+msgstr "プレイリスト名"
+
+msgid "Playlists"
+msgstr "プレイリスト"
+
+msgid "Plays"
+msgstr "再生回数"
+
+msgid "Plays YouTube tracks. Leave empty to use yt-dlp from your PATH."
+msgstr "YouTube のトラックを再生します。空欄にすると PATH 上の yt-dlp を使用します。"
+
+msgid "Preload the next song so it starts without a pause."
+msgstr "次の曲を先読みして、途切れずに再生を開始します。"
+
+msgid "Previous"
+msgstr "前へ"
+
+msgid "Previous is unavailable while a radio station plays"
+msgstr "ラジオの再生中は前に戻れません"
+
+msgid "Purple"
+msgstr "パープル"
+
+msgid "Queue"
+msgstr "キュー"
+
+msgid "Radio"
+msgstr "ラジオ"
+
+msgid "Random"
+msgstr "ランダム"
+
+msgid "Rate {n} star"
+msgid_plural "Rate {n} stars"
+msgstr[0] "星 {n} つで評価"
+
+msgid "Rating"
+msgstr "評価"
+
+msgid "Recently added"
+msgstr "最近追加"
+
+msgid "Recently played"
+msgstr "最近再生"
+
+msgid "Red"
+msgstr "レッド"
+
+msgid "Refresh"
+msgstr "再読み込み"
+
+msgid "Refresh this section"
+msgstr "このセクションを更新"
+
+msgid "Release year"
+msgstr "発売年"
+
+msgid "Remove"
+msgstr "取り除く"
+
+msgid "Remove from favorites"
+msgstr "お気に入りから削除"
+
+msgid "Remove from playlist"
+msgstr "プレイリストから削除"
+
+msgid "Remove from queue"
+msgstr "キューから削除"
+
+msgid "Removed {n} song from \"{}\""
+msgid_plural "Removed {n} songs from \"{}\""
+msgstr[0] "「{}」から {n} 曲を削除しました"
+
+msgid "Removing..."
+msgstr "削除中..."
+
+msgid "Repeat: all"
+msgstr "リピート: すべて"
+
+msgid "Repeat: off"
+msgstr "リピート: オフ"
+
+msgid "Repeat: one"
+msgstr "リピート: 1 曲"
+
+msgid "ReplayGain"
+msgstr "ReplayGain"
+
+msgid "Report what you play to the server."
+msgstr "再生した曲をサーバーに報告します。"
+
+msgid "Rescan the library for new content"
+msgstr "ライブラリを再スキャンして新しいコンテンツを探す"
+
+msgid "Resize column"
+msgstr "列の幅を変更"
+
+msgid "Save"
+msgstr "保存"
+
+msgid "Save on this device"
+msgstr "このデバイスに保存"
+
+msgid "Save the changes on the server"
+msgstr "変更をサーバーに保存"
+
+msgid "Save the changes on this device"
+msgstr "変更をこのデバイスに保存"
+
+msgid "Save to favorites on this device"
+msgstr "このデバイスのお気に入りに保存"
+
+msgid "Save to server"
+msgstr "サーバーに保存"
+
+msgid "Saved on this device"
+msgstr "このデバイスに保存済み"
+
+msgid "Saved on this device, click to remove"
+msgstr "このデバイスに保存済み。クリックで削除"
+
+msgid "Saving the station to the server..."
+msgstr "ステーションをサーバーに保存中..."
+
+msgid "Saving to the server..."
+msgstr "サーバーに保存中..."
+
+msgid "Saving..."
+msgstr "保存中..."
+
+msgid "Scanning the library for new content..."
+msgstr "ライブラリで新しいコンテンツをスキャン中..."
+
+msgid "Scanning the library: {}"
+msgstr "ライブラリをスキャン中: {}"
+
+msgid "Scrobble"
+msgstr "スクロブル"
+
+msgid "Scroll left"
+msgstr "左へスクロール"
+
+msgid "Scroll lists and the queue to the song that is playing."
+msgstr "リストとキューを再生中の曲までスクロールします。"
+
+msgid "Scroll right"
+msgstr "右へスクロール"
+
+msgid "Search"
+msgstr "検索"
+
+msgid "Search failed: {}"
+msgstr "検索に失敗しました: {}"
+
+msgid "SEARCH RESULTS"
+msgstr "検索結果"
+
+msgid "Search songs on YouTube Music"
+msgstr "YouTube Music で曲を検索"
+
+msgid "Search songs, albums, artists"
+msgstr "曲、アルバム、アーティストを検索"
+
+msgid "Search the radio-browser.info directory"
+msgstr "radio-browser.info のディレクトリを検索"
+
+msgid "Search your library for songs, albums and artists"
+msgstr "ライブラリから曲、アルバム、アーティストを検索"
+
+msgid "Searched from top to bottom until one has lyrics."
+msgstr "歌詞が見つかるまで上から順に検索します。"
+
+msgid "Searching for lyrics..."
+msgstr "歌詞を検索中..."
+
+msgid "Searching the radio directory failed: {}"
+msgstr "ラジオ ディレクトリの検索に失敗しました: {}"
+
+msgid "Searching the radio-browser.info directory"
+msgstr "radio-browser.info のディレクトリを検索中"
+
+msgid "Searching..."
+msgstr "検索中..."
+
+msgid "Seeking is unavailable for live radio"
+msgstr "ライブ ラジオではシークできません"
+
+msgid "Server"
+msgstr "サーバー"
+
+msgid "Server type"
+msgstr "サーバーの種類"
+
+msgid "Servers"
+msgstr "サーバー"
+
+msgid "Set rating"
+msgstr "評価を設定"
+
+msgid "Settings"
+msgstr "設定"
+
+msgid "Share"
+msgstr "共有"
+
+msgid "Share ({})"
+msgstr "共有 ({})"
+
+msgid "Share link copied to the clipboard: {}"
+msgstr "共有リンクをクリップボードにコピーしました: {}"
+
+msgid "Share this {}: copy a public link"
+msgstr "この{}を共有: 公開リンクをコピー"
+
+msgid "Sharing is unavailable: {}"
+msgstr "共有できません: {}"
+
+msgid "SHOW LESS"
+msgstr "折りたたむ"
+
+msgid "Show lyrics"
+msgstr "歌詞を表示"
+
+msgid "SHOW MORE"
+msgstr "もっと見る"
+
+msgid "Show more"
+msgstr "もっと見る"
+
+msgid "Show playlists for {}"
+msgstr "{} のプレイリストを表示"
+
+msgid "Show queue"
+msgstr "キューを表示"
+
+msgid "Show the current song on your Discord profile."
+msgstr "再生中の曲を Discord のプロフィールに表示します。"
+
+msgid "Show the next page of stations"
+msgstr "ステーションの次のページを表示"
+
+msgid "Show the queue next to the library; remembered on the next start."
+msgstr "ライブラリの横にキューを表示します。次回の起動時にも保持されます。"
+
+msgid "Show the server and saved stations"
+msgstr "サーバーと保存済みのステーションを表示"
+
+msgid "Show {}"
+msgstr "{} を表示"
+
+msgid "Showing playlists for {}"
+msgstr "{} のプレイリストを表示中"
+
+msgid "Showing the charts for {}"
+msgstr "{} のチャートを表示中"
+
+msgid "Showing the radio-browser.info directory"
+msgstr "radio-browser.info のディレクトリを表示中"
+
+msgid "Showing the server and saved stations"
+msgstr "サーバーと保存済みのステーションを表示中"
+
+msgid "Shuffle"
+msgstr "シャッフル"
+
+msgid "Shuffle every song in {} and its subfolders"
+msgstr "{} とそのサブフォルダー内のすべての曲をシャッフル再生"
+
+msgid "Shuffle play"
+msgstr "シャッフル再生"
+
+msgid "Shuffle: off"
+msgstr "シャッフル: オフ"
+
+msgid "Shuffle: on"
+msgstr "シャッフル: オン"
+
+msgid "Sign in"
+msgstr "サインイン"
+
+msgid "Sign in with browser"
+msgstr "ブラウザーでサインイン"
+
+msgid "Sign out and forget this server's saved login?"
+msgstr "サインアウトして、このサーバーの保存済みログインを削除しますか？"
+
+msgid "Sign out and forget this server?"
+msgstr "サインアウトして、このサーバーを削除しますか？"
+
+msgid "Similar"
+msgstr "類似"
+
+msgid "Similar songs come from your server, so YouTube tracks have none"
+msgstr "類似曲はサーバーから取得されるため、YouTube のトラックにはありません"
+
+msgid "Sleep timer: off"
+msgstr "スリープ タイマー: オフ"
+
+msgid "Sleep timer: {}"
+msgstr "スリープ タイマー: {}"
+
+msgid "Song count"
+msgstr "曲数"
+
+msgid "Songs"
+msgstr "曲"
+
+msgid "Sort by {}"
+msgstr "{} で並べ替え"
+
+msgid "Sort by {}: ascending"
+msgstr "{} で並べ替え: 昇順"
+
+msgid "Sort by {}: descending"
+msgstr "{} で並べ替え: 降順"
+
+msgid "Sort: ascending"
+msgstr "並べ替え: 昇順"
+
+msgid "Sort: descending"
+msgstr "並べ替え: 降順"
+
+msgid "Starting volume, shared with the player bar."
+msgstr "開始時の音量です。プレーヤー バーと共有されます。"
+
+msgid "Station data from radio-browser.info"
+msgstr "ステーションのデータ提供: radio-browser.info"
+
+msgid "Station name"
+msgstr "ステーション名"
+
+msgid "Stations"
+msgstr "ステーション"
+
+msgid "Stop {}"
+msgstr "{} を停止"
+
+msgid "Stream URL"
+msgstr "ストリーム URL"
+
+msgid "Switch"
+msgstr "切り替え"
+
+msgid "Switch between a dark and a light theme with the desktop. {}"
+msgstr "デスクトップに合わせてダーク テーマとライト テーマを切り替えます。{}"
+
+msgid "Switch to grid view"
+msgstr "グリッド表示に切り替え"
+
+msgid "Switch to list view"
+msgstr "リスト表示に切り替え"
+
+msgid "System default"
+msgstr "システムのデフォルト"
+
+msgid "System default follows the language of the desktop."
+msgstr "システムのデフォルトではデスクトップの言語に従います。"
+
+msgid "Tag, for example jazz"
+msgstr "タグ (例: jazz)"
+
+msgid "The desktop currently prefers dark."
+msgstr "現在、デスクトップはダークを優先しています。"
+
+msgid "The desktop currently prefers light."
+msgstr "現在、デスクトップはライトを優先しています。"
+
+msgid "The desktop has no preference, so the dark theme is used."
+msgstr "デスクトップに優先設定がないため、ダーク テーマを使用します。"
+
+msgid "The library scan is still running on the server"
+msgstr "サーバーでライブラリのスキャンがまだ実行中です"
+
+msgid "The queue is empty"
+msgstr "キューは空です"
+
+msgid "The queue is incomplete: loading the rest of the list failed ({})"
+msgstr "キューが不完全です: リストの残りを読み込めませんでした ({})"
+
+msgid "The radio directory could not be reached"
+msgstr "ラジオ ディレクトリに接続できませんでした"
+
+msgid "The radio station stopped streaming"
+msgstr "ラジオ ステーションの配信が停止しました"
+
+msgid "The server refused the station: {}"
+msgstr "サーバーがステーションを拒否しました: {}"
+
+msgid "Theme"
+msgstr "テーマ"
+
+msgid "There is nothing to play in this list"
+msgstr "このリストには再生できるものがありません"
+
+msgid "This Discover page does not exist"
+msgstr "このディスカバー ページは存在しません"
+
+msgid "This folder is empty"
+msgstr "このフォルダーは空です"
+
+msgid "This playlist is empty"
+msgstr "このプレイリストは空です"
+
+msgid "This server has no internet radio. Stations you add are saved on this device."
+msgstr "このサーバーにはインターネット ラジオがありません。追加したステーションはこのデバイスに保存されます。"
+
+msgid "this server has no public share links"
+msgstr "このサーバーには公開共有リンクがありません"
+
+msgid "Time"
+msgstr "時間"
+
+msgid "Title"
+msgstr "タイトル"
+
+msgid "Top songs"
+msgstr "人気曲"
+
+msgid "Track"
+msgstr "トラック"
+
+msgid "Tracks"
+msgstr "トラック"
+
+msgid "Transcode format"
+msgstr "トランスコード形式"
+
+msgid "Try again"
+msgstr "再試行"
+
+msgid "Turn off the theme accent color to pick your own."
+msgstr "独自の色を選ぶには、テーマのアクセント カラーをオフにしてください。"
+
+msgid "Unmute"
+msgstr "ミュート解除"
+
+msgid "Up next"
+msgstr "次に再生"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "Use the theme accent color"
+msgstr "テーマのアクセント カラーを使用"
+
+msgid "Use {}"
+msgstr "{} を使用"
+
+msgid "Used while the desktop prefers dark."
+msgstr "デスクトップがダークを優先しているときに使用されます。"
+
+msgid "Used while the desktop prefers light."
+msgstr "デスクトップがライトを優先しているときに使用されます。"
+
+msgid "Username"
+msgstr "ユーザー名"
+
+msgid "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Feishin deletes right after reading."
+msgstr "このブラウザーの YouTube セッションを使って、パーソナライズされたディスカバーのホームと Premium 音質を利用します。yt-dlp は Cookie を非公開の一時ファイルにコピーし、Feishin は読み取り後すぐにそのファイルを削除します。"
+
+msgid "Volume"
+msgstr "音量"
+
+msgid "Volume {}%"
+msgstr "音量 {}%"
+
+msgid "XDG_RUNTIME_DIR is not set, so there is no private place for the cookies"
+msgstr "XDG_RUNTIME_DIR が設定されていないため、Cookie を保存する非公開の場所がありません"
+
+msgid "Year"
+msgstr "年"
+
+msgid "You are here: {}"
+msgstr "現在の場所: {}"
+
+msgid "Your user is not allowed to share on this server"
+msgstr "このサーバーでは、このユーザーに共有の権限がありません"
+
+msgid "YouTube"
+msgstr "YouTube"
+
+msgid "YouTube albums are not in your library"
+msgstr "YouTube のアルバムはライブラリにありません"
+
+msgid "YouTube artists are not in your library"
+msgstr "YouTube のアーティストはライブラリにいません"
+
+msgid "yt-dlp program"
+msgstr "yt-dlp プログラム"
+
+msgid "{n} album"
+msgid_plural "{n} albums"
+msgstr[0] "{n} 枚のアルバム"
+
+msgid "{n} folder"
+msgid_plural "{n} folders"
+msgstr[0] "{n} 個のフォルダー"
+
+msgid "{n} item so far"
+msgid_plural "{n} items so far"
+msgstr[0] "これまでに {n} 件"
+
+msgid "{n} minute"
+msgid_plural "{n} minutes"
+msgstr[0] "{n} 分"
+
+msgid "{n} selected"
+msgid_plural "{n} selected"
+msgstr[0] "{n} 件選択中"
+
+msgid "{n} song"
+msgid_plural "{n} songs"
+msgstr[0] "{n} 曲"
+
+msgid "{n} song from \"{}\" will play next"
+msgid_plural "{n} songs from \"{}\" will play next"
+msgstr[0] "「{}」の {n} 曲が次に再生されます"
+
+msgid "{n} song on YouTube Music"
+msgid_plural "{n} songs on YouTube Music"
+msgstr[0] "YouTube Music の {n} 曲"
+
+msgid "{n} song will play next"
+msgid_plural "{n} songs will play next"
+msgstr[0] "{n} 曲が次に再生されます"
+
+msgid "{} (current theme)"
+msgstr "{} (現在のテーマ)"
+
+msgid "{} (unavailable)"
+msgstr "{} (利用不可)"
+
+msgid "{} at {}"
+msgstr "{1} の {0}"
+
+msgid "{} cannot be played: its stream address is not an internet stream"
+msgstr "{} は再生できません: ストリーム アドレスがインターネット ストリームではありません"
+
+msgid "{} is shown"
+msgstr "{} を表示中"
+
+msgid "{} kbps"
+msgstr "{} kbps"
+
+msgid "{} s"
+msgstr "{} 秒"
+
+msgid "{}: off"
+msgstr "{}: オフ"
+
+msgid "{}: on"
+msgstr "{}: オン"
+
+msgid "{}: {} (dark)"
+msgstr "{}: {} (ダーク)"
+
+msgid "{}: {} (light)"
+msgstr "{}: {} (ライト)"

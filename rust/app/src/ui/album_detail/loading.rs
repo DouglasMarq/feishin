@@ -39,8 +39,8 @@ pub(super) fn show(window: &AppWindow, detail: AlbumDetail) {
 fn show_error(window: &AppWindow, error: &ApiError) {
     let state = window.global::<AlbumDetailState>();
     state.set_loading(false);
-    state.set_error("Album not found".into());
-    show_status(window, &format!("Could not load the album: {error}"));
+    state.set_error(tr!("Album not found").into());
+    show_status(window, &tr!("Could not load the album: {}", error));
 }
 
 fn clear(window: &AppWindow, album_id: &SharedString) {

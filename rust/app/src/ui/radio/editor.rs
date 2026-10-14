@@ -101,7 +101,7 @@ impl RadioView {
                 self.load();
             }
             Err(error) => {
-                state.set_edit_error(format!("The server refused the station: {error}").into())
+                state.set_edit_error(tr!("The server refused the station: {}", error).into())
             }
         }
     }

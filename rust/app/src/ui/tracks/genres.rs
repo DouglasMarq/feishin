@@ -9,11 +9,9 @@ use super::string_model;
 use crate::session::Session;
 use crate::ui::{AppWindow, Context, TracksState, on_ui};
 
-const ALL_GENRES: &str = "All genres";
-
 fn set_genres(window: &AppWindow, mut genres: Vec<Genre>) {
     genres.sort_by_cached_key(|genre| genre.name.to_lowercase());
-    let names: Vec<SharedString> = std::iter::once(ALL_GENRES.into())
+    let names: Vec<SharedString> = std::iter::once(tr!("All genres").into())
         .chain(genres.iter().map(|genre| genre.name.as_str().into()))
         .collect();
     let ids: Vec<SharedString> = genres

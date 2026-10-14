@@ -112,10 +112,11 @@ async fn import(ctx: &Context) -> Result<Arc<dyn MusicServer>> {
     let store = Arc::clone(&ctx.store);
     let imported = tokio::task::spawn_blocking(move || store.import_feishin()).await??;
     let (config, server) = first_restored_session(ctx, &imported).ok_or_else(|| {
-        anyhow!(
-            "Found {} server(s) in Feishin but none with a usable saved login",
+        anyhow!(tr_plural!(
+            "Found {n} server in Feishin but it has no usable saved login",
+            "Found {n} servers in Feishin but none with a usable saved login",
             imported.len()
-        )
+        ))
     })?;
     ctx.session.set(Some(Arc::clone(&server)));
     ctx.send(Command::Connected {
@@ -147,7 +148,7 @@ fn install_login(window: &AppWindow, ctx: &Context) {
         };
         let state = window.global::<LoginState>();
         let Some(url) = normalize_url(&state.get_url()) else {
-            state.set_error("Enter the server URL".into());
+            state.set_error(tr!("Enter the server URL").into());
             return;
         };
         let config = config_from_form(&state, url);

@@ -4,7 +4,6 @@ use feishin_core::model::{ServerConfig, ServerType};
 use slint::ComponentHandle;
 
 use crate::demo::{DemoLibrary, FakeServer};
-use crate::ui::sharing::SELECTION_NOT_LOADED;
 use crate::ui::test_window::TestWindow;
 use crate::ui::{ShareKind, ShareState, TracksState};
 
@@ -80,7 +79,10 @@ fn a_selection_that_is_not_loaded_explains_how_to_share_it() {
         .invoke_share_selected_tracks();
 
     assert!(view.pump(|| true));
-    assert_eq!(view.status(), SELECTION_NOT_LOADED);
+    assert_eq!(
+        view.status(),
+        "Only loaded tracks can be shared: select fewer tracks or scroll through them first"
+    );
     assert!(server.shared_items().is_empty());
 }
 

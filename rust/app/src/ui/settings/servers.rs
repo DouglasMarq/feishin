@@ -12,10 +12,10 @@ use crate::ui::{AppState, AppWindow, Context, SettingsState, login, on_ui, show_
 
 fn restore(ctx: &Context, config: &ServerConfig) -> Result<Arc<dyn MusicServer>> {
     let credential = ctx.store.credential(&config.id)?.ok_or_else(|| {
-        anyhow!(
+        anyhow!(tr!(
             "No saved login for {}; remove it and add it again",
             config.name
-        )
+        ))
     })?;
     ctx.connector.restore(config, &credential)
 }
@@ -72,7 +72,10 @@ fn show_switch_result(window: &AppWindow, result: Result<Arc<dyn MusicServer>>) 
         }
         Err(error) => {
             state.set_switching("".into());
-            show_status(window, &format!("Could not switch server: {error:#}"));
+            show_status(
+                window,
+                &tr!("Could not switch server: {}", format!("{error:#}")),
+            );
         }
     }
 }

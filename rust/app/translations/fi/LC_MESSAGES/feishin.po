@@ -1,0 +1,1520 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: fi\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+
+msgid "\"{}\" plays next"
+msgstr "\"{}\" toistetaan seuraavaksi"
+
+msgid "\"{}\" will play next"
+msgstr "\"{}\" toistetaan seuraavaksi"
+
+msgid "1 star"
+msgstr "1 tähti"
+
+msgid "2 stars"
+msgstr "2 tähteä"
+
+msgid "3 stars"
+msgstr "3 tähteä"
+
+msgid "4 stars"
+msgstr "4 tähteä"
+
+msgid "5 stars"
+msgstr "5 tähteä"
+
+msgid "About {}"
+msgstr "Tietoja: {}"
+
+msgid "Accent color"
+msgstr "Korostusväri"
+
+msgid "Accent color not changed: {}."
+msgstr "Korostusväriä ei muutettu: {}."
+
+msgid "Accent color {}"
+msgstr "Korostusväri {}"
+
+msgid "Accent color {} (selected)"
+msgstr "Korostusväri {} (valittu)"
+
+msgid "Accent color {} (theme accent in use)"
+msgstr "Korostusväri {} (teeman korostusväri käytössä)"
+
+msgid "Add a station by its stream URL"
+msgstr "Lisää asema sen suoratoisto-osoitteella"
+
+msgid "Add all songs to the queue"
+msgstr "Lisää kaikki kappaleet jonoon"
+
+msgid "Add server"
+msgstr "Lisää palvelin"
+
+msgid "Add station"
+msgstr "Lisää asema"
+
+msgid "Add this link to the end of the queue"
+msgstr "Lisää tämä linkki jonon loppuun"
+
+msgid "Add this station to the server for every client"
+msgstr "Lisää tämä asema palvelimelle kaikille asiakasohjelmille"
+
+msgid "Add to favorites"
+msgstr "Lisää suosikkeihin"
+
+msgid "Add to playlist"
+msgstr "Lisää soittolistaan"
+
+msgid "Add to queue"
+msgstr "Lisää jonoon"
+
+msgid "Add to the server's stations"
+msgstr "Lisää palvelimen asemiin"
+
+msgid "Add {n} song to playlist"
+msgid_plural "Add {n} songs to playlist"
+msgstr[0] "Lisää {n} kappale soittolistaan"
+msgstr[1] "Lisää {n} kappaletta soittolistaan"
+
+msgid "Add {} to the queue"
+msgstr "Lisää {} jonoon"
+
+msgid "Added \"{}\" to the queue"
+msgstr "\"{}\" lisättiin jonoon"
+
+msgid "Added only {n} song to \"{}\": {}"
+msgid_plural "Added only {n} songs to \"{}\": {}"
+msgstr[0] "Soittolistaan \"{}\" lisättiin vain {n} kappale: {}"
+msgstr[1] "Soittolistaan \"{}\" lisättiin vain {n} kappaletta: {}"
+
+msgid "Added {n} song from \"{}\" to the queue"
+msgid_plural "Added {n} songs from \"{}\" to the queue"
+msgstr[0] "{n} kappale kohteesta \"{}\" lisättiin jonoon"
+msgstr[1] "{n} kappaletta kohteesta \"{}\" lisättiin jonoon"
+
+msgid "Added {n} song to \"{}\""
+msgid_plural "Added {n} songs to \"{}\""
+msgstr[0] "{n} kappale lisättiin soittolistaan \"{}\""
+msgstr[1] "{n} kappaletta lisättiin soittolistaan \"{}\""
+
+msgid "Added {n} song to the queue"
+msgid_plural "Added {n} songs to the queue"
+msgstr[0] "{n} kappale lisättiin jonoon"
+msgstr[1] "{n} kappaletta lisättiin jonoon"
+
+msgid "Adding to \"{}\": {} of {n} song"
+msgid_plural "Adding to \"{}\": {} of {n} songs"
+msgstr[0] "Lisätään soittolistaan \"{}\": {}/{n} kappale"
+msgstr[1] "Lisätään soittolistaan \"{}\": {}/{n} kappaletta"
+
+msgid "ALBUM"
+msgstr "ALBUMI"
+
+msgid "Album"
+msgstr "Albumi"
+
+msgid "album"
+msgstr "albumi"
+
+msgid "Album artist"
+msgstr "Albumin artisti"
+
+msgid "Album count"
+msgstr "Albumien määrä"
+
+msgid "Album not found"
+msgstr "Albumia ei löytynyt"
+
+msgid "Albums"
+msgstr "Albumit"
+
+msgid "All genres"
+msgstr "Kaikki genret"
+
+msgid "Already at the end"
+msgstr "Ollaan jo lopussa"
+
+msgid "Already at the start"
+msgstr "Ollaan jo alussa"
+
+msgid "Already in \"{}\""
+msgstr "On jo soittolistassa \"{}\""
+
+msgid "Already on the server"
+msgstr "On jo palvelimella"
+
+msgid "Amber"
+msgstr "Meripihka"
+
+msgid "Appearance"
+msgstr "Ulkoasu"
+
+msgid "ARTIST"
+msgstr "ARTISTI"
+
+msgid "Artist"
+msgstr "Artisti"
+
+msgid "Artists"
+msgstr "Artistit"
+
+msgid "Ask the server to transcode down to this bitrate. Applies from the next song."
+msgstr "Pyydä palvelinta muuntamaan tähän bittinopeuteen. Koskee seuraavasta kappaleesta alkaen."
+
+msgid "Audio device"
+msgstr "Äänilaite"
+
+msgid "Automatic ({})"
+msgstr "Automaattinen ({})"
+
+msgid "Back"
+msgstr "Takaisin"
+
+msgid "Blue"
+msgstr "Sininen"
+
+msgid "by {}"
+msgstr "tekijä: {}"
+
+msgid "Cancel"
+msgstr "Peruuta"
+
+msgid "Cancel timer"
+msgstr "Peruuta ajastin"
+
+msgid "Cannot share: {}"
+msgstr "Ei voi jakaa: {}"
+
+msgid "Chart country"
+msgstr "Listojen maa"
+
+msgid "Charts"
+msgstr "Listat"
+
+msgid "Choose a browser under Settings, YouTube to sign in for a personalized home"
+msgstr "Valitse selain kohdassa Asetukset, YouTube, niin voit kirjautua sisään ja saada henkilökohtaisen etusivun"
+
+msgid "Clear"
+msgstr "Tyhjennä"
+
+msgid "Clear filters"
+msgstr "Poista suodattimet"
+
+msgid "Clear rating"
+msgstr "Poista arvio"
+
+msgid "Clear the favorites and genre filters"
+msgstr "Poista suosikki- ja genresuodattimet"
+
+msgid "Close"
+msgstr "Sulje"
+
+msgid "Close now playing"
+msgstr "Sulje Nyt soi -näkymä"
+
+msgid "Close without saving"
+msgstr "Sulje tallentamatta"
+
+msgid "Colors used across the whole app."
+msgstr "Koko sovelluksessa käytettävät värit."
+
+msgid "Connect to your music server"
+msgstr "Yhdistä musiikkipalvelimeesi"
+
+msgid "Connecting..."
+msgstr "Yhdistetään..."
+
+msgid "Could not add to \"{}\": {}"
+msgstr "Soittolistaan \"{}\" lisääminen epäonnistui: {}"
+
+msgid "Could not add {} to the server"
+msgstr "Kohteen {} lisääminen palvelimelle epäonnistui"
+
+msgid "Could not create a share link: {}"
+msgstr "Jakolinkin luominen epäonnistui: {}"
+
+msgid "Could not create the playlist: {}"
+msgstr "Soittolistan luominen epäonnistui: {}"
+
+msgid "Could not delete the playlist: {}"
+msgstr "Soittolistan poistaminen epäonnistui: {}"
+
+msgid "Could not delete the station"
+msgstr "Aseman poistaminen epäonnistui"
+
+msgid "Could not load albums: {}"
+msgstr "Albumien lataaminen epäonnistui: {}"
+
+msgid "Could not load artists: {}"
+msgstr "Artistien lataaminen epäonnistui: {}"
+
+msgid "Could not load Discover: {}"
+msgstr "Löydä-näkymän lataaminen epäonnistui: {}"
+
+msgid "Could not load genres: {}"
+msgstr "Genrejen lataaminen epäonnistui: {}"
+
+msgid "Could not load it from YouTube Music: {}"
+msgstr "Lataaminen YouTube Musicista epäonnistui: {}"
+
+msgid "Could not load lyrics"
+msgstr "Sanojen lataaminen epäonnistui"
+
+msgid "Could not load moods and genres: {}"
+msgstr "Tunnelmien ja genrejen lataaminen epäonnistui: {}"
+
+msgid "Could not load more results: {}"
+msgstr "Lisätulosten lataaminen epäonnistui: {}"
+
+msgid "Could not load new releases: {}"
+msgstr "Uusien julkaisujen lataaminen epäonnistui: {}"
+
+msgid "Could not load playlists: {}"
+msgstr "Soittolistojen lataaminen epäonnistui: {}"
+
+msgid "Could not load the album: {}"
+msgstr "Albumin lataaminen epäonnistui: {}"
+
+msgid "Could not load the artist: {}"
+msgstr "Artistin lataaminen epäonnistui: {}"
+
+msgid "Could not load the charts: {}"
+msgstr "Listojen lataaminen epäonnistui: {}"
+
+msgid "Could not load the folder: {}"
+msgstr "Kansion lataaminen epäonnistui: {}"
+
+msgid "Could not load the list: {}"
+msgstr "Luettelon lataaminen epäonnistui: {}"
+
+msgid "Could not load the playlist: {}"
+msgstr "Soittolistan lataaminen epäonnistui: {}"
+
+msgid "Could not load the radio stations: {}"
+msgstr "Radioasemien lataaminen epäonnistui: {}"
+
+msgid "Could not load the selection: {}"
+msgstr "Valinnan lataaminen epäonnistui: {}"
+
+msgid "Could not load this page: {}"
+msgstr "Tämän sivun lataaminen epäonnistui: {}"
+
+msgid "Could not load tracks: {}"
+msgstr "Raitojen lataaminen epäonnistui: {}"
+
+msgid "Could not load your home: {}"
+msgstr "Etusivun lataaminen epäonnistui: {}"
+
+msgid "Could not open the folder: {}"
+msgstr "Kansion avaaminen epäonnistui: {}"
+
+msgid "Could not open YouTube Music: {}"
+msgstr "YouTube Musicin avaaminen epäonnistui: {}"
+
+msgid "Could not play \"{}\" from YouTube: {}"
+msgstr "Kohteen \"{}\" toistaminen YouTubesta epäonnistui: {}"
+
+msgid "Could not play album: {}"
+msgstr "Albumin toistaminen epäonnistui: {}"
+
+msgid "Could not play from YouTube: {}"
+msgstr "Toistaminen YouTubesta epäonnistui: {}"
+
+msgid "Could not play the album: {}"
+msgstr "Albumin toistaminen epäonnistui: {}"
+
+msgid "Could not remove songs: {}"
+msgstr "Kappaleiden poistaminen epäonnistui: {}"
+
+msgid "Could not rescan the library: {}"
+msgstr "Kirjaston uudelleenskannaus epäonnistui: {}"
+
+msgid "Could not set the rating: {}"
+msgstr "Arvion asettaminen epäonnistui: {}"
+
+msgid "Could not sign in to YouTube Music ({}). Showing general picks instead."
+msgstr "Kirjautuminen YouTube Musiciin epäonnistui ({}). Näytetään sen sijaan yleisiä valintoja."
+
+msgid "Could not switch server: {}"
+msgstr "Palvelimen vaihtaminen epäonnistui: {}"
+
+msgid "Could not update favorite: {}"
+msgstr "Suosikin päivittäminen epäonnistui: {}"
+
+msgid "Could not update favorites: {}"
+msgstr "Suosikkien päivittäminen epäonnistui: {}"
+
+msgid "Could not update rating: {}"
+msgstr "Arvion päivittäminen epäonnistui: {}"
+
+msgid "Could not update the favorite: {}"
+msgstr "Suosikin päivittäminen epäonnistui: {}"
+
+msgid "Country"
+msgstr "Maa"
+
+msgid "Create"
+msgstr "Luo"
+
+msgid "Created \"{}\" with only {n} song: {}"
+msgid_plural "Created \"{}\" with only {n} songs: {}"
+msgstr[0] "Luotiin \"{}\", mutta vain {n} kappaleella: {}"
+msgstr[1] "Luotiin \"{}\", mutta vain {n} kappaleella: {}"
+
+msgid "Created \"{}\" with {n} song"
+msgid_plural "Created \"{}\" with {n} songs"
+msgstr[0] "Luotiin \"{}\" ({n} kappale)"
+msgstr[1] "Luotiin \"{}\" ({n} kappaletta)"
+
+msgid "Created playlist \"{}\""
+msgstr "Soittolista \"{}\" luotiin"
+
+msgid "Creating a share link..."
+msgstr "Luodaan jakolinkkiä..."
+
+msgid "Creating..."
+msgstr "Luodaan..."
+
+msgid "Crossfade"
+msgstr "Ristihäivytys"
+
+msgid "Crossfade could not be changed: {}"
+msgstr "Ristihäivytyksen muuttaminen epäonnistui: {}"
+
+msgid "Crossfade: {}"
+msgstr "Ristihäivytys: {}"
+
+msgid "Current"
+msgstr "Nykyinen"
+
+msgid "Custom accent color: {} (theme accent in use)"
+msgstr "Oma korostusväri: {} (teeman korostusväri käytössä)"
+
+msgid "Custom accent color: {}, press Enter to apply"
+msgstr "Oma korostusväri: {}, ota käyttöön painamalla Enter"
+
+msgid "Dark theme"
+msgstr "Tumma teema"
+
+msgid "DARK THEMES"
+msgstr "TUMMAT TEEMAT"
+
+msgid "Default country for the Discover charts. Automatic follows your system region."
+msgstr "Löydä-näkymän listojen oletusmaa. Automaattinen seuraa järjestelmän aluetta."
+
+msgid "Default Dark"
+msgstr "Oletus tumma"
+
+msgid "Default Light"
+msgstr "Oletus vaalea"
+
+msgid "Delete"
+msgstr "Poista"
+
+msgid "Delete \"{}\" from the server? This cannot be undone."
+msgstr "Poistetaanko \"{}\" palvelimelta? Tätä ei voi kumota."
+
+msgid "Delete \"{}\"? This cannot be undone."
+msgstr "Poistetaanko \"{}\"? Tätä ei voi kumota."
+
+msgid "Delete playlist"
+msgstr "Poista soittolista"
+
+msgid "Delete station"
+msgstr "Poista asema"
+
+msgid "Delete {} from the server"
+msgstr "Poista {} palvelimelta"
+
+msgid "Deleted playlist \"{}\""
+msgstr "Soittolista \"{}\" poistettiin"
+
+msgid "Deleting..."
+msgstr "Poistetaan..."
+
+msgid "Demo mode: these picks are made up and play from your demo library"
+msgstr "Esittelytila: nämä valinnat ovat keksittyjä ja ne toistetaan esittelykirjastostasi"
+
+msgid "Directory"
+msgstr "Hakemisto"
+
+msgid "Disc {}"
+msgstr "Levy {}"
+
+msgid "Discord Rich Presence"
+msgstr "Discord Rich Presence"
+
+msgid "Discover"
+msgstr "Löydä"
+
+msgid "Discover is open"
+msgstr "Löydä-näkymä on auki"
+
+msgid "Discover new music on YouTube Music"
+msgstr "Löydä uutta musiikkia YouTube Musicista"
+
+msgid "Duration"
+msgstr "Kesto"
+
+msgid "Edit station"
+msgstr "Muokkaa asemaa"
+
+msgid "Edit {}"
+msgstr "Muokkaa: {}"
+
+msgid "End of current track"
+msgstr "Nykyisen raidan loppuun"
+
+msgid "End of track"
+msgstr "Raidan loppuun"
+
+msgid "Enter a name for the station"
+msgstr "Anna asemalle nimi"
+
+msgid "Enter a name, country or tag to search"
+msgstr "Hae kirjoittamalla nimi, maa tai tunniste"
+
+msgid "Enter a stream URL that starts with http:// or https://"
+msgstr "Anna suoratoisto-osoite, joka alkaa http:// tai https://"
+
+msgid "Enter the server URL"
+msgstr "Anna palvelimen osoite"
+
+msgid "Fade the end of each song into the next one. Off keeps gapless playback."
+msgstr "Häivytä kunkin kappaleen loppu seuraavaan. Pois päältä säilyttää katkottoman toiston."
+
+msgid "Favorite"
+msgstr "Suosikki"
+
+msgid "Favorited"
+msgstr "Suosikeissa"
+
+msgid "Favorites"
+msgstr "Suosikit"
+
+msgid "Favorites only: off"
+msgstr "Vain suosikit: pois"
+
+msgid "Favorites only: on"
+msgstr "Vain suosikit: päällä"
+
+msgid "Filter"
+msgstr "Suodatin"
+
+msgid "Filter playlists"
+msgstr "Suodata soittolistoja"
+
+msgid "Find stations by name, country or tag"
+msgstr "Etsi asemia nimen, maan tai tunnisteen perusteella"
+
+msgid "Find stations in the radio-browser.info directory"
+msgstr "Etsi asemia radio-browser.info-hakemistosta"
+
+msgid "Folder"
+msgstr "Kansio"
+
+msgid "Folders"
+msgstr "Kansiot"
+
+msgid "Follow current song"
+msgstr "Seuraa nykyistä kappaletta"
+
+msgid "Follow system color scheme"
+msgstr "Seuraa järjestelmän väriteemaa"
+
+msgid "For you"
+msgstr "Sinulle"
+
+msgid "Forget this server?"
+msgstr "Unohdetaanko tämä palvelin?"
+
+msgid "Format the server should transcode to. Applies from the next song."
+msgstr "Muoto, johon palvelin muuntaa. Koskee seuraavasta kappaleesta alkaen."
+
+msgid "Found {n} server in Feishin but it has no usable saved login"
+msgid_plural "Found {n} servers in Feishin but none with a usable saved login"
+msgstr[0] "Feishinistä löytyi {n} palvelin, mutta sillä ei ole käyttökelpoista tallennettua kirjautumista"
+msgstr[1] "Feishinistä löytyi {n} palvelinta, mutta millään ei ole käyttökelpoista tallennettua kirjautumista"
+
+msgid "Gapless playback"
+msgstr "Katkoton toisto"
+
+msgid "Genres"
+msgstr "Genret"
+
+msgid "Go back to {}"
+msgstr "Palaa kohteeseen {}"
+
+msgid "Go to album"
+msgstr "Siirry albumiin"
+
+msgid "Go to artist"
+msgstr "Siirry artistiin"
+
+msgid "Go to {}"
+msgstr "Siirry: {}"
+
+msgid "Green"
+msgstr "Vihreä"
+
+msgid "Hide lyrics"
+msgstr "Piilota sanat"
+
+msgid "Hide queue"
+msgstr "Piilota jono"
+
+msgid "High Contrast Dark"
+msgstr "Tumma suuri kontrasti"
+
+msgid "High Contrast Light"
+msgstr "Vaalea suuri kontrasti"
+
+msgid "Highlight with the color that comes with the theme."
+msgstr "Korosta teeman mukana tulevalla värillä."
+
+msgid "Home"
+msgstr "Koti"
+
+msgid "Homepage (optional)"
+msgstr "Kotisivu (valinnainen)"
+
+msgid "Import from Feishin"
+msgstr "Tuo Feishinistä"
+
+msgid "Install yt-dlp to play YouTube tracks"
+msgstr "Asenna yt-dlp toistaaksesi YouTube-raitoja"
+
+msgid "Integrations"
+msgstr "Integraatiot"
+
+msgid "Interface"
+msgstr "Käyttöliittymä"
+
+msgid "Internet radio"
+msgstr "Internetradio"
+
+msgid "item"
+msgstr "kohde"
+
+msgid "Jellyfin has no public share links"
+msgstr "Jellyfinissä ei ole julkisia jakolinkkejä"
+
+msgid "Keep this station in the favorites on this device"
+msgstr "Säilytä tämä asema suosikeissa tällä laitteella"
+
+msgid "Language"
+msgstr "Kieli"
+
+msgid "LIBRARY"
+msgstr "KIRJASTO"
+
+msgid "Library scan finished"
+msgstr "Kirjaston skannaus valmis"
+
+msgid "Library scan finished: {n} item"
+msgid_plural "Library scan finished: {n} items"
+msgstr[0] "Kirjaston skannaus valmis: {n} kohde"
+msgstr[1] "Kirjaston skannaus valmis: {n} kohdetta"
+
+msgid "Light theme"
+msgstr "Vaalea teema"
+
+msgid "LIGHT THEMES"
+msgstr "VAALEAT TEEMAT"
+
+msgid "Listening to {}"
+msgstr "Kuunnellaan: {}"
+
+msgid "LIVE"
+msgstr "LIVE"
+
+msgid "Load more"
+msgstr "Lataa lisää"
+
+msgid "Load this section again"
+msgstr "Lataa tämä osio uudelleen"
+
+msgid "Loading playlists..."
+msgstr "Ladataan soittolistoja..."
+
+msgid "Loading similar songs..."
+msgstr "Ladataan samankaltaisia kappaleita..."
+
+msgid "Loading stations..."
+msgstr "Ladataan asemia..."
+
+msgid "Loading the next page of stations"
+msgstr "Ladataan asemien seuraavaa sivua"
+
+msgid "Loading..."
+msgstr "Ladataan..."
+
+msgid "Log out"
+msgstr "Kirjaudu ulos"
+
+msgid "Looking up the YouTube link..."
+msgstr "Haetaan YouTube-linkkiä..."
+
+msgid "Lyrics"
+msgstr "Sanat"
+
+msgid "Lyrics from {}"
+msgstr "Sanat lähteestä {}"
+
+msgid "Lyrics sources"
+msgstr "Sanojen lähteet"
+
+msgid "Maximum bitrate"
+msgstr "Suurin bittinopeus"
+
+msgid "Media keys and desktop media controls. Takes effect after a restart."
+msgstr "Medianäppäimet ja työpöydän mediaohjaimet. Tulee voimaan uudelleenkäynnistyksen jälkeen."
+
+msgid "Moods and genres"
+msgstr "Tunnelmat ja genret"
+
+msgid "Most played"
+msgstr "Eniten toistettu"
+
+msgid "Move down"
+msgstr "Siirrä alaspäin"
+
+msgid "Move up"
+msgstr "Siirrä ylöspäin"
+
+msgid "MPRIS"
+msgstr "MPRIS"
+
+msgid "Mute"
+msgstr "Mykistä"
+
+msgid "Name"
+msgstr "Nimi"
+
+msgid "New playlist"
+msgstr "Uusi soittolista"
+
+msgid "New releases"
+msgstr "Uudet julkaisut"
+
+msgid "Next"
+msgstr "Seuraava"
+
+msgid "Next is unavailable while a radio station plays"
+msgstr "Seuraava ei ole käytettävissä radioaseman soidessa"
+
+msgid "No albums"
+msgstr "Ei albumeita"
+
+msgid "No albums found"
+msgstr "Albumeita ei löytynyt"
+
+msgid "No artists found"
+msgstr "Artisteja ei löytynyt"
+
+msgid "no browser is selected"
+msgstr "selainta ei ole valittu"
+
+msgid "No favorite albums"
+msgstr "Ei suosikkialbumeita"
+
+msgid "No favorite artists"
+msgstr "Ei suosikkiartisteja"
+
+msgid "No favorite tracks"
+msgstr "Ei suosikkiraitoja"
+
+msgid "No genres found"
+msgstr "Genrejä ei löytynyt"
+
+msgid "No lyrics found"
+msgstr "Sanoja ei löytynyt"
+
+msgid "No playlists found"
+msgstr "Soittolistoja ei löytynyt"
+
+msgid "No playlists yet"
+msgstr "Ei vielä soittolistoja"
+
+msgid "No rating"
+msgstr "Ei arviota"
+
+msgid "No results for \"{}\""
+msgstr "Ei tuloksia haulle \"{}\""
+
+msgid "No saved login for {}; remove it and add it again"
+msgstr "Palvelimelle {} ei ole tallennettua kirjautumista; poista se ja lisää uudelleen"
+
+msgid "No saved servers."
+msgstr "Ei tallennettuja palvelimia."
+
+msgid "No similar songs found"
+msgstr "Samankaltaisia kappaleita ei löytynyt"
+
+msgid "No songs here"
+msgstr "Ei kappaleita"
+
+msgid "No stations found"
+msgstr "Asemia ei löytynyt"
+
+msgid "No stations yet. Add one or find one in the directory."
+msgstr "Ei vielä asemia. Lisää asema tai etsi sellainen hakemistosta."
+
+msgid "No tracks found"
+msgstr "Raitoja ei löytynyt"
+
+msgid "None"
+msgstr "Ei mitään"
+
+msgid "Normalize loudness using the track or album gain tags."
+msgstr "Tasoita äänenvoimakkuus raidan tai albumin vahvistustunnisteiden avulla."
+
+msgid "Not connected to a server"
+msgstr "Ei yhteyttä palvelimeen"
+
+msgid "Nothing is playing"
+msgstr "Mitään ei soi"
+
+msgid "Nothing to add yet"
+msgstr "Ei vielä mitään lisättävää"
+
+msgid "Nothing to go back to"
+msgstr "Ei mitään, mihin palata"
+
+msgid "Nothing to play here"
+msgstr "Täällä ei ole mitään toistettavaa"
+
+msgid "Nothing to play yet"
+msgstr "Ei vielä mitään toistettavaa"
+
+msgid "Nothing to show here right now"
+msgstr "Täällä ei ole juuri nyt mitään näytettävää"
+
+msgid "Off"
+msgstr "Pois"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "On the server"
+msgstr "Palvelimella"
+
+msgid "Only a server admin can rescan the library"
+msgstr "Vain palvelimen ylläpitäjä voi skannata kirjaston uudelleen"
+
+msgid "Only loaded tracks can be shared: select fewer tracks or scroll through them first"
+msgstr "Vain ladattuja raitoja voi jakaa: valitse vähemmän raitoja tai vieritä ne ensin läpi"
+
+msgid "Open"
+msgstr "Avaa"
+
+msgid "Open in YouTube Music"
+msgstr "Avaa YouTube Musicissa"
+
+msgid "Open now playing"
+msgstr "Avaa Nyt soi -näkymä"
+
+msgid "Open radio"
+msgstr "Avaa radio"
+
+msgid "Open the album \"{}\""
+msgstr "Avaa albumi \"{}\""
+
+msgid "Open the playlist \"{}\""
+msgstr "Avaa soittolista \"{}\""
+
+msgid "Open the queue panel"
+msgstr "Avaa jonopaneeli"
+
+msgid "Open {}"
+msgstr "Avaa {}"
+
+msgid "Original"
+msgstr "Alkuperäinen"
+
+msgid "Output used by the player."
+msgstr "Soittimen käyttämä äänilähtö."
+
+msgid "Owner"
+msgstr "Omistaja"
+
+msgid "Password"
+msgstr "Salasana"
+
+msgid "Paste a link first"
+msgstr "Liitä ensin linkki"
+
+msgid "Paste a YouTube or YouTube Music link first"
+msgstr "Liitä ensin YouTube- tai YouTube Music -linkki"
+
+msgid "Paste a YouTube or YouTube Music link to try yt-dlp."
+msgstr "Liitä YouTube- tai YouTube Music -linkki kokeillaksesi yt-dlp:tä."
+
+msgid "Pause"
+msgstr "Tauota"
+
+msgid "Pause the radio station"
+msgstr "Tauota radioasema"
+
+msgid "Personalized with your YouTube Music account from {}"
+msgstr "Mukautettu YouTube Music -tililläsi selaimesta {}"
+
+msgid "Pick a color, or type one as #rrggbb and press Enter."
+msgstr "Valitse väri tai kirjoita se muodossa #rrggbb ja paina Enter."
+
+msgid "Pick a mood or genre to see its playlists"
+msgstr "Valitse tunnelma tai genre nähdäksesi sen soittolistat"
+
+msgid "Play"
+msgstr "Toista"
+
+msgid "Play \"{}\" and the rest of this shelf"
+msgstr "Toista \"{}\" ja tämän hyllyn loput"
+
+msgid "Play a YouTube link"
+msgstr "Toista YouTube-linkki"
+
+msgid "Play album"
+msgstr "Toista albumi"
+
+msgid "Play all"
+msgstr "Toista kaikki"
+
+msgid "Play all {n} song"
+msgid_plural "Play all {n} songs"
+msgstr[0] "Toista {n} kappale"
+msgstr[1] "Toista kaikki {n} kappaletta"
+
+msgid "Play count"
+msgstr "Toistomäärä"
+
+msgid "Play every song in {} and its subfolders"
+msgstr "Toista kaikki kappaleet kansiosta {} ja sen alikansioista"
+
+msgid "Play from here"
+msgstr "Toista tästä"
+
+msgid "Play from this song"
+msgstr "Toista tästä kappaleesta"
+
+msgid "Play from {}"
+msgstr "Toista kappaleesta {} alkaen"
+
+msgid "Play next"
+msgstr "Toista seuraavaksi"
+
+msgid "Play the album"
+msgstr "Toista albumi"
+
+msgid "Play the playlist"
+msgstr "Toista soittolista"
+
+msgid "Play the radio station"
+msgstr "Toista radioasema"
+
+msgid "Play this link after the current song"
+msgstr "Toista tämä linkki nykyisen kappaleen jälkeen"
+
+msgid "Play this link now"
+msgstr "Toista tämä linkki nyt"
+
+msgid "Play {}"
+msgstr "Toista {}"
+
+msgid "Play {} next"
+msgstr "Toista {} seuraavaksi"
+
+msgid "Play {} with its subfolders"
+msgstr "Toista {} alikansioineen"
+
+msgid "Playback"
+msgstr "Toisto"
+
+msgid "Playback failed: {}"
+msgstr "Toisto epäonnistui: {}"
+
+msgid "Playing {} failed: {}"
+msgstr "Kohteen {} toisto epäonnistui: {}"
+
+msgid "PLAYLIST"
+msgstr "SOITTOLISTA"
+
+msgid "Playlist"
+msgstr "Soittolista"
+
+msgid "playlist"
+msgstr "soittolista"
+
+msgid "Playlist name"
+msgstr "Soittolistan nimi"
+
+msgid "Playlists"
+msgstr "Soittolistat"
+
+msgid "Plays"
+msgstr "Toistoja"
+
+msgid "Plays YouTube tracks. Leave empty to use yt-dlp from your PATH."
+msgstr "Toistaa YouTube-raitoja. Jätä tyhjäksi, jos haluat käyttää PATH-polun yt-dlp:tä."
+
+msgid "Preload the next song so it starts without a pause."
+msgstr "Esilataa seuraava kappale, jotta se alkaa ilman taukoa."
+
+msgid "Previous"
+msgstr "Edellinen"
+
+msgid "Previous is unavailable while a radio station plays"
+msgstr "Edellinen ei ole käytettävissä radioaseman soidessa"
+
+msgid "Purple"
+msgstr "Violetti"
+
+msgid "Queue"
+msgstr "Jono"
+
+msgid "Radio"
+msgstr "Radio"
+
+msgid "Random"
+msgstr "Satunnainen"
+
+msgid "Rate {n} star"
+msgid_plural "Rate {n} stars"
+msgstr[0] "Arvioi {n} tähdellä"
+msgstr[1] "Arvioi {n} tähdellä"
+
+msgid "Rating"
+msgstr "Arvostelu"
+
+msgid "Recently added"
+msgstr "Äskettäin lisätty"
+
+msgid "Recently played"
+msgstr "Äskettäin toistetut"
+
+msgid "Red"
+msgstr "Punainen"
+
+msgid "Refresh"
+msgstr "Päivitä"
+
+msgid "Refresh this section"
+msgstr "Päivitä tämä osio"
+
+msgid "Release year"
+msgstr "Julkaisuvuosi"
+
+msgid "Remove"
+msgstr "Poista"
+
+msgid "Remove from favorites"
+msgstr "Poista suosikeista"
+
+msgid "Remove from playlist"
+msgstr "Poista soittolistasta"
+
+msgid "Remove from queue"
+msgstr "Poista jonosta"
+
+msgid "Removed {n} song from \"{}\""
+msgid_plural "Removed {n} songs from \"{}\""
+msgstr[0] "{n} kappale poistettiin soittolistasta \"{}\""
+msgstr[1] "{n} kappaletta poistettiin soittolistasta \"{}\""
+
+msgid "Removing..."
+msgstr "Poistetaan..."
+
+msgid "Repeat: all"
+msgstr "Uudelleentoisto: kaikki"
+
+msgid "Repeat: off"
+msgstr "Uudelleentoisto: pois"
+
+msgid "Repeat: one"
+msgstr "Uudelleentoisto: yksi"
+
+msgid "ReplayGain"
+msgstr "ReplayGain"
+
+msgid "Report what you play to the server."
+msgstr "Ilmoita palvelimelle, mitä kuuntelet."
+
+msgid "Rescan the library for new content"
+msgstr "Skannaa kirjasto uuden sisällön varalta"
+
+msgid "Resize column"
+msgstr "Muuta sarakkeen kokoa"
+
+msgid "Save"
+msgstr "Tallenna"
+
+msgid "Save on this device"
+msgstr "Tallenna tälle laitteelle"
+
+msgid "Save the changes on the server"
+msgstr "Tallenna muutokset palvelimelle"
+
+msgid "Save the changes on this device"
+msgstr "Tallenna muutokset tälle laitteelle"
+
+msgid "Save to favorites on this device"
+msgstr "Tallenna suosikkeihin tällä laitteella"
+
+msgid "Save to server"
+msgstr "Tallenna palvelimelle"
+
+msgid "Saved on this device"
+msgstr "Tallennettu tälle laitteelle"
+
+msgid "Saved on this device, click to remove"
+msgstr "Tallennettu tälle laitteelle, poista napsauttamalla"
+
+msgid "Saving the station to the server..."
+msgstr "Tallennetaan asemaa palvelimelle..."
+
+msgid "Saving to the server..."
+msgstr "Tallennetaan palvelimelle..."
+
+msgid "Saving..."
+msgstr "Tallennetaan..."
+
+msgid "Scanning the library for new content..."
+msgstr "Skannataan kirjastoa uuden sisällön varalta..."
+
+msgid "Scanning the library: {}"
+msgstr "Skannataan kirjastoa: {}"
+
+msgid "Scrobble"
+msgstr "Scrobblata"
+
+msgid "Scroll left"
+msgstr "Vieritä vasemmalle"
+
+msgid "Scroll lists and the queue to the song that is playing."
+msgstr "Vieritä luettelot ja jono soivaan kappaleeseen."
+
+msgid "Scroll right"
+msgstr "Vieritä oikealle"
+
+msgid "Search"
+msgstr "Etsi"
+
+msgid "Search failed: {}"
+msgstr "Haku epäonnistui: {}"
+
+msgid "SEARCH RESULTS"
+msgstr "HAKUTULOKSET"
+
+msgid "Search songs on YouTube Music"
+msgstr "Hae kappaleita YouTube Musicista"
+
+msgid "Search songs, albums, artists"
+msgstr "Hae kappaleita, albumeita, artisteja"
+
+msgid "Search the radio-browser.info directory"
+msgstr "Hae radio-browser.info-hakemistosta"
+
+msgid "Search your library for songs, albums and artists"
+msgstr "Hae kirjastostasi kappaleita, albumeita ja artisteja"
+
+msgid "Searched from top to bottom until one has lyrics."
+msgstr "Haetaan ylhäältä alas, kunnes jostakin löytyy sanat."
+
+msgid "Searching for lyrics..."
+msgstr "Haetaan sanoja..."
+
+msgid "Searching the radio directory failed: {}"
+msgstr "Radiohakemiston haku epäonnistui: {}"
+
+msgid "Searching the radio-browser.info directory"
+msgstr "Haetaan radio-browser.info-hakemistosta"
+
+msgid "Searching..."
+msgstr "Haetaan..."
+
+msgid "Seeking is unavailable for live radio"
+msgstr "Kelaus ei ole käytettävissä suorassa radiossa"
+
+msgid "Server"
+msgstr "Palvelin"
+
+msgid "Server type"
+msgstr "Palvelimen tyyppi"
+
+msgid "Servers"
+msgstr "Palvelimet"
+
+msgid "Set rating"
+msgstr "Aseta arvostelu"
+
+msgid "Settings"
+msgstr "Asetukset"
+
+msgid "Share"
+msgstr "Jaa"
+
+msgid "Share ({})"
+msgstr "Jaa ({})"
+
+msgid "Share link copied to the clipboard: {}"
+msgstr "Jakolinkki kopioitiin leikepöydälle: {}"
+
+msgid "Share this {}: copy a public link"
+msgstr "Jaa tämä {}: kopioi julkinen linkki"
+
+msgid "Sharing is unavailable: {}"
+msgstr "Jakaminen ei ole käytettävissä: {}"
+
+msgid "SHOW LESS"
+msgstr "NÄYTÄ VÄHEMMÄN"
+
+msgid "Show lyrics"
+msgstr "Näytä sanat"
+
+msgid "SHOW MORE"
+msgstr "NÄYTÄ LISÄÄ"
+
+msgid "Show more"
+msgstr "Näytä lisää"
+
+msgid "Show playlists for {}"
+msgstr "Näytä soittolistat: {}"
+
+msgid "Show queue"
+msgstr "Näytä jono"
+
+msgid "Show the current song on your Discord profile."
+msgstr "Näytä nykyinen kappale Discord-profiilissasi."
+
+msgid "Show the next page of stations"
+msgstr "Näytä asemien seuraava sivu"
+
+msgid "Show the queue next to the library; remembered on the next start."
+msgstr "Näytä jono kirjaston vieressä; muistetaan seuraavalla käynnistyskerralla."
+
+msgid "Show the server and saved stations"
+msgstr "Näytä palvelimen ja tallennetut asemat"
+
+msgid "Show {}"
+msgstr "Näytä {}"
+
+msgid "Showing playlists for {}"
+msgstr "Näytetään soittolistat: {}"
+
+msgid "Showing the charts for {}"
+msgstr "Näytetään listat: {}"
+
+msgid "Showing the radio-browser.info directory"
+msgstr "Näytetään radio-browser.info-hakemisto"
+
+msgid "Showing the server and saved stations"
+msgstr "Näytetään palvelimen ja tallennetut asemat"
+
+msgid "Shuffle"
+msgstr "Sekoita"
+
+msgid "Shuffle every song in {} and its subfolders"
+msgstr "Sekoita kaikki kappaleet kansiosta {} ja sen alikansioista"
+
+msgid "Shuffle play"
+msgstr "Satunnaistoisto"
+
+msgid "Shuffle: off"
+msgstr "Satunnaistoisto: pois"
+
+msgid "Shuffle: on"
+msgstr "Satunnaistoisto: päällä"
+
+msgid "Sign in"
+msgstr "Kirjaudu sisään"
+
+msgid "Sign in with browser"
+msgstr "Kirjaudu sisään selaimella"
+
+msgid "Sign out and forget this server's saved login?"
+msgstr "Kirjaudutaanko ulos ja unohdetaanko tämän palvelimen tallennettu kirjautuminen?"
+
+msgid "Sign out and forget this server?"
+msgstr "Kirjaudutaanko ulos ja unohdetaanko tämä palvelin?"
+
+msgid "Similar"
+msgstr "Samankaltaiset"
+
+msgid "Similar songs come from your server, so YouTube tracks have none"
+msgstr "Samankaltaiset kappaleet tulevat palvelimeltasi, joten YouTube-raidoilla niitä ei ole"
+
+msgid "Sleep timer: off"
+msgstr "Uniajastin: pois"
+
+msgid "Sleep timer: {}"
+msgstr "Uniajastin: {}"
+
+msgid "Song count"
+msgstr "Kappalemäärä"
+
+msgid "Songs"
+msgstr "Kappaleet"
+
+msgid "Sort by {}"
+msgstr "Lajittele: {}"
+
+msgid "Sort by {}: ascending"
+msgstr "Lajittele: {}, nouseva"
+
+msgid "Sort by {}: descending"
+msgstr "Lajittele: {}, laskeva"
+
+msgid "Sort: ascending"
+msgstr "Lajittelu: nouseva"
+
+msgid "Sort: descending"
+msgstr "Lajittelu: laskeva"
+
+msgid "Starting volume, shared with the player bar."
+msgstr "Aloitusäänenvoimakkuus, jaettu soitinpalkin kanssa."
+
+msgid "Station data from radio-browser.info"
+msgstr "Asematiedot: radio-browser.info"
+
+msgid "Station name"
+msgstr "Aseman nimi"
+
+msgid "Stations"
+msgstr "Asemat"
+
+msgid "Stop {}"
+msgstr "Pysäytä {}"
+
+msgid "Stream URL"
+msgstr "Suoratoisto-osoite"
+
+msgid "Switch"
+msgstr "Vaihda"
+
+msgid "Switch between a dark and a light theme with the desktop. {}"
+msgstr "Vaihda tumman ja vaalean teeman välillä työpöydän mukaan. {}"
+
+msgid "Switch to grid view"
+msgstr "Vaihda ruudukkonäkymään"
+
+msgid "Switch to list view"
+msgstr "Vaihda luettelonäkymään"
+
+msgid "System default"
+msgstr "Järjestelmän oletus"
+
+msgid "System default follows the language of the desktop."
+msgstr "Järjestelmän oletus seuraa työpöydän kieltä."
+
+msgid "Tag, for example jazz"
+msgstr "Tunniste, esimerkiksi jazz"
+
+msgid "The desktop currently prefers dark."
+msgstr "Työpöytä suosii tällä hetkellä tummaa."
+
+msgid "The desktop currently prefers light."
+msgstr "Työpöytä suosii tällä hetkellä vaaleaa."
+
+msgid "The desktop has no preference, so the dark theme is used."
+msgstr "Työpöydällä ei ole asetusta, joten käytetään tummaa teemaa."
+
+msgid "The library scan is still running on the server"
+msgstr "Kirjaston skannaus on vielä käynnissä palvelimella"
+
+msgid "The queue is empty"
+msgstr "Jono on tyhjä"
+
+msgid "The queue is incomplete: loading the rest of the list failed ({})"
+msgstr "Jono on puutteellinen: luettelon loppuosan lataaminen epäonnistui ({})"
+
+msgid "The radio directory could not be reached"
+msgstr "Radiohakemistoon ei saatu yhteyttä"
+
+msgid "The radio station stopped streaming"
+msgstr "Radioasema lopetti lähetyksen"
+
+msgid "The server refused the station: {}"
+msgstr "Palvelin hylkäsi aseman: {}"
+
+msgid "Theme"
+msgstr "Teema"
+
+msgid "There is nothing to play in this list"
+msgstr "Tässä luettelossa ei ole mitään toistettavaa"
+
+msgid "This Discover page does not exist"
+msgstr "Tätä Löydä-sivua ei ole olemassa"
+
+msgid "This folder is empty"
+msgstr "Tämä kansio on tyhjä"
+
+msgid "This playlist is empty"
+msgstr "Tämä soittolista on tyhjä"
+
+msgid "This server has no internet radio. Stations you add are saved on this device."
+msgstr "Tällä palvelimella ei ole internetradiota. Lisäämäsi asemat tallennetaan tälle laitteelle."
+
+msgid "this server has no public share links"
+msgstr "tällä palvelimella ei ole julkisia jakolinkkejä"
+
+msgid "Time"
+msgstr "Aika"
+
+msgid "Title"
+msgstr "Otsikko"
+
+msgid "Top songs"
+msgstr "Parhaat kappaleet"
+
+msgid "Track"
+msgstr "Raita"
+
+msgid "Tracks"
+msgstr "Raidat"
+
+msgid "Transcode format"
+msgstr "Muunnosmuoto"
+
+msgid "Try again"
+msgstr "Yritä uudelleen"
+
+msgid "Turn off the theme accent color to pick your own."
+msgstr "Poista teeman korostusväri käytöstä valitaksesi oman."
+
+msgid "Unmute"
+msgstr "Poista mykistys"
+
+msgid "Up next"
+msgstr "Seuraavaksi"
+
+msgid "URL"
+msgstr "URL-osoite"
+
+msgid "Use the theme accent color"
+msgstr "Käytä teeman korostusväriä"
+
+msgid "Use {}"
+msgstr "Käytä teemaa {}"
+
+msgid "Used while the desktop prefers dark."
+msgstr "Käytössä, kun työpöytä suosii tummaa."
+
+msgid "Used while the desktop prefers light."
+msgstr "Käytössä, kun työpöytä suosii vaaleaa."
+
+msgid "Username"
+msgstr "Käyttäjänimi"
+
+msgid "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Feishin deletes right after reading."
+msgstr "Käyttää tämän selaimen YouTube-istuntoa henkilökohtaiseen Löydä-etusivuun ja Premium-ääneen. yt-dlp kopioi sen evästeet yksityiseen väliaikaistiedostoon, jonka Feishin poistaa heti lukemisen jälkeen."
+
+msgid "Volume"
+msgstr "Äänenvoimakkuus"
+
+msgid "Volume {}%"
+msgstr "Äänenvoimakkuus {} %"
+
+msgid "XDG_RUNTIME_DIR is not set, so there is no private place for the cookies"
+msgstr "XDG_RUNTIME_DIR ei ole asetettu, joten evästeille ei ole yksityistä paikkaa"
+
+msgid "Year"
+msgstr "Vuosi"
+
+msgid "You are here: {}"
+msgstr "Olet tässä: {}"
+
+msgid "Your user is not allowed to share on this server"
+msgstr "Käyttäjälläsi ei ole oikeutta jakaa tällä palvelimella"
+
+msgid "YouTube"
+msgstr "YouTube"
+
+msgid "YouTube albums are not in your library"
+msgstr "YouTube-albumit eivät ole kirjastossasi"
+
+msgid "YouTube artists are not in your library"
+msgstr "YouTube-artistit eivät ole kirjastossasi"
+
+msgid "yt-dlp program"
+msgstr "yt-dlp-ohjelma"
+
+msgid "{n} album"
+msgid_plural "{n} albums"
+msgstr[0] "{n} albumi"
+msgstr[1] "{n} albumia"
+
+msgid "{n} folder"
+msgid_plural "{n} folders"
+msgstr[0] "{n} kansio"
+msgstr[1] "{n} kansiota"
+
+msgid "{n} item so far"
+msgid_plural "{n} items so far"
+msgstr[0] "{n} kohde tähän mennessä"
+msgstr[1] "{n} kohdetta tähän mennessä"
+
+msgid "{n} minute"
+msgid_plural "{n} minutes"
+msgstr[0] "{n} minuutti"
+msgstr[1] "{n} minuuttia"
+
+msgid "{n} selected"
+msgid_plural "{n} selected"
+msgstr[0] "{n} valittu"
+msgstr[1] "{n} valittu"
+
+msgid "{n} song"
+msgid_plural "{n} songs"
+msgstr[0] "{n} kappale"
+msgstr[1] "{n} kappaletta"
+
+msgid "{n} song from \"{}\" will play next"
+msgid_plural "{n} songs from \"{}\" will play next"
+msgstr[0] "{n} kappale kohteesta \"{}\" toistetaan seuraavaksi"
+msgstr[1] "{n} kappaletta kohteesta \"{}\" toistetaan seuraavaksi"
+
+msgid "{n} song on YouTube Music"
+msgid_plural "{n} songs on YouTube Music"
+msgstr[0] "{n} kappale YouTube Musicissa"
+msgstr[1] "{n} kappaletta YouTube Musicissa"
+
+msgid "{n} song will play next"
+msgid_plural "{n} songs will play next"
+msgstr[0] "{n} kappale toistetaan seuraavaksi"
+msgstr[1] "{n} kappaletta toistetaan seuraavaksi"
+
+msgid "{} (current theme)"
+msgstr "{} (nykyinen teema)"
+
+msgid "{} (unavailable)"
+msgstr "{} (ei käytettävissä)"
+
+msgid "{} at {}"
+msgstr "{0} osoitteessa {1}"
+
+msgid "{} cannot be played: its stream address is not an internet stream"
+msgstr "Kohdetta {} ei voi toistaa: sen lähetysosoite ei ole internetlähetys"
+
+msgid "{} is shown"
+msgstr "{} näytetään"
+
+msgid "{} kbps"
+msgstr "{} kbps"
+
+msgid "{} s"
+msgstr "{} s"
+
+msgid "{}: off"
+msgstr "{}: pois"
+
+msgid "{}: on"
+msgstr "{}: päällä"
+
+msgid "{}: {} (dark)"
+msgstr "{}: {} (tumma)"
+
+msgid "{}: {} (light)"
+msgstr "{}: {} (vaalea)"

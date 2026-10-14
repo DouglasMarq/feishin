@@ -1,20 +1,33 @@
 use feishin_core::model::{ArtistListQuery, ArtistSort, SortOrder};
 
-pub const SORTS: [(&str, ArtistSort); 7] = [
-    ("Name", ArtistSort::Name),
-    ("Album count", ArtistSort::AlbumCount),
-    ("Song count", ArtistSort::SongCount),
-    ("Play count", ArtistSort::PlayCount),
-    ("Rating", ArtistSort::Rating),
-    ("Favorited", ArtistSort::Favorited),
-    ("Random", ArtistSort::Random),
+pub const SORTS: [ArtistSort; 7] = [
+    ArtistSort::Name,
+    ArtistSort::AlbumCount,
+    ArtistSort::SongCount,
+    ArtistSort::PlayCount,
+    ArtistSort::Rating,
+    ArtistSort::Favorited,
+    ArtistSort::Random,
 ];
+
+pub fn sort_label(sort: ArtistSort) -> String {
+    match sort {
+        ArtistSort::Name => tr!("Name"),
+        ArtistSort::AlbumCount => tr!("Album count"),
+        ArtistSort::SongCount => tr!("Song count"),
+        ArtistSort::PlayCount => tr!("Play count"),
+        ArtistSort::Rating => tr!("Rating"),
+        ArtistSort::Favorited => tr!("Favorited"),
+        ArtistSort::Random => tr!("Random"),
+    }
+}
 
 fn sort_at(sort_index: i32) -> ArtistSort {
     usize::try_from(sort_index)
         .ok()
         .and_then(|index| SORTS.get(index))
-        .map_or(ArtistSort::Name, |(_, sort)| *sort)
+        .copied()
+        .unwrap_or(ArtistSort::Name)
 }
 
 fn sort_order(descending: bool) -> SortOrder {

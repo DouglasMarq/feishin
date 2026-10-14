@@ -76,7 +76,7 @@ fn add_rows_to_playlist(window: &AppWindow, ctx: &Context, indexes: &[usize]) {
         let result = snapshot.resolve(server.as_ref()).await;
         on_ui(&weak, move |window| match result {
             Ok(songs) => add_songs_to_playlist(window, &songs),
-            Err(error) => show_status(window, &format!("Could not load the selection: {error}")),
+            Err(error) => show_status(window, &tr!("Could not load the selection: {}", error)),
         });
     });
 }

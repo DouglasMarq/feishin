@@ -35,7 +35,7 @@ pub fn header_info(summary: &HeaderSummary) -> String {
         summary
             .owner
             .filter(|owner| !owner.is_empty())
-            .map(|owner| format!("by {owner}")),
+            .map(|owner| tr!("by {}", owner)),
     );
     parts.join(" • ")
 }

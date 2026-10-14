@@ -5,7 +5,6 @@ use slint::{ComponentHandle, ModelRc, SharedString, VecModel};
 
 use super::detail::{RemovalTarget, SharedDetail, lock};
 use super::loading::refresh_if_showing;
-use crate::ui::playlists::song_count_label;
 use crate::ui::{Actions, AppWindow, Context, PlaylistDetailState, on_ui, show_status};
 
 pub fn remove(window: &AppWindow, ctx: &Context, shared: &SharedDetail, indexes: Vec<usize>) {
@@ -40,14 +39,16 @@ fn finish_removal(
     window.global::<PlaylistDetailState>().set_busy(false);
     match result {
         Ok(()) => {
-            let removed_label = song_count_label(removed);
-            show_status(
-                window,
-                &format!("Removed {removed_label} from \"{}\"", target.name),
+            let message = tr_plural!(
+                "Removed {n} song from \"{}\"",
+                "Removed {n} songs from \"{}\"",
+                removed,
+                target.name
             );
+            show_status(window, &message);
             refresh_if_showing(window, &target.playlist_id);
         }
-        Err(error) => show_status(window, &format!("Could not remove songs: {error}")),
+        Err(error) => show_status(window, &tr!("Could not remove songs: {}", error)),
     }
 }
 

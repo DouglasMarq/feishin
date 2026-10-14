@@ -1,0 +1,1520 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: ca\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+
+msgid "\"{}\" plays next"
+msgstr "«{}» sona a continuació"
+
+msgid "\"{}\" will play next"
+msgstr "«{}» sonarà a continuació"
+
+msgid "1 star"
+msgstr "1 estrella"
+
+msgid "2 stars"
+msgstr "2 estrelles"
+
+msgid "3 stars"
+msgstr "3 estrelles"
+
+msgid "4 stars"
+msgstr "4 estrelles"
+
+msgid "5 stars"
+msgstr "5 estrelles"
+
+msgid "About {}"
+msgstr "Sobre {0}"
+
+msgid "Accent color"
+msgstr "Color de ressaltat"
+
+msgid "Accent color not changed: {}."
+msgstr "No s'ha canviat el color de ressaltat: {}."
+
+msgid "Accent color {}"
+msgstr "Color de ressaltat {}"
+
+msgid "Accent color {} (selected)"
+msgstr "Color de ressaltat {} (seleccionat)"
+
+msgid "Accent color {} (theme accent in use)"
+msgstr "Color de ressaltat {} (s'usa el ressaltat del tema)"
+
+msgid "Add a station by its stream URL"
+msgstr "Afegeix una emissora per l'URL de la transmissió"
+
+msgid "Add all songs to the queue"
+msgstr "Afegeix totes les cançons a la cua"
+
+msgid "Add server"
+msgstr "Afegeix un servidor"
+
+msgid "Add station"
+msgstr "Afegeix una emissora"
+
+msgid "Add this link to the end of the queue"
+msgstr "Afegeix aquest enllaç al final de la cua"
+
+msgid "Add this station to the server for every client"
+msgstr "Afegeix aquesta emissora al servidor per a tots els clients"
+
+msgid "Add to favorites"
+msgstr "Afegeix als preferits"
+
+msgid "Add to playlist"
+msgstr "Afegeix a una llista de reproducció"
+
+msgid "Add to queue"
+msgstr "Afegeix a la cua"
+
+msgid "Add to the server's stations"
+msgstr "Afegeix a les emissores del servidor"
+
+msgid "Add {n} song to playlist"
+msgid_plural "Add {n} songs to playlist"
+msgstr[0] "Afegeix {n} cançó a la llista de reproducció"
+msgstr[1] "Afegeix {n} cançons a la llista de reproducció"
+
+msgid "Add {} to the queue"
+msgstr "Afegeix {} a la cua"
+
+msgid "Added \"{}\" to the queue"
+msgstr "S'ha afegit «{}» a la cua"
+
+msgid "Added only {n} song to \"{}\": {}"
+msgid_plural "Added only {n} songs to \"{}\": {}"
+msgstr[0] "Només s'ha afegit {n} cançó a «{}»: {}"
+msgstr[1] "Només s'han afegit {n} cançons a «{}»: {}"
+
+msgid "Added {n} song from \"{}\" to the queue"
+msgid_plural "Added {n} songs from \"{}\" to the queue"
+msgstr[0] "S'ha afegit {n} cançó de «{}» a la cua"
+msgstr[1] "S'han afegit {n} cançons de «{}» a la cua"
+
+msgid "Added {n} song to \"{}\""
+msgid_plural "Added {n} songs to \"{}\""
+msgstr[0] "S'ha afegit {n} cançó a «{}»"
+msgstr[1] "S'han afegit {n} cançons a «{}»"
+
+msgid "Added {n} song to the queue"
+msgid_plural "Added {n} songs to the queue"
+msgstr[0] "S'ha afegit {n} cançó a la cua"
+msgstr[1] "S'han afegit {n} cançons a la cua"
+
+msgid "Adding to \"{}\": {} of {n} song"
+msgid_plural "Adding to \"{}\": {} of {n} songs"
+msgstr[0] "S'està afegint a «{}»: {} de {n} cançó"
+msgstr[1] "S'està afegint a «{}»: {} de {n} cançons"
+
+msgid "ALBUM"
+msgstr "ÀLBUM"
+
+msgid "Album"
+msgstr "Àlbum"
+
+msgid "album"
+msgstr "àlbum"
+
+msgid "Album artist"
+msgstr "Artista de l'àlbum"
+
+msgid "Album count"
+msgstr "Nombre d'àlbums"
+
+msgid "Album not found"
+msgstr "No s'ha trobat l'àlbum"
+
+msgid "Albums"
+msgstr "Àlbums"
+
+msgid "All genres"
+msgstr "Tots els gèneres"
+
+msgid "Already at the end"
+msgstr "Ja és al final"
+
+msgid "Already at the start"
+msgstr "Ja és al principi"
+
+msgid "Already in \"{}\""
+msgstr "Ja és a «{}»"
+
+msgid "Already on the server"
+msgstr "Ja és al servidor"
+
+msgid "Amber"
+msgstr "Ambre"
+
+msgid "Appearance"
+msgstr "Aparença"
+
+msgid "ARTIST"
+msgstr "ARTISTA"
+
+msgid "Artist"
+msgstr "Artista"
+
+msgid "Artists"
+msgstr "Artistes"
+
+msgid "Ask the server to transcode down to this bitrate. Applies from the next song."
+msgstr "Demana al servidor que transcodifiqui fins a aquesta taxa de bits. S'aplica a partir de la cançó següent."
+
+msgid "Audio device"
+msgstr "Dispositiu d'àudio"
+
+msgid "Automatic ({})"
+msgstr "Automàtic ({})"
+
+msgid "Back"
+msgstr "Enrere"
+
+msgid "Blue"
+msgstr "Blau"
+
+msgid "by {}"
+msgstr "de {}"
+
+msgid "Cancel"
+msgstr "Cancel·la"
+
+msgid "Cancel timer"
+msgstr "Cancel·la el temporitzador"
+
+msgid "Cannot share: {}"
+msgstr "No es pot compartir: {}"
+
+msgid "Chart country"
+msgstr "País de les llistes d'èxits"
+
+msgid "Charts"
+msgstr "Llistes d'èxits"
+
+msgid "Choose a browser under Settings, YouTube to sign in for a personalized home"
+msgstr "Trieu un navegador a Configuració, YouTube per a iniciar la sessió i tenir un inici personalitzat"
+
+msgid "Clear"
+msgstr "Neteja"
+
+msgid "Clear filters"
+msgstr "Neteja els filtres"
+
+msgid "Clear rating"
+msgstr "Esborra la valoració"
+
+msgid "Clear the favorites and genre filters"
+msgstr "Neteja els filtres de preferits i de gènere"
+
+msgid "Close"
+msgstr "Tanca"
+
+msgid "Close now playing"
+msgstr "Tanca la reproducció actual"
+
+msgid "Close without saving"
+msgstr "Tanca sense desar"
+
+msgid "Colors used across the whole app."
+msgstr "Colors usats a tota l'aplicació."
+
+msgid "Connect to your music server"
+msgstr "Connecteu-vos al vostre servidor de música"
+
+msgid "Connecting..."
+msgstr "S'està connectant..."
+
+msgid "Could not add to \"{}\": {}"
+msgstr "No s'ha pogut afegir a «{}»: {}"
+
+msgid "Could not add {} to the server"
+msgstr "No s'ha pogut afegir {} al servidor"
+
+msgid "Could not create a share link: {}"
+msgstr "No s'ha pogut crear un enllaç per a compartir: {}"
+
+msgid "Could not create the playlist: {}"
+msgstr "No s'ha pogut crear la llista de reproducció: {}"
+
+msgid "Could not delete the playlist: {}"
+msgstr "No s'ha pogut eliminar la llista de reproducció: {}"
+
+msgid "Could not delete the station"
+msgstr "No s'ha pogut eliminar l'emissora"
+
+msgid "Could not load albums: {}"
+msgstr "No s'han pogut carregar els àlbums: {}"
+
+msgid "Could not load artists: {}"
+msgstr "No s'han pogut carregar els artistes: {}"
+
+msgid "Could not load Discover: {}"
+msgstr "No s'ha pogut carregar Descobreix: {}"
+
+msgid "Could not load genres: {}"
+msgstr "No s'han pogut carregar els gèneres: {}"
+
+msgid "Could not load it from YouTube Music: {}"
+msgstr "No s'ha pogut carregar des de YouTube Music: {}"
+
+msgid "Could not load lyrics"
+msgstr "No s'ha pogut carregar la lletra"
+
+msgid "Could not load moods and genres: {}"
+msgstr "No s'han pogut carregar els estats d'ànim i gèneres: {}"
+
+msgid "Could not load more results: {}"
+msgstr "No s'han pogut carregar més resultats: {}"
+
+msgid "Could not load new releases: {}"
+msgstr "No s'han pogut carregar les novetats: {}"
+
+msgid "Could not load playlists: {}"
+msgstr "No s'han pogut carregar les llistes de reproducció: {}"
+
+msgid "Could not load the album: {}"
+msgstr "No s'ha pogut carregar l'àlbum: {}"
+
+msgid "Could not load the artist: {}"
+msgstr "No s'ha pogut carregar l'artista: {}"
+
+msgid "Could not load the charts: {}"
+msgstr "No s'han pogut carregar les llistes d'èxits: {}"
+
+msgid "Could not load the folder: {}"
+msgstr "No s'ha pogut carregar la carpeta: {}"
+
+msgid "Could not load the list: {}"
+msgstr "No s'ha pogut carregar la llista: {}"
+
+msgid "Could not load the playlist: {}"
+msgstr "No s'ha pogut carregar la llista de reproducció: {}"
+
+msgid "Could not load the radio stations: {}"
+msgstr "No s'han pogut carregar les emissores de ràdio: {}"
+
+msgid "Could not load the selection: {}"
+msgstr "No s'ha pogut carregar la selecció: {}"
+
+msgid "Could not load this page: {}"
+msgstr "No s'ha pogut carregar aquesta pàgina: {}"
+
+msgid "Could not load tracks: {}"
+msgstr "No s'han pogut carregar les pistes: {}"
+
+msgid "Could not load your home: {}"
+msgstr "No s'ha pogut carregar el vostre inici: {}"
+
+msgid "Could not open the folder: {}"
+msgstr "No s'ha pogut obrir la carpeta: {}"
+
+msgid "Could not open YouTube Music: {}"
+msgstr "No s'ha pogut obrir YouTube Music: {}"
+
+msgid "Could not play \"{}\" from YouTube: {}"
+msgstr "No s'ha pogut reproduir «{}» des de YouTube: {}"
+
+msgid "Could not play album: {}"
+msgstr "No s'ha pogut reproduir l'àlbum: {}"
+
+msgid "Could not play from YouTube: {}"
+msgstr "No s'ha pogut reproduir des de YouTube: {}"
+
+msgid "Could not play the album: {}"
+msgstr "No s'ha pogut reproduir l'àlbum: {}"
+
+msgid "Could not remove songs: {}"
+msgstr "No s'han pogut treure les cançons: {}"
+
+msgid "Could not rescan the library: {}"
+msgstr "No s'ha pogut tornar a escanejar la biblioteca: {}"
+
+msgid "Could not set the rating: {}"
+msgstr "No s'ha pogut establir la valoració: {}"
+
+msgid "Could not sign in to YouTube Music ({}). Showing general picks instead."
+msgstr "No s'ha pogut iniciar la sessió a YouTube Music ({}). Es mostren suggeriments generals."
+
+msgid "Could not switch server: {}"
+msgstr "No s'ha pogut canviar de servidor: {}"
+
+msgid "Could not update favorite: {}"
+msgstr "No s'ha pogut actualitzar el preferit: {}"
+
+msgid "Could not update favorites: {}"
+msgstr "No s'han pogut actualitzar els preferits: {}"
+
+msgid "Could not update rating: {}"
+msgstr "No s'ha pogut actualitzar la valoració: {}"
+
+msgid "Could not update the favorite: {}"
+msgstr "No s'ha pogut actualitzar el preferit: {}"
+
+msgid "Country"
+msgstr "País"
+
+msgid "Create"
+msgstr "Crea"
+
+msgid "Created \"{}\" with only {n} song: {}"
+msgid_plural "Created \"{}\" with only {n} songs: {}"
+msgstr[0] "S'ha creat «{}» amb només {n} cançó: {}"
+msgstr[1] "S'ha creat «{}» amb només {n} cançons: {}"
+
+msgid "Created \"{}\" with {n} song"
+msgid_plural "Created \"{}\" with {n} songs"
+msgstr[0] "S'ha creat «{}» amb {n} cançó"
+msgstr[1] "S'ha creat «{}» amb {n} cançons"
+
+msgid "Created playlist \"{}\""
+msgstr "S'ha creat la llista de reproducció «{}»"
+
+msgid "Creating a share link..."
+msgstr "S'està creant un enllaç per a compartir..."
+
+msgid "Creating..."
+msgstr "S'està creant..."
+
+msgid "Crossfade"
+msgstr "Fosa encadenada"
+
+msgid "Crossfade could not be changed: {}"
+msgstr "No s'ha pogut canviar la fosa encadenada: {}"
+
+msgid "Crossfade: {}"
+msgstr "Fosa encadenada: {}"
+
+msgid "Current"
+msgstr "Actual"
+
+msgid "Custom accent color: {} (theme accent in use)"
+msgstr "Color de ressaltat personalitzat: {} (s'usa el ressaltat del tema)"
+
+msgid "Custom accent color: {}, press Enter to apply"
+msgstr "Color de ressaltat personalitzat: {}, premeu Retorn per a aplicar-lo"
+
+msgid "Dark theme"
+msgstr "Tema fosc"
+
+msgid "DARK THEMES"
+msgstr "TEMES FOSCOS"
+
+msgid "Default country for the Discover charts. Automatic follows your system region."
+msgstr "País per defecte de les llistes d'èxits de Descobreix. Automàtic segueix la regió del sistema."
+
+msgid "Default Dark"
+msgstr "Fosc per defecte"
+
+msgid "Default Light"
+msgstr "Clar per defecte"
+
+msgid "Delete"
+msgstr "Elimina"
+
+msgid "Delete \"{}\" from the server? This cannot be undone."
+msgstr "Voleu eliminar «{}» del servidor? No es pot desfer."
+
+msgid "Delete \"{}\"? This cannot be undone."
+msgstr "Voleu eliminar «{}»? No es pot desfer."
+
+msgid "Delete playlist"
+msgstr "Elimina la llista de reproducció"
+
+msgid "Delete station"
+msgstr "Elimina l'emissora"
+
+msgid "Delete {} from the server"
+msgstr "Elimina {} del servidor"
+
+msgid "Deleted playlist \"{}\""
+msgstr "S'ha eliminat la llista de reproducció «{}»"
+
+msgid "Deleting..."
+msgstr "S'està eliminant..."
+
+msgid "Demo mode: these picks are made up and play from your demo library"
+msgstr "Mode de demostració: aquests suggeriments són inventats i sonen des de la vostra biblioteca de demostració"
+
+msgid "Directory"
+msgstr "Directori"
+
+msgid "Disc {}"
+msgstr "Disc {}"
+
+msgid "Discord Rich Presence"
+msgstr "Discord Rich Presence"
+
+msgid "Discover"
+msgstr "Descobreix"
+
+msgid "Discover is open"
+msgstr "Descobreix és obert"
+
+msgid "Discover new music on YouTube Music"
+msgstr "Descobriu música nova a YouTube Music"
+
+msgid "Duration"
+msgstr "Durada"
+
+msgid "Edit station"
+msgstr "Edita l'emissora"
+
+msgid "Edit {}"
+msgstr "Edita {}"
+
+msgid "End of current track"
+msgstr "Final de la pista actual"
+
+msgid "End of track"
+msgstr "Final de la pista"
+
+msgid "Enter a name for the station"
+msgstr "Introduïu un nom per a l'emissora"
+
+msgid "Enter a name, country or tag to search"
+msgstr "Introduïu un nom, un país o una etiqueta per a cercar"
+
+msgid "Enter a stream URL that starts with http:// or https://"
+msgstr "Introduïu un URL de transmissió que comenci per http:// o https://"
+
+msgid "Enter the server URL"
+msgstr "Introduïu l'URL del servidor"
+
+msgid "Fade the end of each song into the next one. Off keeps gapless playback."
+msgstr "Fa que el final de cada cançó es fongui amb la següent. Desactivat manté la reproducció sense pauses."
+
+msgid "Favorite"
+msgstr "Preferit"
+
+msgid "Favorited"
+msgstr "Preferits"
+
+msgid "Favorites"
+msgstr "Preferits"
+
+msgid "Favorites only: off"
+msgstr "Només preferits: desactivat"
+
+msgid "Favorites only: on"
+msgstr "Només preferits: activat"
+
+msgid "Filter"
+msgstr "Filtre"
+
+msgid "Filter playlists"
+msgstr "Filtra les llistes de reproducció"
+
+msgid "Find stations by name, country or tag"
+msgstr "Troba emissores per nom, país o etiqueta"
+
+msgid "Find stations in the radio-browser.info directory"
+msgstr "Troba emissores al directori radio-browser.info"
+
+msgid "Folder"
+msgstr "Carpeta"
+
+msgid "Folders"
+msgstr "Carpetes"
+
+msgid "Follow current song"
+msgstr "Segueix la cançó actual"
+
+msgid "Follow system color scheme"
+msgstr "Segueix l'esquema de colors del sistema"
+
+msgid "For you"
+msgstr "Per a vós"
+
+msgid "Forget this server?"
+msgstr "Voleu oblidar aquest servidor?"
+
+msgid "Format the server should transcode to. Applies from the next song."
+msgstr "Format al qual el servidor ha de transcodificar. S'aplica a partir de la cançó següent."
+
+msgid "Found {n} server in Feishin but it has no usable saved login"
+msgid_plural "Found {n} servers in Feishin but none with a usable saved login"
+msgstr[0] "S'ha trobat {n} servidor al Feishin, però no té cap inici de sessió desat utilitzable"
+msgstr[1] "S'han trobat {n} servidors al Feishin, però cap amb un inici de sessió desat utilitzable"
+
+msgid "Gapless playback"
+msgstr "Reproducció sense pauses"
+
+msgid "Genres"
+msgstr "Gèneres"
+
+msgid "Go back to {}"
+msgstr "Torna a {}"
+
+msgid "Go to album"
+msgstr "Vés a l'àlbum"
+
+msgid "Go to artist"
+msgstr "Vés a l'artista"
+
+msgid "Go to {}"
+msgstr "Vés a {}"
+
+msgid "Green"
+msgstr "Verd"
+
+msgid "Hide lyrics"
+msgstr "Amaga la lletra"
+
+msgid "Hide queue"
+msgstr "Amaga la cua"
+
+msgid "High Contrast Dark"
+msgstr "Contrast alt fosc"
+
+msgid "High Contrast Light"
+msgstr "Contrast alt clar"
+
+msgid "Highlight with the color that comes with the theme."
+msgstr "Ressalta amb el color que inclou el tema."
+
+msgid "Home"
+msgstr "Inici"
+
+msgid "Homepage (optional)"
+msgstr "Pàgina web (opcional)"
+
+msgid "Import from Feishin"
+msgstr "Importa del Feishin"
+
+msgid "Install yt-dlp to play YouTube tracks"
+msgstr "Instal·leu yt-dlp per a reproduir pistes de YouTube"
+
+msgid "Integrations"
+msgstr "Integracions"
+
+msgid "Interface"
+msgstr "Interfície"
+
+msgid "Internet radio"
+msgstr "Ràdio per internet"
+
+msgid "item"
+msgstr "element"
+
+msgid "Jellyfin has no public share links"
+msgstr "Jellyfin no té enllaços públics per a compartir"
+
+msgid "Keep this station in the favorites on this device"
+msgstr "Desa aquesta emissora als preferits d'aquest dispositiu"
+
+msgid "Language"
+msgstr "Llengua"
+
+msgid "LIBRARY"
+msgstr "BIBLIOTECA"
+
+msgid "Library scan finished"
+msgstr "S'ha acabat l'escaneig de la biblioteca"
+
+msgid "Library scan finished: {n} item"
+msgid_plural "Library scan finished: {n} items"
+msgstr[0] "S'ha acabat l'escaneig de la biblioteca: {n} element"
+msgstr[1] "S'ha acabat l'escaneig de la biblioteca: {n} elements"
+
+msgid "Light theme"
+msgstr "Tema clar"
+
+msgid "LIGHT THEMES"
+msgstr "TEMES CLARS"
+
+msgid "Listening to {}"
+msgstr "S'està escoltant {}"
+
+msgid "LIVE"
+msgstr "EN DIRECTE"
+
+msgid "Load more"
+msgstr "Carrega'n més"
+
+msgid "Load this section again"
+msgstr "Torna a carregar aquesta secció"
+
+msgid "Loading playlists..."
+msgstr "S'estan carregant les llistes de reproducció..."
+
+msgid "Loading similar songs..."
+msgstr "S'estan carregant cançons semblants..."
+
+msgid "Loading stations..."
+msgstr "S'estan carregant les emissores..."
+
+msgid "Loading the next page of stations"
+msgstr "S'està carregant la pàgina següent d'emissores"
+
+msgid "Loading..."
+msgstr "S'està carregant..."
+
+msgid "Log out"
+msgstr "Tanca la sessió"
+
+msgid "Looking up the YouTube link..."
+msgstr "S'està cercant l'enllaç de YouTube..."
+
+msgid "Lyrics"
+msgstr "Lletres"
+
+msgid "Lyrics from {}"
+msgstr "Lletra de {}"
+
+msgid "Lyrics sources"
+msgstr "Fonts de lletres"
+
+msgid "Maximum bitrate"
+msgstr "Taxa de bits màxima"
+
+msgid "Media keys and desktop media controls. Takes effect after a restart."
+msgstr "Tecles multimèdia i controls multimèdia de l'escriptori. Té efecte després de reiniciar."
+
+msgid "Moods and genres"
+msgstr "Estats d'ànim i gèneres"
+
+msgid "Most played"
+msgstr "Més reproduïts"
+
+msgid "Move down"
+msgstr "Mou avall"
+
+msgid "Move up"
+msgstr "Mou amunt"
+
+msgid "MPRIS"
+msgstr "MPRIS"
+
+msgid "Mute"
+msgstr "Silencia"
+
+msgid "Name"
+msgstr "Nom"
+
+msgid "New playlist"
+msgstr "Llista de reproducció nova"
+
+msgid "New releases"
+msgstr "Novetats"
+
+msgid "Next"
+msgstr "Següent"
+
+msgid "Next is unavailable while a radio station plays"
+msgstr "Següent no està disponible mentre sona una emissora de ràdio"
+
+msgid "No albums"
+msgstr "No hi ha cap àlbum"
+
+msgid "No albums found"
+msgstr "No s'ha trobat cap àlbum"
+
+msgid "No artists found"
+msgstr "No s'ha trobat cap artista"
+
+msgid "no browser is selected"
+msgstr "no hi ha cap navegador seleccionat"
+
+msgid "No favorite albums"
+msgstr "No hi ha cap àlbum preferit"
+
+msgid "No favorite artists"
+msgstr "No hi ha cap artista preferit"
+
+msgid "No favorite tracks"
+msgstr "No hi ha cap pista preferida"
+
+msgid "No genres found"
+msgstr "No s'ha trobat cap gènere"
+
+msgid "No lyrics found"
+msgstr "No s'ha trobat cap lletra"
+
+msgid "No playlists found"
+msgstr "No s'ha trobat cap llista de reproducció"
+
+msgid "No playlists yet"
+msgstr "Encara no hi ha cap llista de reproducció"
+
+msgid "No rating"
+msgstr "Sense valoració"
+
+msgid "No results for \"{}\""
+msgstr "No hi ha resultats per a «{}»"
+
+msgid "No saved login for {}; remove it and add it again"
+msgstr "No hi ha cap inici de sessió desat per a {}; traieu-lo i torneu-lo a afegir"
+
+msgid "No saved servers."
+msgstr "No hi ha cap servidor desat."
+
+msgid "No similar songs found"
+msgstr "No s'ha trobat cap cançó semblant"
+
+msgid "No songs here"
+msgstr "Aquí no hi ha cap cançó"
+
+msgid "No stations found"
+msgstr "No s'ha trobat cap emissora"
+
+msgid "No stations yet. Add one or find one in the directory."
+msgstr "Encara no hi ha cap emissora. Afegiu-ne una o trobeu-ne una al directori."
+
+msgid "No tracks found"
+msgstr "No s'ha trobat cap pista"
+
+msgid "None"
+msgstr "Cap"
+
+msgid "Normalize loudness using the track or album gain tags."
+msgstr "Normalitza el volum amb les etiquetes de guany de la pista o de l'àlbum."
+
+msgid "Not connected to a server"
+msgstr "No esteu connectat a cap servidor"
+
+msgid "Nothing is playing"
+msgstr "No s'està reproduint res"
+
+msgid "Nothing to add yet"
+msgstr "Encara no hi ha res per afegir"
+
+msgid "Nothing to go back to"
+msgstr "No hi ha res on tornar"
+
+msgid "Nothing to play here"
+msgstr "Aquí no hi ha res per reproduir"
+
+msgid "Nothing to play yet"
+msgstr "Encara no hi ha res per reproduir"
+
+msgid "Nothing to show here right now"
+msgstr "Ara mateix no hi ha res per mostrar aquí"
+
+msgid "Off"
+msgstr "Desactivat"
+
+msgid "OK"
+msgstr "D'acord"
+
+msgid "On the server"
+msgstr "Al servidor"
+
+msgid "Only a server admin can rescan the library"
+msgstr "Només un administrador del servidor pot tornar a escanejar la biblioteca"
+
+msgid "Only loaded tracks can be shared: select fewer tracks or scroll through them first"
+msgstr "Només es poden compartir les pistes carregades: seleccioneu menys pistes o desplaceu-vos-hi primer"
+
+msgid "Open"
+msgstr "Obre"
+
+msgid "Open in YouTube Music"
+msgstr "Obre a YouTube Music"
+
+msgid "Open now playing"
+msgstr "Obre la reproducció actual"
+
+msgid "Open radio"
+msgstr "Obre la ràdio"
+
+msgid "Open the album \"{}\""
+msgstr "Obre l'àlbum «{}»"
+
+msgid "Open the playlist \"{}\""
+msgstr "Obre la llista de reproducció «{}»"
+
+msgid "Open the queue panel"
+msgstr "Obre el plafó de la cua"
+
+msgid "Open {}"
+msgstr "Obre {}"
+
+msgid "Original"
+msgstr "Original"
+
+msgid "Output used by the player."
+msgstr "Sortida que usa el reproductor."
+
+msgid "Owner"
+msgstr "Propietari"
+
+msgid "Password"
+msgstr "Contrasenya"
+
+msgid "Paste a link first"
+msgstr "Primer enganxeu un enllaç"
+
+msgid "Paste a YouTube or YouTube Music link first"
+msgstr "Primer enganxeu un enllaç de YouTube o YouTube Music"
+
+msgid "Paste a YouTube or YouTube Music link to try yt-dlp."
+msgstr "Enganxeu un enllaç de YouTube o YouTube Music per a provar yt-dlp."
+
+msgid "Pause"
+msgstr "Pausa"
+
+msgid "Pause the radio station"
+msgstr "Posa en pausa l'emissora de ràdio"
+
+msgid "Personalized with your YouTube Music account from {}"
+msgstr "Personalitzat amb el vostre compte de YouTube Music de {}"
+
+msgid "Pick a color, or type one as #rrggbb and press Enter."
+msgstr "Trieu un color, o escriviu-lo com a #rrggbb i premeu Retorn."
+
+msgid "Pick a mood or genre to see its playlists"
+msgstr "Trieu un estat d'ànim o un gènere per a veure'n les llistes de reproducció"
+
+msgid "Play"
+msgstr "Reprodueix"
+
+msgid "Play \"{}\" and the rest of this shelf"
+msgstr "Reprodueix «{}» i la resta d'aquest prestatge"
+
+msgid "Play a YouTube link"
+msgstr "Reprodueix un enllaç de YouTube"
+
+msgid "Play album"
+msgstr "Reprodueix l'àlbum"
+
+msgid "Play all"
+msgstr "Reprodueix-ho tot"
+
+msgid "Play all {n} song"
+msgid_plural "Play all {n} songs"
+msgstr[0] "Reprodueix {n} cançó"
+msgstr[1] "Reprodueix les {n} cançons"
+
+msgid "Play count"
+msgstr "Nombre de reproduccions"
+
+msgid "Play every song in {} and its subfolders"
+msgstr "Reprodueix totes les cançons de {} i les seves subcarpetes"
+
+msgid "Play from here"
+msgstr "Reprodueix des d'aquí"
+
+msgid "Play from this song"
+msgstr "Reprodueix des d'aquesta cançó"
+
+msgid "Play from {}"
+msgstr "Reprodueix des de {}"
+
+msgid "Play next"
+msgstr "Reprodueix a continuació"
+
+msgid "Play the album"
+msgstr "Reprodueix l'àlbum"
+
+msgid "Play the playlist"
+msgstr "Reprodueix la llista de reproducció"
+
+msgid "Play the radio station"
+msgstr "Reprodueix l'emissora de ràdio"
+
+msgid "Play this link after the current song"
+msgstr "Reprodueix aquest enllaç després de la cançó actual"
+
+msgid "Play this link now"
+msgstr "Reprodueix aquest enllaç ara"
+
+msgid "Play {}"
+msgstr "Reprodueix {}"
+
+msgid "Play {} next"
+msgstr "Reprodueix {} a continuació"
+
+msgid "Play {} with its subfolders"
+msgstr "Reprodueix {} amb les seves subcarpetes"
+
+msgid "Playback"
+msgstr "Reproducció"
+
+msgid "Playback failed: {}"
+msgstr "Ha fallat la reproducció: {}"
+
+msgid "Playing {} failed: {}"
+msgstr "Ha fallat la reproducció de {}: {}"
+
+msgid "PLAYLIST"
+msgstr "LLISTA DE REPRODUCCIÓ"
+
+msgid "Playlist"
+msgstr "Llista de reproducció"
+
+msgid "playlist"
+msgstr "llista de reproducció"
+
+msgid "Playlist name"
+msgstr "Nom de la llista de reproducció"
+
+msgid "Playlists"
+msgstr "Llistes de reproducció"
+
+msgid "Plays"
+msgstr "Reproduccions"
+
+msgid "Plays YouTube tracks. Leave empty to use yt-dlp from your PATH."
+msgstr "Reprodueix pistes de YouTube. Deixeu-ho buit per a usar el yt-dlp del PATH."
+
+msgid "Preload the next song so it starts without a pause."
+msgstr "Precarrega la cançó següent perquè comenci sense pausa."
+
+msgid "Previous"
+msgstr "Anterior"
+
+msgid "Previous is unavailable while a radio station plays"
+msgstr "Anterior no està disponible mentre sona una emissora de ràdio"
+
+msgid "Purple"
+msgstr "Lila"
+
+msgid "Queue"
+msgstr "Cua"
+
+msgid "Radio"
+msgstr "Ràdio"
+
+msgid "Random"
+msgstr "Aleatori"
+
+msgid "Rate {n} star"
+msgid_plural "Rate {n} stars"
+msgstr[0] "Valora amb {n} estrella"
+msgstr[1] "Valora amb {n} estrelles"
+
+msgid "Rating"
+msgstr "Valoració"
+
+msgid "Recently added"
+msgstr "Afegits recentment"
+
+msgid "Recently played"
+msgstr "Reproduïts recentment"
+
+msgid "Red"
+msgstr "Vermell"
+
+msgid "Refresh"
+msgstr "Actualitza"
+
+msgid "Refresh this section"
+msgstr "Actualitza aquesta secció"
+
+msgid "Release year"
+msgstr "Any de llançament"
+
+msgid "Remove"
+msgstr "Treu"
+
+msgid "Remove from favorites"
+msgstr "Treu dels preferits"
+
+msgid "Remove from playlist"
+msgstr "Treu de la llista de reproducció"
+
+msgid "Remove from queue"
+msgstr "Treu de la cua"
+
+msgid "Removed {n} song from \"{}\""
+msgid_plural "Removed {n} songs from \"{}\""
+msgstr[0] "S'ha tret {n} cançó de «{}»"
+msgstr[1] "S'han tret {n} cançons de «{}»"
+
+msgid "Removing..."
+msgstr "S'està traient..."
+
+msgid "Repeat: all"
+msgstr "Repeteix: totes"
+
+msgid "Repeat: off"
+msgstr "Repeteix: desactivat"
+
+msgid "Repeat: one"
+msgstr "Repeteix: una"
+
+msgid "ReplayGain"
+msgstr "ReplayGain"
+
+msgid "Report what you play to the server."
+msgstr "Informa el servidor del que reproduïu."
+
+msgid "Rescan the library for new content"
+msgstr "Torna a escanejar la biblioteca per trobar contingut nou"
+
+msgid "Resize column"
+msgstr "Redimensiona la columna"
+
+msgid "Save"
+msgstr "Desa"
+
+msgid "Save on this device"
+msgstr "Desa en aquest dispositiu"
+
+msgid "Save the changes on the server"
+msgstr "Desa els canvis al servidor"
+
+msgid "Save the changes on this device"
+msgstr "Desa els canvis en aquest dispositiu"
+
+msgid "Save to favorites on this device"
+msgstr "Desa als preferits d'aquest dispositiu"
+
+msgid "Save to server"
+msgstr "Desa al servidor"
+
+msgid "Saved on this device"
+msgstr "Desada en aquest dispositiu"
+
+msgid "Saved on this device, click to remove"
+msgstr "Desada en aquest dispositiu, feu clic per a treure-la"
+
+msgid "Saving the station to the server..."
+msgstr "S'està desant l'emissora al servidor..."
+
+msgid "Saving to the server..."
+msgstr "S'està desant al servidor..."
+
+msgid "Saving..."
+msgstr "S'està desant..."
+
+msgid "Scanning the library for new content..."
+msgstr "S'està escanejant la biblioteca per trobar contingut nou..."
+
+msgid "Scanning the library: {}"
+msgstr "S'està escanejant la biblioteca: {}"
+
+msgid "Scrobble"
+msgstr "Scrobble"
+
+msgid "Scroll left"
+msgstr "Desplaça a l'esquerra"
+
+msgid "Scroll lists and the queue to the song that is playing."
+msgstr "Desplaça les llistes i la cua fins a la cançó que sona."
+
+msgid "Scroll right"
+msgstr "Desplaça a la dreta"
+
+msgid "Search"
+msgstr "Cerca"
+
+msgid "Search failed: {}"
+msgstr "Ha fallat la cerca: {}"
+
+msgid "SEARCH RESULTS"
+msgstr "RESULTATS DE LA CERCA"
+
+msgid "Search songs on YouTube Music"
+msgstr "Cerca cançons a YouTube Music"
+
+msgid "Search songs, albums, artists"
+msgstr "Cerca cançons, àlbums, artistes"
+
+msgid "Search the radio-browser.info directory"
+msgstr "Cerca al directori radio-browser.info"
+
+msgid "Search your library for songs, albums and artists"
+msgstr "Cerca cançons, àlbums i artistes a la vostra biblioteca"
+
+msgid "Searched from top to bottom until one has lyrics."
+msgstr "Es consulten de dalt a baix fins que una té la lletra."
+
+msgid "Searching for lyrics..."
+msgstr "S'està cercant la lletra..."
+
+msgid "Searching the radio directory failed: {}"
+msgstr "Ha fallat la cerca al directori de ràdios: {}"
+
+msgid "Searching the radio-browser.info directory"
+msgstr "S'està cercant al directori radio-browser.info"
+
+msgid "Searching..."
+msgstr "S'està cercant..."
+
+msgid "Seeking is unavailable for live radio"
+msgstr "No es pot avançar ni retrocedir en una ràdio en directe"
+
+msgid "Server"
+msgstr "Servidor"
+
+msgid "Server type"
+msgstr "Tipus de servidor"
+
+msgid "Servers"
+msgstr "Servidors"
+
+msgid "Set rating"
+msgstr "Valora"
+
+msgid "Settings"
+msgstr "Configuració"
+
+msgid "Share"
+msgstr "Comparteix"
+
+msgid "Share ({})"
+msgstr "Comparteix ({})"
+
+msgid "Share link copied to the clipboard: {}"
+msgstr "S'ha copiat l'enllaç per a compartir al porta-retalls: {}"
+
+msgid "Share this {}: copy a public link"
+msgstr "Comparteix {}: copia un enllaç públic"
+
+msgid "Sharing is unavailable: {}"
+msgstr "No es pot compartir: {}"
+
+msgid "SHOW LESS"
+msgstr "MOSTRA'N MENYS"
+
+msgid "Show lyrics"
+msgstr "Mostra la lletra"
+
+msgid "SHOW MORE"
+msgstr "MOSTRA'N MÉS"
+
+msgid "Show more"
+msgstr "Mostra'n més"
+
+msgid "Show playlists for {}"
+msgstr "Mostra les llistes de reproducció de {}"
+
+msgid "Show queue"
+msgstr "Mostra la cua"
+
+msgid "Show the current song on your Discord profile."
+msgstr "Mostra la cançó actual al vostre perfil de Discord."
+
+msgid "Show the next page of stations"
+msgstr "Mostra la pàgina següent d'emissores"
+
+msgid "Show the queue next to the library; remembered on the next start."
+msgstr "Mostra la cua al costat de la biblioteca; es recorda en el proper inici."
+
+msgid "Show the server and saved stations"
+msgstr "Mostra les emissores del servidor i les desades"
+
+msgid "Show {}"
+msgstr "Mostra {}"
+
+msgid "Showing playlists for {}"
+msgstr "Es mostren les llistes de reproducció de {}"
+
+msgid "Showing the charts for {}"
+msgstr "Es mostren les llistes d'èxits de {}"
+
+msgid "Showing the radio-browser.info directory"
+msgstr "Es mostra el directori radio-browser.info"
+
+msgid "Showing the server and saved stations"
+msgstr "Es mostren les emissores del servidor i les desades"
+
+msgid "Shuffle"
+msgstr "Mescla"
+
+msgid "Shuffle every song in {} and its subfolders"
+msgstr "Reprodueix aleatòriament totes les cançons de {} i les seves subcarpetes"
+
+msgid "Shuffle play"
+msgstr "Reproducció aleatòria"
+
+msgid "Shuffle: off"
+msgstr "Mescla: desactivada"
+
+msgid "Shuffle: on"
+msgstr "Mescla: activada"
+
+msgid "Sign in"
+msgstr "Inicia la sessió"
+
+msgid "Sign in with browser"
+msgstr "Inicia la sessió amb el navegador"
+
+msgid "Sign out and forget this server's saved login?"
+msgstr "Voleu tancar la sessió i oblidar l'inici de sessió desat d'aquest servidor?"
+
+msgid "Sign out and forget this server?"
+msgstr "Voleu tancar la sessió i oblidar aquest servidor?"
+
+msgid "Similar"
+msgstr "Semblants"
+
+msgid "Similar songs come from your server, so YouTube tracks have none"
+msgstr "Les cançons semblants vénen del vostre servidor, així que les pistes de YouTube no en tenen"
+
+msgid "Sleep timer: off"
+msgstr "Temporitzador: desactivat"
+
+msgid "Sleep timer: {}"
+msgstr "Temporitzador: {}"
+
+msgid "Song count"
+msgstr "Nombre de cançons"
+
+msgid "Songs"
+msgstr "Cançons"
+
+msgid "Sort by {}"
+msgstr "Ordena per {}"
+
+msgid "Sort by {}: ascending"
+msgstr "Ordena per {}: ascendent"
+
+msgid "Sort by {}: descending"
+msgstr "Ordena per {}: descendent"
+
+msgid "Sort: ascending"
+msgstr "Ordre: ascendent"
+
+msgid "Sort: descending"
+msgstr "Ordre: descendent"
+
+msgid "Starting volume, shared with the player bar."
+msgstr "Volum inicial, compartit amb la barra del reproductor."
+
+msgid "Station data from radio-browser.info"
+msgstr "Dades de les emissores de radio-browser.info"
+
+msgid "Station name"
+msgstr "Nom de l'emissora"
+
+msgid "Stations"
+msgstr "Emissores"
+
+msgid "Stop {}"
+msgstr "Atura {}"
+
+msgid "Stream URL"
+msgstr "URL de transmissió"
+
+msgid "Switch"
+msgstr "Canvia"
+
+msgid "Switch between a dark and a light theme with the desktop. {}"
+msgstr "Canvia entre un tema fosc i un de clar segons l'escriptori. {}"
+
+msgid "Switch to grid view"
+msgstr "Canvia a la vista de quadrícula"
+
+msgid "Switch to list view"
+msgstr "Canvia a la vista de llista"
+
+msgid "System default"
+msgstr "Predeterminat del sistema"
+
+msgid "System default follows the language of the desktop."
+msgstr "El predeterminat del sistema segueix la llengua de l'escriptori."
+
+msgid "Tag, for example jazz"
+msgstr "Etiqueta, per exemple jazz"
+
+msgid "The desktop currently prefers dark."
+msgstr "Ara l'escriptori prefereix el fosc."
+
+msgid "The desktop currently prefers light."
+msgstr "Ara l'escriptori prefereix el clar."
+
+msgid "The desktop has no preference, so the dark theme is used."
+msgstr "L'escriptori no té cap preferència, així que s'usa el tema fosc."
+
+msgid "The library scan is still running on the server"
+msgstr "L'escaneig de la biblioteca encara està en curs al servidor"
+
+msgid "The queue is empty"
+msgstr "La cua és buida"
+
+msgid "The queue is incomplete: loading the rest of the list failed ({})"
+msgstr "La cua és incompleta: no s'ha pogut carregar la resta de la llista ({})"
+
+msgid "The radio directory could not be reached"
+msgstr "No s'ha pogut accedir al directori de ràdios"
+
+msgid "The radio station stopped streaming"
+msgstr "L'emissora de ràdio ha deixat de transmetre"
+
+msgid "The server refused the station: {}"
+msgstr "El servidor ha rebutjat l'emissora: {}"
+
+msgid "Theme"
+msgstr "Tema"
+
+msgid "There is nothing to play in this list"
+msgstr "No hi ha res per reproduir en aquesta llista"
+
+msgid "This Discover page does not exist"
+msgstr "Aquesta pàgina de Descobreix no existeix"
+
+msgid "This folder is empty"
+msgstr "Aquesta carpeta és buida"
+
+msgid "This playlist is empty"
+msgstr "Aquesta llista de reproducció és buida"
+
+msgid "This server has no internet radio. Stations you add are saved on this device."
+msgstr "Aquest servidor no té ràdio per internet. Les emissores que afegiu es desen en aquest dispositiu."
+
+msgid "this server has no public share links"
+msgstr "aquest servidor no té enllaços públics per a compartir"
+
+msgid "Time"
+msgstr "Temps"
+
+msgid "Title"
+msgstr "Títol"
+
+msgid "Top songs"
+msgstr "Millors cançons"
+
+msgid "Track"
+msgstr "Pista"
+
+msgid "Tracks"
+msgstr "Pistes"
+
+msgid "Transcode format"
+msgstr "Format de transcodificació"
+
+msgid "Try again"
+msgstr "Torna-ho a provar"
+
+msgid "Turn off the theme accent color to pick your own."
+msgstr "Desactiveu el color de ressaltat del tema per a triar-ne un de propi."
+
+msgid "Unmute"
+msgstr "Activa el so"
+
+msgid "Up next"
+msgstr "A continuació"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "Use the theme accent color"
+msgstr "Usa el color de ressaltat del tema"
+
+msgid "Use {}"
+msgstr "Usa {}"
+
+msgid "Used while the desktop prefers dark."
+msgstr "S'usa quan l'escriptori prefereix el fosc."
+
+msgid "Used while the desktop prefers light."
+msgstr "S'usa quan l'escriptori prefereix el clar."
+
+msgid "Username"
+msgstr "Nom d'usuari"
+
+msgid "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Feishin deletes right after reading."
+msgstr "Usa la vostra sessió de YouTube en aquest navegador per a un inici de Descobreix personalitzat i àudio Premium. yt-dlp en copia les galetes a un fitxer temporal privat que el Feishin elimina just després de llegir-lo."
+
+msgid "Volume"
+msgstr "Volum"
+
+msgid "Volume {}%"
+msgstr "Volum {}%"
+
+msgid "XDG_RUNTIME_DIR is not set, so there is no private place for the cookies"
+msgstr "XDG_RUNTIME_DIR no està definit, així que no hi ha cap lloc privat per a les galetes"
+
+msgid "Year"
+msgstr "Any"
+
+msgid "You are here: {}"
+msgstr "Sou aquí: {}"
+
+msgid "Your user is not allowed to share on this server"
+msgstr "El vostre usuari no té permís per a compartir en aquest servidor"
+
+msgid "YouTube"
+msgstr "YouTube"
+
+msgid "YouTube albums are not in your library"
+msgstr "Els àlbums de YouTube no són a la vostra biblioteca"
+
+msgid "YouTube artists are not in your library"
+msgstr "Els artistes de YouTube no són a la vostra biblioteca"
+
+msgid "yt-dlp program"
+msgstr "Programa yt-dlp"
+
+msgid "{n} album"
+msgid_plural "{n} albums"
+msgstr[0] "{n} àlbum"
+msgstr[1] "{n} àlbums"
+
+msgid "{n} folder"
+msgid_plural "{n} folders"
+msgstr[0] "{n} carpeta"
+msgstr[1] "{n} carpetes"
+
+msgid "{n} item so far"
+msgid_plural "{n} items so far"
+msgstr[0] "{n} element fins ara"
+msgstr[1] "{n} elements fins ara"
+
+msgid "{n} minute"
+msgid_plural "{n} minutes"
+msgstr[0] "{n} minut"
+msgstr[1] "{n} minuts"
+
+msgid "{n} selected"
+msgid_plural "{n} selected"
+msgstr[0] "{n} seleccionada"
+msgstr[1] "{n} seleccionades"
+
+msgid "{n} song"
+msgid_plural "{n} songs"
+msgstr[0] "{n} cançó"
+msgstr[1] "{n} cançons"
+
+msgid "{n} song from \"{}\" will play next"
+msgid_plural "{n} songs from \"{}\" will play next"
+msgstr[0] "{n} cançó de «{}» sonarà a continuació"
+msgstr[1] "{n} cançons de «{}» sonaran a continuació"
+
+msgid "{n} song on YouTube Music"
+msgid_plural "{n} songs on YouTube Music"
+msgstr[0] "{n} cançó a YouTube Music"
+msgstr[1] "{n} cançons a YouTube Music"
+
+msgid "{n} song will play next"
+msgid_plural "{n} songs will play next"
+msgstr[0] "{n} cançó sonarà a continuació"
+msgstr[1] "{n} cançons sonaran a continuació"
+
+msgid "{} (current theme)"
+msgstr "{} (tema actual)"
+
+msgid "{} (unavailable)"
+msgstr "{} (no disponible)"
+
+msgid "{} at {}"
+msgstr "{} a {}"
+
+msgid "{} cannot be played: its stream address is not an internet stream"
+msgstr "No es pot reproduir {}: l'adreça de transmissió no és una transmissió d'internet"
+
+msgid "{} is shown"
+msgstr "Es mostra {}"
+
+msgid "{} kbps"
+msgstr "{} kbps"
+
+msgid "{} s"
+msgstr "{} s"
+
+msgid "{}: off"
+msgstr "{}: desactivat"
+
+msgid "{}: on"
+msgstr "{}: activat"
+
+msgid "{}: {} (dark)"
+msgstr "{}: {} (fosc)"
+
+msgid "{}: {} (light)"
+msgstr "{}: {} (clar)"

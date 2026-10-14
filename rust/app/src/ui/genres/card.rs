@@ -33,8 +33,7 @@ pub fn album_artist_names(album: &Album) -> String {
 
 pub fn album_count_label(album_count: Option<u32>) -> String {
     match album_count {
-        Some(1) => "1 album".to_owned(),
-        Some(count) => format!("{count} albums"),
+        Some(count) => tr_plural!("{n} album", "{n} albums", count),
         None => String::new(),
     }
 }

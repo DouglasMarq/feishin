@@ -6,7 +6,6 @@ use feishin_core::model::Playlist;
 use slint::ComponentHandle;
 
 use super::streamed::{ListedAdd, add_listed_songs, add_listed_to_existing};
-use crate::ui::playlists::song_count_label;
 use crate::ui::tracks::ListedSongs;
 use crate::ui::{AppWindow, Context, on_ui, playlist_detail, playlists, show_status};
 
@@ -22,7 +21,13 @@ fn progress_reporter(
 ) -> impl Fn(usize) + Send + 'static {
     let (weak, name) = (window.as_weak(), name.to_owned());
     move |read| {
-        let message = format!("Adding to \"{name}\": {read} of {total} songs");
+        let message = tr_plural!(
+            "Adding to \"{}\": {} of {n} song",
+            "Adding to \"{}\": {} of {n} songs",
+            total,
+            name,
+            read
+        );
         on_ui(&weak, move |window| show_status(window, &message));
     }
 }
@@ -47,13 +52,23 @@ pub fn add_listed(
 }
 
 fn finish_add(window: &AppWindow, picked: &PickedPlaylist, outcome: ListedAdd) {
-    let name = &picked.name;
-    let added = song_count_label(outcome.added);
-    let message = match (outcome.failure, outcome.added) {
-        (None, 0) => format!("Already in \"{name}\""),
-        (None, _) => format!("Added {added} to \"{name}\""),
-        (Some(error), 0) => format!("Could not add to \"{name}\": {error}"),
-        (Some(error), _) => format!("Added only {added} to \"{name}\": {error}"),
+    let (name, added) = (&picked.name, outcome.added);
+    let message = match (outcome.failure, added) {
+        (None, 0) => tr!("Already in \"{}\"", name),
+        (None, _) => tr_plural!(
+            "Added {n} song to \"{}\"",
+            "Added {n} songs to \"{}\"",
+            added,
+            name
+        ),
+        (Some(error), 0) => tr!("Could not add to \"{}\": {}", name, error),
+        (Some(error), _) => tr_plural!(
+            "Added only {n} song to \"{}\": {}",
+            "Added only {n} songs to \"{}\": {}",
+            added,
+            name,
+            error
+        ),
     };
     show_status(window, &message);
     if outcome.added > 0 {
@@ -101,11 +116,22 @@ async fn create_and_fill(
 }
 
 fn finish_create(window: &AppWindow, created: feishin_api::Result<String>, outcome: ListedAdd) {
-    let added = song_count_label(outcome.added);
+    let added = outcome.added;
     let message = match (created, outcome.failure) {
-        (Err(error), _) => format!("Could not create the playlist: {error}"),
-        (Ok(name), None) => format!("Created \"{name}\" with {added}"),
-        (Ok(name), Some(error)) => format!("Created \"{name}\" with only {added}: {error}"),
+        (Err(error), _) => tr!("Could not create the playlist: {}", error),
+        (Ok(name), None) => tr_plural!(
+            "Created \"{}\" with {n} song",
+            "Created \"{}\" with {n} songs",
+            added,
+            name
+        ),
+        (Ok(name), Some(error)) => tr_plural!(
+            "Created \"{}\" with only {n} song: {}",
+            "Created \"{}\" with only {n} songs: {}",
+            added,
+            name,
+            error
+        ),
     };
     show_status(window, &message);
     playlists::refresh(window);

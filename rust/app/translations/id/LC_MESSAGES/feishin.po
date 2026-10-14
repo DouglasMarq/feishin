@@ -1,0 +1,1498 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: id\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+
+msgid "\"{}\" plays next"
+msgstr "Berikutnya: \"{}\""
+
+msgid "\"{}\" will play next"
+msgstr "\"{}\" akan diputar berikutnya"
+
+msgid "1 star"
+msgstr "1 bintang"
+
+msgid "2 stars"
+msgstr "2 bintang"
+
+msgid "3 stars"
+msgstr "3 bintang"
+
+msgid "4 stars"
+msgstr "4 bintang"
+
+msgid "5 stars"
+msgstr "5 bintang"
+
+msgid "About {}"
+msgstr "Tentang {0}"
+
+msgid "Accent color"
+msgstr "Warna sorotan"
+
+msgid "Accent color not changed: {}."
+msgstr "Warna sorotan tidak diubah: {}."
+
+msgid "Accent color {}"
+msgstr "Warna sorotan {}"
+
+msgid "Accent color {} (selected)"
+msgstr "Warna sorotan {} (dipilih)"
+
+msgid "Accent color {} (theme accent in use)"
+msgstr "Warna sorotan {} (sorotan tema sedang digunakan)"
+
+msgid "Add a station by its stream URL"
+msgstr "Tambahkan stasiun melalui URL stream-nya"
+
+msgid "Add all songs to the queue"
+msgstr "Tambahkan semua lagu ke antrean"
+
+msgid "Add server"
+msgstr "Tambah server"
+
+msgid "Add station"
+msgstr "Tambah stasiun"
+
+msgid "Add this link to the end of the queue"
+msgstr "Tambahkan tautan ini ke akhir antrean"
+
+msgid "Add this station to the server for every client"
+msgstr "Tambahkan stasiun ini ke server untuk semua klien"
+
+msgid "Add to favorites"
+msgstr "Tambahkan ke favorit"
+
+msgid "Add to playlist"
+msgstr "Tambahkan ke daftar putar"
+
+msgid "Add to queue"
+msgstr "Tambahkan ke antrean"
+
+msgid "Add to the server's stations"
+msgstr "Tambahkan ke stasiun server"
+
+msgid "Add {n} song to playlist"
+msgid_plural "Add {n} songs to playlist"
+msgstr[0] "Tambahkan {n} lagu ke daftar putar"
+
+msgid "Add {} to the queue"
+msgstr "Tambahkan {} ke antrean"
+
+msgid "Added \"{}\" to the queue"
+msgstr "\"{}\" ditambahkan ke antrean"
+
+msgid "Added only {n} song to \"{}\": {}"
+msgid_plural "Added only {n} songs to \"{}\": {}"
+msgstr[0] "Hanya {n} lagu yang ditambahkan ke \"{}\": {}"
+
+msgid "Added {n} song from \"{}\" to the queue"
+msgid_plural "Added {n} songs from \"{}\" to the queue"
+msgstr[0] "{n} lagu dari \"{}\" ditambahkan ke antrean"
+
+msgid "Added {n} song to \"{}\""
+msgid_plural "Added {n} songs to \"{}\""
+msgstr[0] "{n} lagu ditambahkan ke \"{}\""
+
+msgid "Added {n} song to the queue"
+msgid_plural "Added {n} songs to the queue"
+msgstr[0] "{n} lagu ditambahkan ke antrean"
+
+msgid "Adding to \"{}\": {} of {n} song"
+msgid_plural "Adding to \"{}\": {} of {n} songs"
+msgstr[0] "Menambahkan ke \"{}\": {} dari {n} lagu"
+
+msgid "ALBUM"
+msgstr "ALBUM"
+
+msgid "Album"
+msgstr "Album"
+
+msgid "album"
+msgstr "album"
+
+msgid "Album artist"
+msgstr "Artis album"
+
+msgid "Album count"
+msgstr "Jumlah album"
+
+msgid "Album not found"
+msgstr "Album tidak ditemukan"
+
+msgid "Albums"
+msgstr "Album"
+
+msgid "All genres"
+msgstr "Semua genre"
+
+msgid "Already at the end"
+msgstr "Sudah di akhir"
+
+msgid "Already at the start"
+msgstr "Sudah di awal"
+
+msgid "Already in \"{}\""
+msgstr "Sudah ada di \"{}\""
+
+msgid "Already on the server"
+msgstr "Sudah ada di server"
+
+msgid "Amber"
+msgstr "Kuning amber"
+
+msgid "Appearance"
+msgstr "Tampilan"
+
+msgid "ARTIST"
+msgstr "ARTIS"
+
+msgid "Artist"
+msgstr "Artis"
+
+msgid "Artists"
+msgstr "Artis"
+
+msgid "Ask the server to transcode down to this bitrate. Applies from the next song."
+msgstr "Minta server mentranskode turun ke bitrate ini. Berlaku mulai lagu berikutnya."
+
+msgid "Audio device"
+msgstr "Perangkat audio"
+
+msgid "Automatic ({})"
+msgstr "Otomatis ({})"
+
+msgid "Back"
+msgstr "Kembali"
+
+msgid "Blue"
+msgstr "Biru"
+
+msgid "by {}"
+msgstr "oleh {}"
+
+msgid "Cancel"
+msgstr "Batal"
+
+msgid "Cancel timer"
+msgstr "Batalkan pengatur waktu"
+
+msgid "Cannot share: {}"
+msgstr "Tidak dapat membagikan: {}"
+
+msgid "Chart country"
+msgstr "Negara tangga lagu"
+
+msgid "Charts"
+msgstr "Tangga lagu"
+
+msgid "Choose a browser under Settings, YouTube to sign in for a personalized home"
+msgstr "Pilih browser di Pengaturan, bagian YouTube, untuk masuk dan mendapatkan beranda yang dipersonalisasi"
+
+msgid "Clear"
+msgstr "Bersihkan"
+
+msgid "Clear filters"
+msgstr "Hapus filter"
+
+msgid "Clear rating"
+msgstr "Hapus penilaian"
+
+msgid "Clear the favorites and genre filters"
+msgstr "Hapus filter favorit dan genre"
+
+msgid "Close"
+msgstr "Tutup"
+
+msgid "Close now playing"
+msgstr "Tutup Sedang diputar"
+
+msgid "Close without saving"
+msgstr "Tutup tanpa menyimpan"
+
+msgid "Colors used across the whole app."
+msgstr "Warna yang digunakan di seluruh aplikasi."
+
+msgid "Connect to your music server"
+msgstr "Hubungkan ke server musik Anda"
+
+msgid "Connecting..."
+msgstr "Menghubungkan..."
+
+msgid "Could not add to \"{}\": {}"
+msgstr "Tidak dapat menambahkan ke \"{}\": {}"
+
+msgid "Could not add {} to the server"
+msgstr "Tidak dapat menambahkan {} ke server"
+
+msgid "Could not create a share link: {}"
+msgstr "Tidak dapat membuat tautan berbagi: {}"
+
+msgid "Could not create the playlist: {}"
+msgstr "Tidak dapat membuat daftar putar: {}"
+
+msgid "Could not delete the playlist: {}"
+msgstr "Tidak dapat menghapus daftar putar: {}"
+
+msgid "Could not delete the station"
+msgstr "Tidak dapat menghapus stasiun"
+
+msgid "Could not load albums: {}"
+msgstr "Tidak dapat memuat album: {}"
+
+msgid "Could not load artists: {}"
+msgstr "Tidak dapat memuat artis: {}"
+
+msgid "Could not load Discover: {}"
+msgstr "Tidak dapat memuat Jelajahi: {}"
+
+msgid "Could not load genres: {}"
+msgstr "Tidak dapat memuat genre: {}"
+
+msgid "Could not load it from YouTube Music: {}"
+msgstr "Tidak dapat memuatnya dari YouTube Music: {}"
+
+msgid "Could not load lyrics"
+msgstr "Tidak dapat memuat lirik"
+
+msgid "Could not load moods and genres: {}"
+msgstr "Tidak dapat memuat suasana hati dan genre: {}"
+
+msgid "Could not load more results: {}"
+msgstr "Tidak dapat memuat hasil lainnya: {}"
+
+msgid "Could not load new releases: {}"
+msgstr "Tidak dapat memuat rilisan baru: {}"
+
+msgid "Could not load playlists: {}"
+msgstr "Tidak dapat memuat daftar putar: {}"
+
+msgid "Could not load the album: {}"
+msgstr "Tidak dapat memuat album ini: {}"
+
+msgid "Could not load the artist: {}"
+msgstr "Tidak dapat memuat artis ini: {}"
+
+msgid "Could not load the charts: {}"
+msgstr "Tidak dapat memuat tangga lagu: {}"
+
+msgid "Could not load the folder: {}"
+msgstr "Tidak dapat memuat folder: {}"
+
+msgid "Could not load the list: {}"
+msgstr "Tidak dapat memuat daftar: {}"
+
+msgid "Could not load the playlist: {}"
+msgstr "Tidak dapat memuat daftar putar ini: {}"
+
+msgid "Could not load the radio stations: {}"
+msgstr "Tidak dapat memuat stasiun radio: {}"
+
+msgid "Could not load the selection: {}"
+msgstr "Tidak dapat memuat pilihan: {}"
+
+msgid "Could not load this page: {}"
+msgstr "Tidak dapat memuat halaman ini: {}"
+
+msgid "Could not load tracks: {}"
+msgstr "Tidak dapat memuat trek: {}"
+
+msgid "Could not load your home: {}"
+msgstr "Tidak dapat memuat beranda Anda: {}"
+
+msgid "Could not open the folder: {}"
+msgstr "Tidak dapat membuka folder: {}"
+
+msgid "Could not open YouTube Music: {}"
+msgstr "Tidak dapat membuka YouTube Music: {}"
+
+msgid "Could not play \"{}\" from YouTube: {}"
+msgstr "Tidak dapat memutar \"{}\" dari YouTube: {}"
+
+msgid "Could not play album: {}"
+msgstr "Tidak dapat memutar album: {}"
+
+msgid "Could not play from YouTube: {}"
+msgstr "Tidak dapat memutar dari YouTube: {}"
+
+msgid "Could not play the album: {}"
+msgstr "Tidak dapat memutar album ini: {}"
+
+msgid "Could not remove songs: {}"
+msgstr "Tidak dapat menghapus lagu: {}"
+
+msgid "Could not rescan the library: {}"
+msgstr "Tidak dapat memindai ulang pustaka: {}"
+
+msgid "Could not set the rating: {}"
+msgstr "Tidak dapat menyetel penilaian: {}"
+
+msgid "Could not sign in to YouTube Music ({}). Showing general picks instead."
+msgstr "Tidak dapat masuk ke YouTube Music ({}). Menampilkan pilihan umum sebagai gantinya."
+
+msgid "Could not switch server: {}"
+msgstr "Tidak dapat beralih server: {}"
+
+msgid "Could not update favorite: {}"
+msgstr "Tidak dapat memperbarui favorit: {}"
+
+msgid "Could not update favorites: {}"
+msgstr "Tidak dapat memperbarui daftar favorit: {}"
+
+msgid "Could not update rating: {}"
+msgstr "Tidak dapat memperbarui penilaian: {}"
+
+msgid "Could not update the favorite: {}"
+msgstr "Tidak dapat memperbarui status favorit: {}"
+
+msgid "Country"
+msgstr "Negara"
+
+msgid "Create"
+msgstr "Buat"
+
+msgid "Created \"{}\" with only {n} song: {}"
+msgid_plural "Created \"{}\" with only {n} songs: {}"
+msgstr[0] "\"{}\" dibuat dengan hanya {n} lagu: {}"
+
+msgid "Created \"{}\" with {n} song"
+msgid_plural "Created \"{}\" with {n} songs"
+msgstr[0] "\"{}\" dibuat dengan {n} lagu"
+
+msgid "Created playlist \"{}\""
+msgstr "Daftar putar \"{}\" dibuat"
+
+msgid "Creating a share link..."
+msgstr "Membuat tautan berbagi..."
+
+msgid "Creating..."
+msgstr "Membuat..."
+
+msgid "Crossfade"
+msgstr "Crossfade"
+
+msgid "Crossfade could not be changed: {}"
+msgstr "Crossfade tidak dapat diubah: {}"
+
+msgid "Crossfade: {}"
+msgstr "Crossfade: {}"
+
+msgid "Current"
+msgstr "Saat ini"
+
+msgid "Custom accent color: {} (theme accent in use)"
+msgstr "Warna sorotan kustom: {} (sorotan tema sedang digunakan)"
+
+msgid "Custom accent color: {}, press Enter to apply"
+msgstr "Warna sorotan kustom: {}, tekan Enter untuk menerapkan"
+
+msgid "Dark theme"
+msgstr "Tema gelap"
+
+msgid "DARK THEMES"
+msgstr "TEMA GELAP"
+
+msgid "Default country for the Discover charts. Automatic follows your system region."
+msgstr "Negara default untuk tangga lagu Jelajahi. Otomatis mengikuti wilayah sistem Anda."
+
+msgid "Default Dark"
+msgstr "Gelap default"
+
+msgid "Default Light"
+msgstr "Terang default"
+
+msgid "Delete"
+msgstr "Hapus"
+
+msgid "Delete \"{}\" from the server? This cannot be undone."
+msgstr "Hapus \"{}\" dari server? Tindakan ini tidak dapat dibatalkan."
+
+msgid "Delete \"{}\"? This cannot be undone."
+msgstr "Hapus \"{}\"? Tindakan ini tidak dapat dibatalkan."
+
+msgid "Delete playlist"
+msgstr "Hapus daftar putar"
+
+msgid "Delete station"
+msgstr "Hapus stasiun"
+
+msgid "Delete {} from the server"
+msgstr "Hapus {} dari server"
+
+msgid "Deleted playlist \"{}\""
+msgstr "Daftar putar \"{}\" dihapus"
+
+msgid "Deleting..."
+msgstr "Menghapus..."
+
+msgid "Demo mode: these picks are made up and play from your demo library"
+msgstr "Mode demo: pilihan ini dibuat-buat dan diputar dari pustaka demo Anda"
+
+msgid "Directory"
+msgstr "Direktori"
+
+msgid "Disc {}"
+msgstr "Disk {}"
+
+msgid "Discord Rich Presence"
+msgstr "Discord Rich Presence"
+
+msgid "Discover"
+msgstr "Jelajahi"
+
+msgid "Discover is open"
+msgstr "Jelajahi sedang dibuka"
+
+msgid "Discover new music on YouTube Music"
+msgstr "Temukan musik baru di YouTube Music"
+
+msgid "Duration"
+msgstr "Durasi"
+
+msgid "Edit station"
+msgstr "Edit stasiun"
+
+msgid "Edit {}"
+msgstr "Edit {}"
+
+msgid "End of current track"
+msgstr "Akhir trek saat ini"
+
+msgid "End of track"
+msgstr "Akhir trek"
+
+msgid "Enter a name for the station"
+msgstr "Masukkan nama untuk stasiun"
+
+msgid "Enter a name, country or tag to search"
+msgstr "Masukkan nama, negara, atau tag untuk dicari"
+
+msgid "Enter a stream URL that starts with http:// or https://"
+msgstr "Masukkan URL stream yang diawali dengan http:// atau https://"
+
+msgid "Enter the server URL"
+msgstr "Masukkan URL server"
+
+msgid "Fade the end of each song into the next one. Off keeps gapless playback."
+msgstr "Memudarkan akhir setiap lagu ke lagu berikutnya. Mati mempertahankan pemutaran tanpa jeda."
+
+msgid "Favorite"
+msgstr "Favorit"
+
+msgid "Favorited"
+msgstr "Favorit"
+
+msgid "Favorites"
+msgstr "Favorit"
+
+msgid "Favorites only: off"
+msgstr "Hanya favorit: mati"
+
+msgid "Favorites only: on"
+msgstr "Hanya favorit: nyala"
+
+msgid "Filter"
+msgstr "Filter"
+
+msgid "Filter playlists"
+msgstr "Filter daftar putar"
+
+msgid "Find stations by name, country or tag"
+msgstr "Temukan stasiun berdasarkan nama, negara, atau tag"
+
+msgid "Find stations in the radio-browser.info directory"
+msgstr "Temukan stasiun di direktori radio-browser.info"
+
+msgid "Folder"
+msgstr "Folder"
+
+msgid "Folders"
+msgstr "Folder"
+
+msgid "Follow current song"
+msgstr "Ikuti lagu saat ini"
+
+msgid "Follow system color scheme"
+msgstr "Ikuti skema warna sistem"
+
+msgid "For you"
+msgstr "Untuk Anda"
+
+msgid "Forget this server?"
+msgstr "Lupakan server ini?"
+
+msgid "Format the server should transcode to. Applies from the next song."
+msgstr "Format tujuan transkode server. Berlaku mulai lagu berikutnya."
+
+msgid "Found {n} server in Feishin but it has no usable saved login"
+msgid_plural "Found {n} servers in Feishin but none with a usable saved login"
+msgstr[0] "Menemukan {n} server di Feishin, tetapi tidak ada yang memiliki login tersimpan yang dapat digunakan"
+
+msgid "Gapless playback"
+msgstr "Pemutaran tanpa jeda"
+
+msgid "Genres"
+msgstr "Genre"
+
+msgid "Go back to {}"
+msgstr "Kembali ke {}"
+
+msgid "Go to album"
+msgstr "Buka album"
+
+msgid "Go to artist"
+msgstr "Buka artis"
+
+msgid "Go to {}"
+msgstr "Buka {}"
+
+msgid "Green"
+msgstr "Hijau"
+
+msgid "Hide lyrics"
+msgstr "Sembunyikan lirik"
+
+msgid "Hide queue"
+msgstr "Sembunyikan antrean"
+
+msgid "High Contrast Dark"
+msgstr "Kontras tinggi gelap"
+
+msgid "High Contrast Light"
+msgstr "Kontras tinggi terang"
+
+msgid "Highlight with the color that comes with the theme."
+msgstr "Sorot dengan warna bawaan tema."
+
+msgid "Home"
+msgstr "Beranda"
+
+msgid "Homepage (optional)"
+msgstr "Situs web (opsional)"
+
+msgid "Import from Feishin"
+msgstr "Impor dari Feishin"
+
+msgid "Install yt-dlp to play YouTube tracks"
+msgstr "Instal yt-dlp untuk memutar trek YouTube"
+
+msgid "Integrations"
+msgstr "Integrasi"
+
+msgid "Interface"
+msgstr "Antarmuka"
+
+msgid "Internet radio"
+msgstr "Radio internet"
+
+msgid "item"
+msgstr "item"
+
+msgid "Jellyfin has no public share links"
+msgstr "Jellyfin tidak memiliki tautan berbagi publik"
+
+msgid "Keep this station in the favorites on this device"
+msgstr "Simpan stasiun ini di favorit pada perangkat ini"
+
+msgid "Language"
+msgstr "Bahasa"
+
+msgid "LIBRARY"
+msgstr "PUSTAKA"
+
+msgid "Library scan finished"
+msgstr "Pemindaian pustaka selesai"
+
+msgid "Library scan finished: {n} item"
+msgid_plural "Library scan finished: {n} items"
+msgstr[0] "Pemindaian pustaka selesai: {n} item"
+
+msgid "Light theme"
+msgstr "Tema terang"
+
+msgid "LIGHT THEMES"
+msgstr "TEMA TERANG"
+
+msgid "Listening to {}"
+msgstr "Mendengarkan {}"
+
+msgid "LIVE"
+msgstr "LIVE"
+
+msgid "Load more"
+msgstr "Muat lainnya"
+
+msgid "Load this section again"
+msgstr "Muat ulang bagian ini"
+
+msgid "Loading playlists..."
+msgstr "Memuat daftar putar..."
+
+msgid "Loading similar songs..."
+msgstr "Memuat lagu serupa..."
+
+msgid "Loading stations..."
+msgstr "Memuat stasiun..."
+
+msgid "Loading the next page of stations"
+msgstr "Memuat halaman stasiun berikutnya"
+
+msgid "Loading..."
+msgstr "Memuat..."
+
+msgid "Log out"
+msgstr "Keluar"
+
+msgid "Looking up the YouTube link..."
+msgstr "Mencari tautan YouTube..."
+
+msgid "Lyrics"
+msgstr "Lirik"
+
+msgid "Lyrics from {}"
+msgstr "Lirik dari {}"
+
+msgid "Lyrics sources"
+msgstr "Sumber lirik"
+
+msgid "Maximum bitrate"
+msgstr "Bitrate maksimum"
+
+msgid "Media keys and desktop media controls. Takes effect after a restart."
+msgstr "Tombol media dan kontrol media desktop. Berlaku setelah dimulai ulang."
+
+msgid "Moods and genres"
+msgstr "Suasana hati dan genre"
+
+msgid "Most played"
+msgstr "Paling sering diputar"
+
+msgid "Move down"
+msgstr "Pindahkan ke bawah"
+
+msgid "Move up"
+msgstr "Pindahkan ke atas"
+
+msgid "MPRIS"
+msgstr "MPRIS"
+
+msgid "Mute"
+msgstr "Bisukan"
+
+msgid "Name"
+msgstr "Nama"
+
+msgid "New playlist"
+msgstr "Daftar putar baru"
+
+msgid "New releases"
+msgstr "Rilisan baru"
+
+msgid "Next"
+msgstr "Berikutnya"
+
+msgid "Next is unavailable while a radio station plays"
+msgstr "Berikutnya tidak tersedia saat stasiun radio diputar"
+
+msgid "No albums"
+msgstr "Tidak ada album"
+
+msgid "No albums found"
+msgstr "Album tidak ditemukan"
+
+msgid "No artists found"
+msgstr "Artis tidak ditemukan"
+
+msgid "no browser is selected"
+msgstr "tidak ada browser yang dipilih"
+
+msgid "No favorite albums"
+msgstr "Tidak ada album favorit"
+
+msgid "No favorite artists"
+msgstr "Tidak ada artis favorit"
+
+msgid "No favorite tracks"
+msgstr "Tidak ada trek favorit"
+
+msgid "No genres found"
+msgstr "Genre tidak ditemukan"
+
+msgid "No lyrics found"
+msgstr "Lirik tidak ditemukan"
+
+msgid "No playlists found"
+msgstr "Daftar putar tidak ditemukan"
+
+msgid "No playlists yet"
+msgstr "Belum ada daftar putar"
+
+msgid "No rating"
+msgstr "Tanpa penilaian"
+
+msgid "No results for \"{}\""
+msgstr "Tidak ada hasil untuk \"{}\""
+
+msgid "No saved login for {}; remove it and add it again"
+msgstr "Tidak ada login tersimpan untuk {}; hapus lalu tambahkan lagi"
+
+msgid "No saved servers."
+msgstr "Tidak ada server tersimpan."
+
+msgid "No similar songs found"
+msgstr "Lagu serupa tidak ditemukan"
+
+msgid "No songs here"
+msgstr "Tidak ada lagu di sini"
+
+msgid "No stations found"
+msgstr "Stasiun tidak ditemukan"
+
+msgid "No stations yet. Add one or find one in the directory."
+msgstr "Belum ada stasiun. Tambahkan atau temukan stasiun di direktori."
+
+msgid "No tracks found"
+msgstr "Trek tidak ditemukan"
+
+msgid "None"
+msgstr "Tidak ada"
+
+msgid "Normalize loudness using the track or album gain tags."
+msgstr "Normalkan kenyaringan menggunakan tag gain trek atau album."
+
+msgid "Not connected to a server"
+msgstr "Tidak terhubung ke server"
+
+msgid "Nothing is playing"
+msgstr "Tidak ada yang diputar"
+
+msgid "Nothing to add yet"
+msgstr "Belum ada yang bisa ditambahkan"
+
+msgid "Nothing to go back to"
+msgstr "Tidak ada halaman sebelumnya"
+
+msgid "Nothing to play here"
+msgstr "Tidak ada yang bisa diputar di sini"
+
+msgid "Nothing to play yet"
+msgstr "Belum ada yang bisa diputar"
+
+msgid "Nothing to show here right now"
+msgstr "Tidak ada yang bisa ditampilkan di sini saat ini"
+
+msgid "Off"
+msgstr "Mati"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "On the server"
+msgstr "Di server"
+
+msgid "Only a server admin can rescan the library"
+msgstr "Hanya admin server yang dapat memindai ulang pustaka"
+
+msgid "Only loaded tracks can be shared: select fewer tracks or scroll through them first"
+msgstr "Hanya trek yang sudah dimuat yang dapat dibagikan: pilih lebih sedikit trek atau gulir terlebih dahulu"
+
+msgid "Open"
+msgstr "Buka"
+
+msgid "Open in YouTube Music"
+msgstr "Buka di YouTube Music"
+
+msgid "Open now playing"
+msgstr "Buka Sedang diputar"
+
+msgid "Open radio"
+msgstr "Buka radio"
+
+msgid "Open the album \"{}\""
+msgstr "Buka album \"{}\""
+
+msgid "Open the playlist \"{}\""
+msgstr "Buka daftar putar \"{}\""
+
+msgid "Open the queue panel"
+msgstr "Buka panel antrean"
+
+msgid "Open {}"
+msgstr "Buka {}"
+
+msgid "Original"
+msgstr "Asli"
+
+msgid "Output used by the player."
+msgstr "Output yang digunakan oleh pemutar."
+
+msgid "Owner"
+msgstr "Pemilik"
+
+msgid "Password"
+msgstr "Kata sandi"
+
+msgid "Paste a link first"
+msgstr "Tempel tautan terlebih dahulu"
+
+msgid "Paste a YouTube or YouTube Music link first"
+msgstr "Tempel tautan YouTube atau YouTube Music terlebih dahulu"
+
+msgid "Paste a YouTube or YouTube Music link to try yt-dlp."
+msgstr "Tempel tautan YouTube atau YouTube Music untuk mencoba yt-dlp."
+
+msgid "Pause"
+msgstr "Jeda"
+
+msgid "Pause the radio station"
+msgstr "Jeda stasiun radio"
+
+msgid "Personalized with your YouTube Music account from {}"
+msgstr "Dipersonalisasi dengan akun YouTube Music Anda dari {}"
+
+msgid "Pick a color, or type one as #rrggbb and press Enter."
+msgstr "Pilih warna, atau ketik sebagai #rrggbb lalu tekan Enter."
+
+msgid "Pick a mood or genre to see its playlists"
+msgstr "Pilih suasana hati atau genre untuk melihat daftar putarnya"
+
+msgid "Play"
+msgstr "Putar"
+
+msgid "Play \"{}\" and the rest of this shelf"
+msgstr "Putar \"{}\" dan sisa rak ini"
+
+msgid "Play a YouTube link"
+msgstr "Putar tautan YouTube"
+
+msgid "Play album"
+msgstr "Putar album"
+
+msgid "Play all"
+msgstr "Putar semua"
+
+msgid "Play all {n} song"
+msgid_plural "Play all {n} songs"
+msgstr[0] "Putar semua {n} lagu"
+
+msgid "Play count"
+msgstr "Jumlah putar"
+
+msgid "Play every song in {} and its subfolders"
+msgstr "Putar setiap lagu di {} dan subfoldernya"
+
+msgid "Play from here"
+msgstr "Putar dari sini"
+
+msgid "Play from this song"
+msgstr "Putar dari lagu ini"
+
+msgid "Play from {}"
+msgstr "Putar dari {}"
+
+msgid "Play next"
+msgstr "Putar berikutnya"
+
+msgid "Play the album"
+msgstr "Putar album ini"
+
+msgid "Play the playlist"
+msgstr "Putar daftar putar ini"
+
+msgid "Play the radio station"
+msgstr "Putar stasiun radio"
+
+msgid "Play this link after the current song"
+msgstr "Putar tautan ini setelah lagu saat ini"
+
+msgid "Play this link now"
+msgstr "Putar tautan ini sekarang"
+
+msgid "Play {}"
+msgstr "Putar {}"
+
+msgid "Play {} next"
+msgstr "Putar {} berikutnya"
+
+msgid "Play {} with its subfolders"
+msgstr "Putar {} beserta subfoldernya"
+
+msgid "Playback"
+msgstr "Pemutaran"
+
+msgid "Playback failed: {}"
+msgstr "Pemutaran gagal: {}"
+
+msgid "Playing {} failed: {}"
+msgstr "Gagal memutar {}: {}"
+
+msgid "PLAYLIST"
+msgstr "DAFTAR PUTAR"
+
+msgid "Playlist"
+msgstr "Daftar putar"
+
+msgid "playlist"
+msgstr "daftar putar"
+
+msgid "Playlist name"
+msgstr "Nama daftar putar"
+
+msgid "Playlists"
+msgstr "Daftar putar"
+
+msgid "Plays"
+msgstr "Diputar"
+
+msgid "Plays YouTube tracks. Leave empty to use yt-dlp from your PATH."
+msgstr "Memutar trek YouTube. Biarkan kosong untuk menggunakan yt-dlp dari PATH Anda."
+
+msgid "Preload the next song so it starts without a pause."
+msgstr "Muat lagu berikutnya lebih awal agar dimulai tanpa jeda."
+
+msgid "Previous"
+msgstr "Sebelumnya"
+
+msgid "Previous is unavailable while a radio station plays"
+msgstr "Sebelumnya tidak tersedia saat stasiun radio diputar"
+
+msgid "Purple"
+msgstr "Ungu"
+
+msgid "Queue"
+msgstr "Antrean"
+
+msgid "Radio"
+msgstr "Radio"
+
+msgid "Random"
+msgstr "Acak"
+
+msgid "Rate {n} star"
+msgid_plural "Rate {n} stars"
+msgstr[0] "Beri {n} bintang"
+
+msgid "Rating"
+msgstr "Penilaian"
+
+msgid "Recently added"
+msgstr "Baru saja ditambahkan"
+
+msgid "Recently played"
+msgstr "Baru saja diputar"
+
+msgid "Red"
+msgstr "Merah"
+
+msgid "Refresh"
+msgstr "Segarkan"
+
+msgid "Refresh this section"
+msgstr "Segarkan bagian ini"
+
+msgid "Release year"
+msgstr "Tahun rilis"
+
+msgid "Remove"
+msgstr "Hapus"
+
+msgid "Remove from favorites"
+msgstr "Hapus dari favorit"
+
+msgid "Remove from playlist"
+msgstr "Hapus dari daftar putar"
+
+msgid "Remove from queue"
+msgstr "Hapus dari antrean"
+
+msgid "Removed {n} song from \"{}\""
+msgid_plural "Removed {n} songs from \"{}\""
+msgstr[0] "{n} lagu dihapus dari \"{}\""
+
+msgid "Removing..."
+msgstr "Menghapus..."
+
+msgid "Repeat: all"
+msgstr "Ulangi: semua"
+
+msgid "Repeat: off"
+msgstr "Ulangi: mati"
+
+msgid "Repeat: one"
+msgstr "Ulangi: satu"
+
+msgid "ReplayGain"
+msgstr "ReplayGain"
+
+msgid "Report what you play to the server."
+msgstr "Laporkan apa yang Anda putar ke server."
+
+msgid "Rescan the library for new content"
+msgstr "Pindai ulang pustaka untuk konten baru"
+
+msgid "Resize column"
+msgstr "Ubah ukuran kolom"
+
+msgid "Save"
+msgstr "Simpan"
+
+msgid "Save on this device"
+msgstr "Simpan di perangkat ini"
+
+msgid "Save the changes on the server"
+msgstr "Simpan perubahan di server"
+
+msgid "Save the changes on this device"
+msgstr "Simpan perubahan di perangkat ini"
+
+msgid "Save to favorites on this device"
+msgstr "Simpan ke favorit di perangkat ini"
+
+msgid "Save to server"
+msgstr "Simpan ke server"
+
+msgid "Saved on this device"
+msgstr "Disimpan di perangkat ini"
+
+msgid "Saved on this device, click to remove"
+msgstr "Disimpan di perangkat ini, klik untuk menghapus"
+
+msgid "Saving the station to the server..."
+msgstr "Menyimpan stasiun ke server..."
+
+msgid "Saving to the server..."
+msgstr "Menyimpan ke server..."
+
+msgid "Saving..."
+msgstr "Menyimpan..."
+
+msgid "Scanning the library for new content..."
+msgstr "Memindai pustaka untuk konten baru..."
+
+msgid "Scanning the library: {}"
+msgstr "Memindai pustaka: {}"
+
+msgid "Scrobble"
+msgstr "Scrobble"
+
+msgid "Scroll left"
+msgstr "Gulir ke kiri"
+
+msgid "Scroll lists and the queue to the song that is playing."
+msgstr "Gulir daftar dan antrean ke lagu yang sedang diputar."
+
+msgid "Scroll right"
+msgstr "Gulir ke kanan"
+
+msgid "Search"
+msgstr "Cari"
+
+msgid "Search failed: {}"
+msgstr "Pencarian gagal: {}"
+
+msgid "SEARCH RESULTS"
+msgstr "HASIL PENCARIAN"
+
+msgid "Search songs on YouTube Music"
+msgstr "Cari lagu di YouTube Music"
+
+msgid "Search songs, albums, artists"
+msgstr "Cari lagu, album, artis"
+
+msgid "Search the radio-browser.info directory"
+msgstr "Cari di direktori radio-browser.info"
+
+msgid "Search your library for songs, albums and artists"
+msgstr "Cari lagu, album, dan artis di pustaka Anda"
+
+msgid "Searched from top to bottom until one has lyrics."
+msgstr "Dicari dari atas ke bawah hingga salah satunya memiliki lirik."
+
+msgid "Searching for lyrics..."
+msgstr "Mencari lirik..."
+
+msgid "Searching the radio directory failed: {}"
+msgstr "Pencarian direktori radio gagal: {}"
+
+msgid "Searching the radio-browser.info directory"
+msgstr "Mencari di direktori radio-browser.info"
+
+msgid "Searching..."
+msgstr "Mencari..."
+
+msgid "Seeking is unavailable for live radio"
+msgstr "Tidak dapat menggeser posisi pada radio langsung"
+
+msgid "Server"
+msgstr "Server"
+
+msgid "Server type"
+msgstr "Jenis server"
+
+msgid "Servers"
+msgstr "Server"
+
+msgid "Set rating"
+msgstr "Beri penilaian"
+
+msgid "Settings"
+msgstr "Pengaturan"
+
+msgid "Share"
+msgstr "Bagikan"
+
+msgid "Share ({})"
+msgstr "Bagikan ({})"
+
+msgid "Share link copied to the clipboard: {}"
+msgstr "Tautan berbagi disalin ke papan klip: {}"
+
+msgid "Share this {}: copy a public link"
+msgstr "Bagikan {} ini: salin tautan publik"
+
+msgid "Sharing is unavailable: {}"
+msgstr "Berbagi tidak tersedia: {}"
+
+msgid "SHOW LESS"
+msgstr "TAMPILKAN LEBIH SEDIKIT"
+
+msgid "Show lyrics"
+msgstr "Tampilkan lirik"
+
+msgid "SHOW MORE"
+msgstr "TAMPILKAN LEBIH BANYAK"
+
+msgid "Show more"
+msgstr "Tampilkan lebih banyak"
+
+msgid "Show playlists for {}"
+msgstr "Tampilkan daftar putar untuk {}"
+
+msgid "Show queue"
+msgstr "Tampilkan antrean"
+
+msgid "Show the current song on your Discord profile."
+msgstr "Tampilkan lagu saat ini di profil Discord Anda."
+
+msgid "Show the next page of stations"
+msgstr "Tampilkan halaman stasiun berikutnya"
+
+msgid "Show the queue next to the library; remembered on the next start."
+msgstr "Tampilkan antrean di samping pustaka; diingat saat aplikasi dibuka lagi."
+
+msgid "Show the server and saved stations"
+msgstr "Tampilkan stasiun server dan yang tersimpan"
+
+msgid "Show {}"
+msgstr "Tampilkan {}"
+
+msgid "Showing playlists for {}"
+msgstr "Menampilkan daftar putar untuk {}"
+
+msgid "Showing the charts for {}"
+msgstr "Menampilkan tangga lagu untuk {}"
+
+msgid "Showing the radio-browser.info directory"
+msgstr "Menampilkan direktori radio-browser.info"
+
+msgid "Showing the server and saved stations"
+msgstr "Menampilkan stasiun server dan yang tersimpan"
+
+msgid "Shuffle"
+msgstr "Acak"
+
+msgid "Shuffle every song in {} and its subfolders"
+msgstr "Acak setiap lagu di {} dan subfoldernya"
+
+msgid "Shuffle play"
+msgstr "Putar acak"
+
+msgid "Shuffle: off"
+msgstr "Acak: mati"
+
+msgid "Shuffle: on"
+msgstr "Acak: nyala"
+
+msgid "Sign in"
+msgstr "Masuk"
+
+msgid "Sign in with browser"
+msgstr "Masuk dengan browser"
+
+msgid "Sign out and forget this server's saved login?"
+msgstr "Keluar dan lupakan login tersimpan server ini?"
+
+msgid "Sign out and forget this server?"
+msgstr "Keluar dan lupakan server ini?"
+
+msgid "Similar"
+msgstr "Serupa"
+
+msgid "Similar songs come from your server, so YouTube tracks have none"
+msgstr "Lagu serupa berasal dari server Anda, jadi trek YouTube tidak memilikinya"
+
+msgid "Sleep timer: off"
+msgstr "Pengatur waktu tidur: mati"
+
+msgid "Sleep timer: {}"
+msgstr "Pengatur waktu tidur: {}"
+
+msgid "Song count"
+msgstr "Jumlah lagu"
+
+msgid "Songs"
+msgstr "Lagu"
+
+msgid "Sort by {}"
+msgstr "Urutkan menurut {}"
+
+msgid "Sort by {}: ascending"
+msgstr "Urutkan menurut {}: naik"
+
+msgid "Sort by {}: descending"
+msgstr "Urutkan menurut {}: turun"
+
+msgid "Sort: ascending"
+msgstr "Urutan: naik"
+
+msgid "Sort: descending"
+msgstr "Urutan: turun"
+
+msgid "Starting volume, shared with the player bar."
+msgstr "Volume awal, sama dengan bilah pemutar."
+
+msgid "Station data from radio-browser.info"
+msgstr "Data stasiun dari radio-browser.info"
+
+msgid "Station name"
+msgstr "Nama stasiun"
+
+msgid "Stations"
+msgstr "Stasiun"
+
+msgid "Stop {}"
+msgstr "Hentikan {}"
+
+msgid "Stream URL"
+msgstr "URL stream"
+
+msgid "Switch"
+msgstr "Beralih"
+
+msgid "Switch between a dark and a light theme with the desktop. {}"
+msgstr "Beralih antara tema gelap dan terang mengikuti desktop. {}"
+
+msgid "Switch to grid view"
+msgstr "Beralih ke tampilan kisi"
+
+msgid "Switch to list view"
+msgstr "Beralih ke tampilan daftar"
+
+msgid "System default"
+msgstr "Default sistem"
+
+msgid "System default follows the language of the desktop."
+msgstr "Default sistem mengikuti bahasa desktop."
+
+msgid "Tag, for example jazz"
+msgstr "Tag, misalnya jazz"
+
+msgid "The desktop currently prefers dark."
+msgstr "Desktop saat ini memilih gelap."
+
+msgid "The desktop currently prefers light."
+msgstr "Desktop saat ini memilih terang."
+
+msgid "The desktop has no preference, so the dark theme is used."
+msgstr "Desktop tidak memiliki preferensi, jadi tema gelap digunakan."
+
+msgid "The library scan is still running on the server"
+msgstr "Pemindaian pustaka masih berjalan di server"
+
+msgid "The queue is empty"
+msgstr "Antrean kosong"
+
+msgid "The queue is incomplete: loading the rest of the list failed ({})"
+msgstr "Antrean tidak lengkap: gagal memuat sisa daftar ({})"
+
+msgid "The radio directory could not be reached"
+msgstr "Direktori radio tidak dapat dijangkau"
+
+msgid "The radio station stopped streaming"
+msgstr "Stasiun radio berhenti melakukan streaming"
+
+msgid "The server refused the station: {}"
+msgstr "Server menolak stasiun: {}"
+
+msgid "Theme"
+msgstr "Tema"
+
+msgid "There is nothing to play in this list"
+msgstr "Tidak ada yang bisa diputar dalam daftar ini"
+
+msgid "This Discover page does not exist"
+msgstr "Halaman Jelajahi ini tidak ada"
+
+msgid "This folder is empty"
+msgstr "Folder ini kosong"
+
+msgid "This playlist is empty"
+msgstr "Daftar putar ini kosong"
+
+msgid "This server has no internet radio. Stations you add are saved on this device."
+msgstr "Server ini tidak memiliki radio internet. Stasiun yang Anda tambahkan disimpan di perangkat ini."
+
+msgid "this server has no public share links"
+msgstr "server ini tidak memiliki tautan berbagi publik"
+
+msgid "Time"
+msgstr "Waktu"
+
+msgid "Title"
+msgstr "Judul"
+
+msgid "Top songs"
+msgstr "Lagu teratas"
+
+msgid "Track"
+msgstr "Trek"
+
+msgid "Tracks"
+msgstr "Trek"
+
+msgid "Transcode format"
+msgstr "Format transkode"
+
+msgid "Try again"
+msgstr "Coba lagi"
+
+msgid "Turn off the theme accent color to pick your own."
+msgstr "Matikan warna sorotan tema untuk memilih warna sendiri."
+
+msgid "Unmute"
+msgstr "Bunyikan"
+
+msgid "Up next"
+msgstr "Berikutnya"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "Use the theme accent color"
+msgstr "Gunakan warna sorotan tema"
+
+msgid "Use {}"
+msgstr "Gunakan {}"
+
+msgid "Used while the desktop prefers dark."
+msgstr "Digunakan saat desktop memilih gelap."
+
+msgid "Used while the desktop prefers light."
+msgstr "Digunakan saat desktop memilih terang."
+
+msgid "Username"
+msgstr "Nama pengguna"
+
+msgid "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Feishin deletes right after reading."
+msgstr "Menggunakan sesi YouTube Anda di browser ini untuk beranda Jelajahi yang dipersonalisasi dan audio Premium. yt-dlp menyalin cookie-nya ke file sementara pribadi yang langsung dihapus Feishin setelah dibaca."
+
+msgid "Volume"
+msgstr "Volume"
+
+msgid "Volume {}%"
+msgstr "Volume {}%"
+
+msgid "XDG_RUNTIME_DIR is not set, so there is no private place for the cookies"
+msgstr "XDG_RUNTIME_DIR tidak disetel, jadi tidak ada tempat pribadi untuk cookie"
+
+msgid "Year"
+msgstr "Tahun"
+
+msgid "You are here: {}"
+msgstr "Anda di sini: {}"
+
+msgid "Your user is not allowed to share on this server"
+msgstr "Pengguna Anda tidak diizinkan berbagi di server ini"
+
+msgid "YouTube"
+msgstr "YouTube"
+
+msgid "YouTube albums are not in your library"
+msgstr "Album YouTube tidak ada di pustaka Anda"
+
+msgid "YouTube artists are not in your library"
+msgstr "Artis YouTube tidak ada di pustaka Anda"
+
+msgid "yt-dlp program"
+msgstr "Program yt-dlp"
+
+msgid "{n} album"
+msgid_plural "{n} albums"
+msgstr[0] "{n} album"
+
+msgid "{n} folder"
+msgid_plural "{n} folders"
+msgstr[0] "{n} folder"
+
+msgid "{n} item so far"
+msgid_plural "{n} items so far"
+msgstr[0] "{n} item sejauh ini"
+
+msgid "{n} minute"
+msgid_plural "{n} minutes"
+msgstr[0] "{n} menit"
+
+msgid "{n} selected"
+msgid_plural "{n} selected"
+msgstr[0] "{n} dipilih"
+
+msgid "{n} song"
+msgid_plural "{n} songs"
+msgstr[0] "{n} lagu"
+
+msgid "{n} song from \"{}\" will play next"
+msgid_plural "{n} songs from \"{}\" will play next"
+msgstr[0] "{n} lagu dari \"{}\" akan diputar berikutnya"
+
+msgid "{n} song on YouTube Music"
+msgid_plural "{n} songs on YouTube Music"
+msgstr[0] "{n} lagu di YouTube Music"
+
+msgid "{n} song will play next"
+msgid_plural "{n} songs will play next"
+msgstr[0] "{n} lagu akan diputar berikutnya"
+
+msgid "{} (current theme)"
+msgstr "{} (tema saat ini)"
+
+msgid "{} (unavailable)"
+msgstr "{} (tidak tersedia)"
+
+msgid "{} at {}"
+msgstr "{} di {}"
+
+msgid "{} cannot be played: its stream address is not an internet stream"
+msgstr "{} tidak dapat diputar: alamat stream-nya bukan stream internet"
+
+msgid "{} is shown"
+msgstr "{} ditampilkan"
+
+msgid "{} kbps"
+msgstr "{} kbps"
+
+msgid "{} s"
+msgstr "{} dtk"
+
+msgid "{}: off"
+msgstr "{}: mati"
+
+msgid "{}: on"
+msgstr "{}: nyala"
+
+msgid "{}: {} (dark)"
+msgstr "{}: {} (gelap)"
+
+msgid "{}: {} (light)"
+msgstr "{}: {} (terang)"

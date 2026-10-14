@@ -30,7 +30,7 @@ pub fn toggle_favorite(window: &AppWindow, ctx: &Context) {
                 if state.get_album_id() == album_id {
                     state.set_favorite(!favorite);
                 }
-                show_status(window, &format!("Could not update favorite: {error}"));
+                show_status(window, &tr!("Could not update favorite: {}", error));
             });
         }
     });
@@ -59,7 +59,7 @@ pub fn set_rating(window: &AppWindow, ctx: &Context, rating: i32) {
                 if state.get_album_id() == album_id {
                     state.set_rating(previous);
                 }
-                show_status(window, &format!("Could not update rating: {error}"));
+                show_status(window, &tr!("Could not update rating: {}", error));
             });
         }
     });

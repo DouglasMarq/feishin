@@ -51,7 +51,7 @@ pub(super) fn bitrate_choices(current: Option<u32>) -> Choices<Option<u32>> {
 }
 
 fn bitrate_label(bitrate_kbps: Option<u32>) -> String {
-    bitrate_kbps.map_or_else(|| "Original".to_owned(), |kbps| format!("{kbps} kbps"))
+    bitrate_kbps.map_or_else(|| tr!("Original"), |kbps| tr!("{} kbps", kbps))
 }
 
 pub(super) fn format_choices(current: Option<&str>) -> Choices<Option<String>> {
@@ -66,7 +66,7 @@ pub(super) fn format_choices(current: Option<&str>) -> Choices<Option<String>> {
     }
     let options = values
         .into_iter()
-        .map(|value| (value.clone().unwrap_or_else(|| "Original".into()), value))
+        .map(|value| (value.clone().unwrap_or_else(|| tr!("Original")), value))
         .collect();
     Choices::new(options, &current)
 }
@@ -80,7 +80,7 @@ pub(super) fn device_choices(
         .iter()
         .any(|device| device.name == MPV_SYSTEM_DEFAULT_DEVICE)
     {
-        options.push(("System default".to_owned(), None));
+        options.push((tr!("System default"), None));
     }
     options.extend(devices.iter().map(device_option));
     let current = current
@@ -91,7 +91,7 @@ pub(super) fn device_choices(
             .iter()
             .any(|(_, value)| value.as_ref() == Some(name))
     {
-        options.push((format!("{name} (unavailable)"), current.clone()));
+        options.push((tr!("{} (unavailable)", name), current.clone()));
     }
     Choices::new(options, &current)
 }

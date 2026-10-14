@@ -8,8 +8,6 @@ use super::view::RadioView;
 use crate::controller::{Command, RadioCommand};
 use crate::ui::{AppWindow, RadioSource, RadioState, show_status};
 
-const NOT_CONNECTED: &str = "Not connected to a server";
-
 impl RadioView {
     pub(super) fn play(&self, source: RadioSource, id: &str) {
         let Some(station) = self.with_model(|model| model.station(source, id)) else {
@@ -83,7 +81,7 @@ impl RadioView {
                 shown.finish_change(
                     window,
                     created,
-                    &format!("Could not add {} to the server", draft.name),
+                    &tr!("Could not add {} to the server", draft.name),
                 );
             });
         });
@@ -104,7 +102,7 @@ impl RadioView {
             let shown = view.clone();
             view.on_window(move |window| {
                 window.global::<RadioState>().set_delete_id("".into());
-                shown.finish_change(window, deleted, "Could not delete the station");
+                shown.finish_change(window, deleted, &tr!("Could not delete the station"));
             });
         });
     }
@@ -114,7 +112,7 @@ impl RadioView {
         if server.is_none()
             && let Some(window) = self.window.upgrade()
         {
-            show_status(&window, NOT_CONNECTED);
+            show_status(&window, &tr!("Not connected to a server"));
         }
         server
     }

@@ -33,7 +33,7 @@ fn start_scan(window: &AppWindow, ctx: &Context) {
         return;
     }
     let Some(server) = ctx.session.get() else {
-        show_status(window, "Not connected to a server");
+        show_status(window, &tr!("Not connected to a server"));
         return;
     };
     show_progress(window, None);
@@ -65,7 +65,9 @@ async fn follow_scan(
 fn show_progress(window: &AppWindow, scanned_items: Option<u64>) {
     let state = window.global::<AppState>();
     state.set_library_scanning(true);
-    let progress = scanned_items.map_or_else(String::new, |count| format!("{count} items so far"));
+    let progress = scanned_items.map_or_else(String::new, |count| {
+        tr_plural!("{n} item so far", "{n} items so far", count)
+    });
     state.set_library_scan_progress(progress.into());
 }
 
@@ -84,14 +86,18 @@ fn outcome_message(outcome: &Result<ScanOutcome, ApiError>) -> String {
         Ok(ScanOutcome::Finished(LibraryScan {
             scanned_items: Some(count),
             ..
-        })) => format!("Library scan finished: {count} items"),
-        Ok(ScanOutcome::Finished(_)) => "Library scan finished".into(),
-        Ok(ScanOutcome::StillRunning) => "The library scan is still running on the server".into(),
+        })) => tr_plural!(
+            "Library scan finished: {n} item",
+            "Library scan finished: {n} items",
+            *count
+        ),
+        Ok(ScanOutcome::Finished(_)) => tr!("Library scan finished"),
+        Ok(ScanOutcome::StillRunning) => tr!("The library scan is still running on the server"),
         Err(ApiError::Server {
             code: NOT_AUTHORIZED_CODE,
             ..
-        }) => "Only a server admin can rescan the library".into(),
-        Err(error) => format!("Could not rescan the library: {error}"),
+        }) => tr!("Only a server admin can rescan the library"),
+        Err(error) => tr!("Could not rescan the library: {}", error),
     }
 }
 

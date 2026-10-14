@@ -34,15 +34,44 @@ pub fn queued_message(
     songs: &[MusicSong],
     from: Option<&str>,
 ) -> Option<String> {
-    let what = match (songs, from) {
-        ([song], None) => format!("\"{}\"", song.title),
-        (_, Some(collection)) => format!("{} songs from \"{collection}\"", songs.len()),
-        (_, None) => format!("{} songs", songs.len()),
-    };
     match placement {
         Placement::PlayFrom(_) => None,
-        Placement::Next => Some(format!("{what} will play next")),
-        Placement::Last => Some(format!("Added {what} to the queue")),
+        Placement::Next => Some(play_next_message(songs, from)),
+        Placement::Last => Some(added_to_queue_message(songs, from)),
+    }
+}
+
+fn play_next_message(songs: &[MusicSong], from: Option<&str>) -> String {
+    match (songs, from) {
+        ([song], None) => tr!("\"{}\" will play next", song.title),
+        (_, Some(collection)) => tr_plural!(
+            "{n} song from \"{}\" will play next",
+            "{n} songs from \"{}\" will play next",
+            songs.len(),
+            collection
+        ),
+        (_, None) => tr_plural!(
+            "{n} song will play next",
+            "{n} songs will play next",
+            songs.len()
+        ),
+    }
+}
+
+fn added_to_queue_message(songs: &[MusicSong], from: Option<&str>) -> String {
+    match (songs, from) {
+        ([song], None) => tr!("Added \"{}\" to the queue", song.title),
+        (_, Some(collection)) => tr_plural!(
+            "Added {n} song from \"{}\" to the queue",
+            "Added {n} songs from \"{}\" to the queue",
+            songs.len(),
+            collection
+        ),
+        (_, None) => tr_plural!(
+            "Added {n} song to the queue",
+            "Added {n} songs to the queue",
+            songs.len()
+        ),
     }
 }
 
@@ -88,7 +117,7 @@ fn send_with_ticket(
     mut ticket: SendTicket,
 ) {
     if songs.is_empty() {
-        show_status(window, "Nothing to play here");
+        show_status(window, &tr!("Nothing to play here"));
         return;
     }
     let deps = deps.clone();
@@ -135,7 +164,7 @@ pub fn play_collection(
             }
             Err(error) => show_status(
                 window,
-                &format!("Could not load it from YouTube Music: {error}"),
+                &tr!("Could not load it from YouTube Music: {}", error),
             ),
         });
     });

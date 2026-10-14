@@ -15,6 +15,14 @@ export component TextButton inherits Rectangle {
     in property <bool> primary;
     in property <bool> enabled: true;
     callback clicked();
+    accessible-role: button;
+    accessible-label: root.text;
+    accessible-enabled: root.enabled;
+    accessible-action-default => {
+        if (root.enabled) {
+            root.clicked();
+        }
+    }
     min-width: label.preferred-width + 28px;
     height: 32px;
     border-radius: 4px;
@@ -47,6 +55,13 @@ export component TabButton inherits Rectangle {
     in property <string> tooltip;
     in property <bool> active;
     callback clicked();
+    accessible-role: button;
+    accessible-label: root.text;
+    accessible-checkable: true;
+    accessible-checked: root.active;
+    accessible-action-default => {
+        root.clicked();
+    }
     width: tab-label.preferred-width + 28px;
     height: 32px;
     border-radius: 16px;

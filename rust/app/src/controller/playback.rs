@@ -72,7 +72,7 @@ impl Controller {
             Playable::NotConnected => self
                 .deps
                 .ui
-                .send(UiUpdate::Error("Not connected to a server".into())),
+                .send(UiUpdate::Error(tr!("Not connected to a server"))),
         }
     }
 
@@ -105,9 +105,10 @@ impl Controller {
                 self.loaded = None;
                 self.loading = None;
                 self.playing = false;
-                self.deps
-                    .ui
-                    .send(UiUpdate::Error(format!("Playback failed: {error:#}")));
+                self.deps.ui.send(UiUpdate::Error(tr!(
+                    "Playback failed: {}",
+                    format!("{error:#}")
+                )));
             }
         }
     }

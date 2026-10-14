@@ -1,0 +1,1542 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: lv\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11) ? 0 : (n != 0) ? 1 : 2;\n"
+
+
+msgid "\"{}\" plays next"
+msgstr "\"{}\" tiks atskaņota nākamā"
+
+msgid "\"{}\" will play next"
+msgstr "\"{}\" tiks atskaņota nākamā"
+
+msgid "1 star"
+msgstr "1 zvaigzne"
+
+msgid "2 stars"
+msgstr "2 zvaigznes"
+
+msgid "3 stars"
+msgstr "3 zvaigznes"
+
+msgid "4 stars"
+msgstr "4 zvaigznes"
+
+msgid "5 stars"
+msgstr "5 zvaigznes"
+
+msgid "About {}"
+msgstr "Par {0}"
+
+msgid "Accent color"
+msgstr "Akcenta krāsa"
+
+msgid "Accent color not changed: {}."
+msgstr "Akcenta krāsa netika mainīta: {}."
+
+msgid "Accent color {}"
+msgstr "Akcenta krāsa {}"
+
+msgid "Accent color {} (selected)"
+msgstr "Akcenta krāsa {} (izvēlēta)"
+
+msgid "Accent color {} (theme accent in use)"
+msgstr "Akcenta krāsa {} (tiek izmantota motīva akcenta krāsa)"
+
+msgid "Add a station by its stream URL"
+msgstr "Pievienot staciju pēc tās straumes URL"
+
+msgid "Add all songs to the queue"
+msgstr "Pievienot visas dziesmas rindai"
+
+msgid "Add server"
+msgstr "Pievienot serveri"
+
+msgid "Add station"
+msgstr "Pievienot staciju"
+
+msgid "Add this link to the end of the queue"
+msgstr "Pievienot šo saiti rindas beigās"
+
+msgid "Add this station to the server for every client"
+msgstr "Pievienot šo staciju serverim visiem klientiem"
+
+msgid "Add to favorites"
+msgstr "Pievienot izlasei"
+
+msgid "Add to playlist"
+msgstr "Pievienot atskaņošanas sarakstam"
+
+msgid "Add to queue"
+msgstr "Pievienot rindai"
+
+msgid "Add to the server's stations"
+msgstr "Pievienot servera stacijām"
+
+msgid "Add {n} song to playlist"
+msgid_plural "Add {n} songs to playlist"
+msgstr[0] "Pievienot {n} dziesmu atskaņošanas sarakstam"
+msgstr[1] "Pievienot {n} dziesmas atskaņošanas sarakstam"
+msgstr[2] "Pievienot {n} dziesmu atskaņošanas sarakstam"
+
+msgid "Add {} to the queue"
+msgstr "Pievienot {} rindai"
+
+msgid "Added \"{}\" to the queue"
+msgstr "\"{}\" pievienota rindai"
+
+msgid "Added only {n} song to \"{}\": {}"
+msgid_plural "Added only {n} songs to \"{}\": {}"
+msgstr[0] "Sarakstam \"{}\" pievienota tikai {n} dziesma: {}"
+msgstr[1] "Sarakstam \"{}\" pievienotas tikai {n} dziesmas: {}"
+msgstr[2] "Sarakstam \"{}\" pievienotas tikai {n} dziesmas: {}"
+
+msgid "Added {n} song from \"{}\" to the queue"
+msgid_plural "Added {n} songs from \"{}\" to the queue"
+msgstr[0] "Rindai pievienota {n} dziesma no \"{}\""
+msgstr[1] "Rindai pievienotas {n} dziesmas no \"{}\""
+msgstr[2] "Rindai pievienotas {n} dziesmas no \"{}\""
+
+msgid "Added {n} song to \"{}\""
+msgid_plural "Added {n} songs to \"{}\""
+msgstr[0] "Sarakstam \"{}\" pievienota {n} dziesma"
+msgstr[1] "Sarakstam \"{}\" pievienotas {n} dziesmas"
+msgstr[2] "Sarakstam \"{}\" pievienotas {n} dziesmas"
+
+msgid "Added {n} song to the queue"
+msgid_plural "Added {n} songs to the queue"
+msgstr[0] "Rindai pievienota {n} dziesma"
+msgstr[1] "Rindai pievienotas {n} dziesmas"
+msgstr[2] "Rindai pievienotas {n} dziesmas"
+
+msgid "Adding to \"{}\": {} of {n} song"
+msgid_plural "Adding to \"{}\": {} of {n} songs"
+msgstr[0] "Pievieno sarakstam \"{}\": {} no {n} dziesmas"
+msgstr[1] "Pievieno sarakstam \"{}\": {} no {n} dziesmām"
+msgstr[2] "Pievieno sarakstam \"{}\": {} no {n} dziesmām"
+
+msgid "ALBUM"
+msgstr "ALBUMS"
+
+msgid "Album"
+msgstr "Albums"
+
+msgid "album"
+msgstr "albums"
+
+msgid "Album artist"
+msgstr "Albuma izpildītājs"
+
+msgid "Album count"
+msgstr "Albumu skaits"
+
+msgid "Album not found"
+msgstr "Albums nav atrasts"
+
+msgid "Albums"
+msgstr "Albumi"
+
+msgid "All genres"
+msgstr "Visi žanri"
+
+msgid "Already at the end"
+msgstr "Jau beigās"
+
+msgid "Already at the start"
+msgstr "Jau sākumā"
+
+msgid "Already in \"{}\""
+msgstr "Jau ir sarakstā \"{}\""
+
+msgid "Already on the server"
+msgstr "Jau ir serverī"
+
+msgid "Amber"
+msgstr "Dzintara"
+
+msgid "Appearance"
+msgstr "Izskats"
+
+msgid "ARTIST"
+msgstr "IZPILDĪTĀJS"
+
+msgid "Artist"
+msgstr "Izpildītājs"
+
+msgid "Artists"
+msgstr "Izpildītāji"
+
+msgid "Ask the server to transcode down to this bitrate. Applies from the next song."
+msgstr "Lūgt serverim pārkodēt līdz šim bitu pārraides ātrumam. Stājas spēkā no nākamās dziesmas."
+
+msgid "Audio device"
+msgstr "Skaņas ierīce"
+
+msgid "Automatic ({})"
+msgstr "Automātiski ({})"
+
+msgid "Back"
+msgstr "Atpakaļ"
+
+msgid "Blue"
+msgstr "Zila"
+
+msgid "by {}"
+msgstr "autors: {}"
+
+msgid "Cancel"
+msgstr "Atcelt"
+
+msgid "Cancel timer"
+msgstr "Atcelt taimeri"
+
+msgid "Cannot share: {}"
+msgstr "Nevar kopīgot: {}"
+
+msgid "Chart country"
+msgstr "Topu valsts"
+
+msgid "Charts"
+msgstr "Topi"
+
+msgid "Choose a browser under Settings, YouTube to sign in for a personalized home"
+msgstr "Lai pieteiktos un saņemtu personalizētu sākumu, izvēlieties pārlūku sadaļā Iestatījumi, YouTube"
+
+msgid "Clear"
+msgstr "Notīrīt"
+
+msgid "Clear filters"
+msgstr "Notīrīt filtrus"
+
+msgid "Clear rating"
+msgstr "Notīrīt vērtējumu"
+
+msgid "Clear the favorites and genre filters"
+msgstr "Notīrīt izlases un žanru filtrus"
+
+msgid "Close"
+msgstr "Aizvērt"
+
+msgid "Close now playing"
+msgstr "Aizvērt pašlaik atskaņoto"
+
+msgid "Close without saving"
+msgstr "Aizvērt bez saglabāšanas"
+
+msgid "Colors used across the whole app."
+msgstr "Krāsas, kas tiek izmantotas visā lietotnē."
+
+msgid "Connect to your music server"
+msgstr "Savienoties ar savu mūzikas serveri"
+
+msgid "Connecting..."
+msgstr "Savieno..."
+
+msgid "Could not add to \"{}\": {}"
+msgstr "Neizdevās pievienot sarakstam \"{}\": {}"
+
+msgid "Could not add {} to the server"
+msgstr "Neizdevās pievienot {} serverim"
+
+msgid "Could not create a share link: {}"
+msgstr "Neizdevās izveidot kopīgošanas saiti: {}"
+
+msgid "Could not create the playlist: {}"
+msgstr "Neizdevās izveidot atskaņošanas sarakstu: {}"
+
+msgid "Could not delete the playlist: {}"
+msgstr "Neizdevās dzēst atskaņošanas sarakstu: {}"
+
+msgid "Could not delete the station"
+msgstr "Neizdevās dzēst staciju"
+
+msgid "Could not load albums: {}"
+msgstr "Neizdevās ielādēt albumus: {}"
+
+msgid "Could not load artists: {}"
+msgstr "Neizdevās ielādēt izpildītājus: {}"
+
+msgid "Could not load Discover: {}"
+msgstr "Neizdevās ielādēt sadaļu Atklāt: {}"
+
+msgid "Could not load genres: {}"
+msgstr "Neizdevās ielādēt žanrus: {}"
+
+msgid "Could not load it from YouTube Music: {}"
+msgstr "Neizdevās to ielādēt no YouTube Music: {}"
+
+msgid "Could not load lyrics"
+msgstr "Neizdevās ielādēt dziesmas tekstu"
+
+msgid "Could not load moods and genres: {}"
+msgstr "Neizdevās ielādēt noskaņas un žanrus: {}"
+
+msgid "Could not load more results: {}"
+msgstr "Neizdevās ielādēt vairāk rezultātu: {}"
+
+msgid "Could not load new releases: {}"
+msgstr "Neizdevās ielādēt jaunākos izdevumus: {}"
+
+msgid "Could not load playlists: {}"
+msgstr "Neizdevās ielādēt atskaņošanas sarakstus: {}"
+
+msgid "Could not load the album: {}"
+msgstr "Neizdevās ielādēt albumu: {}"
+
+msgid "Could not load the artist: {}"
+msgstr "Neizdevās ielādēt izpildītāju: {}"
+
+msgid "Could not load the charts: {}"
+msgstr "Neizdevās ielādēt topus: {}"
+
+msgid "Could not load the folder: {}"
+msgstr "Neizdevās ielādēt mapi: {}"
+
+msgid "Could not load the list: {}"
+msgstr "Neizdevās ielādēt sarakstu: {}"
+
+msgid "Could not load the playlist: {}"
+msgstr "Neizdevās ielādēt atskaņošanas sarakstu: {}"
+
+msgid "Could not load the radio stations: {}"
+msgstr "Neizdevās ielādēt radiostacijas: {}"
+
+msgid "Could not load the selection: {}"
+msgstr "Neizdevās ielādēt atlasi: {}"
+
+msgid "Could not load this page: {}"
+msgstr "Neizdevās ielādēt šo lapu: {}"
+
+msgid "Could not load tracks: {}"
+msgstr "Neizdevās ielādēt dziesmas: {}"
+
+msgid "Could not load your home: {}"
+msgstr "Neizdevās ielādēt jūsu sākumu: {}"
+
+msgid "Could not open the folder: {}"
+msgstr "Neizdevās atvērt mapi: {}"
+
+msgid "Could not open YouTube Music: {}"
+msgstr "Neizdevās atvērt YouTube Music: {}"
+
+msgid "Could not play \"{}\" from YouTube: {}"
+msgstr "Neizdevās atskaņot \"{}\" no YouTube: {}"
+
+msgid "Could not play album: {}"
+msgstr "Neizdevās atskaņot albumu: {}"
+
+msgid "Could not play from YouTube: {}"
+msgstr "Neizdevās atskaņot no YouTube: {}"
+
+msgid "Could not play the album: {}"
+msgstr "Neizdevās atskaņot albumu: {}"
+
+msgid "Could not remove songs: {}"
+msgstr "Neizdevās noņemt dziesmas: {}"
+
+msgid "Could not rescan the library: {}"
+msgstr "Neizdevās atkārtoti skenēt bibliotēku: {}"
+
+msgid "Could not set the rating: {}"
+msgstr "Neizdevās iestatīt vērtējumu: {}"
+
+msgid "Could not sign in to YouTube Music ({}). Showing general picks instead."
+msgstr "Neizdevās pieteikties YouTube Music ({}). Tā vietā tiek rādīti vispārīgi ieteikumi."
+
+msgid "Could not switch server: {}"
+msgstr "Neizdevās pārslēgt serveri: {}"
+
+msgid "Could not update favorite: {}"
+msgstr "Neizdevās atjaunināt izlasi: {}"
+
+msgid "Could not update favorites: {}"
+msgstr "Neizdevās atjaunināt izlasi: {}"
+
+msgid "Could not update rating: {}"
+msgstr "Neizdevās atjaunināt vērtējumu: {}"
+
+msgid "Could not update the favorite: {}"
+msgstr "Neizdevās atjaunināt izlasi: {}"
+
+msgid "Country"
+msgstr "Valsts"
+
+msgid "Create"
+msgstr "Izveidot"
+
+msgid "Created \"{}\" with only {n} song: {}"
+msgid_plural "Created \"{}\" with only {n} songs: {}"
+msgstr[0] "Izveidots \"{}\" tikai ar {n} dziesmu: {}"
+msgstr[1] "Izveidots \"{}\" tikai ar {n} dziesmām: {}"
+msgstr[2] "Izveidots \"{}\" tikai ar {n} dziesmām: {}"
+
+msgid "Created \"{}\" with {n} song"
+msgid_plural "Created \"{}\" with {n} songs"
+msgstr[0] "Izveidots \"{}\" ar {n} dziesmu"
+msgstr[1] "Izveidots \"{}\" ar {n} dziesmām"
+msgstr[2] "Izveidots \"{}\" ar {n} dziesmām"
+
+msgid "Created playlist \"{}\""
+msgstr "Izveidots atskaņošanas saraksts \"{}\""
+
+msgid "Creating a share link..."
+msgstr "Veido kopīgošanas saiti..."
+
+msgid "Creating..."
+msgstr "Veido..."
+
+msgid "Crossfade"
+msgstr "Plūstoša pāreja"
+
+msgid "Crossfade could not be changed: {}"
+msgstr "Neizdevās mainīt plūstošo pāreju: {}"
+
+msgid "Crossfade: {}"
+msgstr "Plūstoša pāreja: {}"
+
+msgid "Current"
+msgstr "Pašreizējais"
+
+msgid "Custom accent color: {} (theme accent in use)"
+msgstr "Pielāgota akcenta krāsa: {} (tiek izmantota motīva akcenta krāsa)"
+
+msgid "Custom accent color: {}, press Enter to apply"
+msgstr "Pielāgota akcenta krāsa: {}, nospiediet Enter, lai lietotu"
+
+msgid "Dark theme"
+msgstr "Tumšais motīvs"
+
+msgid "DARK THEMES"
+msgstr "TUMŠIE MOTĪVI"
+
+msgid "Default country for the Discover charts. Automatic follows your system region."
+msgstr "Noklusējuma valsts sadaļas Atklāt topiem. Automātiski seko sistēmas reģionam."
+
+msgid "Default Dark"
+msgstr "Noklusējuma tumšais"
+
+msgid "Default Light"
+msgstr "Noklusējuma gaišais"
+
+msgid "Delete"
+msgstr "Dzēst"
+
+msgid "Delete \"{}\" from the server? This cannot be undone."
+msgstr "Dzēst \"{}\" no servera? To nevar atsaukt."
+
+msgid "Delete \"{}\"? This cannot be undone."
+msgstr "Dzēst \"{}\"? To nevar atsaukt."
+
+msgid "Delete playlist"
+msgstr "Dzēst atskaņošanas sarakstu"
+
+msgid "Delete station"
+msgstr "Dzēst staciju"
+
+msgid "Delete {} from the server"
+msgstr "Dzēst {} no servera"
+
+msgid "Deleted playlist \"{}\""
+msgstr "Atskaņošanas saraksts \"{}\" izdzēsts"
+
+msgid "Deleting..."
+msgstr "Dzēš..."
+
+msgid "Demo mode: these picks are made up and play from your demo library"
+msgstr "Demonstrācijas režīms: šie ieteikumi ir izdomāti un tiek atskaņoti no jūsu demonstrācijas bibliotēkas"
+
+msgid "Directory"
+msgstr "Katalogs"
+
+msgid "Disc {}"
+msgstr "Disks {}"
+
+msgid "Discord Rich Presence"
+msgstr "Discord Rich Presence"
+
+msgid "Discover"
+msgstr "Atklāt"
+
+msgid "Discover is open"
+msgstr "Sadaļa Atklāt ir atvērta"
+
+msgid "Discover new music on YouTube Music"
+msgstr "Atklājiet jaunu mūziku YouTube Music"
+
+msgid "Duration"
+msgstr "Ilgums"
+
+msgid "Edit station"
+msgstr "Rediģēt staciju"
+
+msgid "Edit {}"
+msgstr "Rediģēt {}"
+
+msgid "End of current track"
+msgstr "Pašreizējās dziesmas beigās"
+
+msgid "End of track"
+msgstr "Dziesmas beigās"
+
+msgid "Enter a name for the station"
+msgstr "Ievadiet stacijas nosaukumu"
+
+msgid "Enter a name, country or tag to search"
+msgstr "Ievadiet nosaukumu, valsti vai birku, lai meklētu"
+
+msgid "Enter a stream URL that starts with http:// or https://"
+msgstr "Ievadiet straumes URL, kas sākas ar http:// vai https://"
+
+msgid "Enter the server URL"
+msgstr "Ievadiet servera URL"
+
+msgid "Fade the end of each song into the next one. Off keeps gapless playback."
+msgstr "Plūstoši pārejiet no katras dziesmas beigām uz nākamo. Izslēgts saglabā atskaņošanu bez pauzēm."
+
+msgid "Favorite"
+msgstr "Izlase"
+
+msgid "Favorited"
+msgstr "Pievienots izlasei"
+
+msgid "Favorites"
+msgstr "Iecienītākie"
+
+msgid "Favorites only: off"
+msgstr "Tikai izlase: izslēgts"
+
+msgid "Favorites only: on"
+msgstr "Tikai izlase: ieslēgts"
+
+msgid "Filter"
+msgstr "Filtrs"
+
+msgid "Filter playlists"
+msgstr "Filtrēt atskaņošanas sarakstus"
+
+msgid "Find stations by name, country or tag"
+msgstr "Meklēt stacijas pēc nosaukuma, valsts vai birkas"
+
+msgid "Find stations in the radio-browser.info directory"
+msgstr "Meklēt stacijas radio-browser.info katalogā"
+
+msgid "Folder"
+msgstr "Mape"
+
+msgid "Folders"
+msgstr "Mapes"
+
+msgid "Follow current song"
+msgstr "Sekot pašreizējai dziesmai"
+
+msgid "Follow system color scheme"
+msgstr "Sekot sistēmas krāsu shēmai"
+
+msgid "For you"
+msgstr "Jums"
+
+msgid "Forget this server?"
+msgstr "Aizmirst šo serveri?"
+
+msgid "Format the server should transcode to. Applies from the next song."
+msgstr "Formāts, uz kuru serverim jāpārkodē. Stājas spēkā no nākamās dziesmas."
+
+msgid "Found {n} server in Feishin but it has no usable saved login"
+msgid_plural "Found {n} servers in Feishin but none with a usable saved login"
+msgstr[0] "Feishin atrasts {n} serveris, bet tam nav izmantojamas saglabātas pieteikšanās"
+msgstr[1] "Feishin atrasti {n} serveri, bet nevienam nav izmantojamas saglabātas pieteikšanās"
+msgstr[2] "Feishin atrasti {n} serveri, bet nevienam nav izmantojamas saglabātas pieteikšanās"
+
+msgid "Gapless playback"
+msgstr "Atskaņošana bez pauzēm"
+
+msgid "Genres"
+msgstr "Žanri"
+
+msgid "Go back to {}"
+msgstr "Atgriezties uz {}"
+
+msgid "Go to album"
+msgstr "Doties uz albumu"
+
+msgid "Go to artist"
+msgstr "Doties uz izpildītāju"
+
+msgid "Go to {}"
+msgstr "Doties uz {}"
+
+msgid "Green"
+msgstr "Zaļa"
+
+msgid "Hide lyrics"
+msgstr "Paslēpt tekstu"
+
+msgid "Hide queue"
+msgstr "Paslēpt rindu"
+
+msgid "High Contrast Dark"
+msgstr "Augsta kontrasta tumšais"
+
+msgid "High Contrast Light"
+msgstr "Augsta kontrasta gaišais"
+
+msgid "Highlight with the color that comes with the theme."
+msgstr "Izcelt ar krāsu, kas nāk līdzi motīvam."
+
+msgid "Home"
+msgstr "Sākums"
+
+msgid "Homepage (optional)"
+msgstr "Mājaslapa (neobligāti)"
+
+msgid "Import from Feishin"
+msgstr "Importēt no Feishin"
+
+msgid "Install yt-dlp to play YouTube tracks"
+msgstr "Instalējiet yt-dlp, lai atskaņotu YouTube dziesmas"
+
+msgid "Integrations"
+msgstr "Integrācijas"
+
+msgid "Interface"
+msgstr "Saskarne"
+
+msgid "Internet radio"
+msgstr "Interneta radio"
+
+msgid "item"
+msgstr "vienums"
+
+msgid "Jellyfin has no public share links"
+msgstr "Jellyfin nav publisku kopīgošanas saišu"
+
+msgid "Keep this station in the favorites on this device"
+msgstr "Saglabāt šo staciju izlasē šajā ierīcē"
+
+msgid "Language"
+msgstr "Valoda"
+
+msgid "LIBRARY"
+msgstr "BIBLIOTĒKA"
+
+msgid "Library scan finished"
+msgstr "Bibliotēkas skenēšana pabeigta"
+
+msgid "Library scan finished: {n} item"
+msgid_plural "Library scan finished: {n} items"
+msgstr[0] "Bibliotēkas skenēšana pabeigta: {n} vienums"
+msgstr[1] "Bibliotēkas skenēšana pabeigta: {n} vienumi"
+msgstr[2] "Bibliotēkas skenēšana pabeigta: {n} vienumu"
+
+msgid "Light theme"
+msgstr "Gaišais motīvs"
+
+msgid "LIGHT THEMES"
+msgstr "GAIŠIE MOTĪVI"
+
+msgid "Listening to {}"
+msgstr "Klausāties {}"
+
+msgid "LIVE"
+msgstr "TIEŠRAIDE"
+
+msgid "Load more"
+msgstr "Ielādēt vairāk"
+
+msgid "Load this section again"
+msgstr "Ielādēt šo sadaļu vēlreiz"
+
+msgid "Loading playlists..."
+msgstr "Ielādē atskaņošanas sarakstus..."
+
+msgid "Loading similar songs..."
+msgstr "Ielādē līdzīgas dziesmas..."
+
+msgid "Loading stations..."
+msgstr "Ielādē stacijas..."
+
+msgid "Loading the next page of stations"
+msgstr "Ielādē nākamo staciju lapu"
+
+msgid "Loading..."
+msgstr "Ielādē..."
+
+msgid "Log out"
+msgstr "Atteikties"
+
+msgid "Looking up the YouTube link..."
+msgstr "Meklē YouTube saiti..."
+
+msgid "Lyrics"
+msgstr "Teksti"
+
+msgid "Lyrics from {}"
+msgstr "Teksts no {}"
+
+msgid "Lyrics sources"
+msgstr "Tekstu avoti"
+
+msgid "Maximum bitrate"
+msgstr "Maksimālais bitu pārraides ātrums"
+
+msgid "Media keys and desktop media controls. Takes effect after a restart."
+msgstr "Multivides taustiņi un darbvirsmas multivides vadīklas. Stājas spēkā pēc restartēšanas."
+
+msgid "Moods and genres"
+msgstr "Noskaņas un žanri"
+
+msgid "Most played"
+msgstr "Visbiežāk atskaņotie"
+
+msgid "Move down"
+msgstr "Pārvietot lejup"
+
+msgid "Move up"
+msgstr "Pārvietot augšup"
+
+msgid "MPRIS"
+msgstr "MPRIS"
+
+msgid "Mute"
+msgstr "Izslēgt skaņu"
+
+msgid "Name"
+msgstr "Nosaukums"
+
+msgid "New playlist"
+msgstr "Jauns atskaņošanas saraksts"
+
+msgid "New releases"
+msgstr "Jaunākie izdevumi"
+
+msgid "Next"
+msgstr "Nākamais"
+
+msgid "Next is unavailable while a radio station plays"
+msgstr "Nākamais nav pieejams, kamēr skan radiostacija"
+
+msgid "No albums"
+msgstr "Nav albumu"
+
+msgid "No albums found"
+msgstr "Nav atrasts neviens albums"
+
+msgid "No artists found"
+msgstr "Nav atrasts neviens izpildītājs"
+
+msgid "no browser is selected"
+msgstr "nav izvēlēts neviens pārlūks"
+
+msgid "No favorite albums"
+msgstr "Izlasē nav albumu"
+
+msgid "No favorite artists"
+msgstr "Izlasē nav izpildītāju"
+
+msgid "No favorite tracks"
+msgstr "Izlasē nav dziesmu"
+
+msgid "No genres found"
+msgstr "Nav atrasts neviens žanrs"
+
+msgid "No lyrics found"
+msgstr "Nav atrasts teksts"
+
+msgid "No playlists found"
+msgstr "Nav atrasts neviens atskaņošanas saraksts"
+
+msgid "No playlists yet"
+msgstr "Vēl nav atskaņošanas sarakstu"
+
+msgid "No rating"
+msgstr "Nav vērtējuma"
+
+msgid "No results for \"{}\""
+msgstr "Nav rezultātu vaicājumam \"{}\""
+
+msgid "No saved login for {}; remove it and add it again"
+msgstr "Serverim {} nav saglabātas pieteikšanās; noņemiet to un pievienojiet vēlreiz"
+
+msgid "No saved servers."
+msgstr "Nav saglabātu serveru."
+
+msgid "No similar songs found"
+msgstr "Nav atrasta neviena līdzīga dziesma"
+
+msgid "No songs here"
+msgstr "Šeit nav dziesmu"
+
+msgid "No stations found"
+msgstr "Nav atrasta neviena stacija"
+
+msgid "No stations yet. Add one or find one in the directory."
+msgstr "Vēl nav staciju. Pievienojiet kādu vai atrodiet to katalogā."
+
+msgid "No tracks found"
+msgstr "Nav atrasta neviena dziesma"
+
+msgid "None"
+msgstr "Nav"
+
+msgid "Normalize loudness using the track or album gain tags."
+msgstr "Normalizēt skaļumu, izmantojot dziesmas vai albuma pastiprinājuma birkas."
+
+msgid "Not connected to a server"
+msgstr "Nav savienojuma ar serveri"
+
+msgid "Nothing is playing"
+msgstr "Nekas netiek atskaņots"
+
+msgid "Nothing to add yet"
+msgstr "Pagaidām nav ko pievienot"
+
+msgid "Nothing to go back to"
+msgstr "Nav kur atgriezties"
+
+msgid "Nothing to play here"
+msgstr "Šeit nav ko atskaņot"
+
+msgid "Nothing to play yet"
+msgstr "Pagaidām nav ko atskaņot"
+
+msgid "Nothing to show here right now"
+msgstr "Pašlaik šeit nav ko rādīt"
+
+msgid "Off"
+msgstr "Izslēgts"
+
+msgid "OK"
+msgstr "Labi"
+
+msgid "On the server"
+msgstr "Serverī"
+
+msgid "Only a server admin can rescan the library"
+msgstr "Tikai servera administrators var atkārtoti skenēt bibliotēku"
+
+msgid "Only loaded tracks can be shared: select fewer tracks or scroll through them first"
+msgstr "Kopīgot var tikai ielādētas dziesmas: atlasiet mazāk dziesmu vai vispirms ritiniet tām cauri"
+
+msgid "Open"
+msgstr "Atvērt"
+
+msgid "Open in YouTube Music"
+msgstr "Atvērt YouTube Music"
+
+msgid "Open now playing"
+msgstr "Atvērt pašlaik atskaņoto"
+
+msgid "Open radio"
+msgstr "Atvērt radio"
+
+msgid "Open the album \"{}\""
+msgstr "Atvērt albumu \"{}\""
+
+msgid "Open the playlist \"{}\""
+msgstr "Atvērt atskaņošanas sarakstu \"{}\""
+
+msgid "Open the queue panel"
+msgstr "Atvērt rindas paneli"
+
+msgid "Open {}"
+msgstr "Atvērt {}"
+
+msgid "Original"
+msgstr "Oriģināls"
+
+msgid "Output used by the player."
+msgstr "Izvade, ko izmanto atskaņotājs."
+
+msgid "Owner"
+msgstr "Īpašnieks"
+
+msgid "Password"
+msgstr "Parole"
+
+msgid "Paste a link first"
+msgstr "Vispirms ielīmējiet saiti"
+
+msgid "Paste a YouTube or YouTube Music link first"
+msgstr "Vispirms ielīmējiet YouTube vai YouTube Music saiti"
+
+msgid "Paste a YouTube or YouTube Music link to try yt-dlp."
+msgstr "Ielīmējiet YouTube vai YouTube Music saiti, lai izmēģinātu yt-dlp."
+
+msgid "Pause"
+msgstr "Pauzēt"
+
+msgid "Pause the radio station"
+msgstr "Pauzēt radiostaciju"
+
+msgid "Personalized with your YouTube Music account from {}"
+msgstr "Personalizēts ar jūsu YouTube Music kontu no {}"
+
+msgid "Pick a color, or type one as #rrggbb and press Enter."
+msgstr "Izvēlieties krāsu vai ierakstiet to formātā #rrggbb un nospiediet Enter."
+
+msgid "Pick a mood or genre to see its playlists"
+msgstr "Izvēlieties noskaņu vai žanru, lai redzētu tā atskaņošanas sarakstus"
+
+msgid "Play"
+msgstr "Atskaņot"
+
+msgid "Play \"{}\" and the rest of this shelf"
+msgstr "Atskaņot \"{}\" un pārējo šī plaukta saturu"
+
+msgid "Play a YouTube link"
+msgstr "Atskaņot YouTube saiti"
+
+msgid "Play album"
+msgstr "Atskaņot albumu"
+
+msgid "Play all"
+msgstr "Atskaņot visu"
+
+msgid "Play all {n} song"
+msgid_plural "Play all {n} songs"
+msgstr[0] "Atskaņot {n} dziesmu"
+msgstr[1] "Atskaņot visas {n} dziesmas"
+msgstr[2] "Atskaņot visas {n} dziesmas"
+
+msgid "Play count"
+msgstr "Atskaņošanas skaits"
+
+msgid "Play every song in {} and its subfolders"
+msgstr "Atskaņot visas dziesmas mapē {} un tās apakšmapēs"
+
+msgid "Play from here"
+msgstr "Atskaņot no šejienes"
+
+msgid "Play from this song"
+msgstr "Atskaņot no šīs dziesmas"
+
+msgid "Play from {}"
+msgstr "Atskaņot no {}"
+
+msgid "Play next"
+msgstr "Atskaņot nākamo"
+
+msgid "Play the album"
+msgstr "Atskaņot albumu"
+
+msgid "Play the playlist"
+msgstr "Atskaņot atskaņošanas sarakstu"
+
+msgid "Play the radio station"
+msgstr "Atskaņot radiostaciju"
+
+msgid "Play this link after the current song"
+msgstr "Atskaņot šo saiti pēc pašreizējās dziesmas"
+
+msgid "Play this link now"
+msgstr "Atskaņot šo saiti tagad"
+
+msgid "Play {}"
+msgstr "Atskaņot {}"
+
+msgid "Play {} next"
+msgstr "Atskaņot {} kā nākamo"
+
+msgid "Play {} with its subfolders"
+msgstr "Atskaņot {} ar apakšmapēm"
+
+msgid "Playback"
+msgstr "Atskaņošana"
+
+msgid "Playback failed: {}"
+msgstr "Atskaņošana neizdevās: {}"
+
+msgid "Playing {} failed: {}"
+msgstr "Neizdevās atskaņot {}: {}"
+
+msgid "PLAYLIST"
+msgstr "ATSKAŅOŠANAS SARAKSTS"
+
+msgid "Playlist"
+msgstr "Atskaņošanas saraksts"
+
+msgid "playlist"
+msgstr "atskaņošanas saraksts"
+
+msgid "Playlist name"
+msgstr "Atskaņošanas saraksta nosaukums"
+
+msgid "Playlists"
+msgstr "Atskaņošanas saraksti"
+
+msgid "Plays"
+msgstr "Atskaņošanas reizes"
+
+msgid "Plays YouTube tracks. Leave empty to use yt-dlp from your PATH."
+msgstr "Atskaņo YouTube dziesmas. Atstājiet tukšu, lai izmantotu yt-dlp no PATH."
+
+msgid "Preload the next song so it starts without a pause."
+msgstr "Iepriekš ielādēt nākamo dziesmu, lai tā sāktos bez pauzes."
+
+msgid "Previous"
+msgstr "Iepriekšējais"
+
+msgid "Previous is unavailable while a radio station plays"
+msgstr "Iepriekšējais nav pieejams, kamēr skan radiostacija"
+
+msgid "Purple"
+msgstr "Violeta"
+
+msgid "Queue"
+msgstr "Rinda"
+
+msgid "Radio"
+msgstr "Radio"
+
+msgid "Random"
+msgstr "Nejauši"
+
+msgid "Rate {n} star"
+msgid_plural "Rate {n} stars"
+msgstr[0] "Novērtēt ar {n} zvaigzni"
+msgstr[1] "Novērtēt ar {n} zvaigznēm"
+msgstr[2] "Novērtēt ar {n} zvaigznēm"
+
+msgid "Rating"
+msgstr "Vērtējums"
+
+msgid "Recently added"
+msgstr "Nesen pievienots"
+
+msgid "Recently played"
+msgstr "Nesen atskaņotie"
+
+msgid "Red"
+msgstr "Sarkana"
+
+msgid "Refresh"
+msgstr "Atsvaidzināt"
+
+msgid "Refresh this section"
+msgstr "Atsvaidzināt šo sadaļu"
+
+msgid "Release year"
+msgstr "Izdevuma gads"
+
+msgid "Remove"
+msgstr "Noņemt"
+
+msgid "Remove from favorites"
+msgstr "Noņemt no izlases"
+
+msgid "Remove from playlist"
+msgstr "Noņemt no atskaņošanas saraksta"
+
+msgid "Remove from queue"
+msgstr "Noņemt no rindas"
+
+msgid "Removed {n} song from \"{}\""
+msgid_plural "Removed {n} songs from \"{}\""
+msgstr[0] "No \"{}\" noņemta {n} dziesma"
+msgstr[1] "No \"{}\" noņemtas {n} dziesmas"
+msgstr[2] "No \"{}\" noņemtas {n} dziesmas"
+
+msgid "Removing..."
+msgstr "Noņem..."
+
+msgid "Repeat: all"
+msgstr "Atkārtot: visu"
+
+msgid "Repeat: off"
+msgstr "Atkārtot: izslēgts"
+
+msgid "Repeat: one"
+msgstr "Atkārtot: vienu"
+
+msgid "ReplayGain"
+msgstr "ReplayGain"
+
+msgid "Report what you play to the server."
+msgstr "Ziņot serverim, ko atskaņojat."
+
+msgid "Rescan the library for new content"
+msgstr "Atkārtoti skenēt bibliotēku, meklējot jaunu saturu"
+
+msgid "Resize column"
+msgstr "Mainīt kolonnas izmēru"
+
+msgid "Save"
+msgstr "Saglabāt"
+
+msgid "Save on this device"
+msgstr "Saglabāt šajā ierīcē"
+
+msgid "Save the changes on the server"
+msgstr "Saglabāt izmaiņas serverī"
+
+msgid "Save the changes on this device"
+msgstr "Saglabāt izmaiņas šajā ierīcē"
+
+msgid "Save to favorites on this device"
+msgstr "Saglabāt izlasē šajā ierīcē"
+
+msgid "Save to server"
+msgstr "Saglabāt serverī"
+
+msgid "Saved on this device"
+msgstr "Saglabāts šajā ierīcē"
+
+msgid "Saved on this device, click to remove"
+msgstr "Saglabāts šajā ierīcē, noklikšķiniet, lai noņemtu"
+
+msgid "Saving the station to the server..."
+msgstr "Saglabā staciju serverī..."
+
+msgid "Saving to the server..."
+msgstr "Saglabā serverī..."
+
+msgid "Saving..."
+msgstr "Saglabā..."
+
+msgid "Scanning the library for new content..."
+msgstr "Skenē bibliotēku, meklējot jaunu saturu..."
+
+msgid "Scanning the library: {}"
+msgstr "Skenē bibliotēku: {}"
+
+msgid "Scrobble"
+msgstr "Skroblēt"
+
+msgid "Scroll left"
+msgstr "Ritināt pa kreisi"
+
+msgid "Scroll lists and the queue to the song that is playing."
+msgstr "Ritināt sarakstus un rindu līdz dziesmai, kas tiek atskaņota."
+
+msgid "Scroll right"
+msgstr "Ritināt pa labi"
+
+msgid "Search"
+msgstr "Meklēt"
+
+msgid "Search failed: {}"
+msgstr "Meklēšana neizdevās: {}"
+
+msgid "SEARCH RESULTS"
+msgstr "MEKLĒŠANAS REZULTĀTI"
+
+msgid "Search songs on YouTube Music"
+msgstr "Meklēt dziesmas YouTube Music"
+
+msgid "Search songs, albums, artists"
+msgstr "Meklēt dziesmas, albumus, izpildītājus"
+
+msgid "Search the radio-browser.info directory"
+msgstr "Meklēt radio-browser.info katalogā"
+
+msgid "Search your library for songs, albums and artists"
+msgstr "Meklēt bibliotēkā dziesmas, albumus un izpildītājus"
+
+msgid "Searched from top to bottom until one has lyrics."
+msgstr "Meklē no augšas uz leju, līdz kādā ir atrasts teksts."
+
+msgid "Searching for lyrics..."
+msgstr "Meklē dziesmas tekstu..."
+
+msgid "Searching the radio directory failed: {}"
+msgstr "Radio kataloga meklēšana neizdevās: {}"
+
+msgid "Searching the radio-browser.info directory"
+msgstr "Meklē radio-browser.info katalogā"
+
+msgid "Searching..."
+msgstr "Meklē..."
+
+msgid "Seeking is unavailable for live radio"
+msgstr "Tiešraides radio nevar pārtīt"
+
+msgid "Server"
+msgstr "Serveris"
+
+msgid "Server type"
+msgstr "Servera tips"
+
+msgid "Servers"
+msgstr "Serveri"
+
+msgid "Set rating"
+msgstr "Iestatīt vērtējumu"
+
+msgid "Settings"
+msgstr "Iestatījumi"
+
+msgid "Share"
+msgstr "Dalīties"
+
+msgid "Share ({})"
+msgstr "Kopīgot ({})"
+
+msgid "Share link copied to the clipboard: {}"
+msgstr "Kopīgošanas saite nokopēta starpliktuvē: {}"
+
+msgid "Share this {}: copy a public link"
+msgstr "Kopīgošana ({}): kopēt publisku saiti"
+
+msgid "Sharing is unavailable: {}"
+msgstr "Kopīgošana nav pieejama: {}"
+
+msgid "SHOW LESS"
+msgstr "RĀDĪT MAZĀK"
+
+msgid "Show lyrics"
+msgstr "Rādīt tekstu"
+
+msgid "SHOW MORE"
+msgstr "RĀDĪT VAIRĀK"
+
+msgid "Show more"
+msgstr "Rādīt vairāk"
+
+msgid "Show playlists for {}"
+msgstr "Rādīt atskaņošanas sarakstus: {}"
+
+msgid "Show queue"
+msgstr "Rādīt rindu"
+
+msgid "Show the current song on your Discord profile."
+msgstr "Rādīt pašreizējo dziesmu jūsu Discord profilā."
+
+msgid "Show the next page of stations"
+msgstr "Rādīt nākamo staciju lapu"
+
+msgid "Show the queue next to the library; remembered on the next start."
+msgstr "Rādīt rindu blakus bibliotēkai; tiek atcerēts nākamajā palaišanas reizē."
+
+msgid "Show the server and saved stations"
+msgstr "Rādīt servera un saglabātās stacijas"
+
+msgid "Show {}"
+msgstr "Rādīt {}"
+
+msgid "Showing playlists for {}"
+msgstr "Tiek rādīti atskaņošanas saraksti: {}"
+
+msgid "Showing the charts for {}"
+msgstr "Tiek rādīti topi: {}"
+
+msgid "Showing the radio-browser.info directory"
+msgstr "Tiek rādīts radio-browser.info katalogs"
+
+msgid "Showing the server and saved stations"
+msgstr "Tiek rādītas servera un saglabātās stacijas"
+
+msgid "Shuffle"
+msgstr "Jaukta secība"
+
+msgid "Shuffle every song in {} and its subfolders"
+msgstr "Jaukt visas dziesmas mapē {} un tās apakšmapēs"
+
+msgid "Shuffle play"
+msgstr "Atskaņot jauktā secībā"
+
+msgid "Shuffle: off"
+msgstr "Jaukta secība: izslēgta"
+
+msgid "Shuffle: on"
+msgstr "Jaukta secība: ieslēgta"
+
+msgid "Sign in"
+msgstr "Pieteikties"
+
+msgid "Sign in with browser"
+msgstr "Pieteikties ar pārlūku"
+
+msgid "Sign out and forget this server's saved login?"
+msgstr "Atteikties un aizmirst šī servera saglabāto pieteikšanos?"
+
+msgid "Sign out and forget this server?"
+msgstr "Atteikties un aizmirst šo serveri?"
+
+msgid "Similar"
+msgstr "Līdzīgi"
+
+msgid "Similar songs come from your server, so YouTube tracks have none"
+msgstr "Līdzīgās dziesmas nāk no jūsu servera, tāpēc YouTube dziesmām to nav"
+
+msgid "Sleep timer: off"
+msgstr "Miega taimeris: izslēgts"
+
+msgid "Sleep timer: {}"
+msgstr "Miega taimeris: {}"
+
+msgid "Song count"
+msgstr "Dziesmu skaits"
+
+msgid "Songs"
+msgstr "Dziesmas"
+
+msgid "Sort by {}"
+msgstr "Kārtot pēc: {}"
+
+msgid "Sort by {}: ascending"
+msgstr "Kārtot pēc: {}, augošā secībā"
+
+msgid "Sort by {}: descending"
+msgstr "Kārtot pēc: {}, dilstošā secībā"
+
+msgid "Sort: ascending"
+msgstr "Kārtošana: augošā secībā"
+
+msgid "Sort: descending"
+msgstr "Kārtošana: dilstošā secībā"
+
+msgid "Starting volume, shared with the player bar."
+msgstr "Sākotnējais skaļums, kopīgs ar atskaņotāja joslu."
+
+msgid "Station data from radio-browser.info"
+msgstr "Staciju dati no radio-browser.info"
+
+msgid "Station name"
+msgstr "Stacijas nosaukums"
+
+msgid "Stations"
+msgstr "Stacijas"
+
+msgid "Stop {}"
+msgstr "Apturēt {}"
+
+msgid "Stream URL"
+msgstr "Straumes URL"
+
+msgid "Switch"
+msgstr "Pārslēgt"
+
+msgid "Switch between a dark and a light theme with the desktop. {}"
+msgstr "Pārslēgties starp tumšo un gaišo motīvu atbilstoši darbvirsmai. {}"
+
+msgid "Switch to grid view"
+msgstr "Pārslēgt uz režģa skatu"
+
+msgid "Switch to list view"
+msgstr "Pārslēgt uz saraksta skatu"
+
+msgid "System default"
+msgstr "Sistēmas noklusējums"
+
+msgid "System default follows the language of the desktop."
+msgstr "Sistēmas noklusējums seko darbvirsmas valodai."
+
+msgid "Tag, for example jazz"
+msgstr "Birka, piemēram, jazz"
+
+msgid "The desktop currently prefers dark."
+msgstr "Darbvirsma pašlaik dod priekšroku tumšajam."
+
+msgid "The desktop currently prefers light."
+msgstr "Darbvirsma pašlaik dod priekšroku gaišajam."
+
+msgid "The desktop has no preference, so the dark theme is used."
+msgstr "Darbvirsmai nav preferenču, tāpēc tiek izmantots tumšais motīvs."
+
+msgid "The library scan is still running on the server"
+msgstr "Bibliotēkas skenēšana serverī joprojām notiek"
+
+msgid "The queue is empty"
+msgstr "Rinda ir tukša"
+
+msgid "The queue is incomplete: loading the rest of the list failed ({})"
+msgstr "Rinda nav pilnīga: neizdevās ielādēt pārējo saraksta daļu ({})"
+
+msgid "The radio directory could not be reached"
+msgstr "Radio katalogs nav sasniedzams"
+
+msgid "The radio station stopped streaming"
+msgstr "Radiostacija pārtrauca straumēšanu"
+
+msgid "The server refused the station: {}"
+msgstr "Serveris noraidīja staciju: {}"
+
+msgid "Theme"
+msgstr "Tēma"
+
+msgid "There is nothing to play in this list"
+msgstr "Šajā sarakstā nav ko atskaņot"
+
+msgid "This Discover page does not exist"
+msgstr "Šī sadaļas Atklāt lapa nepastāv"
+
+msgid "This folder is empty"
+msgstr "Šī mape ir tukša"
+
+msgid "This playlist is empty"
+msgstr "Šis atskaņošanas saraksts ir tukšs"
+
+msgid "This server has no internet radio. Stations you add are saved on this device."
+msgstr "Šim serverim nav interneta radio. Jūsu pievienotās stacijas tiek saglabātas šajā ierīcē."
+
+msgid "this server has no public share links"
+msgstr "šim serverim nav publisku kopīgošanas saišu"
+
+msgid "Time"
+msgstr "Ilgums"
+
+msgid "Title"
+msgstr "Nosaukums"
+
+msgid "Top songs"
+msgstr "Populārākās dziesmas"
+
+msgid "Track"
+msgstr "Dziesma"
+
+msgid "Tracks"
+msgstr "Dziesmas"
+
+msgid "Transcode format"
+msgstr "Pārkodēšanas formāts"
+
+msgid "Try again"
+msgstr "Mēģināt vēlreiz"
+
+msgid "Turn off the theme accent color to pick your own."
+msgstr "Izslēdziet motīva akcenta krāsu, lai izvēlētos savu."
+
+msgid "Unmute"
+msgstr "Ieslēgt skaņu"
+
+msgid "Up next"
+msgstr "Nākamais celiņš"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "Use the theme accent color"
+msgstr "Izmantot motīva akcenta krāsu"
+
+msgid "Use {}"
+msgstr "Izmantot {}"
+
+msgid "Used while the desktop prefers dark."
+msgstr "Tiek izmantots, kad darbvirsma dod priekšroku tumšajam."
+
+msgid "Used while the desktop prefers light."
+msgstr "Tiek izmantots, kad darbvirsma dod priekšroku gaišajam."
+
+msgid "Username"
+msgstr "Lietotājvārds"
+
+msgid "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Feishin deletes right after reading."
+msgstr "Izmanto jūsu YouTube sesiju šajā pārlūkā personalizētam sadaļas Atklāt sākumam un Premium audio. yt-dlp nokopē tās sīkfailus privātā pagaidu failā, ko Feishin izdzēš uzreiz pēc nolasīšanas."
+
+msgid "Volume"
+msgstr "Skaļums"
+
+msgid "Volume {}%"
+msgstr "Skaļums {}%"
+
+msgid "XDG_RUNTIME_DIR is not set, so there is no private place for the cookies"
+msgstr "XDG_RUNTIME_DIR nav iestatīts, tāpēc sīkfailiem nav privātas vietas"
+
+msgid "Year"
+msgstr "Gads"
+
+msgid "You are here: {}"
+msgstr "Jūs esat šeit: {}"
+
+msgid "Your user is not allowed to share on this server"
+msgstr "Jūsu lietotājam nav atļauts kopīgot šajā serverī"
+
+msgid "YouTube"
+msgstr "YouTube"
+
+msgid "YouTube albums are not in your library"
+msgstr "YouTube albumi nav jūsu bibliotēkā"
+
+msgid "YouTube artists are not in your library"
+msgstr "YouTube izpildītāji nav jūsu bibliotēkā"
+
+msgid "yt-dlp program"
+msgstr "yt-dlp programma"
+
+msgid "{n} album"
+msgid_plural "{n} albums"
+msgstr[0] "{n} albums"
+msgstr[1] "{n} albumi"
+msgstr[2] "{n} albumu"
+
+msgid "{n} folder"
+msgid_plural "{n} folders"
+msgstr[0] "{n} mape"
+msgstr[1] "{n} mapes"
+msgstr[2] "{n} mapju"
+
+msgid "{n} item so far"
+msgid_plural "{n} items so far"
+msgstr[0] "Pagaidām {n} vienums"
+msgstr[1] "Pagaidām {n} vienumi"
+msgstr[2] "Pagaidām {n} vienumu"
+
+msgid "{n} minute"
+msgid_plural "{n} minutes"
+msgstr[0] "{n} minūte"
+msgstr[1] "{n} minūtes"
+msgstr[2] "{n} minūšu"
+
+msgid "{n} selected"
+msgid_plural "{n} selected"
+msgstr[0] "Atlasīts {n}"
+msgstr[1] "Atlasīti {n}"
+msgstr[2] "Atlasīti {n}"
+
+msgid "{n} song"
+msgid_plural "{n} songs"
+msgstr[0] "{n} dziesma"
+msgstr[1] "{n} dziesmas"
+msgstr[2] "{n} dziesmu"
+
+msgid "{n} song from \"{}\" will play next"
+msgid_plural "{n} songs from \"{}\" will play next"
+msgstr[0] "{n} dziesma no \"{}\" tiks atskaņota nākamā"
+msgstr[1] "{n} dziesmas no \"{}\" tiks atskaņotas nākamās"
+msgstr[2] "{n} dziesmas no \"{}\" tiks atskaņotas nākamās"
+
+msgid "{n} song on YouTube Music"
+msgid_plural "{n} songs on YouTube Music"
+msgstr[0] "{n} dziesma YouTube Music"
+msgstr[1] "{n} dziesmas YouTube Music"
+msgstr[2] "{n} dziesmu YouTube Music"
+
+msgid "{n} song will play next"
+msgid_plural "{n} songs will play next"
+msgstr[0] "{n} dziesma tiks atskaņota nākamā"
+msgstr[1] "{n} dziesmas tiks atskaņotas nākamās"
+msgstr[2] "{n} dziesmas tiks atskaņotas nākamās"
+
+msgid "{} (current theme)"
+msgstr "{} (pašreizējais motīvs)"
+
+msgid "{} (unavailable)"
+msgstr "{} (nav pieejams)"
+
+msgid "{} at {}"
+msgstr "{0} serverī {1}"
+
+msgid "{} cannot be played: its stream address is not an internet stream"
+msgstr "{} nevar atskaņot: tās straumes adrese nav interneta straume"
+
+msgid "{} is shown"
+msgstr "{} tiek rādīts"
+
+msgid "{} kbps"
+msgstr "{} kbps"
+
+msgid "{} s"
+msgstr "{} s"
+
+msgid "{}: off"
+msgstr "{}: izslēgts"
+
+msgid "{}: on"
+msgstr "{}: ieslēgts"
+
+msgid "{}: {} (dark)"
+msgstr "{}: {} (tumšs)"
+
+msgid "{}: {} (light)"
+msgstr "{}: {} (gaišs)"

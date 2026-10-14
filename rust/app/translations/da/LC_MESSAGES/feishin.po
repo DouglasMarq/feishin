@@ -1,0 +1,1520 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: da\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+
+msgid "\"{}\" plays next"
+msgstr "\"{}\" afspilles som den næste"
+
+msgid "\"{}\" will play next"
+msgstr "\"{}\" afspilles som den næste"
+
+msgid "1 star"
+msgstr "1 stjerne"
+
+msgid "2 stars"
+msgstr "2 stjerner"
+
+msgid "3 stars"
+msgstr "3 stjerner"
+
+msgid "4 stars"
+msgstr "4 stjerner"
+
+msgid "5 stars"
+msgstr "5 stjerner"
+
+msgid "About {}"
+msgstr "Om {0}"
+
+msgid "Accent color"
+msgstr "Accentfarve"
+
+msgid "Accent color not changed: {}."
+msgstr "Accentfarven blev ikke ændret: {}."
+
+msgid "Accent color {}"
+msgstr "Accentfarve {}"
+
+msgid "Accent color {} (selected)"
+msgstr "Accentfarve {} (valgt)"
+
+msgid "Accent color {} (theme accent in use)"
+msgstr "Accentfarve {} (temaets accent bruges)"
+
+msgid "Add a station by its stream URL"
+msgstr "Tilføj en station via dens stream-url"
+
+msgid "Add all songs to the queue"
+msgstr "Føj alle sange til køen"
+
+msgid "Add server"
+msgstr "Tilføj server"
+
+msgid "Add station"
+msgstr "Tilføj station"
+
+msgid "Add this link to the end of the queue"
+msgstr "Føj dette link til slutningen af køen"
+
+msgid "Add this station to the server for every client"
+msgstr "Føj denne station til serveren for alle klienter"
+
+msgid "Add to favorites"
+msgstr "Føj til favoritter"
+
+msgid "Add to playlist"
+msgstr "Føj til playliste"
+
+msgid "Add to queue"
+msgstr "Føj til kø"
+
+msgid "Add to the server's stations"
+msgstr "Føj til serverens stationer"
+
+msgid "Add {n} song to playlist"
+msgid_plural "Add {n} songs to playlist"
+msgstr[0] "Føj {n} sang til playliste"
+msgstr[1] "Føj {n} sange til playliste"
+
+msgid "Add {} to the queue"
+msgstr "Føj {} til køen"
+
+msgid "Added \"{}\" to the queue"
+msgstr "\"{}\" blev føjet til køen"
+
+msgid "Added only {n} song to \"{}\": {}"
+msgid_plural "Added only {n} songs to \"{}\": {}"
+msgstr[0] "Kun {n} sang blev føjet til \"{}\": {}"
+msgstr[1] "Kun {n} sange blev føjet til \"{}\": {}"
+
+msgid "Added {n} song from \"{}\" to the queue"
+msgid_plural "Added {n} songs from \"{}\" to the queue"
+msgstr[0] "{n} sang fra \"{}\" blev føjet til køen"
+msgstr[1] "{n} sange fra \"{}\" blev føjet til køen"
+
+msgid "Added {n} song to \"{}\""
+msgid_plural "Added {n} songs to \"{}\""
+msgstr[0] "{n} sang blev føjet til \"{}\""
+msgstr[1] "{n} sange blev føjet til \"{}\""
+
+msgid "Added {n} song to the queue"
+msgid_plural "Added {n} songs to the queue"
+msgstr[0] "{n} sang blev føjet til køen"
+msgstr[1] "{n} sange blev føjet til køen"
+
+msgid "Adding to \"{}\": {} of {n} song"
+msgid_plural "Adding to \"{}\": {} of {n} songs"
+msgstr[0] "Føjer til \"{}\": {} af {n} sang"
+msgstr[1] "Føjer til \"{}\": {} af {n} sange"
+
+msgid "ALBUM"
+msgstr "ALBUM"
+
+msgid "Album"
+msgstr "Album"
+
+msgid "album"
+msgstr "Album"
+
+msgid "Album artist"
+msgstr "Albumkunstner"
+
+msgid "Album count"
+msgstr "Antal albummer"
+
+msgid "Album not found"
+msgstr "Albummet blev ikke fundet"
+
+msgid "Albums"
+msgstr "Albummer"
+
+msgid "All genres"
+msgstr "Alle genrer"
+
+msgid "Already at the end"
+msgstr "Allerede ved slutningen"
+
+msgid "Already at the start"
+msgstr "Allerede ved starten"
+
+msgid "Already in \"{}\""
+msgstr "Allerede i \"{}\""
+
+msgid "Already on the server"
+msgstr "Allerede på serveren"
+
+msgid "Amber"
+msgstr "Rav"
+
+msgid "Appearance"
+msgstr "Udseende"
+
+msgid "ARTIST"
+msgstr "KUNSTNER"
+
+msgid "Artist"
+msgstr "Kunstner"
+
+msgid "Artists"
+msgstr "Kunstnere"
+
+msgid "Ask the server to transcode down to this bitrate. Applies from the next song."
+msgstr "Bed serveren om at omkode ned til denne bitrate. Gælder fra næste sang."
+
+msgid "Audio device"
+msgstr "Lydenhed"
+
+msgid "Automatic ({})"
+msgstr "Automatisk ({})"
+
+msgid "Back"
+msgstr "Tilbage"
+
+msgid "Blue"
+msgstr "Blå"
+
+msgid "by {}"
+msgstr "af {}"
+
+msgid "Cancel"
+msgstr "Annuller"
+
+msgid "Cancel timer"
+msgstr "Annuller timer"
+
+msgid "Cannot share: {}"
+msgstr "Kan ikke dele: {}"
+
+msgid "Chart country"
+msgstr "Land for hitlister"
+
+msgid "Charts"
+msgstr "Hitlister"
+
+msgid "Choose a browser under Settings, YouTube to sign in for a personalized home"
+msgstr "Vælg en browser under Indstillinger > YouTube for at logge ind og få en personlig startside"
+
+msgid "Clear"
+msgstr "Ryd"
+
+msgid "Clear filters"
+msgstr "Ryd filtre"
+
+msgid "Clear rating"
+msgstr "Ryd bedømmelse"
+
+msgid "Clear the favorites and genre filters"
+msgstr "Ryd filtrene for favoritter og genrer"
+
+msgid "Close"
+msgstr "Luk"
+
+msgid "Close now playing"
+msgstr "Luk Afspiller nu"
+
+msgid "Close without saving"
+msgstr "Luk uden at gemme"
+
+msgid "Colors used across the whole app."
+msgstr "Farver, der bruges i hele appen."
+
+msgid "Connect to your music server"
+msgstr "Opret forbindelse til din musikserver"
+
+msgid "Connecting..."
+msgstr "Opretter forbindelse..."
+
+msgid "Could not add to \"{}\": {}"
+msgstr "Kunne ikke føje til \"{}\": {}"
+
+msgid "Could not add {} to the server"
+msgstr "Kunne ikke føje {} til serveren"
+
+msgid "Could not create a share link: {}"
+msgstr "Kunne ikke oprette et delingslink: {}"
+
+msgid "Could not create the playlist: {}"
+msgstr "Kunne ikke oprette playlisten: {}"
+
+msgid "Could not delete the playlist: {}"
+msgstr "Kunne ikke slette playlisten: {}"
+
+msgid "Could not delete the station"
+msgstr "Kunne ikke slette stationen"
+
+msgid "Could not load albums: {}"
+msgstr "Kunne ikke indlæse albummer: {}"
+
+msgid "Could not load artists: {}"
+msgstr "Kunne ikke indlæse kunstnere: {}"
+
+msgid "Could not load Discover: {}"
+msgstr "Kunne ikke indlæse Opdag: {}"
+
+msgid "Could not load genres: {}"
+msgstr "Kunne ikke indlæse genrer: {}"
+
+msgid "Could not load it from YouTube Music: {}"
+msgstr "Kunne ikke indlæse det fra YouTube Music: {}"
+
+msgid "Could not load lyrics"
+msgstr "Kunne ikke indlæse sangtekster"
+
+msgid "Could not load moods and genres: {}"
+msgstr "Kunne ikke indlæse stemninger og genrer: {}"
+
+msgid "Could not load more results: {}"
+msgstr "Kunne ikke indlæse flere resultater: {}"
+
+msgid "Could not load new releases: {}"
+msgstr "Kunne ikke indlæse nye udgivelser: {}"
+
+msgid "Could not load playlists: {}"
+msgstr "Kunne ikke indlæse playlister: {}"
+
+msgid "Could not load the album: {}"
+msgstr "Kunne ikke indlæse albummet: {}"
+
+msgid "Could not load the artist: {}"
+msgstr "Kunne ikke indlæse kunstneren: {}"
+
+msgid "Could not load the charts: {}"
+msgstr "Kunne ikke indlæse hitlisterne: {}"
+
+msgid "Could not load the folder: {}"
+msgstr "Kunne ikke indlæse mappen: {}"
+
+msgid "Could not load the list: {}"
+msgstr "Kunne ikke indlæse listen: {}"
+
+msgid "Could not load the playlist: {}"
+msgstr "Kunne ikke indlæse playlisten: {}"
+
+msgid "Could not load the radio stations: {}"
+msgstr "Kunne ikke indlæse radiostationerne: {}"
+
+msgid "Could not load the selection: {}"
+msgstr "Kunne ikke indlæse udvalget: {}"
+
+msgid "Could not load this page: {}"
+msgstr "Kunne ikke indlæse denne side: {}"
+
+msgid "Could not load tracks: {}"
+msgstr "Kunne ikke indlæse numre: {}"
+
+msgid "Could not load your home: {}"
+msgstr "Kunne ikke indlæse din startside: {}"
+
+msgid "Could not open the folder: {}"
+msgstr "Kunne ikke åbne mappen: {}"
+
+msgid "Could not open YouTube Music: {}"
+msgstr "Kunne ikke åbne YouTube Music: {}"
+
+msgid "Could not play \"{}\" from YouTube: {}"
+msgstr "Kunne ikke afspille \"{}\" fra YouTube: {}"
+
+msgid "Could not play album: {}"
+msgstr "Kunne ikke afspille album: {}"
+
+msgid "Could not play from YouTube: {}"
+msgstr "Kunne ikke afspille fra YouTube: {}"
+
+msgid "Could not play the album: {}"
+msgstr "Kunne ikke afspille albummet: {}"
+
+msgid "Could not remove songs: {}"
+msgstr "Kunne ikke fjerne sange: {}"
+
+msgid "Could not rescan the library: {}"
+msgstr "Kunne ikke genscanne biblioteket: {}"
+
+msgid "Could not set the rating: {}"
+msgstr "Kunne ikke sætte bedømmelsen: {}"
+
+msgid "Could not sign in to YouTube Music ({}). Showing general picks instead."
+msgstr "Kunne ikke logge ind på YouTube Music ({}). Viser generelle forslag i stedet."
+
+msgid "Could not switch server: {}"
+msgstr "Kunne ikke skifte server: {}"
+
+msgid "Could not update favorite: {}"
+msgstr "Kunne ikke opdatere favorit: {}"
+
+msgid "Could not update favorites: {}"
+msgstr "Kunne ikke opdatere favoritter: {}"
+
+msgid "Could not update rating: {}"
+msgstr "Kunne ikke opdatere bedømmelse: {}"
+
+msgid "Could not update the favorite: {}"
+msgstr "Kunne ikke opdatere favoritten: {}"
+
+msgid "Country"
+msgstr "Land"
+
+msgid "Create"
+msgstr "Opret"
+
+msgid "Created \"{}\" with only {n} song: {}"
+msgid_plural "Created \"{}\" with only {n} songs: {}"
+msgstr[0] "\"{}\" blev oprettet med kun {n} sang: {}"
+msgstr[1] "\"{}\" blev oprettet med kun {n} sange: {}"
+
+msgid "Created \"{}\" with {n} song"
+msgid_plural "Created \"{}\" with {n} songs"
+msgstr[0] "\"{}\" blev oprettet med {n} sang"
+msgstr[1] "\"{}\" blev oprettet med {n} sange"
+
+msgid "Created playlist \"{}\""
+msgstr "Playlisten \"{}\" blev oprettet"
+
+msgid "Creating a share link..."
+msgstr "Opretter et delingslink..."
+
+msgid "Creating..."
+msgstr "Opretter..."
+
+msgid "Crossfade"
+msgstr "Crossfade"
+
+msgid "Crossfade could not be changed: {}"
+msgstr "Crossfade kunne ikke ændres: {}"
+
+msgid "Crossfade: {}"
+msgstr "Crossfade: {}"
+
+msgid "Current"
+msgstr "Aktuel"
+
+msgid "Custom accent color: {} (theme accent in use)"
+msgstr "Brugerdefineret accentfarve: {} (temaets accent bruges)"
+
+msgid "Custom accent color: {}, press Enter to apply"
+msgstr "Brugerdefineret accentfarve: {}, tryk på Enter for at anvende"
+
+msgid "Dark theme"
+msgstr "Mørkt tema"
+
+msgid "DARK THEMES"
+msgstr "MØRKE TEMAER"
+
+msgid "Default country for the Discover charts. Automatic follows your system region."
+msgstr "Standardland for hitlisterne i Opdag. Automatisk følger dit systems region."
+
+msgid "Default Dark"
+msgstr "Standard mørk"
+
+msgid "Default Light"
+msgstr "Standard lys"
+
+msgid "Delete"
+msgstr "Slet"
+
+msgid "Delete \"{}\" from the server? This cannot be undone."
+msgstr "Slet \"{}\" fra serveren? Det kan ikke fortrydes."
+
+msgid "Delete \"{}\"? This cannot be undone."
+msgstr "Slet \"{}\"? Det kan ikke fortrydes."
+
+msgid "Delete playlist"
+msgstr "Slet playliste"
+
+msgid "Delete station"
+msgstr "Slet station"
+
+msgid "Delete {} from the server"
+msgstr "Slet {} fra serveren"
+
+msgid "Deleted playlist \"{}\""
+msgstr "Playlisten \"{}\" blev slettet"
+
+msgid "Deleting..."
+msgstr "Sletter..."
+
+msgid "Demo mode: these picks are made up and play from your demo library"
+msgstr "Demotilstand: disse forslag er opdigtede og afspilles fra dit demobibliotek"
+
+msgid "Directory"
+msgstr "Katalog"
+
+msgid "Disc {}"
+msgstr "Disk {}"
+
+msgid "Discord Rich Presence"
+msgstr "Discord Rich Presence"
+
+msgid "Discover"
+msgstr "Opdag"
+
+msgid "Discover is open"
+msgstr "Opdag er åben"
+
+msgid "Discover new music on YouTube Music"
+msgstr "Opdag ny musik på YouTube Music"
+
+msgid "Duration"
+msgstr "Varighed"
+
+msgid "Edit station"
+msgstr "Rediger station"
+
+msgid "Edit {}"
+msgstr "Rediger {}"
+
+msgid "End of current track"
+msgstr "Slutningen af det aktuelle nummer"
+
+msgid "End of track"
+msgstr "Slutningen af nummeret"
+
+msgid "Enter a name for the station"
+msgstr "Angiv et navn til stationen"
+
+msgid "Enter a name, country or tag to search"
+msgstr "Angiv et navn, land eller tag for at søge"
+
+msgid "Enter a stream URL that starts with http:// or https://"
+msgstr "Angiv en stream-url, der starter med http:// eller https://"
+
+msgid "Enter the server URL"
+msgstr "Angiv serverens url"
+
+msgid "Fade the end of each song into the next one. Off keeps gapless playback."
+msgstr "Lad slutningen af hver sang glide over i den næste. Fra bevarer afspilning uden pauser."
+
+msgid "Favorite"
+msgstr "Favorit"
+
+msgid "Favorited"
+msgstr "Favoriseret"
+
+msgid "Favorites"
+msgstr "Favoritter"
+
+msgid "Favorites only: off"
+msgstr "Kun favoritter: fra"
+
+msgid "Favorites only: on"
+msgstr "Kun favoritter: til"
+
+msgid "Filter"
+msgstr "Filter"
+
+msgid "Filter playlists"
+msgstr "Filtrer playlister"
+
+msgid "Find stations by name, country or tag"
+msgstr "Find stationer efter navn, land eller tag"
+
+msgid "Find stations in the radio-browser.info directory"
+msgstr "Find stationer i kataloget fra radio-browser.info"
+
+msgid "Folder"
+msgstr "Mappe"
+
+msgid "Folders"
+msgstr "Mapper"
+
+msgid "Follow current song"
+msgstr "Følg aktuel sang"
+
+msgid "Follow system color scheme"
+msgstr "Følg systemets farveskema"
+
+msgid "For you"
+msgstr "Til dig"
+
+msgid "Forget this server?"
+msgstr "Glem denne server?"
+
+msgid "Format the server should transcode to. Applies from the next song."
+msgstr "Format, som serveren skal omkode til. Gælder fra næste sang."
+
+msgid "Found {n} server in Feishin but it has no usable saved login"
+msgid_plural "Found {n} servers in Feishin but none with a usable saved login"
+msgstr[0] "Fandt {n} server i Feishin, men den har intet brugbart gemt login"
+msgstr[1] "Fandt {n} servere i Feishin, men ingen med et brugbart gemt login"
+
+msgid "Gapless playback"
+msgstr "Afspilning uden pauser"
+
+msgid "Genres"
+msgstr "Genrer"
+
+msgid "Go back to {}"
+msgstr "Gå tilbage til {}"
+
+msgid "Go to album"
+msgstr "Gå til album"
+
+msgid "Go to artist"
+msgstr "Gå til kunstner"
+
+msgid "Go to {}"
+msgstr "Gå til {}"
+
+msgid "Green"
+msgstr "Grøn"
+
+msgid "Hide lyrics"
+msgstr "Skjul sangtekst"
+
+msgid "Hide queue"
+msgstr "Skjul kø"
+
+msgid "High Contrast Dark"
+msgstr "Høj kontrast mørk"
+
+msgid "High Contrast Light"
+msgstr "Høj kontrast lys"
+
+msgid "Highlight with the color that comes with the theme."
+msgstr "Fremhæv med den farve, der følger med temaet."
+
+msgid "Home"
+msgstr "Hjem"
+
+msgid "Homepage (optional)"
+msgstr "Hjemmeside (valgfri)"
+
+msgid "Import from Feishin"
+msgstr "Importer fra Feishin"
+
+msgid "Install yt-dlp to play YouTube tracks"
+msgstr "Installer yt-dlp for at afspille YouTube-numre"
+
+msgid "Integrations"
+msgstr "Integrationer"
+
+msgid "Interface"
+msgstr "Brugerflade"
+
+msgid "Internet radio"
+msgstr "Internetradio"
+
+msgid "item"
+msgstr "element"
+
+msgid "Jellyfin has no public share links"
+msgstr "Jellyfin har ingen offentlige delingslinks"
+
+msgid "Keep this station in the favorites on this device"
+msgstr "Behold denne station i favoritterne på denne enhed"
+
+msgid "Language"
+msgstr "Sprog"
+
+msgid "LIBRARY"
+msgstr "BIBLIOTEK"
+
+msgid "Library scan finished"
+msgstr "Scanning af biblioteket er færdig"
+
+msgid "Library scan finished: {n} item"
+msgid_plural "Library scan finished: {n} items"
+msgstr[0] "Scanning af biblioteket er færdig: {n} element"
+msgstr[1] "Scanning af biblioteket er færdig: {n} elementer"
+
+msgid "Light theme"
+msgstr "Lyst tema"
+
+msgid "LIGHT THEMES"
+msgstr "LYSE TEMAER"
+
+msgid "Listening to {}"
+msgstr "Du lytter til {}"
+
+msgid "LIVE"
+msgstr "LIVE"
+
+msgid "Load more"
+msgstr "Indlæs flere"
+
+msgid "Load this section again"
+msgstr "Indlæs denne sektion igen"
+
+msgid "Loading playlists..."
+msgstr "Indlæser playlister..."
+
+msgid "Loading similar songs..."
+msgstr "Indlæser lignende sange..."
+
+msgid "Loading stations..."
+msgstr "Indlæser stationer..."
+
+msgid "Loading the next page of stations"
+msgstr "Indlæser den næste side med stationer"
+
+msgid "Loading..."
+msgstr "Indlæser..."
+
+msgid "Log out"
+msgstr "Log ud"
+
+msgid "Looking up the YouTube link..."
+msgstr "Slår YouTube-linket op..."
+
+msgid "Lyrics"
+msgstr "Sangtekster"
+
+msgid "Lyrics from {}"
+msgstr "Sangtekst fra {}"
+
+msgid "Lyrics sources"
+msgstr "Kilder til sangtekster"
+
+msgid "Maximum bitrate"
+msgstr "Maksimal bitrate"
+
+msgid "Media keys and desktop media controls. Takes effect after a restart."
+msgstr "Medietaster og skrivebordets mediestyring. Træder i kraft efter en genstart."
+
+msgid "Moods and genres"
+msgstr "Stemninger og genrer"
+
+msgid "Most played"
+msgstr "Mest afspillet"
+
+msgid "Move down"
+msgstr "Flyt ned"
+
+msgid "Move up"
+msgstr "Flyt op"
+
+msgid "MPRIS"
+msgstr "MPRIS"
+
+msgid "Mute"
+msgstr "Slå lyd fra"
+
+msgid "Name"
+msgstr "Navn"
+
+msgid "New playlist"
+msgstr "Ny playliste"
+
+msgid "New releases"
+msgstr "Nye udgivelser"
+
+msgid "Next"
+msgstr "Næste"
+
+msgid "Next is unavailable while a radio station plays"
+msgstr "Næste er ikke tilgængelig, mens en radiostation spiller"
+
+msgid "No albums"
+msgstr "Ingen albummer"
+
+msgid "No albums found"
+msgstr "Ingen albummer fundet"
+
+msgid "No artists found"
+msgstr "Ingen kunstnere fundet"
+
+msgid "no browser is selected"
+msgstr "der er ikke valgt nogen browser"
+
+msgid "No favorite albums"
+msgstr "Ingen favoritalbummer"
+
+msgid "No favorite artists"
+msgstr "Ingen favoritkunstnere"
+
+msgid "No favorite tracks"
+msgstr "Ingen favoritnumre"
+
+msgid "No genres found"
+msgstr "Ingen genrer fundet"
+
+msgid "No lyrics found"
+msgstr "Ingen sangtekster fundet"
+
+msgid "No playlists found"
+msgstr "Ingen playlister fundet"
+
+msgid "No playlists yet"
+msgstr "Ingen playlister endnu"
+
+msgid "No rating"
+msgstr "Ingen bedømmelse"
+
+msgid "No results for \"{}\""
+msgstr "Ingen resultater for \"{}\""
+
+msgid "No saved login for {}; remove it and add it again"
+msgstr "Intet gemt login for {}; fjern serveren, og tilføj den igen"
+
+msgid "No saved servers."
+msgstr "Ingen gemte servere."
+
+msgid "No similar songs found"
+msgstr "Ingen lignende sange fundet"
+
+msgid "No songs here"
+msgstr "Ingen sange her"
+
+msgid "No stations found"
+msgstr "Ingen stationer fundet"
+
+msgid "No stations yet. Add one or find one in the directory."
+msgstr "Ingen stationer endnu. Tilføj en, eller find en i kataloget."
+
+msgid "No tracks found"
+msgstr "Ingen numre fundet"
+
+msgid "None"
+msgstr "Ingen"
+
+msgid "Normalize loudness using the track or album gain tags."
+msgstr "Normaliser lydstyrken med nummerets eller albummets gain-tags."
+
+msgid "Not connected to a server"
+msgstr "Ikke forbundet til en server"
+
+msgid "Nothing is playing"
+msgstr "Der afspilles ikke noget"
+
+msgid "Nothing to add yet"
+msgstr "Intet at tilføje endnu"
+
+msgid "Nothing to go back to"
+msgstr "Intet at gå tilbage til"
+
+msgid "Nothing to play here"
+msgstr "Intet at afspille her"
+
+msgid "Nothing to play yet"
+msgstr "Intet at afspille endnu"
+
+msgid "Nothing to show here right now"
+msgstr "Intet at vise her lige nu"
+
+msgid "Off"
+msgstr "Fra"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "On the server"
+msgstr "På serveren"
+
+msgid "Only a server admin can rescan the library"
+msgstr "Kun en serveradministrator kan genscanne biblioteket"
+
+msgid "Only loaded tracks can be shared: select fewer tracks or scroll through them first"
+msgstr "Kun indlæste numre kan deles: vælg færre numre, eller rul igennem dem først"
+
+msgid "Open"
+msgstr "Åbn"
+
+msgid "Open in YouTube Music"
+msgstr "Åbn i YouTube Music"
+
+msgid "Open now playing"
+msgstr "Åbn Afspiller nu"
+
+msgid "Open radio"
+msgstr "Åbn radio"
+
+msgid "Open the album \"{}\""
+msgstr "Åbn albummet \"{}\""
+
+msgid "Open the playlist \"{}\""
+msgstr "Åbn playlisten \"{}\""
+
+msgid "Open the queue panel"
+msgstr "Åbn køpanelet"
+
+msgid "Open {}"
+msgstr "Åbn {}"
+
+msgid "Original"
+msgstr "Original"
+
+msgid "Output used by the player."
+msgstr "Output, som afspilleren bruger."
+
+msgid "Owner"
+msgstr "Ejer"
+
+msgid "Password"
+msgstr "Adgangskode"
+
+msgid "Paste a link first"
+msgstr "Indsæt et link først"
+
+msgid "Paste a YouTube or YouTube Music link first"
+msgstr "Indsæt et YouTube- eller YouTube Music-link først"
+
+msgid "Paste a YouTube or YouTube Music link to try yt-dlp."
+msgstr "Indsæt et YouTube- eller YouTube Music-link for at prøve yt-dlp."
+
+msgid "Pause"
+msgstr "Pause"
+
+msgid "Pause the radio station"
+msgstr "Sæt radiostationen på pause"
+
+msgid "Personalized with your YouTube Music account from {}"
+msgstr "Personliggjort med din YouTube Music-konto fra {}"
+
+msgid "Pick a color, or type one as #rrggbb and press Enter."
+msgstr "Vælg en farve, eller skriv en som #rrggbb, og tryk på Enter."
+
+msgid "Pick a mood or genre to see its playlists"
+msgstr "Vælg en stemning eller genre for at se dens playlister"
+
+msgid "Play"
+msgstr "Afspil"
+
+msgid "Play \"{}\" and the rest of this shelf"
+msgstr "Afspil \"{}\" og resten af denne række"
+
+msgid "Play a YouTube link"
+msgstr "Afspil et YouTube-link"
+
+msgid "Play album"
+msgstr "Afspil album"
+
+msgid "Play all"
+msgstr "Afspil alle"
+
+msgid "Play all {n} song"
+msgid_plural "Play all {n} songs"
+msgstr[0] "Afspil {n} sang"
+msgstr[1] "Afspil alle {n} sange"
+
+msgid "Play count"
+msgstr "Afspilninger"
+
+msgid "Play every song in {} and its subfolders"
+msgstr "Afspil alle sange i {} og dens undermapper"
+
+msgid "Play from here"
+msgstr "Afspil herfra"
+
+msgid "Play from this song"
+msgstr "Afspil fra denne sang"
+
+msgid "Play from {}"
+msgstr "Afspil fra {}"
+
+msgid "Play next"
+msgstr "Afspil som den næste"
+
+msgid "Play the album"
+msgstr "Afspil albummet"
+
+msgid "Play the playlist"
+msgstr "Afspil playlisten"
+
+msgid "Play the radio station"
+msgstr "Afspil radiostationen"
+
+msgid "Play this link after the current song"
+msgstr "Afspil dette link efter den aktuelle sang"
+
+msgid "Play this link now"
+msgstr "Afspil dette link nu"
+
+msgid "Play {}"
+msgstr "Afspil {}"
+
+msgid "Play {} next"
+msgstr "Afspil {} som den næste"
+
+msgid "Play {} with its subfolders"
+msgstr "Afspil {} med undermapper"
+
+msgid "Playback"
+msgstr "Afspilning"
+
+msgid "Playback failed: {}"
+msgstr "Afspilning mislykkedes: {}"
+
+msgid "Playing {} failed: {}"
+msgstr "Afspilning af {} mislykkedes: {}"
+
+msgid "PLAYLIST"
+msgstr "PLAYLISTE"
+
+msgid "Playlist"
+msgstr "Playliste"
+
+msgid "playlist"
+msgstr "Playliste"
+
+msgid "Playlist name"
+msgstr "Navn på playliste"
+
+msgid "Playlists"
+msgstr "Playlister"
+
+msgid "Plays"
+msgstr "Afspilninger"
+
+msgid "Plays YouTube tracks. Leave empty to use yt-dlp from your PATH."
+msgstr "Afspiller YouTube-numre. Lad feltet være tomt for at bruge yt-dlp fra din PATH."
+
+msgid "Preload the next song so it starts without a pause."
+msgstr "Indlæs den næste sang på forhånd, så den starter uden pause."
+
+msgid "Previous"
+msgstr "Forrige"
+
+msgid "Previous is unavailable while a radio station plays"
+msgstr "Forrige er ikke tilgængelig, mens en radiostation spiller"
+
+msgid "Purple"
+msgstr "Lilla"
+
+msgid "Queue"
+msgstr "Kø"
+
+msgid "Radio"
+msgstr "Radio"
+
+msgid "Random"
+msgstr "Tilfældig"
+
+msgid "Rate {n} star"
+msgid_plural "Rate {n} stars"
+msgstr[0] "Giv {n} stjerne"
+msgstr[1] "Giv {n} stjerner"
+
+msgid "Rating"
+msgstr "Bedømmelse"
+
+msgid "Recently added"
+msgstr "Nyligt tilføjet"
+
+msgid "Recently played"
+msgstr "Nyligt afspillet"
+
+msgid "Red"
+msgstr "Rød"
+
+msgid "Refresh"
+msgstr "Opdater"
+
+msgid "Refresh this section"
+msgstr "Opdater denne sektion"
+
+msgid "Release year"
+msgstr "Udgivelsesår"
+
+msgid "Remove"
+msgstr "Fjern"
+
+msgid "Remove from favorites"
+msgstr "Fjern fra favoritter"
+
+msgid "Remove from playlist"
+msgstr "Fjern fra playliste"
+
+msgid "Remove from queue"
+msgstr "Fjern fra kø"
+
+msgid "Removed {n} song from \"{}\""
+msgid_plural "Removed {n} songs from \"{}\""
+msgstr[0] "{n} sang blev fjernet fra \"{}\""
+msgstr[1] "{n} sange blev fjernet fra \"{}\""
+
+msgid "Removing..."
+msgstr "Fjerner..."
+
+msgid "Repeat: all"
+msgstr "Gentag: alle"
+
+msgid "Repeat: off"
+msgstr "Gentag: fra"
+
+msgid "Repeat: one"
+msgstr "Gentag: én"
+
+msgid "ReplayGain"
+msgstr "ReplayGain"
+
+msgid "Report what you play to the server."
+msgstr "Rapportér det, du afspiller, til serveren."
+
+msgid "Rescan the library for new content"
+msgstr "Genscan biblioteket for nyt indhold"
+
+msgid "Resize column"
+msgstr "Tilpas kolonnebredde"
+
+msgid "Save"
+msgstr "Gem"
+
+msgid "Save on this device"
+msgstr "Gem på denne enhed"
+
+msgid "Save the changes on the server"
+msgstr "Gem ændringerne på serveren"
+
+msgid "Save the changes on this device"
+msgstr "Gem ændringerne på denne enhed"
+
+msgid "Save to favorites on this device"
+msgstr "Gem i favoritter på denne enhed"
+
+msgid "Save to server"
+msgstr "Gem på server"
+
+msgid "Saved on this device"
+msgstr "Gemt på denne enhed"
+
+msgid "Saved on this device, click to remove"
+msgstr "Gemt på denne enhed, klik for at fjerne"
+
+msgid "Saving the station to the server..."
+msgstr "Gemmer stationen på serveren..."
+
+msgid "Saving to the server..."
+msgstr "Gemmer på serveren..."
+
+msgid "Saving..."
+msgstr "Gemmer..."
+
+msgid "Scanning the library for new content..."
+msgstr "Scanner biblioteket for nyt indhold..."
+
+msgid "Scanning the library: {}"
+msgstr "Scanner biblioteket: {}"
+
+msgid "Scrobble"
+msgstr "Scrobble"
+
+msgid "Scroll left"
+msgstr "Rul til venstre"
+
+msgid "Scroll lists and the queue to the song that is playing."
+msgstr "Rul lister og køen til den sang, der spiller."
+
+msgid "Scroll right"
+msgstr "Rul til højre"
+
+msgid "Search"
+msgstr "Søg"
+
+msgid "Search failed: {}"
+msgstr "Søgningen mislykkedes: {}"
+
+msgid "SEARCH RESULTS"
+msgstr "SØGERESULTATER"
+
+msgid "Search songs on YouTube Music"
+msgstr "Søg efter sange på YouTube Music"
+
+msgid "Search songs, albums, artists"
+msgstr "Søg efter sange, albummer, kunstnere"
+
+msgid "Search the radio-browser.info directory"
+msgstr "Søg i kataloget fra radio-browser.info"
+
+msgid "Search your library for songs, albums and artists"
+msgstr "Søg i dit bibliotek efter sange, albummer og kunstnere"
+
+msgid "Searched from top to bottom until one has lyrics."
+msgstr "Gennemsøges oppefra og ned, indtil en har sangtekster."
+
+msgid "Searching for lyrics..."
+msgstr "Søger efter sangtekster..."
+
+msgid "Searching the radio directory failed: {}"
+msgstr "Søgning i radiokataloget mislykkedes: {}"
+
+msgid "Searching the radio-browser.info directory"
+msgstr "Søger i kataloget fra radio-browser.info"
+
+msgid "Searching..."
+msgstr "Søger..."
+
+msgid "Seeking is unavailable for live radio"
+msgstr "Spoling er ikke tilgængelig for liveradio"
+
+msgid "Server"
+msgstr "Server"
+
+msgid "Server type"
+msgstr "Servertype"
+
+msgid "Servers"
+msgstr "Servere"
+
+msgid "Set rating"
+msgstr "Sæt bedømmelse"
+
+msgid "Settings"
+msgstr "Indstillinger"
+
+msgid "Share"
+msgstr "Del"
+
+msgid "Share ({})"
+msgstr "Del ({})"
+
+msgid "Share link copied to the clipboard: {}"
+msgstr "Delingslink kopieret til udklipsholderen: {}"
+
+msgid "Share this {}: copy a public link"
+msgstr "Del {}: kopiér et offentligt link"
+
+msgid "Sharing is unavailable: {}"
+msgstr "Deling er ikke tilgængelig: {}"
+
+msgid "SHOW LESS"
+msgstr "VIS MINDRE"
+
+msgid "Show lyrics"
+msgstr "Vis sangtekst"
+
+msgid "SHOW MORE"
+msgstr "VIS MERE"
+
+msgid "Show more"
+msgstr "Vis mere"
+
+msgid "Show playlists for {}"
+msgstr "Vis playlister for {}"
+
+msgid "Show queue"
+msgstr "Vis kø"
+
+msgid "Show the current song on your Discord profile."
+msgstr "Vis den aktuelle sang på din Discord-profil."
+
+msgid "Show the next page of stations"
+msgstr "Vis den næste side med stationer"
+
+msgid "Show the queue next to the library; remembered on the next start."
+msgstr "Vis køen ved siden af biblioteket; huskes ved næste start."
+
+msgid "Show the server and saved stations"
+msgstr "Vis serverens og gemte stationer"
+
+msgid "Show {}"
+msgstr "Vis {}"
+
+msgid "Showing playlists for {}"
+msgstr "Viser playlister for {}"
+
+msgid "Showing the charts for {}"
+msgstr "Viser hitlisterne for {}"
+
+msgid "Showing the radio-browser.info directory"
+msgstr "Viser kataloget fra radio-browser.info"
+
+msgid "Showing the server and saved stations"
+msgstr "Viser serverens og gemte stationer"
+
+msgid "Shuffle"
+msgstr "Bland"
+
+msgid "Shuffle every song in {} and its subfolders"
+msgstr "Bland alle sange i {} og dens undermapper"
+
+msgid "Shuffle play"
+msgstr "Bland og afspil"
+
+msgid "Shuffle: off"
+msgstr "Bland: fra"
+
+msgid "Shuffle: on"
+msgstr "Bland: til"
+
+msgid "Sign in"
+msgstr "Log ind"
+
+msgid "Sign in with browser"
+msgstr "Log ind med browser"
+
+msgid "Sign out and forget this server's saved login?"
+msgstr "Log ud og glem serverens gemte login?"
+
+msgid "Sign out and forget this server?"
+msgstr "Log ud og glem denne server?"
+
+msgid "Similar"
+msgstr "Lignende"
+
+msgid "Similar songs come from your server, so YouTube tracks have none"
+msgstr "Lignende sange kommer fra din server, så YouTube-numre har ingen"
+
+msgid "Sleep timer: off"
+msgstr "Sleeptimer: fra"
+
+msgid "Sleep timer: {}"
+msgstr "Sleeptimer: {}"
+
+msgid "Song count"
+msgstr "Antal sange"
+
+msgid "Songs"
+msgstr "Sange"
+
+msgid "Sort by {}"
+msgstr "Sorter efter {}"
+
+msgid "Sort by {}: ascending"
+msgstr "Sorter efter {}: stigende"
+
+msgid "Sort by {}: descending"
+msgstr "Sorter efter {}: faldende"
+
+msgid "Sort: ascending"
+msgstr "Sortering: stigende"
+
+msgid "Sort: descending"
+msgstr "Sortering: faldende"
+
+msgid "Starting volume, shared with the player bar."
+msgstr "Startlydstyrke, delt med afspillerlinjen."
+
+msgid "Station data from radio-browser.info"
+msgstr "Stationsdata fra radio-browser.info"
+
+msgid "Station name"
+msgstr "Stationsnavn"
+
+msgid "Stations"
+msgstr "Stationer"
+
+msgid "Stop {}"
+msgstr "Stop {}"
+
+msgid "Stream URL"
+msgstr "Stream-url"
+
+msgid "Switch"
+msgstr "Skift"
+
+msgid "Switch between a dark and a light theme with the desktop. {}"
+msgstr "Skift mellem et mørkt og et lyst tema sammen med skrivebordet. {}"
+
+msgid "Switch to grid view"
+msgstr "Skift til gittervisning"
+
+msgid "Switch to list view"
+msgstr "Skift til listevisning"
+
+msgid "System default"
+msgstr "Systemstandard"
+
+msgid "System default follows the language of the desktop."
+msgstr "Systemstandard følger skrivebordets sprog."
+
+msgid "Tag, for example jazz"
+msgstr "Tag, for eksempel jazz"
+
+msgid "The desktop currently prefers dark."
+msgstr "Skrivebordet foretrækker i øjeblikket mørkt."
+
+msgid "The desktop currently prefers light."
+msgstr "Skrivebordet foretrækker i øjeblikket lyst."
+
+msgid "The desktop has no preference, so the dark theme is used."
+msgstr "Skrivebordet har ingen præference, så det mørke tema bruges."
+
+msgid "The library scan is still running on the server"
+msgstr "Scanningen af biblioteket kører stadig på serveren"
+
+msgid "The queue is empty"
+msgstr "Køen er tom"
+
+msgid "The queue is incomplete: loading the rest of the list failed ({})"
+msgstr "Køen er ufuldstændig: indlæsning af resten af listen mislykkedes ({})"
+
+msgid "The radio directory could not be reached"
+msgstr "Radiokataloget kunne ikke nås"
+
+msgid "The radio station stopped streaming"
+msgstr "Radiostationen stoppede med at streame"
+
+msgid "The server refused the station: {}"
+msgstr "Serveren afviste stationen: {}"
+
+msgid "Theme"
+msgstr "Tema"
+
+msgid "There is nothing to play in this list"
+msgstr "Der er intet at afspille på denne liste"
+
+msgid "This Discover page does not exist"
+msgstr "Denne Opdag-side findes ikke"
+
+msgid "This folder is empty"
+msgstr "Denne mappe er tom"
+
+msgid "This playlist is empty"
+msgstr "Denne playliste er tom"
+
+msgid "This server has no internet radio. Stations you add are saved on this device."
+msgstr "Denne server har ingen internetradio. Stationer, du tilføjer, gemmes på denne enhed."
+
+msgid "this server has no public share links"
+msgstr "denne server har ingen offentlige delingslinks"
+
+msgid "Time"
+msgstr "Tid"
+
+msgid "Title"
+msgstr "Titel"
+
+msgid "Top songs"
+msgstr "Populære sange"
+
+msgid "Track"
+msgstr "Spor"
+
+msgid "Tracks"
+msgstr "Numre"
+
+msgid "Transcode format"
+msgstr "Omkodningsformat"
+
+msgid "Try again"
+msgstr "Prøv igen"
+
+msgid "Turn off the theme accent color to pick your own."
+msgstr "Slå temaets accentfarve fra for at vælge din egen."
+
+msgid "Unmute"
+msgstr "Slå lyd til"
+
+msgid "Up next"
+msgstr "Næste"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "Use the theme accent color"
+msgstr "Brug temaets accentfarve"
+
+msgid "Use {}"
+msgstr "Brug {}"
+
+msgid "Used while the desktop prefers dark."
+msgstr "Bruges, når skrivebordet foretrækker mørkt."
+
+msgid "Used while the desktop prefers light."
+msgstr "Bruges, når skrivebordet foretrækker lyst."
+
+msgid "Username"
+msgstr "Brugernavn"
+
+msgid "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Feishin deletes right after reading."
+msgstr "Bruger din YouTube-session i denne browser til en personlig Opdag-startside og Premium-lyd. yt-dlp kopierer dens cookies til en privat midlertidig fil, som Feishin sletter lige efter læsning."
+
+msgid "Volume"
+msgstr "Lydstyrke"
+
+msgid "Volume {}%"
+msgstr "Lydstyrke {} %"
+
+msgid "XDG_RUNTIME_DIR is not set, so there is no private place for the cookies"
+msgstr "XDG_RUNTIME_DIR er ikke angivet, så der er intet privat sted til cookies"
+
+msgid "Year"
+msgstr "År"
+
+msgid "You are here: {}"
+msgstr "Du er her: {}"
+
+msgid "Your user is not allowed to share on this server"
+msgstr "Din bruger har ikke tilladelse til at dele på denne server"
+
+msgid "YouTube"
+msgstr "YouTube"
+
+msgid "YouTube albums are not in your library"
+msgstr "YouTube-albummer er ikke i dit bibliotek"
+
+msgid "YouTube artists are not in your library"
+msgstr "YouTube-kunstnere er ikke i dit bibliotek"
+
+msgid "yt-dlp program"
+msgstr "yt-dlp-program"
+
+msgid "{n} album"
+msgid_plural "{n} albums"
+msgstr[0] "{n} album"
+msgstr[1] "{n} albummer"
+
+msgid "{n} folder"
+msgid_plural "{n} folders"
+msgstr[0] "{n} mappe"
+msgstr[1] "{n} mapper"
+
+msgid "{n} item so far"
+msgid_plural "{n} items so far"
+msgstr[0] "{n} element indtil videre"
+msgstr[1] "{n} elementer indtil videre"
+
+msgid "{n} minute"
+msgid_plural "{n} minutes"
+msgstr[0] "{n} minut"
+msgstr[1] "{n} minutter"
+
+msgid "{n} selected"
+msgid_plural "{n} selected"
+msgstr[0] "{n} valgt"
+msgstr[1] "{n} valgt"
+
+msgid "{n} song"
+msgid_plural "{n} songs"
+msgstr[0] "{n} sang"
+msgstr[1] "{n} sange"
+
+msgid "{n} song from \"{}\" will play next"
+msgid_plural "{n} songs from \"{}\" will play next"
+msgstr[0] "{n} sang fra \"{}\" afspilles som den næste"
+msgstr[1] "{n} sange fra \"{}\" afspilles som de næste"
+
+msgid "{n} song on YouTube Music"
+msgid_plural "{n} songs on YouTube Music"
+msgstr[0] "{n} sang på YouTube Music"
+msgstr[1] "{n} sange på YouTube Music"
+
+msgid "{n} song will play next"
+msgid_plural "{n} songs will play next"
+msgstr[0] "{n} sang afspilles som den næste"
+msgstr[1] "{n} sange afspilles som de næste"
+
+msgid "{} (current theme)"
+msgstr "{} (aktuelt tema)"
+
+msgid "{} (unavailable)"
+msgstr "{} (ikke tilgængelig)"
+
+msgid "{} at {}"
+msgstr "{} på {}"
+
+msgid "{} cannot be played: its stream address is not an internet stream"
+msgstr "{} kan ikke afspilles: dens streamadresse er ikke en internetstream"
+
+msgid "{} is shown"
+msgstr "{} vises"
+
+msgid "{} kbps"
+msgstr "{} kbps"
+
+msgid "{} s"
+msgstr "{} s"
+
+msgid "{}: off"
+msgstr "{}: fra"
+
+msgid "{}: on"
+msgstr "{}: til"
+
+msgid "{}: {} (dark)"
+msgstr "{}: {} (mørkt)"
+
+msgid "{}: {} (light)"
+msgstr "{}: {} (lyst)"

@@ -74,7 +74,7 @@ impl View {
         *self.line_times_ms.borrow_mut() = lyrics.line_times_ms();
         state.set_lyrics(ModelRc::new(VecModel::from(rows)));
         state.set_lyrics_synced(lyrics.synced);
-        state.set_lyrics_source(lyrics.source.into());
+        state.set_lyrics_source(lyrics.source.as_str().into());
         state.set_lyrics_status(LyricsStatus::Found);
         state.set_active_line(NO_INDEX);
         self.highlight_active_line(window);

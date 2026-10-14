@@ -48,9 +48,9 @@ impl Controller {
     fn start_streamed_playback(&mut self, stream: StreamId, songs: Vec<Song>, start_index: usize) {
         if songs.is_empty() {
             self.list_streams.remove(stream);
-            self.deps.ui.send(UiUpdate::Error(
-                "There is nothing to play in this list".into(),
-            ));
+            self.deps.ui.send(UiUpdate::Error(tr!(
+                "There is nothing to play in this list"
+            )));
             return;
         }
         self.list_streams.cancel_older_than(stream);
@@ -99,9 +99,12 @@ impl Controller {
         };
         let message = match active.is_started() {
             true => {
-                format!("The queue is incomplete: loading the rest of the list failed ({error})")
+                tr!(
+                    "The queue is incomplete: loading the rest of the list failed ({})",
+                    error
+                )
             }
-            false => format!("Could not load the list: {error}"),
+            false => tr!("Could not load the list: {}", error),
         };
         self.deps.ui.send(UiUpdate::Error(message));
         if active.is_started() {

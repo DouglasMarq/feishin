@@ -28,7 +28,7 @@ pub fn toggle_card(window: &AppWindow, ctx: &Context, binding: Binding<CardRow>,
         {
             on_ui(&weak, move |window| {
                 with_grid(window, binding, |grid| grid.set_favorite(&id, favorite));
-                show_status(window, &format!("Could not update favorite: {error}"));
+                show_status(window, &tr!("Could not update favorite: {}", error));
             });
         }
     });
@@ -57,7 +57,7 @@ pub fn toggle_track(window: &AppWindow, ctx: &Context, binding: Binding<TrackIte
                 with_table(window, binding, |table| {
                     table.set_favorite(index, &song_id, favorite);
                 });
-                show_status(window, &format!("Could not update favorite: {error}"));
+                show_status(window, &tr!("Could not update favorite: {}", error));
             });
         }
     });

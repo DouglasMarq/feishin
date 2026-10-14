@@ -78,7 +78,7 @@ fn apply_track_count(
     }
     (binding.loading)(window, false);
     if let Err(error) = result {
-        show_status(window, &format!("Could not load tracks: {error}"));
+        show_status(window, &tr!("Could not load tracks: {}", error));
     }
 }
 
@@ -97,7 +97,7 @@ fn apply_track_page(
         }
         Err(error) => {
             with_table(window, binding, |table| table.page_failed(generation, page));
-            show_status(window, &format!("Could not load tracks: {error}"));
+            show_status(window, &tr!("Could not load tracks: {}", error));
         }
     }
 }

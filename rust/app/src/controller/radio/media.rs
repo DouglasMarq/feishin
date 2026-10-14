@@ -4,13 +4,12 @@ use super::RadioPlayback;
 use crate::controller::Controller;
 
 const RADIO_TRACK_PREFIX: &str = "radio-";
-const LIVE_RADIO: &str = "Internet radio";
 
 fn radio_now_playing(radio: &RadioPlayback) -> NowPlaying {
     let station_name = radio.station.name.clone();
     let (title, artists) = match radio.stream_title.clone() {
         Some(stream_title) => (stream_title, vec![station_name]),
-        None => (station_name, vec![LIVE_RADIO.to_owned()]),
+        None => (station_name, vec![tr!("Internet radio")]),
     };
     NowPlaying {
         track_id: format!("{RADIO_TRACK_PREFIX}{}", radio.station.id),

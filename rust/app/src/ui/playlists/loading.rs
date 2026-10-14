@@ -35,7 +35,7 @@ pub fn load(window: &AppWindow, ctx: &Context) {
 
 fn apply_loaded(window: &AppWindow, generation: u64, result: feishin_api::Result<Vec<Playlist>>) {
     let playlists = result
-        .inspect_err(|error| show_status(window, &format!("Could not load playlists: {error}")))
+        .inspect_err(|error| show_status(window, &tr!("Could not load playlists: {}", error)))
         .unwrap_or_default();
     if with_model(window, |model| model.set_playlists(generation, &playlists)) == Some(true) {
         window.global::<PlaylistsState>().set_loading(false);

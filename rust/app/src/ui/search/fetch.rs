@@ -1,11 +1,10 @@
-use std::fmt::Display;
 use std::sync::Arc;
 
 use feishin_api::MusicServer;
 use slint::ComponentHandle;
 
 use super::results::{Results, with_results};
-use crate::ui::{AppWindow, Context, on_ui, show_status};
+use crate::ui::{AppWindow, Context, on_ui};
 
 pub fn fetch<Value, Failure, Pending>(
     window: &AppWindow,
@@ -29,8 +28,4 @@ where
         });
     });
     true
-}
-
-pub fn report(window: &AppWindow, failure: &str, error: impl Display) {
-    show_status(window, &format!("{failure}: {error}"));
 }

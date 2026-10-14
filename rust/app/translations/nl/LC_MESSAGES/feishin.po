@@ -1,0 +1,1520 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: nl\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+
+msgid "\"{}\" plays next"
+msgstr "\"{}\" wordt hierna afgespeeld"
+
+msgid "\"{}\" will play next"
+msgstr "\"{}\" wordt hierna afgespeeld"
+
+msgid "1 star"
+msgstr "1 ster"
+
+msgid "2 stars"
+msgstr "2 sterren"
+
+msgid "3 stars"
+msgstr "3 sterren"
+
+msgid "4 stars"
+msgstr "4 sterren"
+
+msgid "5 stars"
+msgstr "5 sterren"
+
+msgid "About {}"
+msgstr "Over {0}"
+
+msgid "Accent color"
+msgstr "Accentkleur"
+
+msgid "Accent color not changed: {}."
+msgstr "Accentkleur niet gewijzigd: {}."
+
+msgid "Accent color {}"
+msgstr "Accentkleur {}"
+
+msgid "Accent color {} (selected)"
+msgstr "Accentkleur {} (geselecteerd)"
+
+msgid "Accent color {} (theme accent in use)"
+msgstr "Accentkleur {} (thema-accent in gebruik)"
+
+msgid "Add a station by its stream URL"
+msgstr "Een zender toevoegen via de stream-url"
+
+msgid "Add all songs to the queue"
+msgstr "Alle nummers aan de wachtrij toevoegen"
+
+msgid "Add server"
+msgstr "Server toevoegen"
+
+msgid "Add station"
+msgstr "Zender toevoegen"
+
+msgid "Add this link to the end of the queue"
+msgstr "Deze link aan het einde van de wachtrij toevoegen"
+
+msgid "Add this station to the server for every client"
+msgstr "Deze zender voor alle clients aan de server toevoegen"
+
+msgid "Add to favorites"
+msgstr "Aan favorieten toevoegen"
+
+msgid "Add to playlist"
+msgstr "Aan afspeellijst toevoegen"
+
+msgid "Add to queue"
+msgstr "Aan wachtrij toevoegen"
+
+msgid "Add to the server's stations"
+msgstr "Aan de zenders van de server toevoegen"
+
+msgid "Add {n} song to playlist"
+msgid_plural "Add {n} songs to playlist"
+msgstr[0] "{n} nummer aan afspeellijst toevoegen"
+msgstr[1] "{n} nummers aan afspeellijst toevoegen"
+
+msgid "Add {} to the queue"
+msgstr "{} aan de wachtrij toevoegen"
+
+msgid "Added \"{}\" to the queue"
+msgstr "\"{}\" aan de wachtrij toegevoegd"
+
+msgid "Added only {n} song to \"{}\": {}"
+msgid_plural "Added only {n} songs to \"{}\": {}"
+msgstr[0] "Slechts {n} nummer aan \"{}\" toegevoegd: {}"
+msgstr[1] "Slechts {n} nummers aan \"{}\" toegevoegd: {}"
+
+msgid "Added {n} song from \"{}\" to the queue"
+msgid_plural "Added {n} songs from \"{}\" to the queue"
+msgstr[0] "{n} nummer uit \"{}\" aan de wachtrij toegevoegd"
+msgstr[1] "{n} nummers uit \"{}\" aan de wachtrij toegevoegd"
+
+msgid "Added {n} song to \"{}\""
+msgid_plural "Added {n} songs to \"{}\""
+msgstr[0] "{n} nummer aan \"{}\" toegevoegd"
+msgstr[1] "{n} nummers aan \"{}\" toegevoegd"
+
+msgid "Added {n} song to the queue"
+msgid_plural "Added {n} songs to the queue"
+msgstr[0] "{n} nummer aan de wachtrij toegevoegd"
+msgstr[1] "{n} nummers aan de wachtrij toegevoegd"
+
+msgid "Adding to \"{}\": {} of {n} song"
+msgid_plural "Adding to \"{}\": {} of {n} songs"
+msgstr[0] "Toevoegen aan \"{}\": {} van {n} nummer"
+msgstr[1] "Toevoegen aan \"{}\": {} van {n} nummers"
+
+msgid "ALBUM"
+msgstr "ALBUM"
+
+msgid "Album"
+msgstr "Album"
+
+msgid "album"
+msgstr "Album"
+
+msgid "Album artist"
+msgstr "Albumartiest"
+
+msgid "Album count"
+msgstr "Aantal albums"
+
+msgid "Album not found"
+msgstr "Album niet gevonden"
+
+msgid "Albums"
+msgstr "Albums"
+
+msgid "All genres"
+msgstr "Alle genres"
+
+msgid "Already at the end"
+msgstr "Al aan het einde"
+
+msgid "Already at the start"
+msgstr "Al aan het begin"
+
+msgid "Already in \"{}\""
+msgstr "Al in \"{}\""
+
+msgid "Already on the server"
+msgstr "Al op de server"
+
+msgid "Amber"
+msgstr "Amber"
+
+msgid "Appearance"
+msgstr "Uiterlijk"
+
+msgid "ARTIST"
+msgstr "ARTIEST"
+
+msgid "Artist"
+msgstr "Artiest"
+
+msgid "Artists"
+msgstr "Artiesten"
+
+msgid "Ask the server to transcode down to this bitrate. Applies from the next song."
+msgstr "Laat de server transcoderen naar maximaal deze bitrate. Geldt vanaf het volgende nummer."
+
+msgid "Audio device"
+msgstr "Audioapparaat"
+
+msgid "Automatic ({})"
+msgstr "Automatisch ({})"
+
+msgid "Back"
+msgstr "Terug"
+
+msgid "Blue"
+msgstr "Blauw"
+
+msgid "by {}"
+msgstr "door {}"
+
+msgid "Cancel"
+msgstr "Annuleren"
+
+msgid "Cancel timer"
+msgstr "Timer annuleren"
+
+msgid "Cannot share: {}"
+msgstr "Kan niet delen: {}"
+
+msgid "Chart country"
+msgstr "Land voor hitlijsten"
+
+msgid "Charts"
+msgstr "Hitlijsten"
+
+msgid "Choose a browser under Settings, YouTube to sign in for a personalized home"
+msgstr "Kies een browser onder Instellingen > YouTube om in te loggen voor een persoonlijke startpagina"
+
+msgid "Clear"
+msgstr "Wissen"
+
+msgid "Clear filters"
+msgstr "Filters wissen"
+
+msgid "Clear rating"
+msgstr "Beoordeling wissen"
+
+msgid "Clear the favorites and genre filters"
+msgstr "De favorieten- en genrefilters wissen"
+
+msgid "Close"
+msgstr "Sluiten"
+
+msgid "Close now playing"
+msgstr "Nu afspelen sluiten"
+
+msgid "Close without saving"
+msgstr "Sluiten zonder opslaan"
+
+msgid "Colors used across the whole app."
+msgstr "Kleuren die in de hele app worden gebruikt."
+
+msgid "Connect to your music server"
+msgstr "Verbind met je muziekserver"
+
+msgid "Connecting..."
+msgstr "Verbinden..."
+
+msgid "Could not add to \"{}\": {}"
+msgstr "Kan niet toevoegen aan \"{}\": {}"
+
+msgid "Could not add {} to the server"
+msgstr "Kan {} niet aan de server toevoegen"
+
+msgid "Could not create a share link: {}"
+msgstr "Kan geen deellink maken: {}"
+
+msgid "Could not create the playlist: {}"
+msgstr "Kan de afspeellijst niet maken: {}"
+
+msgid "Could not delete the playlist: {}"
+msgstr "Kan de afspeellijst niet verwijderen: {}"
+
+msgid "Could not delete the station"
+msgstr "Kan de zender niet verwijderen"
+
+msgid "Could not load albums: {}"
+msgstr "Kan albums niet laden: {}"
+
+msgid "Could not load artists: {}"
+msgstr "Kan artiesten niet laden: {}"
+
+msgid "Could not load Discover: {}"
+msgstr "Kan Ontdekken niet laden: {}"
+
+msgid "Could not load genres: {}"
+msgstr "Kan genres niet laden: {}"
+
+msgid "Could not load it from YouTube Music: {}"
+msgstr "Kan het niet laden van YouTube Music: {}"
+
+msgid "Could not load lyrics"
+msgstr "Kan liedtekst niet laden"
+
+msgid "Could not load moods and genres: {}"
+msgstr "Kan stemmingen en genres niet laden: {}"
+
+msgid "Could not load more results: {}"
+msgstr "Kan geen extra resultaten laden: {}"
+
+msgid "Could not load new releases: {}"
+msgstr "Kan nieuwe releases niet laden: {}"
+
+msgid "Could not load playlists: {}"
+msgstr "Kan afspeellijsten niet laden: {}"
+
+msgid "Could not load the album: {}"
+msgstr "Kan het album niet laden: {}"
+
+msgid "Could not load the artist: {}"
+msgstr "Kan de artiest niet laden: {}"
+
+msgid "Could not load the charts: {}"
+msgstr "Kan de hitlijsten niet laden: {}"
+
+msgid "Could not load the folder: {}"
+msgstr "Kan de map niet laden: {}"
+
+msgid "Could not load the list: {}"
+msgstr "Kan de lijst niet laden: {}"
+
+msgid "Could not load the playlist: {}"
+msgstr "Kan de afspeellijst niet laden: {}"
+
+msgid "Could not load the radio stations: {}"
+msgstr "Kan de radiozenders niet laden: {}"
+
+msgid "Could not load the selection: {}"
+msgstr "Kan de selectie niet laden: {}"
+
+msgid "Could not load this page: {}"
+msgstr "Kan deze pagina niet laden: {}"
+
+msgid "Could not load tracks: {}"
+msgstr "Kan tracks niet laden: {}"
+
+msgid "Could not load your home: {}"
+msgstr "Kan je startpagina niet laden: {}"
+
+msgid "Could not open the folder: {}"
+msgstr "Kan de map niet openen: {}"
+
+msgid "Could not open YouTube Music: {}"
+msgstr "Kan YouTube Music niet openen: {}"
+
+msgid "Could not play \"{}\" from YouTube: {}"
+msgstr "Kan \"{}\" niet afspelen vanaf YouTube: {}"
+
+msgid "Could not play album: {}"
+msgstr "Kan album niet afspelen: {}"
+
+msgid "Could not play from YouTube: {}"
+msgstr "Kan niet afspelen vanaf YouTube: {}"
+
+msgid "Could not play the album: {}"
+msgstr "Kan het album niet afspelen: {}"
+
+msgid "Could not remove songs: {}"
+msgstr "Kan nummers niet verwijderen: {}"
+
+msgid "Could not rescan the library: {}"
+msgstr "Kan de bibliotheek niet opnieuw scannen: {}"
+
+msgid "Could not set the rating: {}"
+msgstr "Kan de beoordeling niet instellen: {}"
+
+msgid "Could not sign in to YouTube Music ({}). Showing general picks instead."
+msgstr "Kan niet inloggen bij YouTube Music ({}). In plaats daarvan worden algemene suggesties getoond."
+
+msgid "Could not switch server: {}"
+msgstr "Kan niet van server wisselen: {}"
+
+msgid "Could not update favorite: {}"
+msgstr "Kan favoriet niet bijwerken: {}"
+
+msgid "Could not update favorites: {}"
+msgstr "Kan favorieten niet bijwerken: {}"
+
+msgid "Could not update rating: {}"
+msgstr "Kan beoordeling niet bijwerken: {}"
+
+msgid "Could not update the favorite: {}"
+msgstr "Kan de favoriet niet bijwerken: {}"
+
+msgid "Country"
+msgstr "Land"
+
+msgid "Create"
+msgstr "Aanmaken"
+
+msgid "Created \"{}\" with only {n} song: {}"
+msgid_plural "Created \"{}\" with only {n} songs: {}"
+msgstr[0] "\"{}\" gemaakt met slechts {n} nummer: {}"
+msgstr[1] "\"{}\" gemaakt met slechts {n} nummers: {}"
+
+msgid "Created \"{}\" with {n} song"
+msgid_plural "Created \"{}\" with {n} songs"
+msgstr[0] "\"{}\" gemaakt met {n} nummer"
+msgstr[1] "\"{}\" gemaakt met {n} nummers"
+
+msgid "Created playlist \"{}\""
+msgstr "Afspeellijst \"{}\" gemaakt"
+
+msgid "Creating a share link..."
+msgstr "Deellink maken..."
+
+msgid "Creating..."
+msgstr "Maken..."
+
+msgid "Crossfade"
+msgstr "Crossfade"
+
+msgid "Crossfade could not be changed: {}"
+msgstr "Crossfade kon niet worden gewijzigd: {}"
+
+msgid "Crossfade: {}"
+msgstr "Crossfade: {}"
+
+msgid "Current"
+msgstr "Huidig"
+
+msgid "Custom accent color: {} (theme accent in use)"
+msgstr "Eigen accentkleur: {} (thema-accent in gebruik)"
+
+msgid "Custom accent color: {}, press Enter to apply"
+msgstr "Eigen accentkleur: {}, druk op Enter om toe te passen"
+
+msgid "Dark theme"
+msgstr "Donker thema"
+
+msgid "DARK THEMES"
+msgstr "DONKERE THEMA'S"
+
+msgid "Default country for the Discover charts. Automatic follows your system region."
+msgstr "Standaardland voor de hitlijsten in Ontdekken. Automatisch volgt je systeemregio."
+
+msgid "Default Dark"
+msgstr "Standaard donker"
+
+msgid "Default Light"
+msgstr "Standaard licht"
+
+msgid "Delete"
+msgstr "Verwijderen"
+
+msgid "Delete \"{}\" from the server? This cannot be undone."
+msgstr "\"{}\" van de server verwijderen? Dit kan niet ongedaan worden gemaakt."
+
+msgid "Delete \"{}\"? This cannot be undone."
+msgstr "\"{}\" verwijderen? Dit kan niet ongedaan worden gemaakt."
+
+msgid "Delete playlist"
+msgstr "Afspeellijst verwijderen"
+
+msgid "Delete station"
+msgstr "Zender verwijderen"
+
+msgid "Delete {} from the server"
+msgstr "{} van de server verwijderen"
+
+msgid "Deleted playlist \"{}\""
+msgstr "Afspeellijst \"{}\" verwijderd"
+
+msgid "Deleting..."
+msgstr "Verwijderen..."
+
+msgid "Demo mode: these picks are made up and play from your demo library"
+msgstr "Demomodus: deze suggesties zijn verzonnen en spelen af uit je demobibliotheek"
+
+msgid "Directory"
+msgstr "Gids"
+
+msgid "Disc {}"
+msgstr "Schijf {}"
+
+msgid "Discord Rich Presence"
+msgstr "Discord Rich Presence"
+
+msgid "Discover"
+msgstr "Ontdekken"
+
+msgid "Discover is open"
+msgstr "Ontdekken is geopend"
+
+msgid "Discover new music on YouTube Music"
+msgstr "Ontdek nieuwe muziek op YouTube Music"
+
+msgid "Duration"
+msgstr "Duur"
+
+msgid "Edit station"
+msgstr "Zender bewerken"
+
+msgid "Edit {}"
+msgstr "{} bewerken"
+
+msgid "End of current track"
+msgstr "Einde van huidige track"
+
+msgid "End of track"
+msgstr "Einde van track"
+
+msgid "Enter a name for the station"
+msgstr "Voer een naam in voor de zender"
+
+msgid "Enter a name, country or tag to search"
+msgstr "Voer een naam, land of tag in om te zoeken"
+
+msgid "Enter a stream URL that starts with http:// or https://"
+msgstr "Voer een stream-url in die begint met http:// of https://"
+
+msgid "Enter the server URL"
+msgstr "Voer de server-url in"
+
+msgid "Fade the end of each song into the next one. Off keeps gapless playback."
+msgstr "Laat het einde van elk nummer overvloeien in het volgende. Uit behoudt naadloos afspelen."
+
+msgid "Favorite"
+msgstr "Favoriet"
+
+msgid "Favorited"
+msgstr "Favoriet"
+
+msgid "Favorites"
+msgstr "Favorieten"
+
+msgid "Favorites only: off"
+msgstr "Alleen favorieten: uit"
+
+msgid "Favorites only: on"
+msgstr "Alleen favorieten: aan"
+
+msgid "Filter"
+msgstr "Filter"
+
+msgid "Filter playlists"
+msgstr "Afspeellijsten filteren"
+
+msgid "Find stations by name, country or tag"
+msgstr "Zenders zoeken op naam, land of tag"
+
+msgid "Find stations in the radio-browser.info directory"
+msgstr "Zenders zoeken in de gids van radio-browser.info"
+
+msgid "Folder"
+msgstr "Map"
+
+msgid "Folders"
+msgstr "Mappen"
+
+msgid "Follow current song"
+msgstr "Huidig nummer volgen"
+
+msgid "Follow system color scheme"
+msgstr "Kleurenschema van het systeem volgen"
+
+msgid "For you"
+msgstr "Voor jou"
+
+msgid "Forget this server?"
+msgstr "Deze server vergeten?"
+
+msgid "Format the server should transcode to. Applies from the next song."
+msgstr "Formaat waarnaar de server moet transcoderen. Geldt vanaf het volgende nummer."
+
+msgid "Found {n} server in Feishin but it has no usable saved login"
+msgid_plural "Found {n} servers in Feishin but none with a usable saved login"
+msgstr[0] "{n} server gevonden in Feishin, maar zonder bruikbare opgeslagen login"
+msgstr[1] "{n} servers gevonden in Feishin, maar geen met een bruikbare opgeslagen login"
+
+msgid "Gapless playback"
+msgstr "Naadloos afspelen"
+
+msgid "Genres"
+msgstr "Genres"
+
+msgid "Go back to {}"
+msgstr "Terug naar {}"
+
+msgid "Go to album"
+msgstr "Naar album"
+
+msgid "Go to artist"
+msgstr "Naar artiest"
+
+msgid "Go to {}"
+msgstr "Naar {}"
+
+msgid "Green"
+msgstr "Groen"
+
+msgid "Hide lyrics"
+msgstr "Liedtekst verbergen"
+
+msgid "Hide queue"
+msgstr "Wachtrij verbergen"
+
+msgid "High Contrast Dark"
+msgstr "Hoog contrast donker"
+
+msgid "High Contrast Light"
+msgstr "Hoog contrast licht"
+
+msgid "Highlight with the color that comes with the theme."
+msgstr "Markeren met de kleur die bij het thema hoort."
+
+msgid "Home"
+msgstr "Home"
+
+msgid "Homepage (optional)"
+msgstr "Website (optioneel)"
+
+msgid "Import from Feishin"
+msgstr "Importeren uit Feishin"
+
+msgid "Install yt-dlp to play YouTube tracks"
+msgstr "Installeer yt-dlp om YouTube-tracks af te spelen"
+
+msgid "Integrations"
+msgstr "Integraties"
+
+msgid "Interface"
+msgstr "Interface"
+
+msgid "Internet radio"
+msgstr "Internetradio"
+
+msgid "item"
+msgstr "item"
+
+msgid "Jellyfin has no public share links"
+msgstr "Jellyfin heeft geen openbare deellinks"
+
+msgid "Keep this station in the favorites on this device"
+msgstr "Deze zender op dit apparaat in de favorieten bewaren"
+
+msgid "Language"
+msgstr "Taal"
+
+msgid "LIBRARY"
+msgstr "BIBLIOTHEEK"
+
+msgid "Library scan finished"
+msgstr "Bibliotheekscan voltooid"
+
+msgid "Library scan finished: {n} item"
+msgid_plural "Library scan finished: {n} items"
+msgstr[0] "Bibliotheekscan voltooid: {n} item"
+msgstr[1] "Bibliotheekscan voltooid: {n} items"
+
+msgid "Light theme"
+msgstr "Licht thema"
+
+msgid "LIGHT THEMES"
+msgstr "LICHTE THEMA'S"
+
+msgid "Listening to {}"
+msgstr "Je luistert naar {}"
+
+msgid "LIVE"
+msgstr "LIVE"
+
+msgid "Load more"
+msgstr "Meer laden"
+
+msgid "Load this section again"
+msgstr "Deze sectie opnieuw laden"
+
+msgid "Loading playlists..."
+msgstr "Afspeellijsten laden..."
+
+msgid "Loading similar songs..."
+msgstr "Vergelijkbare nummers laden..."
+
+msgid "Loading stations..."
+msgstr "Zenders laden..."
+
+msgid "Loading the next page of stations"
+msgstr "Volgende pagina met zenders laden"
+
+msgid "Loading..."
+msgstr "Laden..."
+
+msgid "Log out"
+msgstr "Uitloggen"
+
+msgid "Looking up the YouTube link..."
+msgstr "YouTube-link opzoeken..."
+
+msgid "Lyrics"
+msgstr "Liedtekst"
+
+msgid "Lyrics from {}"
+msgstr "Liedtekst van {}"
+
+msgid "Lyrics sources"
+msgstr "Bronnen voor liedteksten"
+
+msgid "Maximum bitrate"
+msgstr "Maximale bitrate"
+
+msgid "Media keys and desktop media controls. Takes effect after a restart."
+msgstr "Mediatoetsen en mediabediening van het bureaublad. Werkt na een herstart."
+
+msgid "Moods and genres"
+msgstr "Stemmingen en genres"
+
+msgid "Most played"
+msgstr "Meest gespeeld"
+
+msgid "Move down"
+msgstr "Omlaag verplaatsen"
+
+msgid "Move up"
+msgstr "Omhoog verplaatsen"
+
+msgid "MPRIS"
+msgstr "MPRIS"
+
+msgid "Mute"
+msgstr "Dempen"
+
+msgid "Name"
+msgstr "Naam"
+
+msgid "New playlist"
+msgstr "Nieuwe afspeellijst"
+
+msgid "New releases"
+msgstr "Nieuwe releases"
+
+msgid "Next"
+msgstr "Volgende"
+
+msgid "Next is unavailable while a radio station plays"
+msgstr "Volgende is niet beschikbaar terwijl een radiozender speelt"
+
+msgid "No albums"
+msgstr "Geen albums"
+
+msgid "No albums found"
+msgstr "Geen albums gevonden"
+
+msgid "No artists found"
+msgstr "Geen artiesten gevonden"
+
+msgid "no browser is selected"
+msgstr "er is geen browser geselecteerd"
+
+msgid "No favorite albums"
+msgstr "Geen favoriete albums"
+
+msgid "No favorite artists"
+msgstr "Geen favoriete artiesten"
+
+msgid "No favorite tracks"
+msgstr "Geen favoriete tracks"
+
+msgid "No genres found"
+msgstr "Geen genres gevonden"
+
+msgid "No lyrics found"
+msgstr "Geen liedtekst gevonden"
+
+msgid "No playlists found"
+msgstr "Geen afspeellijsten gevonden"
+
+msgid "No playlists yet"
+msgstr "Nog geen afspeellijsten"
+
+msgid "No rating"
+msgstr "Geen beoordeling"
+
+msgid "No results for \"{}\""
+msgstr "Geen resultaten voor \"{}\""
+
+msgid "No saved login for {}; remove it and add it again"
+msgstr "Geen opgeslagen login voor {}; verwijder de server en voeg hem opnieuw toe"
+
+msgid "No saved servers."
+msgstr "Geen opgeslagen servers."
+
+msgid "No similar songs found"
+msgstr "Geen vergelijkbare nummers gevonden"
+
+msgid "No songs here"
+msgstr "Hier staan geen nummers"
+
+msgid "No stations found"
+msgstr "Geen zenders gevonden"
+
+msgid "No stations yet. Add one or find one in the directory."
+msgstr "Nog geen zenders. Voeg er een toe of zoek er een in de gids."
+
+msgid "No tracks found"
+msgstr "Geen tracks gevonden"
+
+msgid "None"
+msgstr "Geen"
+
+msgid "Normalize loudness using the track or album gain tags."
+msgstr "Normaliseer het volume met de gain-tags van de track of het album."
+
+msgid "Not connected to a server"
+msgstr "Niet verbonden met een server"
+
+msgid "Nothing is playing"
+msgstr "Er wordt niets afgespeeld"
+
+msgid "Nothing to add yet"
+msgstr "Nog niets om toe te voegen"
+
+msgid "Nothing to go back to"
+msgstr "Niets om naar terug te gaan"
+
+msgid "Nothing to play here"
+msgstr "Hier is niets om af te spelen"
+
+msgid "Nothing to play yet"
+msgstr "Nog niets om af te spelen"
+
+msgid "Nothing to show here right now"
+msgstr "Hier is nu niets te zien"
+
+msgid "Off"
+msgstr "Uit"
+
+msgid "OK"
+msgstr "OK"
+
+msgid "On the server"
+msgstr "Op de server"
+
+msgid "Only a server admin can rescan the library"
+msgstr "Alleen een serverbeheerder kan de bibliotheek opnieuw scannen"
+
+msgid "Only loaded tracks can be shared: select fewer tracks or scroll through them first"
+msgstr "Alleen geladen tracks kunnen worden gedeeld: selecteer minder tracks of scrol er eerst doorheen"
+
+msgid "Open"
+msgstr "Openen"
+
+msgid "Open in YouTube Music"
+msgstr "Openen in YouTube Music"
+
+msgid "Open now playing"
+msgstr "Nu afspelen openen"
+
+msgid "Open radio"
+msgstr "Radio openen"
+
+msgid "Open the album \"{}\""
+msgstr "Het album \"{}\" openen"
+
+msgid "Open the playlist \"{}\""
+msgstr "De afspeellijst \"{}\" openen"
+
+msgid "Open the queue panel"
+msgstr "Het wachtrijpaneel openen"
+
+msgid "Open {}"
+msgstr "{} openen"
+
+msgid "Original"
+msgstr "Origineel"
+
+msgid "Output used by the player."
+msgstr "Uitvoer die de speler gebruikt."
+
+msgid "Owner"
+msgstr "Eigenaar"
+
+msgid "Password"
+msgstr "Wachtwoord"
+
+msgid "Paste a link first"
+msgstr "Plak eerst een link"
+
+msgid "Paste a YouTube or YouTube Music link first"
+msgstr "Plak eerst een YouTube- of YouTube Music-link"
+
+msgid "Paste a YouTube or YouTube Music link to try yt-dlp."
+msgstr "Plak een YouTube- of YouTube Music-link om yt-dlp te proberen."
+
+msgid "Pause"
+msgstr "Pauzeren"
+
+msgid "Pause the radio station"
+msgstr "De radiozender pauzeren"
+
+msgid "Personalized with your YouTube Music account from {}"
+msgstr "Gepersonaliseerd met je YouTube Music-account uit {}"
+
+msgid "Pick a color, or type one as #rrggbb and press Enter."
+msgstr "Kies een kleur, of typ er een als #rrggbb en druk op Enter."
+
+msgid "Pick a mood or genre to see its playlists"
+msgstr "Kies een stemming of genre om de afspeellijsten te zien"
+
+msgid "Play"
+msgstr "Afspelen"
+
+msgid "Play \"{}\" and the rest of this shelf"
+msgstr "\"{}\" en de rest van deze rij afspelen"
+
+msgid "Play a YouTube link"
+msgstr "Een YouTube-link afspelen"
+
+msgid "Play album"
+msgstr "Album afspelen"
+
+msgid "Play all"
+msgstr "Alles afspelen"
+
+msgid "Play all {n} song"
+msgid_plural "Play all {n} songs"
+msgstr[0] "{n} nummer afspelen"
+msgstr[1] "Alle {n} nummers afspelen"
+
+msgid "Play count"
+msgstr "Aantal keer afgespeeld"
+
+msgid "Play every song in {} and its subfolders"
+msgstr "Alle nummers in {} en de submappen afspelen"
+
+msgid "Play from here"
+msgstr "Vanaf hier afspelen"
+
+msgid "Play from this song"
+msgstr "Vanaf dit nummer afspelen"
+
+msgid "Play from {}"
+msgstr "Afspelen vanaf {}"
+
+msgid "Play next"
+msgstr "Hierna afspelen"
+
+msgid "Play the album"
+msgstr "Het album afspelen"
+
+msgid "Play the playlist"
+msgstr "De afspeellijst afspelen"
+
+msgid "Play the radio station"
+msgstr "De radiozender afspelen"
+
+msgid "Play this link after the current song"
+msgstr "Deze link na het huidige nummer afspelen"
+
+msgid "Play this link now"
+msgstr "Deze link nu afspelen"
+
+msgid "Play {}"
+msgstr "{} afspelen"
+
+msgid "Play {} next"
+msgstr "{} hierna afspelen"
+
+msgid "Play {} with its subfolders"
+msgstr "{} met de submappen afspelen"
+
+msgid "Playback"
+msgstr "Afspelen"
+
+msgid "Playback failed: {}"
+msgstr "Afspelen mislukt: {}"
+
+msgid "Playing {} failed: {}"
+msgstr "Afspelen van {} mislukt: {}"
+
+msgid "PLAYLIST"
+msgstr "AFSPEELLIJST"
+
+msgid "Playlist"
+msgstr "Afspeellijst"
+
+msgid "playlist"
+msgstr "Afspeellijst"
+
+msgid "Playlist name"
+msgstr "Naam van afspeellijst"
+
+msgid "Playlists"
+msgstr "Afspeellijsten"
+
+msgid "Plays"
+msgstr "Keren gespeeld"
+
+msgid "Plays YouTube tracks. Leave empty to use yt-dlp from your PATH."
+msgstr "Speelt YouTube-tracks af. Laat leeg om yt-dlp uit je PATH te gebruiken."
+
+msgid "Preload the next song so it starts without a pause."
+msgstr "Laad het volgende nummer vooraf zodat het zonder pauze start."
+
+msgid "Previous"
+msgstr "Vorige"
+
+msgid "Previous is unavailable while a radio station plays"
+msgstr "Vorige is niet beschikbaar terwijl een radiozender speelt"
+
+msgid "Purple"
+msgstr "Paars"
+
+msgid "Queue"
+msgstr "Wachtrij"
+
+msgid "Radio"
+msgstr "Radio"
+
+msgid "Random"
+msgstr "Willekeurig"
+
+msgid "Rate {n} star"
+msgid_plural "Rate {n} stars"
+msgstr[0] "{n} ster geven"
+msgstr[1] "{n} sterren geven"
+
+msgid "Rating"
+msgstr "Beoordeling"
+
+msgid "Recently added"
+msgstr "Recentelijk toegevoegd"
+
+msgid "Recently played"
+msgstr "Recentelijk afgespeeld"
+
+msgid "Red"
+msgstr "Rood"
+
+msgid "Refresh"
+msgstr "Verversen"
+
+msgid "Refresh this section"
+msgstr "Deze sectie verversen"
+
+msgid "Release year"
+msgstr "Releasejaar"
+
+msgid "Remove"
+msgstr "Verwijderen"
+
+msgid "Remove from favorites"
+msgstr "Uit favorieten verwijderen"
+
+msgid "Remove from playlist"
+msgstr "Uit afspeellijst verwijderen"
+
+msgid "Remove from queue"
+msgstr "Uit wachtrij verwijderen"
+
+msgid "Removed {n} song from \"{}\""
+msgid_plural "Removed {n} songs from \"{}\""
+msgstr[0] "{n} nummer uit \"{}\" verwijderd"
+msgstr[1] "{n} nummers uit \"{}\" verwijderd"
+
+msgid "Removing..."
+msgstr "Verwijderen..."
+
+msgid "Repeat: all"
+msgstr "Herhalen: alles"
+
+msgid "Repeat: off"
+msgstr "Herhalen: uit"
+
+msgid "Repeat: one"
+msgstr "Herhalen: één"
+
+msgid "ReplayGain"
+msgstr "ReplayGain"
+
+msgid "Report what you play to the server."
+msgstr "Meld wat je afspeelt aan de server."
+
+msgid "Rescan the library for new content"
+msgstr "De bibliotheek scannen op nieuwe inhoud"
+
+msgid "Resize column"
+msgstr "Kolombreedte aanpassen"
+
+msgid "Save"
+msgstr "Opslaan"
+
+msgid "Save on this device"
+msgstr "Op dit apparaat opslaan"
+
+msgid "Save the changes on the server"
+msgstr "De wijzigingen op de server opslaan"
+
+msgid "Save the changes on this device"
+msgstr "De wijzigingen op dit apparaat opslaan"
+
+msgid "Save to favorites on this device"
+msgstr "Op dit apparaat aan favorieten toevoegen"
+
+msgid "Save to server"
+msgstr "Op de server opslaan"
+
+msgid "Saved on this device"
+msgstr "Opgeslagen op dit apparaat"
+
+msgid "Saved on this device, click to remove"
+msgstr "Opgeslagen op dit apparaat, klik om te verwijderen"
+
+msgid "Saving the station to the server..."
+msgstr "De zender wordt op de server opgeslagen..."
+
+msgid "Saving to the server..."
+msgstr "Opslaan op de server..."
+
+msgid "Saving..."
+msgstr "Opslaan..."
+
+msgid "Scanning the library for new content..."
+msgstr "De bibliotheek wordt gescand op nieuwe inhoud..."
+
+msgid "Scanning the library: {}"
+msgstr "Bibliotheek scannen: {}"
+
+msgid "Scrobble"
+msgstr "Scrobble"
+
+msgid "Scroll left"
+msgstr "Naar links scrollen"
+
+msgid "Scroll lists and the queue to the song that is playing."
+msgstr "Lijsten en de wachtrij naar het nummer scrollen dat speelt."
+
+msgid "Scroll right"
+msgstr "Naar rechts scrollen"
+
+msgid "Search"
+msgstr "Zoeken"
+
+msgid "Search failed: {}"
+msgstr "Zoeken mislukt: {}"
+
+msgid "SEARCH RESULTS"
+msgstr "ZOEKRESULTATEN"
+
+msgid "Search songs on YouTube Music"
+msgstr "Nummers zoeken op YouTube Music"
+
+msgid "Search songs, albums, artists"
+msgstr "Nummers, albums, artiesten zoeken"
+
+msgid "Search the radio-browser.info directory"
+msgstr "De gids van radio-browser.info doorzoeken"
+
+msgid "Search your library for songs, albums and artists"
+msgstr "Je bibliotheek doorzoeken op nummers, albums en artiesten"
+
+msgid "Searched from top to bottom until one has lyrics."
+msgstr "Van boven naar beneden doorzocht tot er een liedtekst heeft."
+
+msgid "Searching for lyrics..."
+msgstr "Liedtekst zoeken..."
+
+msgid "Searching the radio directory failed: {}"
+msgstr "Zoeken in de radiogids mislukt: {}"
+
+msgid "Searching the radio-browser.info directory"
+msgstr "De gids van radio-browser.info wordt doorzocht"
+
+msgid "Searching..."
+msgstr "Zoeken..."
+
+msgid "Seeking is unavailable for live radio"
+msgstr "Spoelen is niet beschikbaar voor live radio"
+
+msgid "Server"
+msgstr "Server"
+
+msgid "Server type"
+msgstr "Servertype"
+
+msgid "Servers"
+msgstr "Servers"
+
+msgid "Set rating"
+msgstr "Kies beoordeling"
+
+msgid "Settings"
+msgstr "Instellingen"
+
+msgid "Share"
+msgstr "Delen"
+
+msgid "Share ({})"
+msgstr "Delen ({})"
+
+msgid "Share link copied to the clipboard: {}"
+msgstr "Deellink naar het klembord gekopieerd: {}"
+
+msgid "Share this {}: copy a public link"
+msgstr "{} delen: kopieer een openbare link"
+
+msgid "Sharing is unavailable: {}"
+msgstr "Delen is niet beschikbaar: {}"
+
+msgid "SHOW LESS"
+msgstr "MINDER TONEN"
+
+msgid "Show lyrics"
+msgstr "Liedtekst tonen"
+
+msgid "SHOW MORE"
+msgstr "MEER TONEN"
+
+msgid "Show more"
+msgstr "Meer tonen"
+
+msgid "Show playlists for {}"
+msgstr "Afspeellijsten voor {} tonen"
+
+msgid "Show queue"
+msgstr "Wachtrij tonen"
+
+msgid "Show the current song on your Discord profile."
+msgstr "Toon het huidige nummer op je Discord-profiel."
+
+msgid "Show the next page of stations"
+msgstr "De volgende pagina met zenders tonen"
+
+msgid "Show the queue next to the library; remembered on the next start."
+msgstr "Toon de wachtrij naast de bibliotheek; wordt onthouden bij de volgende start."
+
+msgid "Show the server and saved stations"
+msgstr "De zenders van de server en opgeslagen zenders tonen"
+
+msgid "Show {}"
+msgstr "{} tonen"
+
+msgid "Showing playlists for {}"
+msgstr "Afspeellijsten voor {} worden getoond"
+
+msgid "Showing the charts for {}"
+msgstr "Hitlijsten voor {} worden getoond"
+
+msgid "Showing the radio-browser.info directory"
+msgstr "De gids van radio-browser.info wordt getoond"
+
+msgid "Showing the server and saved stations"
+msgstr "De zenders van de server en opgeslagen zenders worden getoond"
+
+msgid "Shuffle"
+msgstr "Willekeurig afspelen"
+
+msgid "Shuffle every song in {} and its subfolders"
+msgstr "Alle nummers in {} en de submappen willekeurig afspelen"
+
+msgid "Shuffle play"
+msgstr "Willekeurig afspelen"
+
+msgid "Shuffle: off"
+msgstr "Willekeurig: uit"
+
+msgid "Shuffle: on"
+msgstr "Willekeurig: aan"
+
+msgid "Sign in"
+msgstr "Inloggen"
+
+msgid "Sign in with browser"
+msgstr "Inloggen met browser"
+
+msgid "Sign out and forget this server's saved login?"
+msgstr "Uitloggen en de opgeslagen login van deze server vergeten?"
+
+msgid "Sign out and forget this server?"
+msgstr "Uitloggen en deze server vergeten?"
+
+msgid "Similar"
+msgstr "Vergelijkbaar"
+
+msgid "Similar songs come from your server, so YouTube tracks have none"
+msgstr "Vergelijkbare nummers komen van je server, dus YouTube-tracks hebben er geen"
+
+msgid "Sleep timer: off"
+msgstr "Slaaptimer: uit"
+
+msgid "Sleep timer: {}"
+msgstr "Slaaptimer: {}"
+
+msgid "Song count"
+msgstr "Aantal nummers"
+
+msgid "Songs"
+msgstr "Nummers"
+
+msgid "Sort by {}"
+msgstr "Sorteren op {}"
+
+msgid "Sort by {}: ascending"
+msgstr "Sorteren op {}: oplopend"
+
+msgid "Sort by {}: descending"
+msgstr "Sorteren op {}: aflopend"
+
+msgid "Sort: ascending"
+msgstr "Sorteren: oplopend"
+
+msgid "Sort: descending"
+msgstr "Sorteren: aflopend"
+
+msgid "Starting volume, shared with the player bar."
+msgstr "Beginvolume, gedeeld met de spelerbalk."
+
+msgid "Station data from radio-browser.info"
+msgstr "Zendergegevens van radio-browser.info"
+
+msgid "Station name"
+msgstr "Zendernaam"
+
+msgid "Stations"
+msgstr "Zenders"
+
+msgid "Stop {}"
+msgstr "{} stoppen"
+
+msgid "Stream URL"
+msgstr "Stream-url"
+
+msgid "Switch"
+msgstr "Wisselen"
+
+msgid "Switch between a dark and a light theme with the desktop. {}"
+msgstr "Wissel mee met het bureaublad tussen een donker en een licht thema. {}"
+
+msgid "Switch to grid view"
+msgstr "Naar rasterweergave wisselen"
+
+msgid "Switch to list view"
+msgstr "Naar lijstweergave wisselen"
+
+msgid "System default"
+msgstr "Systeemstandaard"
+
+msgid "System default follows the language of the desktop."
+msgstr "Systeemstandaard volgt de taal van het bureaublad."
+
+msgid "Tag, for example jazz"
+msgstr "Tag, bijvoorbeeld jazz"
+
+msgid "The desktop currently prefers dark."
+msgstr "Het bureaublad geeft momenteel de voorkeur aan donker."
+
+msgid "The desktop currently prefers light."
+msgstr "Het bureaublad geeft momenteel de voorkeur aan licht."
+
+msgid "The desktop has no preference, so the dark theme is used."
+msgstr "Het bureaublad heeft geen voorkeur, dus wordt het donkere thema gebruikt."
+
+msgid "The library scan is still running on the server"
+msgstr "De bibliotheekscan loopt nog op de server"
+
+msgid "The queue is empty"
+msgstr "De wachtrij is leeg"
+
+msgid "The queue is incomplete: loading the rest of the list failed ({})"
+msgstr "De wachtrij is onvolledig: de rest van de lijst laden is mislukt ({})"
+
+msgid "The radio directory could not be reached"
+msgstr "De radiogids is niet bereikbaar"
+
+msgid "The radio station stopped streaming"
+msgstr "De radiozender is gestopt met streamen"
+
+msgid "The server refused the station: {}"
+msgstr "De server heeft de zender geweigerd: {}"
+
+msgid "Theme"
+msgstr "Thema"
+
+msgid "There is nothing to play in this list"
+msgstr "Er is niets om af te spelen in deze lijst"
+
+msgid "This Discover page does not exist"
+msgstr "Deze Ontdekken-pagina bestaat niet"
+
+msgid "This folder is empty"
+msgstr "Deze map is leeg"
+
+msgid "This playlist is empty"
+msgstr "Deze afspeellijst is leeg"
+
+msgid "This server has no internet radio. Stations you add are saved on this device."
+msgstr "Deze server heeft geen internetradio. Zenders die je toevoegt, worden op dit apparaat opgeslagen."
+
+msgid "this server has no public share links"
+msgstr "deze server heeft geen openbare deellinks"
+
+msgid "Time"
+msgstr "Tijd"
+
+msgid "Title"
+msgstr "Titel"
+
+msgid "Top songs"
+msgstr "Topnummers"
+
+msgid "Track"
+msgstr "Track"
+
+msgid "Tracks"
+msgstr "Tracks"
+
+msgid "Transcode format"
+msgstr "Transcodeerformaat"
+
+msgid "Try again"
+msgstr "Opnieuw proberen"
+
+msgid "Turn off the theme accent color to pick your own."
+msgstr "Zet de accentkleur van het thema uit om je eigen kleur te kiezen."
+
+msgid "Unmute"
+msgstr "Dempen opheffen"
+
+msgid "Up next"
+msgstr "Volgende"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "Use the theme accent color"
+msgstr "De accentkleur van het thema gebruiken"
+
+msgid "Use {}"
+msgstr "{} gebruiken"
+
+msgid "Used while the desktop prefers dark."
+msgstr "Gebruikt wanneer het bureaublad de voorkeur geeft aan donker."
+
+msgid "Used while the desktop prefers light."
+msgstr "Gebruikt wanneer het bureaublad de voorkeur geeft aan licht."
+
+msgid "Username"
+msgstr "Gebruikersnaam"
+
+msgid "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Feishin deletes right after reading."
+msgstr "Gebruikt je YouTube-sessie in deze browser voor een persoonlijke Ontdekken-startpagina en Premium-audio. yt-dlp kopieert de cookies naar een privé tijdelijk bestand dat Feishin direct na het lezen verwijdert."
+
+msgid "Volume"
+msgstr "Volume"
+
+msgid "Volume {}%"
+msgstr "Volume {}%"
+
+msgid "XDG_RUNTIME_DIR is not set, so there is no private place for the cookies"
+msgstr "XDG_RUNTIME_DIR is niet ingesteld, dus er is geen privéplek voor de cookies"
+
+msgid "Year"
+msgstr "Jaar"
+
+msgid "You are here: {}"
+msgstr "Je bent hier: {}"
+
+msgid "Your user is not allowed to share on this server"
+msgstr "Je gebruiker mag op deze server niet delen"
+
+msgid "YouTube"
+msgstr "YouTube"
+
+msgid "YouTube albums are not in your library"
+msgstr "YouTube-albums staan niet in je bibliotheek"
+
+msgid "YouTube artists are not in your library"
+msgstr "YouTube-artiesten staan niet in je bibliotheek"
+
+msgid "yt-dlp program"
+msgstr "yt-dlp-programma"
+
+msgid "{n} album"
+msgid_plural "{n} albums"
+msgstr[0] "{n} album"
+msgstr[1] "{n} albums"
+
+msgid "{n} folder"
+msgid_plural "{n} folders"
+msgstr[0] "{n} map"
+msgstr[1] "{n} mappen"
+
+msgid "{n} item so far"
+msgid_plural "{n} items so far"
+msgstr[0] "Tot nu toe {n} item"
+msgstr[1] "Tot nu toe {n} items"
+
+msgid "{n} minute"
+msgid_plural "{n} minutes"
+msgstr[0] "{n} minuut"
+msgstr[1] "{n} minuten"
+
+msgid "{n} selected"
+msgid_plural "{n} selected"
+msgstr[0] "{n} geselecteerd"
+msgstr[1] "{n} geselecteerd"
+
+msgid "{n} song"
+msgid_plural "{n} songs"
+msgstr[0] "{n} nummer"
+msgstr[1] "{n} nummers"
+
+msgid "{n} song from \"{}\" will play next"
+msgid_plural "{n} songs from \"{}\" will play next"
+msgstr[0] "{n} nummer uit \"{}\" wordt hierna afgespeeld"
+msgstr[1] "{n} nummers uit \"{}\" worden hierna afgespeeld"
+
+msgid "{n} song on YouTube Music"
+msgid_plural "{n} songs on YouTube Music"
+msgstr[0] "{n} nummer op YouTube Music"
+msgstr[1] "{n} nummers op YouTube Music"
+
+msgid "{n} song will play next"
+msgid_plural "{n} songs will play next"
+msgstr[0] "{n} nummer wordt hierna afgespeeld"
+msgstr[1] "{n} nummers worden hierna afgespeeld"
+
+msgid "{} (current theme)"
+msgstr "{} (huidig thema)"
+
+msgid "{} (unavailable)"
+msgstr "{} (niet beschikbaar)"
+
+msgid "{} at {}"
+msgstr "{} op {}"
+
+msgid "{} cannot be played: its stream address is not an internet stream"
+msgstr "{} kan niet worden afgespeeld: het streamadres is geen internetstream"
+
+msgid "{} is shown"
+msgstr "{} wordt getoond"
+
+msgid "{} kbps"
+msgstr "{} kbps"
+
+msgid "{} s"
+msgstr "{} s"
+
+msgid "{}: off"
+msgstr "{}: uit"
+
+msgid "{}: on"
+msgstr "{}: aan"
+
+msgid "{}: {} (dark)"
+msgstr "{}: {} (donker)"
+
+msgid "{}: {} (light)"
+msgstr "{}: {} (licht)"

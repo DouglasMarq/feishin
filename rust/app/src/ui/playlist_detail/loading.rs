@@ -125,12 +125,12 @@ fn apply_loaded(window: &AppWindow, shared: &SharedDetail, loaded: Loaded) {
         Ok(page) => page,
         Err(error) => {
             drop(detail);
-            show_status(window, &format!("Could not load the playlist: {error}"));
+            show_status(window, &tr!("Could not load the playlist: {}", error));
             return;
         }
     };
     let metadata = loaded.metadata.as_ref();
-    detail.name = metadata.map_or_else(|| "Playlist".to_owned(), |playlist| playlist.name.clone());
+    detail.name = metadata.map_or_else(|| tr!("Playlist"), |playlist| playlist.name.clone());
     let name = detail.name.clone();
     drop(detail);
     let total = page

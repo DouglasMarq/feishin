@@ -5,14 +5,10 @@ use slint::ComponentHandle;
 use super::view::RadioView;
 use crate::ui::{AppWindow, RadioState, show_status};
 
-const EMPTY_QUERY: &str = "Enter a name, country or tag to search";
-const NOTHING_FOUND: &str = "No stations found";
-const UNREACHABLE: &str = "The radio directory could not be reached";
-
 enum SearchOutcome {
     Stale,
     Shown,
-    Explained(&'static str),
+    Explained(String),
 }
 
 fn query_from_form(state: &RadioState<'_>) -> StationQuery {
@@ -32,7 +28,7 @@ impl RadioView {
         let state = window.global::<RadioState>();
         let query = query_from_form(&state);
         if query.is_empty() {
-            state.set_results_message(EMPTY_QUERY.into());
+            state.set_results_message(tr!("Enter a name, country or tag to search").into());
             return;
         }
         self.run_search(&window, query);
@@ -66,7 +62,7 @@ impl RadioView {
         let outcome = match found {
             Ok(page) => self.page_arrived(generation, page),
             Err(error) => match self.search_failed(window, generation, &error) {
-                true => SearchOutcome::Explained(UNREACHABLE),
+                true => SearchOutcome::Explained(tr!("The radio directory could not be reached")),
                 false => SearchOutcome::Stale,
             },
         };
@@ -87,7 +83,7 @@ impl RadioView {
                 model.results.is_empty(),
             ) {
                 (false, _) => SearchOutcome::Stale,
-                (true, true) => SearchOutcome::Explained(NOTHING_FOUND),
+                (true, true) => SearchOutcome::Explained(tr!("No stations found")),
                 (true, false) => SearchOutcome::Shown,
             }
         })
@@ -98,7 +94,10 @@ impl RadioView {
         if current {
             show_status(
                 window,
-                &format!("Searching the radio directory failed: {error:#}"),
+                &tr!(
+                    "Searching the radio directory failed: {}",
+                    format!("{error:#}")
+                ),
             );
         }
         current

@@ -3,6 +3,7 @@ use std::sync::Arc;
 use slint::ComponentHandle;
 
 use super::display::set_lyrics_rows;
+use super::language::apply_language;
 use super::loading::{load, save_integrations};
 use super::lyrics_sources::move_lyrics_source;
 use super::servers::{log_out, remove_server, switch_server};
@@ -144,6 +145,7 @@ pub(super) fn install_with(window: &AppWindow, ctx: &Context, shared: &Arc<Share
     state.on_integrations_changed(binding.action(apply_integrations));
     install_lyrics_source_callbacks(&state, &binding);
     state.on_interface_changed(binding.action(apply_interface));
+    state.on_language_changed(binding.action(apply_language));
     install_server_callbacks(&state, &binding);
     install_youtube_callbacks(&state, &binding);
     load(window, ctx, shared);

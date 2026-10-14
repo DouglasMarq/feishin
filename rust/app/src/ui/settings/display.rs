@@ -2,6 +2,7 @@ use feishin_storage::settings::{MAX_CROSSFADE_SECONDS, Settings};
 use slint::{ComponentHandle, ModelRc, SharedString, VecModel};
 
 use super::choices::replay_gain_index;
+use super::language::show_languages;
 use super::lyrics_sources::{LyricsSource, lyrics_source_name};
 use super::view::{Shared, View};
 use super::youtube::show_youtube;
@@ -16,7 +17,7 @@ pub(super) fn server_rows(settings: &Settings) -> Vec<ServerRow> {
             id: server.id.as_str().into(),
             name: server.name.as_str().into(),
             kind: format!("{:?}", server.server_type).into(),
-            detail: format!("{} at {}", server.username, server.url).into(),
+            detail: tr!("{} at {}", server.username, server.url).into(),
             current: settings.current_server_id.as_deref() == Some(server.id.as_str()),
         })
         .collect()
@@ -75,6 +76,7 @@ pub(super) fn show(window: &AppWindow, shared: &Shared, snapshot: SettingsSnapsh
     show_youtube(&state, &view);
     state.set_servers(ModelRc::new(VecModel::from(server_rows(settings))));
     state.set_follow_current_song(settings.ui.follow_current_song);
+    show_languages(&state, settings.ui.language.as_deref());
     state.set_switching("".into());
     state.set_loaded(true);
     *shared.view() = view;

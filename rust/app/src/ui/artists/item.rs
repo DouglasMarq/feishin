@@ -2,6 +2,7 @@ use feishin_core::model::Artist;
 use slint::Image;
 
 use super::super::ArtistCard;
+use super::super::genres::album_count_label;
 
 #[derive(Debug, Clone, PartialEq)]
 pub struct ArtistItem {
@@ -29,8 +30,8 @@ impl From<Artist> for ArtistItem {
 impl ArtistItem {
     pub fn into_card(self, image: Option<Image>) -> ArtistCard {
         ArtistCard {
-            albums: count_label(self.album_count, "album", "albums").into(),
-            songs: count_label(self.song_count, "song", "songs").into(),
+            albums: album_count_label(self.album_count).into(),
+            songs: song_count_label(self.song_count).into(),
             id: self.id.into(),
             name: self.name.into(),
             favorite: self.favorite,
@@ -40,12 +41,10 @@ impl ArtistItem {
     }
 }
 
-pub fn count_label(count: Option<u32>, singular: &str, plural: &str) -> String {
-    match count {
-        Some(1) => format!("1 {singular}"),
-        Some(count) => format!("{count} {plural}"),
-        None => String::new(),
-    }
+pub fn song_count_label(count: Option<u32>) -> String {
+    count
+        .map(|count| tr_plural!("{n} song", "{n} songs", count))
+        .unwrap_or_default()
 }
 
 #[cfg(test)]
@@ -54,8 +53,11 @@ mod tests {
 
     #[test]
     fn count_labels() {
-        assert_eq!(count_label(Some(1), "album", "albums"), "1 album");
-        assert_eq!(count_label(Some(3), "album", "albums"), "3 albums");
-        assert_eq!(count_label(None, "album", "albums"), "");
+        assert_eq!(album_count_label(Some(1)), "1 album");
+        assert_eq!(album_count_label(Some(3)), "3 albums");
+        assert_eq!(album_count_label(None), "");
+        assert_eq!(song_count_label(Some(1)), "1 song");
+        assert_eq!(song_count_label(Some(3)), "3 songs");
+        assert_eq!(song_count_label(None), "");
     }
 }

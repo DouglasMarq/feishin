@@ -71,7 +71,7 @@ pub fn toggle_favorite(window: &AppWindow, ctx: &Context) {
         if let Err(error) = result {
             on_ui(&weak_window, move |window| {
                 revert_favorite(window, generation, &artist_id, favorite);
-                show_status(window, &format!("Could not update the favorite: {error}"));
+                show_status(window, &tr!("Could not update the favorite: {}", error));
             });
         }
     });
@@ -90,7 +90,7 @@ pub fn play_album(window: &AppWindow, ctx: &Context, album_id: String) {
                 song_id: None,
             }),
             Err(error) => on_ui(&weak_window, move |window| {
-                show_status(window, &format!("Could not play the album: {error}"));
+                show_status(window, &tr!("Could not play the album: {}", error));
             }),
         }
     });

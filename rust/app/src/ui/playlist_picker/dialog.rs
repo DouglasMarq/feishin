@@ -68,7 +68,7 @@ fn apply_playlists(
         return;
     };
     if let Err(error) = accepted {
-        show_status(window, &format!("Could not load playlists: {error}"));
+        show_status(window, &tr!("Could not load playlists: {}", error));
     }
     window.global::<PlaylistPickerState>().set_loading(false);
     show_rows(window, shared);

@@ -1,0 +1,1520 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language: gl\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+
+msgid "\"{}\" plays next"
+msgstr "\"{}\" soa a continuación"
+
+msgid "\"{}\" will play next"
+msgstr "\"{}\" soará a continuación"
+
+msgid "1 star"
+msgstr "1 estrela"
+
+msgid "2 stars"
+msgstr "2 estrelas"
+
+msgid "3 stars"
+msgstr "3 estrelas"
+
+msgid "4 stars"
+msgstr "4 estrelas"
+
+msgid "5 stars"
+msgstr "5 estrelas"
+
+msgid "About {}"
+msgstr "Sobre {}"
+
+msgid "Accent color"
+msgstr "Cor de realce"
+
+msgid "Accent color not changed: {}."
+msgstr "Non se cambiou a cor de realce: {}."
+
+msgid "Accent color {}"
+msgstr "Cor de realce {}"
+
+msgid "Accent color {} (selected)"
+msgstr "Cor de realce {} (seleccionada)"
+
+msgid "Accent color {} (theme accent in use)"
+msgstr "Cor de realce {} (úsase o realce do tema)"
+
+msgid "Add a station by its stream URL"
+msgstr "Engadir unha emisora polo URL da súa transmisión"
+
+msgid "Add all songs to the queue"
+msgstr "Engadir todas as cancións á cola"
+
+msgid "Add server"
+msgstr "Engadir servidor"
+
+msgid "Add station"
+msgstr "Engadir emisora"
+
+msgid "Add this link to the end of the queue"
+msgstr "Engadir esta ligazón ao final da cola"
+
+msgid "Add this station to the server for every client"
+msgstr "Engadir esta emisora ao servidor para todos os clientes"
+
+msgid "Add to favorites"
+msgstr "Engadir aos favoritos"
+
+msgid "Add to playlist"
+msgstr "Engadir a unha lista de reprodución"
+
+msgid "Add to queue"
+msgstr "Engadir á cola"
+
+msgid "Add to the server's stations"
+msgstr "Engadir ás emisoras do servidor"
+
+msgid "Add {n} song to playlist"
+msgid_plural "Add {n} songs to playlist"
+msgstr[0] "Engadir {n} canción á lista de reprodución"
+msgstr[1] "Engadir {n} cancións á lista de reprodución"
+
+msgid "Add {} to the queue"
+msgstr "Engadir {} á cola"
+
+msgid "Added \"{}\" to the queue"
+msgstr "\"{}\" engadida á cola"
+
+msgid "Added only {n} song to \"{}\": {}"
+msgid_plural "Added only {n} songs to \"{}\": {}"
+msgstr[0] "Só se engadiu {n} canción a \"{}\": {}"
+msgstr[1] "Só se engadiron {n} cancións a \"{}\": {}"
+
+msgid "Added {n} song from \"{}\" to the queue"
+msgid_plural "Added {n} songs from \"{}\" to the queue"
+msgstr[0] "Engadiuse {n} canción de \"{}\" á cola"
+msgstr[1] "Engadíronse {n} cancións de \"{}\" á cola"
+
+msgid "Added {n} song to \"{}\""
+msgid_plural "Added {n} songs to \"{}\""
+msgstr[0] "Engadiuse {n} canción a \"{}\""
+msgstr[1] "Engadíronse {n} cancións a \"{}\""
+
+msgid "Added {n} song to the queue"
+msgid_plural "Added {n} songs to the queue"
+msgstr[0] "Engadiuse {n} canción á cola"
+msgstr[1] "Engadíronse {n} cancións á cola"
+
+msgid "Adding to \"{}\": {} of {n} song"
+msgid_plural "Adding to \"{}\": {} of {n} songs"
+msgstr[0] "Engadindo a \"{}\": {} de {n} canción"
+msgstr[1] "Engadindo a \"{}\": {} de {n} cancións"
+
+msgid "ALBUM"
+msgstr "ÁLBUM"
+
+msgid "Album"
+msgstr "Álbum"
+
+msgid "album"
+msgstr "álbum"
+
+msgid "Album artist"
+msgstr "Artista do álbum"
+
+msgid "Album count"
+msgstr "Número de álbums"
+
+msgid "Album not found"
+msgstr "Non se atopou o álbum"
+
+msgid "Albums"
+msgstr "Álbums"
+
+msgid "All genres"
+msgstr "Todos os xéneros"
+
+msgid "Already at the end"
+msgstr "Xa está ao final"
+
+msgid "Already at the start"
+msgstr "Xa está ao principio"
+
+msgid "Already in \"{}\""
+msgstr "Xa está en \"{}\""
+
+msgid "Already on the server"
+msgstr "Xa está no servidor"
+
+msgid "Amber"
+msgstr "Ámbar"
+
+msgid "Appearance"
+msgstr "Aparencia"
+
+msgid "ARTIST"
+msgstr "ARTISTA"
+
+msgid "Artist"
+msgstr "Artista"
+
+msgid "Artists"
+msgstr "Artistas"
+
+msgid "Ask the server to transcode down to this bitrate. Applies from the next song."
+msgstr "Pedirlle ao servidor que transcodifique ata esta taxa de bits. Aplícase desde a seguinte canción."
+
+msgid "Audio device"
+msgstr "Dispositivo de son"
+
+msgid "Automatic ({})"
+msgstr "Automático ({})"
+
+msgid "Back"
+msgstr "Atrás"
+
+msgid "Blue"
+msgstr "Azul"
+
+msgid "by {}"
+msgstr "de {}"
+
+msgid "Cancel"
+msgstr "Cancelar"
+
+msgid "Cancel timer"
+msgstr "Cancelar o temporizador"
+
+msgid "Cannot share: {}"
+msgstr "Non se pode compartir: {}"
+
+msgid "Chart country"
+msgstr "País das listas de éxitos"
+
+msgid "Charts"
+msgstr "Listas de éxitos"
+
+msgid "Choose a browser under Settings, YouTube to sign in for a personalized home"
+msgstr "Escolle un navegador en Configuración, YouTube para iniciar sesión e ter un inicio personalizado"
+
+msgid "Clear"
+msgstr "Limpar"
+
+msgid "Clear filters"
+msgstr "Limpar os filtros"
+
+msgid "Clear rating"
+msgstr "Quitar a puntuación"
+
+msgid "Clear the favorites and genre filters"
+msgstr "Limpar os filtros de favoritos e xénero"
+
+msgid "Close"
+msgstr "Pechar"
+
+msgid "Close now playing"
+msgstr "Pechar a reprodución actual"
+
+msgid "Close without saving"
+msgstr "Pechar sen gardar"
+
+msgid "Colors used across the whole app."
+msgstr "Cores usadas en toda a aplicación."
+
+msgid "Connect to your music server"
+msgstr "Conéctate ao teu servidor de música"
+
+msgid "Connecting..."
+msgstr "Conectando..."
+
+msgid "Could not add to \"{}\": {}"
+msgstr "Non se puido engadir a \"{}\": {}"
+
+msgid "Could not add {} to the server"
+msgstr "Non se puido engadir {} ao servidor"
+
+msgid "Could not create a share link: {}"
+msgstr "Non se puido crear unha ligazón para compartir: {}"
+
+msgid "Could not create the playlist: {}"
+msgstr "Non se puido crear a lista de reprodución: {}"
+
+msgid "Could not delete the playlist: {}"
+msgstr "Non se puido borrar a lista de reprodución: {}"
+
+msgid "Could not delete the station"
+msgstr "Non se puido borrar a emisora"
+
+msgid "Could not load albums: {}"
+msgstr "Non se puideron cargar os álbums: {}"
+
+msgid "Could not load artists: {}"
+msgstr "Non se puideron cargar os artistas: {}"
+
+msgid "Could not load Discover: {}"
+msgstr "Non se puido cargar Descubrir: {}"
+
+msgid "Could not load genres: {}"
+msgstr "Non se puideron cargar os xéneros: {}"
+
+msgid "Could not load it from YouTube Music: {}"
+msgstr "Non se puido cargar desde YouTube Music: {}"
+
+msgid "Could not load lyrics"
+msgstr "Non se puido cargar a letra"
+
+msgid "Could not load moods and genres: {}"
+msgstr "Non se puideron cargar os estados de ánimo e xéneros: {}"
+
+msgid "Could not load more results: {}"
+msgstr "Non se puideron cargar máis resultados: {}"
+
+msgid "Could not load new releases: {}"
+msgstr "Non se puideron cargar as novidades: {}"
+
+msgid "Could not load playlists: {}"
+msgstr "Non se puideron cargar as listas de reprodución: {}"
+
+msgid "Could not load the album: {}"
+msgstr "Non se puido cargar o álbum: {}"
+
+msgid "Could not load the artist: {}"
+msgstr "Non se puido cargar o artista: {}"
+
+msgid "Could not load the charts: {}"
+msgstr "Non se puideron cargar as listas de éxitos: {}"
+
+msgid "Could not load the folder: {}"
+msgstr "Non se puido cargar o cartafol: {}"
+
+msgid "Could not load the list: {}"
+msgstr "Non se puido cargar a lista: {}"
+
+msgid "Could not load the playlist: {}"
+msgstr "Non se puido cargar a lista de reprodución: {}"
+
+msgid "Could not load the radio stations: {}"
+msgstr "Non se puideron cargar as emisoras de radio: {}"
+
+msgid "Could not load the selection: {}"
+msgstr "Non se puido cargar a selección: {}"
+
+msgid "Could not load this page: {}"
+msgstr "Non se puido cargar esta páxina: {}"
+
+msgid "Could not load tracks: {}"
+msgstr "Non se puideron cargar as pistas: {}"
+
+msgid "Could not load your home: {}"
+msgstr "Non se puido cargar o teu inicio: {}"
+
+msgid "Could not open the folder: {}"
+msgstr "Non se puido abrir o cartafol: {}"
+
+msgid "Could not open YouTube Music: {}"
+msgstr "Non se puido abrir YouTube Music: {}"
+
+msgid "Could not play \"{}\" from YouTube: {}"
+msgstr "Non se puido reproducir \"{}\" desde YouTube: {}"
+
+msgid "Could not play album: {}"
+msgstr "Non se puido reproducir o álbum: {}"
+
+msgid "Could not play from YouTube: {}"
+msgstr "Non se puido reproducir desde YouTube: {}"
+
+msgid "Could not play the album: {}"
+msgstr "Non se puido reproducir o álbum: {}"
+
+msgid "Could not remove songs: {}"
+msgstr "Non se puideron quitar as cancións: {}"
+
+msgid "Could not rescan the library: {}"
+msgstr "Non se puido volver analizar a biblioteca: {}"
+
+msgid "Could not set the rating: {}"
+msgstr "Non se puido establecer a puntuación: {}"
+
+msgid "Could not sign in to YouTube Music ({}). Showing general picks instead."
+msgstr "Non se puido iniciar sesión en YouTube Music ({}). Móstranse suxestións xerais."
+
+msgid "Could not switch server: {}"
+msgstr "Non se puido cambiar de servidor: {}"
+
+msgid "Could not update favorite: {}"
+msgstr "Non se puido actualizar o favorito: {}"
+
+msgid "Could not update favorites: {}"
+msgstr "Non se puideron actualizar os favoritos: {}"
+
+msgid "Could not update rating: {}"
+msgstr "Non se puido actualizar a puntuación: {}"
+
+msgid "Could not update the favorite: {}"
+msgstr "Non se puido actualizar o favorito: {}"
+
+msgid "Country"
+msgstr "País"
+
+msgid "Create"
+msgstr "Crear"
+
+msgid "Created \"{}\" with only {n} song: {}"
+msgid_plural "Created \"{}\" with only {n} songs: {}"
+msgstr[0] "Creouse \"{}\" con só {n} canción: {}"
+msgstr[1] "Creouse \"{}\" con só {n} cancións: {}"
+
+msgid "Created \"{}\" with {n} song"
+msgid_plural "Created \"{}\" with {n} songs"
+msgstr[0] "Creouse \"{}\" con {n} canción"
+msgstr[1] "Creouse \"{}\" con {n} cancións"
+
+msgid "Created playlist \"{}\""
+msgstr "Creouse a lista de reprodución \"{}\""
+
+msgid "Creating a share link..."
+msgstr "Creando unha ligazón para compartir..."
+
+msgid "Creating..."
+msgstr "Creando..."
+
+msgid "Crossfade"
+msgstr "Fundido encadeado"
+
+msgid "Crossfade could not be changed: {}"
+msgstr "Non se puido cambiar o fundido encadeado: {}"
+
+msgid "Crossfade: {}"
+msgstr "Fundido encadeado: {}"
+
+msgid "Current"
+msgstr "Actual"
+
+msgid "Custom accent color: {} (theme accent in use)"
+msgstr "Cor de realce personalizada: {} (úsase o realce do tema)"
+
+msgid "Custom accent color: {}, press Enter to apply"
+msgstr "Cor de realce personalizada: {}, preme Intro para aplicala"
+
+msgid "Dark theme"
+msgstr "Tema escuro"
+
+msgid "DARK THEMES"
+msgstr "TEMAS ESCUROS"
+
+msgid "Default country for the Discover charts. Automatic follows your system region."
+msgstr "País predeterminado das listas de éxitos de Descubrir. Automático segue a rexión do sistema."
+
+msgid "Default Dark"
+msgstr "Escuro predeterminado"
+
+msgid "Default Light"
+msgstr "Claro predeterminado"
+
+msgid "Delete"
+msgstr "Borrar"
+
+msgid "Delete \"{}\" from the server? This cannot be undone."
+msgstr "Borrar \"{}\" do servidor? Non se pode desfacer."
+
+msgid "Delete \"{}\"? This cannot be undone."
+msgstr "Borrar \"{}\"? Non se pode desfacer."
+
+msgid "Delete playlist"
+msgstr "Borrar a lista de reprodución"
+
+msgid "Delete station"
+msgstr "Borrar a emisora"
+
+msgid "Delete {} from the server"
+msgstr "Borrar {} do servidor"
+
+msgid "Deleted playlist \"{}\""
+msgstr "Borrouse a lista de reprodución \"{}\""
+
+msgid "Deleting..."
+msgstr "Borrando..."
+
+msgid "Demo mode: these picks are made up and play from your demo library"
+msgstr "Modo de demostración: estas suxestións son inventadas e soan desde a túa biblioteca de demostración"
+
+msgid "Directory"
+msgstr "Directorio"
+
+msgid "Disc {}"
+msgstr "Disco {}"
+
+msgid "Discord Rich Presence"
+msgstr "Discord Rich Presence"
+
+msgid "Discover"
+msgstr "Descubrir"
+
+msgid "Discover is open"
+msgstr "Descubrir está aberto"
+
+msgid "Discover new music on YouTube Music"
+msgstr "Descubre música nova en YouTube Music"
+
+msgid "Duration"
+msgstr "Duración"
+
+msgid "Edit station"
+msgstr "Editar a emisora"
+
+msgid "Edit {}"
+msgstr "Editar {}"
+
+msgid "End of current track"
+msgstr "Final da pista actual"
+
+msgid "End of track"
+msgstr "Final da pista"
+
+msgid "Enter a name for the station"
+msgstr "Escribe un nome para a emisora"
+
+msgid "Enter a name, country or tag to search"
+msgstr "Escribe un nome, país ou etiqueta para buscar"
+
+msgid "Enter a stream URL that starts with http:// or https://"
+msgstr "Escribe un URL de transmisión que comece por http:// ou https://"
+
+msgid "Enter the server URL"
+msgstr "Escribe o URL do servidor"
+
+msgid "Fade the end of each song into the next one. Off keeps gapless playback."
+msgstr "Funde o final de cada canción coa seguinte. Desactivado mantén a reprodución sen pausas."
+
+msgid "Favorite"
+msgstr "Favorito"
+
+msgid "Favorited"
+msgstr "Favoritos"
+
+msgid "Favorites"
+msgstr "Favoritos"
+
+msgid "Favorites only: off"
+msgstr "Só favoritos: desactivado"
+
+msgid "Favorites only: on"
+msgstr "Só favoritos: activado"
+
+msgid "Filter"
+msgstr "Filtro"
+
+msgid "Filter playlists"
+msgstr "Filtrar as listas de reprodución"
+
+msgid "Find stations by name, country or tag"
+msgstr "Atopar emisoras por nome, país ou etiqueta"
+
+msgid "Find stations in the radio-browser.info directory"
+msgstr "Atopar emisoras no directorio radio-browser.info"
+
+msgid "Folder"
+msgstr "Cartafol"
+
+msgid "Folders"
+msgstr "Cartafoles"
+
+msgid "Follow current song"
+msgstr "Seguir a canción actual"
+
+msgid "Follow system color scheme"
+msgstr "Seguir o esquema de cores do sistema"
+
+msgid "For you"
+msgstr "Para ti"
+
+msgid "Forget this server?"
+msgstr "Esquecer este servidor?"
+
+msgid "Format the server should transcode to. Applies from the next song."
+msgstr "Formato ao que o servidor debe transcodificar. Aplícase desde a seguinte canción."
+
+msgid "Found {n} server in Feishin but it has no usable saved login"
+msgid_plural "Found {n} servers in Feishin but none with a usable saved login"
+msgstr[0] "Atopouse {n} servidor en Feishin, pero non ten un inicio de sesión gardado que se poida usar"
+msgstr[1] "Atopáronse {n} servidores en Feishin, pero ningún cun inicio de sesión gardado que se poida usar"
+
+msgid "Gapless playback"
+msgstr "Reprodución sen pausas"
+
+msgid "Genres"
+msgstr "Xéneros"
+
+msgid "Go back to {}"
+msgstr "Volver a {}"
+
+msgid "Go to album"
+msgstr "Ir ao álbum"
+
+msgid "Go to artist"
+msgstr "Ir ao artista"
+
+msgid "Go to {}"
+msgstr "Ir a {}"
+
+msgid "Green"
+msgstr "Verde"
+
+msgid "Hide lyrics"
+msgstr "Agochar a letra"
+
+msgid "Hide queue"
+msgstr "Agochar a cola"
+
+msgid "High Contrast Dark"
+msgstr "Alto contraste escuro"
+
+msgid "High Contrast Light"
+msgstr "Alto contraste claro"
+
+msgid "Highlight with the color that comes with the theme."
+msgstr "Realzar coa cor que inclúe o tema."
+
+msgid "Home"
+msgstr "Inicio"
+
+msgid "Homepage (optional)"
+msgstr "Páxina web (opcional)"
+
+msgid "Import from Feishin"
+msgstr "Importar de Feishin"
+
+msgid "Install yt-dlp to play YouTube tracks"
+msgstr "Instala yt-dlp para reproducir pistas de YouTube"
+
+msgid "Integrations"
+msgstr "Integracións"
+
+msgid "Interface"
+msgstr "Interface"
+
+msgid "Internet radio"
+msgstr "Radio por internet"
+
+msgid "item"
+msgstr "elemento"
+
+msgid "Jellyfin has no public share links"
+msgstr "Jellyfin non ten ligazóns públicas para compartir"
+
+msgid "Keep this station in the favorites on this device"
+msgstr "Gardar esta emisora nos favoritos deste dispositivo"
+
+msgid "Language"
+msgstr "Idioma"
+
+msgid "LIBRARY"
+msgstr "BIBLIOTECA"
+
+msgid "Library scan finished"
+msgstr "Rematou a análise da biblioteca"
+
+msgid "Library scan finished: {n} item"
+msgid_plural "Library scan finished: {n} items"
+msgstr[0] "Rematou a análise da biblioteca: {n} elemento"
+msgstr[1] "Rematou a análise da biblioteca: {n} elementos"
+
+msgid "Light theme"
+msgstr "Tema claro"
+
+msgid "LIGHT THEMES"
+msgstr "TEMAS CLAROS"
+
+msgid "Listening to {}"
+msgstr "Escoitando {}"
+
+msgid "LIVE"
+msgstr "EN DIRECTO"
+
+msgid "Load more"
+msgstr "Cargar máis"
+
+msgid "Load this section again"
+msgstr "Cargar de novo esta sección"
+
+msgid "Loading playlists..."
+msgstr "Cargando as listas de reprodución..."
+
+msgid "Loading similar songs..."
+msgstr "Cargando cancións similares..."
+
+msgid "Loading stations..."
+msgstr "Cargando emisoras..."
+
+msgid "Loading the next page of stations"
+msgstr "Cargando a seguinte páxina de emisoras"
+
+msgid "Loading..."
+msgstr "Cargando..."
+
+msgid "Log out"
+msgstr "Pechar sesión"
+
+msgid "Looking up the YouTube link..."
+msgstr "Buscando a ligazón de YouTube..."
+
+msgid "Lyrics"
+msgstr "Letra"
+
+msgid "Lyrics from {}"
+msgstr "Letra de {}"
+
+msgid "Lyrics sources"
+msgstr "Fontes de letras"
+
+msgid "Maximum bitrate"
+msgstr "Taxa de bits máxima"
+
+msgid "Media keys and desktop media controls. Takes effect after a restart."
+msgstr "Teclas multimedia e controis multimedia do escritorio. Aplícase despois de reiniciar."
+
+msgid "Moods and genres"
+msgstr "Estados de ánimo e xéneros"
+
+msgid "Most played"
+msgstr "Máis reproducidos"
+
+msgid "Move down"
+msgstr "Baixar"
+
+msgid "Move up"
+msgstr "Subir"
+
+msgid "MPRIS"
+msgstr "MPRIS"
+
+msgid "Mute"
+msgstr "Silenciar"
+
+msgid "Name"
+msgstr "Nome"
+
+msgid "New playlist"
+msgstr "Nova lista de reprodución"
+
+msgid "New releases"
+msgstr "Novidades"
+
+msgid "Next"
+msgstr "Seguinte"
+
+msgid "Next is unavailable while a radio station plays"
+msgstr "Seguinte non está dispoñible mentres soa unha emisora de radio"
+
+msgid "No albums"
+msgstr "Non hai álbums"
+
+msgid "No albums found"
+msgstr "Non se atoparon álbums"
+
+msgid "No artists found"
+msgstr "Non se atoparon artistas"
+
+msgid "no browser is selected"
+msgstr "non hai ningún navegador seleccionado"
+
+msgid "No favorite albums"
+msgstr "Non hai álbums favoritos"
+
+msgid "No favorite artists"
+msgstr "Non hai artistas favoritos"
+
+msgid "No favorite tracks"
+msgstr "Non hai pistas favoritas"
+
+msgid "No genres found"
+msgstr "Non se atoparon xéneros"
+
+msgid "No lyrics found"
+msgstr "Non se atopou ningunha letra"
+
+msgid "No playlists found"
+msgstr "Non se atoparon listas de reprodución"
+
+msgid "No playlists yet"
+msgstr "Aínda non hai listas de reprodución"
+
+msgid "No rating"
+msgstr "Sen puntuación"
+
+msgid "No results for \"{}\""
+msgstr "Non hai resultados para \"{}\""
+
+msgid "No saved login for {}; remove it and add it again"
+msgstr "Non hai ningún inicio de sesión gardado para {}; quítao e engádeo de novo"
+
+msgid "No saved servers."
+msgstr "Non hai servidores gardados."
+
+msgid "No similar songs found"
+msgstr "Non se atoparon cancións similares"
+
+msgid "No songs here"
+msgstr "Aquí non hai cancións"
+
+msgid "No stations found"
+msgstr "Non se atoparon emisoras"
+
+msgid "No stations yet. Add one or find one in the directory."
+msgstr "Aínda non hai emisoras. Engade unha ou atopa unha no directorio."
+
+msgid "No tracks found"
+msgstr "Non se atoparon pistas"
+
+msgid "None"
+msgstr "Ningún"
+
+msgid "Normalize loudness using the track or album gain tags."
+msgstr "Normalizar o volume coas etiquetas de ganancia da pista ou do álbum."
+
+msgid "Not connected to a server"
+msgstr "Sen conexión a un servidor"
+
+msgid "Nothing is playing"
+msgstr "Non se está a reproducir nada"
+
+msgid "Nothing to add yet"
+msgstr "Aínda non hai nada que engadir"
+
+msgid "Nothing to go back to"
+msgstr "Non hai nada ao que volver"
+
+msgid "Nothing to play here"
+msgstr "Aquí non hai nada que reproducir"
+
+msgid "Nothing to play yet"
+msgstr "Aínda non hai nada que reproducir"
+
+msgid "Nothing to show here right now"
+msgstr "Agora mesmo non hai nada que mostrar aquí"
+
+msgid "Off"
+msgstr "Desactivado"
+
+msgid "OK"
+msgstr "Aceptar"
+
+msgid "On the server"
+msgstr "No servidor"
+
+msgid "Only a server admin can rescan the library"
+msgstr "Só un administrador do servidor pode volver analizar a biblioteca"
+
+msgid "Only loaded tracks can be shared: select fewer tracks or scroll through them first"
+msgstr "Só se poden compartir as pistas cargadas: selecciona menos pistas ou desprázate por elas primeiro"
+
+msgid "Open"
+msgstr "Abrir"
+
+msgid "Open in YouTube Music"
+msgstr "Abrir en YouTube Music"
+
+msgid "Open now playing"
+msgstr "Abrir a reprodución actual"
+
+msgid "Open radio"
+msgstr "Abrir a radio"
+
+msgid "Open the album \"{}\""
+msgstr "Abrir o álbum \"{}\""
+
+msgid "Open the playlist \"{}\""
+msgstr "Abrir a lista de reprodución \"{}\""
+
+msgid "Open the queue panel"
+msgstr "Abrir o panel da cola"
+
+msgid "Open {}"
+msgstr "Abrir {}"
+
+msgid "Original"
+msgstr "Orixinal"
+
+msgid "Output used by the player."
+msgstr "Saída que usa o reprodutor."
+
+msgid "Owner"
+msgstr "Propietario"
+
+msgid "Password"
+msgstr "Contrasinal"
+
+msgid "Paste a link first"
+msgstr "Pega primeiro unha ligazón"
+
+msgid "Paste a YouTube or YouTube Music link first"
+msgstr "Pega primeiro unha ligazón de YouTube ou YouTube Music"
+
+msgid "Paste a YouTube or YouTube Music link to try yt-dlp."
+msgstr "Pega unha ligazón de YouTube ou YouTube Music para probar yt-dlp."
+
+msgid "Pause"
+msgstr "Pausa"
+
+msgid "Pause the radio station"
+msgstr "Pausar a emisora de radio"
+
+msgid "Personalized with your YouTube Music account from {}"
+msgstr "Personalizado coa túa conta de YouTube Music de {}"
+
+msgid "Pick a color, or type one as #rrggbb and press Enter."
+msgstr "Escolle unha cor ou escríbea como #rrggbb e preme Intro."
+
+msgid "Pick a mood or genre to see its playlists"
+msgstr "Escolle un estado de ánimo ou xénero para ver as súas listas de reprodución"
+
+msgid "Play"
+msgstr "Reproducir"
+
+msgid "Play \"{}\" and the rest of this shelf"
+msgstr "Reproducir \"{}\" e o resto deste andel"
+
+msgid "Play a YouTube link"
+msgstr "Reproducir unha ligazón de YouTube"
+
+msgid "Play album"
+msgstr "Reproducir o álbum"
+
+msgid "Play all"
+msgstr "Reproducir todo"
+
+msgid "Play all {n} song"
+msgid_plural "Play all {n} songs"
+msgstr[0] "Reproducir {n} canción"
+msgstr[1] "Reproducir as {n} cancións"
+
+msgid "Play count"
+msgstr "Número de reproducións"
+
+msgid "Play every song in {} and its subfolders"
+msgstr "Reproducir todas as cancións de {} e os seus subcartafoles"
+
+msgid "Play from here"
+msgstr "Reproducir desde aquí"
+
+msgid "Play from this song"
+msgstr "Reproducir desde esta canción"
+
+msgid "Play from {}"
+msgstr "Reproducir desde {}"
+
+msgid "Play next"
+msgstr "Reproducir a continuación"
+
+msgid "Play the album"
+msgstr "Reproducir o álbum"
+
+msgid "Play the playlist"
+msgstr "Reproducir a lista de reprodución"
+
+msgid "Play the radio station"
+msgstr "Reproducir a emisora de radio"
+
+msgid "Play this link after the current song"
+msgstr "Reproducir esta ligazón despois da canción actual"
+
+msgid "Play this link now"
+msgstr "Reproducir esta ligazón agora"
+
+msgid "Play {}"
+msgstr "Reproducir {}"
+
+msgid "Play {} next"
+msgstr "Reproducir {} a continuación"
+
+msgid "Play {} with its subfolders"
+msgstr "Reproducir {} cos seus subcartafoles"
+
+msgid "Playback"
+msgstr "Reprodución"
+
+msgid "Playback failed: {}"
+msgstr "Fallou a reprodución: {}"
+
+msgid "Playing {} failed: {}"
+msgstr "Fallou a reprodución de {}: {}"
+
+msgid "PLAYLIST"
+msgstr "LISTA DE REPRODUCIÓN"
+
+msgid "Playlist"
+msgstr "Lista de reprodución"
+
+msgid "playlist"
+msgstr "lista de reprodución"
+
+msgid "Playlist name"
+msgstr "Nome da lista de reprodución"
+
+msgid "Playlists"
+msgstr "Listas de reprodución"
+
+msgid "Plays"
+msgstr "Reproducións"
+
+msgid "Plays YouTube tracks. Leave empty to use yt-dlp from your PATH."
+msgstr "Reproduce pistas de YouTube. Déixao baleiro para usar o yt-dlp do teu PATH."
+
+msgid "Preload the next song so it starts without a pause."
+msgstr "Precargar a seguinte canción para que comece sen pausa."
+
+msgid "Previous"
+msgstr "Anterior"
+
+msgid "Previous is unavailable while a radio station plays"
+msgstr "Anterior non está dispoñible mentres soa unha emisora de radio"
+
+msgid "Purple"
+msgstr "Morado"
+
+msgid "Queue"
+msgstr "Cola"
+
+msgid "Radio"
+msgstr "Radio"
+
+msgid "Random"
+msgstr "Aleatorio"
+
+msgid "Rate {n} star"
+msgid_plural "Rate {n} stars"
+msgstr[0] "Puntuar con {n} estrela"
+msgstr[1] "Puntuar con {n} estrelas"
+
+msgid "Rating"
+msgstr "Puntuación"
+
+msgid "Recently added"
+msgstr "Engadidos recentemente"
+
+msgid "Recently played"
+msgstr "Reproducidos recentemente"
+
+msgid "Red"
+msgstr "Vermello"
+
+msgid "Refresh"
+msgstr "Actualizar"
+
+msgid "Refresh this section"
+msgstr "Actualizar esta sección"
+
+msgid "Release year"
+msgstr "Ano de publicación"
+
+msgid "Remove"
+msgstr "Quitar"
+
+msgid "Remove from favorites"
+msgstr "Quitar dos favoritos"
+
+msgid "Remove from playlist"
+msgstr "Quitar da lista de reprodución"
+
+msgid "Remove from queue"
+msgstr "Quitar da cola"
+
+msgid "Removed {n} song from \"{}\""
+msgid_plural "Removed {n} songs from \"{}\""
+msgstr[0] "Quitouse {n} canción de \"{}\""
+msgstr[1] "Quitáronse {n} cancións de \"{}\""
+
+msgid "Removing..."
+msgstr "Quitando..."
+
+msgid "Repeat: all"
+msgstr "Repetir: todo"
+
+msgid "Repeat: off"
+msgstr "Repetir: desactivado"
+
+msgid "Repeat: one"
+msgstr "Repetir: unha"
+
+msgid "ReplayGain"
+msgstr "ReplayGain"
+
+msgid "Report what you play to the server."
+msgstr "Informar ao servidor do que reproduces."
+
+msgid "Rescan the library for new content"
+msgstr "Volver analizar a biblioteca en busca de contido novo"
+
+msgid "Resize column"
+msgstr "Cambiar o tamaño da columna"
+
+msgid "Save"
+msgstr "Gardar"
+
+msgid "Save on this device"
+msgstr "Gardar neste dispositivo"
+
+msgid "Save the changes on the server"
+msgstr "Gardar os cambios no servidor"
+
+msgid "Save the changes on this device"
+msgstr "Gardar os cambios neste dispositivo"
+
+msgid "Save to favorites on this device"
+msgstr "Gardar nos favoritos deste dispositivo"
+
+msgid "Save to server"
+msgstr "Gardar no servidor"
+
+msgid "Saved on this device"
+msgstr "Gardada neste dispositivo"
+
+msgid "Saved on this device, click to remove"
+msgstr "Gardada neste dispositivo, preme para quitala"
+
+msgid "Saving the station to the server..."
+msgstr "Gardando a emisora no servidor..."
+
+msgid "Saving to the server..."
+msgstr "Gardando no servidor..."
+
+msgid "Saving..."
+msgstr "Gardando..."
+
+msgid "Scanning the library for new content..."
+msgstr "Analizando a biblioteca en busca de contido novo..."
+
+msgid "Scanning the library: {}"
+msgstr "Analizando a biblioteca: {}"
+
+msgid "Scrobble"
+msgstr "Scrobble"
+
+msgid "Scroll left"
+msgstr "Desprazar á esquerda"
+
+msgid "Scroll lists and the queue to the song that is playing."
+msgstr "Desprazar as listas e a cola ata a canción que está a soar."
+
+msgid "Scroll right"
+msgstr "Desprazar á dereita"
+
+msgid "Search"
+msgstr "Buscar"
+
+msgid "Search failed: {}"
+msgstr "Fallou a busca: {}"
+
+msgid "SEARCH RESULTS"
+msgstr "RESULTADOS DA BUSCA"
+
+msgid "Search songs on YouTube Music"
+msgstr "Buscar cancións en YouTube Music"
+
+msgid "Search songs, albums, artists"
+msgstr "Buscar cancións, álbums, artistas"
+
+msgid "Search the radio-browser.info directory"
+msgstr "Buscar no directorio radio-browser.info"
+
+msgid "Search your library for songs, albums and artists"
+msgstr "Buscar cancións, álbums e artistas na túa biblioteca"
+
+msgid "Searched from top to bottom until one has lyrics."
+msgstr "Consúltanse de arriba abaixo ata que unha teña a letra."
+
+msgid "Searching for lyrics..."
+msgstr "Buscando a letra..."
+
+msgid "Searching the radio directory failed: {}"
+msgstr "Fallou a busca no directorio de radios: {}"
+
+msgid "Searching the radio-browser.info directory"
+msgstr "Buscando no directorio radio-browser.info"
+
+msgid "Searching..."
+msgstr "Buscando..."
+
+msgid "Seeking is unavailable for live radio"
+msgstr "Non se pode avanzar nin retroceder nunha radio en directo"
+
+msgid "Server"
+msgstr "Servidor"
+
+msgid "Server type"
+msgstr "Tipo de servidor"
+
+msgid "Servers"
+msgstr "Servidores"
+
+msgid "Set rating"
+msgstr "Puntuar"
+
+msgid "Settings"
+msgstr "Configuración"
+
+msgid "Share"
+msgstr "Compartir"
+
+msgid "Share ({})"
+msgstr "Compartir ({})"
+
+msgid "Share link copied to the clipboard: {}"
+msgstr "Copiouse a ligazón para compartir no portapapeis: {}"
+
+msgid "Share this {}: copy a public link"
+msgstr "Compartir {}: copiar unha ligazón pública"
+
+msgid "Sharing is unavailable: {}"
+msgstr "Non se pode compartir: {}"
+
+msgid "SHOW LESS"
+msgstr "MOSTRAR MENOS"
+
+msgid "Show lyrics"
+msgstr "Mostrar a letra"
+
+msgid "SHOW MORE"
+msgstr "MOSTRAR MÁIS"
+
+msgid "Show more"
+msgstr "Mostrar máis"
+
+msgid "Show playlists for {}"
+msgstr "Mostrar as listas de reprodución de {}"
+
+msgid "Show queue"
+msgstr "Mostrar a cola"
+
+msgid "Show the current song on your Discord profile."
+msgstr "Mostrar a canción actual no teu perfil de Discord."
+
+msgid "Show the next page of stations"
+msgstr "Mostrar a seguinte páxina de emisoras"
+
+msgid "Show the queue next to the library; remembered on the next start."
+msgstr "Mostrar a cola xunto á biblioteca; lémbrase no seguinte inicio."
+
+msgid "Show the server and saved stations"
+msgstr "Mostrar as emisoras do servidor e as gardadas"
+
+msgid "Show {}"
+msgstr "Mostrar {}"
+
+msgid "Showing playlists for {}"
+msgstr "Mostrando as listas de reprodución de {}"
+
+msgid "Showing the charts for {}"
+msgstr "Mostrando as listas de éxitos de {}"
+
+msgid "Showing the radio-browser.info directory"
+msgstr "Mostrando o directorio radio-browser.info"
+
+msgid "Showing the server and saved stations"
+msgstr "Mostrando as emisoras do servidor e as gardadas"
+
+msgid "Shuffle"
+msgstr "Barallar"
+
+msgid "Shuffle every song in {} and its subfolders"
+msgstr "Barallar todas as cancións de {} e os seus subcartafoles"
+
+msgid "Shuffle play"
+msgstr "Reprodución aleatoria"
+
+msgid "Shuffle: off"
+msgstr "Barallar: desactivado"
+
+msgid "Shuffle: on"
+msgstr "Barallar: activado"
+
+msgid "Sign in"
+msgstr "Iniciar sesión"
+
+msgid "Sign in with browser"
+msgstr "Iniciar sesión co navegador"
+
+msgid "Sign out and forget this server's saved login?"
+msgstr "Pechar sesión e esquecer o inicio de sesión gardado deste servidor?"
+
+msgid "Sign out and forget this server?"
+msgstr "Pechar sesión e esquecer este servidor?"
+
+msgid "Similar"
+msgstr "Similares"
+
+msgid "Similar songs come from your server, so YouTube tracks have none"
+msgstr "As cancións similares veñen do teu servidor, polo que as pistas de YouTube non teñen"
+
+msgid "Sleep timer: off"
+msgstr "Temporizador: desactivado"
+
+msgid "Sleep timer: {}"
+msgstr "Temporizador: {}"
+
+msgid "Song count"
+msgstr "Número de cancións"
+
+msgid "Songs"
+msgstr "Cancións"
+
+msgid "Sort by {}"
+msgstr "Ordenar por {}"
+
+msgid "Sort by {}: ascending"
+msgstr "Ordenar por {}: ascendente"
+
+msgid "Sort by {}: descending"
+msgstr "Ordenar por {}: descendente"
+
+msgid "Sort: ascending"
+msgstr "Orde: ascendente"
+
+msgid "Sort: descending"
+msgstr "Orde: descendente"
+
+msgid "Starting volume, shared with the player bar."
+msgstr "Volume inicial, compartido coa barra do reprodutor."
+
+msgid "Station data from radio-browser.info"
+msgstr "Datos das emisoras de radio-browser.info"
+
+msgid "Station name"
+msgstr "Nome da emisora"
+
+msgid "Stations"
+msgstr "Emisoras"
+
+msgid "Stop {}"
+msgstr "Deter {}"
+
+msgid "Stream URL"
+msgstr "URL da transmisión"
+
+msgid "Switch"
+msgstr "Cambiar"
+
+msgid "Switch between a dark and a light theme with the desktop. {}"
+msgstr "Cambiar entre un tema escuro e un claro segundo o escritorio. {}"
+
+msgid "Switch to grid view"
+msgstr "Cambiar á vista de grella"
+
+msgid "Switch to list view"
+msgstr "Cambiar á vista de lista"
+
+msgid "System default"
+msgstr "Predeterminado do sistema"
+
+msgid "System default follows the language of the desktop."
+msgstr "O predeterminado do sistema segue o idioma do escritorio."
+
+msgid "Tag, for example jazz"
+msgstr "Etiqueta, por exemplo jazz"
+
+msgid "The desktop currently prefers dark."
+msgstr "Agora o escritorio prefire o escuro."
+
+msgid "The desktop currently prefers light."
+msgstr "Agora o escritorio prefire o claro."
+
+msgid "The desktop has no preference, so the dark theme is used."
+msgstr "O escritorio non ten preferencia, polo que se usa o tema escuro."
+
+msgid "The library scan is still running on the server"
+msgstr "A análise da biblioteca aínda está en curso no servidor"
+
+msgid "The queue is empty"
+msgstr "A cola está baleira"
+
+msgid "The queue is incomplete: loading the rest of the list failed ({})"
+msgstr "A cola está incompleta: non se puido cargar o resto da lista ({})"
+
+msgid "The radio directory could not be reached"
+msgstr "Non se puido acceder ao directorio de radios"
+
+msgid "The radio station stopped streaming"
+msgstr "A emisora de radio deixou de emitir"
+
+msgid "The server refused the station: {}"
+msgstr "O servidor rexeitou a emisora: {}"
+
+msgid "Theme"
+msgstr "Tema"
+
+msgid "There is nothing to play in this list"
+msgstr "Non hai nada que reproducir nesta lista"
+
+msgid "This Discover page does not exist"
+msgstr "Esta páxina de Descubrir non existe"
+
+msgid "This folder is empty"
+msgstr "Este cartafol está baleiro"
+
+msgid "This playlist is empty"
+msgstr "Esta lista de reprodución está baleira"
+
+msgid "This server has no internet radio. Stations you add are saved on this device."
+msgstr "Este servidor non ten radio por internet. As emisoras que engadas gárdanse neste dispositivo."
+
+msgid "this server has no public share links"
+msgstr "este servidor non ten ligazóns públicas para compartir"
+
+msgid "Time"
+msgstr "Tempo"
+
+msgid "Title"
+msgstr "Título"
+
+msgid "Top songs"
+msgstr "Cancións máis populares"
+
+msgid "Track"
+msgstr "Pista"
+
+msgid "Tracks"
+msgstr "Pistas"
+
+msgid "Transcode format"
+msgstr "Formato de transcodificación"
+
+msgid "Try again"
+msgstr "Tentar de novo"
+
+msgid "Turn off the theme accent color to pick your own."
+msgstr "Desactiva a cor de realce do tema para escoller a túa."
+
+msgid "Unmute"
+msgstr "Activar o son"
+
+msgid "Up next"
+msgstr "A continuación"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "Use the theme accent color"
+msgstr "Usar a cor de realce do tema"
+
+msgid "Use {}"
+msgstr "Usar {}"
+
+msgid "Used while the desktop prefers dark."
+msgstr "Úsase cando o escritorio prefire o escuro."
+
+msgid "Used while the desktop prefers light."
+msgstr "Úsase cando o escritorio prefire o claro."
+
+msgid "Username"
+msgstr "Nome de usuario"
+
+msgid "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Feishin deletes right after reading."
+msgstr "Usa a túa sesión de YouTube neste navegador para un inicio de Descubrir personalizado e son Premium. yt-dlp copia as súas cookies nun ficheiro temporal privado que Feishin borra xusto despois de lelo."
+
+msgid "Volume"
+msgstr "Volume"
+
+msgid "Volume {}%"
+msgstr "Volume {}%"
+
+msgid "XDG_RUNTIME_DIR is not set, so there is no private place for the cookies"
+msgstr "XDG_RUNTIME_DIR non está definido, polo que non hai un lugar privado para as cookies"
+
+msgid "Year"
+msgstr "Ano"
+
+msgid "You are here: {}"
+msgstr "Estás aquí: {}"
+
+msgid "Your user is not allowed to share on this server"
+msgstr "O teu usuario non ten permiso para compartir neste servidor"
+
+msgid "YouTube"
+msgstr "YouTube"
+
+msgid "YouTube albums are not in your library"
+msgstr "Os álbums de YouTube non están na túa biblioteca"
+
+msgid "YouTube artists are not in your library"
+msgstr "Os artistas de YouTube non están na túa biblioteca"
+
+msgid "yt-dlp program"
+msgstr "Programa yt-dlp"
+
+msgid "{n} album"
+msgid_plural "{n} albums"
+msgstr[0] "{n} álbum"
+msgstr[1] "{n} álbums"
+
+msgid "{n} folder"
+msgid_plural "{n} folders"
+msgstr[0] "{n} cartafol"
+msgstr[1] "{n} cartafoles"
+
+msgid "{n} item so far"
+msgid_plural "{n} items so far"
+msgstr[0] "{n} elemento ata agora"
+msgstr[1] "{n} elementos ata agora"
+
+msgid "{n} minute"
+msgid_plural "{n} minutes"
+msgstr[0] "{n} minuto"
+msgstr[1] "{n} minutos"
+
+msgid "{n} selected"
+msgid_plural "{n} selected"
+msgstr[0] "{n} seleccionada"
+msgstr[1] "{n} seleccionadas"
+
+msgid "{n} song"
+msgid_plural "{n} songs"
+msgstr[0] "{n} canción"
+msgstr[1] "{n} cancións"
+
+msgid "{n} song from \"{}\" will play next"
+msgid_plural "{n} songs from \"{}\" will play next"
+msgstr[0] "{n} canción de \"{}\" soará a continuación"
+msgstr[1] "{n} cancións de \"{}\" soarán a continuación"
+
+msgid "{n} song on YouTube Music"
+msgid_plural "{n} songs on YouTube Music"
+msgstr[0] "{n} canción en YouTube Music"
+msgstr[1] "{n} cancións en YouTube Music"
+
+msgid "{n} song will play next"
+msgid_plural "{n} songs will play next"
+msgstr[0] "{n} canción soará a continuación"
+msgstr[1] "{n} cancións soarán a continuación"
+
+msgid "{} (current theme)"
+msgstr "{} (tema actual)"
+
+msgid "{} (unavailable)"
+msgstr "{} (non dispoñible)"
+
+msgid "{} at {}"
+msgstr "{} en {}"
+
+msgid "{} cannot be played: its stream address is not an internet stream"
+msgstr "Non se pode reproducir {}: o seu enderezo de transmisión non é unha transmisión de internet"
+
+msgid "{} is shown"
+msgstr "Móstrase {}"
+
+msgid "{} kbps"
+msgstr "{} kbps"
+
+msgid "{} s"
+msgstr "{} s"
+
+msgid "{}: off"
+msgstr "{}: desactivado"
+
+msgid "{}: on"
+msgstr "{}: activado"
+
+msgid "{}: {} (dark)"
+msgstr "{}: {} (escuro)"
+
+msgid "{}: {} (light)"
+msgstr "{}: {} (claro)"

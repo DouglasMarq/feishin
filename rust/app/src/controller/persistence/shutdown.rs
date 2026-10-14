@@ -43,6 +43,7 @@ impl Controller {
     pub(in crate::controller) fn shut_down(&mut self, ui: UiSettings, done: oneshot::Sender<()>) {
         self.settings.ui = UiSettings {
             follow_current_song: self.settings.ui.follow_current_song,
+            language: self.settings.ui.language.clone(),
             ..ui
         };
         self.save_settings();

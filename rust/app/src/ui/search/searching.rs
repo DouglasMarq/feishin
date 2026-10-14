@@ -3,11 +3,11 @@ use std::sync::Arc;
 use feishin_api::MusicServer;
 use feishin_core::model::{Paging, SearchResults};
 
-use super::fetch::{fetch, report};
+use super::fetch::fetch;
 use super::query::{SEARCH_LIMIT, album_query, artist_query, song_query};
 use super::results::{Results, with_results};
 use super::searches::{More, MoreRequest};
-use crate::ui::{AppWindow, Context, SearchKind};
+use crate::ui::{AppWindow, Context, SearchKind, show_status};
 
 pub fn search(window: &AppWindow, ctx: &Context, query: Option<String>, force: bool) {
     let started = with_results(window, |results| {
@@ -37,7 +37,7 @@ fn finish_search(
     result: feishin_api::Result<SearchResults>,
 ) {
     let found = result
-        .inspect_err(|error| report(window, "Search failed", error))
+        .inspect_err(|error| show_status(window, &tr!("Search failed: {}", error)))
         .ok();
     let applied = results
         .searches
@@ -123,7 +123,7 @@ fn apply_more(
             .apply_more(generation, paging, more),
         Err(error) => {
             results.searches.borrow_mut().more_failed(generation, kind);
-            report(window, "Could not load more results", error);
+            show_status(window, &tr!("Could not load more results: {}", error));
             None
         }
     };

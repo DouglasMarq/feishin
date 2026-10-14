@@ -11,6 +11,16 @@ component NavEntry inherits Rectangle {
     in property <bool> enabled: true;
     in property <string> tooltip;
     callback clicked();
+    accessible-role: button;
+    accessible-label: root.label;
+    accessible-enabled: root.enabled;
+    accessible-checkable: true;
+    accessible-checked: root.active;
+    accessible-action-default => {
+        if (root.enabled) {
+            root.clicked();
+        }
+    }
     height: 36px;
     border-radius: Theme.radius;
     background: root.active ? Theme.surface-raised : (touch.has-hover && root.enabled ? Theme.hover : transparent);
@@ -79,7 +89,7 @@ export component Sidebar inherits Rectangle {
         }
 
         Text {
-            text: "LIBRARY";
+            text: @tr("LIBRARY");
             color: Theme.muted;
             font-size: 11px;
             font-weight: 600;
@@ -89,7 +99,7 @@ export component Sidebar inherits Rectangle {
 
         NavEntry {
             icon: Icons.home;
-            label: "Home";
+            label: @tr("Home");
             active: AppState.route == Route.home;
             clicked => {
                 AppState.navigate(Route.home, "");
@@ -98,8 +108,8 @@ export component Sidebar inherits Rectangle {
 
         NavEntry {
             icon: DiscoverIcons.explore;
-            label: "Discover";
-            tooltip: AppState.route == Route.discover ? "Discover is open" : "Discover new music on YouTube Music";
+            label: @tr("Discover");
+            tooltip: AppState.route == Route.discover ? @tr("Discover is open") : @tr("Discover new music on YouTube Music");
             active: AppState.route == Route.discover;
             clicked => {
                 AppState.navigate(Route.discover, "");
@@ -108,7 +118,7 @@ export component Sidebar inherits Rectangle {
 
         NavEntry {
             icon: Icons.note;
-            label: "Tracks";
+            label: @tr("Tracks");
             active: AppState.route == Route.tracks;
             clicked => {
                 AppState.navigate(Route.tracks, "");
@@ -117,7 +127,7 @@ export component Sidebar inherits Rectangle {
 
         NavEntry {
             icon: Icons.album;
-            label: "Albums";
+            label: @tr("Albums");
             active: AppState.route == Route.albums || AppState.route == Route.album-detail;
             clicked => {
                 AppState.navigate(Route.albums, "");
@@ -126,7 +136,7 @@ export component Sidebar inherits Rectangle {
 
         NavEntry {
             icon: Icons.artist;
-            label: "Artists";
+            label: @tr("Artists");
             active: AppState.route == Route.artists || AppState.route == Route.artist-detail;
             clicked => {
                 AppState.navigate(Route.artists, "");
@@ -135,7 +145,7 @@ export component Sidebar inherits Rectangle {
 
         NavEntry {
             icon: Icons.genre;
-            label: "Genres";
+            label: @tr("Genres");
             active: AppState.route == Route.genres;
             clicked => {
                 AppState.navigate(Route.genres, "");
@@ -144,7 +154,7 @@ export component Sidebar inherits Rectangle {
 
         NavEntry {
             icon: Icons.playlist;
-            label: "Playlists";
+            label: @tr("Playlists");
             active: AppState.route == Route.playlists || AppState.route == Route.playlist-detail;
             clicked => {
                 AppState.navigate(Route.playlists, "");
@@ -153,7 +163,7 @@ export component Sidebar inherits Rectangle {
 
         NavEntry {
             icon: RadioIcons.radio;
-            label: "Radio";
+            label: @tr("Radio");
             active: AppState.route == Route.radio;
             clicked => {
                 AppState.navigate(Route.radio, "");
@@ -162,7 +172,7 @@ export component Sidebar inherits Rectangle {
 
         NavEntry {
             icon: Icons.folder;
-            label: "Folders";
+            label: @tr("Folders");
             active: AppState.route == Route.folders;
             clicked => {
                 AppState.navigate(Route.folders, "");
@@ -171,7 +181,7 @@ export component Sidebar inherits Rectangle {
 
         NavEntry {
             icon: Icons.heart;
-            label: "Favorites";
+            label: @tr("Favorites");
             active: AppState.route == Route.favorites;
             clicked => {
                 AppState.navigate(Route.favorites, "");
@@ -180,7 +190,7 @@ export component Sidebar inherits Rectangle {
 
         NavEntry {
             icon: Icons.search;
-            label: "Search";
+            label: @tr("Search");
             active: AppState.route == Route.search;
             clicked => {
                 AppState.navigate(Route.search, "");
@@ -193,7 +203,7 @@ export component Sidebar inherits Rectangle {
 
         NavEntry {
             icon: Icons.settings;
-            label: "Settings";
+            label: @tr("Settings");
             active: AppState.route == Route.settings;
             clicked => {
                 AppState.navigate(Route.settings, "");
@@ -219,7 +229,7 @@ export component Sidebar inherits Rectangle {
                 icon-size: 16px;
                 active: AppState.library-scanning;
                 transform-rotation: AppState.library-scanning ? mod(animation-tick(), 1s) / 1s * 360deg : 0deg;
-                tooltip: AppState.library-scanning ? (AppState.library-scan-progress == "" ? "Scanning the library for new content..." : "Scanning the library: " + AppState.library-scan-progress) : "Rescan the library for new content";
+                tooltip: AppState.library-scanning ? (AppState.library-scan-progress == "" ? @tr("Scanning the library for new content...") : @tr("Scanning the library: {}", AppState.library-scan-progress)) : @tr("Rescan the library for new content");
                 clicked => {
                     if (!AppState.library-scanning) {
                         AppState.rescan-library();

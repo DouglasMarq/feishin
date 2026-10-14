@@ -71,7 +71,7 @@ impl Picker {
         self.playlists
             .iter()
             .find(|playlist| playlist.id == playlist_id)
-            .map_or_else(|| "playlist".to_owned(), |playlist| playlist.name.clone())
+            .map_or_else(|| tr!("playlist"), |playlist| playlist.name.clone())
     }
 
     pub fn start_request(&mut self) -> Option<PendingRequest> {

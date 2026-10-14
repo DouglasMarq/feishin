@@ -43,7 +43,7 @@ fn render_sections_of(window: &AppWindow, model: &DiscoverModel) {
     state.set_error(
         sections
             .error()
-            .map(|error| format!("Could not load {}: {error}", sections.section.name()))
+            .map(|error| sections.section.load_error(error))
             .unwrap_or_default()
             .into(),
     );
@@ -80,7 +80,7 @@ fn render_page_of(window: &AppWindow, model: &DiscoverModel) {
     state.set_page_error(
         page.error
             .as_deref()
-            .map(|error| format!("Could not load this page: {error}"))
+            .map(|error| tr!("Could not load this page: {}", error))
             .unwrap_or_default()
             .into(),
     );
