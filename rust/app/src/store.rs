@@ -79,14 +79,6 @@ impl SystemStore {
     }
 }
 
-fn feishin_config_dir() -> Option<PathBuf> {
-    std::env::var_os("XDG_CONFIG_HOME")
-        .filter(|dir| !dir.is_empty())
-        .map(PathBuf::from)
-        .or_else(|| std::env::var_os("HOME").map(|home| Path::new(&home).join(".config")))
-        .map(|dir| dir.join("feishin"))
-}
-
 impl Store for SystemStore {
     fn load_settings(&self) -> Result<Settings> {
         Ok(Settings::load(&self.paths)?)
@@ -115,7 +107,7 @@ impl Store for SystemStore {
         Ok(credentials::delete(server_id)?)
     }
     fn import_feishin(&self) -> Result<Vec<ImportedServer>> {
-        let dir = feishin_config_dir().ok_or_else(|| anyhow!("cannot locate ~/.config"))?;
+        let dir = feishin_import::default_config_dir()?;
         Ok(feishin_import::import_servers(&dir)?)
     }
 }
