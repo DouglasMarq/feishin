@@ -1,6 +1,6 @@
 # Packaging the native app
 
-Everything needed to ship Feishin on Linux. The package conflicts with the packages of the old
+Everything needed to ship Feishin on Linux and macOS. The package conflicts with the packages of the old
 Electron app because both install a `feishin` binary.
 
 | Path | What it is |
@@ -10,6 +10,8 @@ Electron app because both install a `feishin` binary.
 | `install-desktop-integration.sh` | Installs the desktop entry, metainfo and hicolor icons under a prefix |
 | `arch/PKGBUILD` | `feishin-native-git` package for Arch Linux |
 | `appimage/build-appimage.sh` | Builds a portable AppImage with libmpv bundled |
+| `macos/build-app.sh` | Builds `Feishin.app` (and a zip of it) with libmpv bundled |
+| `macos/Info.plist` | Bundle metadata, including the local network and Bonjour declarations |
 
 The app id is `org.jeffvli.feishin.native`. The binary sets it as the Wayland app id and X11
 `WM_CLASS`, and reports it as the MPRIS `DesktopEntry`, so the window, the media controls and
@@ -134,3 +136,20 @@ Run it through FUSE or on an extracted AppImage (`--appimage-extract`, then
 The **Rust AppImage** GitHub Actions workflow (`.github/workflows/rust-appimage.yml`) runs the
 same script on Ubuntu 24.04 when started by hand and uploads the AppImage as a build artifact.
 It never publishes a release.
+
+## macOS app
+
+```sh
+brew install mpv dylibbundler
+rust/packaging/macos/build-app.sh
+```
+
+The script builds the release binary, writes `rust/target/macos/Feishin.app` with the version
+from `Cargo.toml`, makes the icon from `assets/icons/512x512.png`, copies libmpv and every
+Homebrew library it links into `Contents/Frameworks` with `dylibbundler`, drops the duplicate
+`LC_RPATH` entries that make dyld refuse to load libmpv, signs the bundle ad hoc and zips it as
+`Feishin-<version>-macos-<arch>.zip`. `OUT_DIR` changes the output folder.
+
+The bundle is not notarized: on another Mac, open it once from Finder with right-click > Open,
+or allow it in System Settings > Privacy & Security. yt-dlp is not bundled; the app finds it in
+`/opt/homebrew/bin` or `/usr/local/bin` even when started from Finder.

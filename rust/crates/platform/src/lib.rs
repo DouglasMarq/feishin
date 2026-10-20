@@ -1,12 +1,28 @@
-mod color_scheme;
 mod discord;
-mod mpris;
-mod sleep_inhibitor;
+#[cfg(all(unix, not(target_os = "macos")))]
+mod freedesktop;
+#[cfg(target_os = "macos")]
+mod macos;
 
-pub use color_scheme::{SystemColorScheme, current_color_scheme, watch_color_scheme};
 pub use discord::{DEFAULT_DISCORD_CLIENT_ID, DiscordDisplayType, DiscordOptions, DiscordPresence};
-pub use mpris::{MediaControls, MediaIdentity};
-pub use sleep_inhibitor::SleepInhibitor;
+#[cfg(all(unix, not(target_os = "macos")))]
+pub use freedesktop::{MediaControls, SleepInhibitor, current_color_scheme, watch_color_scheme};
+#[cfg(target_os = "macos")]
+pub use macos::{MediaControls, SleepInhibitor, current_color_scheme, watch_color_scheme};
+
+#[derive(Debug, Clone, Copy)]
+pub struct MediaIdentity<'text> {
+    pub name: &'text str,
+    pub desktop_entry: &'text str,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
+pub enum SystemColorScheme {
+    Dark,
+    Light,
+    #[default]
+    NoPreference,
+}
 
 #[derive(Debug, thiserror::Error)]
 pub enum PlatformError {

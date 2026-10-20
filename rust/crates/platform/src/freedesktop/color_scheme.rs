@@ -1,7 +1,7 @@
 use futures_util::StreamExt;
 use mpris_server::zbus::{self, Connection, Proxy, proxy::Builder, zvariant::OwnedValue};
 
-use crate::{PlatformError, Result};
+use crate::{PlatformError, Result, SystemColorScheme};
 
 const PORTAL_DESTINATION: &str = "org.freedesktop.portal.Desktop";
 const PORTAL_PATH: &str = "/org/freedesktop/portal/desktop";
@@ -10,21 +10,11 @@ const APPEARANCE_NAMESPACE: &str = "org.freedesktop.appearance";
 const COLOR_SCHEME_KEY: &str = "color-scheme";
 const UNKNOWN_METHOD: &str = "org.freedesktop.DBus.Error.UnknownMethod";
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
-pub enum SystemColorScheme {
-    Dark,
-    Light,
-    #[default]
-    NoPreference,
-}
-
-impl SystemColorScheme {
-    fn from_portal_value(value: &OwnedValue) -> Self {
-        match value.downcast_ref::<u32>() {
-            Ok(1) => Self::Dark,
-            Ok(2) => Self::Light,
-            _ => Self::NoPreference,
-        }
+fn scheme_from_portal_value(value: &OwnedValue) -> SystemColorScheme {
+    match value.downcast_ref::<u32>() {
+        Ok(1) => SystemColorScheme::Dark,
+        Ok(2) => SystemColorScheme::Light,
+        _ => SystemColorScheme::NoPreference,
     }
 }
 
@@ -57,14 +47,14 @@ fn color_scheme_change(message: &zbus::Message) -> Option<SystemColorScheme> {
         .deserialize::<(String, String, OwnedValue)>()
         .ok()?;
     (namespace == APPEARANCE_NAMESPACE && key == COLOR_SCHEME_KEY)
-        .then(|| SystemColorScheme::from_portal_value(&value))
+        .then(|| scheme_from_portal_value(&value))
 }
 
 pub async fn current_color_scheme() -> Result<SystemColorScheme> {
     let connection = Connection::session().await.map_err(desktop_error)?;
     let proxy = settings_proxy(&connection).await.map_err(desktop_error)?;
     let current = read_color_scheme(&proxy).await.map_err(desktop_error)?;
-    Ok(SystemColorScheme::from_portal_value(&current))
+    Ok(scheme_from_portal_value(&current))
 }
 
 pub async fn watch_color_scheme(mut on_change: impl FnMut(SystemColorScheme)) -> Result<()> {
@@ -75,7 +65,7 @@ pub async fn watch_color_scheme(mut on_change: impl FnMut(SystemColorScheme)) ->
         .await
         .map_err(desktop_error)?;
     let current = read_color_scheme(&proxy).await.map_err(desktop_error)?;
-    on_change(SystemColorScheme::from_portal_value(&current));
+    on_change(scheme_from_portal_value(&current));
     while let Some(message) = changes.next().await {
         if let Some(scheme) = color_scheme_change(&message) {
             on_change(scheme);
@@ -97,15 +87,15 @@ mod tests {
     #[test]
     fn portal_values_map_to_schemes() {
         assert_eq!(
-            SystemColorScheme::from_portal_value(&portal_value(1)),
+            scheme_from_portal_value(&portal_value(1)),
             SystemColorScheme::Dark
         );
         assert_eq!(
-            SystemColorScheme::from_portal_value(&portal_value(2)),
+            scheme_from_portal_value(&portal_value(2)),
             SystemColorScheme::Light
         );
         assert_eq!(
-            SystemColorScheme::from_portal_value(&portal_value(0)),
+            scheme_from_portal_value(&portal_value(0)),
             SystemColorScheme::NoPreference
         );
     }
@@ -114,7 +104,7 @@ mod tests {
     fn values_of_another_type_mean_no_preference() {
         let text = OwnedValue::try_from(Value::from("dark")).unwrap();
         assert_eq!(
-            SystemColorScheme::from_portal_value(&text),
+            scheme_from_portal_value(&text),
             SystemColorScheme::NoPreference
         );
     }
@@ -122,9 +112,6 @@ mod tests {
     #[test]
     fn deprecated_read_replies_are_unwrapped() {
         let nested = OwnedValue::try_from(Value::new(Value::from(1_u32))).unwrap();
-        assert_eq!(
-            SystemColorScheme::from_portal_value(&nested),
-            SystemColorScheme::Dark
-        );
+        assert_eq!(scheme_from_portal_value(&nested), SystemColorScheme::Dark);
     }
 }

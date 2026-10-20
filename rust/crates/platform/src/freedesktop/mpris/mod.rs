@@ -15,7 +15,7 @@ use std::time::Duration;
 use mpris_server::Property;
 use tokio::sync::mpsc;
 
-use crate::{MediaControlEvent, NowPlaying, PlatformError, PlaybackStatus, Result};
+use crate::{MediaControlEvent, MediaIdentity, NowPlaying, PlatformError, PlaybackStatus, Result};
 use bus_name::bus_suffix;
 use player_core::MprisPlayerCore;
 use snapshot::PlaybackSnapshot;
@@ -36,12 +36,6 @@ enum Update {
 #[derive(Clone)]
 struct MprisPlayer {
     core: Arc<MprisPlayerCore>,
-}
-
-#[derive(Debug, Clone, Copy)]
-pub struct MediaIdentity<'text> {
-    pub name: &'text str,
-    pub desktop_entry: &'text str,
 }
 
 pub struct MediaControls {

@@ -19,9 +19,25 @@ const NETSCAPE_HEADER: &[u8] = b"# Netscape HTTP Cookie File\n";
 static EXPORT_COUNTER: AtomicU64 = AtomicU64::new(0);
 
 pub fn private_runtime_dir() -> Option<PathBuf> {
-    std::env::var_os("XDG_RUNTIME_DIR")
+    non_empty_directory("XDG_RUNTIME_DIR")
+        .or_else(per_user_temporary_dir)
+        .map(|directory| directory.join(RUNTIME_SUBDIRECTORY))
+}
+
+fn non_empty_directory(variable_name: &str) -> Option<PathBuf> {
+    std::env::var_os(variable_name)
         .filter(|directory| !directory.is_empty())
-        .map(|directory| PathBuf::from(directory).join(RUNTIME_SUBDIRECTORY))
+        .map(PathBuf::from)
+}
+
+#[cfg(target_os = "macos")]
+fn per_user_temporary_dir() -> Option<PathBuf> {
+    non_empty_directory("TMPDIR")
+}
+
+#[cfg(not(target_os = "macos"))]
+fn per_user_temporary_dir() -> Option<PathBuf> {
+    None
 }
 
 pub async fn sign_in_with_browser(

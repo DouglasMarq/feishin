@@ -7,6 +7,7 @@ use std::path::{Path, PathBuf};
 use feishin_api::Credential;
 use feishin_core::model::ServerConfig;
 
+use crate::paths::PLATFORM_LAYOUT;
 use crate::{Result, StorageError, xdg_base};
 use local_storage::read_store_value;
 use raw_store::{Persisted, RawServerEntry};
@@ -30,7 +31,7 @@ pub fn default_config_dir() -> Result<PathBuf> {
     let config_home = xdg_base(
         &|variable_name| std::env::var_os(variable_name),
         "XDG_CONFIG_HOME",
-        ".config",
+        PLATFORM_LAYOUT.config,
     )?;
     Ok(config_home.join("feishin"))
 }

@@ -1,5 +1,6 @@
+use std::ffi::OsString;
 use std::io;
-use std::path::Path;
+use std::path::{Path, PathBuf};
 use std::process::{Output, Stdio};
 use std::time::Duration;
 
@@ -8,6 +9,10 @@ use tokio::process::Command;
 use crate::YouTubeError;
 
 const MAX_FAILURE_MESSAGE_CHARS: usize = 200;
+#[cfg(target_os = "macos")]
+const EXTRA_SEARCH_DIRECTORIES: &[&str] = &["/opt/homebrew/bin", "/usr/local/bin"];
+#[cfg(not(target_os = "macos"))]
+const EXTRA_SEARCH_DIRECTORIES: &[&str] = &[];
 
 pub(crate) async fn run(
     program: &Path,
@@ -21,11 +26,32 @@ pub(crate) async fn run(
         .stdout(Stdio::piped())
         .stderr(Stdio::piped())
         .kill_on_drop(true);
+    if let Some(search_path) = search_path_with(std::env::var_os("PATH"), EXTRA_SEARCH_DIRECTORIES)
+    {
+        command.env("PATH", search_path);
+    }
     let output = tokio::time::timeout(timeout, command.output())
         .await
         .map_err(|_elapsed| YouTubeError::TimedOut(timeout.as_secs()))?
         .map_err(launch_error)?;
     successful_stdout(output)
+}
+
+fn search_path_with(current: Option<OsString>, extra_directories: &[&str]) -> Option<OsString> {
+    let mut directories: Vec<PathBuf> = current
+        .as_deref()
+        .map(|path| std::env::split_paths(path).collect())
+        .unwrap_or_default();
+    let missing: Vec<PathBuf> = extra_directories
+        .iter()
+        .map(PathBuf::from)
+        .filter(|directory| !directories.contains(directory))
+        .collect();
+    if missing.is_empty() {
+        return None;
+    }
+    directories.extend(missing);
+    std::env::join_paths(directories).ok()
 }
 
 fn launch_error(error: io::Error) -> YouTubeError {
@@ -52,5 +78,32 @@ fn failure_message(output: &Output) -> String {
     match last_line {
         Some(line) => line.chars().take(MAX_FAILURE_MESSAGE_CHARS).collect(),
         None => format!("exited with {}", output.status),
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn missing_directories_are_appended_to_the_search_path() {
+        let joined = search_path_with(
+            Some(OsString::from("/usr/bin:/bin")),
+            &["/opt/homebrew/bin"],
+        );
+        assert_eq!(
+            joined,
+            Some(OsString::from("/usr/bin:/bin:/opt/homebrew/bin"))
+        );
+    }
+
+    #[test]
+    fn a_complete_search_path_is_left_alone() {
+        let current = Some(OsString::from("/opt/homebrew/bin:/usr/bin"));
+        assert_eq!(search_path_with(current, &["/opt/homebrew/bin"]), None);
+        assert_eq!(
+            search_path_with(Some(OsString::from("/usr/bin")), &[]),
+            None
+        );
     }
 }

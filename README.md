@@ -7,7 +7,7 @@ A native desktop music player for self-hosted music servers, written in Rust wit
 the Electron [Feishin](https://github.com/jeffvli/feishin) that uses a fraction of its memory
 (about 90 MB PSS with every view open, against about 530 MB for the Electron app).
 
-Linux only for now.
+Runs on Linux and macOS.
 
 ## Features
 
@@ -19,13 +19,15 @@ Linux only for now.
 - Playback through libmpv: gapless, crossfade, ReplayGain, output device, maximum bitrate and
   transcoding, sleep timer, full-screen now playing, play queue synced with the server.
 - Synced and plain lyrics (server, lrclib, NetEase, Genius), scrobbling, MPRIS media keys,
-  Discord Rich Presence, share links, internet radio (server stations and radio-browser.info).
+  macOS Now Playing and media keys, Discord Rich Presence, share links, internet radio (server stations and radio-browser.info).
 - Discover: YouTube Music recommendations, new releases, charts and moods; songs in your
   library play from your server, others through `yt-dlp`.
 - 32 themes with light/dark following the system and an accent color, 39 languages.
 - The screen does not lock and the system does not sleep while music is playing.
 
 ## Install
+
+### Linux
 
 Requirements: `mpv` (libmpv), a Wayland or X11 desktop and at least one font.
 
@@ -40,10 +42,20 @@ Arch Linux users can build the `feishin-native-git` package from `rust/packaging
 
 Settings live in `~/.config/feishin-rs`, passwords in the system keyring (Secret Service).
 
+### macOS
+
+`rust/packaging/macos/build-app.sh` builds `Feishin.app` with libmpv bundled, plus a zip of it,
+under `rust/target/macos`. It needs `brew install mpv dylibbundler` and Xcode's command line
+tools. The app is signed ad hoc, so the first launch has to be allowed in System Settings >
+Privacy & Security. Discover needs `brew install yt-dlp`.
+
+Settings live in `~/Library/Application Support/feishin-rs`, the cache in
+`~/Library/Caches/feishin-rs` and passwords in the login keychain.
+
 ## Development
 
 The Cargo workspace is in [`rust/`](rust). It needs a Rust toolchain, `libmpv`, `fontconfig`,
-`xkbcommon` and `dbus` development files.
+`xkbcommon` and `dbus` development files on Linux, and `brew install mpv pkg-config` on macOS.
 
 ```sh
 cd rust

@@ -1,4 +1,5 @@
 #![cfg(test)]
+#![cfg(all(unix, not(target_os = "macos")))]
 
 use std::io::{BufRead, BufReader};
 use std::process::{Child, Command, Stdio};

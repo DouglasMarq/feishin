@@ -5,6 +5,33 @@ use crate::{Result, StorageError};
 
 pub const APP_DIR_NAME: &str = "feishin-rs";
 
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub(crate) struct HomeLayout {
+    pub(crate) config: &'static str,
+    cache: &'static str,
+    data: &'static str,
+}
+
+#[cfg(any(test, not(target_os = "macos")))]
+const FREEDESKTOP_LAYOUT: HomeLayout = HomeLayout {
+    config: ".config",
+    cache: ".cache",
+    data: ".local/share",
+};
+
+#[cfg(any(test, target_os = "macos"))]
+const MACOS_LAYOUT: HomeLayout = HomeLayout {
+    config: "Library/Application Support",
+    cache: "Library/Caches",
+    data: "Library/Application Support",
+};
+
+#[cfg(target_os = "macos")]
+pub(crate) const PLATFORM_LAYOUT: HomeLayout = MACOS_LAYOUT;
+
+#[cfg(not(target_os = "macos"))]
+pub(crate) const PLATFORM_LAYOUT: HomeLayout = FREEDESKTOP_LAYOUT;
+
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Paths {
     pub config_dir: PathBuf,
@@ -18,10 +45,17 @@ impl Paths {
     }
 
     pub fn from_lookup(lookup: impl Fn(&str) -> Option<OsString>) -> Result<Self> {
+        Self::from_lookup_with_layout(lookup, PLATFORM_LAYOUT)
+    }
+
+    fn from_lookup_with_layout(
+        lookup: impl Fn(&str) -> Option<OsString>,
+        layout: HomeLayout,
+    ) -> Result<Self> {
         Ok(Self {
-            config_dir: xdg_base(&lookup, "XDG_CONFIG_HOME", ".config")?.join(APP_DIR_NAME),
-            cache_dir: xdg_base(&lookup, "XDG_CACHE_HOME", ".cache")?.join(APP_DIR_NAME),
-            data_dir: xdg_base(&lookup, "XDG_DATA_HOME", ".local/share")?.join(APP_DIR_NAME),
+            config_dir: xdg_base(&lookup, "XDG_CONFIG_HOME", layout.config)?.join(APP_DIR_NAME),
+            cache_dir: xdg_base(&lookup, "XDG_CACHE_HOME", layout.cache)?.join(APP_DIR_NAME),
+            data_dir: xdg_base(&lookup, "XDG_DATA_HOME", layout.data)?.join(APP_DIR_NAME),
         })
     }
 
@@ -76,9 +110,13 @@ mod tests {
         move |name| environment.get(name).cloned()
     }
 
+    fn freedesktop(variables: &[(&str, &str)]) -> Result<Paths> {
+        Paths::from_lookup_with_layout(lookup(variables), FREEDESKTOP_LAYOUT)
+    }
+
     #[test]
     fn home_fallbacks() {
-        let paths = Paths::from_lookup(lookup(&[("HOME", "/home/u")])).unwrap();
+        let paths = freedesktop(&[("HOME", "/home/u")]).unwrap();
         assert_eq!(
             paths.config_dir,
             PathBuf::from("/home/u/.config/feishin-rs")
@@ -92,12 +130,12 @@ mod tests {
 
     #[test]
     fn xdg_vars_win() {
-        let paths = Paths::from_lookup(lookup(&[
+        let paths = freedesktop(&[
             ("HOME", "/home/u"),
             ("XDG_CONFIG_HOME", "/cfg"),
             ("XDG_CACHE_HOME", "/cache"),
             ("XDG_DATA_HOME", "/data"),
-        ]))
+        ])
         .unwrap();
         assert_eq!(paths.config_dir, PathBuf::from("/cfg/feishin-rs"));
         assert_eq!(paths.cache_dir, PathBuf::from("/cache/feishin-rs"));
@@ -106,17 +144,35 @@ mod tests {
 
     #[test]
     fn relative_or_empty_xdg_is_ignored() {
-        let paths = Paths::from_lookup(lookup(&[
+        let paths = freedesktop(&[
             ("HOME", "/home/u"),
             ("XDG_CONFIG_HOME", "relative"),
             ("XDG_CACHE_HOME", ""),
-        ]))
+        ])
         .unwrap();
         assert_eq!(
             paths.config_dir,
             PathBuf::from("/home/u/.config/feishin-rs")
         );
         assert_eq!(paths.cache_dir, PathBuf::from("/home/u/.cache/feishin-rs"));
+    }
+
+    #[test]
+    fn macos_home_fallbacks_use_the_library_folder() {
+        let paths =
+            Paths::from_lookup_with_layout(lookup(&[("HOME", "/Users/u")]), MACOS_LAYOUT).unwrap();
+        assert_eq!(
+            paths.config_dir,
+            PathBuf::from("/Users/u/Library/Application Support/feishin-rs")
+        );
+        assert_eq!(
+            paths.cache_dir,
+            PathBuf::from("/Users/u/Library/Caches/feishin-rs")
+        );
+        assert_eq!(
+            paths.data_dir,
+            PathBuf::from("/Users/u/Library/Application Support/feishin-rs")
+        );
     }
 
     #[test]

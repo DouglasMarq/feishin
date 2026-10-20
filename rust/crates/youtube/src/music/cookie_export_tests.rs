@@ -10,7 +10,7 @@ const COOKIE_SCRIPT: &str = r#"while [ "$#" -gt 0 ]; do
   if [ "$1" = "--cookies" ]; then target="$2"; fi
   shift
 done
-stat -c %a "$target" > "$0.mode"
+{ stat -c %a "$target" 2>/dev/null || stat -f %Lp "$target"; } > "$0.mode"
 head -n 1 "$target" > "$0.header"
 printf '# Netscape HTTP Cookie File\n.youtube.com\tTRUE\t/\tTRUE\t0\tSAPISID\tfixture-sapisid\n' > "$target"
 "#;
