@@ -9,17 +9,18 @@ use super::editing::remove;
 use super::loading::load;
 use super::playing::{PlayStart, play_playlist};
 use super::selecting::install_selection;
+use crate::ui::playlist_picker::PlaylistPicker;
 use crate::ui::{AppWindow, Context, PlaylistDetailState};
 
-pub fn install(window: &AppWindow, ctx: &Context) {
+pub fn install(window: &AppWindow, ctx: &Context, picker: &PlaylistPicker) {
     let shared: SharedDetail = Arc::default();
     install_model(window, ctx);
     install_load(window, ctx, &shared);
     install_play(window, ctx, &shared);
     install_play_row(window, ctx, &shared);
     install_selection(window);
-    install_selection_actions(window, ctx, &shared);
-    install_context_action(window, ctx, &shared);
+    install_selection_actions(window, ctx, &shared, picker);
+    install_context_action(window, ctx, &shared, picker);
 }
 
 fn install_load(window: &AppWindow, ctx: &Context, shared: &SharedDetail) {
@@ -68,7 +69,12 @@ fn install_play_row(window: &AppWindow, ctx: &Context, shared: &SharedDetail) {
         });
 }
 
-fn install_selection_actions(window: &AppWindow, ctx: &Context, shared: &SharedDetail) {
+fn install_selection_actions(
+    window: &AppWindow,
+    ctx: &Context,
+    shared: &SharedDetail,
+    picker: &PlaylistPicker,
+) {
     let state = window.global::<PlaylistDetailState>();
 
     let (weak, remove_ctx, remove_shared) = (window.as_weak(), ctx.clone(), Arc::clone(shared));
@@ -79,17 +85,24 @@ fn install_selection_actions(window: &AppWindow, ctx: &Context, shared: &SharedD
         }
     });
 
-    let (weak, add_ctx) = (window.as_weak(), ctx.clone());
+    let (weak, add_ctx, add_picker) = (window.as_weak(), ctx.clone(), picker.clone());
     state.on_add_selected_to_playlist(move || {
         if let Some(window) = weak.upgrade() {
             let indexes = with_model(&window, |model| model.selected_indexes()).unwrap_or_default();
-            act_on_rows(&window, &add_ctx, &indexes, SongAction::AddToPlaylist);
+            let action = SongAction::AddToPlaylist;
+            act_on_rows(&window, &add_ctx, &add_picker, &indexes, action);
         }
     });
 }
 
-fn install_context_action(window: &AppWindow, ctx: &Context, shared: &SharedDetail) {
+fn install_context_action(
+    window: &AppWindow,
+    ctx: &Context,
+    shared: &SharedDetail,
+    picker: &PlaylistPicker,
+) {
     let (weak, menu_ctx, menu_shared) = (window.as_weak(), ctx.clone(), Arc::clone(shared));
+    let menu_picker = picker.clone();
     window
         .global::<PlaylistDetailState>()
         .on_context_action(move |index, action| {
@@ -104,7 +117,9 @@ fn install_context_action(window: &AppWindow, ctx: &Context, shared: &SharedDeta
                 return;
             };
             match SongAction::from_menu(action) {
-                Some(song_action) => act_on_rows(&window, &menu_ctx, &targets, song_action),
+                Some(song_action) => {
+                    act_on_rows(&window, &menu_ctx, &menu_picker, &targets, song_action);
+                }
                 None => remove(&window, &menu_ctx, &menu_shared, targets),
             }
         });

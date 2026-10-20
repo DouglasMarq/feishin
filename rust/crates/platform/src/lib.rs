@@ -3,12 +3,14 @@ mod discord;
 mod freedesktop;
 #[cfg(target_os = "macos")]
 mod macos;
+mod url_opener;
 
 pub use discord::{DEFAULT_DISCORD_CLIENT_ID, DiscordDisplayType, DiscordOptions, DiscordPresence};
 #[cfg(all(unix, not(target_os = "macos")))]
 pub use freedesktop::{MediaControls, SleepInhibitor, current_color_scheme, watch_color_scheme};
 #[cfg(target_os = "macos")]
 pub use macos::{MediaControls, SleepInhibitor, current_color_scheme, watch_color_scheme};
+pub use url_opener::open_url;
 
 #[derive(Debug, Clone, Copy)]
 pub struct MediaIdentity<'text> {
@@ -34,6 +36,8 @@ pub enum PlatformError {
     DesktopSettings(String),
     #[error("sleep inhibitor error: {0}")]
     SleepInhibitor(String),
+    #[error("could not open the link: {0}")]
+    OpenUrl(String),
 }
 
 pub type Result<T> = std::result::Result<T, PlatformError>;

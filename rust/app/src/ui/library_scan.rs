@@ -6,6 +6,7 @@ use feishin_core::model::LibraryScan;
 use slint::{ComponentHandle, Weak};
 
 use super::{AppState, AppWindow, Context, on_ui, show_status, tracks};
+use crate::session::BackgroundWork;
 
 const SCAN_POLL_INTERVAL: Duration = Duration::from_secs(2);
 const MAX_SCAN_POLLS: usize = 1800;
@@ -38,15 +39,34 @@ fn start_scan(window: &AppWindow, ctx: &Context) {
     };
     show_progress(window, None);
     let weak = window.as_weak();
+    let work = ctx.session.background_work();
     ctx.rt.spawn(async move {
-        let outcome = follow_scan(&server, &weak).await;
-        on_ui(&weak, move |window| finish_scan(window, outcome));
+        let outcome = follow_scan_while_connected(work, server, progress_reporter(&weak)).await;
+        on_ui(&weak, move |window| match outcome {
+            Some(outcome) => finish_scan(window, outcome),
+            None => hide_progress(window),
+        });
     });
+}
+
+fn progress_reporter(weak: &Weak<AppWindow>) -> impl Fn(Option<u64>) + Send + 'static {
+    let weak = weak.clone();
+    move |scanned_items| {
+        on_ui(&weak, move |window| show_progress(window, scanned_items));
+    }
+}
+
+async fn follow_scan_while_connected(
+    work: BackgroundWork,
+    server: Arc<dyn MusicServer>,
+    report: impl Fn(Option<u64>),
+) -> Option<Result<ScanOutcome, ApiError>> {
+    work.run(follow_scan(&server, report)).await
 }
 
 async fn follow_scan(
     server: &Arc<dyn MusicServer>,
-    weak: &Weak<AppWindow>,
+    report: impl Fn(Option<u64>),
 ) -> Result<ScanOutcome, ApiError> {
     server.start_library_scan().await?;
     for _ in 0..MAX_SCAN_POLLS {
@@ -55,9 +75,7 @@ async fn follow_scan(
         if !scan.scanning {
             return Ok(ScanOutcome::Finished(scan));
         }
-        on_ui(weak, move |window| {
-            show_progress(window, scan.scanned_items)
-        });
+        report(scan.scanned_items);
     }
     Ok(ScanOutcome::StillRunning)
 }
@@ -71,10 +89,14 @@ fn show_progress(window: &AppWindow, scanned_items: Option<u64>) {
     state.set_library_scan_progress(progress.into());
 }
 
-fn finish_scan(window: &AppWindow, outcome: Result<ScanOutcome, ApiError>) {
+fn hide_progress(window: &AppWindow) {
     let state = window.global::<AppState>();
     state.set_library_scanning(false);
     state.set_library_scan_progress("".into());
+}
+
+fn finish_scan(window: &AppWindow, outcome: Result<ScanOutcome, ApiError>) {
+    hide_progress(window);
     if matches!(outcome, Ok(ScanOutcome::Finished(_))) {
         tracks::refresh(window);
     }
@@ -103,7 +125,34 @@ fn outcome_message(outcome: &Result<ScanOutcome, ApiError>) -> String {
 
 #[cfg(test)]
 mod tests {
+    use std::sync::Mutex;
+
     use super::*;
+    use crate::demo::FakeServer;
+    use crate::session::Session;
+
+    #[tokio::test(start_paused = true)]
+    async fn given_a_logout_library_scan_polling_stops() {
+        let session = Session::default();
+        let server: Arc<dyn MusicServer> = Arc::new(FakeServer::new(30));
+        session.set(Some(Arc::clone(&server)));
+        let reports = Arc::new(Mutex::new(Vec::new()));
+        let recorded = Arc::clone(&reports);
+        let report = move |scanned_items| recorded.lock().unwrap().push(scanned_items);
+        let scan = tokio::spawn(follow_scan_while_connected(
+            session.background_work(),
+            Arc::clone(&server),
+            report,
+        ));
+        tokio::time::sleep(SCAN_POLL_INTERVAL + SCAN_POLL_INTERVAL / 2).await;
+        assert_eq!(reports.lock().unwrap().len(), 1);
+
+        session.set(None);
+
+        assert!(scan.await.unwrap().is_none());
+        tokio::time::sleep(SCAN_POLL_INTERVAL * 4).await;
+        assert_eq!(reports.lock().unwrap().len(), 1);
+    }
 
     fn finished(scanned_items: Option<u64>) -> Result<ScanOutcome, ApiError> {
         Ok(ScanOutcome::Finished(LibraryScan {

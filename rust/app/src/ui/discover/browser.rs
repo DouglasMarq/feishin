@@ -1,30 +1,17 @@
-use std::process::{Command, Stdio};
-
-use crate::ui::{on_ui, show_status};
-
-use super::deps::DiscoverDeps;
-use crate::ui::AppWindow;
 use slint::ComponentHandle;
 
-const OPENER: &str = "xdg-open";
+use super::deps::DiscoverDeps;
+use crate::ui::{AppWindow, on_ui, show_status};
 
 pub fn open_in_browser(window: &AppWindow, deps: &DiscoverDeps, url: String) {
     let weak_window = window.as_weak();
     deps.ctx.rt.spawn_blocking(move || {
-        let opened = Command::new(OPENER)
-            .arg(&url)
-            .stdin(Stdio::null())
-            .stdout(Stdio::null())
-            .stderr(Stdio::null())
-            .status();
-        let failure = match opened {
-            Ok(status) if status.success() => return,
-            Ok(status) => format!("{OPENER} exited with {status}"),
-            Err(error) => error.to_string(),
+        let Err(error) = feishin_platform::open_url(&url) else {
+            return;
         };
-        tracing::warn!("opening {url} failed: {failure}");
+        tracing::warn!("opening {url} failed: {error}");
         on_ui(&weak_window, move |window| {
-            show_status(window, &tr!("Could not open YouTube Music: {}", failure));
+            show_status(window, &tr!("Could not open YouTube Music: {}", error));
         });
     });
 }

@@ -1,12 +1,12 @@
 use feishin_core::model::Song;
-use slint::ComponentHandle;
 
 use super::binding::with_model;
 use super::editing::add_to_playlist;
 use super::model::PlaylistSongsModel;
 use crate::controller::Command;
 use crate::list_stream::{Placement, PlaylistId, RowRanges, SongSource};
-use crate::ui::{AppWindow, Context, PlaylistSongAction, on_ui, show_status};
+use crate::ui::playlist_picker::PlaylistPicker;
+use crate::ui::{AppWindow, Context, PlaylistSongAction};
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum SongAction {
@@ -39,10 +39,16 @@ impl SongAction {
     }
 }
 
-pub fn act_on_rows(window: &AppWindow, ctx: &Context, indexes: &[usize], action: SongAction) {
+pub fn act_on_rows(
+    window: &AppWindow,
+    ctx: &Context,
+    picker: &PlaylistPicker,
+    indexes: &[usize],
+    action: SongAction,
+) {
     match action.placement() {
         Some(placement) => enqueue_rows(window, ctx, indexes, placement),
-        None => add_rows_to_playlist(window, ctx, indexes),
+        None => add_rows_to_playlist(window, picker, indexes),
     }
 }
 
@@ -60,25 +66,14 @@ fn enqueue_rows(window: &AppWindow, ctx: &Context, indexes: &[usize], placement:
     });
 }
 
-fn add_rows_to_playlist(window: &AppWindow, ctx: &Context, indexes: &[usize]) {
+fn add_rows_to_playlist(window: &AppWindow, picker: &PlaylistPicker, indexes: &[usize]) {
     let Some(snapshot) = with_model(window, |model| model.snapshot(indexes)) else {
         return;
     };
-    if snapshot.is_loaded() {
-        add_songs_to_playlist(window, &snapshot.into_loaded());
-        return;
+    match snapshot.is_loaded() {
+        true => add_songs_to_playlist(window, &snapshot.into_loaded()),
+        false => picker.open_listed(window, snapshot.into_listed()),
     }
-    let Some(server) = ctx.session.get() else {
-        return;
-    };
-    let weak = window.as_weak();
-    ctx.rt.spawn(async move {
-        let result = snapshot.resolve(server.as_ref()).await;
-        on_ui(&weak, move |window| match result {
-            Ok(songs) => add_songs_to_playlist(window, &songs),
-            Err(error) => show_status(window, &tr!("Could not load the selection: {}", error)),
-        });
-    });
 }
 
 fn add_songs_to_playlist(window: &AppWindow, songs: &[Song]) {
