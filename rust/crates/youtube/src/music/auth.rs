@@ -21,19 +21,22 @@ impl fmt::Debug for MusicAuth {
 
 struct NetscapeCookie<'text> {
     domain: &'text str,
-    expires_at: u64,
+    expires_at_unix_seconds: u64,
     name: &'text str,
     value: &'text str,
 }
 
 impl MusicAuth {
-    pub fn from_netscape_cookies(text: &str, now_unix: u64) -> Option<Self> {
+    pub fn from_netscape_cookies(text: &str, now_unix_seconds: u64) -> Option<Self> {
         let mut cookies: Vec<(&str, &str)> = Vec::new();
         let live_youtube_cookies = text
             .lines()
             .filter_map(netscape_cookie)
             .filter(|cookie| is_youtube_domain(cookie.domain))
-            .filter(|cookie| cookie.expires_at == 0 || cookie.expires_at > now_unix);
+            .filter(|cookie| {
+                cookie.expires_at_unix_seconds == 0
+                    || cookie.expires_at_unix_seconds > now_unix_seconds
+            });
         for cookie in live_youtube_cookies {
             cookies.retain(|(name, _)| *name != cookie.name);
             cookies.push((cookie.name, cookie.value));
@@ -59,11 +62,11 @@ impl MusicAuth {
         &self.cookie_header
     }
 
-    pub fn authorization(&self, now_unix: u64) -> String {
-        let signed = format!("{now_unix} {} {MUSIC_ORIGIN}", self.sapisid);
+    pub fn authorization(&self, now_unix_seconds: u64) -> String {
+        let signed = format!("{now_unix_seconds} {} {MUSIC_ORIGIN}", self.sapisid);
         let digest = Sha1::digest(signed.as_bytes());
         let hex: String = digest.iter().map(|byte| format!("{byte:02x}")).collect();
-        format!("SAPISIDHASH {now_unix}_{hex}")
+        format!("SAPISIDHASH {now_unix_seconds}_{hex}")
     }
 }
 
@@ -73,17 +76,17 @@ fn netscape_cookie(line: &str) -> Option<NetscapeCookie<'_>> {
         return None;
     }
     let fields: Vec<&str> = line.trim_end_matches(['\r', '\n']).split('\t').collect();
-    let [domain, _, _, _, expires_at, name, value] = fields.as_slice() else {
+    let [domain, _, _, _, expiry_text, name, value] = fields.as_slice() else {
         return None;
     };
-    let expires_at = expires_at
+    let expires_at_unix_seconds = expiry_text
         .trim()
         .parse()
         .inspect_err(|error| tracing::debug!("skipping the cookie {name}: bad expiry: {error}"))
         .ok()?;
     Some(NetscapeCookie {
         domain,
-        expires_at,
+        expires_at_unix_seconds,
         name,
         value,
     })

@@ -10,10 +10,10 @@ use crate::{Result, StorageError};
 
 const COVER_IMAGE: &str = "cover image";
 
-pub(super) fn decode(bytes: &[u8], size: u32) -> Result<DecodedImage> {
+pub(super) fn decode(bytes: &[u8], edge_pixels: u32) -> Result<DecodedImage> {
     let image = image::load_from_memory(bytes)
         .map_err(|error| StorageError::malformed(COVER_IMAGE, error))?;
-    let rgba = shrink_to_fit(image, size).into_rgba8();
+    let rgba = shrink_to_fit(image, edge_pixels).into_rgba8();
     Ok(DecodedImage {
         width: rgba.width(),
         height: rgba.height(),
@@ -21,19 +21,19 @@ pub(super) fn decode(bytes: &[u8], size: u32) -> Result<DecodedImage> {
     })
 }
 
-fn shrink_to_fit(image: DynamicImage, size: u32) -> DynamicImage {
-    let is_larger_than_size = image.width() > size || image.height() > size;
-    match size > 0 && is_larger_than_size {
-        true => image.resize(size, size, FilterType::CatmullRom),
+fn shrink_to_fit(image: DynamicImage, edge_pixels: u32) -> DynamicImage {
+    let is_larger_than_edge = image.width() > edge_pixels || image.height() > edge_pixels;
+    match edge_pixels > 0 && is_larger_than_edge {
+        true => image.resize(edge_pixels, edge_pixels, FilterType::CatmullRom),
         false => image,
     }
 }
 
-pub(super) fn cache_file_name(key: &str, size: u32) -> String {
+pub(super) fn cache_file_name(key: &str, edge_pixels: u32) -> String {
     let mut hasher = Sha256::new();
     hasher.update(key.as_bytes());
     hasher.update([0]);
-    hasher.update(size.to_le_bytes());
+    hasher.update(edge_pixels.to_le_bytes());
     hasher
         .finalize()
         .iter()

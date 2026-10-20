@@ -9,11 +9,13 @@ const SETTINGS_INTERFACE: &str = "org.freedesktop.portal.Settings";
 const APPEARANCE_NAMESPACE: &str = "org.freedesktop.appearance";
 const COLOR_SCHEME_KEY: &str = "color-scheme";
 const UNKNOWN_METHOD: &str = "org.freedesktop.DBus.Error.UnknownMethod";
+const PORTAL_PREFERS_DARK: u32 = 1;
+const PORTAL_PREFERS_LIGHT: u32 = 2;
 
 fn scheme_from_portal_value(value: &OwnedValue) -> SystemColorScheme {
     match value.downcast_ref::<u32>() {
-        Ok(1) => SystemColorScheme::Dark,
-        Ok(2) => SystemColorScheme::Light,
+        Ok(PORTAL_PREFERS_DARK) => SystemColorScheme::Dark,
+        Ok(PORTAL_PREFERS_LIGHT) => SystemColorScheme::Light,
         _ => SystemColorScheme::NoPreference,
     }
 }

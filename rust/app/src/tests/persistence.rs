@@ -14,7 +14,7 @@ fn resized_title_column() -> UiSettings {
     UiSettings {
         track_columns: vec![ColumnSetting {
             id: "title".into(),
-            width: 411.0,
+            width_pixels: 411.0,
             visible: true,
         }],
         queue_panel_open: true,
@@ -69,7 +69,7 @@ async fn settings_and_queue_survive_a_restart() {
     assert!(harness.shutdown_with_ui(ui.clone()).await.is_ok());
 
     let saved = harness.store.load_settings().unwrap_or_default();
-    assert_eq!(saved.playback.volume, 33);
+    assert_eq!(saved.playback.volume_percent, 33);
     assert_eq!(saved.ui, ui);
 
     let mut restored = start_harness_with(saved, 100, Some(harness.temp_dir));

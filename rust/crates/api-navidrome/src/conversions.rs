@@ -3,12 +3,16 @@ use feishin_core::model::ReplayGain;
 const MAX_RATING: u32 = 5;
 const PARTIAL_ISO_DATE_SHAPE: &[u8] = b"dddd-dd-dd";
 const DIGIT_PLACEHOLDER: u8 = b'd';
+const YEAR_LENGTH: usize = 4;
+const YEAR_MONTH_LENGTH: usize = 7;
+const FULL_DATE_LENGTH: usize = 10;
+const MILLISECONDS_PER_SECOND: f64 = 1000.0;
 const UNSET_PLAY_DATE_MARKER: &str = "0001-";
 
 pub(crate) fn seconds_to_ms(seconds: Option<f64>) -> u64 {
     seconds
         .filter(|seconds| seconds.is_finite() && *seconds > 0.0)
-        .map(|seconds| (seconds * 1000.0).round() as u64)
+        .map(|seconds| (seconds * MILLISECONDS_PER_SECOND).round() as u64)
         .unwrap_or(0)
 }
 
@@ -27,18 +31,20 @@ pub(crate) fn partial_iso_year(input: Option<&str>) -> Option<i32> {
     if !matches_partial_iso_date(trimmed.as_bytes()) {
         return None;
     }
-    trimmed.get(0..4)?.parse().ok()
+    trimmed.get(0..YEAR_LENGTH)?.parse().ok()
 }
 
 fn matches_partial_iso_date(bytes: &[u8]) -> bool {
-    matches!(bytes.len(), 4 | 7 | 10)
-        && bytes
-            .iter()
-            .zip(PARTIAL_ISO_DATE_SHAPE)
-            .all(|(byte, expected)| match *expected {
-                DIGIT_PLACEHOLDER => byte.is_ascii_digit(),
-                separator => *byte == separator,
-            })
+    matches!(
+        bytes.len(),
+        YEAR_LENGTH | YEAR_MONTH_LENGTH | FULL_DATE_LENGTH
+    ) && bytes
+        .iter()
+        .zip(PARTIAL_ISO_DATE_SHAPE)
+        .all(|(byte, expected)| match *expected {
+            DIGIT_PLACEHOLDER => byte.is_ascii_digit(),
+            separator => *byte == separator,
+        })
 }
 
 pub(crate) fn play_date(value: Option<String>) -> Option<String> {

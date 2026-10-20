@@ -168,7 +168,7 @@ impl Controller {
         let playback = &self.settings.playback;
         let volume = match playback.muted {
             true => 0,
-            false => playback.volume,
+            false => playback.volume_percent,
         };
         if let Err(error) = self.deps.media.set_volume(f64::from(volume) / 100.0) {
             tracing::debug!("media session volume: {error:#}");

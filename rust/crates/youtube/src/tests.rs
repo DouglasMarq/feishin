@@ -48,7 +48,7 @@ async fn audio_stream_returns_the_printed_address_and_its_expiry() {
     let fake = FakeYtDlp::printing(AUDIO_URL);
     let stream = fake.yt_dlp().audio_stream("feishinVid1").await.unwrap();
     assert_eq!(stream.url, AUDIO_URL);
-    assert_eq!(stream.expires_at, Some(FUTURE_EXPIRY));
+    assert_eq!(stream.expires_at_unix_seconds, Some(FUTURE_EXPIRY));
     assert_eq!(
         fake.arguments(),
         [
@@ -114,7 +114,9 @@ async fn a_hanging_yt_dlp_times_out() {
     let fake = FakeYtDlp::with_body("exec sleep 5");
     let yt_dlp = fake.yt_dlp().with_timeout(Duration::from_millis(200));
     let error = yt_dlp.audio_stream("abc").await.unwrap_err();
-    assert!(matches!(error, YouTubeError::TimedOut(0)));
+    assert!(
+        matches!(error, YouTubeError::TimedOut(timeout) if timeout == Duration::from_millis(200))
+    );
 }
 
 #[tokio::test]
@@ -171,12 +173,15 @@ fn search_addresses_escape_the_query() {
 #[test]
 fn stream_urls_read_their_expiry() {
     assert_eq!(
-        StreamUrl::new(AUDIO_URL.into()).expires_at,
+        StreamUrl::new(AUDIO_URL.into()).expires_at_unix_seconds,
         Some(FUTURE_EXPIRY)
     );
-    assert_eq!(StreamUrl::new("https://host/a?b=1".into()).expires_at, None);
     assert_eq!(
-        StreamUrl::new("https://host/a?expire=x".into()).expires_at,
+        StreamUrl::new("https://host/a?b=1".into()).expires_at_unix_seconds,
+        None
+    );
+    assert_eq!(
+        StreamUrl::new("https://host/a?expire=x".into()).expires_at_unix_seconds,
         None
     );
 }
@@ -334,7 +339,7 @@ async fn real_yt_dlp_finds_and_resolves_a_song() {
     assert!(stream.url.starts_with("https://"));
     assert!(
         stream
-            .expires_at
+            .expires_at_unix_seconds
             .is_some_and(|expires_at| expires_at > unix_now())
     );
 }

@@ -71,7 +71,7 @@ impl MpvOutput {
             audio_device: settings.audio_device.clone(),
             replay_gain: replay_gain_mode(settings.replay_gain),
             gapless: settings.gapless,
-            volume: settings.volume,
+            volume: settings.volume_percent,
             muted: settings.muted,
             crossfade: settings.crossfade(),
         };

@@ -1,5 +1,7 @@
 use std::cmp::Ordering;
 
+const ISO_DAY_LENGTH: usize = 10;
+
 #[derive(PartialEq, Eq)]
 pub enum SortValue {
     Text(Option<String>),
@@ -76,7 +78,7 @@ pub fn number(value: Option<i64>) -> SortValue {
 }
 
 pub fn created_day(created_at: Option<&str>) -> SortValue {
-    SortValue::Text(created_at.map(|timestamp| timestamp.chars().take(10).collect()))
+    SortValue::Text(created_at.map(|timestamp| timestamp.chars().take(ISO_DAY_LENGTH).collect()))
 }
 
 pub fn order_by<T>(items: &mut [T], descending: bool, sort_values: impl Fn(&T) -> Vec<SortValue>) {

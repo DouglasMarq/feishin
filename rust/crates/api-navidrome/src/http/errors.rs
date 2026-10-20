@@ -3,7 +3,10 @@ use reqwest::StatusCode;
 use serde::Deserialize;
 
 const MISSING_DATA_MESSAGE: &str = "data not found";
+const FIRST_AUTH_CODE: i64 = 40;
+const LAST_AUTH_CODE: i64 = 44;
 const NOT_AUTHORIZED_CODE: i64 = 50;
+const NOT_FOUND_CODE: i64 = 70;
 
 #[derive(Deserialize)]
 struct NativeErrorBody {
@@ -52,9 +55,9 @@ fn body_message(status: StatusCode, body: &[u8]) -> String {
 
 pub(crate) fn subsonic_error(code: i64, message: String) -> ApiError {
     match code {
-        40..=44 => ApiError::Auth(message),
+        FIRST_AUTH_CODE..=LAST_AUTH_CODE => ApiError::Auth(message),
         NOT_AUTHORIZED_CODE => ApiError::NotAuthorized(message),
-        70 => ApiError::NotFound,
+        NOT_FOUND_CODE => ApiError::NotFound,
         _ => ApiError::Server {
             code: i32::try_from(code).unwrap_or(i32::MAX),
             message,

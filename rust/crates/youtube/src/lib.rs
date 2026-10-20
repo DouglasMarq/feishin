@@ -18,3 +18,5 @@ pub use search::YouTubeHit;
 pub use stream_cache::StreamCache;
 pub use stream_url::{StreamUrl, unix_now};
 pub use yt_dlp::{DEFAULT_PROGRAM, YtDlp};
+
+const MILLISECONDS_PER_SECOND: u64 = 1000;

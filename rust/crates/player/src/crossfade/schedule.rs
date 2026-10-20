@@ -13,68 +13,70 @@ const LONGEST_FADE_SHARE_OF_TRACK: f64 = 0.4;
 
 #[derive(Debug, Clone, Copy, PartialEq)]
 pub(crate) struct FadeWindow {
-    start: f64,
-    end: f64,
+    start_seconds: f64,
+    end_seconds: f64,
 }
 
 impl FadeWindow {
-    pub(crate) fn planned(duration: Option<f64>, crossfade: Duration) -> Option<Self> {
-        let duration = duration.filter(|seconds| seconds.is_finite())?;
-        let audible_end = duration - DRAIN_MARGIN_SECONDS;
-        let length = crossfade
+    pub(crate) fn planned(duration_seconds: Option<f64>, crossfade: Duration) -> Option<Self> {
+        let duration_seconds = duration_seconds.filter(|seconds| seconds.is_finite())?;
+        let audible_end_seconds = duration_seconds - DRAIN_MARGIN_SECONDS;
+        let length_seconds = crossfade
             .as_secs_f64()
-            .min(duration * LONGEST_FADE_SHARE_OF_TRACK)
-            .min(audible_end);
-        (length > 0.0).then_some(Self {
-            start: audible_end - length,
-            end: audible_end,
+            .min(duration_seconds * LONGEST_FADE_SHARE_OF_TRACK)
+            .min(audible_end_seconds);
+        (length_seconds > 0.0).then_some(Self {
+            start_seconds: audible_end_seconds - length_seconds,
+            end_seconds: audible_end_seconds,
         })
     }
 
-    pub(super) fn starts_at(self) -> f64 {
-        self.start
+    pub(super) fn start_seconds(self) -> f64 {
+        self.start_seconds
     }
 
-    fn fitting_incoming(self, incoming_duration: Option<f64>) -> Self {
-        let longest_for_incoming = incoming_duration
+    fn fitting_incoming(self, incoming_duration_seconds: Option<f64>) -> Self {
+        let longest_for_incoming_seconds = incoming_duration_seconds
             .filter(|seconds| seconds.is_finite() && *seconds > 0.0)
             .map_or(f64::INFINITY, |seconds| {
                 seconds * LONGEST_FADE_SHARE_OF_TRACK
             });
         Self {
-            start: self.start.max(self.end - longest_for_incoming),
-            end: self.end,
+            start_seconds: self
+                .start_seconds
+                .max(self.end_seconds - longest_for_incoming_seconds),
+            end_seconds: self.end_seconds,
         }
     }
 
-    pub(crate) fn has_begun(self, position: f64) -> bool {
-        position >= self.start
+    pub(crate) fn has_begun(self, position_seconds: f64) -> bool {
+        position_seconds >= self.start_seconds
     }
 
-    pub(crate) fn starting_at(self, position: f64) -> Self {
+    pub(crate) fn starting_at(self, position_seconds: f64) -> Self {
         Self {
-            start: position.clamp(self.start, self.end),
-            end: self.end,
+            start_seconds: position_seconds.clamp(self.start_seconds, self.end_seconds),
+            end_seconds: self.end_seconds,
         }
     }
 
-    pub(crate) fn progress(self, incoming_position: f64) -> f64 {
-        match self.length() > 0.0 {
-            true => (incoming_position / self.length()).clamp(0.0, 1.0),
+    pub(crate) fn progress(self, incoming_position_seconds: f64) -> f64 {
+        match self.length_seconds() > 0.0 {
+            true => (incoming_position_seconds / self.length_seconds()).clamp(0.0, 1.0),
             false => 1.0,
         }
     }
 
-    fn is_overdue(self, incoming_position: f64) -> bool {
-        incoming_position >= self.length() + OUTGOING_END_GRACE_SECONDS
+    fn is_overdue(self, incoming_position_seconds: f64) -> bool {
+        incoming_position_seconds >= self.length_seconds() + OUTGOING_END_GRACE_SECONDS
     }
 
-    fn length(self) -> f64 {
-        self.end - self.start
+    fn length_seconds(self) -> f64 {
+        self.end_seconds - self.start_seconds
     }
 
-    fn time_until_start(self, position: f64) -> Duration {
-        Duration::try_from_secs_f64(self.start - position).unwrap_or(Duration::ZERO)
+    fn time_until_start(self, position_seconds: f64) -> Duration {
+        Duration::try_from_secs_f64(self.start_seconds - position_seconds).unwrap_or(Duration::ZERO)
     }
 }
 
@@ -89,27 +91,32 @@ pub(crate) enum FaderPlan {
 pub(crate) fn plan_before_fade(
     crossfade: Duration,
     lead: DeckClock,
-    incoming_duration: Option<f64>,
+    incoming_duration_seconds: Option<f64>,
 ) -> FaderPlan {
-    let window = FadeWindow::planned(lead.duration, crossfade)
-        .map(|window| window.fitting_incoming(incoming_duration));
-    match (lead.position, window) {
-        (Some(position), Some(window)) if !lead.paused => match window.has_begun(position) {
-            true => FaderPlan::Begin(window.starting_at(position)),
-            false => FaderPlan::Recheck(
-                window
-                    .time_until_start(position)
-                    .clamp(SHORTEST_RECHECK, LONGEST_RECHECK),
-            ),
-        },
+    let window = FadeWindow::planned(lead.duration_seconds, crossfade)
+        .map(|window| window.fitting_incoming(incoming_duration_seconds));
+    match (lead.position_seconds, window) {
+        (Some(position_seconds), Some(window)) if !lead.paused => {
+            match window.has_begun(position_seconds) {
+                true => FaderPlan::Begin(window.starting_at(position_seconds)),
+                false => FaderPlan::Recheck(
+                    window
+                        .time_until_start(position_seconds)
+                        .clamp(SHORTEST_RECHECK, LONGEST_RECHECK),
+                ),
+            }
+        }
         _ => FaderPlan::Recheck(LONGEST_RECHECK),
     }
 }
 
-pub(crate) fn plan_during_fade(window: FadeWindow, incoming_position: Option<f64>) -> FaderPlan {
-    match incoming_position {
-        Some(position) if !window.is_overdue(position) => {
-            FaderPlan::Ramp(equal_power_gains(window.progress(position)))
+pub(crate) fn plan_during_fade(
+    window: FadeWindow,
+    incoming_position_seconds: Option<f64>,
+) -> FaderPlan {
+    match incoming_position_seconds {
+        Some(position_seconds) if !window.is_overdue(position_seconds) => {
+            FaderPlan::Ramp(equal_power_gains(window.progress(position_seconds)))
         }
         _ => FaderPlan::Finish,
     }
@@ -121,16 +128,19 @@ mod tests {
 
     const SIX_SECONDS: Duration = Duration::from_secs(6);
 
-    fn clock(position: f64, duration: f64) -> DeckClock {
+    fn clock(position_seconds: f64, duration_seconds: f64) -> DeckClock {
         DeckClock {
-            position: Some(position),
-            duration: Some(duration),
+            position_seconds: Some(position_seconds),
+            duration_seconds: Some(duration_seconds),
             paused: false,
         }
     }
 
-    fn window(start: f64, end: f64) -> FadeWindow {
-        FadeWindow { start, end }
+    fn window(start_seconds: f64, end_seconds: f64) -> FadeWindow {
+        FadeWindow {
+            start_seconds,
+            end_seconds,
+        }
     }
 
     fn audible_end(duration: f64) -> f64 {
@@ -152,7 +162,7 @@ mod tests {
         let end = audible_end(10.0);
         let planned = FadeWindow::planned(Some(10.0), SIX_SECONDS);
         assert_eq!(planned, Some(window(end - 4.0, end)));
-        assert!(planned.is_some_and(|fade| fade.start > 5.0));
+        assert!(planned.is_some_and(|fade| fade.start_seconds > 5.0));
     }
 
     #[test]
@@ -238,11 +248,11 @@ mod tests {
             ..clock(199.0, 200.0)
         };
         let unknown_position = DeckClock {
-            position: None,
+            position_seconds: None,
             ..clock(0.0, 200.0)
         };
         let unknown_duration = DeckClock {
-            duration: None,
+            duration_seconds: None,
             ..clock(199.0, 0.0)
         };
         for lead in [paused, unknown_position, unknown_duration] {

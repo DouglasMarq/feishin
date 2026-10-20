@@ -1,9 +1,13 @@
 use reqwest::Url;
 use serde_json::Value;
 
+use crate::MILLISECONDS_PER_SECOND;
+
 const RESIZABLE_THUMBNAIL_HOSTS: [&str; 2] = ["googleusercontent.com", "ggpht.com"];
 const RUN_SEPARATOR: &str = " • ";
 const THUMBNAIL_SIZE: u32 = 300;
+const SECONDS_PER_MINUTE: u64 = 60;
+const DURATION_PARTS: std::ops::RangeInclusive<usize> = 2..=3;
 const PAGE_TYPE_POINTER: &str =
     "/browseEndpointContextSupportedConfigs/browseEndpointContextMusicConfig/pageType";
 
@@ -95,7 +99,7 @@ pub(super) fn is_album_run(run: &Value) -> bool {
 
 pub(super) fn parse_duration(text: &str) -> Option<u64> {
     let parts: Vec<&str> = text.trim().split(':').collect();
-    if !(2..=3).contains(&parts.len()) {
+    if !DURATION_PARTS.contains(&parts.len()) {
         return None;
     }
     parts
@@ -103,9 +107,9 @@ pub(super) fn parse_duration(text: &str) -> Option<u64> {
         .try_fold(0_u64, |total, part| {
             let valid = !part.is_empty() && part.chars().all(|digit| digit.is_ascii_digit());
             let value: u64 = valid.then(|| part.parse().ok()).flatten()?;
-            total.checked_mul(60)?.checked_add(value)
+            total.checked_mul(SECONDS_PER_MINUTE)?.checked_add(value)
         })
-        .and_then(|seconds| seconds.checked_mul(1000))
+        .and_then(|seconds| seconds.checked_mul(MILLISECONDS_PER_SECOND))
 }
 
 pub(super) fn best_thumbnail(thumbnail_holder: Option<&Value>) -> Option<String> {

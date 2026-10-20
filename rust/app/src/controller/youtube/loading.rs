@@ -100,6 +100,8 @@ impl Controller {
 
 #[cfg(test)]
 mod tests {
+    use std::time::Duration;
+
     use super::*;
 
     #[test]
@@ -109,7 +111,7 @@ mod tests {
             "Install yt-dlp to play YouTube tracks"
         );
         assert_eq!(
-            failure_message("Song", &YouTubeError::TimedOut(30)),
+            failure_message("Song", &YouTubeError::TimedOut(Duration::from_secs(30))),
             "Could not play \"Song\" from YouTube: yt-dlp did not answer within 30 seconds"
         );
     }

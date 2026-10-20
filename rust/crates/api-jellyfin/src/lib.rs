@@ -9,3 +9,5 @@ mod transport;
 
 pub use authorization::auth_header;
 pub use server::JellyfinServer;
+
+const BITS_PER_KILOBIT: u64 = 1000;

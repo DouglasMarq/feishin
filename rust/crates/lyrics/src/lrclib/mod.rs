@@ -6,7 +6,7 @@ use serde::{Deserialize, Serialize};
 use crate::fuzzy::{MATCH_THRESHOLD, SearchItem, order_search_results};
 use crate::http::send_json;
 use crate::lrc::lyrics_from_text;
-use crate::{Lyrics, LyricsQuery, LyricsSource, Result};
+use crate::{Lyrics, LyricsQuery, LyricsSource, MILLISECONDS_PER_SECOND, Result};
 
 const AGENT: &str = "LRCGET v0.2.0 (https://github.com/jeffvli/feishin)";
 const TIMEOUT: Duration = Duration::from_secs(5);
@@ -43,7 +43,7 @@ pub(crate) async fn fetch(
     }
     let duration_secs = query
         .duration_ms
-        .map(|duration_ms| duration_ms as f64 / 1000.0);
+        .map(|duration_ms| duration_ms as f64 / MILLISECONDS_PER_SECOND as f64);
     let exact_match = fetch_exact_match(client, base, query, duration_secs).await?;
     if exact_match.as_ref().is_some_and(|lyrics| lyrics.synced) {
         return Ok(exact_match);

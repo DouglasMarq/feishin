@@ -103,7 +103,7 @@ impl Client {
         let url = format!("{}/rest/{endpoint}", self.base);
         let request = self.build_request(url, self.query(params), encoding);
         let response = request.send().await.map_err(network_error)?;
-        let http_status = response.status().as_u16();
+        let http_status = response.status();
         let total_count = total_count_header(&response);
         let text = response.text().await.map_err(network_error)?;
         let envelope = unwrap_subsonic_response(http_status, &text)?;

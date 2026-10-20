@@ -154,7 +154,7 @@ async fn applying_playback_reaches_the_player_and_is_saved() {
             replay_gain: ReplayGainSetting::Album,
             audio_device: Some("pipewire/hdmi".into()),
             max_bitrate_kbps: Some(128),
-            volume: 5,
+            volume_percent: 5,
             ..PlaybackSettings::default()
         }));
     assert_eq!(
@@ -169,7 +169,10 @@ async fn applying_playback_reaches_the_player_and_is_saved() {
     let saved = harness.saved().playback;
     assert_eq!(saved.replay_gain, ReplayGainSetting::Album);
     assert_eq!(saved.max_bitrate_kbps, Some(128));
-    assert_eq!(saved.volume, PlaybackSettings::default().volume);
+    assert_eq!(
+        saved.volume_percent,
+        PlaybackSettings::default().volume_percent
+    );
 
     harness
         .controller

@@ -28,7 +28,7 @@ impl Controller {
 
     pub(super) fn apply_playback(&mut self, playback: PlaybackSettings) {
         let next = PlaybackSettings {
-            volume: self.settings.playback.volume,
+            volume_percent: self.settings.playback.volume_percent,
             muted: self.settings.playback.muted,
             ..playback
         };

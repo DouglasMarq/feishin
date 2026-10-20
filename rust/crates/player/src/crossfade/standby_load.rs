@@ -12,14 +12,14 @@ pub(crate) enum StandbyLoad {
 }
 
 pub(crate) fn plan_standby_load(crossfade: Duration, lead: DeckClock) -> StandbyLoad {
-    let Some(position) = lead.position else {
+    let Some(position_seconds) = lead.position_seconds else {
         return StandbyLoad::Later(LONGEST_RECHECK);
     };
-    let Some(window) = FadeWindow::planned(lead.duration, crossfade) else {
+    let Some(window) = FadeWindow::planned(lead.duration_seconds, crossfade) else {
         return StandbyLoad::Now;
     };
-    let load_at = window.starts_at() - STANDBY_LOAD_LEAD_SECONDS;
-    match Duration::try_from_secs_f64(load_at - position) {
+    let load_at_seconds = window.start_seconds() - STANDBY_LOAD_LEAD_SECONDS;
+    match Duration::try_from_secs_f64(load_at_seconds - position_seconds) {
         Ok(wait) if !wait.is_zero() => StandbyLoad::Later(wait.min(LONGEST_RECHECK)),
         _ => StandbyLoad::Now,
     }
@@ -31,10 +31,10 @@ mod tests {
 
     const FIVE_SECONDS: Duration = Duration::from_secs(5);
 
-    fn clock(position: Option<f64>, duration: Option<f64>) -> DeckClock {
+    fn clock(position_seconds: Option<f64>, duration_seconds: Option<f64>) -> DeckClock {
         DeckClock {
-            position,
-            duration,
+            position_seconds,
+            duration_seconds,
             paused: false,
         }
     }
@@ -42,7 +42,7 @@ mod tests {
     #[test]
     fn next_track_loads_only_shortly_before_the_fade() {
         let load_at = FadeWindow::planned(Some(300.0), FIVE_SECONDS)
-            .map_or(0.0, FadeWindow::starts_at)
+            .map_or(0.0, FadeWindow::start_seconds)
             - STANDBY_LOAD_LEAD_SECONDS;
         let shortly_before = load_at - 0.25;
         assert!((279.0..280.0).contains(&load_at));

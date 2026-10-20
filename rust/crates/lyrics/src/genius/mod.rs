@@ -9,6 +9,8 @@ use crate::lrc::lyrics_from_text;
 use crate::{Lyrics, LyricsQuery, LyricsSource, Result};
 use page::extract_lyrics;
 
+const SEARCH_LIMIT: &str = "5";
+
 #[derive(Debug, Deserialize)]
 struct SearchResponse {
     response: Option<ResponseBody>,
@@ -78,7 +80,7 @@ async fn search_songs(
     let request = client
         .get(format!("{base}/api/search/song"))
         .timeout(REQUEST_TIMEOUT)
-        .query(&[("per_page", "5"), ("q", search_query.as_str())]);
+        .query(&[("per_page", SEARCH_LIMIT), ("q", search_query.as_str())]);
     let songs = send_json::<SearchResponse>(request)
         .await?
         .and_then(|response| response.response)

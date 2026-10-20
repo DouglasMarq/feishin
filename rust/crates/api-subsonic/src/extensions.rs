@@ -1,6 +1,8 @@
 use crate::client::RequestEncoding;
 use crate::types::OpenSubsonicExtensions;
 
+const ENHANCED_SONG_LYRICS_VERSION: u32 = 2;
+
 #[derive(Debug, Clone, Default, PartialEq, Eq)]
 pub struct Extensions {
     pub form_post: bool,
@@ -53,6 +55,6 @@ impl Extensions {
     }
 
     pub(crate) fn supports_enhanced_lyrics(&self) -> bool {
-        self.song_lyrics.contains(&2)
+        self.song_lyrics.contains(&ENHANCED_SONG_LYRICS_VERSION)
     }
 }

@@ -1,5 +1,7 @@
 use std::time::Duration;
 
+use feishin_core::DEFAULT_VOLUME;
+
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
 pub enum ReplayGainMode {
     #[default]
@@ -40,7 +42,7 @@ impl Default for PlayerConfig {
             audio_device: None,
             replay_gain: ReplayGainMode::Off,
             gapless: true,
-            volume: 70,
+            volume: DEFAULT_VOLUME,
             muted: false,
             crossfade: Duration::ZERO,
         }

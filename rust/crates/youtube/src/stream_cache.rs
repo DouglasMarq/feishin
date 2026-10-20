@@ -9,7 +9,7 @@ const LIFETIME_WITHOUT_EXPIRY_SECS: u64 = 60 * 60;
 struct CachedStream {
     video_id: Box<str>,
     url: String,
-    usable_until: u64,
+    usable_until_unix_seconds: u64,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -26,18 +26,21 @@ impl StreamCache {
         }
     }
 
-    pub fn get(&self, video_id: &str, now: u64) -> Option<String> {
+    pub fn get(&self, video_id: &str, now_unix_seconds: u64) -> Option<String> {
         self.entries
             .iter()
-            .find(|entry| &*entry.video_id == video_id && entry.usable_until > now)
+            .find(|entry| {
+                &*entry.video_id == video_id && entry.usable_until_unix_seconds > now_unix_seconds
+            })
             .map(|entry| entry.url.clone())
     }
 
-    pub fn insert(&mut self, video_id: &str, stream: StreamUrl, now: u64) {
-        self.entries
-            .retain(|entry| &*entry.video_id != video_id && entry.usable_until > now);
-        let usable_until = usable_until(&stream, now);
-        if usable_until <= now || self.capacity == 0 {
+    pub fn insert(&mut self, video_id: &str, stream: StreamUrl, now_unix_seconds: u64) {
+        self.entries.retain(|entry| {
+            &*entry.video_id != video_id && entry.usable_until_unix_seconds > now_unix_seconds
+        });
+        let usable_until_unix_seconds = usable_until_unix_seconds(&stream, now_unix_seconds);
+        if usable_until_unix_seconds <= now_unix_seconds || self.capacity == 0 {
             return;
         }
         while self.entries.len() >= self.capacity {
@@ -46,7 +49,7 @@ impl StreamCache {
         self.entries.push_back(CachedStream {
             video_id: Box::from(video_id),
             url: stream.url,
-            usable_until,
+            usable_until_unix_seconds,
         });
     }
 
@@ -63,9 +66,9 @@ impl StreamCache {
     }
 }
 
-fn usable_until(stream: &StreamUrl, now: u64) -> u64 {
-    match stream.expires_at {
-        Some(expires_at) => expires_at.saturating_sub(EXPIRY_MARGIN_SECS),
-        None => now.saturating_add(LIFETIME_WITHOUT_EXPIRY_SECS),
+fn usable_until_unix_seconds(stream: &StreamUrl, now_unix_seconds: u64) -> u64 {
+    match stream.expires_at_unix_seconds {
+        Some(expires_at_unix_seconds) => expires_at_unix_seconds.saturating_sub(EXPIRY_MARGIN_SECS),
+        None => now_unix_seconds.saturating_add(LIFETIME_WITHOUT_EXPIRY_SECS),
     }
 }

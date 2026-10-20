@@ -1,17 +1,22 @@
 use crate::types::StructuredLyric;
 
+const MAIN_LYRIC_KIND: &str = "main";
+const MILLISECONDS_PER_MINUTE: u64 = 60_000;
+const MILLISECONDS_PER_SECOND: u64 = 1000;
+const MILLISECONDS_PER_CENTISECOND: u64 = 10;
+
 fn is_main_lyric(lyric: &StructuredLyric) -> bool {
-    lyric.kind.as_deref().is_none_or(|kind| kind == "main")
+    lyric
+        .kind
+        .as_deref()
+        .is_none_or(|kind| kind == MAIN_LYRIC_KIND)
 }
 
 fn lrc_timestamp(milliseconds: u64) -> String {
-    let centiseconds = milliseconds / 10;
-    format!(
-        "[{:02}:{:02}.{:02}]",
-        centiseconds / 6000,
-        (centiseconds / 100) % 60,
-        centiseconds % 100
-    )
+    let minutes = milliseconds / MILLISECONDS_PER_MINUTE;
+    let seconds = (milliseconds % MILLISECONDS_PER_MINUTE) / MILLISECONDS_PER_SECOND;
+    let centiseconds = (milliseconds % MILLISECONDS_PER_SECOND) / MILLISECONDS_PER_CENTISECOND;
+    format!("[{minutes:02}:{seconds:02}.{centiseconds:02}]")
 }
 
 fn preferred_lyric(lyrics: &[StructuredLyric]) -> Option<&StructuredLyric> {

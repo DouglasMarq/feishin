@@ -9,14 +9,14 @@ use crate::{Result, TEMPORARY_FILE_PREFIX};
 
 pub(super) struct DiskIndex {
     files: LruCache<String, u64>,
-    total: u64,
+    total_bytes: u64,
 }
 
 #[derive(PartialEq, Eq, PartialOrd, Ord)]
 struct CachedFile {
     modified: SystemTime,
     name: String,
-    length: u64,
+    length_bytes: u64,
 }
 
 impl DiskIndex {
@@ -30,16 +30,16 @@ impl DiskIndex {
         found.sort();
         let mut index = Self {
             files: LruCache::unbounded(),
-            total: 0,
+            total_bytes: 0,
         };
         for cached_file in found {
-            index.insert(cached_file.name, cached_file.length);
+            index.insert(cached_file.name, cached_file.length_bytes);
         }
         Ok(index)
     }
 
     pub(super) fn total_bytes(&self) -> u64 {
-        self.total
+        self.total_bytes
     }
 
     pub(super) fn contains(&self, name: &str) -> bool {
@@ -50,26 +50,26 @@ impl DiskIndex {
         self.files.promote(name);
     }
 
-    pub(super) fn insert(&mut self, name: String, length: u64) {
-        if let Some(previous_length) = self.files.put(name, length) {
-            self.total = self.total.saturating_sub(previous_length);
+    pub(super) fn insert(&mut self, name: String, length_bytes: u64) {
+        if let Some(previous_length_bytes) = self.files.put(name, length_bytes) {
+            self.total_bytes = self.total_bytes.saturating_sub(previous_length_bytes);
         }
-        self.total = self.total.saturating_add(length);
+        self.total_bytes = self.total_bytes.saturating_add(length_bytes);
     }
 
     pub(super) fn remove(&mut self, directory: &Path, name: &str) {
-        if let Some(length) = self.files.pop(name) {
-            self.total = self.total.saturating_sub(length);
+        if let Some(length_bytes) = self.files.pop(name) {
+            self.total_bytes = self.total_bytes.saturating_sub(length_bytes);
         }
         remove_ignoring_errors(&directory.join(name));
     }
 
     pub(super) fn evict(&mut self, directory: &Path, max_bytes: u64) {
-        while self.total > max_bytes {
-            let Some((name, length)) = self.files.pop_lru() else {
+        while self.total_bytes > max_bytes {
+            let Some((name, length_bytes)) = self.files.pop_lru() else {
                 break;
             };
-            self.total = self.total.saturating_sub(length);
+            self.total_bytes = self.total_bytes.saturating_sub(length_bytes);
             remove_evicted_file(directory, &name);
         }
     }
@@ -90,7 +90,7 @@ fn cached_file_from(entry: &DirEntry) -> Result<Option<CachedFile>> {
     Ok(Some(CachedFile {
         modified: metadata.modified().unwrap_or(SystemTime::UNIX_EPOCH),
         name,
-        length: metadata.len(),
+        length_bytes: metadata.len(),
     }))
 }
 

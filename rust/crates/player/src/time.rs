@@ -1,11 +1,19 @@
+const MILLISECONDS_PER_SECOND: u64 = 1000;
+
 pub(crate) fn seconds_to_milliseconds(seconds: f64) -> u64 {
     Some(seconds)
         .filter(|seconds| seconds.is_finite() && *seconds > 0.0)
-        .map_or(0, |seconds| (seconds * 1000.0).round() as u64)
+        .map_or(0, |seconds| {
+            (seconds * MILLISECONDS_PER_SECOND as f64).round() as u64
+        })
 }
 
 pub(crate) fn mpv_seconds_from_milliseconds(milliseconds: u64) -> String {
-    format!("{}.{:03}", milliseconds / 1000, milliseconds % 1000)
+    format!(
+        "{}.{:03}",
+        milliseconds / MILLISECONDS_PER_SECOND,
+        milliseconds % MILLISECONDS_PER_SECOND
+    )
 }
 
 #[cfg(test)]

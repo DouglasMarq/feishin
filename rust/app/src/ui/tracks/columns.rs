@@ -109,7 +109,7 @@ pub fn columns(window: &AppWindow) -> Vec<ColumnSetting> {
         .into_iter()
         .map(|column| ColumnSetting {
             id: column.id().to_owned(),
-            width: width_of(&state, column),
+            width_pixels: width_of(&state, column),
             visible: is_visible(&state, column),
         })
         .collect()
@@ -119,10 +119,10 @@ pub(super) fn apply_columns(window: &AppWindow, columns: &[ColumnSetting]) {
     let state = window.global::<TracksState>();
     let known_columns = columns
         .iter()
-        .filter(|setting| setting.width > 0.0)
+        .filter(|setting| setting.width_pixels > 0.0)
         .filter_map(|setting| TrackColumn::from_id(&setting.id).map(|column| (column, setting)));
     for (column, setting) in known_columns {
-        set_width(&state, column, setting.width);
+        set_width(&state, column, setting.width_pixels);
         set_visible(&state, column, setting.visible);
     }
 }

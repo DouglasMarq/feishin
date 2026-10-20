@@ -5,7 +5,7 @@ const MAX_VOLUME: u8 = 100;
 impl Controller {
     pub(super) fn set_volume(&mut self, volume: u8) {
         let volume = volume.min(MAX_VOLUME);
-        self.settings.playback.volume = volume;
+        self.settings.playback.volume_percent = volume;
         if let Err(error) = self.deps.audio.set_volume(volume) {
             tracing::warn!("setting volume failed: {error:#}");
         }

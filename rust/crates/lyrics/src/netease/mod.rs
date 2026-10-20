@@ -5,6 +5,10 @@ use crate::http::{REQUEST_TIMEOUT, send_json};
 use crate::lrc::lyrics_from_text;
 use crate::{Lyrics, LyricsQuery, LyricsSource, Result};
 
+const SEARCH_LIMIT: &str = "5";
+const SONG_SEARCH_TYPE: &str = "1";
+const LATEST_LYRICS_VERSION: &str = "-1";
+
 #[derive(Debug, Deserialize)]
 struct SearchResponse {
     result: Option<SearchResult>,
@@ -99,10 +103,10 @@ async fn search_songs(
         .get(format!("{base}/api/search/get"))
         .timeout(REQUEST_TIMEOUT)
         .query(&[
-            ("limit", "5"),
+            ("limit", SEARCH_LIMIT),
             ("offset", "0"),
             ("s", search_query.as_str()),
-            ("type", "1"),
+            ("type", SONG_SEARCH_TYPE),
         ]);
     Ok(send_json::<SearchResponse>(request)
         .await?
@@ -121,9 +125,9 @@ async fn lyrics_by_id(
         .timeout(REQUEST_TIMEOUT)
         .query(&[
             ("id", song_id.to_string().as_str()),
-            ("kv", "-1"),
-            ("lv", "-1"),
-            ("tv", "-1"),
+            ("kv", LATEST_LYRICS_VERSION),
+            ("lv", LATEST_LYRICS_VERSION),
+            ("tv", LATEST_LYRICS_VERSION),
         ]);
     let text = send_json::<LyricResponse>(request)
         .await?

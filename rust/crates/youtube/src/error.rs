@@ -1,4 +1,5 @@
 use std::sync::Arc;
+use std::time::Duration;
 
 #[derive(Debug, Clone, thiserror::Error)]
 pub enum YouTubeError {
@@ -6,8 +7,8 @@ pub enum YouTubeError {
     NotInstalled,
     #[error("yt-dlp could not be started: {0}")]
     Launch(#[source] Arc<std::io::Error>),
-    #[error("yt-dlp did not answer within {0} seconds")]
-    TimedOut(u64),
+    #[error("yt-dlp did not answer within {} seconds", .0.as_secs())]
+    TimedOut(Duration),
     #[error("yt-dlp failed: {0}")]
     Failed(String),
     #[error("yt-dlp printed no audio address")]
