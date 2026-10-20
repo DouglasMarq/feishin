@@ -65,7 +65,7 @@ pub(super) fn youtube_form(state: &SettingsState, view: &View) -> YouTubeSetting
     }
 }
 
-pub(super) fn apply_youtube(window: &AppWindow, ctx: &Context, shared: &Arc<Shared>) {
+pub(super) fn apply_youtube(window: &AppWindow, context: &Context, shared: &Arc<Shared>) {
     let state = window.global::<SettingsState>();
     let mut view = shared.view();
     let youtube = youtube_form(&state, &view);
@@ -73,7 +73,7 @@ pub(super) fn apply_youtube(window: &AppWindow, ctx: &Context, shared: &Arc<Shar
         return;
     }
     view.settings.youtube = youtube.clone();
-    ctx.send(Command::YouTube(YouTubeCommand::SaveSettings(youtube)));
+    context.send(Command::YouTube(YouTubeCommand::SaveSettings(youtube)));
 }
 
 #[cfg(test)]

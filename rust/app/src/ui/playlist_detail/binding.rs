@@ -18,22 +18,22 @@ pub fn with_model<Output>(
         .map(action)
 }
 
-pub fn install_model(window: &AppWindow, ctx: &Context) {
+pub fn install_model(window: &AppWindow, context: &Context) {
     let weak = window.as_weak();
-    let fetch_ctx = ctx.clone();
+    let fetch_context = context.clone();
     let model = Rc::new(PlaylistSongsModel::new(move |request| {
-        spawn_page_load(weak.clone(), &fetch_ctx, request);
+        spawn_page_load(weak.clone(), &fetch_context, request);
     }));
     window
         .global::<PlaylistDetailState>()
         .set_rows(ModelRc::from(model));
 }
 
-fn spawn_page_load(window: slint::Weak<AppWindow>, ctx: &Context, request: PageRequest) {
-    let Some(server) = ctx.session.get() else {
+fn spawn_page_load(window: slint::Weak<AppWindow>, context: &Context, request: PageRequest) {
+    let Some(server) = context.session.get() else {
         return;
     };
-    ctx.rt.spawn(async move {
+    context.runtime.spawn(async move {
         let paging = paging_for_page(request.page);
         let result = server
             .playlist_song_page(&request.playlist_id, paging)

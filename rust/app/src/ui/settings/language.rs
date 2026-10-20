@@ -33,16 +33,16 @@ pub(super) fn show_languages(state: &SettingsState, preference: Option<&str>) {
     state.set_language_index(slint_index(language_index(preference)));
 }
 
-pub(super) fn apply_language(window: &AppWindow, ctx: &Context, shared: &Arc<Shared>) {
+pub(super) fn apply_language(window: &AppWindow, context: &Context, shared: &Arc<Shared>) {
     let state = window.global::<SettingsState>();
     let language = language_at(state.get_language_index());
     i18n::select_language(language.as_deref());
     show_languages(&state, language.as_deref());
     shared.view().settings.ui.language.clone_from(&language);
-    ctx.send(Command::SaveLanguage(language));
+    context.send(Command::SaveLanguage(language));
     crate::ui::albums::show_sort_options(window);
     crate::ui::artists::show_sort_options(window);
-    load(window, ctx, shared);
+    load(window, context, shared);
 }
 
 #[cfg(test)]

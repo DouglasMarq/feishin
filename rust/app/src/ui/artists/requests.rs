@@ -101,12 +101,12 @@ async fn fetch_cover(
     });
 }
 
-pub fn spawn_request(weak_window: Weak<AppWindow>, ctx: &Context, request: Request) {
-    let Some(server) = ctx.session.get() else {
+pub fn spawn_request(weak_window: Weak<AppWindow>, context: &Context, request: Request) {
+    let Some(server) = context.session.get() else {
         return;
     };
-    let covers = ctx.covers.clone();
-    ctx.rt.spawn(async move {
+    let covers = context.covers.clone();
+    context.runtime.spawn(async move {
         match request {
             Request::Page {
                 generation,

@@ -41,13 +41,13 @@ fn show_loaded_genres(window: &AppWindow, result: feishin_api::Result<Vec<Genre>
 
 fn spawn_genre_load(
     window: &slint::Weak<AppWindow>,
-    ctx: &Context,
+    context: &Context,
     server: Arc<dyn MusicServer>,
     server_id: String,
 ) {
     let window = window.clone();
-    let session = ctx.session.clone();
-    ctx.rt.spawn(async move {
+    let session = context.session.clone();
+    context.runtime.spawn(async move {
         let result = server.genre_list().await;
         on_ui(&window, move |window| {
             if !is_still_connected_to(&session, &server_id) {
@@ -58,12 +58,12 @@ fn spawn_genre_load(
     });
 }
 
-pub(super) fn install(window: &AppWindow, ctx: &Context) {
+pub(super) fn install(window: &AppWindow, context: &Context) {
     let requested_for: RefCell<Option<String>> = RefCell::default();
     let weak = window.as_weak();
-    let ctx = ctx.clone();
+    let context = context.clone();
     window.global::<TracksState>().on_load_genres(move || {
-        let (Some(window), Some(server)) = (weak.upgrade(), ctx.session.get()) else {
+        let (Some(window), Some(server)) = (weak.upgrade(), context.session.get()) else {
             return;
         };
         let server_id = server.config().id.clone();
@@ -73,7 +73,7 @@ pub(super) fn install(window: &AppWindow, ctx: &Context) {
         requested_for.replace(Some(server_id.clone()));
         window.global::<TracksState>().set_genre_index(0);
         set_genres(&window, Vec::new());
-        spawn_genre_load(&weak, &ctx, server, server_id);
+        spawn_genre_load(&weak, &context, server, server_id);
     });
 }
 

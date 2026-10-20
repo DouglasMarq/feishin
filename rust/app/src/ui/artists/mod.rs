@@ -26,11 +26,11 @@ pub fn set_favorite(window: &AppWindow, artist_id: &str, favorite: bool) {
     with_list(window, |list| list.set_favorite(artist_id, favorite));
 }
 
-fn install_models(window: &AppWindow, ctx: &Context) -> Rc<ArtistList> {
+fn install_models(window: &AppWindow, context: &Context) -> Rc<ArtistList> {
     let weak_window = window.as_weak();
-    let ctx = ctx.clone();
+    let context = context.clone();
     let list = Rc::new(ArtistList::new(move |request| {
-        spawn_request(weak_window.clone(), &ctx, request);
+        spawn_request(weak_window.clone(), &context, request);
     }));
     let state = window.global::<ArtistsState>();
     state.set_items(ModelRc::new(ListModel {
@@ -50,9 +50,9 @@ pub fn show_sort_options(window: &AppWindow) {
         .set_sort_options(ModelRc::new(VecModel::from(options)));
 }
 
-fn install_load(window: &AppWindow, ctx: &Context, list: Rc<ArtistList>, search: SearchText) {
+fn install_load(window: &AppWindow, context: &Context, list: Rc<ArtistList>, search: SearchText) {
     let weak_window = window.as_weak();
-    let session = ctx.session.clone();
+    let session = context.session.clone();
     let loaded_for_server: Rc<RefCell<Option<String>>> = Rc::default();
     window.global::<ArtistsState>().on_load(move |_| {
         let (Some(window), Some(server)) = (weak_window.upgrade(), session.get()) else {
@@ -107,22 +107,22 @@ fn install_set_columns(window: &AppWindow) {
         });
 }
 
-fn install_play(window: &AppWindow, ctx: &Context) {
+fn install_play(window: &AppWindow, context: &Context) {
     let weak_window = window.as_weak();
-    let ctx = ctx.clone();
+    let context = context.clone();
     window.global::<ArtistsState>().on_play(move |artist_id| {
         if let Some(window) = weak_window.upgrade() {
-            play_artist(&window, &ctx, artist_id.as_str(), false);
+            play_artist(&window, &context, artist_id.as_str(), false);
         }
     });
 }
 
-pub fn install(window: &AppWindow, ctx: &Context) {
-    let list = install_models(window, ctx);
+pub fn install(window: &AppWindow, context: &Context) {
+    let list = install_models(window, context);
     let search = SearchText::default();
-    install_load(window, ctx, list, Rc::clone(&search));
+    install_load(window, context, list, Rc::clone(&search));
     install_query_changed(window, Rc::clone(&search));
     install_search_edited(window, search);
     install_set_columns(window);
-    install_play(window, ctx);
+    install_play(window, context);
 }

@@ -12,8 +12,8 @@ use crate::controller::Command;
 
 const COVER_SIZE: u32 = 192;
 
-pub fn load_shelf(window: &AppWindow, ctx: &Context, shelf: usize) {
-    let Some(server) = ctx.session.get() else {
+pub fn load_shelf(window: &AppWindow, context: &Context, shelf: usize) {
+    let Some(server) = context.session.get() else {
         return;
     };
     let Some(Some((generation, query))) = with_home_model(window, |model| model.begin_fetch(shelf))
@@ -21,7 +21,7 @@ pub fn load_shelf(window: &AppWindow, ctx: &Context, shelf: usize) {
         return;
     };
     let weak_window = window.as_weak();
-    ctx.rt.spawn(async move {
+    context.runtime.spawn(async move {
         let paging = Paging {
             start_index: 0,
             limit: SHELF_SIZE,
@@ -44,8 +44,8 @@ pub fn load_shelf(window: &AppWindow, ctx: &Context, shelf: usize) {
     });
 }
 
-pub fn load_cover(window: &AppWindow, ctx: &Context, shelf: usize, index: usize) {
-    let Some(server) = ctx.session.get() else {
+pub fn load_cover(window: &AppWindow, context: &Context, shelf: usize, index: usize) {
+    let Some(server) = context.session.get() else {
         return;
     };
     let Some(Some((album_id, cover_id))) =
@@ -53,9 +53,9 @@ pub fn load_cover(window: &AppWindow, ctx: &Context, shelf: usize, index: usize)
     else {
         return;
     };
-    let covers = Arc::clone(&ctx.covers);
+    let covers = Arc::clone(&context.covers);
     let weak_window = window.as_weak();
-    ctx.rt.spawn(async move {
+    context.runtime.spawn(async move {
         let result = covers.cover(server.as_ref(), &cover_id, COVER_SIZE).await;
         if let Err(error) = &result {
             tracing::debug!("cover {cover_id}: {error:#}");
@@ -69,21 +69,21 @@ pub fn load_cover(window: &AppWindow, ctx: &Context, shelf: usize, index: usize)
 
 pub fn play_album(
     window: &AppWindow,
-    ctx: &Context,
+    context: &Context,
     latest_request: &Arc<AtomicU64>,
     album_id: String,
 ) {
-    let Some(server) = ctx.session.get() else {
+    let Some(server) = context.session.get() else {
         return;
     };
     let request = latest_request.fetch_add(1, Ordering::Relaxed) + 1;
     let latest_request = Arc::clone(latest_request);
-    let ctx = ctx.clone();
+    let context = context.clone();
     let weak_window = window.as_weak();
-    ctx.rt.clone().spawn(async move {
+    context.runtime.clone().spawn(async move {
         match server.album(&album_id).await {
             Ok(detail) if latest_request.load(Ordering::Relaxed) == request => {
-                ctx.send(Command::PlaySongs {
+                context.send(Command::PlaySongs {
                     songs: detail.songs,
                     song_id: None,
                 });

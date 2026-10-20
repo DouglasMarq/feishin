@@ -17,9 +17,9 @@ pub(super) fn system_scheme_changed(window: &AppWindow, scheme: SystemColorSchem
     apply_theme(window, &catalog, &settings);
 }
 
-fn apply_startup_scheme(window: &AppWindow, ctx: &Context) {
+fn apply_startup_scheme(window: &AppWindow, context: &Context) {
     let weak_window = window.as_weak();
-    ctx.rt.spawn(async move {
+    context.runtime.spawn(async move {
         let read = tokio::time::timeout(
             STARTUP_SCHEME_TIMEOUT,
             feishin_platform::current_color_scheme(),
@@ -35,12 +35,12 @@ fn apply_startup_scheme(window: &AppWindow, ctx: &Context) {
     });
 }
 
-pub fn watch_system_scheme(window: &AppWindow, ctx: &Context) {
+pub fn watch_system_scheme(window: &AppWindow, context: &Context) {
     if window.global::<AppearanceState>().get_follow_system() {
-        apply_startup_scheme(window, ctx);
+        apply_startup_scheme(window, context);
     }
     let weak_window = window.as_weak();
-    ctx.rt.spawn(async move {
+    context.runtime.spawn(async move {
         let watched = feishin_platform::watch_color_scheme(|scheme| {
             on_ui(&weak_window, move |window| {
                 system_scheme_changed(window, scheme);

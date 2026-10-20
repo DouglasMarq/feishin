@@ -59,34 +59,39 @@ pub(super) fn act_on_listed(
     listed: ListedSongs,
 ) {
     match action {
-        SongAction::Play => enqueue(&target.ctx, listed, Placement::Now),
-        SongAction::PlayNext => enqueue(&target.ctx, listed, Placement::Next),
-        SongAction::AddLast => enqueue(&target.ctx, listed, Placement::Last),
+        SongAction::Play => enqueue(&target.context, listed, Placement::Now),
+        SongAction::PlayNext => enqueue(&target.context, listed, Placement::Next),
+        SongAction::AddLast => enqueue(&target.context, listed, Placement::Last),
         SongAction::AddToPlaylist => target.picker.open_listed(window, listed),
         SongAction::Favorite(favorite) => {
-            spawn_edit(window, &target.ctx, listed, ListedEdit::Favorite(favorite));
+            spawn_edit(
+                window,
+                &target.context,
+                listed,
+                ListedEdit::Favorite(favorite),
+            );
         }
         SongAction::Rate(rating) => {
-            spawn_edit(window, &target.ctx, listed, ListedEdit::Rate(rating))
+            spawn_edit(window, &target.context, listed, ListedEdit::Rate(rating))
         }
     }
 }
 
-fn enqueue(ctx: &Context, listed: ListedSongs, placement: Placement) {
-    ctx.send(Command::EnqueueFromList {
+fn enqueue(context: &Context, listed: ListedSongs, placement: Placement) {
+    context.send(Command::EnqueueFromList {
         source: listed.source,
         ranges: listed.ranges.into_ranges(),
         placement,
     });
 }
 
-fn spawn_edit(window: &AppWindow, ctx: &Context, listed: ListedSongs, edit: ListedEdit) {
-    let Some(server) = ctx.session.get() else {
+fn spawn_edit(window: &AppWindow, context: &Context, listed: ListedSongs, edit: ListedEdit) {
+    let Some(server) = context.session.get() else {
         return;
     };
     let weak = window.as_weak();
-    let work = ctx.session.background_work();
-    ctx.rt.spawn(async move {
+    let work = context.session.background_work();
+    context.runtime.spawn(async move {
         let edited = work.run(edit_listed(server, &weak, listed, edit)).await;
         if let Some(Some(message)) = edited {
             on_ui(&weak, move |window| show_status(window, &message));

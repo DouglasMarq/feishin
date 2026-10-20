@@ -28,8 +28,8 @@ pub fn close(window: &AppWindow, shared: &SharedPicker) {
     state.set_rows(ModelRc::default());
 }
 
-pub fn open(window: &AppWindow, ctx: &Context, shared: &SharedPicker, songs: PickedSongs) {
-    let Some(server) = ctx.session.get() else {
+pub fn open(window: &AppWindow, context: &Context, shared: &SharedPicker, songs: PickedSongs) {
+    let Some(server) = context.session.get() else {
         return;
     };
     let song_count = songs.song_count();
@@ -39,7 +39,7 @@ pub fn open(window: &AppWindow, ctx: &Context, shared: &SharedPicker, songs: Pic
     let generation = lock(shared).restart(songs);
     show_opened(window, song_count);
     let (weak, shared) = (window.as_weak(), Arc::clone(shared));
-    ctx.rt.spawn(async move {
+    context.runtime.spawn(async move {
         let result = fetch_all(server.as_ref()).await;
         on_ui(&weak, move |window| {
             apply_playlists(window, &shared, generation, result);

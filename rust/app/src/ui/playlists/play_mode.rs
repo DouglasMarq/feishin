@@ -34,17 +34,17 @@ impl PlayMode {
     }
 }
 
-pub fn play(ctx: &Context, window: &AppWindow, id: &str, mode: PlayMode) {
-    let Some(server) = ctx.session.get() else {
+pub fn play(context: &Context, window: &AppWindow, id: &str, mode: PlayMode) {
+    let Some(server) = context.session.get() else {
         return;
     };
-    let (id, task_ctx, weak) = (id.to_owned(), ctx.clone(), window.as_weak());
-    ctx.rt.spawn(async move {
+    let (id, task_context, weak) = (id.to_owned(), context.clone(), window.as_weak());
+    context.runtime.spawn(async move {
         match server.playlist_songs(&id).await {
             Ok(songs) if songs.is_empty() => on_ui(&weak, |window| {
                 show_status(window, &tr!("This playlist is empty"));
             }),
-            Ok(songs) => task_ctx.send(mode.command(songs)),
+            Ok(songs) => task_context.send(mode.command(songs)),
             Err(error) => on_ui(&weak, move |window| {
                 show_status(window, &tr!("Could not load the playlist: {}", error));
             }),

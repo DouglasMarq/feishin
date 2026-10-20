@@ -10,14 +10,14 @@ use super::view::Shared;
 use crate::controller::Command;
 use crate::ui::{AppState, AppWindow, Context, SettingsState, login, on_ui, show_status};
 
-fn restore(ctx: &Context, config: &ServerConfig) -> Result<Arc<dyn MusicServer>> {
-    let credential = ctx.store.credential(&config.id)?.ok_or_else(|| {
+fn restore(context: &Context, config: &ServerConfig) -> Result<Arc<dyn MusicServer>> {
+    let credential = context.store.credential(&config.id)?.ok_or_else(|| {
         anyhow!(tr!(
             "No saved login for {}; remove it and add it again",
             config.name
         ))
     })?;
-    ctx.connector.restore(config, &credential)
+    context.connector.restore(config, &credential)
 }
 
 fn configured_server(shared: &Shared, id: &str) -> Option<ServerConfig> {
@@ -30,17 +30,22 @@ fn configured_server(shared: &Shared, id: &str) -> Option<ServerConfig> {
         .cloned()
 }
 
-pub(super) fn switch_server(window: &AppWindow, ctx: &Context, shared: &Shared, id: SharedString) {
+pub(super) fn switch_server(
+    window: &AppWindow,
+    context: &Context,
+    shared: &Shared,
+    id: SharedString,
+) {
     let Some(config) = configured_server(shared, id.as_str()) else {
         return;
     };
     window.global::<SettingsState>().set_switching(id);
     let weak_window = window.as_weak();
-    let ctx = ctx.clone();
-    ctx.rt.clone().spawn(async move {
-        let result = restore_in_background(&ctx, &config).await;
+    let context = context.clone();
+    context.runtime.clone().spawn(async move {
+        let result = restore_in_background(&context, &config).await;
         if let Ok(server) = &result {
-            login::enter_session(&ctx, server, config, None, Vec::new());
+            login::enter_session(&context, server, config, None, Vec::new());
         }
         on_ui(&weak_window, move |window| {
             show_switch_result(window, result);
@@ -49,11 +54,11 @@ pub(super) fn switch_server(window: &AppWindow, ctx: &Context, shared: &Shared, 
 }
 
 async fn restore_in_background(
-    ctx: &Context,
+    context: &Context,
     config: &ServerConfig,
 ) -> Result<Arc<dyn MusicServer>> {
-    let (ctx, config) = (ctx.clone(), config.clone());
-    let restored = tokio::task::spawn_blocking(move || restore(&ctx, &config)).await;
+    let (context, config) = (context.clone(), config.clone());
+    let restored = tokio::task::spawn_blocking(move || restore(&context, &config)).await;
     restored
         .map_err(anyhow::Error::from)
         .and_then(|restore_result| restore_result)
@@ -76,26 +81,26 @@ fn show_switch_result(window: &AppWindow, result: Result<Arc<dyn MusicServer>>) 
     }
 }
 
-pub(super) fn log_out(window: &AppWindow, ctx: &Context, shared: &Shared) {
+pub(super) fn log_out(window: &AppWindow, context: &Context, shared: &Shared) {
     if let Some(id) = shared.view().settings.current_server_id.take() {
-        ctx.send(Command::RemoveServer(id));
+        context.send(Command::RemoveServer(id));
     }
-    ctx.session.set(None);
+    context.session.set(None);
     window.global::<AppState>().set_server_name("".into());
     login::show_login(window, "");
 }
 
 pub(super) fn remove_server(
     window: &AppWindow,
-    ctx: &Context,
+    context: &Context,
     shared: &Arc<Shared>,
     id: &SharedString,
 ) {
     let current = shared.view().settings.current_server_id.clone();
     if current.as_deref() == Some(id.as_str()) {
-        log_out(window, ctx, shared);
+        log_out(window, context, shared);
         return;
     }
-    ctx.send(Command::RemoveServer(id.into()));
-    load(window, ctx, shared);
+    context.send(Command::RemoveServer(id.into()));
+    load(window, context, shared);
 }

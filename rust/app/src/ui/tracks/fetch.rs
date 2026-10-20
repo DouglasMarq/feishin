@@ -9,11 +9,11 @@ use super::with_model;
 use crate::ui::page_cache::PageApplied;
 use crate::ui::{AppWindow, Context, TracksState, clamp_i32, on_ui, show_status};
 
-pub(super) fn spawn_request(window: slint::Weak<AppWindow>, ctx: &Context, request: Request) {
-    let Some(server) = ctx.session.get() else {
+pub(super) fn spawn_request(window: slint::Weak<AppWindow>, context: &Context, request: Request) {
+    let Some(server) = context.session.get() else {
         return;
     };
-    ctx.rt.spawn(async move {
+    context.runtime.spawn(async move {
         match request {
             Request::Count { generation, query } => {
                 load_count(server, window, generation, query).await;

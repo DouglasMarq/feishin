@@ -46,7 +46,7 @@ impl RadioView {
         let generation = self.with_model(|model| model.begin_search(query.clone()));
         window.global::<RadioState>().set_searching(true);
         let view = self.clone();
-        self.ctx.rt.spawn(async move {
+        self.context.runtime.spawn(async move {
             let found = view.directory.search(&query).await;
             let shown = view.clone();
             view.on_window(move |window| shown.apply_search(window, generation, found));

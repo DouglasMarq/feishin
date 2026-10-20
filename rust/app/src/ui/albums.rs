@@ -105,11 +105,11 @@ pub fn show_sort_options(window: &AppWindow) {
         .set_sort_options(ModelRc::new(VecModel::from(labels)));
 }
 
-fn install_grid_model(window: &AppWindow, ctx: &Context) {
+fn install_grid_model(window: &AppWindow, context: &Context) {
     let weak_window = window.as_weak();
-    let ctx = ctx.clone();
+    let context = context.clone();
     let model = AlbumGridModel::new(move |request| {
-        spawn_request(weak_window.clone(), &ctx, locate, on_count, request)
+        spawn_request(weak_window.clone(), &context, locate, on_count, request)
     });
     window.global::<AlbumsState>().set_rows(ModelRc::new(model));
 }
@@ -156,13 +156,13 @@ fn install_columns_changed(window: &AppWindow) {
         });
 }
 
-fn install_album_actions(window: &AppWindow, ctx: &Context) {
+fn install_album_actions(window: &AppWindow, context: &Context) {
     let bind = |action: AlbumAction| {
         let weak_window = window.as_weak();
-        let ctx = ctx.clone();
+        let context = context.clone();
         move |album_id: SharedString| {
             if let Some(window) = weak_window.upgrade() {
-                album_action(&window, &ctx, album_id.into(), action);
+                album_action(&window, &context, album_id.into(), action);
             }
         }
     };
@@ -173,12 +173,12 @@ fn install_album_actions(window: &AppWindow, ctx: &Context) {
     state.on_add_to_playlist(bind(AlbumAction::AddToPlaylist));
 }
 
-pub fn install(window: &AppWindow, ctx: &Context) {
+pub fn install(window: &AppWindow, context: &Context) {
     show_sort_options(window);
-    install_grid_model(window, ctx);
+    install_grid_model(window, context);
     install_reload_triggers(window);
     install_columns_changed(window);
-    install_album_actions(window, ctx);
+    install_album_actions(window, context);
 }
 
 #[cfg(test)]

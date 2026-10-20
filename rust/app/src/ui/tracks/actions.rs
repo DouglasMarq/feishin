@@ -24,32 +24,32 @@ pub(super) enum SongAction {
 
 #[derive(Clone)]
 pub(super) struct ActionTarget {
-    pub ctx: Context,
+    pub context: Context,
     pub picker: PlaylistPicker,
 }
 
 pub(super) fn act_on_selection(window: &AppWindow, target: &ActionTarget, action: SongAction) {
     match with_model(window, TracksModel::selected_songs) {
-        Some(SelectedSongs::Loaded(songs)) => perform(window, &target.ctx, action, songs),
+        Some(SelectedSongs::Loaded(songs)) => perform(window, &target.context, action, songs),
         Some(SelectedSongs::Listed(listed)) => act_on_listed(window, target, action, listed),
         None => {}
     }
 }
 
-fn perform(window: &AppWindow, ctx: &Context, action: SongAction, songs: Vec<Song>) {
+fn perform(window: &AppWindow, context: &Context, action: SongAction, songs: Vec<Song>) {
     if songs.is_empty() {
         return;
     }
     match action {
-        SongAction::Play => ctx.send(Command::PlaySongs {
+        SongAction::Play => context.send(Command::PlaySongs {
             songs,
             song_id: None,
         }),
-        SongAction::PlayNext => ctx.send(Command::AddNext(songs)),
-        SongAction::AddLast => ctx.send(Command::AddLast(songs)),
+        SongAction::PlayNext => context.send(Command::AddNext(songs)),
+        SongAction::AddLast => context.send(Command::AddLast(songs)),
         SongAction::AddToPlaylist => open_playlist_picker(window, &songs),
-        SongAction::Favorite(favorite) => set_favorite(window, ctx, ids_of(&songs), favorite),
-        SongAction::Rate(rating) => set_rating(window, ctx, ids_of(&songs), rating),
+        SongAction::Favorite(favorite) => set_favorite(window, context, ids_of(&songs), favorite),
+        SongAction::Rate(rating) => set_rating(window, context, ids_of(&songs), rating),
     }
 }
 
@@ -64,12 +64,17 @@ fn ids_of(songs: &[Song]) -> Vec<String> {
     songs.iter().map(|song| song.id.clone()).collect()
 }
 
-pub(super) fn set_favorite(window: &AppWindow, ctx: &Context, ids: Vec<String>, favorite: bool) {
-    let Some(server) = ctx.session.get() else {
+pub(super) fn set_favorite(
+    window: &AppWindow,
+    context: &Context,
+    ids: Vec<String>,
+    favorite: bool,
+) {
+    let Some(server) = context.session.get() else {
         return;
     };
     let weak = window.as_weak();
-    ctx.rt.spawn(async move {
+    context.runtime.spawn(async move {
         let result = server.set_favorite(ItemKind::Song, &ids, favorite).await;
         on_ui(&weak, move |window| match result {
             Ok(()) => {
@@ -97,13 +102,13 @@ pub(super) async fn rate_until_failure(
     (rated, None)
 }
 
-pub(super) fn set_rating(window: &AppWindow, ctx: &Context, ids: Vec<String>, rating: u8) {
-    let Some(server) = ctx.session.get() else {
+pub(super) fn set_rating(window: &AppWindow, context: &Context, ids: Vec<String>, rating: u8) {
+    let Some(server) = context.session.get() else {
         return;
     };
     let weak = window.as_weak();
-    let work = ctx.session.background_work();
-    ctx.rt.spawn(async move {
+    let work = context.session.background_work();
+    context.runtime.spawn(async move {
         let Some((rated, failure)) = work.run(rate_until_failure(server, ids, rating)).await else {
             return;
         };
@@ -121,14 +126,14 @@ pub(super) fn set_rating(window: &AppWindow, ctx: &Context, ids: Vec<String>, ra
 
 pub(super) fn go_to(
     window: &AppWindow,
-    ctx: &Context,
+    context: &Context,
     route: Route,
     target: impl FnOnce(&Song) -> Option<String> + Send + 'static,
 ) {
     let Some(first) = with_model(window, TracksModel::first_selected).flatten() else {
         return;
     };
-    with_first_song(window, ctx, first, move |window, song| {
+    with_first_song(window, context, first, move |window, song| {
         if let Some(target_id) = target(&song) {
             window
                 .global::<AppState>()
@@ -139,7 +144,7 @@ pub(super) fn go_to(
 
 fn with_first_song(
     window: &AppWindow,
-    ctx: &Context,
+    context: &Context,
     first: FirstSelected,
     use_song: impl FnOnce(&AppWindow, Song) + Send + 'static,
 ) {
@@ -147,11 +152,11 @@ fn with_first_song(
         use_song(window, song);
         return;
     }
-    let Some(server) = ctx.session.get() else {
+    let Some(server) = context.session.get() else {
         return;
     };
     let weak = window.as_weak();
-    ctx.rt.spawn(async move {
+    context.runtime.spawn(async move {
         let mut chunks = first.listed.into_chunks(1);
         let result = chunks.next_songs(server.as_ref()).await;
         on_ui(&weak, move |window| match result {

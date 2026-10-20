@@ -20,9 +20,9 @@ fn fetch_cover(
     size: u32,
     done: impl FnOnce(&AppWindow, Option<Image>) + Send + 'static,
 ) {
-    let covers = Arc::clone(&deps.ctx.covers);
+    let covers = Arc::clone(&deps.context.covers);
     let weak_window = window.as_weak();
-    deps.ctx.rt.spawn(async move {
+    deps.context.runtime.spawn(async move {
         let decoded: Option<Arc<DecodedImage>> = covers
             .cover_from_url(&cover_key(&url), &url, size)
             .await

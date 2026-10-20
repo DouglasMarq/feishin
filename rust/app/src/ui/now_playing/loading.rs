@@ -17,7 +17,7 @@ fn is_already_shown(state: &NowPlayingState, song_id: &str) -> bool {
     state.get_song_id() == song_id && (state.get_loaded() || song_id.is_empty())
 }
 
-pub(super) fn load(window: &AppWindow, ctx: &Context, view: &View, song_id: &str) {
+pub(super) fn load(window: &AppWindow, context: &Context, view: &View, song_id: &str) {
     view.refresh_up_next(window);
     let state = window.global::<NowPlayingState>();
     if is_already_shown(&state, song_id) {
@@ -25,10 +25,10 @@ pub(super) fn load(window: &AppWindow, ctx: &Context, view: &View, song_id: &str
     }
     view.clear(window, song_id);
     if let Some(track) = view.external_track(song_id) {
-        load_external(window, ctx, view, &track);
+        load_external(window, context, view, &track);
         return;
     }
-    let Some(server) = ctx.session.get().filter(|_| !song_id.is_empty()) else {
+    let Some(server) = context.session.get().filter(|_| !song_id.is_empty()) else {
         return;
     };
 
@@ -41,7 +41,7 @@ pub(super) fn load(window: &AppWindow, ctx: &Context, view: &View, song_id: &str
 
     let request = DetailsRequest {
         weak_window: window.as_weak(),
-        ctx: ctx.clone(),
+        context: context.clone(),
         server,
         song_id: song_id.to_owned(),
         want_lyrics: cached.is_none(),
@@ -51,7 +51,7 @@ pub(super) fn load(window: &AppWindow, ctx: &Context, view: &View, song_id: &str
 
 struct DetailsRequest {
     weak_window: slint::Weak<AppWindow>,
-    ctx: Context,
+    context: Context,
     server: Arc<dyn MusicServer>,
     song_id: String,
     want_lyrics: bool,
@@ -59,14 +59,14 @@ struct DetailsRequest {
 
 impl DetailsRequest {
     fn spawn(self) {
-        let runtime = self.ctx.rt.clone();
+        let runtime = self.context.runtime.clone();
         runtime.spawn(self.run());
     }
 
     async fn run(self) {
         let Self {
             weak_window,
-            ctx,
+            context,
             server,
             song_id,
             want_lyrics,
@@ -81,11 +81,11 @@ impl DetailsRequest {
         };
         show_song(&weak_window, &song);
         tokio::join!(
-            fetch_cover(&weak_window, &ctx, &server, &song),
+            fetch_cover(&weak_window, &context, &server, &song),
             fetch_similar(&weak_window, server.as_ref(), &song_id),
             async {
                 if want_lyrics {
-                    fetch_lyrics(&weak_window, &ctx, server.as_ref(), &song).await;
+                    fetch_lyrics(&weak_window, &context, server.as_ref(), &song).await;
                 }
             },
         );

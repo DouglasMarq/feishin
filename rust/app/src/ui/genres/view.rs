@@ -25,40 +25,45 @@ const TRACKS: Binding<TrackItem> = Binding {
     loading: |window, loading| window.global::<GenresState>().set_tracks_loading(loading),
 };
 
-pub fn install(window: &AppWindow, ctx: &Context) {
+pub fn install(window: &AppWindow, context: &Context) {
     let state = window.global::<GenresState>();
-    state.set_albums(card_grid(window, ctx, ALBUMS));
-    state.set_tracks(track_table(window, ctx, false, TRACKS));
+    state.set_albums(card_grid(window, context, ALBUMS));
+    state.set_tracks(track_table(window, context, false, TRACKS));
     let list: SharedGenreList = Rc::default();
-    install_load(window, ctx, &list);
+    install_load(window, context, &list);
     install_filter(window, list);
     install_album_columns(window);
-    install_play_track(window, ctx);
+    install_play_track(window, context);
 }
 
-fn install_load(window: &AppWindow, ctx: &Context, list: &SharedGenreList) {
+fn install_load(window: &AppWindow, context: &Context, list: &SharedGenreList) {
     let weak = window.as_weak();
-    let load_ctx = ctx.clone();
+    let load_context = context.clone();
     let load_list = Rc::clone(list);
     window.global::<GenresState>().on_load(move |genre_id| {
         let Some(window) = weak.upgrade() else {
             return;
         };
         if genre_id.is_empty() {
-            show_genre_index(&window, &load_ctx, &load_list);
+            show_genre_index(&window, &load_context, &load_list);
             return;
         }
-        open_genre(&window, &load_ctx, &load_list, &genre_id);
+        open_genre(&window, &load_context, &load_list, &genre_id);
     });
 }
 
-fn show_genre_index(window: &AppWindow, ctx: &Context, list: &SharedGenreList) {
+fn show_genre_index(window: &AppWindow, context: &Context, list: &SharedGenreList) {
     with_grid(window, ALBUMS, |grid| grid.reset(None));
     list.borrow_mut().filter.clear();
-    fetch_genres(window, ctx, list);
+    fetch_genres(window, context, list);
 }
 
-fn open_genre(window: &AppWindow, ctx: &Context, list: &SharedGenreList, genre_id: &SharedString) {
+fn open_genre(
+    window: &AppWindow,
+    context: &Context,
+    list: &SharedGenreList,
+    genre_id: &SharedString,
+) {
     let state = window.global::<GenresState>();
     state.set_albums_loading(true);
     state.set_tracks_loading(true);
@@ -71,7 +76,7 @@ fn open_genre(window: &AppWindow, ctx: &Context, list: &SharedGenreList, genre_i
     show_genre(window, &list.borrow());
     let known = list.borrow().contains(genre_id.as_str());
     if !known {
-        fetch_genres(window, ctx, list);
+        fetch_genres(window, context, list);
     }
 }
 
@@ -100,12 +105,12 @@ fn install_album_columns(window: &AppWindow) {
         });
 }
 
-fn install_play_track(window: &AppWindow, ctx: &Context) {
+fn install_play_track(window: &AppWindow, context: &Context) {
     let weak = window.as_weak();
-    let play_ctx = ctx.clone();
+    let play_context = context.clone();
     window.global::<GenresState>().on_play_track(move |index| {
         if let Some(window) = weak.upgrade() {
-            play_track(&window, &play_ctx, TRACKS, index);
+            play_track(&window, &play_context, TRACKS, index);
         }
     });
 }

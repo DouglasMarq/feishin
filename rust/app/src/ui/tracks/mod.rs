@@ -54,13 +54,13 @@ pub fn set_current(window: &AppWindow, song_id: Option<&str>) {
     with_model(window, |model| model.set_current(song_id));
 }
 
-pub fn install(window: &AppWindow, ctx: &Context, ui: &UiSettings, picker: &PlaylistPicker) {
+pub fn install(window: &AppWindow, context: &Context, ui: &UiSettings, picker: &PlaylistPicker) {
     columns::apply_columns(window, &ui.track_columns);
-    list_callbacks::install_model(window, ctx);
+    list_callbacks::install_model(window, context);
     list_callbacks::install_sorting(window);
     list_callbacks::install_search(window);
     list_callbacks::install_filters(window);
-    list_callbacks::install_play_row(window, ctx);
-    genres::install(window, ctx);
-    selection_callbacks::install(window, ctx, picker);
+    list_callbacks::install_play_row(window, context);
+    genres::install(window, context);
+    selection_callbacks::install(window, context, picker);
 }

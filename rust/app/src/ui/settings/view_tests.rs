@@ -30,8 +30,8 @@ fn open_settings_page() -> SettingsPage {
         .build()
         .unwrap_or_else(|error| panic!("runtime: {error}"));
     let (commands, received) = tokio::sync::mpsc::unbounded_channel();
-    let ctx = Context {
-        rt: runtime.handle().clone(),
+    let context = Context {
+        runtime: runtime.handle().clone(),
         commands,
         session: Session::default(),
         store: Arc::new(JsonStore::new(dir.path())),
@@ -40,7 +40,7 @@ fn open_settings_page() -> SettingsPage {
         remote: crate::remote::Remote::default(),
     };
     let shared = Arc::new(Shared::default());
-    install_with(&window, &ctx, &shared);
+    install_with(&window, &context, &shared);
     let app = window.global::<AppState>();
     app.set_page(Page::Main);
     app.set_route(Route::Settings);

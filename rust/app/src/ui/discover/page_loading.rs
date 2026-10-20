@@ -47,7 +47,7 @@ fn fetch_page(window: &AppWindow, deps: &DiscoverDeps, target: PageTarget, gener
     let settings = deps.settings();
     let weak_window = window.as_weak();
     let cover_deps = deps.clone();
-    deps.ctx.rt.spawn(async move {
+    deps.context.runtime.spawn(async move {
         match target {
             PageTarget::Collection { browse_id, .. } => {
                 let result = source.collection(browse_id, settings).await;

@@ -162,8 +162,8 @@ impl TestWindow {
         let runtime = routed_runtime(2);
         let dir = tempfile::tempdir().unwrap();
         let (sender, commands) = mpsc::unbounded_channel();
-        let ctx = Context {
-            rt: runtime.handle().clone(),
+        let context = Context {
+            runtime: runtime.handle().clone(),
             commands: sender,
             session: Session::default(),
             store: Arc::new(JsonStore::new(dir.path())),
@@ -171,9 +171,9 @@ impl TestWindow {
             covers: Arc::new(DemoCovers),
             remote: crate::remote::Remote::default(),
         };
-        ctx.session.set(Some(Arc::clone(&server)));
+        context.session.set(Some(Arc::clone(&server)));
         let app = AppWindow::new().unwrap();
-        crate::ui::install(&app, &ctx, &Default::default());
+        crate::ui::install(&app, &context, &Default::default());
         app.show().unwrap();
         window.set_size(SIZE);
         login::enter_main(&app, &server);

@@ -13,7 +13,8 @@ impl RadioView {
         let Some(station) = self.with_model(|model| model.station(source, id)) else {
             return;
         };
-        self.ctx.send(Command::Radio(RadioCommand::Play(station)));
+        self.context
+            .send(Command::Radio(RadioCommand::Play(station)));
         if source == RadioSource::Directory {
             self.count_click(id.to_owned());
         }
@@ -21,7 +22,7 @@ impl RadioView {
 
     fn count_click(&self, station_uuid: String) {
         let directory = self.directory.clone();
-        self.ctx.rt.spawn(async move {
+        self.context.runtime.spawn(async move {
             if let Err(error) = directory.count_click(&station_uuid).await {
                 tracing::debug!("counting a radio directory click failed: {error:#}");
             }
@@ -29,7 +30,7 @@ impl RadioView {
     }
 
     pub(super) fn stop(&self) {
-        self.ctx.send(Command::Radio(RadioCommand::Stop));
+        self.context.send(Command::Radio(RadioCommand::Stop));
     }
 
     pub(super) fn toggle_favorite(&self, source: RadioSource, id: &str) {
@@ -45,16 +46,17 @@ impl RadioView {
 
     pub(super) fn keep_favorite(&self, station: RadioStation) {
         self.with_model(|model| model.remember_favorite(station.clone()));
-        self.ctx
+        self.context
             .send(Command::Radio(RadioCommand::AddFavorite(station)));
         self.render_now();
     }
 
     fn forget_favorite(&self, station_id: &str) {
         self.with_model(|model| model.forget_favorite(station_id));
-        self.ctx.send(Command::Radio(RadioCommand::RemoveFavorite(
-            station_id.to_owned(),
-        )));
+        self.context
+            .send(Command::Radio(RadioCommand::RemoveFavorite(
+                station_id.to_owned(),
+            )));
         self.render_now();
     }
 
@@ -74,7 +76,7 @@ impl RadioView {
         self.set_busy(true);
         let draft = RadioStationDraft::from_station(&station);
         let view = self.clone();
-        self.ctx.rt.spawn(async move {
+        self.context.runtime.spawn(async move {
             let created = server.create_radio_station(&draft).await;
             let shown = view.clone();
             view.on_window(move |window| {
@@ -97,7 +99,7 @@ impl RadioView {
         self.set_busy(true);
         let id = id.to_owned();
         let view = self.clone();
-        self.ctx.rt.spawn(async move {
+        self.context.runtime.spawn(async move {
             let deleted = server.delete_radio_station(&id).await;
             let shown = view.clone();
             view.on_window(move |window| {
@@ -108,7 +110,7 @@ impl RadioView {
     }
 
     pub(super) fn connected_server(&self) -> Option<Arc<dyn MusicServer>> {
-        let server = self.ctx.session.get();
+        let server = self.context.session.get();
         if server.is_none()
             && let Some(window) = self.window.upgrade()
         {

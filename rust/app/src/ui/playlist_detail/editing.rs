@@ -7,8 +7,8 @@ use super::detail::{RemovalTarget, SharedDetail, lock};
 use super::loading::refresh_if_showing;
 use crate::ui::{Actions, AppWindow, Context, PlaylistDetailState, on_ui, show_status};
 
-pub fn remove(window: &AppWindow, ctx: &Context, shared: &SharedDetail, indexes: Vec<usize>) {
-    let Some(server) = ctx.session.get() else {
+pub fn remove(window: &AppWindow, context: &Context, shared: &SharedDetail, indexes: Vec<usize>) {
+    let Some(server) = context.session.get() else {
         return;
     };
     let Some(target) = lock(shared).start_removal(&indexes) else {
@@ -16,7 +16,7 @@ pub fn remove(window: &AppWindow, ctx: &Context, shared: &SharedDetail, indexes:
     };
     window.global::<PlaylistDetailState>().set_busy(true);
     let (weak, shared) = (window.as_weak(), Arc::clone(shared));
-    ctx.rt.spawn(async move {
+    context.runtime.spawn(async move {
         let result = server
             .remove_from_playlist(&target.playlist_id, &indexes)
             .await;

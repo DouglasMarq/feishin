@@ -6,21 +6,24 @@ use slint::{ComponentHandle, SharedString};
 
 use super::super::{AlbumDetailState, AppWindow, Context, on_ui, rating_stars, show_status};
 
-fn shown_album(window: &AppWindow, ctx: &Context) -> Option<(SharedString, Arc<dyn MusicServer>)> {
+fn shown_album(
+    window: &AppWindow,
+    context: &Context,
+) -> Option<(SharedString, Arc<dyn MusicServer>)> {
     let album_id = window.global::<AlbumDetailState>().get_album_id();
-    let server = ctx.session.get().filter(|_| !album_id.is_empty())?;
+    let server = context.session.get().filter(|_| !album_id.is_empty())?;
     Some((album_id, server))
 }
 
-pub fn toggle_favorite(window: &AppWindow, ctx: &Context) {
-    let Some((album_id, server)) = shown_album(window, ctx) else {
+pub fn toggle_favorite(window: &AppWindow, context: &Context) {
+    let Some((album_id, server)) = shown_album(window, context) else {
         return;
     };
     let state = window.global::<AlbumDetailState>();
     let favorite = !state.get_favorite();
     state.set_favorite(favorite);
     let weak_window = window.as_weak();
-    ctx.rt.spawn(async move {
+    context.runtime.spawn(async move {
         let result = server
             .set_favorite(ItemKind::Album, &[album_id.to_string()], favorite)
             .await;
@@ -36,8 +39,8 @@ pub fn toggle_favorite(window: &AppWindow, ctx: &Context) {
     });
 }
 
-pub fn set_rating(window: &AppWindow, ctx: &Context, rating: i32) {
-    let Some((album_id, server)) = shown_album(window, ctx) else {
+pub fn set_rating(window: &AppWindow, context: &Context, rating: i32) {
+    let Some((album_id, server)) = shown_album(window, context) else {
         return;
     };
     let state = window.global::<AlbumDetailState>();
@@ -45,7 +48,7 @@ pub fn set_rating(window: &AppWindow, ctx: &Context, rating: i32) {
     let stars = rating_stars(rating);
     state.set_rating(i32::from(stars));
     let weak_window = window.as_weak();
-    ctx.rt.spawn(async move {
+    context.runtime.spawn(async move {
         let result = server.set_rating(ItemKind::Album, &album_id, stars).await;
         if let Err(error) = result {
             on_ui(&weak_window, move |window| {

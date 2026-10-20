@@ -19,7 +19,7 @@ const SIMILAR_COUNT: usize = 20;
 
 pub(super) async fn fetch_cover(
     weak_window: &slint::Weak<AppWindow>,
-    ctx: &Context,
+    context: &Context,
     server: &Arc<dyn MusicServer>,
     song: &Song,
 ) {
@@ -30,16 +30,16 @@ pub(super) async fn fetch_cover(
         server: Arc::clone(server),
         cover_id,
     };
-    show_cover(weak_window, ctx, &source, song.id.clone()).await;
+    show_cover(weak_window, context, &source, song.id.clone()).await;
 }
 
 pub(super) async fn show_cover(
     weak_window: &slint::Weak<AppWindow>,
-    ctx: &Context,
+    context: &Context,
     source: &CoverSource,
     song_id: String,
 ) {
-    let Some(cover) = source.fetch(ctx.covers.as_ref(), COVER_SIZE).await else {
+    let Some(cover) = source.fetch(context.covers.as_ref(), COVER_SIZE).await else {
         return;
     };
     on_ui(weak_window, move |window| {
@@ -88,12 +88,12 @@ pub(super) fn configured_lyrics_sources(session: &Session) -> Vec<LyricsSourceSe
 
 pub(super) async fn fetch_lyrics(
     weak_window: &slint::Weak<AppWindow>,
-    ctx: &Context,
+    context: &Context,
     server: &dyn MusicServer,
     song: &Song,
 ) {
-    let configured = configured_lyrics_sources(&ctx.session);
-    let provider = ctx.connector.lyrics();
+    let configured = configured_lyrics_sources(&context.session);
+    let provider = context.connector.lyrics();
     let plan = lyrics_plan(&configured);
     let result = resolve_lyrics(server, provider.as_ref(), song, &plan).await;
     let song_id = song.id.clone();

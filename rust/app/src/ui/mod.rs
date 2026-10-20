@@ -60,7 +60,7 @@ pub const MAX_RATING: u8 = 5;
 
 #[derive(Clone)]
 pub struct Context {
-    pub rt: tokio::runtime::Handle,
+    pub runtime: tokio::runtime::Handle,
     pub commands: UnboundedSender<Command>,
     pub session: Session,
     pub store: Arc<dyn Store>,
@@ -102,31 +102,31 @@ pub fn on_ui(window: &slint::Weak<AppWindow>, update: impl FnOnce(&AppWindow) + 
     }
 }
 
-pub fn install(window: &AppWindow, ctx: &Context, settings: &Settings) {
-    let picker = playlist_picker::install(window, ctx);
-    tracks::install(window, ctx, &settings.ui, &picker);
-    queue::install(window, ctx);
-    player::install(window, ctx);
-    login::install(window, ctx);
+pub fn install(window: &AppWindow, context: &Context, settings: &Settings) {
+    let picker = playlist_picker::install(window, context);
+    tracks::install(window, context, &settings.ui, &picker);
+    queue::install(window, context);
+    player::install(window, context);
+    login::install(window, context);
     nav::install(window);
-    library_scan::install(window, ctx);
-    home::install(window, ctx);
-    albums::install(window, ctx);
-    album_detail::install(window, ctx);
-    artists::install(window, ctx);
-    artist_detail::install(window, ctx);
-    genres::install(window, ctx);
-    playlists::install(window, ctx);
-    playlist_detail::install(window, ctx, &picker);
-    favorites::install(window, ctx);
-    folders::install(window, ctx);
-    search::install(window, ctx);
-    settings::install(window, ctx);
-    sharing::install(window, ctx);
-    now_playing::install(window, ctx);
-    appearance::install(window, ctx, &settings.appearance);
-    radio::install(window, ctx);
-    devices::install(window, ctx);
+    library_scan::install(window, context);
+    home::install(window, context);
+    albums::install(window, context);
+    album_detail::install(window, context);
+    artists::install(window, context);
+    artist_detail::install(window, context);
+    genres::install(window, context);
+    playlists::install(window, context);
+    playlist_detail::install(window, context, &picker);
+    favorites::install(window, context);
+    folders::install(window, context);
+    search::install(window, context);
+    settings::install(window, context);
+    sharing::install(window, context);
+    now_playing::install(window, context);
+    appearance::install(window, context, &settings.appearance);
+    radio::install(window, context);
+    devices::install(window, context);
     window
         .global::<AppState>()
         .set_queue_open(settings.ui.queue_panel_open);

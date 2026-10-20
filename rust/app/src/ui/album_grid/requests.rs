@@ -106,17 +106,17 @@ async fn fetch_cover(
 
 pub fn spawn_request(
     window: Weak<AppWindow>,
-    ctx: &Context,
+    context: &Context,
     locate: Locate,
     on_count: OnCount,
     request: GridRequest,
 ) {
-    let Some(server) = ctx.session.get() else {
+    let Some(server) = context.session.get() else {
         return;
     };
-    let covers = ctx.covers.clone();
+    let covers = context.covers.clone();
     let target = GridTarget { window, locate };
-    ctx.rt.spawn(async move {
+    context.runtime.spawn(async move {
         match request {
             GridRequest::Count { generation, query } => {
                 fetch_count(server, target, on_count, generation, query).await;

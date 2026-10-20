@@ -16,8 +16,8 @@ fn with_model<Output>(
     rows.as_any().downcast_ref::<PlaylistsModel>().map(action)
 }
 
-pub fn load(window: &AppWindow, ctx: &Context) {
-    let Some(server) = ctx.session.get() else {
+pub fn load(window: &AppWindow, context: &Context) {
+    let Some(server) = context.session.get() else {
         return;
     };
     let Some(generation) = with_model(window, PlaylistsModel::begin) else {
@@ -25,7 +25,7 @@ pub fn load(window: &AppWindow, ctx: &Context) {
     };
     window.global::<PlaylistsState>().set_loading(true);
     let weak = window.as_weak();
-    ctx.rt.spawn(async move {
+    context.runtime.spawn(async move {
         let result = fetch_all(server.as_ref()).await;
         on_ui(&weak, move |window| {
             apply_loaded(window, generation, result);
@@ -48,12 +48,12 @@ pub fn refresh(window: &AppWindow) {
     }
 }
 
-pub fn fetch_cover(weak: slint::Weak<AppWindow>, ctx: &Context, cover_id: String) {
-    let Some(server) = ctx.session.get() else {
+pub fn fetch_cover(weak: slint::Weak<AppWindow>, context: &Context, cover_id: String) {
+    let Some(server) = context.session.get() else {
         return;
     };
-    let covers = ctx.covers.clone();
-    ctx.rt.spawn(async move {
+    let covers = context.covers.clone();
+    context.runtime.spawn(async move {
         match covers
             .cover(server.as_ref(), &cover_id, PLAYLIST_COVER_SIZE)
             .await

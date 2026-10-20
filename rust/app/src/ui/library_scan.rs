@@ -17,29 +17,29 @@ enum ScanOutcome {
     StillRunning,
 }
 
-pub fn install(window: &AppWindow, ctx: &Context) {
+pub fn install(window: &AppWindow, context: &Context) {
     let weak = window.as_weak();
-    let ctx = ctx.clone();
+    let context = context.clone();
     window.global::<AppState>().on_rescan_library(move || {
         if let Some(window) = weak.upgrade() {
-            start_scan(&window, &ctx);
+            start_scan(&window, &context);
         }
     });
 }
 
-fn start_scan(window: &AppWindow, ctx: &Context) {
+fn start_scan(window: &AppWindow, context: &Context) {
     let state = window.global::<AppState>();
     if state.get_library_scanning() {
         return;
     }
-    let Some(server) = ctx.session.get() else {
+    let Some(server) = context.session.get() else {
         show_status(window, &tr!("Not connected to a server"));
         return;
     };
     show_progress(window, None);
     let weak = window.as_weak();
-    let work = ctx.session.background_work();
-    ctx.rt.spawn(async move {
+    let work = context.session.background_work();
+    context.runtime.spawn(async move {
         let outcome = follow_scan_while_connected(work, server, progress_reporter(&weak)).await;
         on_ui(&weak, move |window| match outcome {
             Some(outcome) => finish_scan(window, outcome),

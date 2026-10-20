@@ -17,7 +17,7 @@ const COVER_SIZE: u32 = 300;
 struct LoadRequest {
     window: slint::Weak<AppWindow>,
     shared: SharedDetail,
-    ctx: Context,
+    context: Context,
     playlist_id: String,
     generation: u64,
 }
@@ -40,11 +40,11 @@ fn reset_view(window: &AppWindow, generation: u64, playlist_id: &str) {
     with_model(window, |model| model.reset(generation, playlist_id));
 }
 
-pub fn load(window: &AppWindow, ctx: &Context, shared: &SharedDetail, playlist_id: &str) {
+pub fn load(window: &AppWindow, context: &Context, shared: &SharedDetail, playlist_id: &str) {
     let generation = lock(shared).restart(playlist_id);
     reset_view(window, generation, playlist_id);
     let state = window.global::<PlaylistDetailState>();
-    let Some(server) = ctx.session.get().filter(|_| !playlist_id.is_empty()) else {
+    let Some(server) = context.session.get().filter(|_| !playlist_id.is_empty()) else {
         state.set_loading(false);
         return;
     };
@@ -52,11 +52,11 @@ pub fn load(window: &AppWindow, ctx: &Context, shared: &SharedDetail, playlist_i
     let request = LoadRequest {
         window: window.as_weak(),
         shared: Arc::clone(shared),
-        ctx: ctx.clone(),
+        context: context.clone(),
         playlist_id: playlist_id.to_owned(),
         generation,
     };
-    ctx.rt.spawn(fetch_playlist(server, request));
+    context.runtime.spawn(fetch_playlist(server, request));
 }
 
 async fn fetch_playlist(server: Arc<dyn MusicServer>, request: LoadRequest) {
@@ -85,11 +85,11 @@ async fn fetch_playlist(server: Arc<dyn MusicServer>, request: LoadRequest) {
 }
 
 fn spawn_cover_load(request: &LoadRequest, server: Arc<dyn MusicServer>, cover_id: String) {
-    let covers = request.ctx.covers.clone();
+    let covers = request.context.covers.clone();
     let window = request.window.clone();
     let shared = Arc::clone(&request.shared);
     let generation = request.generation;
-    request.ctx.rt.spawn(async move {
+    request.context.runtime.spawn(async move {
         let Ok(cover) = covers
             .cover(server.as_ref(), &cover_id, COVER_SIZE)
             .await

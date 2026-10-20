@@ -38,15 +38,20 @@ impl PlayStart {
     }
 }
 
-pub fn play_playlist(window: &AppWindow, ctx: &Context, shared: &SharedDetail, start: PlayStart) {
+pub fn play_playlist(
+    window: &AppWindow,
+    context: &Context,
+    shared: &SharedDetail,
+    start: PlayStart,
+) {
     let playlist_id = lock(shared).id.clone();
     if playlist_id.is_empty() {
         return;
     }
     if start.shuffles() && !window.global::<PlayerState>().get_shuffle() {
-        ctx.send(Command::ToggleShuffle);
+        context.send(Command::ToggleShuffle);
     }
-    ctx.send(start.command(PlaylistId(playlist_id)));
+    context.send(start.command(PlaylistId(playlist_id)));
 }
 
 #[cfg(test)]

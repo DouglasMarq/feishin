@@ -115,8 +115,8 @@ fn install_test_platform() -> Option<(Rc<MinimalSoftwareWindow>, Jobs)> {
 
 fn demo_context(runtime: &Runtime, store_dir: &Path) -> (Context, UnboundedReceiver<Command>) {
     let (commands, received) = mpsc::unbounded_channel();
-    let ctx = Context {
-        rt: runtime.handle().clone(),
+    let context = Context {
+        runtime: runtime.handle().clone(),
         commands,
         session: Session::default(),
         store: Arc::new(JsonStore::new(store_dir)),
@@ -124,14 +124,14 @@ fn demo_context(runtime: &Runtime, store_dir: &Path) -> (Context, UnboundedRecei
         covers: Arc::new(DemoCovers),
         remote: crate::remote::Remote::default(),
     };
-    ctx.session.set(Some(Arc::new(FakeServer::new(600))));
-    (ctx, received)
+    context.session.set(Some(Arc::new(FakeServer::new(600))));
+    (context, received)
 }
 
-fn start_tracks_view(window: Rc<MinimalSoftwareWindow>, jobs: Jobs, ctx: &Context) -> Harness {
+fn start_tracks_view(window: Rc<MinimalSoftwareWindow>, jobs: Jobs, context: &Context) -> Harness {
     let app = AppWindow::new().expect("window");
-    let picker = playlist_picker::install(&app, ctx);
-    install(&app, ctx, &UiSettings::default(), &picker);
+    let picker = playlist_picker::install(&app, context);
+    install(&app, context, &UiSettings::default(), &picker);
     nav::install(&app);
     app.show().expect("show");
     window.set_size(SIZE);
@@ -293,8 +293,8 @@ fn tracks_view_lists_selects_filters_and_acts_on_demo_songs() {
     };
     let runtime = routed_runtime(1);
     let store_dir = tempfile::tempdir().unwrap();
-    let (ctx, mut received) = demo_context(&runtime, store_dir.path());
-    let harness = start_tracks_view(window, jobs, &ctx);
+    let (context, mut received) = demo_context(&runtime, store_dir.path());
+    let harness = start_tracks_view(window, jobs, &context);
 
     assert_songs_and_genres_load(&harness);
     assert_pointer_selection(&harness);

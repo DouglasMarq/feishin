@@ -8,7 +8,7 @@ use crate::ui::{AppWindow, Context, on_ui};
 
 pub fn fetch<Value, Failure, Pending>(
     window: &AppWindow,
-    ctx: &Context,
+    context: &Context,
     request: impl FnOnce(Arc<dyn MusicServer>) -> Pending + Send + 'static,
     done: impl FnOnce(&AppWindow, &Results, Result<Value, Failure>) + Send + 'static,
 ) -> bool
@@ -17,11 +17,11 @@ where
     Value: Send + 'static,
     Failure: Send + 'static,
 {
-    let Some(server) = ctx.session.get() else {
+    let Some(server) = context.session.get() else {
         return false;
     };
     let weak = window.as_weak();
-    ctx.rt.spawn(async move {
+    context.runtime.spawn(async move {
         let result = request(server).await;
         on_ui(&weak, move |window| {
             with_results(window, |results| done(window, results, result));

@@ -9,27 +9,27 @@ use crate::ui::{AppWindow, Context, TrackItem, on_ui, show_status};
 
 pub fn track_table(
     window: &AppWindow,
-    ctx: &Context,
+    context: &Context,
     favorite: bool,
     binding: Binding<TrackItem>,
 ) -> ModelRc<TrackItem> {
     let weak = window.as_weak();
-    let ctx = ctx.clone();
+    let context = context.clone();
     ModelRc::new(TrackTable::new(favorite, move |request| {
-        spawn_tracks(weak.clone(), &ctx, binding, request);
+        spawn_tracks(weak.clone(), &context, binding, request);
     }))
 }
 
 fn spawn_tracks(
     window: slint::Weak<AppWindow>,
-    ctx: &Context,
+    context: &Context,
     binding: Binding<TrackItem>,
     request: Request,
 ) {
-    let Some(server) = ctx.session.get() else {
+    let Some(server) = context.session.get() else {
         return;
     };
-    ctx.rt.spawn(async move {
+    context.runtime.spawn(async move {
         match request {
             Request::Count { generation, query } => {
                 let result = server.song_count(&query).await;

@@ -55,14 +55,14 @@ const ARTISTS: Binding<CardRow> = Binding {
     },
 };
 
-pub fn install(window: &AppWindow, ctx: &Context) {
+pub fn install(window: &AppWindow, context: &Context) {
     let state = window.global::<FavoritesState>();
-    state.set_tracks(track_table(window, ctx, true, TRACKS));
-    state.set_albums(card_grid(window, ctx, ALBUMS));
-    state.set_artists(card_grid(window, ctx, ARTISTS));
+    state.set_tracks(track_table(window, context, true, TRACKS));
+    state.set_albums(card_grid(window, context, ALBUMS));
+    state.set_artists(card_grid(window, context, ARTISTS));
     install_load(window);
-    install_play_track(window, ctx);
-    install_toggles(window, ctx);
+    install_play_track(window, context);
+    install_toggles(window, context);
     install_columns(window);
 }
 
@@ -89,42 +89,42 @@ fn load_favorites(window: &AppWindow) {
     });
 }
 
-fn install_play_track(window: &AppWindow, ctx: &Context) {
+fn install_play_track(window: &AppWindow, context: &Context) {
     let weak = window.as_weak();
-    let play_ctx = ctx.clone();
+    let play_context = context.clone();
     window
         .global::<FavoritesState>()
         .on_play_track(move |index| {
             if let Some(window) = weak.upgrade() {
-                play_track(&window, &play_ctx, TRACKS, index);
+                play_track(&window, &play_context, TRACKS, index);
             }
         });
 }
 
-fn install_toggles(window: &AppWindow, ctx: &Context) {
+fn install_toggles(window: &AppWindow, context: &Context) {
     let state = window.global::<FavoritesState>();
 
     let weak = window.as_weak();
-    let toggle_ctx = ctx.clone();
+    let toggle_context = context.clone();
     state.on_toggle_track(move |index| {
         if let (Some(window), Ok(index)) = (weak.upgrade(), usize::try_from(index)) {
-            toggle_track(&window, &toggle_ctx, TRACKS, index);
+            toggle_track(&window, &toggle_context, TRACKS, index);
         }
     });
 
     let weak = window.as_weak();
-    let toggle_ctx = ctx.clone();
+    let toggle_context = context.clone();
     state.on_toggle_album(move |id| {
         if let Some(window) = weak.upgrade() {
-            toggle_card(&window, &toggle_ctx, ALBUMS, &id);
+            toggle_card(&window, &toggle_context, ALBUMS, &id);
         }
     });
 
     let weak = window.as_weak();
-    let toggle_ctx = ctx.clone();
+    let toggle_context = context.clone();
     state.on_toggle_artist(move |id| {
         if let Some(window) = weak.upgrade() {
-            toggle_card(&window, &toggle_ctx, ARTISTS, &id);
+            toggle_card(&window, &toggle_context, ARTISTS, &id);
         }
     });
 }

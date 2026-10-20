@@ -13,11 +13,11 @@ use crate::ui::{AppWindow, Context, TrackColumn, TracksState, sort_order};
 
 const SEARCH_DEBOUNCE: Duration = Duration::from_millis(300);
 
-pub(super) fn install_model(window: &AppWindow, ctx: &Context) {
+pub(super) fn install_model(window: &AppWindow, context: &Context) {
     let weak = window.as_weak();
-    let fetch_ctx = ctx.clone();
+    let fetch_context = context.clone();
     let model = Rc::new(TracksModel::new(move |request| {
-        spawn_request(weak.clone(), &fetch_ctx, request);
+        spawn_request(weak.clone(), &fetch_context, request);
     }));
     window
         .global::<TracksState>()
@@ -99,16 +99,16 @@ pub(super) fn install_filters(window: &AppWindow) {
         });
 }
 
-pub(super) fn install_play_row(window: &AppWindow, ctx: &Context) {
+pub(super) fn install_play_row(window: &AppWindow, context: &Context) {
     let weak = window.as_weak();
-    let play_ctx = ctx.clone();
+    let play_context = context.clone();
     window.global::<TracksState>().on_play_row(move |index| {
         let (Some(window), Ok(index)) = (weak.upgrade(), usize::try_from(index)) else {
             return;
         };
         let target = with_model(&window, |model| (model.query(), model.song_id_at(index)));
         if let Some((query, song_id)) = target {
-            play_ctx.send(Command::PlayFromList {
+            play_context.send(Command::PlayFromList {
                 source: SongSource::Library(query),
                 song_id,
                 row_index: ListRow(index),

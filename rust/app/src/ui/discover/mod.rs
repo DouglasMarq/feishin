@@ -33,11 +33,11 @@ use deps::DiscoverDeps;
 use model::DiscoverModel;
 use render::country_names;
 
-pub fn install(window: &AppWindow, ctx: &Context, source: Arc<dyn DiscoverSource>) {
+pub fn install(window: &AppWindow, context: &Context, source: Arc<dyn DiscoverSource>) {
     let model = Rc::new(DiscoverModel::default());
     let state = window.global::<DiscoverState>();
     state.set_songs(ModelRc::from(Rc::clone(&model.songs)));
     state.set_shelves(ModelRc::from(model));
     state.set_countries(country_names());
-    install_callbacks(window, &DiscoverDeps::new(ctx, source));
+    install_callbacks(window, &DiscoverDeps::new(context, source));
 }

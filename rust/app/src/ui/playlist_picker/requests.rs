@@ -43,8 +43,8 @@ fn finish_request(
     }
 }
 
-pub fn pick(window: &AppWindow, ctx: &Context, shared: &SharedPicker, playlist_id: String) {
-    let Some(server) = ctx.session.get() else {
+pub fn pick(window: &AppWindow, context: &Context, shared: &SharedPicker, playlist_id: String) {
+    let Some(server) = context.session.get() else {
         return;
     };
     let Some(PendingRequest { generation, songs }) = start_request(window, shared) else {
@@ -60,11 +60,11 @@ pub fn pick(window: &AppWindow, ctx: &Context, shared: &SharedPicker, playlist_i
                 generation,
                 song_ids,
             };
-            pick_ids(window, ctx, shared, server, picked, ids_request);
+            pick_ids(window, context, shared, server, picked, ids_request);
         }
         PickedSongs::Listed(listed) => {
             close(window, shared);
-            add_listed(window, ctx, server, picked, listed);
+            add_listed(window, context, server, picked, listed);
         }
     }
 }
@@ -76,14 +76,14 @@ struct IdsRequest {
 
 fn pick_ids(
     window: &AppWindow,
-    ctx: &Context,
+    context: &Context,
     shared: &SharedPicker,
     server: Arc<dyn MusicServer>,
     picked: PickedPlaylist,
     request: IdsRequest,
 ) {
     let (weak, shared) = (window.as_weak(), Arc::clone(shared));
-    ctx.rt.spawn(async move {
+    context.runtime.spawn(async move {
         let outcome = add_new_songs(server.as_ref(), &picked.id, &request.song_ids).await;
         on_ui(&weak, move |window| {
             finish_pick(window, &shared, request.generation, &picked, outcome);
@@ -131,9 +131,9 @@ fn finish_pick(
     }
 }
 
-pub fn create(window: &AppWindow, ctx: &Context, shared: &SharedPicker, name: &str) {
+pub fn create(window: &AppWindow, context: &Context, shared: &SharedPicker, name: &str) {
     let name = name.trim().to_owned();
-    let Some(server) = ctx.session.get().filter(|_| !name.is_empty()) else {
+    let Some(server) = context.session.get().filter(|_| !name.is_empty()) else {
         return;
     };
     let Some(PendingRequest { generation, songs }) = start_request(window, shared) else {
@@ -145,18 +145,18 @@ pub fn create(window: &AppWindow, ctx: &Context, shared: &SharedPicker, name: &s
                 generation,
                 song_ids,
             };
-            create_with_ids(window, ctx, shared, server, name, ids_request);
+            create_with_ids(window, context, shared, server, name, ids_request);
         }
         PickedSongs::Listed(listed) => {
             close(window, shared);
-            create_listed(window, ctx, server, name, listed);
+            create_listed(window, context, server, name, listed);
         }
     }
 }
 
 fn create_with_ids(
     window: &AppWindow,
-    ctx: &Context,
+    context: &Context,
     shared: &SharedPicker,
     server: Arc<dyn MusicServer>,
     name: String,
@@ -164,7 +164,7 @@ fn create_with_ids(
 ) {
     let song_ids = new_song_ids(&[], &request.song_ids);
     let (weak, shared) = (window.as_weak(), Arc::clone(shared));
-    ctx.rt.spawn(async move {
+    context.runtime.spawn(async move {
         let result = server.create_playlist(&name, &song_ids).await;
         on_ui(&weak, move |window| {
             finish_create(window, &shared, request.generation, song_ids.len(), result);

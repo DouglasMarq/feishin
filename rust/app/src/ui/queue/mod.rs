@@ -39,23 +39,23 @@ fn parsed_uid(uid: &str) -> Option<Uid> {
         .ok()
 }
 
-fn install_row_actions(state: &QueueState, ctx: &Context) {
-    let play_ctx = ctx.clone();
+fn install_row_actions(state: &QueueState, context: &Context) {
+    let play_context = context.clone();
     state.on_play(move |uid| {
         if let Some(uid) = parsed_uid(&uid) {
-            play_ctx.send(Command::PlayUid(uid));
+            play_context.send(Command::PlayUid(uid));
         }
     });
-    let remove_ctx = ctx.clone();
+    let remove_context = context.clone();
     state.on_remove(move |uid| {
         if let Some(uid) = parsed_uid(&uid) {
-            remove_ctx.send(Command::Remove(vec![uid]));
+            remove_context.send(Command::Remove(vec![uid]));
         }
     });
 }
 
-fn install_move(state: &QueueState, window: &AppWindow, ctx: &Context) {
-    let move_ctx = ctx.clone();
+fn install_move(state: &QueueState, window: &AppWindow, context: &Context) {
+    let move_context = context.clone();
     let weak = window.as_weak();
     state.on_move(move |from, to| {
         let (Some(window), Ok(from), Ok(to)) =
@@ -65,7 +65,7 @@ fn install_move(state: &QueueState, window: &AppWindow, ctx: &Context) {
         };
         let target = with_model(&window, |model| model.move_target(from, to)).flatten();
         if let Some((uid, before)) = target {
-            move_ctx.send(Command::Move {
+            move_context.send(Command::Move {
                 uids: vec![uid],
                 before,
             });
@@ -73,11 +73,11 @@ fn install_move(state: &QueueState, window: &AppWindow, ctx: &Context) {
     });
 }
 
-pub fn install(window: &AppWindow, ctx: &Context) {
+pub fn install(window: &AppWindow, context: &Context) {
     let state = window.global::<QueueState>();
     state.set_rows(ModelRc::from(Rc::new(QueueModel::default())));
-    install_row_actions(&state, ctx);
-    install_move(&state, window, ctx);
+    install_row_actions(&state, context);
+    install_move(&state, window, context);
 }
 
 pub fn set_view(window: &AppWindow, view: QueueView) {

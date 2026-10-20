@@ -15,10 +15,10 @@ pub fn artist_songs_query(artist_id: &str) -> SongListQuery {
     }
 }
 
-pub fn play_artist(window: &AppWindow, ctx: &Context, artist_id: &str, shuffle: bool) {
+pub fn play_artist(window: &AppWindow, context: &Context, artist_id: &str, shuffle: bool) {
     let source = SongSource::Library(artist_songs_query(artist_id));
     if !shuffle {
-        ctx.send(Command::PlayFromList {
+        context.send(Command::PlayFromList {
             source,
             song_id: None,
             row_index: ListRow(0),
@@ -26,9 +26,9 @@ pub fn play_artist(window: &AppWindow, ctx: &Context, artist_id: &str, shuffle: 
         return;
     }
     if !window.global::<PlayerState>().get_shuffle() {
-        ctx.send(Command::ToggleShuffle);
+        context.send(Command::ToggleShuffle);
     }
-    ctx.send(Command::EnqueueFromList {
+    context.send(Command::EnqueueFromList {
         source,
         ranges: vec![RowRanges::WHOLE_LIST],
         placement: Placement::Now,
@@ -53,17 +53,17 @@ fn revert_favorite(window: &AppWindow, generation: u64, artist_id: &str, favorit
     }
 }
 
-pub fn toggle_favorite(window: &AppWindow, ctx: &Context) {
+pub fn toggle_favorite(window: &AppWindow, context: &Context) {
     let Some((generation, artist_id, favorite)) = flip_loaded_favorite() else {
         return;
     };
-    let Some(server) = ctx.session.get() else {
+    let Some(server) = context.session.get() else {
         return;
     };
     window.global::<ArtistDetailState>().set_favorite(favorite);
     artists::set_favorite(window, &artist_id, favorite);
     let weak_window = window.as_weak();
-    ctx.rt.spawn(async move {
+    context.runtime.spawn(async move {
         let artist_ids = [artist_id.clone()];
         let result = server
             .set_favorite(ItemKind::Artist, &artist_ids, favorite)
@@ -77,13 +77,13 @@ pub fn toggle_favorite(window: &AppWindow, ctx: &Context) {
     });
 }
 
-pub fn play_album(window: &AppWindow, ctx: &Context, album_id: String) {
-    let Some(server) = ctx.session.get() else {
+pub fn play_album(window: &AppWindow, context: &Context, album_id: String) {
+    let Some(server) = context.session.get() else {
         return;
     };
-    let commands = ctx.clone();
+    let commands = context.clone();
     let weak_window = window.as_weak();
-    ctx.rt.spawn(async move {
+    context.runtime.spawn(async move {
         match server.album(&album_id).await {
             Ok(album) => commands.send(Command::PlaySongs {
                 songs: album.songs,

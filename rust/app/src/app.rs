@@ -193,7 +193,7 @@ fn show_restored_session(window: &AppWindow, restored: Result<RestoredLogin>) {
 
 fn restore_session(window: &AppWindow, context: &Context, settings: &Settings, mode: Mode) {
     let (weak_window, context, settings) = (window.as_weak(), context.clone(), settings.clone());
-    let runtime = context.rt.clone();
+    let runtime = context.runtime.clone();
     runtime.spawn(async move {
         let reading = context.clone();
         let restored =
@@ -226,7 +226,7 @@ fn load_settings_or_default(store: &dyn Store) -> Settings {
 }
 
 fn restore_saved_queue_once_shown(context: &Context) {
-    let runtime = context.rt.clone();
+    let runtime = context.runtime.clone();
     let store = Arc::clone(&context.store);
     let commands = context.commands.clone();
     slint::Timer::single_shot(Duration::ZERO, move || {
@@ -241,7 +241,7 @@ fn app_context(
     remote: Remote,
 ) -> Context {
     Context {
-        rt: runtime.handle().clone(),
+        runtime: runtime.handle().clone(),
         commands: commands.clone(),
         session: Session::default(),
         store: backends.store,
@@ -351,7 +351,7 @@ mod tests {
     fn context_with(store: Arc<JsonStore>) -> Context {
         let (commands, _ignored) = mpsc::unbounded_channel();
         Context {
-            rt: tokio::runtime::Handle::current(),
+            runtime: tokio::runtime::Handle::current(),
             commands,
             session: Session::default(),
             store,

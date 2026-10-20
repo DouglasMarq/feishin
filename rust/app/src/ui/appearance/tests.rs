@@ -84,8 +84,8 @@ fn open_with(settings: &AppearanceSettings) -> AppearancePage {
         .build()
         .unwrap();
     let (commands, received) = tokio::sync::mpsc::unbounded_channel();
-    let ctx = Context {
-        rt: runtime.handle().clone(),
+    let context = Context {
+        runtime: runtime.handle().clone(),
         commands,
         session: Session::default(),
         store: Arc::new(JsonStore::new(dir.path())),
@@ -93,7 +93,7 @@ fn open_with(settings: &AppearanceSettings) -> AppearancePage {
         covers: Arc::new(DemoCovers),
         remote: crate::remote::Remote::default(),
     };
-    install(&window, &ctx, settings);
+    install(&window, &context, settings);
     AppearancePage {
         window,
         received,

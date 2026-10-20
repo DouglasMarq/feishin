@@ -79,14 +79,14 @@ async fn load_cover(
     }
 }
 
-pub fn load(window: &AppWindow, ctx: &Context, album_id: SharedString) {
+pub fn load(window: &AppWindow, context: &Context, album_id: SharedString) {
     clear(window, &album_id);
-    let Some(server) = ctx.session.get() else {
+    let Some(server) = context.session.get() else {
         return;
     };
     let weak_window = window.as_weak();
-    let covers = ctx.covers.clone();
-    ctx.rt.spawn(async move {
+    let covers = context.covers.clone();
+    context.runtime.spawn(async move {
         let result = server.album(&album_id).await;
         let cover_id = result
             .as_ref()

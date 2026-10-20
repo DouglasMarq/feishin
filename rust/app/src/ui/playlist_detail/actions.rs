@@ -41,25 +41,25 @@ impl SongAction {
 
 pub fn act_on_rows(
     window: &AppWindow,
-    ctx: &Context,
+    context: &Context,
     picker: &PlaylistPicker,
     indexes: &[usize],
     action: SongAction,
 ) {
     match action.placement() {
-        Some(placement) => enqueue_rows(window, ctx, indexes, placement),
+        Some(placement) => enqueue_rows(window, context, indexes, placement),
         None => add_rows_to_playlist(window, picker, indexes),
     }
 }
 
-fn enqueue_rows(window: &AppWindow, ctx: &Context, indexes: &[usize], placement: Placement) {
+fn enqueue_rows(window: &AppWindow, context: &Context, indexes: &[usize], placement: Placement) {
     let Some(playlist_id) = with_model(window, PlaylistSongsModel::playlist_id) else {
         return;
     };
     if playlist_id.is_empty() || indexes.is_empty() {
         return;
     }
-    ctx.send(Command::EnqueueFromList {
+    context.send(Command::EnqueueFromList {
         source: SongSource::Playlist(PlaylistId(playlist_id)),
         ranges: RowRanges::covering(indexes),
         placement,

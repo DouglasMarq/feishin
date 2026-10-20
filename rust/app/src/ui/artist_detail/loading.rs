@@ -46,19 +46,19 @@ fn show_result(
     }
 }
 
-pub fn load(window: &AppWindow, ctx: &Context, artist_id: &str) {
+pub fn load(window: &AppWindow, context: &Context, artist_id: &str) {
     let Some(generation) = begin(artist_id) else {
         return;
     };
     clear(window);
     window.global::<ArtistDetailState>().set_loading(true);
-    let Some(server) = ctx.session.get() else {
+    let Some(server) = context.session.get() else {
         return;
     };
     let weak_window = window.as_weak();
-    let covers = ctx.covers.clone();
+    let covers = context.covers.clone();
     let artist_id = artist_id.to_owned();
-    ctx.rt.spawn(async move {
+    context.runtime.spawn(async move {
         let detail = server.artist(&artist_id).await;
         let image = fetch_artist_image(server.as_ref(), covers.as_ref(), &detail).await;
         on_ui(&weak_window, move |window| {
@@ -79,14 +79,14 @@ fn claim_album_cover(index: usize) -> Option<(u64, String)> {
     })
 }
 
-pub fn load_album_cover(window: &AppWindow, ctx: &Context, index: usize) {
+pub fn load_album_cover(window: &AppWindow, context: &Context, index: usize) {
     let request = claim_album_cover(index);
-    let (Some((generation, cover_id)), Some(server)) = (request, ctx.session.get()) else {
+    let (Some((generation, cover_id)), Some(server)) = (request, context.session.get()) else {
         return;
     };
     let weak_window = window.as_weak();
-    let covers = ctx.covers.clone();
-    ctx.rt.spawn(async move {
+    let covers = context.covers.clone();
+    context.runtime.spawn(async move {
         let cover = covers
             .cover(server.as_ref(), &cover_id, ALBUM_COVER_SIZE)
             .await;

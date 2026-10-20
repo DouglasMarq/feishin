@@ -76,8 +76,8 @@ fn open_now_playing_page(screen: Screen) -> NowPlayingPage {
     let mut settings = Settings::default();
     settings.integrations.lyrics_sources = vec![LyricsSourceSetting::Server];
     session.publish_settings(&settings);
-    let ctx = Context {
-        rt: runtime.handle().clone(),
+    let context = Context {
+        runtime: runtime.handle().clone(),
         commands: sender,
         session,
         store: Arc::new(store),
@@ -86,7 +86,7 @@ fn open_now_playing_page(screen: Screen) -> NowPlayingPage {
         remote: crate::remote::Remote::default(),
     };
     let window = AppWindow::new().unwrap();
-    crate::ui::install(&window, &ctx, &Default::default());
+    crate::ui::install(&window, &context, &Default::default());
     let player = window.global::<PlayerState>();
     player.set_has_song(true);
     player.set_song_id("song-3".into());

@@ -17,27 +17,27 @@ use apply::apply_theme;
 use catalog::PaletteCatalog;
 pub use system::watch_system_scheme;
 
-pub fn install(window: &AppWindow, ctx: &Context, settings: &AppearanceSettings) {
+pub fn install(window: &AppWindow, context: &Context, settings: &AppearanceSettings) {
     let catalog = PaletteCatalog::from_window(window);
     form::show(window, &catalog, settings);
     apply_theme(window, &catalog, settings);
-    install_callbacks(window, ctx);
+    install_callbacks(window, context);
 }
 
-fn install_callbacks(window: &AppWindow, ctx: &Context) {
+fn install_callbacks(window: &AppWindow, context: &Context) {
     let state = window.global::<AppearanceState>();
     let weak_window = window.as_weak();
-    let changed_ctx = ctx.clone();
+    let changed_context = context.clone();
     state.on_changed(move || {
         if let Some(window) = weak_window.upgrade() {
-            save_changes(&window, &changed_ctx);
+            save_changes(&window, &changed_context);
         }
     });
     let weak_window = window.as_weak();
-    let entered_ctx = ctx.clone();
+    let entered_context = context.clone();
     state.on_accent_entered(move |text| {
         if let Some(window) = weak_window.upgrade() {
-            enter_accent(&window, &entered_ctx, &text);
+            enter_accent(&window, &entered_context, &text);
         }
     });
 }
@@ -48,19 +48,19 @@ fn current_settings(window: &AppWindow) -> (PaletteCatalog, AppearanceSettings) 
     (catalog, settings)
 }
 
-fn save_changes(window: &AppWindow, ctx: &Context) {
+fn save_changes(window: &AppWindow, context: &Context) {
     let (catalog, settings) = current_settings(window);
     form::show_accent(&window.global::<AppearanceState>(), settings.accent);
     apply_theme(window, &catalog, &settings);
-    ctx.send(Command::SaveAppearance(settings));
+    context.send(Command::SaveAppearance(settings));
 }
 
-fn enter_accent(window: &AppWindow, ctx: &Context, text: &SharedString) {
+fn enter_accent(window: &AppWindow, context: &Context, text: &SharedString) {
     let state = window.global::<AppearanceState>();
     match text.parse::<AccentColor>() {
         Ok(accent) => {
             state.set_accent(form::slint_color(accent));
-            save_changes(window, ctx);
+            save_changes(window, context);
         }
         Err(error) => {
             let (_, settings) = current_settings(window);

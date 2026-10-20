@@ -63,7 +63,7 @@ fn fetch_feed(
 ) {
     let source = Arc::clone(&deps.source);
     let weak_window = window.as_weak();
-    deps.ctx.rt.spawn(async move {
+    deps.context.runtime.spawn(async move {
         let result = source
             .feed(request.clone(), settings)
             .await

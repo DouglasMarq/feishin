@@ -90,8 +90,8 @@ fn open_discover() -> Fixture {
     let session = Session::default();
     session.set(Some(Arc::new(FakeServer::new(SONGS))));
     let (commands, received) = mpsc::unbounded_channel();
-    let ctx = Context {
-        rt: runtime.handle().clone(),
+    let context = Context {
+        runtime: runtime.handle().clone(),
         commands,
         session,
         store: Arc::new(JsonStore::new(store_dir.path())),
@@ -103,7 +103,7 @@ fn open_discover() -> Fixture {
     crate::ui::nav::install(&window);
     install(
         &window,
-        &ctx,
+        &context,
         Arc::new(DemoDiscover::new(DemoLibrary::with_songs(SONGS))),
     );
     window.show().unwrap();

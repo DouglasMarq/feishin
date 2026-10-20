@@ -49,8 +49,8 @@ fn open_radio_page() -> RadioPage {
     let server = Arc::new(FakeServer::new(20));
     let session = Session::default();
     session.set(Some(server.clone()));
-    let ctx = Context {
-        rt: runtime.handle().clone(),
+    let context = Context {
+        runtime: runtime.handle().clone(),
         commands,
         session,
         store: Arc::new(JsonStore::new(dir.path())),
@@ -58,7 +58,7 @@ fn open_radio_page() -> RadioPage {
         covers: Arc::new(DemoCovers),
         remote: crate::remote::Remote::default(),
     };
-    let view = install_with(&window, &ctx, Arc::new(DemoDirectory));
+    let view = install_with(&window, &context, Arc::new(DemoDirectory));
     let app = window.global::<AppState>();
     app.set_page(Page::Main);
     app.set_route(Route::Radio);
@@ -279,7 +279,7 @@ fn the_playing_station_is_shown() {
 fn server_changes_without_a_connection_are_explained() {
     let page = open_radio_page();
     page.finish_loading();
-    page.view.ctx.session.set(None);
+    page.view.context.session.set(None);
     let state = page.state();
     state.set_delete_name("Demo Jazz Lounge".into());
     state.set_delete_id("radio-0".into());

@@ -11,11 +11,11 @@ use crate::controller::{Command, MAX_VOLUME, UiSink, UiUpdate};
 
 const COVER_SIZE: u32 = 128;
 
-pub fn install(window: &AppWindow, ctx: &Context) {
+pub fn install(window: &AppWindow, context: &Context) {
     let state = window.global::<PlayerState>();
     let bind = |command: fn() -> Command| {
-        let ctx = ctx.clone();
-        move || ctx.send(command())
+        let context = context.clone();
+        move || context.send(command())
     };
     state.on_toggle_pause(bind(|| Command::TogglePause));
     state.on_next(bind(|| Command::Next));
@@ -23,13 +23,13 @@ pub fn install(window: &AppWindow, ctx: &Context) {
     state.on_toggle_mute(bind(|| Command::ToggleMute));
     state.on_toggle_shuffle(bind(|| Command::ToggleShuffle));
     state.on_cycle_repeat(bind(|| Command::CycleRepeat));
-    let seek_ctx = ctx.clone();
+    let seek_context = context.clone();
     state.on_seek(move |position_ms| {
-        seek_ctx.send(Command::Seek(u64::try_from(position_ms).unwrap_or(0)));
+        seek_context.send(Command::Seek(u64::try_from(position_ms).unwrap_or(0)));
     });
-    let volume_ctx = ctx.clone();
+    let volume_context = context.clone();
     state.on_set_volume(move |volume| {
-        volume_ctx.send(Command::SetVolume(
+        volume_context.send(Command::SetVolume(
             u8::try_from(volume.clamp(0, i32::from(MAX_VOLUME))).unwrap_or_default(),
         ));
     });
@@ -37,22 +37,22 @@ pub fn install(window: &AppWindow, ctx: &Context) {
 
 pub struct SlintSink {
     window: slint::Weak<AppWindow>,
-    ctx: Context,
+    context: Context,
 }
 
 impl SlintSink {
-    pub fn new(window: slint::Weak<AppWindow>, ctx: Context) -> Self {
-        Self { window, ctx }
+    pub fn new(window: slint::Weak<AppWindow>, context: Context) -> Self {
+        Self { window, context }
     }
 
     fn load_cover(&self, track: &QueueTrack) {
-        let Some(source) = CoverSource::of_track(track, self.ctx.session.get()) else {
+        let Some(source) = CoverSource::of_track(track, self.context.session.get()) else {
             return;
         };
         let song_id = track.song_id.to_string();
-        let covers = self.ctx.covers.clone();
+        let covers = self.context.covers.clone();
         let window = self.window.clone();
-        self.ctx.rt.spawn(async move {
+        self.context.runtime.spawn(async move {
             if let Some(cover) = source.fetch(covers.as_ref(), COVER_SIZE).await {
                 on_ui(&window, move |window| show_cover(window, &song_id, &cover));
             }
