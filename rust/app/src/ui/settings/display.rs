@@ -1,3 +1,4 @@
+use feishin_core::model::ServerType;
 use feishin_storage::settings::{MAX_CROSSFADE_SECONDS, Settings};
 use slint::{ComponentHandle, ModelRc, SharedString, VecModel};
 
@@ -16,11 +17,19 @@ pub(super) fn server_rows(settings: &Settings) -> Vec<ServerRow> {
         .map(|server| ServerRow {
             id: server.id.as_str().into(),
             name: server.name.as_str().into(),
-            kind: format!("{:?}", server.server_type).into(),
+            kind: server_kind_label(server.server_type).into(),
             detail: tr!("{} at {}", server.username, server.url).into(),
             current: settings.current_server_id.as_deref() == Some(server.id.as_str()),
         })
         .collect()
+}
+
+fn server_kind_label(server_type: ServerType) -> &'static str {
+    match server_type {
+        ServerType::Navidrome => "Navidrome",
+        ServerType::Subsonic => "Subsonic",
+        ServerType::Jellyfin => "Jellyfin",
+    }
 }
 
 pub(super) fn string_model(values: &[String]) -> ModelRc<SharedString> {
@@ -100,5 +109,12 @@ mod tests {
         assert!(!rows[0].current && rows[1].current);
         assert_eq!(rows[0].kind, "Navidrome");
         assert_eq!(rows[0].detail, "me at https://a.example.com");
+    }
+
+    #[test]
+    fn given_each_server_type_the_kind_label_is_its_product_name() {
+        assert_eq!(server_kind_label(ServerType::Navidrome), "Navidrome");
+        assert_eq!(server_kind_label(ServerType::Subsonic), "Subsonic");
+        assert_eq!(server_kind_label(ServerType::Jellyfin), "Jellyfin");
     }
 }

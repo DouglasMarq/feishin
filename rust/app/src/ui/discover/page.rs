@@ -81,7 +81,7 @@ impl Page {
         self.loading = true;
         self.error = None;
         self.title = match &target {
-            PageTarget::Search(query) => format!("\"{query}\""),
+            PageTarget::Search(query) => tr!("\"{}\"", query),
             PageTarget::Collection { .. } | PageTarget::Mix(_) => String::new(),
         };
         self.subtitle.clear();
