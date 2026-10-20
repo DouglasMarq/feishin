@@ -1,4 +1,4 @@
-use std::sync::OnceLock;
+use std::sync::{Arc, OnceLock};
 
 use async_trait::async_trait;
 use feishin_api::MusicServer;
@@ -349,7 +349,7 @@ impl DiscoverSource for DemoDiscover {
             .catalog()
             .search(&query, COLLECTION_SONGS)
             .await
-            .map_err(|error| MusicError::Network(error.to_string()))?;
+            .map_err(|error| MusicError::Network(Arc::new(error)))?;
         Ok(results.songs.iter().map(music_song_of).collect())
     }
 

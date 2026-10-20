@@ -76,9 +76,14 @@ fn netscape_cookie(line: &str) -> Option<NetscapeCookie<'_>> {
     let [domain, _, _, _, expires_at, name, value] = fields.as_slice() else {
         return None;
     };
+    let expires_at = expires_at
+        .trim()
+        .parse()
+        .inspect_err(|error| tracing::debug!("skipping the cookie {name}: bad expiry: {error}"))
+        .ok()?;
     Some(NetscapeCookie {
         domain,
-        expires_at: expires_at.trim().parse().unwrap_or_default(),
+        expires_at,
         name,
         value,
     })
@@ -141,6 +146,13 @@ mod tests {
         let anonymous = ".youtube.com\tTRUE\t/\tTRUE\t0\tYSC\tvisitor\n";
         assert_eq!(MusicAuth::from_netscape_cookies(anonymous, NOW), None);
         assert_eq!(MusicAuth::from_netscape_cookies("", NOW), None);
+    }
+
+    #[test]
+    fn given_a_cookie_with_a_malformed_expiry_it_is_skipped() {
+        let text = ".youtube.com\tTRUE\t/\tTRUE\tsoon\tSAPISID\tfixture-sapisid\n\
+            .youtube.com\tTRUE\t/\tTRUE\t0\tPREF\tf6=8\n";
+        assert_eq!(MusicAuth::from_netscape_cookies(text, NOW), None);
     }
 
     #[test]

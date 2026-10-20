@@ -3,7 +3,7 @@ mod connection;
 mod options;
 mod text_field;
 
-use std::sync::mpsc;
+use std::sync::mpsc::{self, RecvTimeoutError};
 use std::time::{Duration, SystemTime, UNIX_EPOCH};
 
 use discord_rich_presence::DiscordIpcClient;
@@ -31,8 +31,11 @@ impl DiscordPresence {
                 commands,
                 options: DiscordOptions::default(),
             }),
-            Err(_) => Err(PlatformError::Discord(
-                "timed out connecting to Discord".to_owned(),
+            Err(RecvTimeoutError::Timeout) => Err(PlatformError::Discord(
+                "timed out connecting to Discord".into(),
+            )),
+            Err(RecvTimeoutError::Disconnected) => Err(PlatformError::Discord(
+                "the Discord thread stopped before connecting".into(),
             )),
         }
     }
@@ -72,7 +75,7 @@ impl DiscordPresence {
     fn send(&self, command: Command) -> Result<()> {
         self.commands
             .send(command)
-            .map_err(|_| PlatformError::Discord("Discord thread is not running".to_owned()))
+            .map_err(|error| PlatformError::Discord(Box::new(error)))
     }
 }
 

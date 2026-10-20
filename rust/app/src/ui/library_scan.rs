@@ -10,7 +10,6 @@ use crate::session::BackgroundWork;
 
 const SCAN_POLL_INTERVAL: Duration = Duration::from_secs(2);
 const MAX_SCAN_POLLS: usize = 1800;
-const NOT_AUTHORIZED_CODE: i32 = 50;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 enum ScanOutcome {
@@ -115,10 +114,7 @@ fn outcome_message(outcome: &Result<ScanOutcome, ApiError>) -> String {
         ),
         Ok(ScanOutcome::Finished(_)) => tr!("Library scan finished"),
         Ok(ScanOutcome::StillRunning) => tr!("The library scan is still running on the server"),
-        Err(ApiError::Server {
-            code: NOT_AUTHORIZED_CODE,
-            ..
-        }) => tr!("Only a server admin can rescan the library"),
+        Err(ApiError::NotAuthorized(_)) => tr!("Only a server admin can rescan the library"),
         Err(error) => tr!("Could not rescan the library: {}", error),
     }
 }
@@ -172,10 +168,7 @@ mod tests {
 
     #[test]
     fn users_without_admin_rights_are_told_why() {
-        let refused = Err(ApiError::Server {
-            code: NOT_AUTHORIZED_CODE,
-            message: "User not authorized".into(),
-        });
+        let refused = Err(ApiError::NotAuthorized("User not authorized".into()));
         assert_eq!(
             outcome_message(&refused),
             "Only a server admin can rescan the library"

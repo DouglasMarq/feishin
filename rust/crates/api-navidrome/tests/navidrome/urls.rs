@@ -84,6 +84,9 @@ async fn given_an_invalid_server_address_native_calls_fail() {
         let server = NavidromeServer::with_credential(config(address), &credential(Some("jwt-1")))
             .expect("server");
         let fetched = server.song("s1").await;
-        assert!(matches!(fetched, Err(ApiError::Network(_))), "{address}");
+        assert!(
+            matches!(fetched, Err(ApiError::InvalidAddress(_))),
+            "{address}"
+        );
     }
 }

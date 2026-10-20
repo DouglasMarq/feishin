@@ -82,9 +82,8 @@ async fn a_failing_yt_dlp_reports_its_last_error_line() {
         "echo 'WARNING: noise' >&2\necho 'ERROR: [youtube] abc: Video unavailable' >&2\nexit 1",
     );
     let error = fake.yt_dlp().audio_stream("abc").await.unwrap_err();
-    assert_eq!(
-        error,
-        YouTubeError::Failed("[youtube] abc: Video unavailable".into())
+    assert!(
+        matches!(&error, YouTubeError::Failed(message) if message == "[youtube] abc: Video unavailable")
     );
     assert!(error.user_message().contains("Video unavailable"));
 }
@@ -94,7 +93,7 @@ async fn output_without_an_address_is_an_error() {
     let _spawning = SPAWNING.lock().await;
     let fake = FakeYtDlp::printing("nothing useful");
     let error = fake.yt_dlp().audio_stream("abc").await.unwrap_err();
-    assert_eq!(error, YouTubeError::NoAudioUrl);
+    assert!(matches!(error, YouTubeError::NoAudioUrl));
 }
 
 #[tokio::test]
@@ -102,7 +101,7 @@ async fn a_missing_binary_asks_to_install_yt_dlp() {
     let directory = tempfile::tempdir().unwrap();
     let yt_dlp = YtDlp::new(directory.path().join("no-such-yt-dlp"));
     let error = yt_dlp.audio_stream("abc").await.unwrap_err();
-    assert_eq!(error, YouTubeError::NotInstalled);
+    assert!(matches!(error, YouTubeError::NotInstalled));
     assert_eq!(
         error.user_message(),
         "Install yt-dlp to play YouTube tracks"
@@ -115,7 +114,7 @@ async fn a_hanging_yt_dlp_times_out() {
     let fake = FakeYtDlp::with_body("exec sleep 5");
     let yt_dlp = fake.yt_dlp().with_timeout(Duration::from_millis(200));
     let error = yt_dlp.audio_stream("abc").await.unwrap_err();
-    assert_eq!(error, YouTubeError::TimedOut(0));
+    assert!(matches!(error, YouTubeError::TimedOut(0)));
 }
 
 #[tokio::test]
@@ -124,7 +123,7 @@ async fn video_ids_that_could_be_options_are_refused() {
         .audio_stream("--exec=rm")
         .await
         .unwrap_err();
-    assert_eq!(error, YouTubeError::InvalidVideoId("--exec=rm".into()));
+    assert!(matches!(error, YouTubeError::InvalidVideoId(id) if id == "--exec=rm"));
 }
 
 #[tokio::test]
@@ -316,7 +315,7 @@ async fn empty_video_output_is_an_error() {
     let _spawning = SPAWNING.lock().await;
     let fake = FakeYtDlp::printing("");
     let error = fake.yt_dlp().video("abc").await.unwrap_err();
-    assert_eq!(error, YouTubeError::NoVideoDetails);
+    assert!(matches!(error, YouTubeError::NoVideoDetails));
 }
 
 #[tokio::test]

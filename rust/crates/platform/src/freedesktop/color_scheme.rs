@@ -19,7 +19,7 @@ fn scheme_from_portal_value(value: &OwnedValue) -> SystemColorScheme {
 }
 
 fn desktop_error(error: zbus::Error) -> PlatformError {
-    PlatformError::DesktopSettings(error.to_string())
+    PlatformError::DesktopSettings(Box::new(error))
 }
 
 async fn settings_proxy(connection: &Connection) -> zbus::Result<Proxy<'static>> {
@@ -45,6 +45,7 @@ fn color_scheme_change(message: &zbus::Message) -> Option<SystemColorScheme> {
     let (namespace, key, value) = message
         .body()
         .deserialize::<(String, String, OwnedValue)>()
+        .inspect_err(|error| tracing::debug!("ignoring a malformed portal setting change: {error}"))
         .ok()?;
     (namespace == APPEARANCE_NAMESPACE && key == COLOR_SCHEME_KEY)
         .then(|| scheme_from_portal_value(&value))

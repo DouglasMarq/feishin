@@ -17,7 +17,10 @@ async fn jellyfin_has_no_server_stations_and_makes_no_requests() {
     let mock = MockServer::start().await;
     let server = server(&mock);
 
-    assert!(server.radio_stations().await.unwrap().is_empty());
+    assert!(matches!(
+        server.radio_stations().await,
+        Err(ApiError::Unsupported(_))
+    ));
     assert!(!server.can_manage_radio_stations().await.unwrap());
     assert!(
         mock.received_requests()

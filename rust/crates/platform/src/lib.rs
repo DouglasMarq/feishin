@@ -27,18 +27,20 @@ pub enum SystemColorScheme {
     NoPreference,
 }
 
+pub type ErrorCause = Box<dyn std::error::Error + Send + Sync>;
+
 #[derive(Debug, thiserror::Error)]
 pub enum PlatformError {
     #[error("media controls error: {0}")]
-    MediaControls(String),
+    MediaControls(#[source] ErrorCause),
     #[error("discord error: {0}")]
-    Discord(String),
+    Discord(#[source] ErrorCause),
     #[error("desktop settings error: {0}")]
-    DesktopSettings(String),
+    DesktopSettings(#[source] ErrorCause),
     #[error("sleep inhibitor error: {0}")]
-    SleepInhibitor(String),
+    SleepInhibitor(#[source] ErrorCause),
     #[error("could not open the link: {0}")]
-    OpenUrl(String),
+    OpenUrl(#[source] ErrorCause),
 }
 
 pub type Result<T> = std::result::Result<T, PlatformError>;
@@ -73,4 +75,20 @@ pub enum PlaybackStatus {
     Playing { position_ms: u64 },
     Paused { position_ms: u64 },
     Stopped,
+}
+
+#[cfg(test)]
+mod tests {
+    use std::error::Error;
+
+    use super::*;
+
+    #[test]
+    fn given_a_wrapped_failure_the_source_is_the_original_error() {
+        let refused = std::io::Error::from(std::io::ErrorKind::ConnectionRefused);
+        let error = PlatformError::Discord(Box::new(refused));
+        let source = error.source().unwrap();
+        assert!(source.downcast_ref::<std::io::Error>().is_some());
+        assert_eq!(error.to_string(), format!("discord error: {source}"));
+    }
 }

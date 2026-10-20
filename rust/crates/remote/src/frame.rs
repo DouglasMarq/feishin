@@ -21,37 +21,27 @@ pub async fn read_message_within<Message: DeserializeOwned>(
     let read = (&mut *reader)
         .take(max_bytes + 1)
         .read_until(b'\n', &mut line)
-        .await
-        .map_err(|error| RemoteError::Io(error.to_string()))?;
+        .await?;
     if read == 0 {
         return Ok(None);
     }
     if line.last() != Some(&b'\n') {
         return Err(RemoteError::Protocol(match read as u64 > max_bytes {
-            true => "a message is too large".to_owned(),
-            false => "the connection ended in the middle of a message".to_owned(),
+            true => "a message is too large",
+            false => "the connection ended in the middle of a message",
         }));
     }
-    serde_json::from_slice(&line)
-        .map(Some)
-        .map_err(|error| RemoteError::Protocol(error.to_string()))
+    Ok(Some(serde_json::from_slice(&line)?))
 }
 
 pub async fn write_message<Message: Serialize>(
     writer: &mut (impl AsyncWrite + Unpin),
     message: &Message,
 ) -> Result<(), RemoteError> {
-    let mut line =
-        serde_json::to_vec(message).map_err(|error| RemoteError::Protocol(error.to_string()))?;
+    let mut line = serde_json::to_vec(message)?;
     line.push(b'\n');
-    writer
-        .write_all(&line)
-        .await
-        .map_err(|error| RemoteError::Io(error.to_string()))?;
-    writer
-        .flush()
-        .await
-        .map_err(|error| RemoteError::Io(error.to_string()))
+    writer.write_all(&line).await?;
+    Ok(writer.flush().await?)
 }
 
 #[cfg(test)]
@@ -90,7 +80,7 @@ mod tests {
         let mut invalid = BufReader::new(b"not json\n".as_slice());
         assert!(matches!(
             read_message::<ClientMessage>(&mut invalid).await,
-            Err(RemoteError::Protocol(_))
+            Err(RemoteError::Malformed(_))
         ));
     }
 }

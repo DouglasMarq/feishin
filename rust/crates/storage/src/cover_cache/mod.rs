@@ -62,7 +62,7 @@ impl CoverCache {
             .await
             .clone();
         self.forget_inflight_load(&image_key, &load_cell);
-        shared_result.map_err(|error| error.duplicate())
+        shared_result.map_err(Arc::unwrap_or_clone)
     }
 
     pub fn get_cached(&self, key: &str, size: u32) -> Option<Arc<DecodedImage>> {

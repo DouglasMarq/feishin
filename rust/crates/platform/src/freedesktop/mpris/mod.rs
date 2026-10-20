@@ -7,7 +7,7 @@ mod root_interface;
 mod service;
 mod snapshot;
 
-use std::sync::mpsc as std_mpsc;
+use std::sync::mpsc::{self as std_mpsc, RecvTimeoutError};
 use std::sync::{Arc, Mutex};
 use std::thread;
 use std::time::Duration;
@@ -62,11 +62,14 @@ impl MediaControls {
         thread::Builder::new()
             .name(MPRIS_THREAD_NAME.to_owned())
             .spawn(move || service::run(player, update_receiver, ready_sender))
-            .map_err(|error| PlatformError::MediaControls(error.to_string()))?;
+            .map_err(|error| PlatformError::MediaControls(Box::new(error)))?;
         match ready_receiver.recv_timeout(STARTUP_TIMEOUT) {
             Ok(registered) => registered.map(|()| Self { updates }),
-            Err(_) => Err(PlatformError::MediaControls(
-                "timed out registering on the session bus".to_owned(),
+            Err(RecvTimeoutError::Timeout) => Err(PlatformError::MediaControls(
+                "timed out registering on the session bus".into(),
+            )),
+            Err(RecvTimeoutError::Disconnected) => Err(PlatformError::MediaControls(
+                "the MPRIS thread stopped before registering".into(),
             )),
         }
     }
@@ -90,6 +93,6 @@ impl MediaControls {
     fn send(&self, update: Update) -> Result<()> {
         self.updates
             .send(update)
-            .map_err(|_| PlatformError::MediaControls("MPRIS thread is not running".to_owned()))
+            .map_err(|error| PlatformError::MediaControls(Box::new(error)))
     }
 }

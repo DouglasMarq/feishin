@@ -264,7 +264,7 @@ async fn undecodable_bodies_are_rejected_and_not_stored() {
     let cache = cache(directory.path(), 10 << 20, 4);
     assert!(matches!(
         cache.get("bad", &format!("{}/bad", server.uri()), 8).await,
-        Err(StorageError::Invalid(_))
+        Err(StorageError::Malformed { .. })
     ));
     assert!(files_in(directory.path()).is_empty());
     assert_eq!(cache.disk_usage(), 0);

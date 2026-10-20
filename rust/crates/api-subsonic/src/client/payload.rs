@@ -3,6 +3,13 @@ use serde::de::DeserializeOwned;
 
 use super::envelope::SubsonicEnvelope;
 
+#[derive(Debug, thiserror::Error)]
+#[error("{endpoint}: {source}")]
+struct EndpointDecodeError {
+    endpoint: String,
+    source: serde_json::Error,
+}
+
 pub struct Payload {
     endpoint: String,
     envelope: SubsonicEnvelope,
@@ -34,7 +41,10 @@ impl Payload {
         } = self;
         serde_json::from_value(body).map_err(|error| match tolerated_failure_message {
             Some(message) => ApiError::Server { code: 0, message },
-            None => ApiError::Decode(format!("{endpoint}: {error}")),
+            None => ApiError::Decode(Box::new(EndpointDecodeError {
+                endpoint,
+                source: error,
+            })),
         })
     }
 }

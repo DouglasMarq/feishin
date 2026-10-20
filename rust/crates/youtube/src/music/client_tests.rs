@@ -106,10 +106,10 @@ async fn collections_are_browsed_by_id_and_bad_ids_are_refused() {
     let music = client(&server);
     let album = music.collection("MPREb_g3H4u5nW8xD").await.unwrap();
     assert_eq!(album.songs.len(), 3);
-    assert_eq!(
+    assert!(matches!(
         music.collection("../evil").await,
-        Err(MusicError::InvalidId("../evil".into()))
-    );
+        Err(MusicError::InvalidId(id)) if id == "../evil"
+    ));
 }
 
 #[tokio::test]
@@ -146,10 +146,10 @@ async fn song_radio_asks_the_watch_endpoint_for_the_radio_playlist() {
     let music = client(&server);
     let radio = music.radio("invented001").await.unwrap();
     assert_eq!(radio.len(), 5);
-    assert_eq!(
+    assert!(matches!(
         music.radio("../evil").await,
-        Err(MusicError::InvalidId("../evil".into()))
-    );
+        Err(MusicError::InvalidId(id)) if id == "../evil"
+    ));
     let requests = server.received_requests().await.unwrap();
     assert_eq!(requests.len(), 1);
     assert!(requests[0].headers.get("cookie").is_none());
@@ -191,11 +191,11 @@ async fn failures_map_to_status_and_decode_errors() {
         .await;
     let music = client(&server);
     let rejected = music.home().await.unwrap_err();
-    assert_eq!(rejected, MusicError::Status(403));
+    assert!(matches!(rejected, MusicError::Status(403)));
     assert!(rejected.is_rejected_sign_in());
     assert!(matches!(
         music.new_releases().await,
-        Err(MusicError::Decode(_))
+        Err(MusicError::Malformed(_))
     ));
     assert!(matches!(
         music.charts("BR").await,

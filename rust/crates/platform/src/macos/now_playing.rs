@@ -119,7 +119,7 @@ fn signed_offset(direction: SeekDirection, amount_ms: i64) -> i64 {
 }
 
 fn media_error(error: souvlaki::Error) -> PlatformError {
-    PlatformError::MediaControls(error.to_string())
+    PlatformError::MediaControls(Box::new(error))
 }
 
 #[cfg(test)]

@@ -9,6 +9,7 @@ use crate::{Result, StorageError};
 const PREFERRED_ORIGIN: &str = "file://";
 const UTF16_ENCODING_MARKER: u8 = 0;
 const LATIN1_ENCODING_MARKER: u8 = 1;
+const FEISHIN_LOCAL_STORAGE: &str = "Feishin localStorage";
 
 struct StoreEntry {
     origin: String,
@@ -100,5 +101,5 @@ fn decode_utf16_le(data: &[u8]) -> Option<String> {
 }
 
 fn leveldb_error(status: rusty_leveldb::Status) -> StorageError {
-    StorageError::Invalid(format!("Feishin localStorage: {status}"))
+    StorageError::malformed(FEISHIN_LOCAL_STORAGE, status)
 }

@@ -146,5 +146,5 @@ async fn capped_body(mut response: reqwest::Response) -> Result<Vec<u8>> {
 }
 
 fn network_error(error: reqwest::Error) -> StorageError {
-    StorageError::Network(error.without_url().to_string())
+    StorageError::Network(Arc::new(error.without_url()))
 }

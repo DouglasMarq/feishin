@@ -2,12 +2,13 @@ use std::fs::{DirBuilder, DirEntry, OpenOptions, Permissions};
 use std::io::Write;
 use std::os::unix::fs::{DirBuilderExt, OpenOptionsExt, PermissionsExt};
 use std::path::{Path, PathBuf};
+use std::sync::Arc;
 use std::sync::atomic::{AtomicU64, Ordering};
 use std::time::Duration;
 
 use super::auth::MusicAuth;
 use super::error::MusicError;
-use crate::{YtDlp, unix_now};
+use crate::{YouTubeError, YtDlp, unix_now};
 
 const RUNTIME_SUBDIRECTORY: &str = "feishin-rs";
 const PRIVATE_DIRECTORY_MODE: u32 = 0o700;
@@ -15,6 +16,9 @@ const PRIVATE_FILE_MODE: u32 = 0o600;
 const COOKIE_FILE_PREFIX: &str = "youtube-music-cookies-";
 const STALE_AFTER: Duration = Duration::from_secs(600);
 const NETSCAPE_HEADER: &[u8] = b"# Netscape HTTP Cookie File\n";
+const READING_COOKIES: &str = "could not read the exported cookies";
+const PREPARING_PRIVATE_FOLDER: &str = "could not prepare a private folder";
+const CREATING_COOKIE_FILE: &str = "could not create the cookie file";
 
 static EXPORT_COUNTER: AtomicU64 = AtomicU64::new(0);
 
@@ -51,14 +55,14 @@ pub async fn sign_in_with_browser(
     remove_stale_cookie_files(private_dir);
     let cookie_file = PrivateFile::create(private_dir)?;
     let exported = yt_dlp.export_cookies(cookie_file.path()).await;
-    let text = std::fs::read_to_string(cookie_file.path()).unwrap_or_default();
+    let text = read_exported_cookies(cookie_file.path(), &exported)?;
     drop(cookie_file);
     match (
         MusicAuth::from_netscape_cookies(&text, unix_now()),
         exported,
     ) {
         (Some(auth), _) => Ok(auth),
-        (None, Err(error)) => Err(MusicError::SignIn(error.to_string())),
+        (None, Err(error)) => Err(MusicError::CookieExport(error)),
         (None, Ok(())) => Err(MusicError::SignIn(format!(
             "{} has no YouTube session",
             browser.label()
@@ -66,10 +70,29 @@ pub async fn sign_in_with_browser(
     }
 }
 
+fn read_exported_cookies(
+    path: &Path,
+    exported: &Result<(), YouTubeError>,
+) -> Result<String, MusicError> {
+    match (std::fs::read_to_string(path), exported) {
+        (Ok(text), _) => Ok(text),
+        (Err(error), Ok(())) => Err(cookie_file_error(READING_COOKIES, error)),
+        (Err(error), Err(_)) => {
+            tracing::debug!("yt-dlp left no cookie file: {error}");
+            Ok(String::new())
+        }
+    }
+}
+
+fn cookie_file_error(context: &'static str, error: std::io::Error) -> MusicError {
+    MusicError::CookieFile {
+        context,
+        source: Arc::new(error),
+    }
+}
+
 fn prepare_private_dir(directory: &Path) -> Result<(), MusicError> {
-    let failed = |error: std::io::Error| {
-        MusicError::SignIn(format!("could not prepare a private folder: {error}"))
-    };
+    let failed = |error: std::io::Error| cookie_file_error(PREPARING_PRIVATE_FOLDER, error);
     DirBuilder::new()
         .recursive(true)
         .mode(PRIVATE_DIRECTORY_MODE)
@@ -129,9 +152,7 @@ impl PrivateFile {
         {
             tracing::debug!("could not remove a stale cookie file: {error}");
         }
-        let failed = |error: std::io::Error| {
-            MusicError::SignIn(format!("could not create the cookie file: {error}"))
-        };
+        let failed = |error: std::io::Error| cookie_file_error(CREATING_COOKIE_FILE, error);
         let mut file = OpenOptions::new()
             .write(true)
             .create_new(true)

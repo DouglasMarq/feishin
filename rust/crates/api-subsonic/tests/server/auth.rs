@@ -192,4 +192,22 @@ async fn given_a_network_failure_the_error_has_no_credentials() {
         !message.contains("abc123") && !message.contains("0123456789abcdef"),
         "{message}"
     );
+    let source = std::error::Error::source(&error).expect("the transport error");
+    assert!(source.downcast_ref::<reqwest::Error>().is_some());
+}
+
+#[tokio::test]
+async fn given_subsonic_error_50_returns_not_authorized() {
+    let mock = MockServer::start().await;
+    Mock::given(path("/rest/startScan.view"))
+        .respond_with(failed(
+            json!(50),
+            "User is not authorized for the given operation",
+        ))
+        .mount(&mock)
+        .await;
+
+    let refused = server(&mock).start_library_scan().await;
+
+    assert!(matches!(refused, Err(ApiError::NotAuthorized(_))));
 }

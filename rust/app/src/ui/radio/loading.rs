@@ -1,7 +1,7 @@
 use std::sync::Arc;
 
-use feishin_api::MusicServer;
-use feishin_core::model::{RadioStation, ServerType};
+use feishin_api::{ApiError, MusicServer};
+use feishin_core::model::RadioStation;
 use slint::ComponentHandle;
 use tokio::sync::oneshot;
 
@@ -41,17 +41,12 @@ async fn saved_favorites(reply: oneshot::Receiver<SettingsSnapshot>) -> Vec<Radi
         .unwrap_or_default()
 }
 
-fn server_has_radio(server: Option<&Arc<dyn MusicServer>>) -> bool {
-    server.is_none_or(|server| server.config().server_type != ServerType::Jellyfin)
-}
-
 impl RadioView {
     pub(super) fn load(&self) {
         let server = self.ctx.session.get();
         if let Some(window) = self.window.upgrade() {
             let state = window.global::<RadioState>();
             state.set_stations_loading(true);
-            state.set_server_has_radio(server_has_radio(server.as_ref()));
         }
         let ticket = self.with_model(RadioModel::begin_load);
         let (reply, answer) = oneshot::channel();
@@ -74,8 +69,10 @@ impl RadioView {
         favorites: Vec<RadioStation>,
         server_stations: ServerStations,
     ) {
+        let has_radio = !matches!(server_stations.stations, Err(ApiError::Unsupported(_)));
         let (loaded, failure) = match server_stations.stations {
             Ok(stations) => (stations, None),
+            Err(ApiError::Unsupported(_)) => (Vec::new(), None),
             Err(error) => (Vec::new(), Some(error)),
         };
         let loaded = LoadedStations {
@@ -89,7 +86,9 @@ impl RadioView {
         if let Some(error) = failure {
             show_status(window, &tr!("Could not load the radio stations: {}", error));
         }
-        window.global::<RadioState>().set_stations_loading(false);
+        let state = window.global::<RadioState>();
+        state.set_server_has_radio(has_radio);
+        state.set_stations_loading(false);
         self.render(window);
     }
 }

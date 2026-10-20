@@ -1,6 +1,6 @@
 use std::sync::Arc;
 
-use feishin_api::MusicServer;
+use feishin_api::{ApiError, MusicServer};
 use feishin_core::model::RadioStation;
 use feishin_radio_browser::StationQuery;
 use slint::{ComponentHandle, Model};
@@ -78,6 +78,10 @@ fn open_radio_page() -> RadioPage {
 impl RadioPage {
     fn finish_loading(&self) {
         let stations = self.runtime.block_on(self.server.radio_stations());
+        self.finish_loading_with(stations);
+    }
+
+    fn finish_loading_with(&self, stations: feishin_api::Result<Vec<RadioStation>>) {
         let server_stations = ServerStations {
             stations,
             can_manage: true,
@@ -304,4 +308,25 @@ fn a_slow_load_keeps_a_favorite_saved_meanwhile() {
         .apply_loaded(&page.window, ticket, Vec::new(), server_stations);
 
     assert!(page.stations().iter().any(|row| row.name == "My Station"));
+}
+
+#[test]
+fn given_a_server_with_radio_its_stations_are_listed_as_server_radio() {
+    let page = open_radio_page();
+    page.state().set_server_has_radio(false);
+
+    page.finish_loading();
+
+    assert!(page.state().get_server_has_radio());
+}
+
+#[test]
+fn given_a_server_without_radio_the_view_explains_it_without_an_error() {
+    let page = open_radio_page();
+
+    page.finish_loading_with(Err(ApiError::Unsupported("internet radio stations")));
+
+    assert!(!page.state().get_server_has_radio());
+    assert_eq!(page.window.global::<AppState>().get_status(), "");
+    assert_eq!(page.stations().len(), 1);
 }

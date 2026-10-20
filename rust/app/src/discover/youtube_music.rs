@@ -112,6 +112,8 @@ impl YouTubeMusicSource {
 fn sign_in_reason(error: &MusicError) -> String {
     match error {
         MusicError::SignIn(reason) => reason.clone(),
+        MusicError::CookieExport(error) => error.to_string(),
+        MusicError::CookieFile { context, source } => format!("{context}: {source}"),
         other => other.to_string(),
     }
 }

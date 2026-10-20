@@ -8,7 +8,7 @@ publish.workspace = true
 [dependencies]
 async-trait.workspace = true
 feishin-core.workspace = true
-getrandom = "0.3.4"
+getrandom = { version = "0.3.4", features = ["std"] }
 hex = "0.4.3"
 mdns-sd = { version = "0.21", default-features = false, features = ["async"] }
 gethostname = "1.1.0"

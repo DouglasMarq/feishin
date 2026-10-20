@@ -126,7 +126,7 @@ impl Store for SystemStore {
             .transpose()?)
     }
     fn set_credential(&self, server_id: &str, credential: &Credential) -> Result<()> {
-        Ok(credentials::set(server_id, &credential.to_json())?)
+        Ok(credentials::set(server_id, &credential.to_json()?)?)
     }
     fn delete_credential(&self, server_id: &str) -> Result<()> {
         Ok(credentials::delete(server_id)?)

@@ -4,7 +4,7 @@ use std::time::Duration;
 use reqwest::{Response, StatusCode};
 use serde::de::{DeserializeOwned, IgnoredAny};
 
-use crate::error::{DirectoryError, Result, network_error};
+use crate::error::{DirectoryError, Result};
 use crate::mirror::{ServerEntry, pick_mirror};
 use crate::query::StationQuery;
 use crate::station::{RawStation, StationPage, playable_stations};
@@ -37,7 +37,7 @@ impl RadioBrowser {
             .connect_timeout(CONNECT_TIMEOUT)
             .timeout(REQUEST_TIMEOUT)
             .build()
-            .map_err(network_error)?;
+            .map_err(DirectoryError::Network)?;
         Ok(Self {
             http,
             discovery_url: discovery_url.trim_end_matches('/').to_owned(),
@@ -143,9 +143,9 @@ fn is_worth_retrying(error: &DirectoryError) -> bool {
 async fn send_and_decode<Decoded: DeserializeOwned>(
     request: reqwest::RequestBuilder,
 ) -> Result<Decoded> {
-    let response = request.send().await.map_err(network_error)?;
+    let response = request.send().await.map_err(DirectoryError::Network)?;
     let body = successful_body(response).await?;
-    serde_json::from_slice(&body).map_err(|error| DirectoryError::Decode(error.to_string()))
+    Ok(serde_json::from_slice(&body)?)
 }
 
 async fn successful_body(mut response: Response) -> Result<Vec<u8>> {
@@ -154,7 +154,7 @@ async fn successful_body(mut response: Response) -> Result<Vec<u8>> {
         return Err(DirectoryError::Status(status.as_u16()));
     }
     let mut body = Vec::new();
-    while let Some(chunk) = response.chunk().await.map_err(network_error)? {
+    while let Some(chunk) = response.chunk().await.map_err(DirectoryError::Network)? {
         if body.len().saturating_add(chunk.len()) > MAX_RESPONSE_BYTES {
             return Err(DirectoryError::TooLarge(MAX_RESPONSE_BYTES));
         }

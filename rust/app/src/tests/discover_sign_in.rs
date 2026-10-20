@@ -147,7 +147,10 @@ async fn pages_and_searches_do_not_wait_for_a_slow_sign_in() {
         discover.search("anything".into(), settings(&fake)),
     )
     .await;
-    assert_eq!(search, Ok(Ok(Vec::new())), "the search was not held back");
+    assert!(
+        matches!(search, Ok(Ok(ref songs)) if songs.is_empty()),
+        "the search was not held back"
+    );
     let feed = signing_in.await.unwrap().unwrap();
     assert_eq!(
         feed.notice,

@@ -210,7 +210,7 @@ fn bad_json_is_invalid() {
     let directory = feishin_dir_with(&[(storage_key("file://", STORE_KEY), latin1("{oops"))]);
     assert!(matches!(
         import(directory.path()),
-        Err(StorageError::Invalid(_))
+        Err(StorageError::Malformed { .. })
     ));
 }
 

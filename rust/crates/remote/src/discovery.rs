@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 use std::net::{IpAddr, SocketAddr};
-use std::sync::Mutex;
+use std::sync::{Arc, Mutex, PoisonError};
 
 use mdns_sd::{IfKind, ResolvedService, ServiceDaemon, ServiceEvent, ServiceInfo};
 use tokio::sync::watch;
@@ -58,9 +58,10 @@ impl Discovery {
         .enable_addr_auto();
         let fullname = service.get_fullname().to_owned();
         self.daemon.register(service).map_err(discovery_error)?;
-        if let Ok(mut advertised) = self.advertised.lock() {
-            *advertised = Some(fullname);
-        }
+        *self
+            .advertised
+            .lock()
+            .unwrap_or_else(PoisonError::into_inner) = Some(fullname);
         Ok(())
     }
 
@@ -68,8 +69,8 @@ impl Discovery {
         let Some(fullname) = self
             .advertised
             .lock()
-            .ok()
-            .and_then(|mut advertised| advertised.take())
+            .unwrap_or_else(PoisonError::into_inner)
+            .take()
         else {
             return;
         };
@@ -160,7 +161,7 @@ fn reachable_address(addresses: impl Iterator<Item = IpAddr>) -> Option<IpAddr> 
 }
 
 fn discovery_error(error: mdns_sd::Error) -> RemoteError {
-    RemoteError::Discovery(error.to_string())
+    RemoteError::Discovery(Arc::new(error))
 }
 
 #[cfg(test)]

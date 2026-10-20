@@ -1,8 +1,9 @@
-use feishin_api::ApiError;
+use feishin_api::{ApiError, ErrorCause};
 use reqwest::StatusCode;
 use serde::Deserialize;
 
 const MISSING_DATA_MESSAGE: &str = "data not found";
+const NOT_AUTHORIZED_CODE: i64 = 50;
 
 #[derive(Deserialize)]
 struct NativeErrorBody {
@@ -15,15 +16,15 @@ fn reports_missing_data(body: &[u8]) -> bool {
 }
 
 pub(crate) fn network_error(error: reqwest::Error) -> ApiError {
-    ApiError::Network(error.without_url().to_string())
+    ApiError::Network(Box::new(error.without_url()))
 }
 
-pub(crate) fn invalid_address_error(reason: impl std::fmt::Display) -> ApiError {
-    ApiError::Network(format!("invalid server address: {reason}"))
+pub(crate) fn invalid_address_error(reason: impl Into<ErrorCause>) -> ApiError {
+    ApiError::InvalidAddress(reason.into())
 }
 
 pub(crate) fn decode_error(error: serde_json::Error) -> ApiError {
-    ApiError::Decode(error.to_string())
+    ApiError::Decode(Box::new(error))
 }
 
 pub(crate) fn missing_session_error() -> ApiError {
@@ -33,6 +34,7 @@ pub(crate) fn missing_session_error() -> ApiError {
 pub(crate) fn http_status_error(status: StatusCode, body: &[u8]) -> ApiError {
     match status {
         StatusCode::UNAUTHORIZED => ApiError::Auth(body_message(status, body)),
+        StatusCode::FORBIDDEN => ApiError::NotAuthorized(body_message(status, body)),
         StatusCode::NOT_FOUND => ApiError::NotFound,
         _ if reports_missing_data(body) => ApiError::NotFound,
         _ => ApiError::Server {
@@ -51,6 +53,7 @@ fn body_message(status: StatusCode, body: &[u8]) -> String {
 pub(crate) fn subsonic_error(code: i64, message: String) -> ApiError {
     match code {
         40..=44 => ApiError::Auth(message),
+        NOT_AUTHORIZED_CODE => ApiError::NotAuthorized(message),
         70 => ApiError::NotFound,
         _ => ApiError::Server {
             code: i32::try_from(code).unwrap_or(i32::MAX),
@@ -70,6 +73,12 @@ mod tests {
             br#"{"error":"data not found"}"#,
         );
         assert!(matches!(error, ApiError::NotFound));
+    }
+
+    #[test]
+    fn given_http_403_returns_not_authorized() {
+        let error = http_status_error(StatusCode::FORBIDDEN, b"admin only");
+        assert!(matches!(error, ApiError::NotAuthorized(message) if message == "admin only"));
     }
 
     #[test]

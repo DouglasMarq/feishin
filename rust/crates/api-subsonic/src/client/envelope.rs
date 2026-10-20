@@ -2,6 +2,8 @@ use feishin_api::{ApiError, Result};
 use serde_json::Value;
 
 const MAX_ERROR_BODY_CHARS: usize = 200;
+const MISSING_ENVELOPE_MESSAGE: &str = "missing subsonic-response";
+const NOT_AUTHORIZED_CODE: i32 = 50;
 
 pub struct SubsonicEnvelope {
     pub body: Value,
@@ -9,8 +11,12 @@ pub struct SubsonicEnvelope {
 }
 
 pub fn unwrap_subsonic_response(http_status: u16, text: &str) -> Result<SubsonicEnvelope> {
-    let Some(body) = extract_subsonic_response(text) else {
-        return Err(missing_envelope_error(http_status, text));
+    let body = match extract_subsonic_response(text) {
+        Ok(Some(body)) => body,
+        Ok(None) => return Err(missing_envelope_error(http_status, text, None)),
+        Err(parse_error) => {
+            return Err(missing_envelope_error(http_status, text, Some(parse_error)));
+        }
     };
     match body.get("status").and_then(Value::as_str) {
         Some("ok") => Ok(SubsonicEnvelope {
@@ -21,18 +27,25 @@ pub fn unwrap_subsonic_response(http_status: u16, text: &str) -> Result<Subsonic
     }
 }
 
-fn extract_subsonic_response(text: &str) -> Option<Value> {
-    serde_json::from_str::<Value>(text)
-        .ok()
-        .and_then(|mut document| document.get_mut("subsonic-response").map(Value::take))
-        .filter(Value::is_object)
+fn extract_subsonic_response(text: &str) -> serde_json::Result<Option<Value>> {
+    let mut document = serde_json::from_str::<Value>(text)?;
+    Ok(document
+        .get_mut("subsonic-response")
+        .map(Value::take)
+        .filter(Value::is_object))
 }
 
-fn missing_envelope_error(http_status: u16, text: &str) -> ApiError {
+fn missing_envelope_error(
+    http_status: u16,
+    text: &str,
+    parse_error: Option<serde_json::Error>,
+) -> ApiError {
     match http_status {
         401 | 403 => ApiError::Auth(format!("HTTP {http_status}")),
         404 => ApiError::NotFound,
-        200..=299 => ApiError::Decode("missing subsonic-response".into()),
+        200..=299 => ApiError::Decode(
+            parse_error.map_or_else(|| MISSING_ENVELOPE_MESSAGE.into(), Into::into),
+        ),
         _ => ApiError::Server {
             code: i32::from(http_status),
             message: text.chars().take(MAX_ERROR_BODY_CHARS).collect(),
@@ -56,6 +69,7 @@ fn failed_envelope(body: Value) -> Result<SubsonicEnvelope> {
             tolerated_failure_message: Some(message),
         }),
         Some(40..=44) => Err(ApiError::Auth(message)),
+        Some(NOT_AUTHORIZED_CODE) => Err(ApiError::NotAuthorized(message)),
         Some(70) => Err(ApiError::NotFound),
         Some(code) => Err(ApiError::Server { code, message }),
         None => Err(ApiError::Server { code: 0, message }),
@@ -121,5 +135,25 @@ mod tests {
             unwrap_subsonic_response(200, "<html>"),
             Err(ApiError::Decode(_))
         ));
+    }
+
+    #[test]
+    fn given_a_body_that_is_not_json_the_decode_error_keeps_the_parse_error() {
+        let Err(error) = unwrap_subsonic_response(200, "<html>") else {
+            panic!("an html page is not a subsonic response");
+        };
+        let source = std::error::Error::source(&error).unwrap();
+        assert!(source.downcast_ref::<serde_json::Error>().is_some());
+    }
+
+    #[test]
+    fn given_json_without_an_envelope_the_decode_error_names_it() {
+        let Err(error) = unwrap_subsonic_response(200, "{}") else {
+            panic!("an empty object is not a subsonic response");
+        };
+        assert_eq!(
+            error.to_string(),
+            "unexpected response: missing subsonic-response"
+        );
     }
 }

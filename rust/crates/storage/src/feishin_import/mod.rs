@@ -52,8 +52,8 @@ pub fn import(feishin_config_dir: &Path) -> Result<FeishinImport> {
 }
 
 pub fn parse_auth_store(json: &str) -> Result<FeishinImport> {
-    let persisted: Persisted = serde_json::from_str(json)
-        .map_err(|error| StorageError::Invalid(format!("{STORE_KEY}: {error}")))?;
+    let persisted: Persisted =
+        serde_json::from_str(json).map_err(|error| StorageError::malformed(STORE_KEY, error))?;
     let servers: Vec<ImportedServer> = persisted
         .state
         .server_list

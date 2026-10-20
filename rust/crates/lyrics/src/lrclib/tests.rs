@@ -208,5 +208,10 @@ async fn malformed_json_is_a_decode_error() {
     )
     .await;
     let result = fetch(&reqwest::Client::new(), &server.uri(), &query()).await;
-    assert!(matches!(result, Err(crate::LyricsError::Decode(_))));
+    let Err(error) = result else {
+        panic!("an html page is not lyrics json");
+    };
+    assert!(matches!(error, crate::LyricsError::Decode(_)));
+    let source = std::error::Error::source(&error).unwrap();
+    assert!(source.downcast_ref::<serde_json::Error>().is_some());
 }

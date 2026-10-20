@@ -29,7 +29,7 @@ impl FlakyFolders {
     fn call(&self) -> feishin_api::Result<()> {
         let call = self.calls.fetch_add(1, Ordering::SeqCst) + 1;
         match self.failing_calls.contains(&call) {
-            true => Err(ApiError::Network(format!("call {call} dropped"))),
+            true => Err(ApiError::Network(format!("call {call} dropped").into())),
             false => Ok(()),
         }
     }

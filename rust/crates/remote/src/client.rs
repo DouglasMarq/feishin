@@ -32,8 +32,7 @@ pub async fn connect(
 ) -> Result<ClientLink, RemoteError> {
     let stream = tokio::time::timeout(CONNECT_TIMEOUT, TcpStream::connect(address))
         .await
-        .map_err(|_| RemoteError::TimedOut)?
-        .map_err(|error| RemoteError::Io(error.to_string()))?;
+        .map_err(|_| RemoteError::TimedOut)??;
     let (read_half, mut writer) = stream.into_split();
     let mut reader = BufReader::new(read_half);
     let host = greet(&mut reader, &mut writer, me, trust.as_ref()).await?;
@@ -61,7 +60,7 @@ async fn greet(
         nonce,
     }) = challenge
     else {
-        return Err(RemoteError::Protocol("expected a challenge".to_owned()));
+        return Err(RemoteError::Protocol("expected a challenge"));
     };
     if version != PROTOCOL_VERSION {
         return Err(RemoteError::Failed(
@@ -94,8 +93,8 @@ async fn await_welcome(
             Some(HostMessage::Welcome { server }) => return Ok(server),
             Some(HostMessage::Denied) => return Err(RemoteError::Denied),
             Some(HostMessage::Failed { failure }) => return Err(RemoteError::Failed(failure)),
-            Some(_) => return Err(RemoteError::Protocol("expected a welcome".to_owned())),
-            None => return Err(RemoteError::Io("the connection closed".to_owned())),
+            Some(_) => return Err(RemoteError::Protocol("expected a welcome")),
+            None => return Err(connection_closed()),
         }
     }
 }
@@ -138,4 +137,8 @@ fn spawn_reader(mut reader: BufReader<OwnedReadHalf>) -> mpsc::Receiver<HostMess
         }
     });
     receiver
+}
+
+fn connection_closed() -> RemoteError {
+    std::io::Error::new(std::io::ErrorKind::UnexpectedEof, "the connection closed").into()
 }
