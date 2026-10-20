@@ -1,11 +1,12 @@
 use std::sync::Arc;
 use std::time::Duration;
 
+use async_trait::async_trait;
 use feishin_core::queue::{Queue, QueueTrack, YouTubeTrack};
 use feishin_player::PlayerEvent;
 use feishin_remote::{
-    ClientMessage, DeviceId, DeviceInfo, Host, HostMessage, HostState, PairingToken, RemoteControl,
-    ServerKey, TransferPayload, TrustStore, connect,
+    ClientMessage, DeviceId, DeviceInfo, Host, HostDelegate, HostMessage, HostState, PairingToken,
+    RemoteControl, RemoteFailure, ServerKey, TransferPayload, TrustStore, connect,
 };
 use tokio::net::TcpListener;
 use tokio::sync::{mpsc, oneshot, watch};
@@ -125,11 +126,31 @@ async fn received(commands: &mut mpsc::UnboundedReceiver<Command>) -> Command {
         .unwrap()
 }
 
+struct ApprovingDelegate(AppHostDelegate);
+
+#[async_trait]
+impl HostDelegate for ApprovingDelegate {
+    async fn approve(&self, _device: DeviceInfo) -> bool {
+        true
+    }
+    fn control(&self, device: &DeviceInfo, control: RemoteControl) -> Result<(), RemoteFailure> {
+        self.0.control(device, control)
+    }
+    async fn adopt(&self, payload: TransferPayload) -> Result<(), RemoteFailure> {
+        self.0.adopt(payload).await
+    }
+    async fn hand_over(&self) -> Result<TransferPayload, RemoteFailure> {
+        self.0.hand_over().await
+    }
+    fn server(&self) -> Option<ServerKey> {
+        self.0.server()
+    }
+}
+
 struct ControlledPlayer {
     address: std::net::SocketAddr,
     forwarded: mpsc::UnboundedReceiver<Command>,
     local_key: Option<ServerKey>,
-    answering: tokio::task::JoinHandle<()>,
     _state: watch::Sender<HostState>,
 }
 
@@ -138,19 +159,12 @@ async fn controlled_player() -> ControlledPlayer {
     let session: Session = harness.session.clone();
     let local_key = session.get().map(|server| ServerKey::of(server.config()));
     let (commands, forwarded) = mpsc::unbounded_channel();
-    let approvals = Approvals::default();
-    let delegate = Arc::new(AppHostDelegate {
+    let delegate = Arc::new(ApprovingDelegate(AppHostDelegate {
         commands,
         session,
-        approvals: approvals.clone(),
+        approvals: Approvals::default(),
         window: slint::Weak::default(),
-    });
-    let answering = tokio::spawn(async move {
-        loop {
-            approvals.answer(true);
-            tokio::time::sleep(Duration::from_millis(10)).await;
-        }
-    });
+    }));
     let listener = TcpListener::bind("127.0.0.1:0").await.unwrap();
     let address = listener.local_addr().unwrap();
     let (state, watched) = watch::channel(HostState::default());
@@ -160,7 +174,6 @@ async fn controlled_player() -> ControlledPlayer {
         address,
         forwarded,
         local_key,
-        answering,
         _state: state,
     }
 }
@@ -192,7 +205,6 @@ async fn another_device_plays_songs_on_this_player_over_the_network() {
         panic!("expected the tracks to play");
     };
     assert_eq!((tracks.len(), start_index), (2, Some(1)));
-    player.answering.abort();
 }
 
 #[tokio::test]
@@ -229,5 +241,4 @@ async fn another_device_takes_the_music_from_this_player() {
         }
     };
     assert_eq!(*transferred, payload);
-    player.answering.abort();
 }

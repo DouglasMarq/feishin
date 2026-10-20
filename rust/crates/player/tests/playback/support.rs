@@ -115,6 +115,13 @@ pub(crate) fn player() -> (Player, Arc<Recorder>) {
     player_with(PlayerConfig::default())
 }
 
+pub(crate) fn position_of(event: &PlayerEvent) -> Option<u64> {
+    match event {
+        PlayerEvent::Position { position_ms, .. } => Some(*position_ms),
+        _ => None,
+    }
+}
+
 pub(crate) fn has_error(events: &[PlayerEvent]) -> bool {
     events
         .iter()

@@ -1,5 +1,6 @@
 use std::os::unix::fs::PermissionsExt;
 use std::path::PathBuf;
+use std::time::Duration;
 
 use feishin_core::queue::{QueueTrack, Uid, YouTubeTrack};
 use feishin_storage::settings::Settings;
@@ -9,6 +10,9 @@ use super::harness::{Harness, start_harness, test_settings};
 use crate::controller::{Command, TrackCommand};
 
 static SPAWNING: Mutex<()> = Mutex::const_new(());
+
+const CALL_POLL_INTERVAL: Duration = Duration::from_millis(10);
+const CALL_WAIT_LIMIT: Duration = Duration::from_secs(5);
 
 pub(super) const FUTURE_URL: &str =
     "https://rr1.googlevideo.example/videoplayback?expire=4102444800&id=1";
@@ -54,6 +58,15 @@ impl FakeYtDlp {
         std::fs::read_to_string(self.directory.path().join("yt-dlp.calls"))
             .map(|calls| calls.lines().count())
             .unwrap_or(0)
+    }
+
+    pub(super) async fn wait_for_calls(&self, expected: usize) {
+        let called = async {
+            while self.calls() < expected {
+                tokio::time::sleep(CALL_POLL_INTERVAL).await;
+            }
+        };
+        tokio::time::timeout(CALL_WAIT_LIMIT, called).await.unwrap();
     }
 
     pub(super) fn last_arguments(&self) -> Vec<String> {

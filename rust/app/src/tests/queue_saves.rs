@@ -12,7 +12,7 @@ use crate::store::Store;
 
 const QUEUE_SAVE_DELAY: Duration = Duration::from_secs(10);
 const PLAYBACK_SAVE_DELAY: Duration = Duration::from_secs(2);
-const WRITE_POLLS: usize = 500;
+const SAVE_WAIT: Duration = Duration::from_secs(1);
 
 async fn advance_and_handle(harness: &mut Harness, duration: Duration) {
     tokio::time::advance(duration).await;
@@ -22,9 +22,8 @@ async fn advance_and_handle(harness: &mut Harness, duration: Duration) {
     }
 }
 
-async fn wait_for_saved(harness: &Harness, accept: impl Fn(&StoredQueue) -> bool) -> bool {
-    for _ in 0..WRITE_POLLS {
-        settle().await;
+async fn wait_for_saved(harness: &mut Harness, accept: impl Fn(&StoredQueue) -> bool) -> bool {
+    while let Ok(Some(())) = tokio::time::timeout(SAVE_WAIT, harness.saves.recv()).await {
         if harness
             .store
             .load_queue()
@@ -35,7 +34,6 @@ async fn wait_for_saved(harness: &Harness, accept: impl Fn(&StoredQueue) -> bool
         {
             return true;
         }
-        std::thread::sleep(Duration::from_millis(2));
     }
     false
 }
@@ -58,12 +56,10 @@ async fn queue_is_saved_ten_seconds_after_the_last_structural_change() {
         .controller
         .handle(Command::AddLast(test_songs(5, 100_000).split_off(3)));
     advance_and_handle(&mut harness, Duration::from_secs(5)).await;
-    std::thread::sleep(Duration::from_millis(20));
-    settle().await;
-    assert!(harness.store.load_queue().ok().flatten().is_none());
+    assert!(!wait_for_saved(&mut harness, |_| true).await);
 
     advance_and_handle(&mut harness, QUEUE_SAVE_DELAY).await;
-    let saved = wait_for_saved(&harness, |stored| saved_ids(stored).len() == 5).await;
+    let saved = wait_for_saved(&mut harness, |stored| saved_ids(stored).len() == 5).await;
     assert!(saved, "the queue is saved once the edits settle");
 }
 
@@ -73,14 +69,14 @@ async fn position_changes_rewrite_only_the_small_playback_file() {
     harness.controller.play_now(test_songs(4, 100_000), "s1");
     harness.start_current();
     advance_and_handle(&mut harness, QUEUE_SAVE_DELAY).await;
-    assert!(wait_for_saved(&harness, |stored| stored.snapshot.items.len() == 4).await);
+    assert!(wait_for_saved(&mut harness, |stored| stored.snapshot.items.len() == 4).await);
     let queue_file = harness.temp_dir.path().join(queue_store::QUEUE_FILE);
     let saved_queue = std::fs::read(&queue_file).unwrap_or_default();
 
     harness.controller.handle(Command::Next);
     harness.controller.handle(Command::Seek(42_000));
     advance_and_handle(&mut harness, PLAYBACK_SAVE_DELAY).await;
-    let moved = wait_for_saved(&harness, |stored| stored.position_ms == 42_000).await;
+    let moved = wait_for_saved(&mut harness, |stored| stored.position_ms == 42_000).await;
     assert!(moved, "the position is saved without the queue changing");
     assert_eq!(std::fs::read(&queue_file).unwrap_or_default(), saved_queue);
 
@@ -109,7 +105,7 @@ async fn a_failed_queue_save_is_written_again_at_shutdown() {
     let mut harness = start_harness(test_settings(false, false));
     harness.controller.play_now(test_songs(3, 100_000), "s0");
     advance_and_handle(&mut harness, QUEUE_SAVE_DELAY).await;
-    assert!(wait_for_saved(&harness, |stored| stored.snapshot.items.len() == 3).await);
+    assert!(wait_for_saved(&mut harness, |stored| stored.snapshot.items.len() == 3).await);
     let queue_file = harness.temp_dir.path().join(queue_store::QUEUE_FILE);
     assert!(std::fs::remove_file(queue_file).is_ok());
 

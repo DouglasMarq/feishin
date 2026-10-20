@@ -4,9 +4,10 @@ use std::time::Duration;
 
 use feishin_player::{MediaSource, Player, PlayerConfig, PlayerEvent, ReplayGainMode};
 
-use crate::support::{Recorder, has_error, player_with, sine_wave_url};
+use crate::support::{Recorder, has_error, player_with, position_of, sine_wave_url};
 
 const MISSING_FILE: &str = "/nonexistent/feishin-player-test.flac";
+const POSITION_AFTER_SEEK_PLAYED_MS: u64 = 7_500;
 
 fn crossfade_player(crossfade: Duration) -> (Player, Arc<Recorder>) {
     player_with(PlayerConfig {
@@ -27,13 +28,6 @@ fn load_track(player: &Player, uid: u64, seconds: u32) {
 fn preload_track(player: &Player, uid: u64, seconds: u32) {
     let url = sine_wave_url(seconds);
     player.preload_source(source(uid, &url, seconds)).unwrap();
-}
-
-fn position_of(event: &PlayerEvent) -> Option<u64> {
-    match event {
-        PlayerEvent::Position { position_ms, .. } => Some(*position_ms),
-        _ => None,
-    }
 }
 
 fn index_of(events: &[PlayerEvent], expected: &PlayerEvent) -> usize {
@@ -88,7 +82,9 @@ fn seeking_during_a_fade_cancels_it() {
     recorder.wait_after(event_count_before, "position after seek", |event| {
         position_of(event).is_some_and(|position| (6_000..9_000).contains(&position))
     });
-    thread::sleep(Duration::from_millis(1_500));
+    recorder.wait_after(event_count_before, "1.5 s played after the seek", |event| {
+        position_of(event).is_some_and(|position| position >= POSITION_AFTER_SEEK_PLAYED_MS)
+    });
 
     assert_eq!(recorder.milestones(), vec![started(1), started(2)]);
     assert!(player.position_ms().unwrap() >= 6_000);
