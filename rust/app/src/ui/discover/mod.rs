@@ -6,6 +6,7 @@ mod cover_slots;
 mod covers;
 mod deps;
 mod loading;
+mod mixes;
 mod model;
 mod page;
 mod page_actions;

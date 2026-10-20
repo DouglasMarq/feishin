@@ -6,7 +6,6 @@ mod interner;
 mod item;
 mod lookup;
 mod navigation;
-mod random;
 mod removal;
 mod reordering;
 mod shuffling;
@@ -31,8 +30,8 @@ pub use track::QueueTrack;
 pub use view::QueueView;
 pub use youtube_track::{YOUTUBE_SERVER_ID, YOUTUBE_SONG_ID_PREFIX, YouTubeTrack, youtube_song_id};
 
+use crate::random::SplitMix64;
 use interner::TrackInterner;
-use random::SplitMix64;
 use view::QueueLayout;
 
 const FIRST_UID: Uid = 1;

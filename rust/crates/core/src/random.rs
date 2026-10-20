@@ -6,16 +6,16 @@ const SECOND_MIX_MULTIPLIER: u64 = 0x94D0_49BB_1331_11EB;
 const SEED_HASH_INPUT: u64 = 0x5EED;
 
 #[derive(Debug, Clone)]
-pub(super) struct SplitMix64 {
+pub struct SplitMix64 {
     state: u64,
 }
 
 impl SplitMix64 {
-    pub(super) fn from_seed(seed: u64) -> Self {
+    pub fn from_seed(seed: u64) -> Self {
         Self { state: seed }
     }
 
-    pub(super) fn from_random_seed() -> Self {
+    pub fn from_random_seed() -> Self {
         Self::from_seed(RandomState::new().hash_one(SEED_HASH_INPUT))
     }
 
@@ -31,7 +31,7 @@ impl SplitMix64 {
         ((u128::from(self.next_u64()) * exclusive_bound as u128) >> 64) as usize
     }
 
-    pub(super) fn shuffle<Element>(&mut self, elements: &mut [Element]) {
+    pub fn shuffle<Element>(&mut self, elements: &mut [Element]) {
         for last_unshuffled in (1..elements.len()).rev() {
             let swap_with = self.index_below(last_unshuffled + 1);
             elements.swap(last_unshuffled, swap_with);

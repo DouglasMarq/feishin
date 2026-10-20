@@ -21,7 +21,9 @@ Runs on Linux and macOS.
 - Synced and plain lyrics (server, lrclib, NetEase, Genius), scrobbling, MPRIS media keys,
   macOS Now Playing and media keys, Discord Rich Presence, share links, internet radio (server stations and radio-browser.info).
 - Discover: YouTube Music recommendations, new releases, charts and moods; songs in your
-  library play from your server, others through `yt-dlp`.
+  library play from your server, others through `yt-dlp`. Personal mixes built from what you
+  play and favorite: up to four Daily Mixes that blend your songs with similar ones, and a
+  Discover Weekly of songs you do not have, renewed every Monday.
 - 32 themes with light/dark following the system and an accent color, 39 languages.
 - The screen does not lock and the system does not sleep while music is playing.
 

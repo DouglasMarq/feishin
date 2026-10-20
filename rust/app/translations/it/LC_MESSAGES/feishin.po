@@ -396,6 +396,9 @@ msgstr "Colore d'accento personalizzato: {} (in uso l'accento del tema)"
 msgid "Custom accent color: {}, press Enter to apply"
 msgstr "Colore d'accento personalizzato: {}, premi Invio per applicarlo"
 
+msgid "Daily Mix {}"
+msgstr "Mix giornaliero {}"
+
 msgid "Dark theme"
 msgstr "Tema scuro"
 
@@ -455,6 +458,9 @@ msgstr "Scopri è aperto"
 
 msgid "Discover new music on YouTube Music"
 msgstr "Scopri nuova musica su YouTube Music"
+
+msgid "Discover Weekly"
+msgstr "Scoperte della settimana"
 
 msgid "Duration"
 msgstr "Durata"
@@ -673,6 +679,9 @@ msgstr "Bitrate massimo"
 msgid "Media keys and desktop media controls. Takes effect after a restart."
 msgstr "Tasti multimediali e controlli multimediali del desktop. Ha effetto dopo il riavvio."
 
+msgid "MIX"
+msgstr "MIX"
+
 msgid "Moods and genres"
 msgstr "Mood e generi"
 
@@ -699,6 +708,9 @@ msgstr "Nuova playlist"
 
 msgid "New releases"
 msgstr "Nuove uscite"
+
+msgid "New to you, refreshed every Monday"
+msgstr "Nuovi per te, aggiornati ogni lunedì"
 
 msgid "Next"
 msgstr "Successivo"
@@ -823,6 +835,9 @@ msgstr "Apri la radio"
 msgid "Open the album \"{}\""
 msgstr "Apri l'album \"{}\""
 
+msgid "Open the mix \"{}\""
+msgstr "Apri il mix \"{}\""
+
 msgid "Open the playlist \"{}\""
 msgstr "Apri la playlist \"{}\""
 
@@ -908,6 +923,9 @@ msgstr "Riproduci dopo"
 
 msgid "Play the album"
 msgstr "Riproduci l'album"
+
+msgid "Play the mix"
+msgstr "Riproduci il mix"
 
 msgid "Play the playlist"
 msgstr "Riproduci la playlist"
@@ -1351,6 +1369,9 @@ msgstr "Questa pagina di Scopri non esiste"
 msgid "This folder is empty"
 msgstr "Questa cartella è vuota"
 
+msgid "This mix is no longer available"
+msgstr "Questo mix non è più disponibile"
+
 msgid "This playlist is empty"
 msgstr "Questa playlist è vuota"
 
@@ -1417,6 +1438,9 @@ msgstr "Volume"
 msgid "Volume {}%"
 msgstr "Volume {}%"
 
+msgid "With {}"
+msgstr "Con {}"
+
 msgid "XDG_RUNTIME_DIR is not set, so there is no private place for the cookies"
 msgstr "XDG_RUNTIME_DIR non è impostata, quindi non esiste una posizione privata per i cookie"
 
@@ -1425,6 +1449,9 @@ msgstr "Anno"
 
 msgid "You are here: {}"
 msgstr "Ti trovi qui: {}"
+
+msgid "Your mixes"
+msgstr "I tuoi mix"
 
 msgid "Your user is not allowed to share on this server"
 msgstr "Il tuo utente non è autorizzato a condividere su questo server"

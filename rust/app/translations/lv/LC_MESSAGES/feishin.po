@@ -404,6 +404,9 @@ msgstr "Pielāgota akcenta krāsa: {} (tiek izmantota motīva akcenta krāsa)"
 msgid "Custom accent color: {}, press Enter to apply"
 msgstr "Pielāgota akcenta krāsa: {}, nospiediet Enter, lai lietotu"
 
+msgid "Daily Mix {}"
+msgstr "Dienas mikss {}"
+
 msgid "Dark theme"
 msgstr "Tumšais motīvs"
 
@@ -463,6 +466,9 @@ msgstr "Sadaļa Atklāt ir atvērta"
 
 msgid "Discover new music on YouTube Music"
 msgstr "Atklājiet jaunu mūziku YouTube Music"
+
+msgid "Discover Weekly"
+msgstr "Nedēļas atklājumi"
 
 msgid "Duration"
 msgstr "Ilgums"
@@ -683,6 +689,9 @@ msgstr "Maksimālais bitu pārraides ātrums"
 msgid "Media keys and desktop media controls. Takes effect after a restart."
 msgstr "Multivides taustiņi un darbvirsmas multivides vadīklas. Stājas spēkā pēc restartēšanas."
 
+msgid "MIX"
+msgstr "MIKSS"
+
 msgid "Moods and genres"
 msgstr "Noskaņas un žanri"
 
@@ -709,6 +718,9 @@ msgstr "Jauns atskaņošanas saraksts"
 
 msgid "New releases"
 msgstr "Jaunākie izdevumi"
+
+msgid "New to you, refreshed every Monday"
+msgstr "Jaunums tev, atjaunojas katru pirmdienu"
 
 msgid "Next"
 msgstr "Nākamais"
@@ -833,6 +845,9 @@ msgstr "Atvērt radio"
 msgid "Open the album \"{}\""
 msgstr "Atvērt albumu \"{}\""
 
+msgid "Open the mix \"{}\""
+msgstr "Atvērt miksu \"{}\""
+
 msgid "Open the playlist \"{}\""
 msgstr "Atvērt atskaņošanas sarakstu \"{}\""
 
@@ -919,6 +934,9 @@ msgstr "Atskaņot nākamo"
 
 msgid "Play the album"
 msgstr "Atskaņot albumu"
+
+msgid "Play the mix"
+msgstr "Atskaņot miksu"
 
 msgid "Play the playlist"
 msgstr "Atskaņot atskaņošanas sarakstu"
@@ -1364,6 +1382,9 @@ msgstr "Šī sadaļas Atklāt lapa nepastāv"
 msgid "This folder is empty"
 msgstr "Šī mape ir tukša"
 
+msgid "This mix is no longer available"
+msgstr "Šis mikss vairs nav pieejams"
+
 msgid "This playlist is empty"
 msgstr "Šis atskaņošanas saraksts ir tukšs"
 
@@ -1430,6 +1451,9 @@ msgstr "Skaļums"
 msgid "Volume {}%"
 msgstr "Skaļums {}%"
 
+msgid "With {}"
+msgstr "Ar {}"
+
 msgid "XDG_RUNTIME_DIR is not set, so there is no private place for the cookies"
 msgstr "XDG_RUNTIME_DIR nav iestatīts, tāpēc sīkfailiem nav privātas vietas"
 
@@ -1438,6 +1462,9 @@ msgstr "Gads"
 
 msgid "You are here: {}"
 msgstr "Jūs esat šeit: {}"
+
+msgid "Your mixes"
+msgstr "Tavi miksi"
 
 msgid "Your user is not allowed to share on this server"
 msgstr "Jūsu lietotājam nav atļauts kopīgot šajā serverī"

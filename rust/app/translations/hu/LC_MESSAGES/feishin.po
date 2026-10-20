@@ -396,6 +396,9 @@ msgstr "Egyéni kiemelő szín: {} (a téma kiemelő színe van használatban)"
 msgid "Custom accent color: {}, press Enter to apply"
 msgstr "Egyéni kiemelő szín: {}, az alkalmazáshoz nyomj Entert"
 
+msgid "Daily Mix {}"
+msgstr "Napi mix {}"
+
 msgid "Dark theme"
 msgstr "Sötét téma"
 
@@ -455,6 +458,9 @@ msgstr "A Felfedezés meg van nyitva"
 
 msgid "Discover new music on YouTube Music"
 msgstr "Fedezz fel új zenéket a YouTube Musicon"
+
+msgid "Discover Weekly"
+msgstr "A hét felfedezései"
 
 msgid "Duration"
 msgstr "Hossz"
@@ -673,6 +679,9 @@ msgstr "Maximális bitráta"
 msgid "Media keys and desktop media controls. Takes effect after a restart."
 msgstr "Médiabillentyűk és asztali médiavezérlők. Újraindítás után lép életbe."
 
+msgid "MIX"
+msgstr "MIX"
+
 msgid "Moods and genres"
 msgstr "Hangulatok és műfajok"
 
@@ -699,6 +708,9 @@ msgstr "Új lejátszási lista"
 
 msgid "New releases"
 msgstr "Új megjelenések"
+
+msgid "New to you, refreshed every Monday"
+msgstr "Új neked, minden hétfőn frissül"
 
 msgid "Next"
 msgstr "Következő"
@@ -823,6 +835,9 @@ msgstr "Rádió megnyitása"
 msgid "Open the album \"{}\""
 msgstr "A(z) „{}” album megnyitása"
 
+msgid "Open the mix \"{}\""
+msgstr "A(z) „{}” mix megnyitása"
+
 msgid "Open the playlist \"{}\""
 msgstr "A(z) „{}” lejátszási lista megnyitása"
 
@@ -908,6 +923,9 @@ msgstr "Lejátszás következőként"
 
 msgid "Play the album"
 msgstr "Az album lejátszása"
+
+msgid "Play the mix"
+msgstr "A mix lejátszása"
 
 msgid "Play the playlist"
 msgstr "A lejátszási lista lejátszása"
@@ -1351,6 +1369,9 @@ msgstr "Ez a Felfedezés oldal nem létezik"
 msgid "This folder is empty"
 msgstr "Ez a mappa üres"
 
+msgid "This mix is no longer available"
+msgstr "Ez a mix már nem érhető el"
+
 msgid "This playlist is empty"
 msgstr "Ez a lejátszási lista üres"
 
@@ -1417,6 +1438,9 @@ msgstr "Hangerő"
 msgid "Volume {}%"
 msgstr "Hangerő: {}%"
 
+msgid "With {}"
+msgstr "Előadók: {}"
+
 msgid "XDG_RUNTIME_DIR is not set, so there is no private place for the cookies"
 msgstr "Az XDG_RUNTIME_DIR nincs beállítva, így nincs privát hely a sütik számára"
 
@@ -1425,6 +1449,9 @@ msgstr "Év"
 
 msgid "You are here: {}"
 msgstr "Itt vagy: {}"
+
+msgid "Your mixes"
+msgstr "Mixeid"
 
 msgid "Your user is not allowed to share on this server"
 msgstr "A felhasználódnak nincs megosztási joga ezen a szerveren"

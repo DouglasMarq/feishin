@@ -1,7 +1,8 @@
-use feishin_youtube::music::CHART_COUNTRIES;
+use feishin_youtube::music::{CHART_COUNTRIES, MusicShelf};
 use slint::{ComponentHandle, ModelRc, SharedString, VecModel};
 
 use super::model::{DiscoverModel, with_discover};
+use crate::discover::{DiscoverFeed, FeedNotice, FeedRequest};
 use crate::ui::{AppWindow, DiscoverNotice, DiscoverState, clamp_i32};
 
 pub fn country_names() -> ModelRc<SharedString> {
@@ -47,17 +48,41 @@ fn render_sections_of(window: &AppWindow, model: &DiscoverModel) {
             .unwrap_or_default()
             .into(),
     );
-    let notice = feed.map(|feed| feed.notice.clone()).unwrap_or_default();
+    show_notice(
+        &state,
+        &feed.map(|feed| feed.notice.clone()).unwrap_or_default(),
+    );
+    let shelves = shelves_with_mixes(model, request.as_ref(), feed);
+    let shown = feed.and(request);
+    drop(sections);
+    model.show_shelves(shown.as_ref(), &shelves);
+}
+
+fn show_notice(state: &DiscoverState<'_>, notice: &FeedNotice) {
     state.set_notice(notice.message().into());
     state.set_notice_kind(match (notice.is_warning(), notice.message().is_empty()) {
         (true, _) => DiscoverNotice::Warning,
         (false, true) => DiscoverNotice::None,
         (false, false) => DiscoverNotice::Info,
     });
-    let shelves = feed.map(|feed| feed.shelves.clone()).unwrap_or_default();
-    let shown = feed.and(request);
-    drop(sections);
-    model.show_shelves(shown.as_ref(), &shelves);
+}
+
+fn shelves_with_mixes(
+    model: &DiscoverModel,
+    request: Option<&FeedRequest>,
+    feed: Option<&DiscoverFeed>,
+) -> Vec<MusicShelf> {
+    let mix_shelf = match request {
+        Some(FeedRequest::ForYou) => model.mixes.borrow().shelf(),
+        _ => None,
+    };
+    feed.map(|feed| {
+        mix_shelf
+            .into_iter()
+            .chain(feed.shelves.iter().cloned())
+            .collect()
+    })
+    .unwrap_or_default()
 }
 
 pub fn render_page(window: &AppWindow) {

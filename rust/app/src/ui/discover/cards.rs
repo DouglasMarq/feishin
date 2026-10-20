@@ -1,6 +1,7 @@
 use feishin_youtube::music::{CollectionKind, MusicCollection, MusicSong, ShelfItem};
 use slint::Image;
 
+use crate::discover::mixes::is_mix_id;
 use crate::ui::{DiscoverCard, DiscoverCardKind, DiscoverSong, clamp_i32, format_duration};
 
 pub fn card_of(item: &ShelfItem) -> DiscoverCard {
@@ -24,9 +25,10 @@ fn song_card(song: &MusicSong) -> DiscoverCard {
 
 fn collection_card(collection: &MusicCollection) -> DiscoverCard {
     DiscoverCard {
-        kind: match collection.kind {
-            CollectionKind::Album => DiscoverCardKind::Album,
-            CollectionKind::Playlist => DiscoverCardKind::Playlist,
+        kind: match (is_mix_id(&collection.browse_id), collection.kind) {
+            (true, _) => DiscoverCardKind::Mix,
+            (false, CollectionKind::Album) => DiscoverCardKind::Album,
+            (false, CollectionKind::Playlist) => DiscoverCardKind::Playlist,
         },
         id: collection.browse_id.as_str().into(),
         title: collection.title.as_str().into(),
@@ -110,5 +112,17 @@ mod tests {
         );
         assert!(!card.can_load_cover);
         assert_eq!(thumbnail_of(&album), None);
+    }
+
+    #[test]
+    fn mixes_get_their_own_card_kind() {
+        let mix = ShelfItem::Collection(MusicCollection {
+            browse_id: "mix:weekly".into(),
+            kind: CollectionKind::Playlist,
+            title: "Discover Weekly".into(),
+            subtitle: String::new(),
+            thumbnail_url: None,
+        });
+        assert_eq!(card_of(&mix).kind, DiscoverCardKind::Mix);
     }
 }

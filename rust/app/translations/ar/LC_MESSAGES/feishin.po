@@ -428,6 +428,9 @@ msgstr "لون تمييز مخصص: {} (لون السمة مستخدم)"
 msgid "Custom accent color: {}, press Enter to apply"
 msgstr "لون تمييز مخصص: {}، اضغط Enter للتطبيق"
 
+msgid "Daily Mix {}"
+msgstr "المزيج اليومي {}"
+
 msgid "Dark theme"
 msgstr "السمة الداكنة"
 
@@ -487,6 +490,9 @@ msgstr "الاستكشاف مفتوح"
 
 msgid "Discover new music on YouTube Music"
 msgstr "اكتشف موسيقى جديدة على YouTube Music"
+
+msgid "Discover Weekly"
+msgstr "اكتشافات الأسبوع"
 
 msgid "Duration"
 msgstr "مدة"
@@ -713,6 +719,9 @@ msgstr "الحد الأقصى لمعدل البت"
 msgid "Media keys and desktop media controls. Takes effect after a restart."
 msgstr "مفاتيح الوسائط وعناصر التحكم بالوسائط في سطح المكتب. يسري بعد إعادة التشغيل."
 
+msgid "MIX"
+msgstr "مزيج"
+
 msgid "Moods and genres"
 msgstr "الأمزجة والأنواع"
 
@@ -739,6 +748,9 @@ msgstr "قائمة تشغيل جديدة"
 
 msgid "New releases"
 msgstr "إصدارات جديدة"
+
+msgid "New to you, refreshed every Monday"
+msgstr "جديد عليك، يتجدد كل يوم اثنين"
 
 msgid "Next"
 msgstr "التالي"
@@ -863,6 +875,9 @@ msgstr "فتح الراديو"
 msgid "Open the album \"{}\""
 msgstr "فتح الألبوم \"{}\""
 
+msgid "Open the mix \"{}\""
+msgstr "فتح المزيج \"{}\""
+
 msgid "Open the playlist \"{}\""
 msgstr "فتح قائمة التشغيل \"{}\""
 
@@ -952,6 +967,9 @@ msgstr "تشغيل تاليًا"
 
 msgid "Play the album"
 msgstr "تشغيل الألبوم"
+
+msgid "Play the mix"
+msgstr "تشغيل المزيج"
 
 msgid "Play the playlist"
 msgstr "تشغيل قائمة التشغيل"
@@ -1403,6 +1421,9 @@ msgstr "صفحة الاستكشاف هذه غير موجودة"
 msgid "This folder is empty"
 msgstr "هذا المجلد فارغ"
 
+msgid "This mix is no longer available"
+msgstr "لم يعد هذا المزيج متاحًا"
+
 msgid "This playlist is empty"
 msgstr "قائمة التشغيل هذه فارغة"
 
@@ -1469,6 +1490,9 @@ msgstr "مستوى الصوت"
 msgid "Volume {}%"
 msgstr "مستوى الصوت {}%"
 
+msgid "With {}"
+msgstr "مع {}"
+
 msgid "XDG_RUNTIME_DIR is not set, so there is no private place for the cookies"
 msgstr "المتغير XDG_RUNTIME_DIR غير مضبوط، لذا لا يوجد مكان خاص لملفات تعريف الارتباط"
 
@@ -1477,6 +1501,9 @@ msgstr "السنة"
 
 msgid "You are here: {}"
 msgstr "أنت هنا: {}"
+
+msgid "Your mixes"
+msgstr "مزيجاتك"
 
 msgid "Your user is not allowed to share on this server"
 msgstr "لا يُسمح لمستخدمك بالمشاركة على هذا الخادم"

@@ -388,6 +388,9 @@ msgstr "สีเน้นที่กำหนดเอง: {} (กำลัง
 msgid "Custom accent color: {}, press Enter to apply"
 msgstr "สีเน้นที่กำหนดเอง: {} กด Enter เพื่อใช้"
 
+msgid "Daily Mix {}"
+msgstr "มิกซ์ประจำวัน {}"
+
 msgid "Dark theme"
 msgstr "ธีมมืด"
 
@@ -447,6 +450,9 @@ msgstr "เปิดหน้าสำรวจอยู่"
 
 msgid "Discover new music on YouTube Music"
 msgstr "ค้นพบเพลงใหม่บน YouTube Music"
+
+msgid "Discover Weekly"
+msgstr "การค้นพบประจำสัปดาห์"
 
 msgid "Duration"
 msgstr "ระยะเวลา"
@@ -663,6 +669,9 @@ msgstr "บิตเรตสูงสุด"
 msgid "Media keys and desktop media controls. Takes effect after a restart."
 msgstr "ปุ่มมีเดียและตัวควบคุมสื่อบนเดสก์ท็อป มีผลหลังจากรีสตาร์ต"
 
+msgid "MIX"
+msgstr "มิกซ์"
+
 msgid "Moods and genres"
 msgstr "อารมณ์และแนวเพลง"
 
@@ -689,6 +698,9 @@ msgstr "เพลย์ลิสต์ใหม่"
 
 msgid "New releases"
 msgstr "เพลงใหม่"
+
+msgid "New to you, refreshed every Monday"
+msgstr "ใหม่สำหรับคุณ อัปเดตทุกวันจันทร์"
 
 msgid "Next"
 msgstr "ถัดไป"
@@ -813,6 +825,9 @@ msgstr "เปิดวิทยุ"
 msgid "Open the album \"{}\""
 msgstr "เปิดอัลบั้ม \"{}\""
 
+msgid "Open the mix \"{}\""
+msgstr "เปิดมิกซ์ \"{}\""
+
 msgid "Open the playlist \"{}\""
 msgstr "เปิดเพลย์ลิสต์ \"{}\""
 
@@ -897,6 +912,9 @@ msgstr "เล่นถัดไป"
 
 msgid "Play the album"
 msgstr "เล่นอัลบั้ม"
+
+msgid "Play the mix"
+msgstr "เล่นมิกซ์"
 
 msgid "Play the playlist"
 msgstr "เล่นเพลย์ลิสต์"
@@ -1338,6 +1356,9 @@ msgstr "ไม่มีหน้าสำรวจนี้"
 msgid "This folder is empty"
 msgstr "โฟลเดอร์นี้ว่างเปล่า"
 
+msgid "This mix is no longer available"
+msgstr "มิกซ์นี้ไม่มีให้ใช้งานแล้ว"
+
 msgid "This playlist is empty"
 msgstr "เพลย์ลิสต์นี้ว่างเปล่า"
 
@@ -1404,6 +1425,9 @@ msgstr "ระดับเสียง"
 msgid "Volume {}%"
 msgstr "ระดับเสียง {}%"
 
+msgid "With {}"
+msgstr "พร้อม {}"
+
 msgid "XDG_RUNTIME_DIR is not set, so there is no private place for the cookies"
 msgstr "ไม่ได้ตั้งค่า XDG_RUNTIME_DIR จึงไม่มีที่ส่วนตัวสำหรับเก็บคุกกี้"
 
@@ -1412,6 +1436,9 @@ msgstr "ปี"
 
 msgid "You are here: {}"
 msgstr "คุณอยู่ที่: {}"
+
+msgid "Your mixes"
+msgstr "มิกซ์ของคุณ"
 
 msgid "Your user is not allowed to share on this server"
 msgstr "ผู้ใช้ของคุณไม่ได้รับอนุญาตให้แบ่งปันบนเซิร์ฟเวอร์นี้"

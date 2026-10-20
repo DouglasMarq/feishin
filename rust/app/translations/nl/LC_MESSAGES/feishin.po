@@ -396,6 +396,9 @@ msgstr "Eigen accentkleur: {} (thema-accent in gebruik)"
 msgid "Custom accent color: {}, press Enter to apply"
 msgstr "Eigen accentkleur: {}, druk op Enter om toe te passen"
 
+msgid "Daily Mix {}"
+msgstr "Dagelijkse mix {}"
+
 msgid "Dark theme"
 msgstr "Donker thema"
 
@@ -455,6 +458,9 @@ msgstr "Ontdekken is geopend"
 
 msgid "Discover new music on YouTube Music"
 msgstr "Ontdek nieuwe muziek op YouTube Music"
+
+msgid "Discover Weekly"
+msgstr "Ontdekkingen van de week"
 
 msgid "Duration"
 msgstr "Duur"
@@ -673,6 +679,9 @@ msgstr "Maximale bitrate"
 msgid "Media keys and desktop media controls. Takes effect after a restart."
 msgstr "Mediatoetsen en mediabediening van het bureaublad. Werkt na een herstart."
 
+msgid "MIX"
+msgstr "MIX"
+
 msgid "Moods and genres"
 msgstr "Stemmingen en genres"
 
@@ -699,6 +708,9 @@ msgstr "Nieuwe afspeellijst"
 
 msgid "New releases"
 msgstr "Nieuwe releases"
+
+msgid "New to you, refreshed every Monday"
+msgstr "Nieuw voor jou, elke maandag vernieuwd"
 
 msgid "Next"
 msgstr "Volgende"
@@ -823,6 +835,9 @@ msgstr "Radio openen"
 msgid "Open the album \"{}\""
 msgstr "Het album \"{}\" openen"
 
+msgid "Open the mix \"{}\""
+msgstr "De mix \"{}\" openen"
+
 msgid "Open the playlist \"{}\""
 msgstr "De afspeellijst \"{}\" openen"
 
@@ -908,6 +923,9 @@ msgstr "Hierna afspelen"
 
 msgid "Play the album"
 msgstr "Het album afspelen"
+
+msgid "Play the mix"
+msgstr "De mix afspelen"
 
 msgid "Play the playlist"
 msgstr "De afspeellijst afspelen"
@@ -1351,6 +1369,9 @@ msgstr "Deze Ontdekken-pagina bestaat niet"
 msgid "This folder is empty"
 msgstr "Deze map is leeg"
 
+msgid "This mix is no longer available"
+msgstr "Deze mix is niet meer beschikbaar"
+
 msgid "This playlist is empty"
 msgstr "Deze afspeellijst is leeg"
 
@@ -1417,6 +1438,9 @@ msgstr "Volume"
 msgid "Volume {}%"
 msgstr "Volume {}%"
 
+msgid "With {}"
+msgstr "Met {}"
+
 msgid "XDG_RUNTIME_DIR is not set, so there is no private place for the cookies"
 msgstr "XDG_RUNTIME_DIR is niet ingesteld, dus er is geen privéplek voor de cookies"
 
@@ -1425,6 +1449,9 @@ msgstr "Jaar"
 
 msgid "You are here: {}"
 msgstr "Je bent hier: {}"
+
+msgid "Your mixes"
+msgstr "Jouw mixen"
 
 msgid "Your user is not allowed to share on this server"
 msgstr "Je gebruiker mag op deze server niet delen"

@@ -396,6 +396,9 @@ msgstr "Собствен акцентен цвят: {} (използва се а
 msgid "Custom accent color: {}, press Enter to apply"
 msgstr "Собствен акцентен цвят: {}, натиснете Enter за прилагане"
 
+msgid "Daily Mix {}"
+msgstr "Дневен микс {}"
+
 msgid "Dark theme"
 msgstr "Тъмна тема"
 
@@ -455,6 +458,9 @@ msgstr "„Откриване“ е отворено"
 
 msgid "Discover new music on YouTube Music"
 msgstr "Открийте нова музика в YouTube Music"
+
+msgid "Discover Weekly"
+msgstr "Открития на седмицата"
 
 msgid "Duration"
 msgstr "Продължителност"
@@ -673,6 +679,9 @@ msgstr "Максимален битрейт"
 msgid "Media keys and desktop media controls. Takes effect after a restart."
 msgstr "Мултимедийни клавиши и мултимедийни контроли на работния плот. Влиза в сила след рестарт."
 
+msgid "MIX"
+msgstr "МИКС"
+
 msgid "Moods and genres"
 msgstr "Настроения и жанрове"
 
@@ -699,6 +708,9 @@ msgstr "Нов плейлист"
 
 msgid "New releases"
 msgstr "Нови издания"
+
+msgid "New to you, refreshed every Monday"
+msgstr "Ново за теб, обновява се всеки понеделник"
 
 msgid "Next"
 msgstr "Следваща"
@@ -823,6 +835,9 @@ msgstr "Отваряне на радиото"
 msgid "Open the album \"{}\""
 msgstr "Отваряне на албума „{}“"
 
+msgid "Open the mix \"{}\""
+msgstr "Отваряне на микса „{}“"
+
 msgid "Open the playlist \"{}\""
 msgstr "Отваряне на плейлиста „{}“"
 
@@ -908,6 +923,9 @@ msgstr "Възпроизвеждане следващ"
 
 msgid "Play the album"
 msgstr "Възпроизвеждане на албума"
+
+msgid "Play the mix"
+msgstr "Възпроизвеждане на микса"
 
 msgid "Play the playlist"
 msgstr "Възпроизвеждане на плейлиста"
@@ -1351,6 +1369,9 @@ msgstr "Тази страница от „Откриване“ не същес�
 msgid "This folder is empty"
 msgstr "Тази папка е празна"
 
+msgid "This mix is no longer available"
+msgstr "Този микс вече не е наличен"
+
 msgid "This playlist is empty"
 msgstr "Този плейлист е празен"
 
@@ -1417,6 +1438,9 @@ msgstr "Сила на звука"
 msgid "Volume {}%"
 msgstr "Сила на звука {}%"
 
+msgid "With {}"
+msgstr "С {}"
+
 msgid "XDG_RUNTIME_DIR is not set, so there is no private place for the cookies"
 msgstr "XDG_RUNTIME_DIR не е зададена, затова няма лично място за бисквитките"
 
@@ -1425,6 +1449,9 @@ msgstr "Година"
 
 msgid "You are here: {}"
 msgstr "Вие сте тук: {}"
+
+msgid "Your mixes"
+msgstr "Твоите миксове"
 
 msgid "Your user is not allowed to share on this server"
 msgstr "Потребителят ви няма право да споделя в този сървър"

@@ -404,6 +404,9 @@ msgstr "Culoare de accent personalizată: {} (se folosește accentul temei)"
 msgid "Custom accent color: {}, press Enter to apply"
 msgstr "Culoare de accent personalizată: {}, apasă Enter pentru a aplica"
 
+msgid "Daily Mix {}"
+msgstr "Mix zilnic {}"
+
 msgid "Dark theme"
 msgstr "Temă întunecată"
 
@@ -463,6 +466,9 @@ msgstr "Descoperă este deschis"
 
 msgid "Discover new music on YouTube Music"
 msgstr "Descoperă muzică nouă pe YouTube Music"
+
+msgid "Discover Weekly"
+msgstr "Descoperirile săptămânii"
 
 msgid "Duration"
 msgstr "Durată"
@@ -683,6 +689,9 @@ msgstr "Bitrate maxim"
 msgid "Media keys and desktop media controls. Takes effect after a restart."
 msgstr "Taste media și controale media ale desktopului. Intră în vigoare după repornire."
 
+msgid "MIX"
+msgstr "MIX"
+
 msgid "Moods and genres"
 msgstr "Stări și genuri"
 
@@ -709,6 +718,9 @@ msgstr "Playlist nou"
 
 msgid "New releases"
 msgstr "Noutăți"
+
+msgid "New to you, refreshed every Monday"
+msgstr "Nou pentru tine, reîmprospătat în fiecare luni"
 
 msgid "Next"
 msgstr "Următorul"
@@ -833,6 +845,9 @@ msgstr "Deschide radioul"
 msgid "Open the album \"{}\""
 msgstr "Deschide albumul „{}”"
 
+msgid "Open the mix \"{}\""
+msgstr "Deschide mixul „{}”"
+
 msgid "Open the playlist \"{}\""
 msgstr "Deschide playlistul „{}”"
 
@@ -919,6 +934,9 @@ msgstr "Redă în continuare"
 
 msgid "Play the album"
 msgstr "Redă albumul"
+
+msgid "Play the mix"
+msgstr "Redă mixul"
 
 msgid "Play the playlist"
 msgstr "Redă playlistul"
@@ -1364,6 +1382,9 @@ msgstr "Această pagină Descoperă nu există"
 msgid "This folder is empty"
 msgstr "Acest dosar este gol"
 
+msgid "This mix is no longer available"
+msgstr "Acest mix nu mai este disponibil"
+
 msgid "This playlist is empty"
 msgstr "Acest playlist este gol"
 
@@ -1430,6 +1451,9 @@ msgstr "Volum"
 msgid "Volume {}%"
 msgstr "Volum {}%"
 
+msgid "With {}"
+msgstr "Cu {}"
+
 msgid "XDG_RUNTIME_DIR is not set, so there is no private place for the cookies"
 msgstr "XDG_RUNTIME_DIR nu este setat, deci nu există un loc privat pentru cookie-uri"
 
@@ -1438,6 +1462,9 @@ msgstr "An"
 
 msgid "You are here: {}"
 msgstr "Te afli aici: {}"
+
+msgid "Your mixes"
+msgstr "Mixurile tale"
 
 msgid "Your user is not allowed to share on this server"
 msgstr "Utilizatorul tău nu are permisiunea de a partaja pe acest server"

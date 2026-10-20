@@ -396,6 +396,9 @@ msgstr "Anpassad accentfärg: {} (temats accent används)"
 msgid "Custom accent color: {}, press Enter to apply"
 msgstr "Anpassad accentfärg: {}, tryck på Enter för att använda"
 
+msgid "Daily Mix {}"
+msgstr "Daglig mix {}"
+
 msgid "Dark theme"
 msgstr "Mörkt tema"
 
@@ -455,6 +458,9 @@ msgstr "Upptäck är öppet"
 
 msgid "Discover new music on YouTube Music"
 msgstr "Upptäck ny musik på YouTube Music"
+
+msgid "Discover Weekly"
+msgstr "Veckans upptäckter"
 
 msgid "Duration"
 msgstr "Längd"
@@ -673,6 +679,9 @@ msgstr "Högsta bithastighet"
 msgid "Media keys and desktop media controls. Takes effect after a restart."
 msgstr "Medieknappar och skrivbordets mediekontroller. Börjar gälla efter en omstart."
 
+msgid "MIX"
+msgstr "MIX"
+
 msgid "Moods and genres"
 msgstr "Stämningar och genrer"
 
@@ -699,6 +708,9 @@ msgstr "Ny spellista"
 
 msgid "New releases"
 msgstr "Nya släpp"
+
+msgid "New to you, refreshed every Monday"
+msgstr "Nytt för dig, uppdateras varje måndag"
 
 msgid "Next"
 msgstr "Nästa"
@@ -823,6 +835,9 @@ msgstr "Öppna radio"
 msgid "Open the album \"{}\""
 msgstr "Öppna albumet \"{}\""
 
+msgid "Open the mix \"{}\""
+msgstr "Öppna mixen \"{}\""
+
 msgid "Open the playlist \"{}\""
 msgstr "Öppna spellistan \"{}\""
 
@@ -908,6 +923,9 @@ msgstr "Spela härnäst"
 
 msgid "Play the album"
 msgstr "Spela albumet"
+
+msgid "Play the mix"
+msgstr "Spela mixen"
 
 msgid "Play the playlist"
 msgstr "Spela spellistan"
@@ -1351,6 +1369,9 @@ msgstr "Den här Upptäck-sidan finns inte"
 msgid "This folder is empty"
 msgstr "Den här mappen är tom"
 
+msgid "This mix is no longer available"
+msgstr "Den här mixen är inte längre tillgänglig"
+
 msgid "This playlist is empty"
 msgstr "Den här spellistan är tom"
 
@@ -1417,6 +1438,9 @@ msgstr "Volym"
 msgid "Volume {}%"
 msgstr "Volym {} %"
 
+msgid "With {}"
+msgstr "Med {}"
+
 msgid "XDG_RUNTIME_DIR is not set, so there is no private place for the cookies"
 msgstr "XDG_RUNTIME_DIR är inte angiven, så det finns ingen privat plats för cookies"
 
@@ -1425,6 +1449,9 @@ msgstr "År"
 
 msgid "You are here: {}"
 msgstr "Du är här: {}"
+
+msgid "Your mixes"
+msgstr "Dina mixar"
 
 msgid "Your user is not allowed to share on this server"
 msgstr "Din användare får inte dela på den här servern"

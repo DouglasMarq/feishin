@@ -404,6 +404,9 @@ msgstr "Vlastní barva zvýraznění: {} (používá se zvýraznění motivu)"
 msgid "Custom accent color: {}, press Enter to apply"
 msgstr "Vlastní barva zvýraznění: {}, potvrďte klávesou Enter"
 
+msgid "Daily Mix {}"
+msgstr "Denní mix {}"
+
 msgid "Dark theme"
 msgstr "Tmavý motiv"
 
@@ -463,6 +466,9 @@ msgstr "Sekce Objevovat je otevřená"
 
 msgid "Discover new music on YouTube Music"
 msgstr "Objevujte novou hudbu na YouTube Music"
+
+msgid "Discover Weekly"
+msgstr "Objevy týdne"
 
 msgid "Duration"
 msgstr "Trvání"
@@ -683,6 +689,9 @@ msgstr "Maximální datový tok"
 msgid "Media keys and desktop media controls. Takes effect after a restart."
 msgstr "Multimediální klávesy a ovládání médií v prostředí. Projeví se po restartu."
 
+msgid "MIX"
+msgstr "MIX"
+
 msgid "Moods and genres"
 msgstr "Nálady a žánry"
 
@@ -709,6 +718,9 @@ msgstr "Nový playlist"
 
 msgid "New releases"
 msgstr "Novinky"
+
+msgid "New to you, refreshed every Monday"
+msgstr "Nové pro vás, obnovuje se každé pondělí"
 
 msgid "Next"
 msgstr "Další"
@@ -833,6 +845,9 @@ msgstr "Otevřít rádio"
 msgid "Open the album \"{}\""
 msgstr "Otevřít album „{}“"
 
+msgid "Open the mix \"{}\""
+msgstr "Otevřít mix „{}“"
+
 msgid "Open the playlist \"{}\""
 msgstr "Otevřít playlist „{}“"
 
@@ -919,6 +934,9 @@ msgstr "Přehrát jako další"
 
 msgid "Play the album"
 msgstr "Přehrát toto album"
+
+msgid "Play the mix"
+msgstr "Přehrát mix"
 
 msgid "Play the playlist"
 msgstr "Přehrát tento playlist"
@@ -1364,6 +1382,9 @@ msgstr "Tato stránka sekce Objevovat neexistuje"
 msgid "This folder is empty"
 msgstr "Tato složka je prázdná"
 
+msgid "This mix is no longer available"
+msgstr "Tento mix už není k dispozici"
+
 msgid "This playlist is empty"
 msgstr "Tento playlist je prázdný"
 
@@ -1430,6 +1451,9 @@ msgstr "Hlasitost"
 msgid "Volume {}%"
 msgstr "Hlasitost {} %"
 
+msgid "With {}"
+msgstr "S interprety {}"
+
 msgid "XDG_RUNTIME_DIR is not set, so there is no private place for the cookies"
 msgstr "Proměnná XDG_RUNTIME_DIR není nastavena, takže pro soubory cookie neexistuje soukromé místo"
 
@@ -1438,6 +1462,9 @@ msgstr "Rok"
 
 msgid "You are here: {}"
 msgstr "Jste zde: {}"
+
+msgid "Your mixes"
+msgstr "Vaše mixy"
 
 msgid "Your user is not allowed to share on this server"
 msgstr "Váš uživatel nemá na tomto serveru oprávnění sdílet"

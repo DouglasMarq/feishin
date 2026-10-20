@@ -396,6 +396,9 @@ msgstr "Custom na kulay ng accent: {} (accent ng tema ang ginagamit)"
 msgid "Custom accent color: {}, press Enter to apply"
 msgstr "Custom na kulay ng accent: {}, pindutin ang Enter para ilapat"
 
+msgid "Daily Mix {}"
+msgstr "Daily Mix {}"
+
 msgid "Dark theme"
 msgstr "Madilim na tema"
 
@@ -455,6 +458,9 @@ msgstr "Bukas ang Tuklasin"
 
 msgid "Discover new music on YouTube Music"
 msgstr "Tumuklas ng bagong musika sa YouTube Music"
+
+msgid "Discover Weekly"
+msgstr "Mga Tuklas ng Linggo"
 
 msgid "Duration"
 msgstr "Haba"
@@ -673,6 +679,9 @@ msgstr "Pinakamataas na bitrate"
 msgid "Media keys and desktop media controls. Takes effect after a restart."
 msgstr "Mga media key at media control ng desktop. Magkakabisa pagkatapos mag-restart."
 
+msgid "MIX"
+msgstr "MIX"
+
 msgid "Moods and genres"
 msgstr "Mga mood at genre"
 
@@ -699,6 +708,9 @@ msgstr "Bagong playlist"
 
 msgid "New releases"
 msgstr "Mga bagong labas"
+
+msgid "New to you, refreshed every Monday"
+msgstr "Bago sa iyo, nire-refresh tuwing Lunes"
 
 msgid "Next"
 msgstr "Susunod"
@@ -823,6 +835,9 @@ msgstr "Buksan ang radyo"
 msgid "Open the album \"{}\""
 msgstr "Buksan ang album na \"{}\""
 
+msgid "Open the mix \"{}\""
+msgstr "Buksan ang mix na \"{}\""
+
 msgid "Open the playlist \"{}\""
 msgstr "Buksan ang playlist na \"{}\""
 
@@ -908,6 +923,9 @@ msgstr "I-play nang susunod"
 
 msgid "Play the album"
 msgstr "I-play ang album"
+
+msgid "Play the mix"
+msgstr "I-play ang mix"
 
 msgid "Play the playlist"
 msgstr "I-play ang playlist"
@@ -1351,6 +1369,9 @@ msgstr "Hindi umiiral ang pahinang ito ng Tuklasin"
 msgid "This folder is empty"
 msgstr "Walang laman ang folder na ito"
 
+msgid "This mix is no longer available"
+msgstr "Hindi na available ang mix na ito"
+
 msgid "This playlist is empty"
 msgstr "Walang laman ang playlist na ito"
 
@@ -1417,6 +1438,9 @@ msgstr "Volume"
 msgid "Volume {}%"
 msgstr "Volume {}%"
 
+msgid "With {}"
+msgstr "Kasama si {}"
+
 msgid "XDG_RUNTIME_DIR is not set, so there is no private place for the cookies"
 msgstr "Hindi naka-set ang XDG_RUNTIME_DIR, kaya walang pribadong lugar para sa mga cookie"
 
@@ -1425,6 +1449,9 @@ msgstr "Taon"
 
 msgid "You are here: {}"
 msgstr "Nandito ka: {}"
+
+msgid "Your mixes"
+msgstr "Ang mga mix mo"
 
 msgid "Your user is not allowed to share on this server"
 msgstr "Hindi pinapayagang magbahagi ang iyong user sa server na ito"

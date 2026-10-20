@@ -3,9 +3,10 @@ use std::sync::Arc;
 use slint::ComponentHandle;
 
 use super::deps::DiscoverDeps;
+use super::mixes::ensure_mixes;
 use super::model::with_discover;
 use super::render::render_sections;
-use super::sections::Sections;
+use super::sections::{Section, Sections};
 use crate::discover::{DiscoverFeed, FeedRequest, default_chart_country};
 use crate::ui::{AppWindow, on_ui, show_status};
 
@@ -21,6 +22,12 @@ pub fn show_sections(window: &AppWindow, deps: &DiscoverDeps) {
     .unwrap_or_default();
     for request in requests {
         fetch_feed(window, deps, request);
+    }
+    let for_you = with_discover(window, |model| {
+        model.sections.borrow().section == Section::ForYou
+    });
+    if for_you == Some(true) {
+        ensure_mixes(window, deps);
     }
     render_sections(window);
 }

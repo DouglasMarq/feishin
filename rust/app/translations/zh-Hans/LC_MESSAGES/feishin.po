@@ -388,6 +388,9 @@ msgstr "自定义强调色：{}（正在使用主题强调色）"
 msgid "Custom accent color: {}, press Enter to apply"
 msgstr "自定义强调色：{}，按 Enter 应用"
 
+msgid "Daily Mix {}"
+msgstr "每日推荐 {}"
+
 msgid "Dark theme"
 msgstr "深色主题"
 
@@ -447,6 +450,9 @@ msgstr "“发现”已打开"
 
 msgid "Discover new music on YouTube Music"
 msgstr "在 YouTube Music 上发现新音乐"
+
+msgid "Discover Weekly"
+msgstr "每周新发现"
 
 msgid "Duration"
 msgstr "时长"
@@ -663,6 +669,9 @@ msgstr "最大码率"
 msgid "Media keys and desktop media controls. Takes effect after a restart."
 msgstr "媒体键和桌面媒体控制。重启后生效。"
 
+msgid "MIX"
+msgstr "合辑"
+
 msgid "Moods and genres"
 msgstr "心情与流派"
 
@@ -689,6 +698,9 @@ msgstr "新建播放列表"
 
 msgid "New releases"
 msgstr "新发行"
+
+msgid "New to you, refreshed every Monday"
+msgstr "为你推荐的新歌，每周一更新"
 
 msgid "Next"
 msgstr "下一首"
@@ -813,6 +825,9 @@ msgstr "打开电台"
 msgid "Open the album \"{}\""
 msgstr "打开专辑“{}”"
 
+msgid "Open the mix \"{}\""
+msgstr "打开合辑“{}”"
+
 msgid "Open the playlist \"{}\""
 msgstr "打开播放列表“{}”"
 
@@ -897,6 +912,9 @@ msgstr "下一首播放"
 
 msgid "Play the album"
 msgstr "播放专辑"
+
+msgid "Play the mix"
+msgstr "播放合辑"
 
 msgid "Play the playlist"
 msgstr "播放此播放列表"
@@ -1338,6 +1356,9 @@ msgstr "此“发现”页面不存在"
 msgid "This folder is empty"
 msgstr "此文件夹为空"
 
+msgid "This mix is no longer available"
+msgstr "此合辑已不可用"
+
 msgid "This playlist is empty"
 msgstr "此播放列表为空"
 
@@ -1404,6 +1425,9 @@ msgstr "音量"
 msgid "Volume {}%"
 msgstr "音量 {}%"
 
+msgid "With {}"
+msgstr "包含 {}"
+
 msgid "XDG_RUNTIME_DIR is not set, so there is no private place for the cookies"
 msgstr "未设置 XDG_RUNTIME_DIR，因此没有存放 Cookie 的私有位置"
 
@@ -1412,6 +1436,9 @@ msgstr "年份"
 
 msgid "You are here: {}"
 msgstr "当前位置：{}"
+
+msgid "Your mixes"
+msgstr "你的合辑"
 
 msgid "Your user is not allowed to share on this server"
 msgstr "你的用户无权在此服务器上分享"

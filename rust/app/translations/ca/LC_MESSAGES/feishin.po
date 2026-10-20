@@ -396,6 +396,9 @@ msgstr "Color de ressaltat personalitzat: {} (s'usa el ressaltat del tema)"
 msgid "Custom accent color: {}, press Enter to apply"
 msgstr "Color de ressaltat personalitzat: {}, premeu Retorn per a aplicar-lo"
 
+msgid "Daily Mix {}"
+msgstr "Mix diari {}"
+
 msgid "Dark theme"
 msgstr "Tema fosc"
 
@@ -455,6 +458,9 @@ msgstr "Descobreix és obert"
 
 msgid "Discover new music on YouTube Music"
 msgstr "Descobriu música nova a YouTube Music"
+
+msgid "Discover Weekly"
+msgstr "Descobriments de la setmana"
 
 msgid "Duration"
 msgstr "Durada"
@@ -673,6 +679,9 @@ msgstr "Taxa de bits màxima"
 msgid "Media keys and desktop media controls. Takes effect after a restart."
 msgstr "Tecles multimèdia i controls multimèdia de l'escriptori. Té efecte després de reiniciar."
 
+msgid "MIX"
+msgstr "MIX"
+
 msgid "Moods and genres"
 msgstr "Estats d'ànim i gèneres"
 
@@ -699,6 +708,9 @@ msgstr "Llista de reproducció nova"
 
 msgid "New releases"
 msgstr "Novetats"
+
+msgid "New to you, refreshed every Monday"
+msgstr "Nou per a tu, s'actualitza cada dilluns"
 
 msgid "Next"
 msgstr "Següent"
@@ -823,6 +835,9 @@ msgstr "Obre la ràdio"
 msgid "Open the album \"{}\""
 msgstr "Obre l'àlbum «{}»"
 
+msgid "Open the mix \"{}\""
+msgstr "Obre el mix «{}»"
+
 msgid "Open the playlist \"{}\""
 msgstr "Obre la llista de reproducció «{}»"
 
@@ -908,6 +923,9 @@ msgstr "Reprodueix a continuació"
 
 msgid "Play the album"
 msgstr "Reprodueix l'àlbum"
+
+msgid "Play the mix"
+msgstr "Reprodueix el mix"
 
 msgid "Play the playlist"
 msgstr "Reprodueix la llista de reproducció"
@@ -1351,6 +1369,9 @@ msgstr "Aquesta pàgina de Descobreix no existeix"
 msgid "This folder is empty"
 msgstr "Aquesta carpeta és buida"
 
+msgid "This mix is no longer available"
+msgstr "Aquest mix ja no està disponible"
+
 msgid "This playlist is empty"
 msgstr "Aquesta llista de reproducció és buida"
 
@@ -1417,6 +1438,9 @@ msgstr "Volum"
 msgid "Volume {}%"
 msgstr "Volum {}%"
 
+msgid "With {}"
+msgstr "Amb {}"
+
 msgid "XDG_RUNTIME_DIR is not set, so there is no private place for the cookies"
 msgstr "XDG_RUNTIME_DIR no està definit, així que no hi ha cap lloc privat per a les galetes"
 
@@ -1425,6 +1449,9 @@ msgstr "Any"
 
 msgid "You are here: {}"
 msgstr "Sou aquí: {}"
+
+msgid "Your mixes"
+msgstr "Els teus mixos"
 
 msgid "Your user is not allowed to share on this server"
 msgstr "El vostre usuari no té permís per a compartir en aquest servidor"

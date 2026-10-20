@@ -396,6 +396,9 @@ msgstr "தனிப்பயன் உச்சரிப்பு நிறம�
 msgid "Custom accent color: {}, press Enter to apply"
 msgstr "தனிப்பயன் உச்சரிப்பு நிறம்: {}, பயன்படுத்த Enter ஐ அழுத்தவும்"
 
+msgid "Daily Mix {}"
+msgstr "தினசரி கலவை {}"
+
 msgid "Dark theme"
 msgstr "இருண்ட கருப்பொருள்"
 
@@ -455,6 +458,9 @@ msgstr "கண்டறி திறந்துள்ளது"
 
 msgid "Discover new music on YouTube Music"
 msgstr "YouTube Music இல் புதிய இசையைக் கண்டறியுங்கள்"
+
+msgid "Discover Weekly"
+msgstr "வாரத்தின் கண்டுபிடிப்புகள்"
 
 msgid "Duration"
 msgstr "காலம்"
@@ -673,6 +679,9 @@ msgstr "அதிகபட்ச பிட்ரேட்"
 msgid "Media keys and desktop media controls. Takes effect after a restart."
 msgstr "மீடியா விசைகள் மற்றும் டெஸ்க்டாப் மீடியா கட்டுப்பாடுகள். மறுதொடக்கத்துக்குப் பிறகு நடைமுறைக்கு வரும்."
 
+msgid "MIX"
+msgstr "கலவை"
+
 msgid "Moods and genres"
 msgstr "மனநிலைகள் மற்றும் வகைகள்"
 
@@ -699,6 +708,9 @@ msgstr "புதிய பிளேலிஸ்ட்"
 
 msgid "New releases"
 msgstr "புதிய வெளியீடுகள்"
+
+msgid "New to you, refreshed every Monday"
+msgstr "உங்களுக்குப் புதியது, ஒவ்வொரு திங்கட்கிழமையும் புதுப்பிக்கப்படும்"
 
 msgid "Next"
 msgstr "அடுத்தது"
@@ -823,6 +835,9 @@ msgstr "வானொலியைத் திற"
 msgid "Open the album \"{}\""
 msgstr "\"{}\" ஆல்பத்தைத் திற"
 
+msgid "Open the mix \"{}\""
+msgstr "\"{}\" கலவையைத் திற"
+
 msgid "Open the playlist \"{}\""
 msgstr "\"{}\" பிளேலிஸ்ட்டைத் திற"
 
@@ -908,6 +923,9 @@ msgstr "அடுத்ததாக இயக்கு"
 
 msgid "Play the album"
 msgstr "ஆல்பத்தை இயக்கு"
+
+msgid "Play the mix"
+msgstr "கலவையை இயக்கு"
 
 msgid "Play the playlist"
 msgstr "பிளேலிஸ்ட்டை இயக்கு"
@@ -1351,6 +1369,9 @@ msgstr "இந்தக் கண்டறி பக்கம் இல்லை
 msgid "This folder is empty"
 msgstr "இந்தக் கோப்புறை காலியாக உள்ளது"
 
+msgid "This mix is no longer available"
+msgstr "இந்தக் கலவை இனி கிடைக்காது"
+
 msgid "This playlist is empty"
 msgstr "இந்த பிளேலிஸ்ட் காலியாக உள்ளது"
 
@@ -1417,6 +1438,9 @@ msgstr "ஒலியளவு"
 msgid "Volume {}%"
 msgstr "ஒலியளவு {}%"
 
+msgid "With {}"
+msgstr "{} உடன்"
+
 msgid "XDG_RUNTIME_DIR is not set, so there is no private place for the cookies"
 msgstr "XDG_RUNTIME_DIR அமைக்கப்படவில்லை, எனவே குக்கீகளுக்குத் தனிப்பட்ட இடம் இல்லை"
 
@@ -1425,6 +1449,9 @@ msgstr "ஆண்டு"
 
 msgid "You are here: {}"
 msgstr "நீங்கள் இங்கே உள்ளீர்கள்: {}"
+
+msgid "Your mixes"
+msgstr "உங்கள் கலவைகள்"
 
 msgid "Your user is not allowed to share on this server"
 msgstr "இந்தச் சேவையகத்தில் பகிர உங்கள் பயனருக்கு அனுமதி இல்லை"

@@ -396,6 +396,9 @@ msgstr "Eigen aksentfarge: {} (aksentfargen til temaet er i bruk)"
 msgid "Custom accent color: {}, press Enter to apply"
 msgstr "Eigen aksentfarge: {}, trykk Enter for å bruke han"
 
+msgid "Daily Mix {}"
+msgstr "Dagleg miks {}"
+
 msgid "Dark theme"
 msgstr "Mørkt tema"
 
@@ -455,6 +458,9 @@ msgstr "Utforsk er ope"
 
 msgid "Discover new music on YouTube Music"
 msgstr "Oppdag ny musikk på YouTube Music"
+
+msgid "Discover Weekly"
+msgstr "Veka sine oppdagingar"
 
 msgid "Duration"
 msgstr "Varigheit"
@@ -673,6 +679,9 @@ msgstr "Største bitrate"
 msgid "Media keys and desktop media controls. Takes effect after a restart."
 msgstr "Medietastar og mediekontrollar på skrivebordet. Trer i kraft etter omstart."
 
+msgid "MIX"
+msgstr "MIKS"
+
 msgid "Moods and genres"
 msgstr "Stemningar og sjangrar"
 
@@ -699,6 +708,9 @@ msgstr "Ny speleliste"
 
 msgid "New releases"
 msgstr "Nye utgjevingar"
+
+msgid "New to you, refreshed every Monday"
+msgstr "Nytt for deg, oppdaterast kvar måndag"
 
 msgid "Next"
 msgstr "Neste"
@@ -823,6 +835,9 @@ msgstr "Opne radio"
 msgid "Open the album \"{}\""
 msgstr "Opne albumet \"{}\""
 
+msgid "Open the mix \"{}\""
+msgstr "Opne miksen \"{}\""
+
 msgid "Open the playlist \"{}\""
 msgstr "Opne spelelista \"{}\""
 
@@ -908,6 +923,9 @@ msgstr "Spel av som neste"
 
 msgid "Play the album"
 msgstr "Spel av albumet"
+
+msgid "Play the mix"
+msgstr "Spel av miksen"
 
 msgid "Play the playlist"
 msgstr "Spel av spelelista"
@@ -1351,6 +1369,9 @@ msgstr "Denne Utforsk-sida finst ikkje"
 msgid "This folder is empty"
 msgstr "Denne mappa er tom"
 
+msgid "This mix is no longer available"
+msgstr "Denne miksen er ikkje lenger tilgjengeleg"
+
 msgid "This playlist is empty"
 msgstr "Denne spelelista er tom"
 
@@ -1417,6 +1438,9 @@ msgstr "Volum"
 msgid "Volume {}%"
 msgstr "Volum {}%"
 
+msgid "With {}"
+msgstr "Med {}"
+
 msgid "XDG_RUNTIME_DIR is not set, so there is no private place for the cookies"
 msgstr "XDG_RUNTIME_DIR er ikkje sett, så det finst ingen privat stad for informasjonskapslane"
 
@@ -1425,6 +1449,9 @@ msgstr "År"
 
 msgid "You are here: {}"
 msgstr "Du er her: {}"
+
+msgid "Your mixes"
+msgstr "Miksane dine"
 
 msgid "Your user is not allowed to share on this server"
 msgstr "Brukaren din har ikkje lov til å dele på denne tenaren"

@@ -52,6 +52,25 @@ impl YouTubeMusicSource {
         self.client(settings, auth)
     }
 
+    async fn signed_in_or_anonymous<Output, Answer>(
+        &self,
+        settings: &YouTubeSettings,
+        request: impl Fn(MusicClient) -> Answer,
+    ) -> Result<Output, MusicError>
+    where
+        Answer: Future<Output = Result<Output, MusicError>>,
+    {
+        let signed_in = self.signed_in_client(settings).await?;
+        let was_signed_in = signed_in.is_signed_in();
+        match request(signed_in).await {
+            Err(error) if error.is_rejected_sign_in() && was_signed_in => {
+                self.sign_in.forget();
+                request(self.client(settings, None)?).await
+            }
+            other => other,
+        }
+    }
+
     async fn anonymous_home(
         &self,
         settings: &YouTubeSettings,
@@ -131,14 +150,11 @@ impl DiscoverSource for YouTubeMusicSource {
         browse_id: String,
         settings: YouTubeSettings,
     ) -> Result<CollectionPage, MusicError> {
-        let signed_in = self.signed_in_client(&settings).await?;
-        match signed_in.collection(&browse_id).await {
-            Err(error) if error.is_rejected_sign_in() && signed_in.is_signed_in() => {
-                self.sign_in.forget();
-                self.client(&settings, None)?.collection(&browse_id).await
-            }
-            other => other,
-        }
+        self.signed_in_or_anonymous(&settings, |client| {
+            let browse_id = browse_id.clone();
+            async move { client.collection(&browse_id).await }
+        })
+        .await
     }
 
     async fn search(
@@ -146,13 +162,22 @@ impl DiscoverSource for YouTubeMusicSource {
         query: String,
         settings: YouTubeSettings,
     ) -> Result<Vec<MusicSong>, MusicError> {
-        let signed_in = self.signed_in_client(&settings).await?;
-        match signed_in.search_songs(&query).await {
-            Err(error) if error.is_rejected_sign_in() && signed_in.is_signed_in() => {
-                self.sign_in.forget();
-                self.client(&settings, None)?.search_songs(&query).await
-            }
-            other => other,
-        }
+        self.signed_in_or_anonymous(&settings, |client| {
+            let query = query.clone();
+            async move { client.search_songs(&query).await }
+        })
+        .await
+    }
+
+    async fn radio(
+        &self,
+        video_id: String,
+        settings: YouTubeSettings,
+    ) -> Result<Vec<MusicSong>, MusicError> {
+        self.signed_in_or_anonymous(&settings, |client| {
+            let video_id = video_id.clone();
+            async move { client.radio(&video_id).await }
+        })
+        .await
     }
 }

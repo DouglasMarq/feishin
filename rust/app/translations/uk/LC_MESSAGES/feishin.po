@@ -404,6 +404,9 @@ msgstr "Власний акцентний колір: {} (використову
 msgid "Custom accent color: {}, press Enter to apply"
 msgstr "Власний акцентний колір: {}, натисніть Enter, щоб застосувати"
 
+msgid "Daily Mix {}"
+msgstr "Щоденний мікс {}"
+
 msgid "Dark theme"
 msgstr "Темна тема"
 
@@ -463,6 +466,9 @@ msgstr "«Огляд» відкрито"
 
 msgid "Discover new music on YouTube Music"
 msgstr "Відкривайте нову музику в YouTube Music"
+
+msgid "Discover Weekly"
+msgstr "Відкриття тижня"
 
 msgid "Duration"
 msgstr "Тривалість"
@@ -683,6 +689,9 @@ msgstr "Максимальний бітрейт"
 msgid "Media keys and desktop media controls. Takes effect after a restart."
 msgstr "Мультимедійні клавіші та керування медіа на робочому столі. Діє після перезапуску."
 
+msgid "MIX"
+msgstr "МІКС"
+
 msgid "Moods and genres"
 msgstr "Настрої та жанри"
 
@@ -709,6 +718,9 @@ msgstr "Новий плейлист"
 
 msgid "New releases"
 msgstr "Новинки"
+
+msgid "New to you, refreshed every Monday"
+msgstr "Нове для вас, оновлюється щопонеділка"
 
 msgid "Next"
 msgstr "Наступний"
@@ -833,6 +845,9 @@ msgstr "Відкрити радіо"
 msgid "Open the album \"{}\""
 msgstr "Відкрити альбом «{}»"
 
+msgid "Open the mix \"{}\""
+msgstr "Відкрити мікс «{}»"
+
 msgid "Open the playlist \"{}\""
 msgstr "Відкрити плейлист «{}»"
 
@@ -919,6 +934,9 @@ msgstr "Відтворити наступним"
 
 msgid "Play the album"
 msgstr "Відтворити альбом"
+
+msgid "Play the mix"
+msgstr "Відтворити мікс"
 
 msgid "Play the playlist"
 msgstr "Відтворити плейлист"
@@ -1364,6 +1382,9 @@ msgstr "Цієї сторінки «Огляду» не існує"
 msgid "This folder is empty"
 msgstr "Ця папка порожня"
 
+msgid "This mix is no longer available"
+msgstr "Цей мікс більше недоступний"
+
 msgid "This playlist is empty"
 msgstr "Цей плейлист порожній"
 
@@ -1430,6 +1451,9 @@ msgstr "Гучність"
 msgid "Volume {}%"
 msgstr "Гучність {}%"
 
+msgid "With {}"
+msgstr "З участю: {}"
+
 msgid "XDG_RUNTIME_DIR is not set, so there is no private place for the cookies"
 msgstr "XDG_RUNTIME_DIR не задано, тому немає приватного місця для файлів cookie"
 
@@ -1438,6 +1462,9 @@ msgstr "Рік"
 
 msgid "You are here: {}"
 msgstr "Ви тут: {}"
+
+msgid "Your mixes"
+msgstr "Ваші мікси"
 
 msgid "Your user is not allowed to share on this server"
 msgstr "Вашому користувачу заборонено поширювати на цьому сервері"

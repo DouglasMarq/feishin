@@ -6,6 +6,7 @@ use slint::{ComponentHandle, Image, Model, ModelNotify, ModelRc, ModelTracker, V
 
 use super::cards::{card_of, song_row, thumbnail_of};
 use super::cover_slots::CoverSlots;
+use super::mixes::MixState;
 use super::page::Page;
 use super::sections::Sections;
 use crate::discover::FeedRequest;
@@ -29,6 +30,8 @@ pub struct DiscoverModel {
     slots: RefCell<Vec<ShelfSlot>>,
     notify: ModelNotify,
     shown_request: RefCell<Option<FeedRequest>>,
+    shown_mix_revision: Cell<u64>,
+    pub mixes: RefCell<MixState>,
     shelf_generation: Cell<u64>,
     card_covers: RefCell<CoverSlots<CardKey>>,
     pub sections: RefCell<Sections>,
@@ -40,10 +43,14 @@ pub struct DiscoverModel {
 
 impl DiscoverModel {
     pub fn show_shelves(&self, request: Option<&FeedRequest>, shelves: &[MusicShelf]) {
-        if self.shown_request.borrow().as_ref() == request {
+        let mix_revision = self.mixes.borrow().revision();
+        if self.shown_request.borrow().as_ref() == request
+            && self.shown_mix_revision.get() == mix_revision
+        {
             return;
         }
         *self.shown_request.borrow_mut() = request.cloned();
+        self.shown_mix_revision.set(mix_revision);
         self.shelf_generation.set(self.shelf_generation.get() + 1);
         self.card_covers.borrow_mut().clear();
         *self.slots.borrow_mut() = shelves.iter().map(slot_of).collect();

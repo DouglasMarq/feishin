@@ -17,7 +17,9 @@ use crate::discover::DemoDiscover;
 use crate::session::Session;
 use crate::store::JsonStore;
 use crate::ui::test_window::{Jobs, claim_routed_platform, routed_runtime};
-use crate::ui::{AppState, AppWindow, Context, DiscoverSection, DiscoverState, Page, Route};
+use crate::ui::{
+    AppState, AppWindow, Context, DiscoverCardKind, DiscoverSection, DiscoverState, Page, Route,
+};
 
 const SONGS: usize = 2_400;
 
@@ -139,24 +141,27 @@ impl Fixture {
     }
 }
 
+const PICKED_SHELF: usize = 1;
+
 fn for_you_is_shown(fixture: &Fixture, screen: &Screen) {
-    screen.wait_until("For you loads with covers", || {
+    screen.wait_until("For you loads with your mixes first", || {
+        fixture.shelf_titles() == ["Your mixes", "Picked for you", "Playlists to try"]
+    });
+    screen.wait_until("the picked songs load with covers", || {
         with_discover(&fixture.window, |model| {
-            let cards = model.cards(0);
+            let cards = model.cards(PICKED_SHELF);
             cards.len() == 11 && cards.first().is_some_and(|card| card.has_cover)
         })
         .unwrap_or(false)
     });
-    assert_eq!(
-        fixture.shelf_titles(),
-        ["Picked for you", "Playlists to try"]
-    );
     assert!(fixture.state().get_notice().starts_with("Demo mode"));
     assert!(!fixture.state().get_loading());
 }
 
 fn playing_a_card_plays_the_shelf_from_it(fixture: &mut Fixture) {
-    fixture.state().invoke_play_from_card(0, 2);
+    fixture
+        .state()
+        .invoke_play_from_card(PICKED_SHELF as i32, 2);
     let Command::Tracks(TrackCommand::PlayNow {
         tracks,
         start_index,
@@ -174,6 +179,35 @@ fn playing_a_card_plays_the_shelf_from_it(fixture: &mut Fixture) {
         tracks.last().map(|track| track.song_id.as_str()),
         Some("yt:demoOnlyOnYouTube")
     );
+}
+
+fn mixes_open_as_pages_and_play(fixture: &mut Fixture, screen: &Screen) {
+    let mix = fixture
+        .state()
+        .get_shelves()
+        .row_data(0)
+        .unwrap()
+        .cards
+        .row_data(0)
+        .unwrap();
+    assert_eq!(mix.kind, DiscoverCardKind::Mix);
+    assert_eq!(mix.title, "Daily Mix 1");
+    fixture
+        .window
+        .global::<AppState>()
+        .invoke_navigate(Route::Discover, mix.id.clone());
+    screen.wait_until("the mix opens", || {
+        fixture.state().get_songs().row_count() >= 12
+    });
+    assert_eq!(fixture.state().get_page_kind(), "MIX");
+    assert!(!fixture.state().get_page_has_link());
+    fixture.state().invoke_play_page();
+    let Command::Tracks(TrackCommand::PlayNow { tracks, .. }) = fixture.next_command() else {
+        panic!("expected PlayNow");
+    };
+    assert_eq!(tracks.len(), fixture.state().get_songs().row_count());
+    fixture.window.global::<AppState>().invoke_back();
+    screen.pump();
 }
 
 fn charts_follow_the_country(fixture: &Fixture, screen: &Screen) {
@@ -285,6 +319,7 @@ fn discover_shows_demo_sections_pages_and_plays_from_the_library_first() {
     let mut fixture = open_discover();
     for_you_is_shown(&fixture, &screen);
     playing_a_card_plays_the_shelf_from_it(&mut fixture);
+    mixes_open_as_pages_and_play(&mut fixture, &screen);
     charts_follow_the_country(&fixture, &screen);
     moods_open_their_playlists(&fixture, &screen);
     playlists_open_as_pages(&fixture, &screen);

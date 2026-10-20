@@ -2,6 +2,8 @@ use feishin_youtube::music::{
     CollectionKind, CollectionPage, MusicSong, collection_kind, collection_url, is_browse_id,
 };
 
+use crate::discover::mixes::MixId;
+
 pub const SEARCH_PREFIX: &str = "search:";
 
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -11,6 +13,7 @@ pub enum PageTarget {
         kind: CollectionKind,
     },
     Search(String),
+    Mix(MixId),
 }
 
 impl PageTarget {
@@ -18,6 +21,9 @@ impl PageTarget {
         if let Some(query) = detail_id.strip_prefix(SEARCH_PREFIX) {
             let query = query.trim();
             return (!query.is_empty()).then(|| Self::Search(query.to_owned()));
+        }
+        if let Some(mix) = MixId::parse(detail_id) {
+            return Some(Self::Mix(mix));
         }
         is_browse_id(detail_id).then(|| Self::Collection {
             browse_id: detail_id.to_owned(),
@@ -36,13 +42,14 @@ impl PageTarget {
                 ..
             } => "PLAYLIST",
             Self::Search(_) => "SEARCH RESULTS",
+            Self::Mix(_) => "MIX",
         }
     }
 
     pub fn web_url(&self) -> Option<String> {
         match self {
             Self::Collection { browse_id, .. } => Some(collection_url(browse_id)),
-            Self::Search(_) => None,
+            Self::Search(_) | Self::Mix(_) => None,
         }
     }
 }
@@ -75,7 +82,7 @@ impl Page {
         self.error = None;
         self.title = match &target {
             PageTarget::Search(query) => format!("\"{query}\""),
-            PageTarget::Collection { .. } => String::new(),
+            PageTarget::Collection { .. } | PageTarget::Mix(_) => String::new(),
         };
         self.subtitle.clear();
         self.thumbnail_url = None;
@@ -152,6 +159,10 @@ mod tests {
         );
         assert_eq!(PageTarget::parse("search:   "), None);
         assert_eq!(PageTarget::parse("not an id"), None);
+        let mix = PageTarget::parse("mix:daily-2").unwrap();
+        assert_eq!(mix, PageTarget::Mix(MixId::Daily(2)));
+        assert_eq!((mix.kind_label(), mix.web_url()), ("MIX", None));
+        assert_eq!(PageTarget::parse("mix:unknown"), None);
         assert_eq!(search_detail_id("  hey "), Some("search:hey".into()));
         assert_eq!(search_detail_id(" "), None);
         assert_eq!(

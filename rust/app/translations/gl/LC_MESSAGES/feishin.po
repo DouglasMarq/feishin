@@ -396,6 +396,9 @@ msgstr "Cor de realce personalizada: {} (úsase o realce do tema)"
 msgid "Custom accent color: {}, press Enter to apply"
 msgstr "Cor de realce personalizada: {}, preme Intro para aplicala"
 
+msgid "Daily Mix {}"
+msgstr "Mix diario {}"
+
 msgid "Dark theme"
 msgstr "Tema escuro"
 
@@ -455,6 +458,9 @@ msgstr "Descubrir está aberto"
 
 msgid "Discover new music on YouTube Music"
 msgstr "Descubre música nova en YouTube Music"
+
+msgid "Discover Weekly"
+msgstr "Descubertas da semana"
 
 msgid "Duration"
 msgstr "Duración"
@@ -673,6 +679,9 @@ msgstr "Taxa de bits máxima"
 msgid "Media keys and desktop media controls. Takes effect after a restart."
 msgstr "Teclas multimedia e controis multimedia do escritorio. Aplícase despois de reiniciar."
 
+msgid "MIX"
+msgstr "MIX"
+
 msgid "Moods and genres"
 msgstr "Estados de ánimo e xéneros"
 
@@ -699,6 +708,9 @@ msgstr "Nova lista de reprodución"
 
 msgid "New releases"
 msgstr "Novidades"
+
+msgid "New to you, refreshed every Monday"
+msgstr "Novo para ti, renóvase cada luns"
 
 msgid "Next"
 msgstr "Seguinte"
@@ -823,6 +835,9 @@ msgstr "Abrir a radio"
 msgid "Open the album \"{}\""
 msgstr "Abrir o álbum \"{}\""
 
+msgid "Open the mix \"{}\""
+msgstr "Abrir o mix \"{}\""
+
 msgid "Open the playlist \"{}\""
 msgstr "Abrir a lista de reprodución \"{}\""
 
@@ -908,6 +923,9 @@ msgstr "Reproducir a continuación"
 
 msgid "Play the album"
 msgstr "Reproducir o álbum"
+
+msgid "Play the mix"
+msgstr "Reproducir o mix"
 
 msgid "Play the playlist"
 msgstr "Reproducir a lista de reprodución"
@@ -1351,6 +1369,9 @@ msgstr "Esta páxina de Descubrir non existe"
 msgid "This folder is empty"
 msgstr "Este cartafol está baleiro"
 
+msgid "This mix is no longer available"
+msgstr "Este mix xa non está dispoñible"
+
 msgid "This playlist is empty"
 msgstr "Esta lista de reprodución está baleira"
 
@@ -1417,6 +1438,9 @@ msgstr "Volume"
 msgid "Volume {}%"
 msgstr "Volume {}%"
 
+msgid "With {}"
+msgstr "Con {}"
+
 msgid "XDG_RUNTIME_DIR is not set, so there is no private place for the cookies"
 msgstr "XDG_RUNTIME_DIR non está definido, polo que non hai un lugar privado para as cookies"
 
@@ -1425,6 +1449,9 @@ msgstr "Ano"
 
 msgid "You are here: {}"
 msgstr "Estás aquí: {}"
+
+msgid "Your mixes"
+msgstr "Os teus mix"
 
 msgid "Your user is not allowed to share on this server"
 msgstr "O teu usuario non ten permiso para compartir neste servidor"

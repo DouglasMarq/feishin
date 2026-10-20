@@ -20,6 +20,9 @@ const ALBUM_PREFIX: &str = "MPREdemo";
 const PLAYLIST_PREFIX: &str = "VLdemo-";
 const MOOD_PREFIX: &str = "demo-mood-";
 const ONLY_ON_YOUTUBE_ID: &str = "demoOnlyOnYouTube";
+const RADIO_LIBRARY_SONGS: usize = 25;
+const RADIO_NEW_SONGS: usize = 10;
+const NEW_ARTIST_COUNT: usize = 31;
 const MOODS: [&str; 8] = [
     "Chill",
     "Focus",
@@ -166,6 +169,24 @@ impl DemoDiscover {
         )
     }
 
+    fn radio_songs(&self, video_id: &str) -> Vec<MusicSong> {
+        let seed = seed_of(video_id);
+        let mut new_songs = (0..RADIO_NEW_SONGS).map(|step| new_song(seed, step));
+        let mut radio = Vec::new();
+        for (position, song) in self
+            .picked_songs(seed, RADIO_LIBRARY_SONGS)
+            .into_iter()
+            .enumerate()
+        {
+            radio.push(song);
+            if position % 2 == 1 {
+                radio.extend(new_songs.next());
+            }
+        }
+        radio.extend(new_songs);
+        radio
+    }
+
     fn collection_page(&self, browse_id: &str) -> Result<CollectionPage, MusicError> {
         if let Some(first_index) = browse_id
             .strip_prefix(ALBUM_PREFIX)
@@ -230,6 +251,19 @@ fn only_on_youtube() -> MusicSong {
         album: None,
         duration_ms: Some(200_000),
         thumbnail_url: Some(demo_thumbnail(ONLY_ON_YOUTUBE_ID)),
+    }
+}
+
+fn new_song(seed: u64, step: usize) -> MusicSong {
+    let number = usize::try_from(seed % 97).unwrap_or_default() + step;
+    let video_id = format!("demoNew{number}");
+    MusicSong {
+        thumbnail_url: Some(demo_thumbnail(&video_id)),
+        video_id,
+        title: format!("Undiscovered Song {number}"),
+        artists: vec![format!("Newcomer {}", number % NEW_ARTIST_COUNT)],
+        album: None,
+        duration_ms: Some(180_000 + (number as u64 % 60) * 1_000),
     }
 }
 
@@ -317,5 +351,13 @@ impl DiscoverSource for DemoDiscover {
             .await
             .map_err(|error| MusicError::Network(error.to_string()))?;
         Ok(results.songs.iter().map(music_song_of).collect())
+    }
+
+    async fn radio(
+        &self,
+        video_id: String,
+        _settings: YouTubeSettings,
+    ) -> Result<Vec<MusicSong>, MusicError> {
+        Ok(self.radio_songs(&video_id))
     }
 }

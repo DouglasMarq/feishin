@@ -1,6 +1,7 @@
 mod demo_source;
 mod feed;
 mod library_match;
+pub mod mixes;
 mod names;
 mod sign_in;
 mod source;
@@ -11,10 +12,8 @@ mod youtube_music;
 mod tests;
 
 pub use demo_source::DemoDiscover;
-#[cfg(test)]
-pub use feed::FeedNotice;
-pub use feed::{DiscoverFeed, FeedRequest, default_chart_country};
-pub use library_match::LibraryMatcher;
+pub use feed::{DiscoverFeed, FeedNotice, FeedRequest, default_chart_country};
+pub use library_match::{LibraryMatcher, LibraryPresence};
 #[cfg(test)]
 pub use sign_in::SignIn;
 pub use source::DiscoverSource;

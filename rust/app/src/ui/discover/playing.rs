@@ -6,8 +6,10 @@ use feishin_youtube::music::MusicSong;
 use slint::ComponentHandle;
 
 use super::deps::DiscoverDeps;
+use super::mixes::mix_page;
 use super::send_order::SendTurn;
 use crate::controller::{Command, TrackCommand};
+use crate::discover::mixes::MixId;
 use crate::discover::resolve_tracks;
 use crate::ui::{AppWindow, on_ui, show_status};
 
@@ -144,6 +146,10 @@ pub fn play_collection(
     browse_id: String,
     placement: Placement,
 ) {
+    if let Some(mix) = MixId::parse(&browse_id) {
+        play_mix(window, deps, mix, placement);
+        return;
+    }
     let source = Arc::clone(&deps.source);
     let settings = deps.settings();
     let ticket = ticket_for(deps, placement);
@@ -168,6 +174,15 @@ pub fn play_collection(
             ),
         });
     });
+}
+
+fn play_mix(window: &AppWindow, deps: &DiscoverDeps, mix: MixId, placement: Placement) {
+    let Some(page) = mix_page(window, mix) else {
+        show_status(window, &tr!("This mix is no longer available"));
+        return;
+    };
+    let message = queued_message(placement, &page.songs, Some(&page.title));
+    send_resolved(window, deps, page.songs, placement, message);
 }
 
 #[cfg(test)]

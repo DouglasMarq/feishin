@@ -247,7 +247,7 @@ component PageHeader inherits HorizontalLayout {
         horizontal-stretch: 1;
 
         Text {
-            text: DiscoverState.page-kind == "SEARCH RESULTS" ? @tr("SEARCH RESULTS") : (DiscoverState.page-kind == "ALBUM" ? @tr("ALBUM") : @tr("PLAYLIST"));
+            text: DiscoverState.page-kind == "SEARCH RESULTS" ? @tr("SEARCH RESULTS") : (DiscoverState.page-kind == "ALBUM" ? @tr("ALBUM") : (DiscoverState.page-kind == "MIX" ? @tr("MIX") : @tr("PLAYLIST")));
             color: Theme.muted;
             font-size: 11px;
             font-weight: 600;

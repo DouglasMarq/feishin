@@ -396,6 +396,9 @@ msgstr "Oma korostusväri: {} (teeman korostusväri käytössä)"
 msgid "Custom accent color: {}, press Enter to apply"
 msgstr "Oma korostusväri: {}, ota käyttöön painamalla Enter"
 
+msgid "Daily Mix {}"
+msgstr "Päivän miksaus {}"
+
 msgid "Dark theme"
 msgstr "Tumma teema"
 
@@ -455,6 +458,9 @@ msgstr "Löydä-näkymä on auki"
 
 msgid "Discover new music on YouTube Music"
 msgstr "Löydä uutta musiikkia YouTube Musicista"
+
+msgid "Discover Weekly"
+msgstr "Viikon löydöt"
 
 msgid "Duration"
 msgstr "Kesto"
@@ -673,6 +679,9 @@ msgstr "Suurin bittinopeus"
 msgid "Media keys and desktop media controls. Takes effect after a restart."
 msgstr "Medianäppäimet ja työpöydän mediaohjaimet. Tulee voimaan uudelleenkäynnistyksen jälkeen."
 
+msgid "MIX"
+msgstr "MIKSAUS"
+
 msgid "Moods and genres"
 msgstr "Tunnelmat ja genret"
 
@@ -699,6 +708,9 @@ msgstr "Uusi soittolista"
 
 msgid "New releases"
 msgstr "Uudet julkaisut"
+
+msgid "New to you, refreshed every Monday"
+msgstr "Uutta sinulle, päivittyy joka maanantai"
 
 msgid "Next"
 msgstr "Seuraava"
@@ -823,6 +835,9 @@ msgstr "Avaa radio"
 msgid "Open the album \"{}\""
 msgstr "Avaa albumi \"{}\""
 
+msgid "Open the mix \"{}\""
+msgstr "Avaa miksaus \"{}\""
+
 msgid "Open the playlist \"{}\""
 msgstr "Avaa soittolista \"{}\""
 
@@ -908,6 +923,9 @@ msgstr "Toista seuraavaksi"
 
 msgid "Play the album"
 msgstr "Toista albumi"
+
+msgid "Play the mix"
+msgstr "Toista miksaus"
 
 msgid "Play the playlist"
 msgstr "Toista soittolista"
@@ -1351,6 +1369,9 @@ msgstr "Tätä Löydä-sivua ei ole olemassa"
 msgid "This folder is empty"
 msgstr "Tämä kansio on tyhjä"
 
+msgid "This mix is no longer available"
+msgstr "Tämä miksaus ei ole enää saatavilla"
+
 msgid "This playlist is empty"
 msgstr "Tämä soittolista on tyhjä"
 
@@ -1417,6 +1438,9 @@ msgstr "Äänenvoimakkuus"
 msgid "Volume {}%"
 msgstr "Äänenvoimakkuus {} %"
 
+msgid "With {}"
+msgstr "Mukana {}"
+
 msgid "XDG_RUNTIME_DIR is not set, so there is no private place for the cookies"
 msgstr "XDG_RUNTIME_DIR ei ole asetettu, joten evästeille ei ole yksityistä paikkaa"
 
@@ -1425,6 +1449,9 @@ msgstr "Vuosi"
 
 msgid "You are here: {}"
 msgstr "Olet tässä: {}"
+
+msgid "Your mixes"
+msgstr "Omat miksauksesi"
 
 msgid "Your user is not allowed to share on this server"
 msgstr "Käyttäjälläsi ei ole oikeutta jakaa tällä palvelimella"

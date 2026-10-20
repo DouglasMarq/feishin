@@ -73,6 +73,13 @@ pub async fn library_match(server: &dyn MusicServer, song: &MusicSong) -> Option
     }
 }
 
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum LibraryPresence {
+    InLibrary,
+    NotInLibrary,
+    Unknown,
+}
+
 #[derive(Clone, Default)]
 pub struct LibraryMatcher {
     remembered: Arc<Mutex<HashMap<MatchKey, Option<Song>>>>,
@@ -84,19 +91,49 @@ impl LibraryMatcher {
         server: Arc<dyn MusicServer>,
         songs: &[MusicSong],
     ) -> Vec<Option<Song>> {
+        self.lookup(server, songs, MATCH_BUDGET)
+            .await
+            .into_iter()
+            .map(Option::flatten)
+            .collect()
+    }
+
+    pub async fn presence(
+        &self,
+        server: Arc<dyn MusicServer>,
+        songs: &[MusicSong],
+        budget: Duration,
+    ) -> Vec<LibraryPresence> {
+        self.lookup(server, songs, budget)
+            .await
+            .into_iter()
+            .map(|looked_up| match looked_up {
+                Some(Some(_)) => LibraryPresence::InLibrary,
+                Some(None) => LibraryPresence::NotInLibrary,
+                None => LibraryPresence::Unknown,
+            })
+            .collect()
+    }
+
+    async fn lookup(
+        &self,
+        server: Arc<dyn MusicServer>,
+        songs: &[MusicSong],
+        budget: Duration,
+    ) -> Vec<Option<Option<Song>>> {
         let server_id = server.config().id.clone();
-        let mut found: Vec<Option<Song>> = vec![None; songs.len()];
+        let mut found: Vec<Option<Option<Song>>> = vec![None; songs.len()];
         let mut pending = Vec::new();
         for ((index, song), slot) in songs.iter().enumerate().zip(found.iter_mut()) {
             match self.remembered(&server_id, &song.video_id) {
-                Some(known) => *slot = known,
+                Some(known) => *slot = Some(known),
                 None => pending.push((index, song.clone())),
             }
         }
-        for (index, video_id, matched) in search_all(server, pending).await {
+        for (index, video_id, matched) in search_all(server, pending, budget).await {
             self.remember(&server_id, video_id, matched.clone());
             if let Some(slot) = found.get_mut(index) {
-                *slot = matched;
+                *slot = Some(matched);
             }
         }
         found
@@ -123,6 +160,7 @@ impl LibraryMatcher {
 async fn search_all(
     server: Arc<dyn MusicServer>,
     pending: Vec<(usize, MusicSong)>,
+    budget: Duration,
 ) -> Vec<SearchOutcome> {
     let permits = Arc::new(Semaphore::new(PARALLEL_SEARCHES));
     let mut tasks = JoinSet::new();
@@ -143,10 +181,7 @@ async fn search_all(
             }
         }
     };
-    if tokio::time::timeout(MATCH_BUDGET, collecting)
-        .await
-        .is_err()
-    {
+    if tokio::time::timeout(budget, collecting).await.is_err() {
         tracing::debug!("library matching ran out of time; the rest plays from YouTube");
     }
     outcomes

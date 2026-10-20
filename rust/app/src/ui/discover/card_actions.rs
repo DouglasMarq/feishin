@@ -4,6 +4,7 @@ use super::browser::open_in_browser;
 use super::deps::DiscoverDeps;
 use super::model::with_discover;
 use super::playing::{Placement, play_collection, play_songs};
+use crate::discover::mixes::is_mix_id;
 use crate::ui::AppWindow;
 
 fn item_at(window: &AppWindow, shelf: usize, card: usize) -> Option<ShelfItem> {
@@ -35,8 +36,10 @@ pub fn place_card(
 pub fn open_card_in_browser(window: &AppWindow, deps: &DiscoverDeps, shelf: usize, card: usize) {
     let url = match item_at(window, shelf, card) {
         Some(ShelfItem::Song(song)) => song.web_url(),
-        Some(ShelfItem::Collection(collection)) => collection.web_url(),
-        None => return,
+        Some(ShelfItem::Collection(collection)) if !is_mix_id(&collection.browse_id) => {
+            collection.web_url()
+        }
+        Some(ShelfItem::Collection(_)) | None => return,
     };
     open_in_browser(window, deps, url);
 }

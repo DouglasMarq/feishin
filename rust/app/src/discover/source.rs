@@ -23,4 +23,10 @@ pub trait DiscoverSource: Send + Sync {
         query: String,
         settings: YouTubeSettings,
     ) -> Result<Vec<MusicSong>, MusicError>;
+
+    async fn radio(
+        &self,
+        video_id: String,
+        settings: YouTubeSettings,
+    ) -> Result<Vec<MusicSong>, MusicError>;
 }

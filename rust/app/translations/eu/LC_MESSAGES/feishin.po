@@ -396,6 +396,9 @@ msgstr "Azentu-kolore pertsonalizatua: {} (gaiaren azentua erabiltzen ari da)"
 msgid "Custom accent color: {}, press Enter to apply"
 msgstr "Azentu-kolore pertsonalizatua: {}, sakatu Enter aplikatzeko"
 
+msgid "Daily Mix {}"
+msgstr "Eguneko nahasketa {}"
+
 msgid "Dark theme"
 msgstr "Gai iluna"
 
@@ -455,6 +458,9 @@ msgstr "Aurkitu irekita dago"
 
 msgid "Discover new music on YouTube Music"
 msgstr "Aurkitu musika berria YouTube Music-en"
+
+msgid "Discover Weekly"
+msgstr "Asteko aurkikuntzak"
 
 msgid "Duration"
 msgstr "Iraupena"
@@ -673,6 +679,9 @@ msgstr "Gehienezko bit-tasa"
 msgid "Media keys and desktop media controls. Takes effect after a restart."
 msgstr "Multimedia-teklak eta mahaigaineko multimedia-kontrolak. Berrabiarazi ondoren aplikatuko da."
 
+msgid "MIX"
+msgstr "NAHASKETA"
+
 msgid "Moods and genres"
 msgstr "Aldarteak eta generoak"
 
@@ -699,6 +708,9 @@ msgstr "Erreprodukzio-zerrenda berria"
 
 msgid "New releases"
 msgstr "Argitalpen berriak"
+
+msgid "New to you, refreshed every Monday"
+msgstr "Berria zuretzat, astelehenero eguneratzen da"
 
 msgid "Next"
 msgstr "Hurrengoa"
@@ -823,6 +835,9 @@ msgstr "Ireki irratia"
 msgid "Open the album \"{}\""
 msgstr "Ireki \"{}\" albuma"
 
+msgid "Open the mix \"{}\""
+msgstr "Ireki \"{}\" nahasketa"
+
 msgid "Open the playlist \"{}\""
 msgstr "Ireki \"{}\" erreprodukzio-zerrenda"
 
@@ -908,6 +923,9 @@ msgstr "Erreproduzitu hurrengo"
 
 msgid "Play the album"
 msgstr "Erreproduzitu albuma"
+
+msgid "Play the mix"
+msgstr "Erreproduzitu nahasketa"
 
 msgid "Play the playlist"
 msgstr "Erreproduzitu erreprodukzio-zerrenda"
@@ -1351,6 +1369,9 @@ msgstr "Aurkitu orri hau ez dago"
 msgid "This folder is empty"
 msgstr "Karpeta hau hutsik dago"
 
+msgid "This mix is no longer available"
+msgstr "Nahasketa hau ez dago erabilgarri jada"
+
 msgid "This playlist is empty"
 msgstr "Erreprodukzio-zerrenda hau hutsik dago"
 
@@ -1417,6 +1438,9 @@ msgstr "Bolumena"
 msgid "Volume {}%"
 msgstr "Bolumena: %{}"
 
+msgid "With {}"
+msgstr "Honekin: {}"
+
 msgid "XDG_RUNTIME_DIR is not set, so there is no private place for the cookies"
 msgstr "XDG_RUNTIME_DIR ez dago ezarrita; beraz, ez dago cookientzako leku pribaturik"
 
@@ -1425,6 +1449,9 @@ msgstr "Urtea"
 
 msgid "You are here: {}"
 msgstr "Hemen zaude: {}"
+
+msgid "Your mixes"
+msgstr "Zure nahasketak"
 
 msgid "Your user is not allowed to share on this server"
 msgstr "Zure erabiltzaileak ez du baimenik zerbitzari honetan partekatzeko"

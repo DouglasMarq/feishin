@@ -5,12 +5,25 @@ use std::sync::{Mutex, PoisonError};
 use anyhow::{Context, Result, anyhow};
 use feishin_api::Credential;
 use feishin_storage::Paths;
-use feishin_storage::credentials;
 use feishin_storage::feishin_import::{self, ImportedServer};
 use feishin_storage::queue_store::{self, EncodedQueue, PlaybackState, StoredQueue};
 use feishin_storage::settings::Settings;
+use feishin_storage::{credentials, state_files};
 use serde::Serialize;
 use serde::de::DeserializeOwned;
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum StateFile {
+    DiscoverMixes,
+}
+
+impl StateFile {
+    fn file_name(self) -> &'static str {
+        match self {
+            Self::DiscoverMixes => "discover-mixes.json",
+        }
+    }
+}
 
 pub trait Store: Send + Sync {
     fn load_settings(&self) -> Result<Settings>;
@@ -22,6 +35,8 @@ pub trait Store: Send + Sync {
     fn set_credential(&self, server_id: &str, credential: &Credential) -> Result<()>;
     fn delete_credential(&self, server_id: &str) -> Result<()>;
     fn import_feishin(&self) -> Result<Vec<ImportedServer>>;
+    fn read_state(&self, file: StateFile) -> Result<Option<Vec<u8>>>;
+    fn write_state(&self, file: StateFile, bytes: &[u8]) -> Result<()>;
 }
 
 struct QueueFiles {
@@ -77,6 +92,13 @@ impl SystemStore {
     pub fn paths(&self) -> &Paths {
         &self.paths
     }
+
+    fn state_path(&self, file: StateFile) -> PathBuf {
+        let directory = match file {
+            StateFile::DiscoverMixes => &self.paths.cache_dir,
+        };
+        directory.join(file.file_name())
+    }
 }
 
 impl Store for SystemStore {
@@ -109,6 +131,12 @@ impl Store for SystemStore {
     fn import_feishin(&self) -> Result<Vec<ImportedServer>> {
         let dir = feishin_import::default_config_dir()?;
         Ok(feishin_import::import_servers(&dir)?)
+    }
+    fn read_state(&self, file: StateFile) -> Result<Option<Vec<u8>>> {
+        Ok(state_files::read(&self.state_path(file))?)
+    }
+    fn write_state(&self, file: StateFile, bytes: &[u8]) -> Result<()> {
+        Ok(state_files::write(&self.state_path(file), bytes)?)
     }
 }
 
@@ -187,6 +215,12 @@ impl Store for JsonStore {
     }
     fn import_feishin(&self) -> Result<Vec<ImportedServer>> {
         Ok(Vec::new())
+    }
+    fn read_state(&self, file: StateFile) -> Result<Option<Vec<u8>>> {
+        Ok(state_files::read(&self.dir.join(file.file_name()))?)
+    }
+    fn write_state(&self, file: StateFile, bytes: &[u8]) -> Result<()> {
+        Ok(state_files::write(&self.dir.join(file.file_name()), bytes)?)
     }
 }
 

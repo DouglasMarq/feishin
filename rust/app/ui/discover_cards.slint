@@ -43,6 +43,7 @@ export component DiscoverCardView inherits Rectangle {
     property <bool> is-song: root.card.kind == DiscoverCardKind.song;
     property <bool> wants-cover: root.on-screen && !root.card.has-cover && root.card.can-load-cover;
     property <bool> is-album: root.card.kind == DiscoverCardKind.album;
+    property <bool> is-mix: root.card.kind == DiscoverCardKind.mix;
     width: 160px;
     height: 214px;
 
@@ -101,9 +102,9 @@ export component DiscoverCardView inherits Rectangle {
                 }
             }
 
-            MenuSeparator { }
+            if !root.is-mix: MenuSeparator { }
 
-            MenuItem {
+            if !root.is-mix: MenuItem {
                 title: @tr("Open in YouTube Music");
                 activated => {
                     DiscoverState.open-card-in-browser(root.shelf-index, root.card-index);
@@ -125,7 +126,7 @@ export component DiscoverCardView inherits Rectangle {
     }
 
     TooltipAnchor {
-        text: root.is-song ? @tr("Play \"{}\" and the rest of this shelf", root.card.title) : root.is-album ? @tr("Open the album \"{}\"", root.card.title) : @tr("Open the playlist \"{}\"", root.card.title);
+        text: root.is-song ? @tr("Play \"{}\" and the rest of this shelf", root.card.title) : root.is-album ? @tr("Open the album \"{}\"", root.card.title) : root.is-mix ? @tr("Open the mix \"{}\"", root.card.title) : @tr("Open the playlist \"{}\"", root.card.title);
         hovered: card-touch.has-hover && !play-button.hovered;
     }
 
@@ -159,7 +160,7 @@ export component DiscoverCardView inherits Rectangle {
             x: parent.width - self.width - 10px;
             y: parent.height - self.height - 10px;
             shown: card-touch.has-hover;
-            tooltip: root.is-song ? @tr("Play from here") : root.is-album ? @tr("Play the album") : @tr("Play the playlist");
+            tooltip: root.is-song ? @tr("Play from here") : root.is-album ? @tr("Play the album") : root.is-mix ? @tr("Play the mix") : @tr("Play the playlist");
             clicked => {
                 if (root.is-song) {
                     DiscoverState.play-from-card(root.shelf-index, root.card-index);

@@ -412,6 +412,9 @@ msgstr "Barva poudarka po meri: {} (v uporabi je poudarek teme)"
 msgid "Custom accent color: {}, press Enter to apply"
 msgstr "Barva poudarka po meri: {}, pritisnite Enter za uporabo"
 
+msgid "Daily Mix {}"
+msgstr "Dnevni miks {}"
+
 msgid "Dark theme"
 msgstr "Temna tema"
 
@@ -471,6 +474,9 @@ msgstr "Odkrij je odprto"
 
 msgid "Discover new music on YouTube Music"
 msgstr "Odkrijte novo glasbo v YouTube Music"
+
+msgid "Discover Weekly"
+msgstr "Odkritja tedna"
 
 msgid "Duration"
 msgstr "Trajanje"
@@ -693,6 +699,9 @@ msgstr "Največja bitna hitrost"
 msgid "Media keys and desktop media controls. Takes effect after a restart."
 msgstr "Predstavnostne tipke in namizni kontrolniki predvajanja. Začne veljati po ponovnem zagonu."
 
+msgid "MIX"
+msgstr "MIKS"
+
 msgid "Moods and genres"
 msgstr "Razpoloženja in zvrsti"
 
@@ -719,6 +728,9 @@ msgstr "Nov seznam predvajanja"
 
 msgid "New releases"
 msgstr "Nove izdaje"
+
+msgid "New to you, refreshed every Monday"
+msgstr "Novo za vas, osveženo vsak ponedeljek"
 
 msgid "Next"
 msgstr "Naslednja"
@@ -843,6 +855,9 @@ msgstr "Odpri radio"
 msgid "Open the album \"{}\""
 msgstr "Odpri album „{}“"
 
+msgid "Open the mix \"{}\""
+msgstr "Odpri miks „{}“"
+
 msgid "Open the playlist \"{}\""
 msgstr "Odpri seznam predvajanja „{}“"
 
@@ -930,6 +945,9 @@ msgstr "Predvajaj naslednje"
 
 msgid "Play the album"
 msgstr "Predvajaj album"
+
+msgid "Play the mix"
+msgstr "Predvajaj miks"
 
 msgid "Play the playlist"
 msgstr "Predvajaj seznam predvajanja"
@@ -1377,6 +1395,9 @@ msgstr "Ta stran v razdelku Odkrij ne obstaja"
 msgid "This folder is empty"
 msgstr "Ta mapa je prazna"
 
+msgid "This mix is no longer available"
+msgstr "Ta miks ni več na voljo"
+
 msgid "This playlist is empty"
 msgstr "Ta seznam predvajanja je prazen"
 
@@ -1443,6 +1464,9 @@ msgstr "Glasnost"
 msgid "Volume {}%"
 msgstr "Glasnost {}%"
 
+msgid "With {}"
+msgstr "Z izvajalci {}"
+
 msgid "XDG_RUNTIME_DIR is not set, so there is no private place for the cookies"
 msgstr "XDG_RUNTIME_DIR ni nastavljen, zato ni zasebnega mesta za piškotke"
 
@@ -1451,6 +1475,9 @@ msgstr "Leto"
 
 msgid "You are here: {}"
 msgstr "Tu ste: {}"
+
+msgid "Your mixes"
+msgstr "Vaši miksi"
 
 msgid "Your user is not allowed to share on this server"
 msgstr "Vaš uporabnik na tem strežniku nima dovoljenja za deljenje"

@@ -125,6 +125,25 @@ async fn library_songs_play_from_the_server_and_the_rest_from_youtube() {
 }
 
 #[tokio::test]
+async fn presence_tells_library_songs_from_new_ones_and_is_remembered() {
+    let songs = demo_songs().await;
+    let matcher = LibraryMatcher::default();
+    let presence = matcher
+        .presence(demo_server(), &songs, std::time::Duration::from_secs(5))
+        .await;
+    let in_library = presence
+        .iter()
+        .filter(|presence| **presence == LibraryPresence::InLibrary)
+        .count();
+    assert_eq!(in_library, 10);
+    assert_eq!(presence.last(), Some(&LibraryPresence::NotInLibrary));
+    let remembered = matcher
+        .presence(demo_server(), &songs, std::time::Duration::ZERO)
+        .await;
+    assert_eq!(remembered, presence, "answers are remembered");
+}
+
+#[tokio::test]
 async fn without_a_server_every_song_plays_from_youtube() {
     let songs = demo_songs().await;
     let tracks = resolve_tracks(&LibraryMatcher::default(), None, &songs).await;

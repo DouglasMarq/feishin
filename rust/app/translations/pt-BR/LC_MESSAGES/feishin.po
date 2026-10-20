@@ -396,6 +396,9 @@ msgstr "Cor de realce personalizada: {} (realce do tema em uso)"
 msgid "Custom accent color: {}, press Enter to apply"
 msgstr "Cor de realce personalizada: {}, pressione Enter para aplicar"
 
+msgid "Daily Mix {}"
+msgstr "Mix diário {}"
+
 msgid "Dark theme"
 msgstr "Tema escuro"
 
@@ -455,6 +458,9 @@ msgstr "Descobrir está aberto"
 
 msgid "Discover new music on YouTube Music"
 msgstr "Descubra músicas novas no YouTube Music"
+
+msgid "Discover Weekly"
+msgstr "Descobertas da semana"
 
 msgid "Duration"
 msgstr "Duração"
@@ -673,6 +679,9 @@ msgstr "Taxa de bits máxima"
 msgid "Media keys and desktop media controls. Takes effect after a restart."
 msgstr "Teclas de mídia e controles de mídia da área de trabalho. Entra em vigor após reiniciar."
 
+msgid "MIX"
+msgstr "MIX"
+
 msgid "Moods and genres"
 msgstr "Humores e gêneros"
 
@@ -699,6 +708,9 @@ msgstr "Nova playlist"
 
 msgid "New releases"
 msgstr "Lançamentos"
+
+msgid "New to you, refreshed every Monday"
+msgstr "Novidades para você, renovadas toda segunda-feira"
 
 msgid "Next"
 msgstr "Próxima"
@@ -823,6 +835,9 @@ msgstr "Abrir rádio"
 msgid "Open the album \"{}\""
 msgstr "Abrir o álbum \"{}\""
 
+msgid "Open the mix \"{}\""
+msgstr "Abrir o mix \"{}\""
+
 msgid "Open the playlist \"{}\""
 msgstr "Abrir a playlist \"{}\""
 
@@ -908,6 +923,9 @@ msgstr "Tocar em seguida"
 
 msgid "Play the album"
 msgstr "Tocar o álbum"
+
+msgid "Play the mix"
+msgstr "Tocar o mix"
 
 msgid "Play the playlist"
 msgstr "Tocar a playlist"
@@ -1351,6 +1369,9 @@ msgstr "Esta página do Descobrir não existe"
 msgid "This folder is empty"
 msgstr "Esta pasta está vazia"
 
+msgid "This mix is no longer available"
+msgstr "Este mix não está mais disponível"
+
 msgid "This playlist is empty"
 msgstr "Esta playlist está vazia"
 
@@ -1417,6 +1438,9 @@ msgstr "Volume"
 msgid "Volume {}%"
 msgstr "Volume {}%"
 
+msgid "With {}"
+msgstr "Com {}"
+
 msgid "XDG_RUNTIME_DIR is not set, so there is no private place for the cookies"
 msgstr "XDG_RUNTIME_DIR não está definido, então não há um lugar privado para os cookies"
 
@@ -1425,6 +1449,9 @@ msgstr "Ano"
 
 msgid "You are here: {}"
 msgstr "Você está aqui: {}"
+
+msgid "Your mixes"
+msgstr "Seus mixes"
 
 msgid "Your user is not allowed to share on this server"
 msgstr "Seu usuário não tem permissão para compartilhar neste servidor"

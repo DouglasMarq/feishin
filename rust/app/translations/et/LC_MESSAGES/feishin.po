@@ -396,6 +396,9 @@ msgstr "Kohandatud rõhuvärv: {} (kasutusel on teema rõhuvärv)"
 msgid "Custom accent color: {}, press Enter to apply"
 msgstr "Kohandatud rõhuvärv: {}, rakendamiseks vajuta Enter"
 
+msgid "Daily Mix {}"
+msgstr "Päeva miks {}"
+
 msgid "Dark theme"
 msgstr "Tume teema"
 
@@ -455,6 +458,9 @@ msgstr "Avasta on avatud"
 
 msgid "Discover new music on YouTube Music"
 msgstr "Avasta YouTube Musicus uut muusikat"
+
+msgid "Discover Weekly"
+msgstr "Nädala avastused"
 
 msgid "Duration"
 msgstr "Kestus"
@@ -673,6 +679,9 @@ msgstr "Maksimaalne bitikiirus"
 msgid "Media keys and desktop media controls. Takes effect after a restart."
 msgstr "Meediaklahvid ja töölaua meediajuhtnupud. Jõustub pärast taaskäivitust."
 
+msgid "MIX"
+msgstr "MIKS"
+
 msgid "Moods and genres"
 msgstr "Meeleolud ja žanrid"
 
@@ -699,6 +708,9 @@ msgstr "Uus esitusloend"
 
 msgid "New releases"
 msgstr "Uued väljalasked"
+
+msgid "New to you, refreshed every Monday"
+msgstr "Sulle uus, uueneb igal esmaspäeval"
 
 msgid "Next"
 msgstr "Järgmine"
@@ -823,6 +835,9 @@ msgstr "Ava raadio"
 msgid "Open the album \"{}\""
 msgstr "Ava album \"{}\""
 
+msgid "Open the mix \"{}\""
+msgstr "Ava miks \"{}\""
+
 msgid "Open the playlist \"{}\""
 msgstr "Ava esitusloend \"{}\""
 
@@ -908,6 +923,9 @@ msgstr "Esita järgmisena"
 
 msgid "Play the album"
 msgstr "Esita album"
+
+msgid "Play the mix"
+msgstr "Esita miks"
 
 msgid "Play the playlist"
 msgstr "Esita esitusloend"
@@ -1351,6 +1369,9 @@ msgstr "Seda Avasta lehte pole olemas"
 msgid "This folder is empty"
 msgstr "See kaust on tühi"
 
+msgid "This mix is no longer available"
+msgstr "See miks pole enam saadaval"
+
 msgid "This playlist is empty"
 msgstr "See esitusloend on tühi"
 
@@ -1417,6 +1438,9 @@ msgstr "Helitugevus"
 msgid "Volume {}%"
 msgstr "Helitugevus {}%"
 
+msgid "With {}"
+msgstr "Esitajatega {}"
+
 msgid "XDG_RUNTIME_DIR is not set, so there is no private place for the cookies"
 msgstr "XDG_RUNTIME_DIR pole määratud, seega pole küpsiste jaoks privaatset kohta"
 
@@ -1425,6 +1449,9 @@ msgstr "Aasta"
 
 msgid "You are here: {}"
 msgstr "Oled siin: {}"
+
+msgid "Your mixes"
+msgstr "Sinu miksid"
 
 msgid "Your user is not allowed to share on this server"
 msgstr "Sinu kasutajal pole selles serveris lubatud jagada"

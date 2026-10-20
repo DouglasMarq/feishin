@@ -396,6 +396,9 @@ msgstr "رنگ شاخص سفارشی: {} (رنگ شاخص تم در حال اس�
 msgid "Custom accent color: {}, press Enter to apply"
 msgstr "رنگ شاخص سفارشی: {}، برای اعمال Enter را بزنید"
 
+msgid "Daily Mix {}"
+msgstr "میکس روزانه {}"
+
 msgid "Dark theme"
 msgstr "تم تیره"
 
@@ -455,6 +458,9 @@ msgstr "کاوش باز است"
 
 msgid "Discover new music on YouTube Music"
 msgstr "موسیقی تازه را در YouTube Music کشف کنید"
+
+msgid "Discover Weekly"
+msgstr "کشف‌های هفته"
 
 msgid "Duration"
 msgstr "مدت"
@@ -673,6 +679,9 @@ msgstr "حداکثر نرخ بیت"
 msgid "Media keys and desktop media controls. Takes effect after a restart."
 msgstr "کلیدهای رسانه و کنترل‌های رسانه‌ی میزکار. پس از راه‌اندازی دوباره اعمال می‌شود."
 
+msgid "MIX"
+msgstr "میکس"
+
 msgid "Moods and genres"
 msgstr "حال‌وهواها و ژانرها"
 
@@ -699,6 +708,9 @@ msgstr "فهرست پخش جدید"
 
 msgid "New releases"
 msgstr "انتشارهای جدید"
+
+msgid "New to you, refreshed every Monday"
+msgstr "برای شما تازه است، هر دوشنبه به‌روز می‌شود"
 
 msgid "Next"
 msgstr "بعدی"
@@ -823,6 +835,9 @@ msgstr "باز کردن رادیو"
 msgid "Open the album \"{}\""
 msgstr "باز کردن آلبوم \"{}\""
 
+msgid "Open the mix \"{}\""
+msgstr "باز کردن میکس \"{}\""
+
 msgid "Open the playlist \"{}\""
 msgstr "باز کردن فهرست پخش \"{}\""
 
@@ -908,6 +923,9 @@ msgstr "پخش در نوبت بعد"
 
 msgid "Play the album"
 msgstr "پخش آلبوم"
+
+msgid "Play the mix"
+msgstr "پخش میکس"
 
 msgid "Play the playlist"
 msgstr "پخش فهرست پخش"
@@ -1351,6 +1369,9 @@ msgstr "این صفحه‌ی کاوش وجود ندارد"
 msgid "This folder is empty"
 msgstr "این پوشه خالی است"
 
+msgid "This mix is no longer available"
+msgstr "این میکس دیگر در دسترس نیست"
+
 msgid "This playlist is empty"
 msgstr "این فهرست پخش خالی است"
 
@@ -1417,6 +1438,9 @@ msgstr "بلندی صدا"
 msgid "Volume {}%"
 msgstr "بلندی صدا {}%"
 
+msgid "With {}"
+msgstr "با {}"
+
 msgid "XDG_RUNTIME_DIR is not set, so there is no private place for the cookies"
 msgstr "XDG_RUNTIME_DIR تنظیم نشده است، بنابراین جای خصوصی برای کوکی‌ها وجود ندارد"
 
@@ -1425,6 +1449,9 @@ msgstr "سال"
 
 msgid "You are here: {}"
 msgstr "اینجا هستید: {}"
+
+msgid "Your mixes"
+msgstr "میکس‌های شما"
 
 msgid "Your user is not allowed to share on this server"
 msgstr "کاربر شما اجازه‌ی اشتراک‌گذاری در این سرور را ندارد"

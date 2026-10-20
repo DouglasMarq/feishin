@@ -8,6 +8,7 @@ pub mod credentials;
 pub mod feishin_import;
 pub mod queue_store;
 pub mod settings;
+pub mod state_files;
 
 pub use error::{Result, StorageError};
 pub use paths::{APP_DIR_NAME, Paths};

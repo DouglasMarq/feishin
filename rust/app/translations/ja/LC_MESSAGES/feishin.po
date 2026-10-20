@@ -388,6 +388,9 @@ msgstr "カスタム アクセント カラー: {} (テーマのアクセント�
 msgid "Custom accent color: {}, press Enter to apply"
 msgstr "カスタム アクセント カラー: {}、Enter キーで適用"
 
+msgid "Daily Mix {}"
+msgstr "デイリーミックス {}"
+
 msgid "Dark theme"
 msgstr "ダーク テーマ"
 
@@ -447,6 +450,9 @@ msgstr "ディスカバーを表示中"
 
 msgid "Discover new music on YouTube Music"
 msgstr "YouTube Music で新しい音楽を見つける"
+
+msgid "Discover Weekly"
+msgstr "今週の新発見"
 
 msgid "Duration"
 msgstr "長さ"
@@ -663,6 +669,9 @@ msgstr "最大ビットレート"
 msgid "Media keys and desktop media controls. Takes effect after a restart."
 msgstr "メディア キーとデスクトップのメディア コントロール。再起動後に有効になります。"
 
+msgid "MIX"
+msgstr "ミックス"
+
 msgid "Moods and genres"
 msgstr "ムードとジャンル"
 
@@ -689,6 +698,9 @@ msgstr "新規プレイリスト"
 
 msgid "New releases"
 msgstr "新作"
+
+msgid "New to you, refreshed every Monday"
+msgstr "あなたにとって新しい曲、毎週月曜日に更新"
 
 msgid "Next"
 msgstr "次へ"
@@ -813,6 +825,9 @@ msgstr "ラジオを開く"
 msgid "Open the album \"{}\""
 msgstr "アルバム「{}」を開く"
 
+msgid "Open the mix \"{}\""
+msgstr "ミックス「{}」を開く"
+
 msgid "Open the playlist \"{}\""
 msgstr "プレイリスト「{}」を開く"
 
@@ -897,6 +912,9 @@ msgstr "次に再生"
 
 msgid "Play the album"
 msgstr "アルバムを再生"
+
+msgid "Play the mix"
+msgstr "ミックスを再生"
 
 msgid "Play the playlist"
 msgstr "プレイリストを再生"
@@ -1338,6 +1356,9 @@ msgstr "このディスカバー ページは存在しません"
 msgid "This folder is empty"
 msgstr "このフォルダーは空です"
 
+msgid "This mix is no longer available"
+msgstr "このミックスは利用できなくなりました"
+
 msgid "This playlist is empty"
 msgstr "このプレイリストは空です"
 
@@ -1404,6 +1425,9 @@ msgstr "音量"
 msgid "Volume {}%"
 msgstr "音量 {}%"
 
+msgid "With {}"
+msgstr "{} など"
+
 msgid "XDG_RUNTIME_DIR is not set, so there is no private place for the cookies"
 msgstr "XDG_RUNTIME_DIR が設定されていないため、Cookie を保存する非公開の場所がありません"
 
@@ -1412,6 +1436,9 @@ msgstr "年"
 
 msgid "You are here: {}"
 msgstr "現在の場所: {}"
+
+msgid "Your mixes"
+msgstr "あなたのミックス"
 
 msgid "Your user is not allowed to share on this server"
 msgstr "このサーバーでは、このユーザーに共有の権限がありません"

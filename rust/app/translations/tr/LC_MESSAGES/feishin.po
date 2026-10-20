@@ -396,6 +396,9 @@ msgstr "Özel vurgu rengi: {} (tema vurgusu kullanılıyor)"
 msgid "Custom accent color: {}, press Enter to apply"
 msgstr "Özel vurgu rengi: {}, uygulamak için Enter'a basın"
 
+msgid "Daily Mix {}"
+msgstr "Günlük Mix {}"
+
 msgid "Dark theme"
 msgstr "Koyu tema"
 
@@ -455,6 +458,9 @@ msgstr "Keşfet açık"
 
 msgid "Discover new music on YouTube Music"
 msgstr "YouTube Music'te yeni müzikler keşfedin"
+
+msgid "Discover Weekly"
+msgstr "Haftanın Keşifleri"
 
 msgid "Duration"
 msgstr "Süre"
@@ -673,6 +679,9 @@ msgstr "Maksimum bit hızı"
 msgid "Media keys and desktop media controls. Takes effect after a restart."
 msgstr "Medya tuşları ve masaüstü medya denetimleri. Yeniden başlatmadan sonra etkinleşir."
 
+msgid "MIX"
+msgstr "MİX"
+
 msgid "Moods and genres"
 msgstr "Ruh halleri ve türler"
 
@@ -699,6 +708,9 @@ msgstr "Yeni çalma listesi"
 
 msgid "New releases"
 msgstr "Yeni çıkanlar"
+
+msgid "New to you, refreshed every Monday"
+msgstr "Senin için yeni, her pazartesi yenilenir"
 
 msgid "Next"
 msgstr "Sonraki"
@@ -823,6 +835,9 @@ msgstr "Radyoyu aç"
 msgid "Open the album \"{}\""
 msgstr "\"{}\" albümünü aç"
 
+msgid "Open the mix \"{}\""
+msgstr "\"{}\" mix'ini aç"
+
 msgid "Open the playlist \"{}\""
 msgstr "\"{}\" çalma listesini aç"
 
@@ -908,6 +923,9 @@ msgstr "Sıradaki olarak çal"
 
 msgid "Play the album"
 msgstr "Albümü çal"
+
+msgid "Play the mix"
+msgstr "Mix'i çal"
 
 msgid "Play the playlist"
 msgstr "Çalma listesini çal"
@@ -1351,6 +1369,9 @@ msgstr "Bu Keşfet sayfası mevcut değil"
 msgid "This folder is empty"
 msgstr "Bu klasör boş"
 
+msgid "This mix is no longer available"
+msgstr "Bu mix artık kullanılamıyor"
+
 msgid "This playlist is empty"
 msgstr "Bu çalma listesi boş"
 
@@ -1417,6 +1438,9 @@ msgstr "Ses düzeyi"
 msgid "Volume {}%"
 msgstr "Ses düzeyi %{}"
 
+msgid "With {}"
+msgstr "{} ile"
+
 msgid "XDG_RUNTIME_DIR is not set, so there is no private place for the cookies"
 msgstr "XDG_RUNTIME_DIR ayarlanmamış, bu nedenle çerezler için özel bir yer yok"
 
@@ -1425,6 +1449,9 @@ msgstr "Yıl"
 
 msgid "You are here: {}"
 msgstr "Buradasınız: {}"
+
+msgid "Your mixes"
+msgstr "Mix'lerin"
 
 msgid "Your user is not allowed to share on this server"
 msgstr "Kullanıcınızın bu sunucuda paylaşım izni yok"

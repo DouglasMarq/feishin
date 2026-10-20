@@ -404,6 +404,9 @@ msgstr "Свой акцентный цвет: {} (используется цв�
 msgid "Custom accent color: {}, press Enter to apply"
 msgstr "Свой акцентный цвет: {}, нажмите Enter, чтобы применить"
 
+msgid "Daily Mix {}"
+msgstr "Ежедневный микс {}"
+
 msgid "Dark theme"
 msgstr "Тёмная тема"
 
@@ -463,6 +466,9 @@ msgstr "«Обзор» открыт"
 
 msgid "Discover new music on YouTube Music"
 msgstr "Открывайте новую музыку в YouTube Music"
+
+msgid "Discover Weekly"
+msgstr "Открытия недели"
 
 msgid "Duration"
 msgstr "Продолжительность"
@@ -683,6 +689,9 @@ msgstr "Максимальный битрейт"
 msgid "Media keys and desktop media controls. Takes effect after a restart."
 msgstr "Мультимедийные клавиши и управление воспроизведением на рабочем столе. Вступает в силу после перезапуска."
 
+msgid "MIX"
+msgstr "МИКС"
+
 msgid "Moods and genres"
 msgstr "Настроения и жанры"
 
@@ -709,6 +718,9 @@ msgstr "Новый плейлист"
 
 msgid "New releases"
 msgstr "Новинки"
+
+msgid "New to you, refreshed every Monday"
+msgstr "Новое для вас, обновляется каждый понедельник"
 
 msgid "Next"
 msgstr "Следующий"
@@ -833,6 +845,9 @@ msgstr "Открыть радио"
 msgid "Open the album \"{}\""
 msgstr "Открыть альбом «{}»"
 
+msgid "Open the mix \"{}\""
+msgstr "Открыть микс «{}»"
+
 msgid "Open the playlist \"{}\""
 msgstr "Открыть плейлист «{}»"
 
@@ -919,6 +934,9 @@ msgstr "Воспроизвести следующим"
 
 msgid "Play the album"
 msgstr "Воспроизвести альбом"
+
+msgid "Play the mix"
+msgstr "Воспроизвести микс"
 
 msgid "Play the playlist"
 msgstr "Воспроизвести плейлист"
@@ -1364,6 +1382,9 @@ msgstr "Этой страницы «Обзора» не существует"
 msgid "This folder is empty"
 msgstr "Эта папка пуста"
 
+msgid "This mix is no longer available"
+msgstr "Этот микс больше недоступен"
+
 msgid "This playlist is empty"
 msgstr "Этот плейлист пуст"
 
@@ -1430,6 +1451,9 @@ msgstr "Громкость"
 msgid "Volume {}%"
 msgstr "Громкость {}%"
 
+msgid "With {}"
+msgstr "С участием: {}"
+
 msgid "XDG_RUNTIME_DIR is not set, so there is no private place for the cookies"
 msgstr "XDG_RUNTIME_DIR не задан, поэтому нет закрытого места для cookie"
 
@@ -1438,6 +1462,9 @@ msgstr "Год"
 
 msgid "You are here: {}"
 msgstr "Вы здесь: {}"
+
+msgid "Your mixes"
+msgstr "Ваши миксы"
 
 msgid "Your user is not allowed to share on this server"
 msgstr "Вашему пользователю запрещено делиться на этом сервере"
