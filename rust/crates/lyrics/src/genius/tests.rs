@@ -152,12 +152,12 @@ async fn given_a_hit_outside_genius_its_page_is_never_fetched() {
     let elsewhere = MockServer::start().await;
     let mut foreign = hit(
         &server,
-        "Queen-bohemian-rhapsody-lyrics",
-        "Bohemian Rhapsody",
-        "Queen",
+        "Velvet-comets-lantern-harbor-lyrics",
+        "Lantern Harbor",
+        "Velvet Comets",
     );
     foreign["result"]["url"] = json!(format!(
-        "{}/Queen-bohemian-rhapsody-lyrics",
+        "{}/Velvet-comets-lantern-harbor-lyrics",
         elsewhere.uri()
     ));
     mount_search(&server, vec![foreign]).await;
@@ -181,16 +181,16 @@ async fn given_a_page_larger_than_the_cap_it_is_rejected() {
         &server,
         vec![hit(
             &server,
-            "Queen-bohemian-rhapsody-lyrics",
-            "Bohemian Rhapsody",
-            "Queen",
+            "Velvet-comets-lantern-harbor-lyrics",
+            "Lantern Harbor",
+            "Velvet Comets",
         )],
     )
     .await;
     let mut oversized = PAGE.to_owned();
     oversized.push_str(&" ".repeat(crate::http::MAX_RESPONSE_BYTES));
     Mock::given(method("GET"))
-        .and(path("/Queen-bohemian-rhapsody-lyrics"))
+        .and(path("/Velvet-comets-lantern-harbor-lyrics"))
         .respond_with(ResponseTemplate::new(200).set_body_string(oversized))
         .mount(&server)
         .await;

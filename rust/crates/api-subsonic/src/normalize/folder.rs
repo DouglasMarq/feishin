@@ -64,7 +64,7 @@ mod tests {
     fn children_split_into_folders_and_songs() {
         let children = vec![
             child(json!({ "id": 10, "isDir": true, "title": "Arrival", "coverArt": "c10" })),
-            child(json!({ "id": "s1", "isDir": false, "title": "Dancing Queen", "duration": 231 })),
+            child(json!({ "id": "s1", "isDir": false, "title": "Harbor Waltz", "duration": 231 })),
             child(json!({ "id": "d2", "isDir": true, "name": "Loose" })),
         ];
         let listing = folder_listing(children, "srv");
