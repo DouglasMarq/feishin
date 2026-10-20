@@ -7,7 +7,7 @@ use slint::{ComponentHandle, SharedString};
 
 use super::string_model;
 use crate::session::Session;
-use crate::ui::{AppWindow, Context, TracksState, on_ui};
+use crate::ui::{AppWindow, Context, TracksState, on_ui, show_status};
 
 fn set_genres(window: &AppWindow, mut genres: Vec<Genre>) {
     genres.sort_by_cached_key(|genre| genre.name.to_lowercase());
@@ -29,6 +29,16 @@ fn is_still_connected_to(session: &Session, server_id: &str) -> bool {
         .is_some_and(|server| server.config().id == server_id)
 }
 
+fn show_loaded_genres(window: &AppWindow, result: feishin_api::Result<Vec<Genre>>) {
+    match result {
+        Ok(genres) => set_genres(window, genres),
+        Err(error) => {
+            tracing::warn!("loading genres failed: {error}");
+            show_status(window, &tr!("Could not load genres: {}", error));
+        }
+    }
+}
+
 fn spawn_genre_load(
     window: &slint::Weak<AppWindow>,
     ctx: &Context,
@@ -43,10 +53,7 @@ fn spawn_genre_load(
             if !is_still_connected_to(&session, &server_id) {
                 return;
             }
-            match result {
-                Ok(genres) => set_genres(window, genres),
-                Err(error) => tracing::warn!("loading genres failed: {error}"),
-            }
+            show_loaded_genres(window, result);
         });
     });
 }
@@ -68,4 +75,25 @@ pub(super) fn install(window: &AppWindow, ctx: &Context) {
         set_genres(&window, Vec::new());
         spawn_genre_load(&weak, &ctx, server, server_id);
     });
+}
+
+#[cfg(test)]
+mod tests {
+    use feishin_api::ApiError;
+
+    use super::*;
+    use crate::demo::FakeServer;
+    use crate::ui::test_window::TestWindow;
+
+    #[test]
+    fn given_a_failed_genre_load_the_status_shows_an_error() {
+        let Some(view) = TestWindow::open(Arc::new(FakeServer::new(10))) else {
+            return;
+        };
+        show_loaded_genres(&view.app, Err(ApiError::Network("timed out".into())));
+        assert_eq!(
+            view.status(),
+            "Could not load genres: network error: timed out"
+        );
+    }
 }
