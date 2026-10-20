@@ -72,6 +72,13 @@ impl CoverCache {
             .cloned()
     }
 
+    pub fn cached_file(&self, key: &str, size: u32) -> Option<PathBuf> {
+        let file_name = ImageKey::new(key, size).file_name();
+        lock(&self.inner.disk)
+            .contains(&file_name)
+            .then(|| self.inner.config.dir.join(file_name))
+    }
+
     pub fn disk_usage(&self) -> u64 {
         lock(&self.inner.disk).total_bytes()
     }

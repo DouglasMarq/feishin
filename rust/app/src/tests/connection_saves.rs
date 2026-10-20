@@ -83,6 +83,7 @@ fn controller_on_a_full_disk(directory: &tempfile::TempDir) -> (Controller, Arc<
         session,
         ui: ui.clone(),
         commands,
+        covers: Arc::new(crate::covers::DemoCovers),
     };
     (
         Controller::new(deps, Settings::default(), None, Some(1)),

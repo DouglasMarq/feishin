@@ -64,6 +64,7 @@ fn controller_with(media: &RecordingMedia, temp_dir: &tempfile::TempDir) -> Cont
         session,
         ui: Arc::new(RecordingUi::default()),
         commands,
+        covers: Arc::new(crate::covers::DemoCovers),
     };
     Controller::new(deps, test_settings(false, false), None, Some(1))
 }

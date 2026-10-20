@@ -6,6 +6,8 @@ mod image_url;
 mod macos;
 mod url_opener;
 
+use std::path::PathBuf;
+
 pub use discord::{DEFAULT_DISCORD_CLIENT_ID, DiscordDisplayType, DiscordOptions, DiscordPresence};
 #[cfg(all(unix, not(target_os = "macos")))]
 pub use freedesktop::{MediaControls, SleepInhibitor, current_color_scheme, watch_color_scheme};
@@ -68,6 +70,7 @@ pub struct NowPlaying {
     pub album: Option<String>,
     pub duration_ms: Option<u64>,
     pub cover_url: Option<String>,
+    pub cover_file: Option<PathBuf>,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq)]

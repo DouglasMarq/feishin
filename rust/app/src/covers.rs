@@ -1,3 +1,4 @@
+use std::path::PathBuf;
 use std::sync::Arc;
 use std::time::Duration;
 
@@ -28,6 +29,17 @@ pub trait CoverProvider: Send + Sync {
         url: &str,
         size: u32,
     ) -> Result<Arc<DecodedImage>>;
+
+    fn cover_file(
+        &self,
+        server: &dyn MusicServer,
+        cover_art_id: &str,
+        size: u32,
+    ) -> Option<PathBuf>;
+}
+
+fn server_cover_key(server: &dyn MusicServer, cover_art_id: &str) -> String {
+    format!("{}:{cover_art_id}", server.config().id)
 }
 
 pub struct CachedCovers(CoverCache);
@@ -54,7 +66,7 @@ impl CoverProvider for CachedCovers {
         cover_art_id: &str,
         size: u32,
     ) -> Result<Arc<DecodedImage>> {
-        let cache_key = format!("{}:{cover_art_id}", server.config().id);
+        let cache_key = server_cover_key(server, cover_art_id);
         let url = server.cover_art_url(cover_art_id, Some(size));
         Ok(self.0.get(&cache_key, &url, size).await?)
     }
@@ -66,6 +78,16 @@ impl CoverProvider for CachedCovers {
         size: u32,
     ) -> Result<Arc<DecodedImage>> {
         Ok(self.0.get(cache_key, url, size).await?)
+    }
+
+    fn cover_file(
+        &self,
+        server: &dyn MusicServer,
+        cover_art_id: &str,
+        size: u32,
+    ) -> Option<PathBuf> {
+        self.0
+            .cached_file(&server_cover_key(server, cover_art_id), size)
     }
 }
 
@@ -97,5 +119,14 @@ impl CoverProvider for DemoCovers {
             height: size,
             rgba: render_cover(cache_key, size),
         }))
+    }
+
+    fn cover_file(
+        &self,
+        _server: &dyn MusicServer,
+        _cover_art_id: &str,
+        _size: u32,
+    ) -> Option<PathBuf> {
+        None
     }
 }

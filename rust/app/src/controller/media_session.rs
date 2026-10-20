@@ -1,7 +1,11 @@
+use std::path::PathBuf;
+use std::sync::Arc;
+
 use feishin_core::queue::QueueTrack;
 use feishin_platform::{MediaControlEvent, NowPlaying, PlaybackStatus};
 
-use super::{Controller, UiUpdate};
+use super::command::forward_command;
+use super::{Command, Controller, UiUpdate};
 
 const MEDIA_COVER_SIZE: u32 = 512;
 
@@ -9,7 +13,11 @@ fn volume_percent(fraction: f64) -> u8 {
     (fraction.clamp(0.0, 1.0) * 100.0).round() as u8
 }
 
-fn now_playing_of(track: &QueueTrack, cover_url: Option<String>) -> NowPlaying {
+fn now_playing_of(
+    track: &QueueTrack,
+    cover_url: Option<String>,
+    cover_file: Option<PathBuf>,
+) -> NowPlaying {
     NowPlaying {
         track_id: track.song_id.to_string(),
         title: track.title.to_string(),
@@ -21,6 +29,7 @@ fn now_playing_of(track: &QueueTrack, cover_url: Option<String>) -> NowPlaying {
         album: track.album.as_deref().map(str::to_owned),
         duration_ms: Some(track.duration_ms),
         cover_url,
+        cover_file,
     }
 }
 
@@ -70,13 +79,68 @@ impl Controller {
         })
     }
 
+    fn media_cover_file(&self, track: &QueueTrack) -> Option<PathBuf> {
+        if track.is_external() {
+            return None;
+        }
+        let server = self.deps.session.get()?;
+        let cover_art_id = track.cover_art_id.as_deref()?;
+        self.deps
+            .covers
+            .cover_file(server.as_ref(), cover_art_id, MEDIA_COVER_SIZE)
+    }
+
+    fn cache_media_cover(&self, track: &QueueTrack) {
+        if track.is_external() {
+            return;
+        }
+        let (Some(server), Some(cover_art_id)) =
+            (self.deps.session.get(), track.cover_art_id.as_deref())
+        else {
+            return;
+        };
+        let cover_art_id = cover_art_id.to_owned();
+        let covers = Arc::clone(&self.deps.covers);
+        let commands = self.deps.commands.clone();
+        let song_id = track.song_id.to_string();
+        tokio::spawn(async move {
+            match covers
+                .cover(server.as_ref(), &cover_art_id, MEDIA_COVER_SIZE)
+                .await
+            {
+                Ok(_) => forward_command(&commands, Command::MediaCoverCached { song_id }),
+                Err(error) => tracing::debug!("caching the media session cover failed: {error:#}"),
+            }
+        });
+    }
+
     pub(super) fn update_media_metadata(&mut self, track: &QueueTrack) {
+        let cover_file = self.media_cover_file(track);
+        if cover_file.is_none() {
+            self.cache_media_cover(track);
+        }
+        self.send_media_metadata(track, cover_file);
+    }
+
+    pub(super) fn on_media_cover_cached(&mut self, song_id: &str) {
+        if self.is_radio_playing() {
+            return;
+        }
+        let Some(track) = self
+            .current_track()
+            .filter(|track| track.song_id.as_ref() == song_id)
+        else {
+            return;
+        };
+        if let Some(cover_file) = self.media_cover_file(&track) {
+            self.send_media_metadata(&track, Some(cover_file));
+        }
+    }
+
+    fn send_media_metadata(&mut self, track: &QueueTrack, cover_file: Option<PathBuf>) {
         let cover_url = self.media_cover_url(track);
-        if let Err(error) = self
-            .deps
-            .media
-            .set_metadata(&now_playing_of(track, cover_url))
-        {
+        let now_playing = now_playing_of(track, cover_url, cover_file);
+        if let Err(error) = self.deps.media.set_metadata(&now_playing) {
             tracing::debug!("media session metadata: {error:#}");
         }
     }

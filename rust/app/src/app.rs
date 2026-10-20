@@ -280,6 +280,7 @@ fn controller_deps(
             window.as_weak(),
         )),
         commands: context.commands.clone(),
+        covers: Arc::clone(&context.covers),
     })
 }
 

@@ -73,6 +73,25 @@ async fn downloads_once_then_serves_from_memory() {
 }
 
 #[tokio::test]
+async fn given_a_downloaded_cover_its_file_on_disk_is_known() {
+    let server = MockServer::start().await;
+    serve(&server, "/cover/a", png(300, 300), 1).await;
+    let directory = tempfile::tempdir().unwrap();
+    let cache = cache(directory.path(), 10 << 20, 10);
+    assert_eq!(cache.cached_file("a", 100), None);
+
+    cache
+        .get("a", &format!("{}/cover/a", server.uri()), 100)
+        .await
+        .unwrap();
+
+    let file = cache.cached_file("a", 100).unwrap();
+    assert_eq!(file, directory.path().join(cache_file_name("a", 100)));
+    assert!(file.is_file());
+    assert_eq!(cache.cached_file("a", 200), None);
+}
+
+#[tokio::test]
 async fn reloads_from_disk_in_a_new_instance() {
     let server = MockServer::start().await;
     serve(&server, "/c", png(64, 64), 1).await;

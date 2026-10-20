@@ -28,7 +28,7 @@ impl ImageKey {
         }
     }
 
-    fn file_name(&self) -> String {
+    pub(super) fn file_name(&self) -> String {
         cache_file_name(&self.cover_key, self.size)
     }
 }
