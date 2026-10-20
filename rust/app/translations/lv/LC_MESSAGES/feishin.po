@@ -5,6 +5,9 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11) ? 0 : (n != 0) ? 1 : 2;\n"
 
 
+msgid "\"{}\""
+msgstr "\"{}\""
+
 msgid "\"{}\" plays next"
 msgstr "\"{}\" tiks atskaņota nākamā"
 
@@ -59,6 +62,9 @@ msgstr "Pievienot serveri"
 msgid "Add station"
 msgstr "Pievienot staciju"
 
+msgid "Add the selected songs to a playlist"
+msgstr "Pievienot atlasītās dziesmas atskaņošanas sarakstam"
+
 msgid "Add this link to the end of the queue"
 msgstr "Pievienot šo saiti rindas beigās"
 
@@ -76,6 +82,9 @@ msgstr "Pievienot rindai"
 
 msgid "Add to the server's stations"
 msgstr "Pievienot servera stacijām"
+
+msgid "Add to {}"
+msgstr "Pievienot sarakstam {}"
 
 msgid "Add {n} song to playlist"
 msgid_plural "Add {n} songs to playlist"
@@ -233,11 +242,23 @@ msgstr "Notīrīt vērtējumu"
 msgid "Clear the favorites and genre filters"
 msgstr "Notīrīt izlases un žanru filtrus"
 
+msgid "Click to close"
+msgstr "Noklikšķiniet, lai aizvērtu"
+
+msgid "Click to dismiss"
+msgstr "Noklikšķiniet, lai paslēptu"
+
 msgid "Close"
 msgstr "Aizvērt"
 
 msgid "Close now playing"
 msgstr "Aizvērt pašlaik atskaņoto"
+
+msgid "Close without adding the songs"
+msgstr "Aizvērt, nepievienojot dziesmas"
+
+msgid "Close without changes"
+msgstr "Aizvērt bez izmaiņām"
 
 msgid "Close without saving"
 msgstr "Aizvērt bez saglabāšanas"
@@ -245,8 +266,14 @@ msgstr "Aizvērt bez saglabāšanas"
 msgid "Colors used across the whole app."
 msgstr "Krāsas, kas tiek izmantotas visā lietotnē."
 
+msgid "Connect to this server"
+msgstr "Savienoties ar šo serveri"
+
 msgid "Connect to your music server"
 msgstr "Savienoties ar savu mūzikas serveri"
+
+msgid "Connect to {}"
+msgstr "Savienoties ar {}"
 
 msgid "Connecting..."
 msgstr "Savieno..."
@@ -274,6 +301,9 @@ msgstr "Neizdevās izveidot atskaņošanas sarakstu: {}"
 
 msgid "Could not delete the playlist: {}"
 msgstr "Neizdevās dzēst atskaņošanas sarakstu: {}"
+
+msgid "Could not delete the saved login: {}"
+msgstr "Neizdevās dzēst saglabāto pieteikšanos: {}"
 
 msgid "Could not delete the station"
 msgstr "Neizdevās dzēst staciju"
@@ -353,6 +383,9 @@ msgstr "Neizdevās atvērt mapi: {}"
 msgid "Could not open YouTube Music: {}"
 msgstr "Neizdevās atvērt YouTube Music: {}"
 
+msgid "Could not pause or resume playback: {}"
+msgstr "Neizdevās pauzēt vai atsākt atskaņošanu: {}"
+
 msgid "Could not play \"{}\" from YouTube: {}"
 msgstr "Neizdevās atskaņot \"{}\" no YouTube: {}"
 
@@ -371,11 +404,23 @@ msgstr "Neizdevās noņemt dziesmas: {}"
 msgid "Could not rescan the library: {}"
 msgstr "Neizdevās atkārtoti skenēt bibliotēku: {}"
 
+msgid "Could not save the login for {}: {}"
+msgstr "Neizdevās saglabāt pieteikšanos serverim {}: {}"
+
+msgid "Could not save the settings: {}"
+msgstr "Neizdevās saglabāt iestatījumus: {}"
+
+msgid "Could not seek: {}"
+msgstr "Neizdevās pārtīt: {}"
+
 msgid "Could not set the rating: {}"
 msgstr "Neizdevās iestatīt vērtējumu: {}"
 
 msgid "Could not sign in to YouTube Music ({}). Showing general picks instead."
 msgstr "Neizdevās pieteikties YouTube Music ({}). Tā vietā tiek rādīti vispārīgi ieteikumi."
+
+msgid "Could not stop playback: {}"
+msgstr "Neizdevās apturēt atskaņošanu: {}"
 
 msgid "Could not switch server: {}"
 msgstr "Neizdevās pārslēgt serveri: {}"
@@ -397,6 +442,15 @@ msgstr "Valsts"
 
 msgid "Create"
 msgstr "Izveidot"
+
+msgid "Create a playlist with these songs"
+msgstr "Izveidot atskaņošanas sarakstu ar šīm dziesmām"
+
+msgid "Create an empty playlist"
+msgstr "Izveidot tukšu atskaņošanas sarakstu"
+
+msgid "Create the playlist"
+msgstr "Izveidot atskaņošanas sarakstu"
 
 msgid "Created \"{}\" with only {n} song: {}"
 msgid_plural "Created \"{}\" with only {n} songs: {}"
@@ -458,6 +512,9 @@ msgstr "Noklusējuma gaišais"
 msgid "Delete"
 msgstr "Dzēst"
 
+msgid "Delete \"{}\""
+msgstr "Dzēst \"{}\""
+
 msgid "Delete \"{}\" from the server? This cannot be undone."
 msgstr "Dzēst \"{}\" no servera? To nevar atsaukt."
 
@@ -511,6 +568,15 @@ msgstr "Atklājiet jaunu mūziku YouTube Music"
 
 msgid "Discover Weekly"
 msgstr "Nedēļas atklājumi"
+
+msgid "Do not let \"{}\" control this player"
+msgstr "Neļaut ierīcei \"{}\" vadīt šo atskaņotāju"
+
+msgid "Double-click to play"
+msgstr "Veiciet dubultklikšķi, lai atskaņotu"
+
+msgid "Double-click to play, drag to reorder"
+msgstr "Veiciet dubultklikšķi, lai atskaņotu, velciet, lai pārkārtotu"
 
 msgid "Duration"
 msgstr "Ilgums"
@@ -590,6 +656,9 @@ msgstr "Aizmirst visas"
 msgid "Forget this server?"
 msgstr "Aizmirst šo serveri?"
 
+msgid "Forget {}"
+msgstr "Aizmirst {}"
+
 msgid "Format the server should transcode to. Applies from the next song."
 msgstr "Formāts, uz kuru serverim jāpārkodē. Stājas spēkā no nākamās dziesmas."
 
@@ -601,6 +670,9 @@ msgstr[2] "Feishin atrasti {n} serveri, bet nevienam nav izmantojamas saglabāta
 
 msgid "Gapless playback"
 msgstr "Atskaņošana bez pauzēm"
+
+msgid "Genre filter: {}"
+msgstr "Žanra filtrs: {}"
 
 msgid "Genres"
 msgstr "Žanri"
@@ -644,6 +716,9 @@ msgstr "Mājaslapa (neobligāti)"
 msgid "Import from Feishin"
 msgstr "Importēt no Feishin"
 
+msgid "Import the servers saved by a previous Feishin install"
+msgstr "Importēt serverus, kas saglabāti iepriekšējā Feishin instalācijā"
+
 msgid "Install yt-dlp to play YouTube tracks"
 msgstr "Instalējiet yt-dlp, lai atskaņotu YouTube dziesmas"
 
@@ -677,14 +752,20 @@ msgstr "tā apstājās"
 msgid "item"
 msgstr "vienums"
 
-msgid "Jellyfin has no public share links"
-msgstr "Jellyfin nav publisku kopīgošanas saišu"
+msgid "Jump to this line"
+msgstr "Pāriet uz šo rindu"
 
 msgid "Keep this station in the favorites on this device"
 msgstr "Saglabāt šo staciju izlasē šajā ierīcē"
 
+msgid "Keep {}"
+msgstr "Paturēt {}"
+
 msgid "Language"
 msgstr "Valoda"
+
+msgid "Let \"{}\" control this player"
+msgstr "Ļaut ierīcei \"{}\" vadīt šo atskaņotāju"
 
 msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
 msgstr "Ļauj citiem Feishin atskaņotājiem šajā tīklā vadīt šo. Katra ierīce pirmajā reizē lūdz jūsu apstiprinājumu."
@@ -715,6 +796,9 @@ msgstr "TIEŠRAIDE"
 
 msgid "Load more"
 msgstr "Ielādēt vairāk"
+
+msgid "Load more results"
+msgstr "Ielādēt vairāk rezultātu"
 
 msgid "Load this section again"
 msgstr "Ielādēt šo sadaļu vēlreiz"
@@ -1157,6 +1241,9 @@ msgstr "Noņemt no atskaņošanas saraksta"
 msgid "Remove from queue"
 msgstr "Noņemt no rindas"
 
+msgid "Remove the selected songs from this playlist"
+msgstr "Noņemt atlasītās dziesmas no šī atskaņošanas saraksta"
+
 msgid "Removed {n} song from \"{}\""
 msgid_plural "Removed {n} songs from \"{}\""
 msgstr[0] "No \"{}\" noņemta {n} dziesma"
@@ -1177,6 +1264,9 @@ msgstr "Atkārtot: vienu"
 
 msgid "ReplayGain"
 msgstr "ReplayGain"
+
+msgid "ReplayGain could not be changed: {}"
+msgstr "Neizdevās mainīt ReplayGain: {}"
 
 msgid "Report what you play to the server."
 msgstr "Ziņot serverim, ko atskaņojat."
@@ -1283,6 +1373,9 @@ msgstr "Serveris"
 msgid "Server type"
 msgstr "Servera tips"
 
+msgid "Server type: {}"
+msgstr "Servera tips: {}"
+
 msgid "Servers"
 msgstr "Serveri"
 
@@ -1307,8 +1400,17 @@ msgstr "Kopīgošana ({}): kopēt publisku saiti"
 msgid "Sharing is unavailable: {}"
 msgstr "Kopīgošana nav pieejama: {}"
 
+msgid "Show all top songs"
+msgstr "Rādīt visas populārākās dziesmas"
+
+msgid "Show fewer top songs"
+msgstr "Rādīt mazāk populārāko dziesmu"
+
 msgid "SHOW LESS"
 msgstr "RĀDĪT MAZĀK"
+
+msgid "Show less of the biography"
+msgstr "Rādīt mazāk no biogrāfijas"
 
 msgid "Show lyrics"
 msgstr "Rādīt tekstu"
@@ -1336,6 +1438,9 @@ msgstr "Rādīt rindu blakus bibliotēkai; tiek atcerēts nākamajā palaišanas
 
 msgid "Show the server and saved stations"
 msgstr "Rādīt servera un saglabātās stacijas"
+
+msgid "Show the whole biography"
+msgstr "Rādīt visu biogrāfiju"
 
 msgid "Show {}"
 msgstr "Rādīt {}"
@@ -1370,6 +1475,9 @@ msgstr "Jaukta secība: ieslēgta"
 msgid "Sign in"
 msgstr "Pieteikties"
 
+msgid "Sign in to another server"
+msgstr "Pieteikties citā serverī"
+
 msgid "Sign in with browser"
 msgstr "Pieteikties ar pārlūku"
 
@@ -1378,6 +1486,9 @@ msgstr "Atteikties un aizmirst šī servera saglabāto pieteikšanos?"
 
 msgid "Sign out and forget this server?"
 msgstr "Atteikties un aizmirst šo serveri?"
+
+msgid "Sign out of {}"
+msgstr "Atteikties no {}"
 
 msgid "Similar"
 msgstr "Līdzīgi"
@@ -1424,6 +1535,9 @@ msgstr "Stacijas nosaukums"
 msgid "Stations"
 msgstr "Stacijas"
 
+msgid "Stay signed in"
+msgstr "Palikt pieteiktam"
+
 msgid "Stop {}"
 msgstr "Apturēt {}"
 
@@ -1453,6 +1567,9 @@ msgstr "Birka, piemēram, jazz"
 
 msgid "That device is no longer on the network"
 msgstr "Šī ierīce vairs nav tīklā"
+
+msgid "The audio device could not be changed: {}"
+msgstr "Neizdevās mainīt skaņas ierīci: {}"
 
 msgid "the connection was not allowed"
 msgstr "savienojums netika atļauts"
@@ -1688,11 +1805,23 @@ msgstr "{} kbps"
 msgid "{} s"
 msgstr "{} s"
 
+msgid "{} {} kbps"
+msgstr "{} {} kbps"
+
+msgid "{} · {}"
+msgstr "{} · {}"
+
+msgid "{} • {}"
+msgstr "{} • {}"
+
 msgid "{}: off"
 msgstr "{}: izslēgts"
 
 msgid "{}: on"
 msgstr "{}: ieslēgts"
+
+msgid "{}: {}"
+msgstr "{}: {}"
 
 msgid "{}: {} (dark)"
 msgstr "{}: {} (tumšs)"

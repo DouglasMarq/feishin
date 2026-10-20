@@ -5,6 +5,9 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11) ? 0 : (n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20)) ? 1 : 2;\n"
 
 
+msgid "\"{}\""
+msgstr "«{}»"
+
 msgid "\"{}\" plays next"
 msgstr "«{}» будет следующим"
 
@@ -59,6 +62,9 @@ msgstr "Добавить сервер"
 msgid "Add station"
 msgstr "Добавить станцию"
 
+msgid "Add the selected songs to a playlist"
+msgstr "Добавить выбранные песни в плейлист"
+
 msgid "Add this link to the end of the queue"
 msgstr "Добавить эту ссылку в конец очереди"
 
@@ -76,6 +82,9 @@ msgstr "Добавить в очередь"
 
 msgid "Add to the server's stations"
 msgstr "Добавить в станции сервера"
+
+msgid "Add to {}"
+msgstr "Добавить в {}"
 
 msgid "Add {n} song to playlist"
 msgid_plural "Add {n} songs to playlist"
@@ -233,11 +242,23 @@ msgstr "Сбросить оценку"
 msgid "Clear the favorites and genre filters"
 msgstr "Сбросить фильтры избранного и жанра"
 
+msgid "Click to close"
+msgstr "Нажмите, чтобы закрыть"
+
+msgid "Click to dismiss"
+msgstr "Нажмите, чтобы скрыть"
+
 msgid "Close"
 msgstr "Закрыть"
 
 msgid "Close now playing"
 msgstr "Закрыть «Сейчас играет»"
+
+msgid "Close without adding the songs"
+msgstr "Закрыть без добавления песен"
+
+msgid "Close without changes"
+msgstr "Закрыть без изменений"
 
 msgid "Close without saving"
 msgstr "Закрыть без сохранения"
@@ -245,8 +266,14 @@ msgstr "Закрыть без сохранения"
 msgid "Colors used across the whole app."
 msgstr "Цвета, используемые во всём приложении."
 
+msgid "Connect to this server"
+msgstr "Подключиться к этому серверу"
+
 msgid "Connect to your music server"
 msgstr "Подключитесь к своему музыкальному серверу"
+
+msgid "Connect to {}"
+msgstr "Подключиться к {}"
 
 msgid "Connecting..."
 msgstr "Подключение..."
@@ -274,6 +301,9 @@ msgstr "Не удалось создать плейлист: {}"
 
 msgid "Could not delete the playlist: {}"
 msgstr "Не удалось удалить плейлист: {}"
+
+msgid "Could not delete the saved login: {}"
+msgstr "Не удалось удалить сохранённые данные входа: {}"
 
 msgid "Could not delete the station"
 msgstr "Не удалось удалить станцию"
@@ -353,6 +383,9 @@ msgstr "Не удалось открыть папку: {}"
 msgid "Could not open YouTube Music: {}"
 msgstr "Не удалось открыть YouTube Music: {}"
 
+msgid "Could not pause or resume playback: {}"
+msgstr "Не удалось приостановить или возобновить воспроизведение: {}"
+
 msgid "Could not play \"{}\" from YouTube: {}"
 msgstr "Не удалось воспроизвести «{}» с YouTube: {}"
 
@@ -371,11 +404,23 @@ msgstr "Не удалось удалить песни: {}"
 msgid "Could not rescan the library: {}"
 msgstr "Не удалось пересканировать библиотеку: {}"
 
+msgid "Could not save the login for {}: {}"
+msgstr "Не удалось сохранить данные входа для {}: {}"
+
+msgid "Could not save the settings: {}"
+msgstr "Не удалось сохранить настройки: {}"
+
+msgid "Could not seek: {}"
+msgstr "Не удалось перемотать: {}"
+
 msgid "Could not set the rating: {}"
 msgstr "Не удалось установить оценку: {}"
 
 msgid "Could not sign in to YouTube Music ({}). Showing general picks instead."
 msgstr "Не удалось войти в YouTube Music ({}). Показаны общие рекомендации."
+
+msgid "Could not stop playback: {}"
+msgstr "Не удалось остановить воспроизведение: {}"
 
 msgid "Could not switch server: {}"
 msgstr "Не удалось переключить сервер: {}"
@@ -397,6 +442,15 @@ msgstr "Страна"
 
 msgid "Create"
 msgstr "Создать"
+
+msgid "Create a playlist with these songs"
+msgstr "Создать плейлист с этими песнями"
+
+msgid "Create an empty playlist"
+msgstr "Создать пустой плейлист"
+
+msgid "Create the playlist"
+msgstr "Создать плейлист"
 
 msgid "Created \"{}\" with only {n} song: {}"
 msgid_plural "Created \"{}\" with only {n} songs: {}"
@@ -458,6 +512,9 @@ msgstr "Светлая по умолчанию"
 msgid "Delete"
 msgstr "Удалить"
 
+msgid "Delete \"{}\""
+msgstr "Удалить «{}»"
+
 msgid "Delete \"{}\" from the server? This cannot be undone."
 msgstr "Удалить «{}» с сервера? Это действие нельзя отменить."
 
@@ -511,6 +568,15 @@ msgstr "Открывайте новую музыку в YouTube Music"
 
 msgid "Discover Weekly"
 msgstr "Открытия недели"
+
+msgid "Do not let \"{}\" control this player"
+msgstr "Не разрешать устройству «{}» управлять этим плеером"
+
+msgid "Double-click to play"
+msgstr "Дважды щёлкните, чтобы воспроизвести"
+
+msgid "Double-click to play, drag to reorder"
+msgstr "Дважды щёлкните, чтобы воспроизвести, перетащите, чтобы изменить порядок"
 
 msgid "Duration"
 msgstr "Продолжительность"
@@ -590,6 +656,9 @@ msgstr "Забыть все"
 msgid "Forget this server?"
 msgstr "Забыть этот сервер?"
 
+msgid "Forget {}"
+msgstr "Забыть {}"
+
 msgid "Format the server should transcode to. Applies from the next song."
 msgstr "Формат, в который сервер должен перекодировать. Применяется со следующей песни."
 
@@ -601,6 +670,9 @@ msgstr[2] "В Feishin найдено {n} серверов, но ни для од
 
 msgid "Gapless playback"
 msgstr "Воспроизведение без пауз"
+
+msgid "Genre filter: {}"
+msgstr "Фильтр по жанру: {}"
 
 msgid "Genres"
 msgstr "Жанры"
@@ -644,6 +716,9 @@ msgstr "Домашняя страница (необязательно)"
 msgid "Import from Feishin"
 msgstr "Импорт из Feishin"
 
+msgid "Import the servers saved by a previous Feishin install"
+msgstr "Импортировать серверы, сохранённые предыдущей установкой Feishin"
+
 msgid "Install yt-dlp to play YouTube tracks"
 msgstr "Установите yt-dlp, чтобы воспроизводить треки с YouTube"
 
@@ -677,14 +752,20 @@ msgstr "оно остановилось"
 msgid "item"
 msgstr "элемент"
 
-msgid "Jellyfin has no public share links"
-msgstr "В Jellyfin нет публичных ссылок"
+msgid "Jump to this line"
+msgstr "Перейти к этой строке"
 
 msgid "Keep this station in the favorites on this device"
 msgstr "Хранить эту станцию в избранном на этом устройстве"
 
+msgid "Keep {}"
+msgstr "Оставить {}"
+
 msgid "Language"
 msgstr "Язык"
+
+msgid "Let \"{}\" control this player"
+msgstr "Разрешить устройству «{}» управлять этим плеером"
 
 msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
 msgstr "Разрешить другим плеерам Feishin в этой сети управлять этим. Каждое устройство в первый раз запрашивает ваше разрешение."
@@ -715,6 +796,9 @@ msgstr "ЭФИР"
 
 msgid "Load more"
 msgstr "Загрузить ещё"
+
+msgid "Load more results"
+msgstr "Загрузить ещё результаты"
 
 msgid "Load this section again"
 msgstr "Загрузить этот раздел снова"
@@ -1157,6 +1241,9 @@ msgstr "Удалить из плейлиста"
 msgid "Remove from queue"
 msgstr "Удалить из очереди"
 
+msgid "Remove the selected songs from this playlist"
+msgstr "Удалить выбранные песни из этого плейлиста"
+
 msgid "Removed {n} song from \"{}\""
 msgid_plural "Removed {n} songs from \"{}\""
 msgstr[0] "Из «{}» удалена {n} песня"
@@ -1177,6 +1264,9 @@ msgstr "Повтор: один"
 
 msgid "ReplayGain"
 msgstr "ReplayGain"
+
+msgid "ReplayGain could not be changed: {}"
+msgstr "Не удалось изменить ReplayGain: {}"
 
 msgid "Report what you play to the server."
 msgstr "Сообщать серверу о том, что вы слушаете."
@@ -1283,6 +1373,9 @@ msgstr "Сервер"
 msgid "Server type"
 msgstr "Тип сервера"
 
+msgid "Server type: {}"
+msgstr "Тип сервера: {}"
+
 msgid "Servers"
 msgstr "Серверы"
 
@@ -1307,8 +1400,17 @@ msgstr "Поделиться: скопировать публичную ссыл
 msgid "Sharing is unavailable: {}"
 msgstr "Публикация недоступна: {}"
 
+msgid "Show all top songs"
+msgstr "Показать все популярные песни"
+
+msgid "Show fewer top songs"
+msgstr "Показать меньше популярных песен"
+
 msgid "SHOW LESS"
 msgstr "СВЕРНУТЬ"
+
+msgid "Show less of the biography"
+msgstr "Свернуть биографию"
 
 msgid "Show lyrics"
 msgstr "Показать текст песни"
@@ -1336,6 +1438,9 @@ msgstr "Показывать очередь рядом с библиотекой
 
 msgid "Show the server and saved stations"
 msgstr "Показать станции сервера и сохранённые"
+
+msgid "Show the whole biography"
+msgstr "Показать всю биографию"
 
 msgid "Show {}"
 msgstr "Показать: {}"
@@ -1370,6 +1475,9 @@ msgstr "Перемешивание: вкл"
 msgid "Sign in"
 msgstr "Войти"
 
+msgid "Sign in to another server"
+msgstr "Войти на другой сервер"
+
 msgid "Sign in with browser"
 msgstr "Войти через браузер"
 
@@ -1378,6 +1486,9 @@ msgstr "Выйти и забыть сохранённые данные вход�
 
 msgid "Sign out and forget this server?"
 msgstr "Выйти и забыть этот сервер?"
+
+msgid "Sign out of {}"
+msgstr "Выйти из {}"
 
 msgid "Similar"
 msgstr "Похожие"
@@ -1424,6 +1535,9 @@ msgstr "Название станции"
 msgid "Stations"
 msgstr "Станции"
 
+msgid "Stay signed in"
+msgstr "Остаться в системе"
+
 msgid "Stop {}"
 msgstr "Остановить {}"
 
@@ -1453,6 +1567,9 @@ msgstr "Тег, например jazz"
 
 msgid "That device is no longer on the network"
 msgstr "Этого устройства больше нет в сети"
+
+msgid "The audio device could not be changed: {}"
+msgstr "Не удалось изменить аудиоустройство: {}"
 
 msgid "the connection was not allowed"
 msgstr "подключение не разрешено"
@@ -1688,11 +1805,23 @@ msgstr "{} kbps"
 msgid "{} s"
 msgstr "{} с"
 
+msgid "{} {} kbps"
+msgstr "{} {} kbps"
+
+msgid "{} · {}"
+msgstr "{} · {}"
+
+msgid "{} • {}"
+msgstr "{} • {}"
+
 msgid "{}: off"
 msgstr "{}: выкл"
 
 msgid "{}: on"
 msgstr "{}: вкл"
+
+msgid "{}: {}"
+msgstr "{}: {}"
 
 msgid "{}: {} (dark)"
 msgstr "{}: {} (тёмная)"

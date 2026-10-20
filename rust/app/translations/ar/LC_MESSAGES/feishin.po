@@ -5,6 +5,9 @@ msgstr ""
 "Plural-Forms: nplurals=6; plural=(n==0) ? 0 : (n==1) ? 1 : (n==2) ? 2 : (n%100>=3 && n%100<=10) ? 3 : (n%100>=11) ? 4 : 5;\n"
 
 
+msgid "\"{}\""
+msgstr "\"{}\""
+
 msgid "\"{}\" plays next"
 msgstr "\"{}\" يُشغَّل تاليًا"
 
@@ -59,6 +62,9 @@ msgstr "إضافة خادم"
 msgid "Add station"
 msgstr "إضافة محطة"
 
+msgid "Add the selected songs to a playlist"
+msgstr "إضافة الأغاني المحددة إلى قائمة تشغيل"
+
 msgid "Add this link to the end of the queue"
 msgstr "إضافة هذا الرابط إلى نهاية قائمة الانتظار"
 
@@ -76,6 +82,9 @@ msgstr "إضافة إلى قائمة الانتظار"
 
 msgid "Add to the server's stations"
 msgstr "إضافة إلى محطات الخادم"
+
+msgid "Add to {}"
+msgstr "إضافة إلى {}"
 
 msgid "Add {n} song to playlist"
 msgid_plural "Add {n} songs to playlist"
@@ -251,11 +260,23 @@ msgstr "مسح التقييم"
 msgid "Clear the favorites and genre filters"
 msgstr "مسح تصفية المفضلة والأنواع"
 
+msgid "Click to close"
+msgstr "انقر للإغلاق"
+
+msgid "Click to dismiss"
+msgstr "انقر للتجاهل"
+
 msgid "Close"
 msgstr "إغلاق"
 
 msgid "Close now playing"
 msgstr "إغلاق شاشة التشغيل الحالي"
+
+msgid "Close without adding the songs"
+msgstr "إغلاق دون إضافة الأغاني"
+
+msgid "Close without changes"
+msgstr "إغلاق دون تغييرات"
 
 msgid "Close without saving"
 msgstr "إغلاق دون حفظ"
@@ -263,8 +284,14 @@ msgstr "إغلاق دون حفظ"
 msgid "Colors used across the whole app."
 msgstr "الألوان المستخدمة في التطبيق بأكمله."
 
+msgid "Connect to this server"
+msgstr "الاتصال بهذا الخادم"
+
 msgid "Connect to your music server"
 msgstr "اتصل بخادم الموسيقى الخاص بك"
+
+msgid "Connect to {}"
+msgstr "الاتصال بـ {}"
 
 msgid "Connecting..."
 msgstr "جارٍ الاتصال..."
@@ -292,6 +319,9 @@ msgstr "تعذر إنشاء قائمة التشغيل: {}"
 
 msgid "Could not delete the playlist: {}"
 msgstr "تعذر حذف قائمة التشغيل: {}"
+
+msgid "Could not delete the saved login: {}"
+msgstr "تعذر حذف بيانات الدخول المحفوظة: {}"
 
 msgid "Could not delete the station"
 msgstr "تعذر حذف المحطة"
@@ -371,6 +401,9 @@ msgstr "تعذر فتح المجلد: {}"
 msgid "Could not open YouTube Music: {}"
 msgstr "تعذر فتح YouTube Music: {}"
 
+msgid "Could not pause or resume playback: {}"
+msgstr "تعذر إيقاف التشغيل مؤقتًا أو استئنافه: {}"
+
 msgid "Could not play \"{}\" from YouTube: {}"
 msgstr "تعذر تشغيل \"{}\" من YouTube: {}"
 
@@ -389,11 +422,23 @@ msgstr "تعذرت إزالة الأغاني: {}"
 msgid "Could not rescan the library: {}"
 msgstr "تعذرت إعادة فحص المكتبة: {}"
 
+msgid "Could not save the login for {}: {}"
+msgstr "تعذر حفظ بيانات الدخول لـ {}: {}"
+
+msgid "Could not save the settings: {}"
+msgstr "تعذر حفظ الإعدادات: {}"
+
+msgid "Could not seek: {}"
+msgstr "تعذر التقديم أو الترجيع: {}"
+
 msgid "Could not set the rating: {}"
 msgstr "تعذر تعيين التقييم: {}"
 
 msgid "Could not sign in to YouTube Music ({}). Showing general picks instead."
 msgstr "تعذر تسجيل الدخول إلى YouTube Music ({}). يتم عرض اختيارات عامة بدلًا من ذلك."
+
+msgid "Could not stop playback: {}"
+msgstr "تعذر إيقاف التشغيل: {}"
 
 msgid "Could not switch server: {}"
 msgstr "تعذر تبديل الخادم: {}"
@@ -415,6 +460,15 @@ msgstr "البلد"
 
 msgid "Create"
 msgstr "إنشاء"
+
+msgid "Create a playlist with these songs"
+msgstr "إنشاء قائمة تشغيل بهذه الأغاني"
+
+msgid "Create an empty playlist"
+msgstr "إنشاء قائمة تشغيل فارغة"
+
+msgid "Create the playlist"
+msgstr "إنشاء قائمة التشغيل"
 
 msgid "Created \"{}\" with only {n} song: {}"
 msgid_plural "Created \"{}\" with only {n} songs: {}"
@@ -482,6 +536,9 @@ msgstr "فاتح افتراضي"
 msgid "Delete"
 msgstr "حذف"
 
+msgid "Delete \"{}\""
+msgstr "حذف \"{}\""
+
 msgid "Delete \"{}\" from the server? This cannot be undone."
 msgstr "هل تريد حذف \"{}\" من الخادم؟ لا يمكن التراجع عن ذلك."
 
@@ -535,6 +592,15 @@ msgstr "اكتشف موسيقى جديدة على YouTube Music"
 
 msgid "Discover Weekly"
 msgstr "اكتشافات الأسبوع"
+
+msgid "Do not let \"{}\" control this player"
+msgstr "عدم السماح لـ \"{}\" بالتحكم في هذا المشغل"
+
+msgid "Double-click to play"
+msgstr "انقر نقرًا مزدوجًا للتشغيل"
+
+msgid "Double-click to play, drag to reorder"
+msgstr "انقر نقرًا مزدوجًا للتشغيل، واسحب لإعادة الترتيب"
 
 msgid "Duration"
 msgstr "مدة"
@@ -614,6 +680,9 @@ msgstr "نسيان الكل"
 msgid "Forget this server?"
 msgstr "هل تريد نسيان هذا الخادم؟"
 
+msgid "Forget {}"
+msgstr "نسيان {}"
+
 msgid "Format the server should transcode to. Applies from the next song."
 msgstr "الصيغة التي يحوّل الخادم الترميز إليها. يُطبَّق بدءًا من الأغنية التالية."
 
@@ -628,6 +697,9 @@ msgstr[5] "تم العثور على {n} خادم في Feishin لكن لا يوج
 
 msgid "Gapless playback"
 msgstr "تشغيل دون فواصل"
+
+msgid "Genre filter: {}"
+msgstr "تصفية النوع: {}"
 
 msgid "Genres"
 msgstr "أنواع"
@@ -671,6 +743,9 @@ msgstr "الموقع الإلكتروني (اختياري)"
 msgid "Import from Feishin"
 msgstr "استيراد من Feishin"
 
+msgid "Import the servers saved by a previous Feishin install"
+msgstr "استيراد الخوادم المحفوظة من تثبيت سابق لـ Feishin"
+
 msgid "Install yt-dlp to play YouTube tracks"
 msgstr "ثبّت yt-dlp لتشغيل مقاطع YouTube"
 
@@ -704,14 +779,20 @@ msgstr "توقف"
 msgid "item"
 msgstr "العنصر"
 
-msgid "Jellyfin has no public share links"
-msgstr "لا يوفر Jellyfin روابط مشاركة عامة"
+msgid "Jump to this line"
+msgstr "الانتقال إلى هذا السطر"
 
 msgid "Keep this station in the favorites on this device"
 msgstr "الاحتفاظ بهذه المحطة في المفضلة على هذا الجهاز"
 
+msgid "Keep {}"
+msgstr "الإبقاء على {}"
+
 msgid "Language"
 msgstr "اللغة"
+
+msgid "Let \"{}\" control this player"
+msgstr "السماح لـ \"{}\" بالتحكم في هذا المشغل"
 
 msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
 msgstr "السماح لمشغلات Feishin الأخرى على هذه الشبكة بالتحكم في هذا المشغل. يطلب كل جهاز موافقتك في المرة الأولى."
@@ -745,6 +826,9 @@ msgstr "مباشر"
 
 msgid "Load more"
 msgstr "تحميل المزيد"
+
+msgid "Load more results"
+msgstr "تحميل المزيد من النتائج"
 
 msgid "Load this section again"
 msgstr "إعادة تحميل هذا القسم"
@@ -1193,6 +1277,9 @@ msgstr "إزالة من قائمة التشغيل"
 msgid "Remove from queue"
 msgstr "إزالة من قائمة الانتظار"
 
+msgid "Remove the selected songs from this playlist"
+msgstr "إزالة الأغاني المحددة من قائمة التشغيل هذه"
+
 msgid "Removed {n} song from \"{}\""
 msgid_plural "Removed {n} songs from \"{}\""
 msgstr[0] "تمت إزالة {n} أغنية من \"{}\""
@@ -1216,6 +1303,9 @@ msgstr "التكرار: أغنية واحدة"
 
 msgid "ReplayGain"
 msgstr "ReplayGain"
+
+msgid "ReplayGain could not be changed: {}"
+msgstr "تعذر تغيير ReplayGain: {}"
 
 msgid "Report what you play to the server."
 msgstr "إبلاغ الخادم بما تشغّله."
@@ -1322,6 +1412,9 @@ msgstr "الخادم"
 msgid "Server type"
 msgstr "نوع الخادم"
 
+msgid "Server type: {}"
+msgstr "نوع الخادم: {}"
+
 msgid "Servers"
 msgstr "الخوادم"
 
@@ -1346,8 +1439,17 @@ msgstr "مشاركة {}: نسخ رابط عام"
 msgid "Sharing is unavailable: {}"
 msgstr "المشاركة غير متاحة: {}"
 
+msgid "Show all top songs"
+msgstr "عرض كل أفضل الأغاني"
+
+msgid "Show fewer top songs"
+msgstr "عرض عدد أقل من أفضل الأغاني"
+
 msgid "SHOW LESS"
 msgstr "عرض أقل"
+
+msgid "Show less of the biography"
+msgstr "تصغير السيرة الذاتية"
 
 msgid "Show lyrics"
 msgstr "إظهار كلمات الأغنية"
@@ -1375,6 +1477,9 @@ msgstr "عرض قائمة الانتظار بجوار المكتبة؛ يُحف�
 
 msgid "Show the server and saved stations"
 msgstr "عرض محطات الخادم والمحطات المحفوظة"
+
+msgid "Show the whole biography"
+msgstr "عرض السيرة الذاتية كاملة"
 
 msgid "Show {}"
 msgstr "عرض {}"
@@ -1409,6 +1514,9 @@ msgstr "الخلط: مفعّل"
 msgid "Sign in"
 msgstr "تسجيل الدخول"
 
+msgid "Sign in to another server"
+msgstr "تسجيل الدخول إلى خادم آخر"
+
 msgid "Sign in with browser"
 msgstr "تسجيل الدخول عبر المتصفح"
 
@@ -1417,6 +1525,9 @@ msgstr "هل تريد تسجيل الخروج ونسيان بيانات الدخ
 
 msgid "Sign out and forget this server?"
 msgstr "هل تريد تسجيل الخروج ونسيان هذا الخادم؟"
+
+msgid "Sign out of {}"
+msgstr "تسجيل الخروج من {}"
 
 msgid "Similar"
 msgstr "مشابهة"
@@ -1463,6 +1574,9 @@ msgstr "اسم المحطة"
 msgid "Stations"
 msgstr "المحطات"
 
+msgid "Stay signed in"
+msgstr "البقاء مسجلاً الدخول"
+
 msgid "Stop {}"
 msgstr "إيقاف {}"
 
@@ -1492,6 +1606,9 @@ msgstr "وسم، مثلًا jazz"
 
 msgid "That device is no longer on the network"
 msgstr "لم يعد هذا الجهاز على الشبكة"
+
+msgid "The audio device could not be changed: {}"
+msgstr "تعذر تغيير جهاز الصوت: {}"
 
 msgid "the connection was not allowed"
 msgstr "لم يُسمح بالاتصال"
@@ -1754,11 +1871,23 @@ msgstr "{} kbps"
 msgid "{} s"
 msgstr "{} ث"
 
+msgid "{} {} kbps"
+msgstr "{} {} kbps"
+
+msgid "{} · {}"
+msgstr "{} · {}"
+
+msgid "{} • {}"
+msgstr "{} • {}"
+
 msgid "{}: off"
 msgstr "{}: متوقف"
 
 msgid "{}: on"
 msgstr "{}: مفعّل"
+
+msgid "{}: {}"
+msgstr "{}: {}"
 
 msgid "{}: {} (dark)"
 msgstr "{}: {} (داكن)"

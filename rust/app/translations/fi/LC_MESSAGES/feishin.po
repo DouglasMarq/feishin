@@ -5,6 +5,9 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 
+msgid "\"{}\""
+msgstr "\"{}\""
+
 msgid "\"{}\" plays next"
 msgstr "\"{}\" toistetaan seuraavaksi"
 
@@ -59,6 +62,9 @@ msgstr "Lisää palvelin"
 msgid "Add station"
 msgstr "Lisää asema"
 
+msgid "Add the selected songs to a playlist"
+msgstr "Lisää valitut kappaleet soittolistaan"
+
 msgid "Add this link to the end of the queue"
 msgstr "Lisää tämä linkki jonon loppuun"
 
@@ -76,6 +82,9 @@ msgstr "Lisää jonoon"
 
 msgid "Add to the server's stations"
 msgstr "Lisää palvelimen asemiin"
+
+msgid "Add to {}"
+msgstr "Lisää soittolistaan {}"
 
 msgid "Add {n} song to playlist"
 msgid_plural "Add {n} songs to playlist"
@@ -227,11 +236,23 @@ msgstr "Poista arvio"
 msgid "Clear the favorites and genre filters"
 msgstr "Poista suosikki- ja genresuodattimet"
 
+msgid "Click to close"
+msgstr "Sulje napsauttamalla"
+
+msgid "Click to dismiss"
+msgstr "Ohita napsauttamalla"
+
 msgid "Close"
 msgstr "Sulje"
 
 msgid "Close now playing"
 msgstr "Sulje Nyt soi -näkymä"
+
+msgid "Close without adding the songs"
+msgstr "Sulje lisäämättä kappaleita"
+
+msgid "Close without changes"
+msgstr "Sulje tekemättä muutoksia"
 
 msgid "Close without saving"
 msgstr "Sulje tallentamatta"
@@ -239,8 +260,14 @@ msgstr "Sulje tallentamatta"
 msgid "Colors used across the whole app."
 msgstr "Koko sovelluksessa käytettävät värit."
 
+msgid "Connect to this server"
+msgstr "Yhdistä tähän palvelimeen"
+
 msgid "Connect to your music server"
 msgstr "Yhdistä musiikkipalvelimeesi"
+
+msgid "Connect to {}"
+msgstr "Yhdistä palvelimeen {}"
 
 msgid "Connecting..."
 msgstr "Yhdistetään..."
@@ -268,6 +295,9 @@ msgstr "Soittolistan luominen epäonnistui: {}"
 
 msgid "Could not delete the playlist: {}"
 msgstr "Soittolistan poistaminen epäonnistui: {}"
+
+msgid "Could not delete the saved login: {}"
+msgstr "Tallennetun kirjautumisen poistaminen epäonnistui: {}"
 
 msgid "Could not delete the station"
 msgstr "Aseman poistaminen epäonnistui"
@@ -347,6 +377,9 @@ msgstr "Kansion avaaminen epäonnistui: {}"
 msgid "Could not open YouTube Music: {}"
 msgstr "YouTube Musicin avaaminen epäonnistui: {}"
 
+msgid "Could not pause or resume playback: {}"
+msgstr "Toiston keskeyttäminen tai jatkaminen epäonnistui: {}"
+
 msgid "Could not play \"{}\" from YouTube: {}"
 msgstr "Kohteen \"{}\" toistaminen YouTubesta epäonnistui: {}"
 
@@ -365,11 +398,23 @@ msgstr "Kappaleiden poistaminen epäonnistui: {}"
 msgid "Could not rescan the library: {}"
 msgstr "Kirjaston uudelleenskannaus epäonnistui: {}"
 
+msgid "Could not save the login for {}: {}"
+msgstr "Palvelimen {} kirjautumisen tallentaminen epäonnistui: {}"
+
+msgid "Could not save the settings: {}"
+msgstr "Asetusten tallentaminen epäonnistui: {}"
+
+msgid "Could not seek: {}"
+msgstr "Kelaus epäonnistui: {}"
+
 msgid "Could not set the rating: {}"
 msgstr "Arvion asettaminen epäonnistui: {}"
 
 msgid "Could not sign in to YouTube Music ({}). Showing general picks instead."
 msgstr "Kirjautuminen YouTube Musiciin epäonnistui ({}). Näytetään sen sijaan yleisiä valintoja."
+
+msgid "Could not stop playback: {}"
+msgstr "Toiston pysäyttäminen epäonnistui: {}"
 
 msgid "Could not switch server: {}"
 msgstr "Palvelimen vaihtaminen epäonnistui: {}"
@@ -391,6 +436,15 @@ msgstr "Maa"
 
 msgid "Create"
 msgstr "Luo"
+
+msgid "Create a playlist with these songs"
+msgstr "Luo soittolista näistä kappaleista"
+
+msgid "Create an empty playlist"
+msgstr "Luo tyhjä soittolista"
+
+msgid "Create the playlist"
+msgstr "Luo soittolista"
 
 msgid "Created \"{}\" with only {n} song: {}"
 msgid_plural "Created \"{}\" with only {n} songs: {}"
@@ -450,6 +504,9 @@ msgstr "Oletus vaalea"
 msgid "Delete"
 msgstr "Poista"
 
+msgid "Delete \"{}\""
+msgstr "Poista \"{}\""
+
 msgid "Delete \"{}\" from the server? This cannot be undone."
 msgstr "Poistetaanko \"{}\" palvelimelta? Tätä ei voi kumota."
 
@@ -503,6 +560,15 @@ msgstr "Löydä uutta musiikkia YouTube Musicista"
 
 msgid "Discover Weekly"
 msgstr "Viikon löydöt"
+
+msgid "Do not let \"{}\" control this player"
+msgstr "Älä anna laitteen \"{}\" ohjata tätä soitinta"
+
+msgid "Double-click to play"
+msgstr "Toista kaksoisnapsauttamalla"
+
+msgid "Double-click to play, drag to reorder"
+msgstr "Toista kaksoisnapsauttamalla, järjestä vetämällä"
 
 msgid "Duration"
 msgstr "Kesto"
@@ -582,6 +648,9 @@ msgstr "Unohda kaikki"
 msgid "Forget this server?"
 msgstr "Unohdetaanko tämä palvelin?"
 
+msgid "Forget {}"
+msgstr "Unohda {}"
+
 msgid "Format the server should transcode to. Applies from the next song."
 msgstr "Muoto, johon palvelin muuntaa. Koskee seuraavasta kappaleesta alkaen."
 
@@ -592,6 +661,9 @@ msgstr[1] "Feishinistä löytyi {n} palvelinta, mutta millään ei ole käyttök
 
 msgid "Gapless playback"
 msgstr "Katkoton toisto"
+
+msgid "Genre filter: {}"
+msgstr "Tyylilajisuodatin: {}"
 
 msgid "Genres"
 msgstr "Genret"
@@ -635,6 +707,9 @@ msgstr "Kotisivu (valinnainen)"
 msgid "Import from Feishin"
 msgstr "Tuo Feishinistä"
 
+msgid "Import the servers saved by a previous Feishin install"
+msgstr "Tuo aiemman Feishin-asennuksen tallentamat palvelimet"
+
 msgid "Install yt-dlp to play YouTube tracks"
 msgstr "Asenna yt-dlp toistaaksesi YouTube-raitoja"
 
@@ -668,14 +743,20 @@ msgstr "se pysähtyi"
 msgid "item"
 msgstr "kohde"
 
-msgid "Jellyfin has no public share links"
-msgstr "Jellyfinissä ei ole julkisia jakolinkkejä"
+msgid "Jump to this line"
+msgstr "Siirry tälle riville"
 
 msgid "Keep this station in the favorites on this device"
 msgstr "Säilytä tämä asema suosikeissa tällä laitteella"
 
+msgid "Keep {}"
+msgstr "Säilytä {}"
+
 msgid "Language"
 msgstr "Kieli"
+
+msgid "Let \"{}\" control this player"
+msgstr "Anna laitteen \"{}\" ohjata tätä soitinta"
 
 msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
 msgstr "Anna muiden tämän verkon Feishin-soittimien ohjata tätä. Jokainen laite pyytää lupaasi ensimmäisellä kerralla."
@@ -705,6 +786,9 @@ msgstr "LIVE"
 
 msgid "Load more"
 msgstr "Lataa lisää"
+
+msgid "Load more results"
+msgstr "Lataa lisää tuloksia"
 
 msgid "Load this section again"
 msgstr "Lataa tämä osio uudelleen"
@@ -1145,6 +1229,9 @@ msgstr "Poista soittolistasta"
 msgid "Remove from queue"
 msgstr "Poista jonosta"
 
+msgid "Remove the selected songs from this playlist"
+msgstr "Poista valitut kappaleet tästä soittolistasta"
+
 msgid "Removed {n} song from \"{}\""
 msgid_plural "Removed {n} songs from \"{}\""
 msgstr[0] "{n} kappale poistettiin soittolistasta \"{}\""
@@ -1164,6 +1251,9 @@ msgstr "Uudelleentoisto: yksi"
 
 msgid "ReplayGain"
 msgstr "ReplayGain"
+
+msgid "ReplayGain could not be changed: {}"
+msgstr "ReplayGainin muuttaminen epäonnistui: {}"
 
 msgid "Report what you play to the server."
 msgstr "Ilmoita palvelimelle, mitä kuuntelet."
@@ -1270,6 +1360,9 @@ msgstr "Palvelin"
 msgid "Server type"
 msgstr "Palvelimen tyyppi"
 
+msgid "Server type: {}"
+msgstr "Palvelimen tyyppi: {}"
+
 msgid "Servers"
 msgstr "Palvelimet"
 
@@ -1294,8 +1387,17 @@ msgstr "Jaa tämä {}: kopioi julkinen linkki"
 msgid "Sharing is unavailable: {}"
 msgstr "Jakaminen ei ole käytettävissä: {}"
 
+msgid "Show all top songs"
+msgstr "Näytä kaikki parhaat kappaleet"
+
+msgid "Show fewer top songs"
+msgstr "Näytä vähemmän parhaita kappaleita"
+
 msgid "SHOW LESS"
 msgstr "NÄYTÄ VÄHEMMÄN"
+
+msgid "Show less of the biography"
+msgstr "Näytä vähemmän elämäkertaa"
 
 msgid "Show lyrics"
 msgstr "Näytä sanat"
@@ -1323,6 +1425,9 @@ msgstr "Näytä jono kirjaston vieressä; muistetaan seuraavalla käynnistyskerr
 
 msgid "Show the server and saved stations"
 msgstr "Näytä palvelimen ja tallennetut asemat"
+
+msgid "Show the whole biography"
+msgstr "Näytä koko elämäkerta"
 
 msgid "Show {}"
 msgstr "Näytä {}"
@@ -1357,6 +1462,9 @@ msgstr "Satunnaistoisto: päällä"
 msgid "Sign in"
 msgstr "Kirjaudu sisään"
 
+msgid "Sign in to another server"
+msgstr "Kirjaudu toiseen palvelimeen"
+
 msgid "Sign in with browser"
 msgstr "Kirjaudu sisään selaimella"
 
@@ -1365,6 +1473,9 @@ msgstr "Kirjaudutaanko ulos ja unohdetaanko tämän palvelimen tallennettu kirja
 
 msgid "Sign out and forget this server?"
 msgstr "Kirjaudutaanko ulos ja unohdetaanko tämä palvelin?"
+
+msgid "Sign out of {}"
+msgstr "Kirjaudu ulos palvelimesta {}"
 
 msgid "Similar"
 msgstr "Samankaltaiset"
@@ -1411,6 +1522,9 @@ msgstr "Aseman nimi"
 msgid "Stations"
 msgstr "Asemat"
 
+msgid "Stay signed in"
+msgstr "Pysy kirjautuneena"
+
 msgid "Stop {}"
 msgstr "Pysäytä {}"
 
@@ -1440,6 +1554,9 @@ msgstr "Tunniste, esimerkiksi jazz"
 
 msgid "That device is no longer on the network"
 msgstr "Laite ei ole enää verkossa"
+
+msgid "The audio device could not be changed: {}"
+msgstr "Äänilaitteen vaihtaminen epäonnistui: {}"
 
 msgid "the connection was not allowed"
 msgstr "yhteyttä ei sallittu"
@@ -1666,11 +1783,23 @@ msgstr "{} kbps"
 msgid "{} s"
 msgstr "{} s"
 
+msgid "{} {} kbps"
+msgstr "{} {} kbps"
+
+msgid "{} · {}"
+msgstr "{} · {}"
+
+msgid "{} • {}"
+msgstr "{} • {}"
+
 msgid "{}: off"
 msgstr "{}: pois"
 
 msgid "{}: on"
 msgstr "{}: päällä"
+
+msgid "{}: {}"
+msgstr "{}: {}"
 
 msgid "{}: {} (dark)"
 msgstr "{}: {} (tumma)"

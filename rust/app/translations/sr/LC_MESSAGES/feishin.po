@@ -5,6 +5,9 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11) ? 0 : (n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20)) ? 1 : 2;\n"
 
 
+msgid "\"{}\""
+msgstr "\"{}\""
+
 msgid "\"{}\" plays next"
 msgstr "\"{}\" sledeća na redu"
 
@@ -59,6 +62,9 @@ msgstr "Dodaj server"
 msgid "Add station"
 msgstr "Dodaj stanicu"
 
+msgid "Add the selected songs to a playlist"
+msgstr "Dodaj izabrane pesme u plejlistu"
+
 msgid "Add this link to the end of the queue"
 msgstr "Dodaj ovaj link na kraj reda"
 
@@ -76,6 +82,9 @@ msgstr "Dodaj u red"
 
 msgid "Add to the server's stations"
 msgstr "Dodaj u stanice na serveru"
+
+msgid "Add to {}"
+msgstr "Dodaj u {}"
 
 msgid "Add {n} song to playlist"
 msgid_plural "Add {n} songs to playlist"
@@ -233,11 +242,23 @@ msgstr "Ukloni ocenu"
 msgid "Clear the favorites and genre filters"
 msgstr "Očisti filtere favorita i žanra"
 
+msgid "Click to close"
+msgstr "Kliknite da zatvorite"
+
+msgid "Click to dismiss"
+msgstr "Kliknite da odbacite"
+
 msgid "Close"
 msgstr "Zatvori"
 
 msgid "Close now playing"
 msgstr "Zatvori trenutno puštano"
+
+msgid "Close without adding the songs"
+msgstr "Zatvori bez dodavanja pesama"
+
+msgid "Close without changes"
+msgstr "Zatvori bez izmena"
 
 msgid "Close without saving"
 msgstr "Zatvori bez čuvanja"
@@ -245,8 +266,14 @@ msgstr "Zatvori bez čuvanja"
 msgid "Colors used across the whole app."
 msgstr "Boje koje se koriste u celoj aplikaciji."
 
+msgid "Connect to this server"
+msgstr "Poveži se sa ovim serverom"
+
 msgid "Connect to your music server"
 msgstr "Povežite se sa svojim muzičkim serverom"
+
+msgid "Connect to {}"
+msgstr "Poveži se sa {}"
 
 msgid "Connecting..."
 msgstr "Povezivanje..."
@@ -274,6 +301,9 @@ msgstr "Pravljenje plejliste nije uspelo: {}"
 
 msgid "Could not delete the playlist: {}"
 msgstr "Brisanje plejliste nije uspelo: {}"
+
+msgid "Could not delete the saved login: {}"
+msgstr "Brisanje sačuvane prijave nije uspelo: {}"
 
 msgid "Could not delete the station"
 msgstr "Brisanje stanice nije uspelo"
@@ -353,6 +383,9 @@ msgstr "Otvaranje foldera nije uspelo: {}"
 msgid "Could not open YouTube Music: {}"
 msgstr "Otvaranje YouTube Music nije uspelo: {}"
 
+msgid "Could not pause or resume playback: {}"
+msgstr "Pauziranje ili nastavljanje reprodukcije nije uspelo: {}"
+
 msgid "Could not play \"{}\" from YouTube: {}"
 msgstr "Puštanje \"{}\" sa YouTube nije uspelo: {}"
 
@@ -371,11 +404,23 @@ msgstr "Uklanjanje pesama nije uspelo: {}"
 msgid "Could not rescan the library: {}"
 msgstr "Ponovno skeniranje biblioteke nije uspelo: {}"
 
+msgid "Could not save the login for {}: {}"
+msgstr "Čuvanje prijave za {} nije uspelo: {}"
+
+msgid "Could not save the settings: {}"
+msgstr "Čuvanje podešavanja nije uspelo: {}"
+
+msgid "Could not seek: {}"
+msgstr "Premotavanje nije uspelo: {}"
+
 msgid "Could not set the rating: {}"
 msgstr "Postavljanje ocene nije uspelo: {}"
 
 msgid "Could not sign in to YouTube Music ({}). Showing general picks instead."
 msgstr "Prijava na YouTube Music nije uspela ({}). Umesto toga prikazuju se opšti predlozi."
+
+msgid "Could not stop playback: {}"
+msgstr "Zaustavljanje reprodukcije nije uspelo: {}"
 
 msgid "Could not switch server: {}"
 msgstr "Promena servera nije uspela: {}"
@@ -397,6 +442,15 @@ msgstr "Zemlja"
 
 msgid "Create"
 msgstr "Napravi"
+
+msgid "Create a playlist with these songs"
+msgstr "Napravi plejlistu od ovih pesama"
+
+msgid "Create an empty playlist"
+msgstr "Napravi praznu plejlistu"
+
+msgid "Create the playlist"
+msgstr "Napravi plejlistu"
 
 msgid "Created \"{}\" with only {n} song: {}"
 msgid_plural "Created \"{}\" with only {n} songs: {}"
@@ -458,6 +512,9 @@ msgstr "Podrazumevana svetla"
 msgid "Delete"
 msgstr "Obriši"
 
+msgid "Delete \"{}\""
+msgstr "Obriši \"{}\""
+
 msgid "Delete \"{}\" from the server? This cannot be undone."
 msgstr "Obrisati \"{}\" sa servera? Ovo se ne može poništiti."
 
@@ -511,6 +568,15 @@ msgstr "Otkrijte novu muziku na YouTube Music"
 
 msgid "Discover Weekly"
 msgstr "Otkrića nedelje"
+
+msgid "Do not let \"{}\" control this player"
+msgstr "Ne dozvoli uređaju \"{}\" da upravlja ovim plejerom"
+
+msgid "Double-click to play"
+msgstr "Dvaput kliknite za puštanje"
+
+msgid "Double-click to play, drag to reorder"
+msgstr "Dvaput kliknite za puštanje, prevucite za promenu redosleda"
 
 msgid "Duration"
 msgstr "Trajanje"
@@ -590,6 +656,9 @@ msgstr "Zaboravi sve"
 msgid "Forget this server?"
 msgstr "Zaboraviti ovaj server?"
 
+msgid "Forget {}"
+msgstr "Zaboravi {}"
+
 msgid "Format the server should transcode to. Applies from the next song."
 msgstr "Format u koji server treba da transkodira. Primenjuje se od sledeće pesme."
 
@@ -601,6 +670,9 @@ msgstr[2] "Pronađeno je {n} servera u Feishin, ali nijedan nema upotrebljivu sa
 
 msgid "Gapless playback"
 msgstr "Reprodukcija bez pauza"
+
+msgid "Genre filter: {}"
+msgstr "Filter žanra: {}"
 
 msgid "Genres"
 msgstr "Žanrovi"
@@ -644,6 +716,9 @@ msgstr "Veb-sajt (opciono)"
 msgid "Import from Feishin"
 msgstr "Uvezi iz Feishin"
 
+msgid "Import the servers saved by a previous Feishin install"
+msgstr "Uvezi servere koje je sačuvala prethodna instalacija Feishin"
+
 msgid "Install yt-dlp to play YouTube tracks"
 msgstr "Instalirajte yt-dlp za puštanje pesama sa YouTube"
 
@@ -677,14 +752,20 @@ msgstr "zaustavio se"
 msgid "item"
 msgstr "stavka"
 
-msgid "Jellyfin has no public share links"
-msgstr "Jellyfin nema javne linkove za deljenje"
+msgid "Jump to this line"
+msgstr "Skoči na ovaj red"
 
 msgid "Keep this station in the favorites on this device"
 msgstr "Čuvaj ovu stanicu u favoritima na ovom uređaju"
 
+msgid "Keep {}"
+msgstr "Zadrži {}"
+
 msgid "Language"
 msgstr "Jezik"
+
+msgid "Let \"{}\" control this player"
+msgstr "Dozvoli uređaju \"{}\" da upravlja ovim plejerom"
 
 msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
 msgstr "Dozvoli drugim Feishin plejerima na ovoj mreži da upravljaju ovim. Svaki uređaj prvi put traži vaše odobrenje."
@@ -715,6 +796,9 @@ msgstr "UŽIVO"
 
 msgid "Load more"
 msgstr "Učitaj još"
+
+msgid "Load more results"
+msgstr "Učitaj još rezultata"
 
 msgid "Load this section again"
 msgstr "Ponovo učitaj ovaj odeljak"
@@ -1157,6 +1241,9 @@ msgstr "Ukloni iz plejliste"
 msgid "Remove from queue"
 msgstr "Ukloni iz reda"
 
+msgid "Remove the selected songs from this playlist"
+msgstr "Ukloni izabrane pesme iz ove plejliste"
+
 msgid "Removed {n} song from \"{}\""
 msgid_plural "Removed {n} songs from \"{}\""
 msgstr[0] "Uklonjena je {n} pesma iz \"{}\""
@@ -1177,6 +1264,9 @@ msgstr "Ponavljanje: jedna"
 
 msgid "ReplayGain"
 msgstr "ReplayGain"
+
+msgid "ReplayGain could not be changed: {}"
+msgstr "Promena ReplayGain nije uspela: {}"
 
 msgid "Report what you play to the server."
 msgstr "Prijavljuje serveru šta slušate."
@@ -1283,6 +1373,9 @@ msgstr "Server"
 msgid "Server type"
 msgstr "Tip servera"
 
+msgid "Server type: {}"
+msgstr "Tip servera: {}"
+
 msgid "Servers"
 msgstr "Serveri"
 
@@ -1307,8 +1400,17 @@ msgstr "Podeli ({}): kopiraj javni link"
 msgid "Sharing is unavailable: {}"
 msgstr "Deljenje nije dostupno: {}"
 
+msgid "Show all top songs"
+msgstr "Prikaži sve najpopularnije pesme"
+
+msgid "Show fewer top songs"
+msgstr "Prikaži manje najpopularnijih pesama"
+
 msgid "SHOW LESS"
 msgstr "PRIKAŽI MANJE"
+
+msgid "Show less of the biography"
+msgstr "Prikaži manje biografije"
 
 msgid "Show lyrics"
 msgstr "Prikaži tekst pesme"
@@ -1336,6 +1438,9 @@ msgstr "Prikazuje red pored biblioteke; pamti se za sledeće pokretanje."
 
 msgid "Show the server and saved stations"
 msgstr "Prikaži stanice sa servera i sačuvane stanice"
+
+msgid "Show the whole biography"
+msgstr "Prikaži celu biografiju"
 
 msgid "Show {}"
 msgstr "Prikaži: {}"
@@ -1370,6 +1475,9 @@ msgstr "Nasumično: uključeno"
 msgid "Sign in"
 msgstr "Prijavi se"
 
+msgid "Sign in to another server"
+msgstr "Prijavi se na drugi server"
+
 msgid "Sign in with browser"
 msgstr "Prijavi se preko pregledača"
 
@@ -1378,6 +1486,9 @@ msgstr "Odjaviti se i zaboraviti sačuvanu prijavu za ovaj server?"
 
 msgid "Sign out and forget this server?"
 msgstr "Odjaviti se i zaboraviti ovaj server?"
+
+msgid "Sign out of {}"
+msgstr "Odjavi se sa {}"
 
 msgid "Similar"
 msgstr "Slično"
@@ -1424,6 +1535,9 @@ msgstr "Naziv stanice"
 msgid "Stations"
 msgstr "Stanice"
 
+msgid "Stay signed in"
+msgstr "Ostani prijavljen"
+
 msgid "Stop {}"
 msgstr "Zaustavi {}"
 
@@ -1453,6 +1567,9 @@ msgstr "Oznaka, na primer jazz"
 
 msgid "That device is no longer on the network"
 msgstr "Taj uređaj više nije na mreži"
+
+msgid "The audio device could not be changed: {}"
+msgstr "Promena audio uređaja nije uspela: {}"
 
 msgid "the connection was not allowed"
 msgstr "veza nije dozvoljena"
@@ -1688,11 +1805,23 @@ msgstr "{} kbps"
 msgid "{} s"
 msgstr "{} s"
 
+msgid "{} {} kbps"
+msgstr "{} {} kbps"
+
+msgid "{} · {}"
+msgstr "{} · {}"
+
+msgid "{} • {}"
+msgstr "{} • {}"
+
 msgid "{}: off"
 msgstr "{}: isključeno"
 
 msgid "{}: on"
 msgstr "{}: uključeno"
+
+msgid "{}: {}"
+msgstr "{}: {}"
 
 msgid "{}: {} (dark)"
 msgstr "{}: {} (tamna)"

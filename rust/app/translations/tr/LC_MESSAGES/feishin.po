@@ -5,6 +5,9 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 
+msgid "\"{}\""
+msgstr "\"{}\""
+
 msgid "\"{}\" plays next"
 msgstr "Sıradaki: \"{}\""
 
@@ -59,6 +62,9 @@ msgstr "Sunucu ekle"
 msgid "Add station"
 msgstr "İstasyon ekle"
 
+msgid "Add the selected songs to a playlist"
+msgstr "Seçili şarkıları bir çalma listesine ekle"
+
 msgid "Add this link to the end of the queue"
 msgstr "Bu bağlantıyı sıranın sonuna ekle"
 
@@ -76,6 +82,9 @@ msgstr "Sıraya ekle"
 
 msgid "Add to the server's stations"
 msgstr "Sunucunun istasyonlarına ekle"
+
+msgid "Add to {}"
+msgstr "Şuna ekle: {}"
 
 msgid "Add {n} song to playlist"
 msgid_plural "Add {n} songs to playlist"
@@ -227,11 +236,23 @@ msgstr "Puanı temizle"
 msgid "Clear the favorites and genre filters"
 msgstr "Favori ve tür filtrelerini temizle"
 
+msgid "Click to close"
+msgstr "Kapatmak için tıkla"
+
+msgid "Click to dismiss"
+msgstr "Gizlemek için tıkla"
+
 msgid "Close"
 msgstr "Kapat"
 
 msgid "Close now playing"
 msgstr "Şimdi çalınanı kapat"
+
+msgid "Close without adding the songs"
+msgstr "Şarkıları eklemeden kapat"
+
+msgid "Close without changes"
+msgstr "Değişiklik yapmadan kapat"
 
 msgid "Close without saving"
 msgstr "Kaydetmeden kapat"
@@ -239,8 +260,14 @@ msgstr "Kaydetmeden kapat"
 msgid "Colors used across the whole app."
 msgstr "Uygulamanın genelinde kullanılan renkler."
 
+msgid "Connect to this server"
+msgstr "Bu sunucuya bağlan"
+
 msgid "Connect to your music server"
 msgstr "Müzik sunucunuza bağlanın"
+
+msgid "Connect to {}"
+msgstr "Bağlan: {}"
 
 msgid "Connecting..."
 msgstr "Bağlanıyor..."
@@ -268,6 +295,9 @@ msgstr "Çalma listesi oluşturulamadı: {}"
 
 msgid "Could not delete the playlist: {}"
 msgstr "Çalma listesi silinemedi: {}"
+
+msgid "Could not delete the saved login: {}"
+msgstr "Kayıtlı oturum bilgisi silinemedi: {}"
 
 msgid "Could not delete the station"
 msgstr "İstasyon silinemedi"
@@ -347,6 +377,9 @@ msgstr "Klasör açılamadı: {}"
 msgid "Could not open YouTube Music: {}"
 msgstr "YouTube Music açılamadı: {}"
 
+msgid "Could not pause or resume playback: {}"
+msgstr "Çalma duraklatılamadı veya sürdürülemedi: {}"
+
 msgid "Could not play \"{}\" from YouTube: {}"
 msgstr "\"{}\" YouTube'dan çalınamadı: {}"
 
@@ -365,11 +398,23 @@ msgstr "Şarkılar kaldırılamadı: {}"
 msgid "Could not rescan the library: {}"
 msgstr "Kitaplık yeniden taranamadı: {}"
 
+msgid "Could not save the login for {}: {}"
+msgstr "{} için oturum bilgisi kaydedilemedi: {}"
+
+msgid "Could not save the settings: {}"
+msgstr "Ayarlar kaydedilemedi: {}"
+
+msgid "Could not seek: {}"
+msgstr "İleri veya geri sarılamadı: {}"
+
 msgid "Could not set the rating: {}"
 msgstr "Puan verilemedi: {}"
 
 msgid "Could not sign in to YouTube Music ({}). Showing general picks instead."
 msgstr "YouTube Music'te oturum açılamadı ({}). Bunun yerine genel öneriler gösteriliyor."
+
+msgid "Could not stop playback: {}"
+msgstr "Çalma durdurulamadı: {}"
 
 msgid "Could not switch server: {}"
 msgstr "Sunucu değiştirilemedi: {}"
@@ -391,6 +436,15 @@ msgstr "Ülke"
 
 msgid "Create"
 msgstr "Oluştur"
+
+msgid "Create a playlist with these songs"
+msgstr "Bu şarkılarla bir çalma listesi oluştur"
+
+msgid "Create an empty playlist"
+msgstr "Boş bir çalma listesi oluştur"
+
+msgid "Create the playlist"
+msgstr "Çalma listesini oluştur"
 
 msgid "Created \"{}\" with only {n} song: {}"
 msgid_plural "Created \"{}\" with only {n} songs: {}"
@@ -450,6 +504,9 @@ msgstr "Varsayılan açık"
 msgid "Delete"
 msgstr "Sil"
 
+msgid "Delete \"{}\""
+msgstr "Sil: \"{}\""
+
 msgid "Delete \"{}\" from the server? This cannot be undone."
 msgstr "\"{}\" sunucudan silinsin mi? Bu işlem geri alınamaz."
 
@@ -503,6 +560,15 @@ msgstr "YouTube Music'te yeni müzikler keşfedin"
 
 msgid "Discover Weekly"
 msgstr "Haftanın Keşifleri"
+
+msgid "Do not let \"{}\" control this player"
+msgstr "\"{}\" bu çaları kontrol edemesin"
+
+msgid "Double-click to play"
+msgstr "Çalmak için çift tıkla"
+
+msgid "Double-click to play, drag to reorder"
+msgstr "Çalmak için çift tıkla, yeniden sıralamak için sürükle"
 
 msgid "Duration"
 msgstr "Süre"
@@ -582,6 +648,9 @@ msgstr "Tümünü unut"
 msgid "Forget this server?"
 msgstr "Bu sunucu unutulsun mu?"
 
+msgid "Forget {}"
+msgstr "Unut: {}"
+
 msgid "Format the server should transcode to. Applies from the next song."
 msgstr "Sunucunun dönüştüreceği biçim. Sonraki şarkıdan itibaren geçerlidir."
 
@@ -592,6 +661,9 @@ msgstr[1] "Feishin'de {n} sunucu bulundu ancak hiçbirinde kullanılabilir kayı
 
 msgid "Gapless playback"
 msgstr "Boşluksuz çalma"
+
+msgid "Genre filter: {}"
+msgstr "Tür filtresi: {}"
 
 msgid "Genres"
 msgstr "Türler"
@@ -635,6 +707,9 @@ msgstr "Web sitesi (isteğe bağlı)"
 msgid "Import from Feishin"
 msgstr "Feishin'den içe aktar"
 
+msgid "Import the servers saved by a previous Feishin install"
+msgstr "Önceki bir Feishin kurulumunun kaydettiği sunucuları içe aktar"
+
 msgid "Install yt-dlp to play YouTube tracks"
 msgstr "YouTube parçalarını çalmak için yt-dlp'yi yükleyin"
 
@@ -668,14 +743,20 @@ msgstr "durdu"
 msgid "item"
 msgstr "öğe"
 
-msgid "Jellyfin has no public share links"
-msgstr "Jellyfin'de herkese açık paylaşım bağlantıları yok"
+msgid "Jump to this line"
+msgstr "Bu satıra atla"
 
 msgid "Keep this station in the favorites on this device"
 msgstr "Bu istasyonu bu cihazda favorilerde tut"
 
+msgid "Keep {}"
+msgstr "Koru: {}"
+
 msgid "Language"
 msgstr "Dil"
+
+msgid "Let \"{}\" control this player"
+msgstr "\"{}\" bu çaları kontrol edebilsin"
 
 msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
 msgstr "Bu ağdaki diğer Feishin çalarların bunu kontrol etmesine izin ver. Her cihaz ilk seferde onayını ister."
@@ -705,6 +786,9 @@ msgstr "CANLI"
 
 msgid "Load more"
 msgstr "Daha fazla yükle"
+
+msgid "Load more results"
+msgstr "Daha fazla sonuç yükle"
 
 msgid "Load this section again"
 msgstr "Bu bölümü yeniden yükle"
@@ -1145,6 +1229,9 @@ msgstr "Çalma listesinden kaldır"
 msgid "Remove from queue"
 msgstr "Sıradan kaldır"
 
+msgid "Remove the selected songs from this playlist"
+msgstr "Seçili şarkıları bu çalma listesinden kaldır"
+
 msgid "Removed {n} song from \"{}\""
 msgid_plural "Removed {n} songs from \"{}\""
 msgstr[0] "\"{}\" listesinden {n} şarkı kaldırıldı"
@@ -1164,6 +1251,9 @@ msgstr "Tekrarla: bir"
 
 msgid "ReplayGain"
 msgstr "ReplayGain"
+
+msgid "ReplayGain could not be changed: {}"
+msgstr "ReplayGain değiştirilemedi: {}"
 
 msgid "Report what you play to the server."
 msgstr "Çaldıklarınızı sunucuya bildir."
@@ -1270,6 +1360,9 @@ msgstr "Sunucu"
 msgid "Server type"
 msgstr "Sunucu türü"
 
+msgid "Server type: {}"
+msgstr "Sunucu türü: {}"
+
 msgid "Servers"
 msgstr "Sunucular"
 
@@ -1294,8 +1387,17 @@ msgstr "Paylaş ({}): herkese açık bağlantıyı kopyala"
 msgid "Sharing is unavailable: {}"
 msgstr "Paylaşım kullanılamıyor: {}"
 
+msgid "Show all top songs"
+msgstr "Tüm popüler şarkıları göster"
+
+msgid "Show fewer top songs"
+msgstr "Daha az popüler şarkı göster"
+
 msgid "SHOW LESS"
 msgstr "DAHA AZ GÖSTER"
+
+msgid "Show less of the biography"
+msgstr "Biyografiyi daralt"
 
 msgid "Show lyrics"
 msgstr "Şarkı sözlerini göster"
@@ -1323,6 +1425,9 @@ msgstr "Sırayı kitaplığın yanında göster; bir sonraki açılışta hatır
 
 msgid "Show the server and saved stations"
 msgstr "Sunucu ve kayıtlı istasyonları göster"
+
+msgid "Show the whole biography"
+msgstr "Biyografinin tamamını göster"
 
 msgid "Show {}"
 msgstr "Göster: {}"
@@ -1357,6 +1462,9 @@ msgstr "Karışık: açık"
 msgid "Sign in"
 msgstr "Oturum aç"
 
+msgid "Sign in to another server"
+msgstr "Başka bir sunucuda oturum aç"
+
 msgid "Sign in with browser"
 msgstr "Tarayıcıyla oturum aç"
 
@@ -1365,6 +1473,9 @@ msgstr "Oturum kapatılıp bu sunucunun kayıtlı oturum bilgisi unutulsun mu?"
 
 msgid "Sign out and forget this server?"
 msgstr "Oturum kapatılıp bu sunucu unutulsun mu?"
+
+msgid "Sign out of {}"
+msgstr "Oturumu kapat: {}"
 
 msgid "Similar"
 msgstr "Benzer"
@@ -1411,6 +1522,9 @@ msgstr "İstasyon adı"
 msgid "Stations"
 msgstr "İstasyonlar"
 
+msgid "Stay signed in"
+msgstr "Oturum açık kalsın"
+
 msgid "Stop {}"
 msgstr "Durdur: {}"
 
@@ -1440,6 +1554,9 @@ msgstr "Etiket, örneğin jazz"
 
 msgid "That device is no longer on the network"
 msgstr "O cihaz artık ağda değil"
+
+msgid "The audio device could not be changed: {}"
+msgstr "Ses aygıtı değiştirilemedi: {}"
 
 msgid "the connection was not allowed"
 msgstr "bağlantıya izin verilmedi"
@@ -1666,11 +1783,23 @@ msgstr "{} kbps"
 msgid "{} s"
 msgstr "{} sn"
 
+msgid "{} {} kbps"
+msgstr "{} {} kbps"
+
+msgid "{} · {}"
+msgstr "{} · {}"
+
+msgid "{} • {}"
+msgstr "{} • {}"
+
 msgid "{}: off"
 msgstr "{}: kapalı"
 
 msgid "{}: on"
 msgstr "{}: açık"
+
+msgid "{}: {}"
+msgstr "{}: {}"
 
 msgid "{}: {} (dark)"
 msgstr "{}: {} (koyu)"

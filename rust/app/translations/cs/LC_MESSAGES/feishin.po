@@ -5,6 +5,9 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
 
+msgid "\"{}\""
+msgstr "„{}“"
+
 msgid "\"{}\" plays next"
 msgstr "Jako další: „{}“"
 
@@ -59,6 +62,9 @@ msgstr "Přidat server"
 msgid "Add station"
 msgstr "Přidat stanici"
 
+msgid "Add the selected songs to a playlist"
+msgstr "Přidat vybrané skladby do playlistu"
+
 msgid "Add this link to the end of the queue"
 msgstr "Přidat tento odkaz na konec fronty"
 
@@ -76,6 +82,9 @@ msgstr "Přidat do fronty"
 
 msgid "Add to the server's stations"
 msgstr "Přidat ke stanicím serveru"
+
+msgid "Add to {}"
+msgstr "Přidat do {}"
 
 msgid "Add {n} song to playlist"
 msgid_plural "Add {n} songs to playlist"
@@ -233,11 +242,23 @@ msgstr "Zrušit hodnocení"
 msgid "Clear the favorites and genre filters"
 msgstr "Zrušit filtry oblíbených a žánrů"
 
+msgid "Click to close"
+msgstr "Kliknutím zavřete"
+
+msgid "Click to dismiss"
+msgstr "Kliknutím skryjete"
+
 msgid "Close"
 msgstr "Zavřít"
 
 msgid "Close now playing"
 msgstr "Zavřít Právě hraje"
+
+msgid "Close without adding the songs"
+msgstr "Zavřít bez přidání skladeb"
+
+msgid "Close without changes"
+msgstr "Zavřít beze změn"
 
 msgid "Close without saving"
 msgstr "Zavřít bez uložení"
@@ -245,8 +266,14 @@ msgstr "Zavřít bez uložení"
 msgid "Colors used across the whole app."
 msgstr "Barvy používané v celé aplikaci."
 
+msgid "Connect to this server"
+msgstr "Připojit k tomuto serveru"
+
 msgid "Connect to your music server"
 msgstr "Připojte se ke svému hudebnímu serveru"
+
+msgid "Connect to {}"
+msgstr "Připojit k {}"
 
 msgid "Connecting..."
 msgstr "Připojování..."
@@ -274,6 +301,9 @@ msgstr "Nelze vytvořit playlist: {}"
 
 msgid "Could not delete the playlist: {}"
 msgstr "Nelze odstranit playlist: {}"
+
+msgid "Could not delete the saved login: {}"
+msgstr "Uložené přihlášení nelze odstranit: {}"
 
 msgid "Could not delete the station"
 msgstr "Stanici nelze odstranit"
@@ -353,6 +383,9 @@ msgstr "Nelze otevřít složku: {}"
 msgid "Could not open YouTube Music: {}"
 msgstr "Nelze otevřít YouTube Music: {}"
 
+msgid "Could not pause or resume playback: {}"
+msgstr "Přehrávání nelze pozastavit ani obnovit: {}"
+
 msgid "Could not play \"{}\" from YouTube: {}"
 msgstr "„{}“ nelze přehrát z YouTube: {}"
 
@@ -371,11 +404,23 @@ msgstr "Nelze odebrat skladby: {}"
 msgid "Could not rescan the library: {}"
 msgstr "Nelze znovu prohledat knihovnu: {}"
 
+msgid "Could not save the login for {}: {}"
+msgstr "Přihlášení pro {} nelze uložit: {}"
+
+msgid "Could not save the settings: {}"
+msgstr "Nastavení nelze uložit: {}"
+
+msgid "Could not seek: {}"
+msgstr "Nelze přetočit: {}"
+
 msgid "Could not set the rating: {}"
 msgstr "Nelze nastavit hodnocení: {}"
 
 msgid "Could not sign in to YouTube Music ({}). Showing general picks instead."
 msgstr "Nelze se přihlásit do YouTube Music ({}). Místo toho se zobrazují obecné tipy."
+
+msgid "Could not stop playback: {}"
+msgstr "Přehrávání nelze zastavit: {}"
 
 msgid "Could not switch server: {}"
 msgstr "Nelze přepnout server: {}"
@@ -397,6 +442,15 @@ msgstr "Země"
 
 msgid "Create"
 msgstr "Vytvořit"
+
+msgid "Create a playlist with these songs"
+msgstr "Vytvořit playlist s těmito skladbami"
+
+msgid "Create an empty playlist"
+msgstr "Vytvořit prázdný playlist"
+
+msgid "Create the playlist"
+msgstr "Vytvořit playlist"
 
 msgid "Created \"{}\" with only {n} song: {}"
 msgid_plural "Created \"{}\" with only {n} songs: {}"
@@ -458,6 +512,9 @@ msgstr "Výchozí světlý"
 msgid "Delete"
 msgstr "Odstranit"
 
+msgid "Delete \"{}\""
+msgstr "Odstranit „{}“"
+
 msgid "Delete \"{}\" from the server? This cannot be undone."
 msgstr "Odstranit „{}“ ze serveru? Tuto akci nelze vrátit zpět."
 
@@ -511,6 +568,15 @@ msgstr "Objevujte novou hudbu na YouTube Music"
 
 msgid "Discover Weekly"
 msgstr "Objevy týdne"
+
+msgid "Do not let \"{}\" control this player"
+msgstr "Nepovolit zařízení „{}“ ovládat tento přehrávač"
+
+msgid "Double-click to play"
+msgstr "Dvojitým kliknutím přehrajete"
+
+msgid "Double-click to play, drag to reorder"
+msgstr "Dvojitým kliknutím přehrajete, přetažením změníte pořadí"
 
 msgid "Duration"
 msgstr "Trvání"
@@ -590,6 +656,9 @@ msgstr "Zapomenout vše"
 msgid "Forget this server?"
 msgstr "Zapomenout tento server?"
 
+msgid "Forget {}"
+msgstr "Zapomenout {}"
+
 msgid "Format the server should transcode to. Applies from the next song."
 msgstr "Formát, do kterého má server překódovat. Platí od další skladby."
 
@@ -601,6 +670,9 @@ msgstr[2] "V aplikaci Feishin bylo nalezeno {n} serverů, ale žádný nemá pou
 
 msgid "Gapless playback"
 msgstr "Přehrávání bez mezer"
+
+msgid "Genre filter: {}"
+msgstr "Filtr žánru: {}"
 
 msgid "Genres"
 msgstr "Žánry"
@@ -644,6 +716,9 @@ msgstr "Domovská stránka (nepovinné)"
 msgid "Import from Feishin"
 msgstr "Importovat z Feishin"
 
+msgid "Import the servers saved by a previous Feishin install"
+msgstr "Importovat servery uložené předchozí instalací Feishin"
+
 msgid "Install yt-dlp to play YouTube tracks"
 msgstr "Pro přehrávání skladeb z YouTube nainstalujte yt-dlp"
 
@@ -677,14 +752,20 @@ msgstr "zastavilo se"
 msgid "item"
 msgstr "položka"
 
-msgid "Jellyfin has no public share links"
-msgstr "Jellyfin nemá veřejné odkazy ke sdílení"
+msgid "Jump to this line"
+msgstr "Přejít na tento řádek"
 
 msgid "Keep this station in the favorites on this device"
 msgstr "Ponechat tuto stanici v oblíbených na tomto zařízení"
 
+msgid "Keep {}"
+msgstr "Ponechat {}"
+
 msgid "Language"
 msgstr "Jazyk"
+
+msgid "Let \"{}\" control this player"
+msgstr "Povolit zařízení „{}“ ovládat tento přehrávač"
 
 msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
 msgstr "Povolí ostatním přehrávačům Feishin v této síti ovládat tento. Každé zařízení poprvé požádá o vaše schválení."
@@ -715,6 +796,9 @@ msgstr "ŽIVĚ"
 
 msgid "Load more"
 msgstr "Načíst další"
+
+msgid "Load more results"
+msgstr "Načíst další výsledky"
 
 msgid "Load this section again"
 msgstr "Znovu načíst tuto sekci"
@@ -1157,6 +1241,9 @@ msgstr "Odebrat z playlistu"
 msgid "Remove from queue"
 msgstr "Odebrat z fronty"
 
+msgid "Remove the selected songs from this playlist"
+msgstr "Odebrat vybrané skladby z tohoto playlistu"
+
 msgid "Removed {n} song from \"{}\""
 msgid_plural "Removed {n} songs from \"{}\""
 msgstr[0] "Z „{}“ byla odebrána {n} skladba"
@@ -1177,6 +1264,9 @@ msgstr "Opakování: jedna"
 
 msgid "ReplayGain"
 msgstr "ReplayGain"
+
+msgid "ReplayGain could not be changed: {}"
+msgstr "ReplayGain nelze změnit: {}"
 
 msgid "Report what you play to the server."
 msgstr "Hlásit serveru, co posloucháte."
@@ -1283,6 +1373,9 @@ msgstr "Server"
 msgid "Server type"
 msgstr "Typ serveru"
 
+msgid "Server type: {}"
+msgstr "Typ serveru: {}"
+
 msgid "Servers"
 msgstr "Servery"
 
@@ -1307,8 +1400,17 @@ msgstr "Sdílet ({}): zkopírovat veřejný odkaz"
 msgid "Sharing is unavailable: {}"
 msgstr "Sdílení není k dispozici: {}"
 
+msgid "Show all top songs"
+msgstr "Zobrazit všechny nejlepší skladby"
+
+msgid "Show fewer top songs"
+msgstr "Zobrazit méně nejlepších skladeb"
+
 msgid "SHOW LESS"
 msgstr "ZOBRAZIT MÉNĚ"
+
+msgid "Show less of the biography"
+msgstr "Zobrazit méně z životopisu"
 
 msgid "Show lyrics"
 msgstr "Zobrazit text"
@@ -1336,6 +1438,9 @@ msgstr "Zobrazovat frontu vedle knihovny; zapamatuje se pro další spuštění.
 
 msgid "Show the server and saved stations"
 msgstr "Zobrazit stanice serveru a uložené stanice"
+
+msgid "Show the whole biography"
+msgstr "Zobrazit celý životopis"
 
 msgid "Show {}"
 msgstr "Zobrazit: {}"
@@ -1370,6 +1475,9 @@ msgstr "Náhodně: zapnuto"
 msgid "Sign in"
 msgstr "Přihlásit se"
 
+msgid "Sign in to another server"
+msgstr "Přihlásit se k jinému serveru"
+
 msgid "Sign in with browser"
 msgstr "Přihlásit se přes prohlížeč"
 
@@ -1378,6 +1486,9 @@ msgstr "Odhlásit se a zapomenout uložené přihlášení k tomuto serveru?"
 
 msgid "Sign out and forget this server?"
 msgstr "Odhlásit se a zapomenout tento server?"
+
+msgid "Sign out of {}"
+msgstr "Odhlásit se z {}"
 
 msgid "Similar"
 msgstr "Podobné"
@@ -1424,6 +1535,9 @@ msgstr "Název stanice"
 msgid "Stations"
 msgstr "Stanice"
 
+msgid "Stay signed in"
+msgstr "Zůstat přihlášen"
+
 msgid "Stop {}"
 msgstr "Zastavit {}"
 
@@ -1453,6 +1567,9 @@ msgstr "Štítek, například jazz"
 
 msgid "That device is no longer on the network"
 msgstr "Toto zařízení už není v síti"
+
+msgid "The audio device could not be changed: {}"
+msgstr "Zvukové zařízení nelze změnit: {}"
 
 msgid "the connection was not allowed"
 msgstr "připojení nebylo povoleno"
@@ -1688,11 +1805,23 @@ msgstr "{} kbps"
 msgid "{} s"
 msgstr "{} s"
 
+msgid "{} {} kbps"
+msgstr "{} {} kbps"
+
+msgid "{} · {}"
+msgstr "{} · {}"
+
+msgid "{} • {}"
+msgstr "{} • {}"
+
 msgid "{}: off"
 msgstr "{}: vypnuto"
 
 msgid "{}: on"
 msgstr "{}: zapnuto"
+
+msgid "{}: {}"
+msgstr "{}: {}"
 
 msgid "{}: {} (dark)"
 msgstr "{}: {} (tmavý)"

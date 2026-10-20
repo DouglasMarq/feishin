@@ -5,6 +5,9 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 
+msgid "\"{}\""
+msgstr "「{}」"
+
 msgid "\"{}\" plays next"
 msgstr "「{}」を次に再生します"
 
@@ -59,6 +62,9 @@ msgstr "サーバーを追加"
 msgid "Add station"
 msgstr "ステーションを追加"
 
+msgid "Add the selected songs to a playlist"
+msgstr "選択した曲をプレイリストに追加"
+
 msgid "Add this link to the end of the queue"
 msgstr "このリンクをキューの最後に追加"
 
@@ -76,6 +82,9 @@ msgstr "キューに追加"
 
 msgid "Add to the server's stations"
 msgstr "サーバーのステーションに追加"
+
+msgid "Add to {}"
+msgstr "{} に追加"
 
 msgid "Add {n} song to playlist"
 msgid_plural "Add {n} songs to playlist"
@@ -221,11 +230,23 @@ msgstr "評価をクリア"
 msgid "Clear the favorites and genre filters"
 msgstr "お気に入りとジャンルのフィルターをクリア"
 
+msgid "Click to close"
+msgstr "クリックして閉じる"
+
+msgid "Click to dismiss"
+msgstr "クリックして非表示"
+
 msgid "Close"
 msgstr "閉じる"
 
 msgid "Close now playing"
 msgstr "再生中の画面を閉じる"
+
+msgid "Close without adding the songs"
+msgstr "曲を追加せずに閉じる"
+
+msgid "Close without changes"
+msgstr "変更せずに閉じる"
 
 msgid "Close without saving"
 msgstr "保存せずに閉じる"
@@ -233,8 +254,14 @@ msgstr "保存せずに閉じる"
 msgid "Colors used across the whole app."
 msgstr "アプリ全体で使われる色です。"
 
+msgid "Connect to this server"
+msgstr "このサーバーに接続"
+
 msgid "Connect to your music server"
 msgstr "音楽サーバーに接続"
+
+msgid "Connect to {}"
+msgstr "{} に接続"
 
 msgid "Connecting..."
 msgstr "接続中..."
@@ -262,6 +289,9 @@ msgstr "プレイリストを作成できませんでした: {}"
 
 msgid "Could not delete the playlist: {}"
 msgstr "プレイリストを削除できませんでした: {}"
+
+msgid "Could not delete the saved login: {}"
+msgstr "保存済みログインを削除できませんでした: {}"
 
 msgid "Could not delete the station"
 msgstr "ステーションを削除できませんでした"
@@ -341,6 +371,9 @@ msgstr "フォルダーを開けませんでした: {}"
 msgid "Could not open YouTube Music: {}"
 msgstr "YouTube Music を開けませんでした: {}"
 
+msgid "Could not pause or resume playback: {}"
+msgstr "再生を一時停止または再開できませんでした: {}"
+
 msgid "Could not play \"{}\" from YouTube: {}"
 msgstr "YouTube から「{}」を再生できませんでした: {}"
 
@@ -359,11 +392,23 @@ msgstr "曲を削除できませんでした: {}"
 msgid "Could not rescan the library: {}"
 msgstr "ライブラリを再スキャンできませんでした: {}"
 
+msgid "Could not save the login for {}: {}"
+msgstr "{} のログインを保存できませんでした: {}"
+
+msgid "Could not save the settings: {}"
+msgstr "設定を保存できませんでした: {}"
+
+msgid "Could not seek: {}"
+msgstr "シークできませんでした: {}"
+
 msgid "Could not set the rating: {}"
 msgstr "評価を設定できませんでした: {}"
 
 msgid "Could not sign in to YouTube Music ({}). Showing general picks instead."
 msgstr "YouTube Music にサインインできませんでした ({})。代わりに一般的なおすすめを表示しています。"
+
+msgid "Could not stop playback: {}"
+msgstr "再生を停止できませんでした: {}"
 
 msgid "Could not switch server: {}"
 msgstr "サーバーを切り替えられませんでした: {}"
@@ -385,6 +430,15 @@ msgstr "国"
 
 msgid "Create"
 msgstr "作成"
+
+msgid "Create a playlist with these songs"
+msgstr "これらの曲でプレイリストを作成"
+
+msgid "Create an empty playlist"
+msgstr "空のプレイリストを作成"
+
+msgid "Create the playlist"
+msgstr "プレイリストを作成"
 
 msgid "Created \"{}\" with only {n} song: {}"
 msgid_plural "Created \"{}\" with only {n} songs: {}"
@@ -442,6 +496,9 @@ msgstr "デフォルト ライト"
 msgid "Delete"
 msgstr "削除"
 
+msgid "Delete \"{}\""
+msgstr "「{}」を削除"
+
 msgid "Delete \"{}\" from the server? This cannot be undone."
 msgstr "サーバーから「{}」を削除しますか？この操作は元に戻せません。"
 
@@ -495,6 +552,15 @@ msgstr "YouTube Music で新しい音楽を見つける"
 
 msgid "Discover Weekly"
 msgstr "今週の新発見"
+
+msgid "Do not let \"{}\" control this player"
+msgstr "「{}」にこのプレーヤーの操作を許可しない"
+
+msgid "Double-click to play"
+msgstr "ダブルクリックで再生"
+
+msgid "Double-click to play, drag to reorder"
+msgstr "ダブルクリックで再生、ドラッグで並べ替え"
 
 msgid "Duration"
 msgstr "長さ"
@@ -574,6 +640,9 @@ msgstr "すべて削除"
 msgid "Forget this server?"
 msgstr "このサーバーを削除しますか？"
 
+msgid "Forget {}"
+msgstr "{} を削除"
+
 msgid "Format the server should transcode to. Applies from the next song."
 msgstr "サーバーがトランスコードする形式です。次の曲から適用されます。"
 
@@ -583,6 +652,9 @@ msgstr[0] "Feishin に {n} 件のサーバーが見つかりましたが、使�
 
 msgid "Gapless playback"
 msgstr "ギャップレス再生"
+
+msgid "Genre filter: {}"
+msgstr "ジャンル フィルター: {}"
 
 msgid "Genres"
 msgstr "ジャンル"
@@ -626,6 +698,9 @@ msgstr "ホームページ (任意)"
 msgid "Import from Feishin"
 msgstr "Feishin からインポート"
 
+msgid "Import the servers saved by a previous Feishin install"
+msgstr "以前の Feishin で保存したサーバーをインポート"
+
 msgid "Install yt-dlp to play YouTube tracks"
 msgstr "YouTube のトラックを再生するには yt-dlp をインストールしてください"
 
@@ -659,14 +734,20 @@ msgstr "停止しました"
 msgid "item"
 msgstr "アイテム"
 
-msgid "Jellyfin has no public share links"
-msgstr "Jellyfin には公開共有リンクがありません"
+msgid "Jump to this line"
+msgstr "この行へ移動"
 
 msgid "Keep this station in the favorites on this device"
 msgstr "このステーションをこのデバイスのお気に入りに保存"
 
+msgid "Keep {}"
+msgstr "{} を残す"
+
 msgid "Language"
 msgstr "言語"
+
+msgid "Let \"{}\" control this player"
+msgstr "「{}」にこのプレーヤーの操作を許可"
 
 msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
 msgstr "このネットワーク上の他の Feishin プレーヤーからの操作を許可します。各デバイスは初回に許可を求めます。"
@@ -695,6 +776,9 @@ msgstr "ライブ"
 
 msgid "Load more"
 msgstr "さらに読み込む"
+
+msgid "Load more results"
+msgstr "さらに結果を読み込む"
 
 msgid "Load this section again"
 msgstr "このセクションを再読み込み"
@@ -1133,6 +1217,9 @@ msgstr "プレイリストから削除"
 msgid "Remove from queue"
 msgstr "キューから削除"
 
+msgid "Remove the selected songs from this playlist"
+msgstr "選択した曲をこのプレイリストから削除"
+
 msgid "Removed {n} song from \"{}\""
 msgid_plural "Removed {n} songs from \"{}\""
 msgstr[0] "「{}」から {n} 曲を削除しました"
@@ -1151,6 +1238,9 @@ msgstr "リピート: 1 曲"
 
 msgid "ReplayGain"
 msgstr "ReplayGain"
+
+msgid "ReplayGain could not be changed: {}"
+msgstr "ReplayGain を変更できませんでした: {}"
 
 msgid "Report what you play to the server."
 msgstr "再生した曲をサーバーに報告します。"
@@ -1257,6 +1347,9 @@ msgstr "サーバー"
 msgid "Server type"
 msgstr "サーバーの種類"
 
+msgid "Server type: {}"
+msgstr "サーバーの種類: {}"
+
 msgid "Servers"
 msgstr "サーバー"
 
@@ -1281,8 +1374,17 @@ msgstr "この{}を共有: 公開リンクをコピー"
 msgid "Sharing is unavailable: {}"
 msgstr "共有できません: {}"
 
+msgid "Show all top songs"
+msgstr "人気曲をすべて表示"
+
+msgid "Show fewer top songs"
+msgstr "人気曲の表示を減らす"
+
 msgid "SHOW LESS"
 msgstr "折りたたむ"
+
+msgid "Show less of the biography"
+msgstr "経歴を折りたたむ"
 
 msgid "Show lyrics"
 msgstr "歌詞を表示"
@@ -1310,6 +1412,9 @@ msgstr "ライブラリの横にキューを表示します。次回の起動時
 
 msgid "Show the server and saved stations"
 msgstr "サーバーと保存済みのステーションを表示"
+
+msgid "Show the whole biography"
+msgstr "経歴をすべて表示"
 
 msgid "Show {}"
 msgstr "{} を表示"
@@ -1344,6 +1449,9 @@ msgstr "シャッフル: オン"
 msgid "Sign in"
 msgstr "サインイン"
 
+msgid "Sign in to another server"
+msgstr "別のサーバーにサインイン"
+
 msgid "Sign in with browser"
 msgstr "ブラウザーでサインイン"
 
@@ -1352,6 +1460,9 @@ msgstr "サインアウトして、このサーバーの保存済みログイン
 
 msgid "Sign out and forget this server?"
 msgstr "サインアウトして、このサーバーを削除しますか？"
+
+msgid "Sign out of {}"
+msgstr "{} からサインアウト"
 
 msgid "Similar"
 msgstr "類似"
@@ -1398,6 +1509,9 @@ msgstr "ステーション名"
 msgid "Stations"
 msgstr "ステーション"
 
+msgid "Stay signed in"
+msgstr "サインインしたままにする"
+
 msgid "Stop {}"
 msgstr "{} を停止"
 
@@ -1427,6 +1541,9 @@ msgstr "タグ (例: jazz)"
 
 msgid "That device is no longer on the network"
 msgstr "そのデバイスはネットワーク上にありません"
+
+msgid "The audio device could not be changed: {}"
+msgstr "オーディオ デバイスを変更できませんでした: {}"
 
 msgid "the connection was not allowed"
 msgstr "接続が許可されませんでした"
@@ -1644,11 +1761,23 @@ msgstr "{} kbps"
 msgid "{} s"
 msgstr "{} 秒"
 
+msgid "{} {} kbps"
+msgstr "{} {} kbps"
+
+msgid "{} · {}"
+msgstr "{} · {}"
+
+msgid "{} • {}"
+msgstr "{} • {}"
+
 msgid "{}: off"
 msgstr "{}: オフ"
 
 msgid "{}: on"
 msgstr "{}: オン"
+
+msgid "{}: {}"
+msgstr "{}: {}"
 
 msgid "{}: {} (dark)"
 msgstr "{}: {} (ダーク)"

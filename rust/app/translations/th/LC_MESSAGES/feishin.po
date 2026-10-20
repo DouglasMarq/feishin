@@ -5,6 +5,9 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 
+msgid "\"{}\""
+msgstr "\"{}\""
+
 msgid "\"{}\" plays next"
 msgstr "\"{}\" จะเล่นเป็นเพลงถัดไป"
 
@@ -59,6 +62,9 @@ msgstr "เพิ่มเซิร์ฟเวอร์"
 msgid "Add station"
 msgstr "เพิ่มสถานี"
 
+msgid "Add the selected songs to a playlist"
+msgstr "เพิ่มเพลงที่เลือกลงในเพลย์ลิสต์"
+
 msgid "Add this link to the end of the queue"
 msgstr "เพิ่มลิงก์นี้ไว้ท้ายคิว"
 
@@ -76,6 +82,9 @@ msgstr "เพิ่มลงในคิว"
 
 msgid "Add to the server's stations"
 msgstr "เพิ่มลงในสถานีของเซิร์ฟเวอร์"
+
+msgid "Add to {}"
+msgstr "เพิ่มลงใน {}"
 
 msgid "Add {n} song to playlist"
 msgid_plural "Add {n} songs to playlist"
@@ -221,11 +230,23 @@ msgstr "ล้างคะแนน"
 msgid "Clear the favorites and genre filters"
 msgstr "ล้างตัวกรองรายการโปรดและแนวเพลง"
 
+msgid "Click to close"
+msgstr "คลิกเพื่อปิด"
+
+msgid "Click to dismiss"
+msgstr "คลิกเพื่อซ่อน"
+
 msgid "Close"
 msgstr "ปิด"
 
 msgid "Close now playing"
 msgstr "ปิดหน้ากำลังเล่น"
+
+msgid "Close without adding the songs"
+msgstr "ปิดโดยไม่เพิ่มเพลง"
+
+msgid "Close without changes"
+msgstr "ปิดโดยไม่เปลี่ยนแปลง"
 
 msgid "Close without saving"
 msgstr "ปิดโดยไม่บันทึก"
@@ -233,8 +254,14 @@ msgstr "ปิดโดยไม่บันทึก"
 msgid "Colors used across the whole app."
 msgstr "สีที่ใช้ทั่วทั้งแอป"
 
+msgid "Connect to this server"
+msgstr "เชื่อมต่อกับเซิร์ฟเวอร์นี้"
+
 msgid "Connect to your music server"
 msgstr "เชื่อมต่อกับเซิร์ฟเวอร์เพลงของคุณ"
+
+msgid "Connect to {}"
+msgstr "เชื่อมต่อกับ {}"
 
 msgid "Connecting..."
 msgstr "กำลังเชื่อมต่อ..."
@@ -262,6 +289,9 @@ msgstr "สร้างเพลย์ลิสต์ไม่ได้: {}"
 
 msgid "Could not delete the playlist: {}"
 msgstr "ลบเพลย์ลิสต์ไม่ได้: {}"
+
+msgid "Could not delete the saved login: {}"
+msgstr "ลบข้อมูลเข้าสู่ระบบที่บันทึกไว้ไม่ได้: {}"
 
 msgid "Could not delete the station"
 msgstr "ลบสถานีไม่ได้"
@@ -341,6 +371,9 @@ msgstr "เปิดโฟลเดอร์ไม่ได้: {}"
 msgid "Could not open YouTube Music: {}"
 msgstr "เปิด YouTube Music ไม่ได้: {}"
 
+msgid "Could not pause or resume playback: {}"
+msgstr "หยุดชั่วคราวหรือเล่นต่อไม่ได้: {}"
+
 msgid "Could not play \"{}\" from YouTube: {}"
 msgstr "เล่น \"{}\" จาก YouTube ไม่ได้: {}"
 
@@ -359,11 +392,23 @@ msgstr "นำเพลงออกไม่ได้: {}"
 msgid "Could not rescan the library: {}"
 msgstr "สแกนคลังเพลงใหม่ไม่ได้: {}"
 
+msgid "Could not save the login for {}: {}"
+msgstr "บันทึกข้อมูลเข้าสู่ระบบของ {} ไม่ได้: {}"
+
+msgid "Could not save the settings: {}"
+msgstr "บันทึกการตั้งค่าไม่ได้: {}"
+
+msgid "Could not seek: {}"
+msgstr "กรอเวลาไม่ได้: {}"
+
 msgid "Could not set the rating: {}"
 msgstr "ให้คะแนนไม่ได้: {}"
 
 msgid "Could not sign in to YouTube Music ({}). Showing general picks instead."
 msgstr "ลงชื่อเข้าใช้ YouTube Music ไม่ได้ ({}) จึงแสดงรายการแนะนำทั่วไปแทน"
+
+msgid "Could not stop playback: {}"
+msgstr "หยุดเล่นไม่ได้: {}"
 
 msgid "Could not switch server: {}"
 msgstr "สลับเซิร์ฟเวอร์ไม่ได้: {}"
@@ -385,6 +430,15 @@ msgstr "ประเทศ"
 
 msgid "Create"
 msgstr "สร้าง"
+
+msgid "Create a playlist with these songs"
+msgstr "สร้างเพลย์ลิสต์จากเพลงเหล่านี้"
+
+msgid "Create an empty playlist"
+msgstr "สร้างเพลย์ลิสต์ว่าง"
+
+msgid "Create the playlist"
+msgstr "สร้างเพลย์ลิสต์"
 
 msgid "Created \"{}\" with only {n} song: {}"
 msgid_plural "Created \"{}\" with only {n} songs: {}"
@@ -442,6 +496,9 @@ msgstr "สว่างเริ่มต้น"
 msgid "Delete"
 msgstr "ลบ"
 
+msgid "Delete \"{}\""
+msgstr "ลบ \"{}\""
+
 msgid "Delete \"{}\" from the server? This cannot be undone."
 msgstr "ลบ \"{}\" ออกจากเซิร์ฟเวอร์ใช่ไหม การกระทำนี้ย้อนกลับไม่ได้"
 
@@ -495,6 +552,15 @@ msgstr "ค้นพบเพลงใหม่บน YouTube Music"
 
 msgid "Discover Weekly"
 msgstr "การค้นพบประจำสัปดาห์"
+
+msgid "Do not let \"{}\" control this player"
+msgstr "ไม่อนุญาตให้ \"{}\" ควบคุมเครื่องเล่นนี้"
+
+msgid "Double-click to play"
+msgstr "ดับเบิลคลิกเพื่อเล่น"
+
+msgid "Double-click to play, drag to reorder"
+msgstr "ดับเบิลคลิกเพื่อเล่น ลากเพื่อจัดลำดับใหม่"
 
 msgid "Duration"
 msgstr "ระยะเวลา"
@@ -574,6 +640,9 @@ msgstr "ลืมทั้งหมด"
 msgid "Forget this server?"
 msgstr "ลบเซิร์ฟเวอร์นี้ใช่ไหม"
 
+msgid "Forget {}"
+msgstr "ลบ {}"
+
 msgid "Format the server should transcode to. Applies from the next song."
 msgstr "รูปแบบที่ให้เซิร์ฟเวอร์แปลงไฟล์ มีผลตั้งแต่เพลงถัดไป"
 
@@ -583,6 +652,9 @@ msgstr[0] "พบเซิร์ฟเวอร์ {n} รายการใน 
 
 msgid "Gapless playback"
 msgstr "เล่นต่อเนื่องไร้ช่องว่าง"
+
+msgid "Genre filter: {}"
+msgstr "ตัวกรองแนวเพลง: {}"
 
 msgid "Genres"
 msgstr "แนวเพลง"
@@ -626,6 +698,9 @@ msgstr "หน้าเว็บหลัก (ไม่บังคับ)"
 msgid "Import from Feishin"
 msgstr "นำเข้าจาก Feishin"
 
+msgid "Import the servers saved by a previous Feishin install"
+msgstr "นำเข้าเซิร์ฟเวอร์ที่บันทึกไว้จาก Feishin ที่ติดตั้งก่อนหน้านี้"
+
 msgid "Install yt-dlp to play YouTube tracks"
 msgstr "ติดตั้ง yt-dlp เพื่อเล่นแทร็กจาก YouTube"
 
@@ -659,14 +734,20 @@ msgstr "หยุดทำงานแล้ว"
 msgid "item"
 msgstr "รายการ"
 
-msgid "Jellyfin has no public share links"
-msgstr "Jellyfin ไม่มีลิงก์แบ่งปันสาธารณะ"
+msgid "Jump to this line"
+msgstr "ข้ามไปที่บรรทัดนี้"
 
 msgid "Keep this station in the favorites on this device"
 msgstr "เก็บสถานีนี้ไว้ในรายการโปรดบนอุปกรณ์นี้"
 
+msgid "Keep {}"
+msgstr "เก็บ {} ไว้"
+
 msgid "Language"
 msgstr "ภาษา"
+
+msgid "Let \"{}\" control this player"
+msgstr "อนุญาตให้ \"{}\" ควบคุมเครื่องเล่นนี้"
 
 msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
 msgstr "ให้เครื่องเล่น Feishin อื่นในเครือข่ายนี้ควบคุมเครื่องนี้ได้ แต่ละอุปกรณ์จะขอการอนุญาตจากคุณในครั้งแรก"
@@ -695,6 +776,9 @@ msgstr "สด"
 
 msgid "Load more"
 msgstr "โหลดเพิ่ม"
+
+msgid "Load more results"
+msgstr "โหลดผลลัพธ์เพิ่ม"
 
 msgid "Load this section again"
 msgstr "โหลดส่วนนี้อีกครั้ง"
@@ -1133,6 +1217,9 @@ msgstr "นำออกจากเพลย์ลิสต์"
 msgid "Remove from queue"
 msgstr "ลบออกจากคิว"
 
+msgid "Remove the selected songs from this playlist"
+msgstr "นำเพลงที่เลือกออกจากเพลย์ลิสต์นี้"
+
 msgid "Removed {n} song from \"{}\""
 msgid_plural "Removed {n} songs from \"{}\""
 msgstr[0] "นำ {n} เพลงออกจาก \"{}\" แล้ว"
@@ -1151,6 +1238,9 @@ msgstr "เล่นซ้ำ: เพลงเดียว"
 
 msgid "ReplayGain"
 msgstr "ReplayGain"
+
+msgid "ReplayGain could not be changed: {}"
+msgstr "เปลี่ยน ReplayGain ไม่ได้: {}"
 
 msgid "Report what you play to the server."
 msgstr "รายงานเพลงที่คุณเล่นไปยังเซิร์ฟเวอร์"
@@ -1257,6 +1347,9 @@ msgstr "เซิร์ฟเวอร์"
 msgid "Server type"
 msgstr "ประเภทเซิร์ฟเวอร์"
 
+msgid "Server type: {}"
+msgstr "ประเภทเซิร์ฟเวอร์: {}"
+
 msgid "Servers"
 msgstr "เซิร์ฟเวอร์"
 
@@ -1281,8 +1374,17 @@ msgstr "แบ่งปัน{}นี้: คัดลอกลิงก์ส�
 msgid "Sharing is unavailable: {}"
 msgstr "แบ่งปันไม่ได้: {}"
 
+msgid "Show all top songs"
+msgstr "แสดงเพลงยอดนิยมทั้งหมด"
+
+msgid "Show fewer top songs"
+msgstr "แสดงเพลงยอดนิยมน้อยลง"
+
 msgid "SHOW LESS"
 msgstr "แสดงน้อยลง"
+
+msgid "Show less of the biography"
+msgstr "ย่อประวัติ"
 
 msgid "Show lyrics"
 msgstr "แสดงเนื้อเพลง"
@@ -1310,6 +1412,9 @@ msgstr "แสดงคิวข้างคลังเพลง และจ�
 
 msgid "Show the server and saved stations"
 msgstr "แสดงสถานีของเซิร์ฟเวอร์และสถานีที่บันทึกไว้"
+
+msgid "Show the whole biography"
+msgstr "แสดงประวัติทั้งหมด"
 
 msgid "Show {}"
 msgstr "แสดง {}"
@@ -1344,6 +1449,9 @@ msgstr "สุ่ม: เปิด"
 msgid "Sign in"
 msgstr "ลงชื่อเข้าใช้"
 
+msgid "Sign in to another server"
+msgstr "ลงชื่อเข้าใช้เซิร์ฟเวอร์อื่น"
+
 msgid "Sign in with browser"
 msgstr "ลงชื่อเข้าใช้ด้วยเบราว์เซอร์"
 
@@ -1352,6 +1460,9 @@ msgstr "ออกจากระบบและลบข้อมูลเข้
 
 msgid "Sign out and forget this server?"
 msgstr "ออกจากระบบและลบเซิร์ฟเวอร์นี้ใช่ไหม"
+
+msgid "Sign out of {}"
+msgstr "ออกจากระบบ {}"
 
 msgid "Similar"
 msgstr "เพลงที่คล้ายกัน"
@@ -1398,6 +1509,9 @@ msgstr "ชื่อสถานี"
 msgid "Stations"
 msgstr "สถานี"
 
+msgid "Stay signed in"
+msgstr "คงสถานะลงชื่อเข้าใช้"
+
 msgid "Stop {}"
 msgstr "หยุด {}"
 
@@ -1427,6 +1541,9 @@ msgstr "แท็ก เช่น jazz"
 
 msgid "That device is no longer on the network"
 msgstr "อุปกรณ์นั้นไม่อยู่ในเครือข่ายแล้ว"
+
+msgid "The audio device could not be changed: {}"
+msgstr "เปลี่ยนอุปกรณ์เสียงไม่ได้: {}"
 
 msgid "the connection was not allowed"
 msgstr "ไม่ได้รับอนุญาตให้เชื่อมต่อ"
@@ -1644,11 +1761,23 @@ msgstr "{} kbps"
 msgid "{} s"
 msgstr "{} วินาที"
 
+msgid "{} {} kbps"
+msgstr "{} {} kbps"
+
+msgid "{} · {}"
+msgstr "{} · {}"
+
+msgid "{} • {}"
+msgstr "{} • {}"
+
 msgid "{}: off"
 msgstr "{}: ปิด"
 
 msgid "{}: on"
 msgstr "{}: เปิด"
+
+msgid "{}: {}"
+msgstr "{}: {}"
 
 msgid "{}: {} (dark)"
 msgstr "{}: {} (มืด)"
