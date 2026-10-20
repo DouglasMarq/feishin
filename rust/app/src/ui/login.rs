@@ -6,14 +6,14 @@ use feishin_core::model::{ServerConfig, ServerType};
 use feishin_storage::feishin_import::ImportedServer;
 use slint::ComponentHandle;
 
-use super::{AppState, AppWindow, Context, LoginState, Page, on_ui, sharing, tracks};
+use super::{AppState, AppWindow, Context, LoginState, Page, ServerKind, on_ui, sharing, tracks};
 use crate::controller::Command;
 
-fn server_type(index: i32) -> ServerType {
-    match index {
-        1 => ServerType::Subsonic,
-        2 => ServerType::Jellyfin,
-        _ => ServerType::Navidrome,
+fn server_type(kind: ServerKind) -> ServerType {
+    match kind {
+        ServerKind::Navidrome => ServerType::Navidrome,
+        ServerKind::Subsonic => ServerType::Subsonic,
+        ServerKind::Jellyfin => ServerType::Jellyfin,
     }
 }
 
@@ -184,6 +184,13 @@ mod tests {
     use crate::demo::{FakeServer, demo_credential};
     use crate::session::Session;
     use crate::store::{JsonStore, Store};
+
+    #[test]
+    fn given_each_server_kind_in_the_form_it_maps_to_the_same_server_type() {
+        assert_eq!(server_type(ServerKind::Navidrome), ServerType::Navidrome);
+        assert_eq!(server_type(ServerKind::Subsonic), ServerType::Subsonic);
+        assert_eq!(server_type(ServerKind::Jellyfin), ServerType::Jellyfin);
+    }
 
     #[tokio::test]
     async fn given_a_login_the_credential_travels_to_the_controller() {

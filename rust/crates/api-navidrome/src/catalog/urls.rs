@@ -9,7 +9,12 @@ const CACHE_BUSTER_SEPARATOR: &str = "&_=";
 impl NavidromeServer {
     pub(crate) fn build_stream_url(&self, song_id: &str, options: &StreamOptions) -> String {
         let mut params: QueryParams = vec![("id", song_id.to_owned())];
-        params.extend(options.format.clone().map(|format| ("format", format)));
+        params.extend(
+            options
+                .format
+                .as_ref()
+                .map(|format| ("format", format.as_str().to_owned())),
+        );
         params.extend(
             options
                 .max_bitrate_kbps

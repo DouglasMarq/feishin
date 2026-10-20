@@ -3,6 +3,7 @@ use std::rc::Rc;
 use std::sync::Arc;
 use std::time::{Duration, Instant};
 
+use feishin_core::model::{SongSort, SortOrder};
 use feishin_storage::settings::UiSettings;
 use slint::platform::software_renderer::{
     MinimalSoftwareWindow, PremultipliedRgbaColor, RepaintBufferType,
@@ -23,8 +24,8 @@ use crate::session::Session;
 use crate::store::JsonStore;
 use crate::ui::test_window::{Jobs, claim_routed_platform, routed_runtime};
 use crate::ui::{
-    AppState, AppWindow, Context, Page, PlayerState, Route, TrackRow, TracksState, nav,
-    playlist_picker,
+    AppState, AppWindow, Context, Page, PlayerState, Route, TrackColumn, TrackRow, TracksState,
+    nav, playlist_picker,
 };
 
 const SIZE: PhysicalSize = PhysicalSize::new(1280, 820);
@@ -264,6 +265,27 @@ fn assert_play_row_uses_filtered_query(
     }
 }
 
+fn assert_sorting_by_a_column_twice_sorts_it_descending(
+    harness: &Harness,
+    received: &mut UnboundedReceiver<Command>,
+) {
+    let state = harness.tracks();
+    state.invoke_sort_by(TrackColumn::Year);
+    assert_eq!(state.get_sort_column(), TrackColumn::Year);
+    assert!(!state.get_sort_desc());
+    state.invoke_sort_by(TrackColumn::Year);
+    assert!(state.get_sort_desc());
+    assert!(harness.pump(|| !harness.tracks().get_loading() && harness.row(0).loaded));
+    harness.tracks().invoke_play_row(0);
+    match received.try_recv() {
+        Ok(Command::PlayFromList {
+            source: SongSource::Library(query),
+            ..
+        }) => assert_eq!((query.sort, query.order), (SongSort::Year, SortOrder::Desc)),
+        _ => panic!("expected PlayFromList"),
+    }
+}
+
 #[test]
 fn tracks_view_lists_selects_filters_and_acts_on_demo_songs() {
     let Some((window, jobs)) = install_test_platform() else {
@@ -283,4 +305,5 @@ fn tracks_view_lists_selects_filters_and_acts_on_demo_songs() {
     assert_favorite_toggles(&harness);
     assert_filters_reload(&harness);
     assert_play_row_uses_filtered_query(&harness, &mut received);
+    assert_sorting_by_a_column_twice_sorts_it_descending(&harness, &mut received);
 }

@@ -1,7 +1,6 @@
-use feishin_core::model::{SongListQuery, SongSort, SortOrder};
+use feishin_core::model::{SongListQuery, SortOrder};
 use slint::{ComponentHandle, Model};
 
-use super::columns::TrackColumn;
 use super::model::TracksModel;
 use super::with_model;
 use crate::ui::{AppWindow, TracksState};
@@ -35,10 +34,6 @@ pub fn parse_year(text: &str) -> Option<i32> {
         .parse()
         .ok()
         .filter(|year| (1..=9999).contains(year))
-}
-
-pub fn sort_for(column: &str) -> SongSort {
-    TrackColumn::from_id(column).map_or(SongSort::Name, TrackColumn::sort)
 }
 
 pub(super) fn sort_order(descending: bool) -> SortOrder {

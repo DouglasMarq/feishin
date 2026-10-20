@@ -2,6 +2,7 @@ use std::rc::Rc;
 
 use feishin_api::MusicServer;
 use feishin_core::model::Song;
+use feishin_storage::settings::LyricsSourceSetting;
 use slint::{ComponentHandle, ModelRc, VecModel};
 
 use super::loading::is_current;
@@ -73,7 +74,7 @@ pub(super) async fn fetch_similar(
     });
 }
 
-pub(super) fn configured_lyrics_sources(session: &Session) -> Vec<String> {
+pub(super) fn configured_lyrics_sources(session: &Session) -> Vec<LyricsSourceSetting> {
     session.settings().integrations.lyrics_sources.clone()
 }
 
@@ -83,9 +84,9 @@ pub(super) async fn fetch_lyrics(
     server: &dyn MusicServer,
     song: &Song,
 ) {
-    let source_names = configured_lyrics_sources(&ctx.session);
+    let configured = configured_lyrics_sources(&ctx.session);
     let provider = ctx.connector.lyrics();
-    let plan = lyrics_plan(&source_names);
+    let plan = lyrics_plan(&configured);
     let result = resolve_lyrics(server, provider.as_ref(), song, &plan).await;
     let song_id = song.id.clone();
     on_ui(weak_window, move |window| {

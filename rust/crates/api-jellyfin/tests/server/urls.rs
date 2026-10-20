@@ -1,6 +1,5 @@
-use feishin_api::{ApiError, Credential, MusicServer, StreamOptions};
+use feishin_api::{ApiError, Credential, MusicServer, StreamOptions, TranscodeFormat};
 use feishin_api_jellyfin::JellyfinServer;
-use reqwest::Url;
 use wiremock::matchers::{method, path};
 use wiremock::{Mock, MockServer, ResponseTemplate};
 
@@ -22,7 +21,7 @@ fn stream_url_transcodes_to_requested_format_and_bitrate() {
     let jellyfin = server_at(SERVER_URL);
     let options = StreamOptions {
         max_bitrate_kbps: Some(192),
-        format: Some("opus".into()),
+        format: TranscodeFormat::parse("opus"),
     };
     assert_eq!(
         jellyfin.stream_url("s1", &options),
@@ -58,26 +57,6 @@ fn cover_art_url_adds_size_only_when_requested() {
         jellyfin.cover_art_url("al1", None),
         "https://jf.example/Items/al1/Images/Primary?quality=96"
     );
-}
-
-#[test]
-fn given_a_transcode_format_with_query_characters_it_is_encoded() {
-    let jellyfin = server_at(SERVER_URL);
-    let options = StreamOptions {
-        max_bitrate_kbps: None,
-        format: Some("mp3&apiKey=stolen".into()),
-    };
-
-    let url = Url::parse(&jellyfin.stream_url("s1", &options)).unwrap();
-
-    let values_of = |wanted: &str| -> Vec<String> {
-        url.query_pairs()
-            .filter(|(key, _)| key == wanted)
-            .map(|(_, value)| value.into_owned())
-            .collect()
-    };
-    assert_eq!(values_of("apiKey"), ["tok123"]);
-    assert_eq!(values_of("audioCodec"), ["mp3&apiKey=stolen"]);
 }
 
 #[test]

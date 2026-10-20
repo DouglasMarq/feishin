@@ -47,8 +47,10 @@ export global Actions {
     callback add-to-playlist(song-ids: [string]);
 }
 
+export enum ServerKind { navidrome, subsonic, jellyfin }
+
 export global LoginState {
-    in-out property <int> server-type;
+    in-out property <ServerKind> server-type;
     in-out property <string> url;
     in-out property <string> username;
     in-out property <string> password;
@@ -58,11 +60,13 @@ export global LoginState {
     callback import-feishin();
 }
 
+export enum TrackColumn { index, title, artist, album, year, plays, duration, favorite, rating }
+
 export global TracksState {
     in property <[TrackRow]> rows;
     in property <int> total;
     in property <bool> loading;
-    in-out property <string> sort-column: "title";
+    in-out property <TrackColumn> sort-column: TrackColumn.title;
     in-out property <bool> sort-desc;
     in-out property <length> w-index: 56px;
     in-out property <length> w-title: 320px;
@@ -72,7 +76,7 @@ export global TracksState {
     in-out property <length> w-plays: 64px;
     in-out property <length> w-duration: 72px;
     callback search-edited(text: string);
-    callback sort-by(column: string);
+    callback sort-by(column: TrackColumn);
     callback play-row(row-index: int);
     in-out property <bool> show-artist: true;
     in-out property <bool> show-album: true;
@@ -108,6 +112,8 @@ export global TracksState {
     callback rate-row(row-index: int, rating: int);
 }
 
+export enum RepeatState { off, all, one }
+
 export global PlayerState {
     in property <bool> has-song;
     in property <string> song-id;
@@ -122,10 +128,11 @@ export global PlayerState {
     in property <int> volume: 70;
     in property <bool> muted;
     in property <bool> shuffle;
-    in property <int> repeat;
+    in property <RepeatState> repeat;
     in property <bool> sleep-active;
     in property <string> sleep-label;
     callback start-sleep-timer(minutes: int);
+    callback sleep-at-end-of-track();
     callback cancel-sleep-timer();
     callback toggle-pause();
     callback next();

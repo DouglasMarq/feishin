@@ -4,6 +4,8 @@ export enum DiscoverCardKind { song, album, playlist, mix }
 
 export enum DiscoverNotice { none, info, warning }
 
+export enum DiscoverPageKind { playlist, album, search-results, mix }
+
 export struct DiscoverCard {
     kind: DiscoverCardKind,
     id: string,
@@ -52,7 +54,7 @@ export global DiscoverState {
     in property <[string]> moods;
     in property <int> mood-index: -1;
     in-out property <string> search-text;
-    in property <string> page-kind;
+    in property <DiscoverPageKind> page-kind;
     in property <string> page-title;
     in property <string> page-subtitle;
     in property <image> page-cover;

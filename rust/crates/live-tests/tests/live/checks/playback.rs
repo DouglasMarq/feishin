@@ -74,7 +74,7 @@ pub async fn streams_return_audio(backend: Backend) {
         );
         let transcoded_options = StreamOptions {
             max_bitrate_kbps: Some(96),
-            format: Some("mp3".into()),
+            format: feishin_api::TranscodeFormat::parse("mp3"),
         };
         let transcoded = download(&server.stream_url(&song.id, &transcoded_options)).await;
         assert!(

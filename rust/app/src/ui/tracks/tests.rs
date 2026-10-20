@@ -12,11 +12,12 @@ use slint::Model;
 
 use super::listed::{LISTED_CHUNK_SIZE, ListedSongs};
 use super::model::{PAGE_SIZE, Request, TracksModel};
-use super::query::{Filters, parse_year, sort_for};
+use super::query::{Filters, parse_year};
 use super::row::track_row;
 use super::selection::{SelectedSongs, Selection};
 use super::selection_ranges::SelectionRanges;
 use crate::demo::{FakeServer, test_song};
+use crate::ui::TrackColumn;
 
 type RequestLog = Rc<RefCell<Vec<(u64, Option<usize>)>>>;
 
@@ -243,6 +244,19 @@ fn rows_carry_links_favorite_and_rating() {
     assert!(row.artist_id.starts_with("artist-"));
     assert!(row.favorite);
     assert_eq!(row.rating, 3);
-    assert_eq!(sort_for("favorite"), SongSort::Favorited);
-    assert_eq!(sort_for("rating"), SongSort::Rating);
+    assert_eq!(TrackColumn::Favorite.sort(), SongSort::Favorited);
+    assert_eq!(TrackColumn::Rating.sort(), SongSort::Rating);
+}
+
+#[test]
+fn given_each_track_column_its_settings_id_maps_back_to_the_same_column() {
+    for column in TrackColumn::ALL {
+        assert_eq!(TrackColumn::from_id(column.id()), Some(column));
+    }
+    assert_eq!(TrackColumn::Plays.id(), "plays");
+}
+
+#[test]
+fn given_an_unknown_settings_column_id_it_maps_to_no_column() {
+    assert_eq!(TrackColumn::from_id("bitrate"), None);
 }

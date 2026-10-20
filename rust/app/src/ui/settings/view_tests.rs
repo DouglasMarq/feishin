@@ -1,6 +1,6 @@
 use std::sync::Arc;
 
-use feishin_storage::settings::ReplayGainSetting;
+use feishin_storage::settings::{LyricsSourceSetting, ReplayGainSetting};
 use slint::{ComponentHandle, Model};
 use tokio::sync::mpsc::UnboundedReceiver;
 
@@ -13,7 +13,7 @@ use crate::controller::{Command, SettingsSnapshot, YouTubeCommand};
 use crate::covers::DemoCovers;
 use crate::session::Session;
 use crate::store::JsonStore;
-use crate::ui::{AppState, AppWindow, Context, Page, Route, SettingsState};
+use crate::ui::{AppState, AppWindow, Context, Page, ReplayGain, Route, SettingsState};
 
 struct SettingsPage {
     window: AppWindow,
@@ -88,15 +88,12 @@ fn assert_saves_lyrics_and_playback(
     state.invoke_toggle_lyrics_source(3);
     match received.try_recv() {
         Ok(Command::SaveIntegrations(saved)) => {
-            assert_eq!(
-                saved.lyrics_sources,
-                ["server", "lrclib", "netease", "genius"]
-            );
+            assert_eq!(saved.lyrics_sources, LyricsSourceSetting::ALL);
         }
         _ => panic!("expected SaveIntegrations"),
     }
 
-    state.set_replay_gain(1);
+    state.set_replay_gain(ReplayGain::Track);
     state.set_device_index(1);
     state.set_crossfade_seconds(6);
     state.invoke_playback_changed();

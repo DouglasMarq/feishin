@@ -1,6 +1,6 @@
 import { LineEdit } from "std-widgets.slint";
 import { Theme, Icons } from "theme.slint";
-import { LoginState } from "globals.slint";
+import { LoginState, ServerKind } from "globals.slint";
 import { Icon, TooltipButton, TooltipComboBox } from "widgets.slint";
 
 component Label inherits Text {
@@ -64,8 +64,11 @@ export component LoginView inherits Rectangle {
                     TooltipComboBox {
                         tooltip: @tr("Server type: {}", self.current-value);
                         model: ["Navidrome", "Subsonic", "Jellyfin"];
-                        current-index <=> LoginState.server-type;
+                        current-index: LoginState.server-type == ServerKind.subsonic ? 1 : (LoginState.server-type == ServerKind.jellyfin ? 2 : 0);
                         enabled: !LoginState.busy;
+                        selected => {
+                            LoginState.server-type = [ServerKind.navidrome, ServerKind.subsonic, ServerKind.jellyfin][self.current-index];
+                        }
                     }
 
                     Label {

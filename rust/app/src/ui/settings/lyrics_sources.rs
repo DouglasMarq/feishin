@@ -1,42 +1,34 @@
-const KNOWN_LYRICS_SOURCES: [(&str, &str); 4] = [
-    ("server", "Server"),
-    ("lrclib", "LRCLIB"),
-    ("netease", "NetEase"),
-    ("genius", "Genius"),
-];
+use feishin_storage::settings::LyricsSourceSetting;
 
 #[derive(Debug, Clone, PartialEq)]
 pub(super) struct LyricsSource {
-    pub(super) id: String,
+    pub(super) source: LyricsSourceSetting,
     pub(super) enabled: bool,
 }
 
-pub(super) fn lyrics_sources(enabled: &[String]) -> Vec<LyricsSource> {
+pub(super) fn lyrics_sources(enabled: &[LyricsSourceSetting]) -> Vec<LyricsSource> {
     let mut sources: Vec<LyricsSource> = Vec::new();
-    for id in enabled {
-        push_if_missing(&mut sources, id, true);
+    for &source in enabled {
+        push_if_missing(&mut sources, source, true);
     }
-    for (id, _) in KNOWN_LYRICS_SOURCES {
-        push_if_missing(&mut sources, id, false);
+    for source in LyricsSourceSetting::ALL {
+        push_if_missing(&mut sources, source, false);
     }
     sources
 }
 
-fn push_if_missing(sources: &mut Vec<LyricsSource>, id: &str, enabled: bool) {
-    if sources.iter().any(|source| source.id == id) {
+fn push_if_missing(sources: &mut Vec<LyricsSource>, source: LyricsSourceSetting, enabled: bool) {
+    if sources.iter().any(|listed| listed.source == source) {
         return;
     }
-    sources.push(LyricsSource {
-        id: id.to_owned(),
-        enabled,
-    });
+    sources.push(LyricsSource { source, enabled });
 }
 
-pub(super) fn enabled_lyrics_sources(sources: &[LyricsSource]) -> Vec<String> {
+pub(super) fn enabled_lyrics_sources(sources: &[LyricsSource]) -> Vec<LyricsSourceSetting> {
     sources
         .iter()
         .filter(|source| source.enabled)
-        .map(|source| source.id.clone())
+        .map(|source| source.source)
         .collect()
 }
 
@@ -50,16 +42,6 @@ pub(super) fn move_lyrics_source(sources: &mut [LyricsSource], index: usize, del
     }
 }
 
-pub(super) fn lyrics_source_name(id: &str) -> String {
-    match id {
-        "server" => tr!("Server"),
-        _ => KNOWN_LYRICS_SOURCES
-            .iter()
-            .find(|(known, _)| *known == id)
-            .map_or_else(|| id.to_owned(), |(_, name)| (*name).to_owned()),
-    }
-}
-
 #[cfg(test)]
 mod tests {
     use feishin_storage::settings::IntegrationSettings;
@@ -68,18 +50,22 @@ mod tests {
 
     #[test]
     fn lyrics_sources_list_enabled_first_then_the_rest() {
-        let mut sources = lyrics_sources(&["lrclib".into(), "server".into(), "lrclib".into()]);
-        let ids: Vec<_> = sources
+        let mut sources = lyrics_sources(&[
+            LyricsSourceSetting::Lrclib,
+            LyricsSourceSetting::Server,
+            LyricsSourceSetting::Lrclib,
+        ]);
+        let listed: Vec<_> = sources
             .iter()
-            .map(|source| (source.id.as_str(), source.enabled))
+            .map(|source| (source.source, source.enabled))
             .collect();
         assert_eq!(
-            ids,
+            listed,
             [
-                ("lrclib", true),
-                ("server", true),
-                ("netease", false),
-                ("genius", false)
+                (LyricsSourceSetting::Lrclib, true),
+                (LyricsSourceSetting::Server, true),
+                (LyricsSourceSetting::NetEase, false),
+                (LyricsSourceSetting::Genius, false)
             ]
         );
         assert!(move_lyrics_source(&mut sources, 1, -1));
@@ -88,10 +74,12 @@ mod tests {
         sources[3].enabled = true;
         assert_eq!(
             enabled_lyrics_sources(&sources),
-            ["server", "lrclib", "genius"]
+            [
+                LyricsSourceSetting::Server,
+                LyricsSourceSetting::Lrclib,
+                LyricsSourceSetting::Genius
+            ]
         );
-        assert_eq!(lyrics_source_name("netease"), "NetEase");
-        assert_eq!(lyrics_source_name("custom"), "custom");
     }
 
     #[test]

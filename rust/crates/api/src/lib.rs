@@ -9,5 +9,5 @@ pub use credential::Credential;
 pub use error::{ApiError, Result};
 pub use latest_cache::LatestCache;
 pub use music_server::MusicServer;
-pub use stream_options::StreamOptions;
+pub use stream_options::{StreamOptions, TranscodeFormat};
 pub use ttl_cache::TtlCache;

@@ -1,4 +1,4 @@
-use feishin_api::{ApiError, MusicServer, StreamOptions};
+use feishin_api::{ApiError, MusicServer, StreamOptions, TranscodeFormat};
 use feishin_api_navidrome::NavidromeServer;
 use wiremock::matchers::{method, path};
 use wiremock::{Mock, MockServer, ResponseTemplate};
@@ -26,7 +26,7 @@ async fn stream_url_includes_credentials() {
             "s 1",
             &StreamOptions {
                 max_bitrate_kbps: Some(192),
-                format: Some("opus".into()),
+                format: TranscodeFormat::parse("opus"),
             }
         ),
         "https://music.example.com/rest/stream.view?u=alice&s=salt1&t=tok1&v=1.16.1&c=feishin&id=s+1&format=opus&maxBitRate=192"
@@ -45,21 +45,6 @@ async fn cover_art_url_includes_credentials() {
         server.cover_art_url("pl1&_=2024-02-02T00:00:00Z", None),
         "https://music.example.com/rest/getCoverArt.view?u=alice&s=salt1&t=tok1&v=1.16.1&c=feishin&id=pl1&_=2024-02-02T00%3A00%3A00Z"
     );
-}
-
-#[tokio::test]
-async fn given_a_transcode_format_with_query_characters_it_is_encoded() {
-    let server = remote_server();
-
-    let url = server.stream_url(
-        "s1",
-        &StreamOptions {
-            max_bitrate_kbps: None,
-            format: Some("mp3&t=stolen".into()),
-        },
-    );
-
-    assert!(url.ends_with("&id=s1&format=mp3%26t%3Dstolen"), "{url}");
 }
 
 #[tokio::test]

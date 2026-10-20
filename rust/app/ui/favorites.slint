@@ -2,6 +2,8 @@ import { Theme } from "theme.slint";
 import { AppState, Route } from "globals.slint";
 import { CardGrid, CardRow, Tab, TrackItem, TrackTable } from "genres.slint";
 
+export enum FavoritesTab { tracks, albums, artists }
+
 export global FavoritesState {
     in property <[TrackItem]> tracks;
     in property <bool> tracks-loading;
@@ -9,7 +11,7 @@ export global FavoritesState {
     in property <bool> albums-loading;
     in property <[CardRow]> artists;
     in property <bool> artists-loading;
-    in-out property <int> tab;
+    in-out property <FavoritesTab> tab;
     callback load(string);
     callback play-track(int);
     callback toggle-track(int);
@@ -49,33 +51,33 @@ export component FavoritesView inherits Rectangle {
                 y: (parent.height - self.height) / 2;
                 text: @tr("Tracks");
                 count: FavoritesState.tracks-loading ? "" : FavoritesState.tracks.length;
-                active: FavoritesState.tab == 0;
+                active: FavoritesState.tab == FavoritesTab.tracks;
                 clicked => {
-                    FavoritesState.tab = 0;
+                    FavoritesState.tab = FavoritesTab.tracks;
                 }
             }
 
             Tab {
                 y: (parent.height - self.height) / 2;
                 text: @tr("Albums");
-                active: FavoritesState.tab == 1;
+                active: FavoritesState.tab == FavoritesTab.albums;
                 clicked => {
-                    FavoritesState.tab = 1;
+                    FavoritesState.tab = FavoritesTab.albums;
                 }
             }
 
             Tab {
                 y: (parent.height - self.height) / 2;
                 text: @tr("Artists");
-                active: FavoritesState.tab == 2;
+                active: FavoritesState.tab == FavoritesTab.artists;
                 clicked => {
-                    FavoritesState.tab = 2;
+                    FavoritesState.tab = FavoritesTab.artists;
                 }
             }
         }
 
         Rectangle {
-            if FavoritesState.tab == 0: TrackTable {
+            if FavoritesState.tab == FavoritesTab.tracks: TrackTable {
                 rows: FavoritesState.tracks;
                 loading: FavoritesState.tracks-loading;
                 show-favorite: true;
@@ -88,7 +90,7 @@ export component FavoritesView inherits Rectangle {
                 }
             }
 
-            if FavoritesState.tab == 1: CardGrid {
+            if FavoritesState.tab == FavoritesTab.albums: CardGrid {
                 rows: FavoritesState.albums;
                 loading: FavoritesState.albums-loading;
                 show-favorite: true;
@@ -104,7 +106,7 @@ export component FavoritesView inherits Rectangle {
                 }
             }
 
-            if FavoritesState.tab == 2: CardGrid {
+            if FavoritesState.tab == FavoritesTab.artists: CardGrid {
                 rows: FavoritesState.artists;
                 loading: FavoritesState.artists-loading;
                 round: true;

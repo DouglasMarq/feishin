@@ -3,6 +3,7 @@ use feishin_youtube::music::{
 };
 
 use crate::discover::mixes::MixId;
+use crate::ui::DiscoverPageKind;
 
 pub const SEARCH_PREFIX: &str = "search:";
 
@@ -31,18 +32,18 @@ impl PageTarget {
         })
     }
 
-    pub fn kind_label(&self) -> &'static str {
+    pub fn page_kind(&self) -> DiscoverPageKind {
         match self {
             Self::Collection {
                 kind: CollectionKind::Album,
                 ..
-            } => "ALBUM",
+            } => DiscoverPageKind::Album,
             Self::Collection {
                 kind: CollectionKind::Playlist,
                 ..
-            } => "PLAYLIST",
-            Self::Search(_) => "SEARCH RESULTS",
-            Self::Mix(_) => "MIX",
+            } => DiscoverPageKind::Playlist,
+            Self::Search(_) => DiscoverPageKind::SearchResults,
+            Self::Mix(_) => DiscoverPageKind::Mix,
         }
     }
 
@@ -148,10 +149,10 @@ mod tests {
 
     #[test]
     fn detail_ids_open_albums_playlists_or_searches() {
-        assert_eq!(album_target().kind_label(), "ALBUM");
+        assert_eq!(album_target().page_kind(), DiscoverPageKind::Album);
         assert_eq!(
-            PageTarget::parse("VLPLx").map(|target| target.kind_label()),
-            Some("PLAYLIST")
+            PageTarget::parse("VLPLx").map(|target| target.page_kind()),
+            Some(DiscoverPageKind::Playlist)
         );
         assert_eq!(
             PageTarget::parse("search: get lucky "),
@@ -161,7 +162,10 @@ mod tests {
         assert_eq!(PageTarget::parse("not an id"), None);
         let mix = PageTarget::parse("mix:daily-2").unwrap();
         assert_eq!(mix, PageTarget::Mix(MixId::Daily(2)));
-        assert_eq!((mix.kind_label(), mix.web_url()), ("MIX", None));
+        assert_eq!(
+            (mix.page_kind(), mix.web_url()),
+            (DiscoverPageKind::Mix, None)
+        );
         assert_eq!(PageTarget::parse("mix:unknown"), None);
         assert_eq!(search_detail_id("  hey "), Some("search:hey".into()));
         assert_eq!(search_detail_id(" "), None);

@@ -6,7 +6,8 @@ use feishin_core::queue::Uid;
 use feishin_player::{AudioDevice, PlayerEvent};
 use feishin_storage::appearance::{AccentColor, AppearanceSettings, ThemeId};
 use feishin_storage::settings::{
-    IntegrationSettings, PlaybackSettings, ReplayGainSetting, Settings, UiSettings,
+    IntegrationSettings, LyricsSourceSetting, PlaybackSettings, ReplayGainSetting, Settings,
+    UiSettings,
 };
 use tokio::sync::{mpsc, oneshot};
 
@@ -270,7 +271,7 @@ async fn interface_and_integrations_are_saved_and_survive_shutdown() {
         .handle(Command::SaveLanguage(Some("de".into())));
     let integrations = IntegrationSettings {
         discord_rich_presence: true,
-        lyrics_sources: vec!["genius".into()],
+        lyrics_sources: vec![LyricsSourceSetting::Genius],
         ..IntegrationSettings::default()
     };
     harness
