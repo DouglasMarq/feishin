@@ -124,7 +124,7 @@ impl Routing {
         }
     }
 
-    fn pause_changed(&mut self, paused: bool) -> RouteOutcome {
+    pub(crate) fn pause_changed(&mut self, paused: bool) -> RouteOutcome {
         if self.paused == paused {
             return RouteOutcome::default();
         }

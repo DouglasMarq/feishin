@@ -53,9 +53,13 @@ impl Mixer {
         &self,
         change: impl FnOnce(&mut MixerState) -> Outcome,
     ) -> Outcome {
-        let mut state = self.lock_state();
-        let outcome = change(&mut state);
-        self.wake_fader(&mut state);
+        let (outcome, events) = {
+            let mut state = self.lock_state();
+            let outcome = change(&mut state);
+            self.wake_fader(&mut state);
+            (outcome, std::mem::take(&mut state.unreported_events))
+        };
+        self.emit(events);
         outcome
     }
 

@@ -1,4 +1,5 @@
-use std::sync::{Arc, OnceLock, Weak};
+use std::sync::atomic::{AtomicBool, Ordering};
+use std::sync::{Arc, Barrier, OnceLock, Weak};
 use std::thread;
 use std::time::Duration;
 
@@ -137,6 +138,45 @@ fn load_unpauses() {
             PlayerEvent::Started { uid: 1 },
             PlayerEvent::TrackEnded { uid: 1 },
             PlayerEvent::Idle,
+        ]
+    );
+}
+
+#[test]
+fn given_a_pause_undone_before_mpv_reports_it_reports_both_changes() {
+    let recorder = Arc::new(Recorder::default());
+    let event_thread_held = Arc::new(Barrier::new(2));
+    let holding_armed = Arc::new(AtomicBool::new(true));
+    let event_sink = Arc::clone(&recorder);
+    let callback_barrier = Arc::clone(&event_thread_held);
+    let callback_armed = Arc::clone(&holding_armed);
+    let player = Player::with_null_output(
+        PlayerConfig::default(),
+        Box::new(move |event| {
+            let holds = matches!(event, PlayerEvent::Position { .. })
+                && callback_armed.swap(false, Ordering::SeqCst);
+            event_sink.push(event);
+            if holds {
+                callback_barrier.wait();
+                callback_barrier.wait();
+            }
+        }),
+    )
+    .unwrap();
+
+    player.load(1, &sine_wave_url(10), 0).unwrap();
+    event_thread_held.wait();
+    player.pause().unwrap();
+    player.play().unwrap();
+    event_thread_held.wait();
+    recorder.wait_for_event(PlayerEvent::Resumed);
+
+    assert_eq!(
+        recorder.milestones(),
+        vec![
+            PlayerEvent::Started { uid: 1 },
+            PlayerEvent::Paused,
+            PlayerEvent::Resumed,
         ]
     );
 }
