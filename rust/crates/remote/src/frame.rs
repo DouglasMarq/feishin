@@ -5,13 +5,21 @@ use tokio::io::{AsyncBufRead, AsyncBufReadExt, AsyncReadExt, AsyncWrite, AsyncWr
 use crate::error::RemoteError;
 
 pub const MAX_FRAME_BYTES: u64 = 32 * 1024 * 1024;
+pub const MAX_HANDSHAKE_FRAME_BYTES: u64 = 16 * 1024;
 
 pub async fn read_message<Message: DeserializeOwned>(
     reader: &mut (impl AsyncBufRead + Unpin),
 ) -> Result<Option<Message>, RemoteError> {
+    read_message_within(reader, MAX_FRAME_BYTES).await
+}
+
+pub async fn read_message_within<Message: DeserializeOwned>(
+    reader: &mut (impl AsyncBufRead + Unpin),
+    max_bytes: u64,
+) -> Result<Option<Message>, RemoteError> {
     let mut line = Vec::new();
     let read = (&mut *reader)
-        .take(MAX_FRAME_BYTES + 1)
+        .take(max_bytes + 1)
         .read_until(b'\n', &mut line)
         .await
         .map_err(|error| RemoteError::Io(error.to_string()))?;
@@ -19,7 +27,7 @@ pub async fn read_message<Message: DeserializeOwned>(
         return Ok(None);
     }
     if line.last() != Some(&b'\n') {
-        return Err(RemoteError::Protocol(match read as u64 > MAX_FRAME_BYTES {
+        return Err(RemoteError::Protocol(match read as u64 > max_bytes {
             true => "a message is too large".to_owned(),
             false => "the connection ended in the middle of a message".to_owned(),
         }));

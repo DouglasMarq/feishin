@@ -3,6 +3,7 @@ use std::ops::Range;
 use feishin_core::model::{ServerConfig, SongListQuery};
 use feishin_core::queue::{QueueItem, QueueSnapshot, QueueTrack, RepeatMode, Uid};
 use serde::{Deserialize, Serialize};
+use url::Url;
 
 use crate::pairing::{Nonce, PairingToken, Proof};
 
@@ -34,17 +35,9 @@ impl ServerKey {
 }
 
 fn normalized_url(url: &str) -> String {
-    let trimmed = url.trim().trim_end_matches('/');
-    match trimmed.split_once("://") {
-        Some((scheme, rest)) => {
-            let (host, path) = rest.split_once('/').unwrap_or((rest, ""));
-            let host = host.to_lowercase();
-            match path.is_empty() {
-                true => format!("{}://{host}", scheme.to_lowercase()),
-                false => format!("{}://{host}/{path}", scheme.to_lowercase()),
-            }
-        }
-        None => trimmed.to_lowercase(),
+    match Url::parse(url.trim()) {
+        Ok(parsed) => parsed.as_str().trim_end_matches('/').to_owned(),
+        Err(_) => url.trim().trim_end_matches('/').to_lowercase(),
     }
 }
 
@@ -252,6 +245,18 @@ mod tests {
         assert_ne!(
             ServerKey::of(&config("https://music.example.com", "alice")),
             ServerKey::of(&config("https://music.example.com", "bob"))
+        );
+    }
+
+    #[test]
+    fn given_server_addresses_that_differ_only_in_form_they_share_a_key() {
+        assert_eq!(
+            ServerKey::of(&config(" HTTP://Navidrome.Example:80/Music/ ", "feishin")).url,
+            "http://navidrome.example/Music"
+        );
+        assert_eq!(
+            ServerKey::of(&config("navidrome.example", "feishin")).url,
+            "navidrome.example"
         );
     }
 

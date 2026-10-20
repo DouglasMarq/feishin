@@ -8,7 +8,7 @@ use tokio::net::tcp::{OwnedReadHalf, OwnedWriteHalf};
 use tokio::sync::mpsc;
 
 use crate::error::RemoteError;
-use crate::frame::{read_message, write_message};
+use crate::frame::{MAX_HANDSHAKE_FRAME_BYTES, read_message, read_message_within, write_message};
 use crate::pairing::proof_of;
 use crate::protocol::{ClientMessage, DeviceInfo, HostMessage, PROTOCOL_VERSION, ServerKey};
 use crate::trust::TrustStore;
@@ -16,12 +16,13 @@ use crate::trust::TrustStore;
 const CONNECT_TIMEOUT: Duration = Duration::from_secs(5);
 const CHALLENGE_TIMEOUT: Duration = Duration::from_secs(10);
 const APPROVAL_WAIT: Duration = Duration::from_secs(75);
+const INCOMING_MESSAGE_CAPACITY: usize = 64;
 
 pub struct ClientLink {
     pub host: DeviceInfo,
     pub server: Option<ServerKey>,
     pub outgoing: mpsc::UnboundedSender<ClientMessage>,
-    pub incoming: mpsc::UnboundedReceiver<HostMessage>,
+    pub incoming: mpsc::Receiver<HostMessage>,
 }
 
 pub async fn connect(
@@ -51,7 +52,7 @@ async fn greet(
     me: DeviceInfo,
     trust: &dyn TrustStore,
 ) -> Result<DeviceInfo, RemoteError> {
-    let challenge = tokio::time::timeout(CHALLENGE_TIMEOUT, read_message::<HostMessage>(reader))
+    let challenge = tokio::time::timeout(CHALLENGE_TIMEOUT, read_handshake_message(reader))
         .await
         .map_err(|_| RemoteError::TimedOut)??;
     let Some(HostMessage::Challenge {
@@ -85,7 +86,7 @@ async fn await_welcome(
     trust: &dyn TrustStore,
 ) -> Result<Option<ServerKey>, RemoteError> {
     loop {
-        let answer = tokio::time::timeout(APPROVAL_WAIT, read_message::<HostMessage>(reader))
+        let answer = tokio::time::timeout(APPROVAL_WAIT, read_handshake_message(reader))
             .await
             .map_err(|_| RemoteError::TimedOut)??;
         match answer {
@@ -97,6 +98,12 @@ async fn await_welcome(
             None => return Err(RemoteError::Io("the connection closed".to_owned())),
         }
     }
+}
+
+async fn read_handshake_message(
+    reader: &mut BufReader<OwnedReadHalf>,
+) -> Result<Option<HostMessage>, RemoteError> {
+    read_message_within(reader, MAX_HANDSHAKE_FRAME_BYTES).await
 }
 
 fn spawn_writer(mut writer: OwnedWriteHalf) -> mpsc::UnboundedSender<ClientMessage> {
@@ -112,13 +119,13 @@ fn spawn_writer(mut writer: OwnedWriteHalf) -> mpsc::UnboundedSender<ClientMessa
     sender
 }
 
-fn spawn_reader(mut reader: BufReader<OwnedReadHalf>) -> mpsc::UnboundedReceiver<HostMessage> {
-    let (sender, receiver) = mpsc::unbounded_channel();
+fn spawn_reader(mut reader: BufReader<OwnedReadHalf>) -> mpsc::Receiver<HostMessage> {
+    let (sender, receiver) = mpsc::channel(INCOMING_MESSAGE_CAPACITY);
     tokio::spawn(async move {
         loop {
             match read_message::<HostMessage>(&mut reader).await {
                 Ok(Some(message)) => {
-                    if sender.send(message).is_err() {
+                    if sender.send(message).await.is_err() {
                         return;
                     }
                 }

@@ -3,6 +3,8 @@ use std::fmt;
 use serde::{Deserialize, Serialize};
 use sha2::{Digest, Sha256};
 
+use crate::error::RemoteError;
+
 const SECRET_BYTES: usize = 32;
 const PROOF_CONTEXT: &[u8] = b"feishin-remote-v1";
 const DEVICE_ID_BYTES: usize = 12;
@@ -18,8 +20,8 @@ macro_rules! secret_type {
         pub struct $name([u8; SECRET_BYTES]);
 
         impl $name {
-            pub fn random() -> Self {
-                Self(random_bytes())
+            pub fn random() -> Result<Self, RemoteError> {
+                random_bytes().map(Self)
             }
         }
 
@@ -51,16 +53,19 @@ secret_type!(Nonce);
 secret_type!(PairingToken);
 secret_type!(Proof);
 
-fn random_bytes() -> [u8; SECRET_BYTES] {
+fn random_bytes() -> Result<[u8; SECRET_BYTES], RemoteError> {
     let mut bytes = [0_u8; SECRET_BYTES];
-    if let Err(error) = getrandom::fill(&mut bytes) {
-        tracing::error!("the system random source failed: {error}");
-    }
-    bytes
+    getrandom::fill(&mut bytes)
+        .map_err(|error| RemoteError::Io(format!("the system random source failed: {error}")))?;
+    Ok(bytes)
 }
 
 pub fn new_device_id() -> String {
-    let bytes: Vec<u8> = random_bytes().into_iter().take(DEVICE_ID_BYTES).collect();
+    let random = random_bytes().unwrap_or_else(|error| {
+        tracing::error!("{error}");
+        [0_u8; SECRET_BYTES]
+    });
+    let bytes: Vec<u8> = random.into_iter().take(DEVICE_ID_BYTES).collect();
     hex::encode(bytes)
 }
 
@@ -90,16 +95,16 @@ mod tests {
 
     #[test]
     fn a_proof_only_matches_its_token_and_nonce() {
-        let (token, nonce) = (PairingToken::random(), Nonce::random());
+        let (token, nonce) = (PairingToken::random().unwrap(), Nonce::random().unwrap());
         let proof = proof_of(&token, &nonce);
         assert!(proves(&proof, &token, &nonce));
-        assert!(!proves(&proof, &PairingToken::random(), &nonce));
-        assert!(!proves(&proof, &token, &Nonce::random()));
+        assert!(!proves(&proof, &PairingToken::random().unwrap(), &nonce));
+        assert!(!proves(&proof, &token, &Nonce::random().unwrap()));
     }
 
     #[test]
     fn secrets_travel_as_hex_and_reject_garbage() {
-        let token = PairingToken::random();
+        let token = PairingToken::random().unwrap();
         let json = serde_json::to_string(&token).unwrap();
         assert_eq!(json.len(), 2 + SECRET_BYTES * 2);
         assert_eq!(serde_json::from_str::<PairingToken>(&json).unwrap(), token);

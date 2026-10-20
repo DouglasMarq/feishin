@@ -68,7 +68,7 @@ fn mirrored_queue(queue: RemoteQueue) -> Queue {
 }
 
 pub fn spawn_link(
-    mut incoming: mpsc::UnboundedReceiver<HostMessage>,
+    mut incoming: mpsc::Receiver<HostMessage>,
     mut mirror: Mirror,
     events: mpsc::UnboundedSender<LinkEvent>,
 ) -> JoinHandle<()> {
