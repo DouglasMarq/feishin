@@ -49,7 +49,11 @@ impl JellyfinServer {
             name,
             user_id: &self.user_id,
         };
-        let response = send(self.request(Method::POST, "playlists").json(&new_playlist)).await?;
+        let response = send(
+            self.request(Method::POST, &["playlists"])
+                .json(&new_playlist),
+        )
+        .await?;
         let created: dto::CreatedPlaylist = decode(response).await?;
         self.append_to_playlist(&created.id, song_ids).await?;
         self.playlist_summary(&created.id).await
@@ -91,7 +95,7 @@ impl JellyfinServer {
     }
 
     pub(super) async fn delete_playlist_item(&self, id: &str) -> Result<()> {
-        self.execute(self.request(Method::DELETE, &format!("items/{id}")))
+        self.execute(self.request(Method::DELETE, &["items", id]))
             .await
     }
 }

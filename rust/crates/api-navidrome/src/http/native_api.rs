@@ -5,12 +5,17 @@ use reqwest::header::HeaderMap;
 use reqwest::{Method, RequestBuilder, StatusCode};
 use serde::Serialize;
 use serde::de::DeserializeOwned;
+use url::Url;
 
 use crate::NavidromeServer;
-use crate::http::errors::{decode_error, http_status_error, missing_session_error, network_error};
+use crate::http::errors::{
+    decode_error, http_status_error, invalid_address_error, missing_session_error, network_error,
+};
 use crate::http::session_token::SESSION_TOKEN_HEADER;
 
 const TOTAL_COUNT_HEADER: &str = "x-total-count";
+const NATIVE_API_SEGMENT: &str = "api";
+const CANNOT_BE_A_BASE: &str = "it cannot hold a path";
 
 pub(crate) struct NativeResponse {
     body: Vec<u8>,
@@ -27,7 +32,7 @@ impl NavidromeServer {
     pub(crate) async fn native(
         &self,
         method: Method,
-        path: &str,
+        path: &[&str],
         params: &[(&str, String)],
     ) -> Result<NativeResponse> {
         let request = self.native_request(method, path, params)?;
@@ -37,7 +42,7 @@ impl NavidromeServer {
     pub(crate) async fn native_with_body<Body: Serialize + ?Sized>(
         &self,
         method: Method,
-        path: &str,
+        path: &[&str],
         body: &Body,
     ) -> Result<NativeResponse> {
         let request = self.native_request(method, path, &[])?.json(body);
@@ -46,7 +51,7 @@ impl NavidromeServer {
 
     pub(crate) async fn native_get<Decoded: DeserializeOwned>(
         &self,
-        path: &str,
+        path: &[&str],
         params: &[(&str, String)],
     ) -> Result<(Decoded, Option<usize>)> {
         let response = self.native(Method::GET, path, params).await?;
@@ -70,7 +75,7 @@ impl NavidromeServer {
     fn native_request(
         &self,
         method: Method,
-        path: &str,
+        path: &[&str],
         params: &[(&str, String)],
     ) -> Result<RequestBuilder> {
         let token = self
@@ -78,9 +83,19 @@ impl NavidromeServer {
             .ok_or_else(missing_session_error)?;
         Ok(self
             .http_client
-            .request(method, format!("{}/api/{path}", self.base_url))
+            .request(method, self.native_url(path)?)
             .query(params)
             .header(SESSION_TOKEN_HEADER, format!("Bearer {token}")))
+    }
+
+    fn native_url(&self, path: &[&str]) -> Result<Url> {
+        let mut url = Url::parse(&self.base_url).map_err(invalid_address_error)?;
+        url.path_segments_mut()
+            .map_err(|()| invalid_address_error(CANNOT_BE_A_BASE))?
+            .pop_if_empty()
+            .push(NATIVE_API_SEGMENT)
+            .extend(path);
+        Ok(url)
     }
 
     async fn send_native(&self, request: RequestBuilder) -> Result<NativeResponse> {

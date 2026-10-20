@@ -22,8 +22,7 @@ impl NavidromeServer {
     }
 
     pub(crate) async fn native_playlist(&self, id: &str) -> Result<Playlist> {
-        let (playlist, _): (NativePlaylist, _) =
-            self.native_get(&format!("playlist/{id}"), &[]).await?;
+        let (playlist, _): (NativePlaylist, _) = self.native_get(&["playlist", id], &[]).await?;
         Ok(normalize_playlist(playlist, self.server_id()))
     }
 
@@ -52,7 +51,7 @@ impl NavidromeServer {
             ("_order", "ASC".into()),
         ];
         let (playlists, total): (Vec<NativePlaylist>, _) =
-            self.native_get("playlist", &params).await?;
+            self.native_get(&["playlist"], &params).await?;
         Ok(Page {
             items: playlists
                 .into_iter()

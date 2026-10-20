@@ -121,7 +121,7 @@ impl NavidromeServer {
     }
 
     async fn native_song(&self, id: &str) -> Result<Song> {
-        let (song, _): (NativeSong, _) = self.native_get(&format!("song/{id}"), &[]).await?;
+        let (song, _): (NativeSong, _) = self.native_get(&["song", id], &[]).await?;
         Ok(normalize_song(song, self.server_id()))
     }
 
@@ -144,7 +144,7 @@ impl NavidromeServer {
         let mut total: Option<usize> = None;
         for batch in album_id_batches(&query.album_ids) {
             let params = query::song_list(query, start, end, batch, features);
-            let (songs, count): (Vec<NativeSong>, _) = self.native_get("song", &params).await?;
+            let (songs, count): (Vec<NativeSong>, _) = self.native_get(&["song"], &params).await?;
             items.extend(self.songs_from_native(songs));
             total = count.map(|count| total.unwrap_or(0) + count).or(total);
         }

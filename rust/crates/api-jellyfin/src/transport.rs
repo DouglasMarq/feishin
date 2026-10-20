@@ -1,16 +1,39 @@
+use std::time::Duration;
+
 use feishin_api::{ApiError, Result};
 use feishin_core::model::ServerConfig;
-use reqwest::{RequestBuilder, Response, StatusCode};
+use reqwest::{RequestBuilder, Response, StatusCode, Url};
 use serde::de::DeserializeOwned;
+
+const CONNECT_TIMEOUT: Duration = Duration::from_secs(15);
+const REQUEST_TIMEOUT: Duration = Duration::from_secs(60);
 
 pub fn http_client() -> Result<reqwest::Client> {
     reqwest::Client::builder()
+        .connect_timeout(CONNECT_TIMEOUT)
+        .timeout(REQUEST_TIMEOUT)
         .build()
         .map_err(|error| ApiError::Network(error.to_string()))
 }
 
-pub fn base_url(config: &ServerConfig) -> String {
-    config.url.trim_end_matches('/').to_owned()
+pub fn base_url(config: &ServerConfig) -> Result<Url> {
+    let url = Url::parse(&config.url)
+        .map_err(|error| ApiError::Network(format!("invalid server address: {error}")))?;
+    match url.cannot_be_a_base() {
+        true => Err(ApiError::Network(format!(
+            "invalid server address: {} cannot hold a path",
+            url.scheme()
+        ))),
+        false => Ok(url),
+    }
+}
+
+pub fn endpoint(base_url: &Url, path: &[&str]) -> Url {
+    let mut url = base_url.clone();
+    if let Ok(mut segments) = url.path_segments_mut() {
+        segments.pop_if_empty().extend(path);
+    }
+    url
 }
 
 pub async fn send(request: RequestBuilder) -> Result<Response> {

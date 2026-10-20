@@ -22,7 +22,7 @@ fn library_scan_of(tasks: &[dto::ScheduledTask]) -> LibraryScan {
 
 impl JellyfinServer {
     pub(super) async fn begin_library_scan(&self) -> Result<LibraryScan> {
-        self.execute(self.request(Method::POST, "library/refresh"))
+        self.execute(self.request(Method::POST, &["library", "refresh"]))
             .await?;
         Ok(LibraryScan {
             scanning: true,
@@ -32,7 +32,7 @@ impl JellyfinServer {
 
     pub(super) async fn fetch_library_scan(&self) -> Result<LibraryScan> {
         let params = QueryParams::default().set("IsHidden", false);
-        let tasks: Vec<dto::ScheduledTask> = self.get("scheduledtasks", &params).await?;
+        let tasks: Vec<dto::ScheduledTask> = self.get(&["scheduledtasks"], &params).await?;
         Ok(library_scan_of(&tasks))
     }
 }

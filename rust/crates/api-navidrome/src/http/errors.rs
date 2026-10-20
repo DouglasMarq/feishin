@@ -15,7 +15,11 @@ fn reports_missing_data(body: &[u8]) -> bool {
 }
 
 pub(crate) fn network_error(error: reqwest::Error) -> ApiError {
-    ApiError::Network(error.to_string())
+    ApiError::Network(error.without_url().to_string())
+}
+
+pub(crate) fn invalid_address_error(reason: impl std::fmt::Display) -> ApiError {
+    ApiError::Network(format!("invalid server address: {reason}"))
 }
 
 pub(crate) fn decode_error(error: serde_json::Error) -> ApiError {

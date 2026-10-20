@@ -52,6 +52,6 @@ impl JellyfinServer {
     }
 }
 
-pub(super) fn playlist_items_path(playlist_id: &str) -> String {
-    format!("playlists/{playlist_id}/items")
+pub(super) fn playlist_items_path(playlist_id: &str) -> [&str; 3] {
+    ["playlists", playlist_id, "items"]
 }

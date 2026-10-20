@@ -1,9 +1,12 @@
 use feishin_api::StreamOptions;
 
 use super::JellyfinServer;
+use crate::transport::endpoint;
 
 const DEFAULT_TRANSCODE_FORMAT: &str = "mp3";
 const BITS_PER_KILOBIT: u64 = 1000;
+const IMAGE_QUALITY: &str = "96";
+const TRANSCODING_PROTOCOL: &str = "http";
 
 impl JellyfinServer {
     pub(super) fn song_stream_url(&self, song_id: &str, options: &StreamOptions) -> String {
@@ -14,44 +17,50 @@ impl JellyfinServer {
     }
 
     pub(super) fn primary_image_url(&self, cover_art_id: &str, edge_pixels: Option<u32>) -> String {
-        let image_url = format!(
-            "{}/Items/{cover_art_id}/Images/Primary?quality=96",
-            self.base_url
+        let mut url = endpoint(
+            &self.base_url,
+            &["Items", cover_art_id, "Images", "Primary"],
         );
-        let size_suffix = edge_pixels
-            .map(|edge| format!("&fillHeight={edge}&fillWidth={edge}"))
-            .unwrap_or_default();
-        format!("{image_url}{size_suffix}")
+        let mut query = url.query_pairs_mut();
+        query.append_pair("quality", IMAGE_QUALITY);
+        if let Some(edge) = edge_pixels.map(|edge| edge.to_string()) {
+            query
+                .append_pair("fillHeight", &edge)
+                .append_pair("fillWidth", &edge);
+        }
+        query.finish().to_string()
     }
 
     fn direct_download_url(&self, song_id: &str) -> String {
-        format!(
-            "{}/Items/{song_id}/Download?apiKey={}&playSessionId=",
-            self.base_url, self.access_token
-        )
+        let mut url = endpoint(&self.base_url, &["Items", song_id, "Download"]);
+        url.query_pairs_mut()
+            .append_pair("apiKey", &self.access_token)
+            .append_pair("playSessionId", "")
+            .finish()
+            .to_string()
     }
 
     fn transcoding_url(&self, song_id: &str, options: &StreamOptions) -> String {
-        let (base, token, user_id) = (&self.base_url, &self.access_token, &self.user_id);
         let format = options
             .format
             .as_deref()
             .unwrap_or(DEFAULT_TRANSCODE_FORMAT);
         let session = format!("feishin-{song_id}-{}-0-0", format.to_lowercase());
-        let universal_url = format!(
-            "{base}/audio/{song_id}/universal?userId={user_id}&deviceId=&audioCodec={format}&apiKey={token}\
-             &playSessionId={session}&container={format}&transcodingProtocol=http\
-             &transcodingContainer={format}"
-        );
-        let bitrate_suffix = options
-            .max_bitrate_kbps
-            .map(|kbps| {
-                format!(
-                    "&maxStreamingBitrate={}",
-                    u64::from(kbps) * BITS_PER_KILOBIT
-                )
-            })
-            .unwrap_or_default();
-        format!("{universal_url}{bitrate_suffix}")
+        let mut url = endpoint(&self.base_url, &["audio", song_id, "universal"]);
+        let mut query = url.query_pairs_mut();
+        query
+            .append_pair("userId", &self.user_id)
+            .append_pair("deviceId", "")
+            .append_pair("audioCodec", format)
+            .append_pair("apiKey", &self.access_token)
+            .append_pair("playSessionId", &session)
+            .append_pair("container", format)
+            .append_pair("transcodingProtocol", TRANSCODING_PROTOCOL)
+            .append_pair("transcodingContainer", format);
+        if let Some(kbps) = options.max_bitrate_kbps {
+            let bits_per_second = u64::from(kbps) * BITS_PER_KILOBIT;
+            query.append_pair("maxStreamingBitrate", &bits_per_second.to_string());
+        }
+        query.finish().to_string()
     }
 }

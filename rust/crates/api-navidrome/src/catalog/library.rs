@@ -81,7 +81,7 @@ impl NavidromeServer {
 
     async fn legacy_native_genres(&self) -> Result<Vec<Genre>> {
         let params: QueryParams = vec![("_sort", "name".into()), ("_order", "ASC".into())];
-        let (genres, _): (Vec<NativeGenre>, _) = self.native_get("genre", &params).await?;
+        let (genres, _): (Vec<NativeGenre>, _) = self.native_get(&["genre"], &params).await?;
         let counted = self.subsonic_genres().await.unwrap_or_else(|error| {
             tracing::debug!(%error, "genre counts unavailable");
             Vec::new()
@@ -98,7 +98,7 @@ impl NavidromeServer {
             ("_order", "ASC".into()),
             ("tag_name", "genre".into()),
         ];
-        let (tags, _): (Vec<NativeTag>, _) = self.native_get("tag", &params).await?;
+        let (tags, _): (Vec<NativeTag>, _) = self.native_get(&["tag"], &params).await?;
         Ok(tags.into_iter().map(normalize_genre).collect())
     }
 }
