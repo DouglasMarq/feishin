@@ -23,7 +23,7 @@ const config = {
                 'window',
             ],
         ],
-        'scope-case': [2, 'always', 'kebab-case'],
+        'scope-case': [2, 'always', ['kebab-case', 'lower-case']],
         'subject-case': [2, 'never', ['pascal-case', 'upper-case']],
         'body-max-line-length': [0],
     },
