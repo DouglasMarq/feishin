@@ -119,10 +119,8 @@ fn inhibit_call(service: &'static str) -> Call {
 
 #[test]
 fn inhibits_once_while_playing_and_releases_on_stop() {
-    let Some((_bus, address)) = spawn_private_bus() else {
-        eprintln!("skipping: dbus-daemon is not available");
-        return;
-    };
+    let (_bus, address) =
+        spawn_private_bus().expect("dbus-daemon is not available: install it to run this test");
     unsafe { std::env::set_var("DBUS_SESSION_BUS_ADDRESS", &address) };
     let (sender, calls) = mpsc::channel();
     let _services = serve_fake_services(&address, sender);
