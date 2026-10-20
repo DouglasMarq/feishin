@@ -85,7 +85,7 @@ impl NavidromeServer {
         features: &Features,
     ) -> Result<Page<Album>> {
         let params = query::album_list(query, start, end, features);
-        let (albums, total): (Vec<NativeAlbum>, _) = self.native_get("album", &params).await?;
+        let (albums, total): (Vec<NativeAlbum>, _) = self.native_get(&["album"], &params).await?;
         Ok(Page {
             items: albums
                 .into_iter()
@@ -115,9 +115,9 @@ impl NavidromeServer {
     }
 
     async fn native_album(&self, id: &str, features: &Features) -> Result<AlbumDetail> {
-        let (album, _): (NativeAlbum, _) = self.native_get(&format!("album/{id}"), &[]).await?;
+        let (album, _): (NativeAlbum, _) = self.native_get(&["album", id], &[]).await?;
         let (songs, _): (Vec<NativeSong>, _) = self
-            .native_get("song", &query::album_songs(id, features))
+            .native_get(&["song"], &query::album_songs(id, features))
             .await?;
         Ok(AlbumDetail {
             album: normalize_album(album, self.server_id()),

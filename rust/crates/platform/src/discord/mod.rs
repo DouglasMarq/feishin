@@ -1,6 +1,5 @@
 mod activity;
 mod connection;
-mod image_url;
 mod options;
 mod text_field;
 

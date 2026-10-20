@@ -171,7 +171,7 @@ mod tests {
         let directory = tempfile::tempdir().unwrap();
         let store: Arc<dyn Store> = Arc::new(JsonStore::new(directory.path()));
         let first = FileTrust::load(Arc::clone(&store));
-        let token = PairingToken::random();
+        let token = PairingToken::random().unwrap();
         first.trust(&device("phone"), token);
         first.remember_host(&DeviceId("tv".into()), token);
         let again = FileTrust::load(store);
@@ -188,7 +188,7 @@ mod tests {
         let directory = tempfile::tempdir().unwrap();
         let store: Arc<dyn Store> = Arc::new(JsonStore::new(directory.path()));
         let first = FileTrust::ephemeral(Arc::clone(&store));
-        first.trust(&device("phone"), PairingToken::random());
+        first.trust(&device("phone"), PairingToken::random().unwrap());
         assert_ne!(
             FileTrust::ephemeral(Arc::clone(&store)).device_id(),
             first.device_id()

@@ -4,7 +4,7 @@ use serde_json::json;
 use wiremock::matchers::{method, path, query_param, query_param_is_missing};
 use wiremock::{Mock, MockServer, ResponseTemplate};
 
-use crate::support::{config, failed, ok, server, valid_salted_token};
+use crate::support::{CREDENTIAL, config, failed, ok, server, valid_salted_token};
 
 #[tokio::test]
 async fn login_uses_token_auth() {
@@ -170,4 +170,26 @@ async fn requests_carry_credential_and_ping_works() {
         .mount(&mock)
         .await;
     assert!(server(&mock).ping().await.is_ok());
+}
+
+#[tokio::test]
+async fn given_a_network_failure_the_error_has_no_credentials() {
+    let unreachable = std::net::TcpListener::bind("127.0.0.1:0")
+        .and_then(|listener| listener.local_addr())
+        .expect("free port");
+    let credential = Credential::Subsonic {
+        subsonic: CREDENTIAL.into(),
+    };
+    let server =
+        SubsonicServer::with_credential(config(&format!("http://{unreachable}")), &credential)
+            .expect("server");
+
+    let error = server.ping().await.expect_err("unreachable server");
+
+    assert!(matches!(error, ApiError::Network(_)));
+    let message = error.to_string();
+    assert!(
+        !message.contains("abc123") && !message.contains("0123456789abcdef"),
+        "{message}"
+    );
 }

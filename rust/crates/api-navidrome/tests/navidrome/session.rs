@@ -198,3 +198,27 @@ async fn subsonic_errors_are_mapped() {
     ));
     assert!(matches!(server.ping().await, Err(ApiError::Auth(_))));
 }
+
+#[tokio::test]
+async fn given_a_network_failure_the_error_has_no_credentials() {
+    let unreachable = std::net::TcpListener::bind("127.0.0.1:0")
+        .and_then(|listener| listener.local_addr())
+        .expect("free port");
+    let server = NavidromeServer::with_credential(
+        config(&format!("http://{unreachable}")),
+        &Credential::Navidrome {
+            subsonic: SUBSONIC_AUTH.into(),
+            nd_token: None,
+        },
+    )
+    .expect("server");
+
+    let error = server.ping().await.expect_err("unreachable server");
+
+    assert!(matches!(error, ApiError::Network(_)));
+    let message = error.to_string();
+    assert!(
+        !message.contains("salt1") && !message.contains("tok1"),
+        "{message}"
+    );
+}

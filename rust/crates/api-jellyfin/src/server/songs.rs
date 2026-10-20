@@ -86,8 +86,10 @@ impl JellyfinServer {
     }
 
     pub(super) async fn similar_song_list(&self, song_id: &str, count: usize) -> Result<Vec<Song>> {
-        let similar_path = format!("items/{song_id}/similar");
-        match self.mix(&similar_path, song_id, count).await {
+        match self
+            .mix(&["items", song_id, "similar"], song_id, count)
+            .await
+        {
             Ok(songs) if !songs.is_empty() => Ok(songs),
             Ok(_no_similar_songs) => self.instant_mix(song_id, count).await,
             Err(error) => {
@@ -98,14 +100,13 @@ impl JellyfinServer {
     }
 
     async fn instant_mix(&self, song_id: &str, count: usize) -> Result<Vec<Song>> {
-        let instant_mix_path = format!("items/{song_id}/InstantMix");
-        self.mix(&instant_mix_path, song_id, count).await
+        self.mix(&["items", song_id, "InstantMix"], song_id, count)
+            .await
     }
 
     pub(super) async fn song_lyrics(&self, song: &Song) -> Result<Option<String>> {
-        let lyrics_path = format!("audio/{}/Lyrics", song.id);
         match self
-            .get::<dto::Lyrics>(&lyrics_path, &QueryParams::default())
+            .get::<dto::Lyrics>(&["audio", &song.id, "Lyrics"], &QueryParams::default())
             .await
         {
             Ok(lyrics) => Ok(normalize::lyrics(lyrics)),
@@ -114,7 +115,7 @@ impl JellyfinServer {
         }
     }
 
-    async fn mix(&self, path: &str, seed_song_id: &str, count: usize) -> Result<Vec<Song>> {
+    async fn mix(&self, path: &[&str], seed_song_id: &str, count: usize) -> Result<Vec<Song>> {
         let params = QueryParams::default()
             .fields(SONG_FIELDS)
             .set("Limit", count)

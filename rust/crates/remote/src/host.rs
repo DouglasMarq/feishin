@@ -9,7 +9,7 @@ use tokio::net::{TcpListener, TcpStream};
 use tokio::sync::{Mutex, mpsc, watch};
 
 use crate::error::RemoteError;
-use crate::frame::{read_message, write_message};
+use crate::frame::{MAX_HANDSHAKE_FRAME_BYTES, read_message, read_message_within, write_message};
 use crate::host_state::{HostState, Outbox};
 use crate::lan::is_lan_peer;
 use crate::pairing::{Nonce, PairingToken, proves};
@@ -21,6 +21,7 @@ use crate::trust::TrustStore;
 
 const HELLO_TIMEOUT: Duration = Duration::from_secs(10);
 const APPROVAL_TIMEOUT: Duration = Duration::from_secs(60);
+const INCOMING_MESSAGE_CAPACITY: usize = 64;
 
 #[async_trait]
 pub trait HostDelegate: Send + Sync {
@@ -101,16 +102,19 @@ impl Host {
         reader: &mut BufReader<OwnedReadHalf>,
         writer: &mut OwnedWriteHalf,
     ) -> Result<DeviceInfo, RemoteError> {
-        let nonce = Nonce::random();
+        let nonce = Nonce::random()?;
         let challenge = HostMessage::Challenge {
             version: PROTOCOL_VERSION,
             device: self.me.clone(),
             nonce,
         };
         write_message(writer, &challenge).await?;
-        let hello = tokio::time::timeout(HELLO_TIMEOUT, read_message::<ClientMessage>(reader))
-            .await
-            .map_err(|_| RemoteError::TimedOut)??;
+        let hello = tokio::time::timeout(
+            HELLO_TIMEOUT,
+            read_message_within::<ClientMessage>(reader, MAX_HANDSHAKE_FRAME_BYTES),
+        )
+        .await
+        .map_err(|_| RemoteError::TimedOut)??;
         let Some(ClientMessage::Hello {
             version,
             device,
@@ -155,19 +159,19 @@ impl Host {
             write_message(writer, &HostMessage::Denied).await?;
             return Err(RemoteError::Denied);
         }
-        let token = PairingToken::random();
+        let token = PairingToken::random()?;
         self.trust.trust(device, token);
         write_message(writer, &HostMessage::Paired { token }).await
     }
 }
 
-fn spawn_reader(mut reader: BufReader<OwnedReadHalf>) -> mpsc::UnboundedReceiver<ClientMessage> {
-    let (sender, receiver) = mpsc::unbounded_channel();
+fn spawn_reader(mut reader: BufReader<OwnedReadHalf>) -> mpsc::Receiver<ClientMessage> {
+    let (sender, receiver) = mpsc::channel(INCOMING_MESSAGE_CAPACITY);
     tokio::spawn(async move {
         loop {
             match read_message::<ClientMessage>(&mut reader).await {
                 Ok(Some(message)) => {
-                    if sender.send(message).is_err() {
+                    if sender.send(message).await.is_err() {
                         return;
                     }
                 }
@@ -202,10 +206,7 @@ struct Session<'host> {
 }
 
 impl Session<'_> {
-    async fn run(
-        mut self,
-        mut incoming: mpsc::UnboundedReceiver<ClientMessage>,
-    ) -> Result<(), RemoteError> {
+    async fn run(mut self, mut incoming: mpsc::Receiver<ClientMessage>) -> Result<(), RemoteError> {
         let mut state = Some(self.host.state.clone());
         let initial = self.host.state.borrow().clone();
         self.push_state(&initial).await?;

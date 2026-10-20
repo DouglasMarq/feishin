@@ -37,7 +37,7 @@ impl NavidromeServer {
     ) -> Result<Vec<NativeSong>> {
         let (tracks, _): (Vec<NativeSong>, _) = self
             .native_get(
-                &format!("playlist/{id}/tracks"),
+                &["playlist", id, "tracks"],
                 &query::playlist_tracks(features),
             )
             .await?;
@@ -54,7 +54,7 @@ impl NavidromeServer {
         let params =
             query::playlist_track_page(start, end_index_or_all(start, paging.limit), features);
         let (tracks, total): (Vec<NativeSong>, _) = self
-            .native_get(&format!("playlist/{id}/tracks"), &params)
+            .native_get(&["playlist", id, "tracks"], &params)
             .await?;
         Ok(Page {
             items: self.songs_from_native(tracks),

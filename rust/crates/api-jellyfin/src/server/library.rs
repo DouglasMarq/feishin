@@ -13,7 +13,8 @@ const MUSIC_COLLECTION_TYPE: &str = "music";
 
 impl JellyfinServer {
     pub(super) async fn ping_system_info(&self) -> Result<()> {
-        self.execute(self.request(Method::GET, "system/info")).await
+        self.execute(self.request(Method::GET, &["system", "info"]))
+            .await
     }
 
     pub(super) async fn all_genres(&self) -> Result<Vec<Genre>> {
@@ -25,7 +26,7 @@ impl JellyfinServer {
             .set("SortOrder", sort_order(SortOrder::Asc))
             .set("StartIndex", 0)
             .set("UserId", &self.user_id);
-        let list: dto::ItemList<dto::Genre> = self.get("musicgenres", &params).await?;
+        let list: dto::ItemList<dto::Genre> = self.get(&["musicgenres"], &params).await?;
         Ok(list.items.into_iter().map(normalize::genre).collect())
     }
 

@@ -5,10 +5,13 @@ use std::time::Duration;
 
 use async_trait::async_trait;
 use feishin_core::queue::{Queue, QueueTrack, YouTubeTrack};
-use tokio::net::TcpListener;
+use tokio::io::{AsyncBufReadExt, AsyncReadExt, AsyncWriteExt, BufReader};
+use tokio::net::{TcpListener, TcpStream};
 use tokio::sync::{mpsc, watch};
 
 use super::*;
+use crate::frame::MAX_HANDSHAKE_FRAME_BYTES;
+use crate::protocol::PROTOCOL_VERSION;
 
 #[derive(Default)]
 struct MemoryTrust {
@@ -307,4 +310,33 @@ async fn a_host_without_state_updates_still_takes_controls() {
         .await
         .unwrap();
     assert_eq!(received, Some(RemoteControl::Next));
+}
+
+#[tokio::test]
+async fn given_an_oversized_hello_rejects_the_connection() {
+    let host = start_host(true).await;
+    let (read_half, mut writer) = TcpStream::connect(host.address).await.unwrap().into_split();
+    let mut reader = BufReader::new(read_half);
+    let mut challenge = String::new();
+    reader.read_line(&mut challenge).await.unwrap();
+    let oversized_name = "x".repeat(usize::try_from(MAX_HANDSHAKE_FRAME_BYTES).unwrap() * 2);
+    let hello = ClientMessage::Hello {
+        version: PROTOCOL_VERSION,
+        device: DeviceInfo {
+            id: DeviceId("phone".to_owned()),
+            name: oversized_name,
+        },
+        proof: None,
+    };
+    let mut line = serde_json::to_vec(&hello).unwrap();
+    line.push(b'\n');
+    let _sent = writer.write_all(&line).await;
+
+    let mut answer = Vec::new();
+    let _closed = tokio::time::timeout(Duration::from_secs(5), reader.read_to_end(&mut answer))
+        .await
+        .unwrap();
+
+    assert!(answer.is_empty(), "{}", String::from_utf8_lossy(&answer));
+    assert_eq!(*host.delegate.approvals.lock().unwrap(), 0);
 }

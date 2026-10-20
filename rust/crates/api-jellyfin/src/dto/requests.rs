@@ -1,6 +1,6 @@
 use serde::Serialize;
 
-#[derive(Debug, Serialize)]
+#[derive(Serialize)]
 #[serde(rename_all = "PascalCase")]
 pub struct AuthenticateByName<'a> {
     #[serde(rename = "Pw")]

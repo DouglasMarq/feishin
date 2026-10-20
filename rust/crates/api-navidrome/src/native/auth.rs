@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Deserialize)]
+#[derive(Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub(crate) struct NativeAuth {
     pub token: String,
@@ -8,7 +8,7 @@ pub(crate) struct NativeAuth {
     pub subsonic_token: String,
 }
 
-#[derive(Debug, Serialize)]
+#[derive(Serialize)]
 pub(crate) struct LoginRequest<'credentials> {
     pub username: &'credentials str,
     pub password: &'credentials str,

@@ -84,7 +84,7 @@ impl NavidromeServer {
             position: snapshot.position_ms,
             current: snapshot.current,
         };
-        self.native_with_body(Method::POST, "queue", &request)
+        self.native_with_body(Method::POST, &["queue"], &request)
             .await
             .map(|_| ())
     }
@@ -115,7 +115,7 @@ impl NavidromeServer {
     }
 
     async fn native_play_queue(&self) -> Result<Option<ServerPlayQueue>> {
-        let (queue, _): (NativeQueue, _) = self.native_get("queue", &[]).await?;
+        let (queue, _): (NativeQueue, _) = self.native_get(&["queue"], &[]).await?;
         let songs = self.songs_from_native(queue.items.unwrap_or_default());
         if songs.is_empty() {
             return Ok(None);

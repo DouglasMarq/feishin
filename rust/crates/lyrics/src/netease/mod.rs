@@ -1,7 +1,7 @@
 use serde::Deserialize;
 
 use crate::fuzzy::{MATCH_THRESHOLD, SearchItem, order_search_results};
-use crate::http::send_json;
+use crate::http::{REQUEST_TIMEOUT, send_json};
 use crate::lrc::lyrics_from_text;
 use crate::{Lyrics, LyricsQuery, LyricsSource, Result};
 
@@ -95,12 +95,15 @@ async fn search_songs(
     query: &LyricsQuery,
 ) -> Result<Vec<Song>> {
     let search_query = format!("{} {}", query.artist, query.title);
-    let request = client.get(format!("{base}/api/search/get")).query(&[
-        ("limit", "5"),
-        ("offset", "0"),
-        ("s", search_query.as_str()),
-        ("type", "1"),
-    ]);
+    let request = client
+        .get(format!("{base}/api/search/get"))
+        .timeout(REQUEST_TIMEOUT)
+        .query(&[
+            ("limit", "5"),
+            ("offset", "0"),
+            ("s", search_query.as_str()),
+            ("type", "1"),
+        ]);
     Ok(send_json::<SearchResponse>(request)
         .await?
         .and_then(|response| response.result)
@@ -113,12 +116,15 @@ async fn lyrics_by_id(
     base: &str,
     song_id: u64,
 ) -> Result<Option<Lyrics>> {
-    let request = client.get(format!("{base}/api/song/lyric")).query(&[
-        ("id", song_id.to_string().as_str()),
-        ("kv", "-1"),
-        ("lv", "-1"),
-        ("tv", "-1"),
-    ]);
+    let request = client
+        .get(format!("{base}/api/song/lyric"))
+        .timeout(REQUEST_TIMEOUT)
+        .query(&[
+            ("id", song_id.to_string().as_str()),
+            ("kv", "-1"),
+            ("lv", "-1"),
+            ("tv", "-1"),
+        ]);
     let text = send_json::<LyricResponse>(request)
         .await?
         .and_then(|response| response.lrc)

@@ -6,9 +6,9 @@ use crate::dto;
 use crate::normalize::TICKS_PER_MS;
 use crate::query_params::QueryParams;
 
-const NOW_PLAYING_PATH: &str = "sessions/playing";
-const PROGRESS_PATH: &str = "sessions/playing/progress";
-const STOPPED_PATH: &str = "sessions/playing/stopped";
+const NOW_PLAYING_PATH: &[&str] = &["sessions", "playing"];
+const PROGRESS_PATH: &[&str] = &["sessions", "playing", "progress"];
+const STOPPED_PATH: &[&str] = &["sessions", "playing", "stopped"];
 
 impl JellyfinServer {
     pub async fn report_progress(
@@ -62,7 +62,7 @@ impl JellyfinServer {
             false => Method::DELETE,
         };
         for id in ids {
-            let path = format!("users/{}/favoriteitems/{id}", self.user_id);
+            let path = ["users", &self.user_id, "favoriteitems", id];
             let request = self.request(method.clone(), &path).json(&dto::EmptyBody {});
             self.execute(request).await?;
         }
@@ -81,7 +81,7 @@ impl JellyfinServer {
 
     async fn post_playback_report(
         &self,
-        path: &str,
+        path: &[&str],
         report: &dto::PlaybackReport<'_>,
     ) -> Result<()> {
         self.execute(self.request(Method::POST, path).json(report))

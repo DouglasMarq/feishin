@@ -43,7 +43,8 @@ impl NavidromeServer {
     ) -> Result<Page<Artist>> {
         let start = paging.start_index;
         let params = query::artist_list(query, start, end_index(start, paging.limit), features);
-        let (artists, total): (Vec<NativeArtist>, _) = self.native_get("artist", &params).await?;
+        let (artists, total): (Vec<NativeArtist>, _) =
+            self.native_get(&["artist"], &params).await?;
         Ok(Page {
             items: artists
                 .into_iter()
@@ -73,7 +74,7 @@ impl NavidromeServer {
     }
 
     async fn native_artist(&self, id: &str, features: &Features) -> Result<ArtistDetail> {
-        let (artist, _): (NativeArtist, _) = self.native_get(&format!("artist/{id}"), &[]).await?;
+        let (artist, _): (NativeArtist, _) = self.native_get(&["artist", id], &[]).await?;
         let albums = self
             .native_album_page(
                 &artist_albums_query(id),

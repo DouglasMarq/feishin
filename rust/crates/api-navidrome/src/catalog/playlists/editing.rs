@@ -53,7 +53,7 @@ impl NavidromeServer {
 
     pub(crate) async fn remove_playlist(&self, id: &str) -> Result<()> {
         let native = async {
-            self.native(Method::DELETE, &format!("playlist/{id}"), &[])
+            self.native(Method::DELETE, &["playlist", id], &[])
                 .await
                 .map(|_| ())
         };
@@ -69,7 +69,7 @@ impl NavidromeServer {
     async fn native_create_playlist(&self, name: &str, song_ids: &[String]) -> Result<Playlist> {
         let request = CreatePlaylistRequest { name, rules: None };
         let created: NativeCreatedId = self
-            .native_with_body(Method::POST, "playlist", &request)
+            .native_with_body(Method::POST, &["playlist"], &request)
             .await?
             .json()?;
         if !song_ids.is_empty() {
@@ -94,7 +94,7 @@ impl NavidromeServer {
     async fn native_add_tracks(&self, playlist_id: &str, song_ids: &[String]) -> Result<()> {
         self.native_with_body(
             Method::POST,
-            &format!("playlist/{playlist_id}/tracks"),
+            &["playlist", playlist_id, "tracks"],
             &TrackIdsRequest { ids: song_ids },
         )
         .await
@@ -124,7 +124,7 @@ impl NavidromeServer {
             .collect::<Result<QueryParams>>()?;
         self.native(
             Method::DELETE,
-            &format!("playlist/{playlist_id}/tracks"),
+            &["playlist", playlist_id, "tracks"],
             &params,
         )
         .await

@@ -94,6 +94,7 @@ async fn search_tracks(
     let request = client
         .get(format!("{base}/api/search"))
         .header(USER_AGENT, AGENT)
+        .timeout(TIMEOUT)
         .query(&[("q", format!("{} {}", query.title, query.artist))]);
     Ok(send_json(request).await?.unwrap_or_default())
 }

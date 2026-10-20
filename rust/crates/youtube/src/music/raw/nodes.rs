@@ -1,5 +1,7 @@
+use reqwest::Url;
 use serde_json::Value;
 
+const RESIZABLE_THUMBNAIL_HOSTS: [&str; 2] = ["googleusercontent.com", "ggpht.com"];
 const RUN_SEPARATOR: &str = " • ";
 const THUMBNAIL_SIZE: u32 = 300;
 const PAGE_TYPE_POINTER: &str =
@@ -119,8 +121,7 @@ pub(super) fn best_thumbnail(thumbnail_holder: Option<&Value>) -> Option<String>
 }
 
 fn sized_thumbnail(url: &str, size: u32) -> String {
-    let resizable = url.contains("googleusercontent.com") || url.contains("ggpht.com");
-    let Some((base, options)) = url.rsplit_once('=').filter(|_| resizable) else {
+    let Some((base, options)) = url.rsplit_once('=').filter(|_| is_resizable_thumbnail(url)) else {
         return url.to_owned();
     };
     let kept: String = options
@@ -129,6 +130,18 @@ fn sized_thumbnail(url: &str, size: u32) -> String {
         .map(|option| format!("-{option}"))
         .collect();
     format!("{base}=w{size}-h{size}{kept}")
+}
+
+fn is_resizable_thumbnail(url: &str) -> bool {
+    Url::parse(url)
+        .ok()
+        .as_ref()
+        .and_then(Url::host_str)
+        .is_some_and(|host| {
+            RESIZABLE_THUMBNAIL_HOSTS
+                .iter()
+                .any(|resizable| host == *resizable || host.ends_with(&format!(".{resizable}")))
+        })
 }
 
 fn is_size_option(option: &str) -> bool {
@@ -172,6 +185,16 @@ mod tests {
             best_thumbnail(Some(&channel)).as_deref(),
             Some("https://yt3.ggpht.com/x=w300-h300")
         );
+    }
+
+    #[test]
+    fn given_a_thumbnail_host_that_only_mentions_google_it_is_kept_as_it_is() {
+        let lookalike = "https://images.example/googleusercontent.com/abc=w60-h60";
+        let holder = json!({"thumbnails": [{"url": lookalike, "width": 60}]});
+        assert_eq!(best_thumbnail(Some(&holder)).as_deref(), Some(lookalike));
+        let suffix = "https://notggpht.com/abc=s60";
+        let holder = json!({"thumbnails": [{"url": suffix, "width": 60}]});
+        assert_eq!(best_thumbnail(Some(&holder)).as_deref(), Some(suffix));
     }
 
     #[test]

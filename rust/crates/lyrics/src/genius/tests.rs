@@ -145,3 +145,57 @@ async fn page_without_lyrics_yields_none() {
         .unwrap();
     assert!(lyrics.is_none());
 }
+
+#[tokio::test]
+async fn given_a_hit_outside_genius_its_page_is_never_fetched() {
+    let server = MockServer::start().await;
+    let elsewhere = MockServer::start().await;
+    let mut foreign = hit(
+        &server,
+        "Queen-bohemian-rhapsody-lyrics",
+        "Bohemian Rhapsody",
+        "Queen",
+    );
+    foreign["result"]["url"] = json!(format!(
+        "{}/Queen-bohemian-rhapsody-lyrics",
+        elsewhere.uri()
+    ));
+    mount_search(&server, vec![foreign]).await;
+    Mock::given(method("GET"))
+        .respond_with(ResponseTemplate::new(200).set_body_string(PAGE))
+        .expect(0)
+        .mount(&elsewhere)
+        .await;
+
+    let lyrics = fetch(&reqwest::Client::new(), &server.uri(), &query())
+        .await
+        .unwrap();
+
+    assert!(lyrics.is_none());
+}
+
+#[tokio::test]
+async fn given_a_page_larger_than_the_cap_it_is_rejected() {
+    let server = MockServer::start().await;
+    mount_search(
+        &server,
+        vec![hit(
+            &server,
+            "Queen-bohemian-rhapsody-lyrics",
+            "Bohemian Rhapsody",
+            "Queen",
+        )],
+    )
+    .await;
+    let mut oversized = PAGE.to_owned();
+    oversized.push_str(&" ".repeat(crate::http::MAX_RESPONSE_BYTES));
+    Mock::given(method("GET"))
+        .and(path("/Queen-bohemian-rhapsody-lyrics"))
+        .respond_with(ResponseTemplate::new(200).set_body_string(oversized))
+        .mount(&server)
+        .await;
+
+    let fetched = fetch(&reqwest::Client::new(), &server.uri(), &query()).await;
+
+    assert!(matches!(fetched, Err(crate::LyricsError::Decode(_))));
+}

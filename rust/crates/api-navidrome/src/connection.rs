@@ -12,6 +12,8 @@ use crate::http::{decode_error, network_error, query_string};
 use crate::native::{LoginRequest, NativeAuth};
 
 const FOLDER_TIME_TO_LIVE: Duration = Duration::from_secs(30);
+const CONNECT_TIMEOUT: Duration = Duration::from_secs(15);
+const REQUEST_TIMEOUT: Duration = Duration::from_secs(60);
 
 impl NavidromeServer {
     pub async fn login(config: ServerConfig, password: &str) -> Result<(Self, Credential)> {
@@ -68,7 +70,11 @@ impl NavidromeServer {
 }
 
 fn build_http_client() -> Result<reqwest::Client> {
-    reqwest::Client::builder().build().map_err(network_error)
+    reqwest::Client::builder()
+        .connect_timeout(CONNECT_TIMEOUT)
+        .timeout(REQUEST_TIMEOUT)
+        .build()
+        .map_err(network_error)
 }
 
 fn normalized_base_url(url: &str) -> String {

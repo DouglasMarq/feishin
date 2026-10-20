@@ -2,10 +2,10 @@ use discord_rich_presence::activity::{
     Activity, ActivityType, Assets, StatusDisplayType, Timestamps,
 };
 
-use super::image_url::is_shareable_image_url;
 use super::options::{DiscordDisplayType, DiscordOptions};
 use super::text_field::text_field;
 use crate::NowPlaying;
+use crate::image_url::is_shareable_image_url;
 
 const DEFAULT_LARGE_IMAGE: &str = "icon";
 const ARTIST_SEPARATOR: &str = ", ";

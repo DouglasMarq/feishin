@@ -12,6 +12,7 @@ use crate::protocol::{DeviceId, DeviceInfo, PROTOCOL_VERSION, SERVICE_TYPE};
 const ID_KEY: &str = "id";
 const NAME_KEY: &str = "name";
 const VERSION_KEY: &str = "v";
+const MAX_DISCOVERED_DEVICES: usize = 64;
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Discovered {
@@ -85,8 +86,9 @@ impl Discovery {
             while let Ok(event) = events.recv_async().await {
                 let changed = match event {
                     ServiceEvent::ServiceResolved(service) => discovered_of(&service, &me)
-                        .map(|device| found.insert(service.get_fullname().to_owned(), device))
-                        .is_some(),
+                        .is_some_and(|device| {
+                            remember(&mut found, service.get_fullname().to_owned(), device)
+                        }),
                     ServiceEvent::ServiceRemoved(_service_type, fullname) => {
                         found.remove(&fullname).is_some()
                     }
@@ -108,6 +110,15 @@ impl Drop for Discovery {
             tracing::debug!("stopping device discovery failed: {error}");
         }
     }
+}
+
+fn remember(found: &mut HashMap<String, Discovered>, fullname: String, device: Discovered) -> bool {
+    if found.len() >= MAX_DISCOVERED_DEVICES && !found.contains_key(&fullname) {
+        tracing::debug!("ignoring a player announcement past {MAX_DISCOVERED_DEVICES} players");
+        return false;
+    }
+    found.insert(fullname, device);
+    true
 }
 
 fn sorted(found: &HashMap<String, Discovered>) -> Vec<Discovered> {
@@ -155,6 +166,40 @@ fn discovery_error(error: mdns_sd::Error) -> RemoteError {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    fn discovered(index: usize) -> Discovered {
+        Discovered {
+            device: DeviceInfo {
+                id: DeviceId(format!("player-{index}")),
+                name: format!("Player {index}"),
+            },
+            address: SocketAddr::new(IpAddr::from([192, 168, 1, 7]), 4000),
+        }
+    }
+
+    #[test]
+    fn given_more_announcements_than_the_cap_only_known_players_are_kept() {
+        let mut found = HashMap::new();
+        for index in 0..MAX_DISCOVERED_DEVICES {
+            assert!(remember(
+                &mut found,
+                format!("player-{index}"),
+                discovered(index)
+            ));
+        }
+        let late = MAX_DISCOVERED_DEVICES;
+        assert!(!remember(
+            &mut found,
+            format!("player-{late}"),
+            discovered(late)
+        ));
+        assert!(remember(
+            &mut found,
+            "player-0".to_owned(),
+            discovered(late)
+        ));
+        assert_eq!(found.len(), MAX_DISCOVERED_DEVICES);
+    }
 
     #[test]
     fn a_network_address_is_preferred_over_loopback() {

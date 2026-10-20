@@ -11,7 +11,7 @@ use crate::normalize;
 use crate::query_params::QueryParams;
 use crate::sorting::{TOP_SONGS_ORDER, artist_sort, sort_order};
 
-const ALBUM_ARTISTS_PATH: &str = "artists/albumArtists";
+const ALBUM_ARTISTS_PATH: &[&str] = &["artists", "albumArtists"];
 
 impl JellyfinServer {
     pub(super) fn normalize_artists(&self, items: Vec<dto::AlbumArtist>) -> Vec<Artist> {
