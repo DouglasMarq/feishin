@@ -5,6 +5,9 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 
+msgid "\"{}\""
+msgstr "„{}”"
+
 msgid "\"{}\" plays next"
 msgstr "„{}” következik"
 
@@ -59,6 +62,9 @@ msgstr "Szerver hozzáadása"
 msgid "Add station"
 msgstr "Állomás hozzáadása"
 
+msgid "Add the selected songs to a playlist"
+msgstr "A kijelölt dalok hozzáadása egy lejátszási listához"
+
 msgid "Add this link to the end of the queue"
 msgstr "A hivatkozás hozzáadása a lejátszási sor végéhez"
 
@@ -76,6 +82,9 @@ msgstr "Hozzáadás a lejátszási sorhoz"
 
 msgid "Add to the server's stations"
 msgstr "Hozzáadás a szerver állomásaihoz"
+
+msgid "Add to {}"
+msgstr "Hozzáadás ehhez: {}"
 
 msgid "Add {n} song to playlist"
 msgid_plural "Add {n} songs to playlist"
@@ -227,11 +236,23 @@ msgstr "Értékelés törlése"
 msgid "Clear the favorites and genre filters"
 msgstr "A kedvencek- és műfajszűrők törlése"
 
+msgid "Click to close"
+msgstr "Kattints a bezáráshoz"
+
+msgid "Click to dismiss"
+msgstr "Kattints az elvetéshez"
+
 msgid "Close"
 msgstr "Bezárás"
 
 msgid "Close now playing"
 msgstr "Most játszott bezárása"
+
+msgid "Close without adding the songs"
+msgstr "Bezárás a dalok hozzáadása nélkül"
+
+msgid "Close without changes"
+msgstr "Bezárás változtatás nélkül"
 
 msgid "Close without saving"
 msgstr "Bezárás mentés nélkül"
@@ -239,8 +260,14 @@ msgstr "Bezárás mentés nélkül"
 msgid "Colors used across the whole app."
 msgstr "Az egész alkalmazásban használt színek."
 
+msgid "Connect to this server"
+msgstr "Csatlakozás ehhez a szerverhez"
+
 msgid "Connect to your music server"
 msgstr "Csatlakozás a zeneszerveredhez"
+
+msgid "Connect to {}"
+msgstr "Csatlakozás ehhez: {}"
 
 msgid "Connecting..."
 msgstr "Csatlakozás..."
@@ -268,6 +295,9 @@ msgstr "Nem sikerült létrehozni a lejátszási listát: {}"
 
 msgid "Could not delete the playlist: {}"
 msgstr "Nem sikerült törölni a lejátszási listát: {}"
+
+msgid "Could not delete the saved login: {}"
+msgstr "Nem sikerült törölni a mentett bejelentkezést: {}"
 
 msgid "Could not delete the station"
 msgstr "Nem sikerült törölni az állomást"
@@ -347,6 +377,9 @@ msgstr "Nem sikerült megnyitni a mappát: {}"
 msgid "Could not open YouTube Music: {}"
 msgstr "Nem sikerült megnyitni a YouTube Musicot: {}"
 
+msgid "Could not pause or resume playback: {}"
+msgstr "Nem sikerült szüneteltetni vagy folytatni a lejátszást: {}"
+
 msgid "Could not play \"{}\" from YouTube: {}"
 msgstr "Nem sikerült lejátszani a YouTube-ról: „{}”: {}"
 
@@ -365,11 +398,23 @@ msgstr "Nem sikerült eltávolítani a dalokat: {}"
 msgid "Could not rescan the library: {}"
 msgstr "Nem sikerült újraolvasni a könyvtárat: {}"
 
+msgid "Could not save the login for {}: {}"
+msgstr "Nem sikerült menteni a bejelentkezést ehhez: {}: {}"
+
+msgid "Could not save the settings: {}"
+msgstr "Nem sikerült menteni a beállításokat: {}"
+
+msgid "Could not seek: {}"
+msgstr "Nem sikerült tekerni: {}"
+
 msgid "Could not set the rating: {}"
 msgstr "Nem sikerült beállítani az értékelést: {}"
 
 msgid "Could not sign in to YouTube Music ({}). Showing general picks instead."
 msgstr "Nem sikerült bejelentkezni a YouTube Musicba ({}). Helyette általános ajánlások láthatók."
+
+msgid "Could not stop playback: {}"
+msgstr "Nem sikerült leállítani a lejátszást: {}"
 
 msgid "Could not switch server: {}"
 msgstr "Nem sikerült szervert váltani: {}"
@@ -391,6 +436,15 @@ msgstr "Ország"
 
 msgid "Create"
 msgstr "Létrehozás"
+
+msgid "Create a playlist with these songs"
+msgstr "Lejátszási lista létrehozása ezekkel a dalokkal"
+
+msgid "Create an empty playlist"
+msgstr "Üres lejátszási lista létrehozása"
+
+msgid "Create the playlist"
+msgstr "A lejátszási lista létrehozása"
 
 msgid "Created \"{}\" with only {n} song: {}"
 msgid_plural "Created \"{}\" with only {n} songs: {}"
@@ -450,6 +504,9 @@ msgstr "Alapértelmezett világos"
 msgid "Delete"
 msgstr "Törlés"
 
+msgid "Delete \"{}\""
+msgstr "„{}” törlése"
+
 msgid "Delete \"{}\" from the server? This cannot be undone."
 msgstr "Törlöd a(z) „{}” elemet a szerverről? Ez nem vonható vissza."
 
@@ -503,6 +560,15 @@ msgstr "Fedezz fel új zenéket a YouTube Musicon"
 
 msgid "Discover Weekly"
 msgstr "A hét felfedezései"
+
+msgid "Do not let \"{}\" control this player"
+msgstr "Ne engedd, hogy „{}” vezérelje ezt a lejátszót"
+
+msgid "Double-click to play"
+msgstr "Dupla kattintás a lejátszáshoz"
+
+msgid "Double-click to play, drag to reorder"
+msgstr "Dupla kattintás a lejátszáshoz, húzás az átrendezéshez"
 
 msgid "Duration"
 msgstr "Hossz"
@@ -582,6 +648,9 @@ msgstr "Összes elfelejtése"
 msgid "Forget this server?"
 msgstr "Elfelejted ezt a szervert?"
 
+msgid "Forget {}"
+msgstr "{} elfelejtése"
+
 msgid "Format the server should transcode to. Applies from the next song."
 msgstr "A formátum, amelyre a szerver átkódol. A következő daltól érvényes."
 
@@ -592,6 +661,9 @@ msgstr[1] "{n} szerver található a Feishinben, de egyiknek sincs használható
 
 msgid "Gapless playback"
 msgstr "Szünetmentes lejátszás"
+
+msgid "Genre filter: {}"
+msgstr "Műfajszűrő: {}"
 
 msgid "Genres"
 msgstr "Műfajok"
@@ -635,6 +707,9 @@ msgstr "Honlap (nem kötelező)"
 msgid "Import from Feishin"
 msgstr "Importálás a Feishinből"
 
+msgid "Import the servers saved by a previous Feishin install"
+msgstr "Egy korábbi Feishin-telepítés által mentett szerverek importálása"
+
 msgid "Install yt-dlp to play YouTube tracks"
 msgstr "A YouTube-számok lejátszásához telepítsd a yt-dlp-t"
 
@@ -668,14 +743,20 @@ msgstr "leállt"
 msgid "item"
 msgstr "elem"
 
-msgid "Jellyfin has no public share links"
-msgstr "A Jellyfin nem támogat nyilvános megosztási hivatkozásokat"
+msgid "Jump to this line"
+msgstr "Ugrás erre a sorra"
 
 msgid "Keep this station in the favorites on this device"
 msgstr "Az állomás megtartása a kedvencek között ezen az eszközön"
 
+msgid "Keep {}"
+msgstr "{} megtartása"
+
 msgid "Language"
 msgstr "Nyelv"
+
+msgid "Let \"{}\" control this player"
+msgstr "Engedd, hogy „{}” vezérelje ezt a lejátszót"
 
 msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
 msgstr "Engedi, hogy a hálózat más Feishin lejátszói vezéreljék ezt. Minden eszköz első alkalommal engedélyt kér."
@@ -705,6 +786,9 @@ msgstr "ÉLŐ"
 
 msgid "Load more"
 msgstr "Továbbiak betöltése"
+
+msgid "Load more results"
+msgstr "További találatok betöltése"
 
 msgid "Load this section again"
 msgstr "A szakasz újbóli betöltése"
@@ -1145,6 +1229,9 @@ msgstr "Eltávolítás a lejátszási listáról"
 msgid "Remove from queue"
 msgstr "Eltávolítás a lejátszási sorból"
 
+msgid "Remove the selected songs from this playlist"
+msgstr "A kijelölt dalok eltávolítása ebből a lejátszási listából"
+
 msgid "Removed {n} song from \"{}\""
 msgid_plural "Removed {n} songs from \"{}\""
 msgstr[0] "{n} dal eltávolítva innen: „{}”"
@@ -1164,6 +1251,9 @@ msgstr "Ismétlés: egy"
 
 msgid "ReplayGain"
 msgstr "ReplayGain"
+
+msgid "ReplayGain could not be changed: {}"
+msgstr "A ReplayGain nem módosítható: {}"
 
 msgid "Report what you play to the server."
 msgstr "A lejátszott zenék jelentése a szervernek."
@@ -1270,6 +1360,9 @@ msgstr "Szerver"
 msgid "Server type"
 msgstr "Szerver típusa"
 
+msgid "Server type: {}"
+msgstr "Szerver típusa: {}"
+
 msgid "Servers"
 msgstr "Szerverek"
 
@@ -1294,8 +1387,17 @@ msgstr "A(z) {} megosztása: nyilvános hivatkozás másolása"
 msgid "Sharing is unavailable: {}"
 msgstr "A megosztás nem érhető el: {}"
 
+msgid "Show all top songs"
+msgstr "Az összes legnépszerűbb dal megjelenítése"
+
+msgid "Show fewer top songs"
+msgstr "Kevesebb legnépszerűbb dal megjelenítése"
+
 msgid "SHOW LESS"
 msgstr "KEVESEBB"
+
+msgid "Show less of the biography"
+msgstr "Az életrajz rövidítése"
 
 msgid "Show lyrics"
 msgstr "Dalszöveg megjelenítése"
@@ -1323,6 +1425,9 @@ msgstr "A lejátszási sor megjelenítése a könyvtár mellett; a következő i
 
 msgid "Show the server and saved stations"
 msgstr "A szerver és a mentett állomások megjelenítése"
+
+msgid "Show the whole biography"
+msgstr "A teljes életrajz megjelenítése"
 
 msgid "Show {}"
 msgstr "{} megjelenítése"
@@ -1357,6 +1462,9 @@ msgstr "Keverés: be"
 msgid "Sign in"
 msgstr "Bejelentkezés"
 
+msgid "Sign in to another server"
+msgstr "Bejelentkezés másik szerverre"
+
 msgid "Sign in with browser"
 msgstr "Bejelentkezés böngészővel"
 
@@ -1365,6 +1473,9 @@ msgstr "Kijelentkezel, és elfelejted a szerver mentett bejelentkezését?"
 
 msgid "Sign out and forget this server?"
 msgstr "Kijelentkezel, és elfelejted ezt a szervert?"
+
+msgid "Sign out of {}"
+msgstr "Kijelentkezés innen: {}"
 
 msgid "Similar"
 msgstr "Hasonlók"
@@ -1411,6 +1522,9 @@ msgstr "Állomás neve"
 msgid "Stations"
 msgstr "Állomások"
 
+msgid "Stay signed in"
+msgstr "Maradj bejelentkezve"
+
 msgid "Stop {}"
 msgstr "{} leállítása"
 
@@ -1440,6 +1554,9 @@ msgstr "Címke, például jazz"
 
 msgid "That device is no longer on the network"
 msgstr "Ez az eszköz már nincs a hálózaton"
+
+msgid "The audio device could not be changed: {}"
+msgstr "A hangeszközt nem sikerült módosítani: {}"
 
 msgid "the connection was not allowed"
 msgstr "a kapcsolat nem lett engedélyezve"
@@ -1666,11 +1783,23 @@ msgstr "{} kbps"
 msgid "{} s"
 msgstr "{} mp"
 
+msgid "{} {} kbps"
+msgstr "{} {} kbps"
+
+msgid "{} · {}"
+msgstr "{} · {}"
+
+msgid "{} • {}"
+msgstr "{} • {}"
+
 msgid "{}: off"
 msgstr "{}: ki"
 
 msgid "{}: on"
 msgstr "{}: be"
+
+msgid "{}: {}"
+msgstr "{}: {}"
 
 msgid "{}: {} (dark)"
 msgstr "{}: {} (sötét)"

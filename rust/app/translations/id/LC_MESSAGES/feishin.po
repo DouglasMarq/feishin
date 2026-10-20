@@ -5,6 +5,9 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 
+msgid "\"{}\""
+msgstr "\"{}\""
+
 msgid "\"{}\" plays next"
 msgstr "Berikutnya: \"{}\""
 
@@ -59,6 +62,9 @@ msgstr "Tambah server"
 msgid "Add station"
 msgstr "Tambah stasiun"
 
+msgid "Add the selected songs to a playlist"
+msgstr "Tambahkan lagu yang dipilih ke daftar putar"
+
 msgid "Add this link to the end of the queue"
 msgstr "Tambahkan tautan ini ke akhir antrean"
 
@@ -76,6 +82,9 @@ msgstr "Tambahkan ke antrean"
 
 msgid "Add to the server's stations"
 msgstr "Tambahkan ke stasiun server"
+
+msgid "Add to {}"
+msgstr "Tambahkan ke {}"
 
 msgid "Add {n} song to playlist"
 msgid_plural "Add {n} songs to playlist"
@@ -221,11 +230,23 @@ msgstr "Hapus penilaian"
 msgid "Clear the favorites and genre filters"
 msgstr "Hapus filter favorit dan genre"
 
+msgid "Click to close"
+msgstr "Klik untuk menutup"
+
+msgid "Click to dismiss"
+msgstr "Klik untuk mengabaikan"
+
 msgid "Close"
 msgstr "Tutup"
 
 msgid "Close now playing"
 msgstr "Tutup Sedang diputar"
+
+msgid "Close without adding the songs"
+msgstr "Tutup tanpa menambahkan lagu"
+
+msgid "Close without changes"
+msgstr "Tutup tanpa perubahan"
 
 msgid "Close without saving"
 msgstr "Tutup tanpa menyimpan"
@@ -233,8 +254,14 @@ msgstr "Tutup tanpa menyimpan"
 msgid "Colors used across the whole app."
 msgstr "Warna yang digunakan di seluruh aplikasi."
 
+msgid "Connect to this server"
+msgstr "Hubungkan ke server ini"
+
 msgid "Connect to your music server"
 msgstr "Hubungkan ke server musik Anda"
+
+msgid "Connect to {}"
+msgstr "Hubungkan ke {}"
 
 msgid "Connecting..."
 msgstr "Menghubungkan..."
@@ -262,6 +289,9 @@ msgstr "Tidak dapat membuat daftar putar: {}"
 
 msgid "Could not delete the playlist: {}"
 msgstr "Tidak dapat menghapus daftar putar: {}"
+
+msgid "Could not delete the saved login: {}"
+msgstr "Tidak dapat menghapus login tersimpan: {}"
 
 msgid "Could not delete the station"
 msgstr "Tidak dapat menghapus stasiun"
@@ -341,6 +371,9 @@ msgstr "Tidak dapat membuka folder: {}"
 msgid "Could not open YouTube Music: {}"
 msgstr "Tidak dapat membuka YouTube Music: {}"
 
+msgid "Could not pause or resume playback: {}"
+msgstr "Tidak dapat menjeda atau melanjutkan pemutaran: {}"
+
 msgid "Could not play \"{}\" from YouTube: {}"
 msgstr "Tidak dapat memutar \"{}\" dari YouTube: {}"
 
@@ -359,11 +392,23 @@ msgstr "Tidak dapat menghapus lagu: {}"
 msgid "Could not rescan the library: {}"
 msgstr "Tidak dapat memindai ulang pustaka: {}"
 
+msgid "Could not save the login for {}: {}"
+msgstr "Tidak dapat menyimpan login untuk {}: {}"
+
+msgid "Could not save the settings: {}"
+msgstr "Tidak dapat menyimpan pengaturan: {}"
+
+msgid "Could not seek: {}"
+msgstr "Tidak dapat menggeser posisi: {}"
+
 msgid "Could not set the rating: {}"
 msgstr "Tidak dapat menyetel penilaian: {}"
 
 msgid "Could not sign in to YouTube Music ({}). Showing general picks instead."
 msgstr "Tidak dapat masuk ke YouTube Music ({}). Menampilkan pilihan umum sebagai gantinya."
+
+msgid "Could not stop playback: {}"
+msgstr "Tidak dapat menghentikan pemutaran: {}"
 
 msgid "Could not switch server: {}"
 msgstr "Tidak dapat beralih server: {}"
@@ -385,6 +430,15 @@ msgstr "Negara"
 
 msgid "Create"
 msgstr "Buat"
+
+msgid "Create a playlist with these songs"
+msgstr "Buat daftar putar dengan lagu-lagu ini"
+
+msgid "Create an empty playlist"
+msgstr "Buat daftar putar kosong"
+
+msgid "Create the playlist"
+msgstr "Buat daftar putar"
 
 msgid "Created \"{}\" with only {n} song: {}"
 msgid_plural "Created \"{}\" with only {n} songs: {}"
@@ -442,6 +496,9 @@ msgstr "Terang default"
 msgid "Delete"
 msgstr "Hapus"
 
+msgid "Delete \"{}\""
+msgstr "Hapus \"{}\""
+
 msgid "Delete \"{}\" from the server? This cannot be undone."
 msgstr "Hapus \"{}\" dari server? Tindakan ini tidak dapat dibatalkan."
 
@@ -495,6 +552,15 @@ msgstr "Temukan musik baru di YouTube Music"
 
 msgid "Discover Weekly"
 msgstr "Temuan Mingguan"
+
+msgid "Do not let \"{}\" control this player"
+msgstr "Jangan izinkan \"{}\" mengendalikan pemutar ini"
+
+msgid "Double-click to play"
+msgstr "Klik dua kali untuk memutar"
+
+msgid "Double-click to play, drag to reorder"
+msgstr "Klik dua kali untuk memutar, seret untuk mengubah urutan"
 
 msgid "Duration"
 msgstr "Durasi"
@@ -574,6 +640,9 @@ msgstr "Lupakan semua"
 msgid "Forget this server?"
 msgstr "Lupakan server ini?"
 
+msgid "Forget {}"
+msgstr "Lupakan {}"
+
 msgid "Format the server should transcode to. Applies from the next song."
 msgstr "Format tujuan transkode server. Berlaku mulai lagu berikutnya."
 
@@ -583,6 +652,9 @@ msgstr[0] "Menemukan {n} server di Feishin, tetapi tidak ada yang memiliki login
 
 msgid "Gapless playback"
 msgstr "Pemutaran tanpa jeda"
+
+msgid "Genre filter: {}"
+msgstr "Filter genre: {}"
 
 msgid "Genres"
 msgstr "Genre"
@@ -626,6 +698,9 @@ msgstr "Situs web (opsional)"
 msgid "Import from Feishin"
 msgstr "Impor dari Feishin"
 
+msgid "Import the servers saved by a previous Feishin install"
+msgstr "Impor server yang disimpan oleh instalasi Feishin sebelumnya"
+
 msgid "Install yt-dlp to play YouTube tracks"
 msgstr "Instal yt-dlp untuk memutar trek YouTube"
 
@@ -659,14 +734,20 @@ msgstr "berhenti"
 msgid "item"
 msgstr "item"
 
-msgid "Jellyfin has no public share links"
-msgstr "Jellyfin tidak memiliki tautan berbagi publik"
+msgid "Jump to this line"
+msgstr "Lompat ke baris ini"
 
 msgid "Keep this station in the favorites on this device"
 msgstr "Simpan stasiun ini di favorit pada perangkat ini"
 
+msgid "Keep {}"
+msgstr "Pertahankan {}"
+
 msgid "Language"
 msgstr "Bahasa"
+
+msgid "Let \"{}\" control this player"
+msgstr "Izinkan \"{}\" mengendalikan pemutar ini"
 
 msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
 msgstr "Izinkan pemutar Feishin lain di jaringan ini mengendalikan pemutar ini. Setiap perangkat meminta persetujuanmu pada kali pertama."
@@ -695,6 +776,9 @@ msgstr "LIVE"
 
 msgid "Load more"
 msgstr "Muat lainnya"
+
+msgid "Load more results"
+msgstr "Muat hasil lainnya"
 
 msgid "Load this section again"
 msgstr "Muat ulang bagian ini"
@@ -1133,6 +1217,9 @@ msgstr "Hapus dari daftar putar"
 msgid "Remove from queue"
 msgstr "Hapus dari antrean"
 
+msgid "Remove the selected songs from this playlist"
+msgstr "Hapus lagu yang dipilih dari daftar putar ini"
+
 msgid "Removed {n} song from \"{}\""
 msgid_plural "Removed {n} songs from \"{}\""
 msgstr[0] "{n} lagu dihapus dari \"{}\""
@@ -1151,6 +1238,9 @@ msgstr "Ulangi: satu"
 
 msgid "ReplayGain"
 msgstr "ReplayGain"
+
+msgid "ReplayGain could not be changed: {}"
+msgstr "ReplayGain tidak dapat diubah: {}"
 
 msgid "Report what you play to the server."
 msgstr "Laporkan apa yang Anda putar ke server."
@@ -1257,6 +1347,9 @@ msgstr "Server"
 msgid "Server type"
 msgstr "Jenis server"
 
+msgid "Server type: {}"
+msgstr "Jenis server: {}"
+
 msgid "Servers"
 msgstr "Server"
 
@@ -1281,8 +1374,17 @@ msgstr "Bagikan {} ini: salin tautan publik"
 msgid "Sharing is unavailable: {}"
 msgstr "Berbagi tidak tersedia: {}"
 
+msgid "Show all top songs"
+msgstr "Tampilkan semua lagu teratas"
+
+msgid "Show fewer top songs"
+msgstr "Tampilkan lebih sedikit lagu teratas"
+
 msgid "SHOW LESS"
 msgstr "TAMPILKAN LEBIH SEDIKIT"
+
+msgid "Show less of the biography"
+msgstr "Tampilkan lebih sedikit biografi"
 
 msgid "Show lyrics"
 msgstr "Tampilkan lirik"
@@ -1310,6 +1412,9 @@ msgstr "Tampilkan antrean di samping pustaka; diingat saat aplikasi dibuka lagi.
 
 msgid "Show the server and saved stations"
 msgstr "Tampilkan stasiun server dan yang tersimpan"
+
+msgid "Show the whole biography"
+msgstr "Tampilkan seluruh biografi"
 
 msgid "Show {}"
 msgstr "Tampilkan {}"
@@ -1344,6 +1449,9 @@ msgstr "Acak: nyala"
 msgid "Sign in"
 msgstr "Masuk"
 
+msgid "Sign in to another server"
+msgstr "Masuk ke server lain"
+
 msgid "Sign in with browser"
 msgstr "Masuk dengan browser"
 
@@ -1352,6 +1460,9 @@ msgstr "Keluar dan lupakan login tersimpan server ini?"
 
 msgid "Sign out and forget this server?"
 msgstr "Keluar dan lupakan server ini?"
+
+msgid "Sign out of {}"
+msgstr "Keluar dari {}"
 
 msgid "Similar"
 msgstr "Serupa"
@@ -1398,6 +1509,9 @@ msgstr "Nama stasiun"
 msgid "Stations"
 msgstr "Stasiun"
 
+msgid "Stay signed in"
+msgstr "Tetap masuk"
+
 msgid "Stop {}"
 msgstr "Hentikan {}"
 
@@ -1427,6 +1541,9 @@ msgstr "Tag, misalnya jazz"
 
 msgid "That device is no longer on the network"
 msgstr "Perangkat itu sudah tidak ada di jaringan"
+
+msgid "The audio device could not be changed: {}"
+msgstr "Perangkat audio tidak dapat diubah: {}"
 
 msgid "the connection was not allowed"
 msgstr "koneksi tidak diizinkan"
@@ -1644,11 +1761,23 @@ msgstr "{} kbps"
 msgid "{} s"
 msgstr "{} dtk"
 
+msgid "{} {} kbps"
+msgstr "{} {} kbps"
+
+msgid "{} · {}"
+msgstr "{} · {}"
+
+msgid "{} • {}"
+msgstr "{} • {}"
+
 msgid "{}: off"
 msgstr "{}: mati"
 
 msgid "{}: on"
 msgstr "{}: nyala"
+
+msgid "{}: {}"
+msgstr "{}: {}"
 
 msgid "{}: {} (dark)"
 msgstr "{}: {} (gelap)"

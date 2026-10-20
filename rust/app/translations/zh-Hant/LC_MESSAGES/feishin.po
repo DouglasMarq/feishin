@@ -5,6 +5,9 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 
+msgid "\"{}\""
+msgstr "「{}」"
+
 msgid "\"{}\" plays next"
 msgstr "「{}」將在下一首播放"
 
@@ -59,6 +62,9 @@ msgstr "新增伺服器"
 msgid "Add station"
 msgstr "新增電台"
 
+msgid "Add the selected songs to a playlist"
+msgstr "將所選歌曲加入播放清單"
+
 msgid "Add this link to the end of the queue"
 msgstr "將此連結加入佇列結尾"
 
@@ -76,6 +82,9 @@ msgstr "加入佇列"
 
 msgid "Add to the server's stations"
 msgstr "新增至伺服器電台"
+
+msgid "Add to {}"
+msgstr "加入 {}"
 
 msgid "Add {n} song to playlist"
 msgid_plural "Add {n} songs to playlist"
@@ -221,11 +230,23 @@ msgstr "清除評分"
 msgid "Clear the favorites and genre filters"
 msgstr "清除收藏與曲風篩選"
 
+msgid "Click to close"
+msgstr "按一下即可關閉"
+
+msgid "Click to dismiss"
+msgstr "按一下即可忽略"
+
 msgid "Close"
 msgstr "關閉"
 
 msgid "Close now playing"
 msgstr "關閉正在播放"
+
+msgid "Close without adding the songs"
+msgstr "關閉且不加入歌曲"
+
+msgid "Close without changes"
+msgstr "關閉且不做變更"
 
 msgid "Close without saving"
 msgstr "關閉且不儲存"
@@ -233,8 +254,14 @@ msgstr "關閉且不儲存"
 msgid "Colors used across the whole app."
 msgstr "整個應用程式使用的顏色。"
 
+msgid "Connect to this server"
+msgstr "連線至此伺服器"
+
 msgid "Connect to your music server"
 msgstr "連線至你的音樂伺服器"
+
+msgid "Connect to {}"
+msgstr "連線至 {}"
 
 msgid "Connecting..."
 msgstr "連線中..."
@@ -262,6 +289,9 @@ msgstr "無法建立播放清單：{}"
 
 msgid "Could not delete the playlist: {}"
 msgstr "無法刪除播放清單：{}"
+
+msgid "Could not delete the saved login: {}"
+msgstr "無法刪除已儲存的登入資訊：{}"
 
 msgid "Could not delete the station"
 msgstr "無法刪除電台"
@@ -341,6 +371,9 @@ msgstr "無法開啟資料夾：{}"
 msgid "Could not open YouTube Music: {}"
 msgstr "無法開啟 YouTube Music：{}"
 
+msgid "Could not pause or resume playback: {}"
+msgstr "無法暫停或繼續播放：{}"
+
 msgid "Could not play \"{}\" from YouTube: {}"
 msgstr "無法從 YouTube 播放「{}」：{}"
 
@@ -359,11 +392,23 @@ msgstr "無法移除歌曲：{}"
 msgid "Could not rescan the library: {}"
 msgstr "無法重新掃描媒體庫：{}"
 
+msgid "Could not save the login for {}: {}"
+msgstr "無法儲存 {} 的登入資訊：{}"
+
+msgid "Could not save the settings: {}"
+msgstr "無法儲存設定：{}"
+
+msgid "Could not seek: {}"
+msgstr "無法跳轉進度：{}"
+
 msgid "Could not set the rating: {}"
 msgstr "無法設定評分：{}"
 
 msgid "Could not sign in to YouTube Music ({}). Showing general picks instead."
 msgstr "無法登入 YouTube Music（{}）。將改為顯示一般推薦。"
+
+msgid "Could not stop playback: {}"
+msgstr "無法停止播放：{}"
 
 msgid "Could not switch server: {}"
 msgstr "無法切換伺服器：{}"
@@ -385,6 +430,15 @@ msgstr "國家/地區"
 
 msgid "Create"
 msgstr "建立"
+
+msgid "Create a playlist with these songs"
+msgstr "以這些歌曲建立播放清單"
+
+msgid "Create an empty playlist"
+msgstr "建立空白播放清單"
+
+msgid "Create the playlist"
+msgstr "建立播放清單"
 
 msgid "Created \"{}\" with only {n} song: {}"
 msgid_plural "Created \"{}\" with only {n} songs: {}"
@@ -442,6 +496,9 @@ msgstr "預設淺色"
 msgid "Delete"
 msgstr "刪除"
 
+msgid "Delete \"{}\""
+msgstr "刪除「{}」"
+
 msgid "Delete \"{}\" from the server? This cannot be undone."
 msgstr "要從伺服器刪除「{}」嗎？此操作無法復原。"
 
@@ -495,6 +552,15 @@ msgstr "在 YouTube Music 上探索新音樂"
 
 msgid "Discover Weekly"
 msgstr "每週新發現"
+
+msgid "Do not let \"{}\" control this player"
+msgstr "不允許「{}」控制此播放器"
+
+msgid "Double-click to play"
+msgstr "按兩下即可播放"
+
+msgid "Double-click to play, drag to reorder"
+msgstr "按兩下即可播放，拖曳即可重新排序"
 
 msgid "Duration"
 msgstr "時長"
@@ -574,6 +640,9 @@ msgstr "全部忘記"
 msgid "Forget this server?"
 msgstr "要移除此伺服器嗎？"
 
+msgid "Forget {}"
+msgstr "移除 {}"
+
 msgid "Format the server should transcode to. Applies from the next song."
 msgstr "伺服器轉碼的目標格式。從下一首歌曲開始生效。"
 
@@ -583,6 +652,9 @@ msgstr[0] "在 Feishin 中找到 {n} 個伺服器，但沒有可用的已儲存�
 
 msgid "Gapless playback"
 msgstr "無縫播放"
+
+msgid "Genre filter: {}"
+msgstr "曲風篩選：{}"
 
 msgid "Genres"
 msgstr "曲風"
@@ -626,6 +698,9 @@ msgstr "首頁（選填）"
 msgid "Import from Feishin"
 msgstr "從 Feishin 匯入"
 
+msgid "Import the servers saved by a previous Feishin install"
+msgstr "匯入先前安裝的 Feishin 所儲存的伺服器"
+
 msgid "Install yt-dlp to play YouTube tracks"
 msgstr "安裝 yt-dlp 以播放 YouTube 曲目"
 
@@ -659,14 +734,20 @@ msgstr "已停止"
 msgid "item"
 msgstr "項目"
 
-msgid "Jellyfin has no public share links"
-msgstr "Jellyfin 不支援公開分享連結"
+msgid "Jump to this line"
+msgstr "跳至此行"
 
 msgid "Keep this station in the favorites on this device"
 msgstr "在此裝置的收藏中保留此電台"
 
+msgid "Keep {}"
+msgstr "保留 {}"
+
 msgid "Language"
 msgstr "語言"
+
+msgid "Let \"{}\" control this player"
+msgstr "允許「{}」控制此播放器"
 
 msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
 msgstr "允許此網路中的其他 Feishin 播放器控制此播放器。每台裝置第一次連線時都會請求你的允許。"
@@ -695,6 +776,9 @@ msgstr "直播"
 
 msgid "Load more"
 msgstr "載入更多"
+
+msgid "Load more results"
+msgstr "載入更多結果"
 
 msgid "Load this section again"
 msgstr "重新載入此區塊"
@@ -1133,6 +1217,9 @@ msgstr "從播放清單中移除"
 msgid "Remove from queue"
 msgstr "從佇列中移除"
 
+msgid "Remove the selected songs from this playlist"
+msgstr "從此播放清單中移除所選歌曲"
+
 msgid "Removed {n} song from \"{}\""
 msgid_plural "Removed {n} songs from \"{}\""
 msgstr[0] "已從「{}」中移除 {n} 首歌曲"
@@ -1151,6 +1238,9 @@ msgstr "重複：單曲"
 
 msgid "ReplayGain"
 msgstr "ReplayGain"
+
+msgid "ReplayGain could not be changed: {}"
+msgstr "無法變更 ReplayGain：{}"
 
 msgid "Report what you play to the server."
 msgstr "將播放紀錄回報給伺服器。"
@@ -1257,6 +1347,9 @@ msgstr "伺服器"
 msgid "Server type"
 msgstr "伺服器類型"
 
+msgid "Server type: {}"
+msgstr "伺服器類型：{}"
+
 msgid "Servers"
 msgstr "伺服器"
 
@@ -1281,8 +1374,17 @@ msgstr "分享此{}：複製公開連結"
 msgid "Sharing is unavailable: {}"
 msgstr "無法分享：{}"
 
+msgid "Show all top songs"
+msgstr "顯示所有熱門歌曲"
+
+msgid "Show fewer top songs"
+msgstr "顯示較少熱門歌曲"
+
 msgid "SHOW LESS"
 msgstr "收合"
+
+msgid "Show less of the biography"
+msgstr "收合簡介"
 
 msgid "Show lyrics"
 msgstr "顯示歌詞"
@@ -1310,6 +1412,9 @@ msgstr "在媒體庫旁顯示佇列；下次啟動時仍會保留。"
 
 msgid "Show the server and saved stations"
 msgstr "顯示伺服器電台與已儲存的電台"
+
+msgid "Show the whole biography"
+msgstr "顯示完整簡介"
 
 msgid "Show {}"
 msgstr "顯示 {}"
@@ -1344,6 +1449,9 @@ msgstr "隨機播放：開"
 msgid "Sign in"
 msgstr "登入"
 
+msgid "Sign in to another server"
+msgstr "登入其他伺服器"
+
 msgid "Sign in with browser"
 msgstr "透過瀏覽器登入"
 
@@ -1352,6 +1460,9 @@ msgstr "要登出並移除此伺服器的已儲存登入資訊嗎？"
 
 msgid "Sign out and forget this server?"
 msgstr "要登出並移除此伺服器嗎？"
+
+msgid "Sign out of {}"
+msgstr "登出 {}"
 
 msgid "Similar"
 msgstr "相似"
@@ -1398,6 +1509,9 @@ msgstr "電台名稱"
 msgid "Stations"
 msgstr "電台"
 
+msgid "Stay signed in"
+msgstr "保持登入"
+
 msgid "Stop {}"
 msgstr "停止 {}"
 
@@ -1427,6 +1541,9 @@ msgstr "標籤，例如 jazz"
 
 msgid "That device is no longer on the network"
 msgstr "該裝置已不在網路中"
+
+msgid "The audio device could not be changed: {}"
+msgstr "無法變更音訊裝置：{}"
 
 msgid "the connection was not allowed"
 msgstr "連線未被允許"
@@ -1644,11 +1761,23 @@ msgstr "{} kbps"
 msgid "{} s"
 msgstr "{} 秒"
 
+msgid "{} {} kbps"
+msgstr "{} {} kbps"
+
+msgid "{} · {}"
+msgstr "{} · {}"
+
+msgid "{} • {}"
+msgstr "{} • {}"
+
 msgid "{}: off"
 msgstr "{}：關"
 
 msgid "{}: on"
 msgstr "{}：開"
+
+msgid "{}: {}"
+msgstr "{}：{}"
 
 msgid "{}: {} (dark)"
 msgstr "{}：{}（深色）"

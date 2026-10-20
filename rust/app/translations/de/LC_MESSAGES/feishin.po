@@ -5,6 +5,9 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 
+msgid "\"{}\""
+msgstr "\"{}\""
+
 msgid "\"{}\" plays next"
 msgstr "\"{}\" wird als Nächstes gespielt"
 
@@ -59,6 +62,9 @@ msgstr "Server hinzufügen"
 msgid "Add station"
 msgstr "Sender hinzufügen"
 
+msgid "Add the selected songs to a playlist"
+msgstr "Ausgewählte Songs zu einer Wiedergabeliste hinzufügen"
+
 msgid "Add this link to the end of the queue"
 msgstr "Diesen Link ans Ende der Warteschlange setzen"
 
@@ -76,6 +82,9 @@ msgstr "Zur Warteschlange hinzufügen"
 
 msgid "Add to the server's stations"
 msgstr "Zu den Sendern des Servers hinzufügen"
+
+msgid "Add to {}"
+msgstr "Zu {} hinzufügen"
 
 msgid "Add {n} song to playlist"
 msgid_plural "Add {n} songs to playlist"
@@ -227,11 +236,23 @@ msgstr "Bewertung entfernen"
 msgid "Clear the favorites and genre filters"
 msgstr "Favoriten- und Genrefilter zurücksetzen"
 
+msgid "Click to close"
+msgstr "Zum Schließen klicken"
+
+msgid "Click to dismiss"
+msgstr "Zum Ausblenden klicken"
+
 msgid "Close"
 msgstr "Schließen"
 
 msgid "Close now playing"
 msgstr "Wiedergabeansicht schließen"
+
+msgid "Close without adding the songs"
+msgstr "Schließen, ohne die Songs hinzuzufügen"
+
+msgid "Close without changes"
+msgstr "Ohne Änderungen schließen"
 
 msgid "Close without saving"
 msgstr "Ohne Speichern schließen"
@@ -239,8 +260,14 @@ msgstr "Ohne Speichern schließen"
 msgid "Colors used across the whole app."
 msgstr "Farben, die in der gesamten App verwendet werden."
 
+msgid "Connect to this server"
+msgstr "Mit diesem Server verbinden"
+
 msgid "Connect to your music server"
 msgstr "Mit deinem Musikserver verbinden"
+
+msgid "Connect to {}"
+msgstr "Mit {} verbinden"
 
 msgid "Connecting..."
 msgstr "Verbinde..."
@@ -268,6 +295,9 @@ msgstr "Wiedergabeliste konnte nicht erstellt werden: {}"
 
 msgid "Could not delete the playlist: {}"
 msgstr "Wiedergabeliste konnte nicht gelöscht werden: {}"
+
+msgid "Could not delete the saved login: {}"
+msgstr "Gespeicherte Anmeldung konnte nicht gelöscht werden: {}"
 
 msgid "Could not delete the station"
 msgstr "Sender konnte nicht gelöscht werden"
@@ -347,6 +377,9 @@ msgstr "Verzeichnis konnte nicht geöffnet werden: {}"
 msgid "Could not open YouTube Music: {}"
 msgstr "YouTube Music konnte nicht geöffnet werden: {}"
 
+msgid "Could not pause or resume playback: {}"
+msgstr "Wiedergabe konnte nicht pausiert oder fortgesetzt werden: {}"
+
 msgid "Could not play \"{}\" from YouTube: {}"
 msgstr "\"{}\" konnte nicht von YouTube abgespielt werden: {}"
 
@@ -365,11 +398,23 @@ msgstr "Songs konnten nicht entfernt werden: {}"
 msgid "Could not rescan the library: {}"
 msgstr "Bibliothek konnte nicht neu eingelesen werden: {}"
 
+msgid "Could not save the login for {}: {}"
+msgstr "Anmeldung für {} konnte nicht gespeichert werden: {}"
+
+msgid "Could not save the settings: {}"
+msgstr "Einstellungen konnten nicht gespeichert werden: {}"
+
+msgid "Could not seek: {}"
+msgstr "Spulen fehlgeschlagen: {}"
+
 msgid "Could not set the rating: {}"
 msgstr "Bewertung konnte nicht gesetzt werden: {}"
 
 msgid "Could not sign in to YouTube Music ({}). Showing general picks instead."
 msgstr "Anmeldung bei YouTube Music fehlgeschlagen ({}). Stattdessen werden allgemeine Empfehlungen angezeigt."
+
+msgid "Could not stop playback: {}"
+msgstr "Wiedergabe konnte nicht gestoppt werden: {}"
 
 msgid "Could not switch server: {}"
 msgstr "Serverwechsel fehlgeschlagen: {}"
@@ -391,6 +436,15 @@ msgstr "Land"
 
 msgid "Create"
 msgstr "Erstellen"
+
+msgid "Create a playlist with these songs"
+msgstr "Wiedergabeliste mit diesen Songs erstellen"
+
+msgid "Create an empty playlist"
+msgstr "Leere Wiedergabeliste erstellen"
+
+msgid "Create the playlist"
+msgstr "Wiedergabeliste erstellen"
 
 msgid "Created \"{}\" with only {n} song: {}"
 msgid_plural "Created \"{}\" with only {n} songs: {}"
@@ -450,6 +504,9 @@ msgstr "Standard Hell"
 msgid "Delete"
 msgstr "Löschen"
 
+msgid "Delete \"{}\""
+msgstr "\"{}\" löschen"
+
 msgid "Delete \"{}\" from the server? This cannot be undone."
 msgstr "\"{}\" vom Server löschen? Dies kann nicht rückgängig gemacht werden."
 
@@ -503,6 +560,15 @@ msgstr "Neue Musik auf YouTube Music entdecken"
 
 msgid "Discover Weekly"
 msgstr "Entdeckungen der Woche"
+
+msgid "Do not let \"{}\" control this player"
+msgstr "\"{}\" diesen Player nicht steuern lassen"
+
+msgid "Double-click to play"
+msgstr "Doppelklick zum Abspielen"
+
+msgid "Double-click to play, drag to reorder"
+msgstr "Doppelklick zum Abspielen, ziehen zum Umsortieren"
 
 msgid "Duration"
 msgstr "Dauer"
@@ -582,6 +648,9 @@ msgstr "Alle vergessen"
 msgid "Forget this server?"
 msgstr "Diesen Server vergessen?"
 
+msgid "Forget {}"
+msgstr "{} vergessen"
+
 msgid "Format the server should transcode to. Applies from the next song."
 msgstr "Format, in das der Server umwandeln soll. Gilt ab dem nächsten Song."
 
@@ -592,6 +661,9 @@ msgstr[1] "{n} Server in Feishin gefunden, aber keiner mit verwendbarer gespeich
 
 msgid "Gapless playback"
 msgstr "Lückenlose Wiedergabe"
+
+msgid "Genre filter: {}"
+msgstr "Genrefilter: {}"
 
 msgid "Genres"
 msgstr "Genres"
@@ -635,6 +707,9 @@ msgstr "Homepage (optional)"
 msgid "Import from Feishin"
 msgstr "Aus Feishin importieren"
 
+msgid "Import the servers saved by a previous Feishin install"
+msgstr "Die von einer früheren Feishin-Installation gespeicherten Server importieren"
+
 msgid "Install yt-dlp to play YouTube tracks"
 msgstr "Installiere yt-dlp, um YouTube-Titel abzuspielen"
 
@@ -668,14 +743,20 @@ msgstr "es wurde beendet"
 msgid "item"
 msgstr "Element"
 
-msgid "Jellyfin has no public share links"
-msgstr "Jellyfin hat keine öffentlichen Freigabelinks"
+msgid "Jump to this line"
+msgstr "Zu dieser Zeile springen"
 
 msgid "Keep this station in the favorites on this device"
 msgstr "Diesen Sender auf diesem Gerät in den Favoriten behalten"
 
+msgid "Keep {}"
+msgstr "{} behalten"
+
 msgid "Language"
 msgstr "Sprache"
+
+msgid "Let \"{}\" control this player"
+msgstr "\"{}\" diesen Player steuern lassen"
 
 msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
 msgstr "Andere Feishin-Player in diesem Netzwerk dürfen diesen steuern. Jedes Gerät fragt beim ersten Mal nach deiner Erlaubnis."
@@ -705,6 +786,9 @@ msgstr "LIVE"
 
 msgid "Load more"
 msgstr "Mehr laden"
+
+msgid "Load more results"
+msgstr "Weitere Ergebnisse laden"
 
 msgid "Load this section again"
 msgstr "Diesen Abschnitt erneut laden"
@@ -1145,6 +1229,9 @@ msgstr "Aus Wiedergabeliste entfernen"
 msgid "Remove from queue"
 msgstr "Aus Warteschlange entfernen"
 
+msgid "Remove the selected songs from this playlist"
+msgstr "Ausgewählte Songs aus dieser Wiedergabeliste entfernen"
+
 msgid "Removed {n} song from \"{}\""
 msgid_plural "Removed {n} songs from \"{}\""
 msgstr[0] "{n} Song aus \"{}\" entfernt"
@@ -1164,6 +1251,9 @@ msgstr "Wiederholen: einen"
 
 msgid "ReplayGain"
 msgstr "ReplayGain"
+
+msgid "ReplayGain could not be changed: {}"
+msgstr "ReplayGain konnte nicht geändert werden: {}"
 
 msgid "Report what you play to the server."
 msgstr "Gespielte Titel an den Server melden."
@@ -1270,6 +1360,9 @@ msgstr "Server"
 msgid "Server type"
 msgstr "Servertyp"
 
+msgid "Server type: {}"
+msgstr "Servertyp: {}"
+
 msgid "Servers"
 msgstr "Server"
 
@@ -1294,8 +1387,17 @@ msgstr "{} teilen: öffentlichen Link kopieren"
 msgid "Sharing is unavailable: {}"
 msgstr "Teilen nicht verfügbar: {}"
 
+msgid "Show all top songs"
+msgstr "Alle Top-Songs anzeigen"
+
+msgid "Show fewer top songs"
+msgstr "Weniger Top-Songs anzeigen"
+
 msgid "SHOW LESS"
 msgstr "WENIGER ANZEIGEN"
+
+msgid "Show less of the biography"
+msgstr "Weniger von der Biografie anzeigen"
 
 msgid "Show lyrics"
 msgstr "Songtext anzeigen"
@@ -1323,6 +1425,9 @@ msgstr "Warteschlange neben der Bibliothek anzeigen; wird beim nächsten Start b
 
 msgid "Show the server and saved stations"
 msgstr "Sender des Servers und gespeicherte Sender anzeigen"
+
+msgid "Show the whole biography"
+msgstr "Ganze Biografie anzeigen"
 
 msgid "Show {}"
 msgstr "{} anzeigen"
@@ -1357,6 +1462,9 @@ msgstr "Zufallswiedergabe: an"
 msgid "Sign in"
 msgstr "Anmelden"
 
+msgid "Sign in to another server"
+msgstr "Bei einem anderen Server anmelden"
+
 msgid "Sign in with browser"
 msgstr "Mit Browser anmelden"
 
@@ -1365,6 +1473,9 @@ msgstr "Abmelden und die gespeicherte Anmeldung dieses Servers vergessen?"
 
 msgid "Sign out and forget this server?"
 msgstr "Abmelden und diesen Server vergessen?"
+
+msgid "Sign out of {}"
+msgstr "Von {} abmelden"
 
 msgid "Similar"
 msgstr "Ähnlich"
@@ -1411,6 +1522,9 @@ msgstr "Sendername"
 msgid "Stations"
 msgstr "Sender"
 
+msgid "Stay signed in"
+msgstr "Angemeldet bleiben"
+
 msgid "Stop {}"
 msgstr "{} stoppen"
 
@@ -1440,6 +1554,9 @@ msgstr "Tag, zum Beispiel Jazz"
 
 msgid "That device is no longer on the network"
 msgstr "Dieses Gerät ist nicht mehr im Netzwerk"
+
+msgid "The audio device could not be changed: {}"
+msgstr "Audiogerät konnte nicht geändert werden: {}"
 
 msgid "the connection was not allowed"
 msgstr "die Verbindung wurde nicht erlaubt"
@@ -1666,11 +1783,23 @@ msgstr "{} kbps"
 msgid "{} s"
 msgstr "{} s"
 
+msgid "{} {} kbps"
+msgstr "{} {} kbps"
+
+msgid "{} · {}"
+msgstr "{} · {}"
+
+msgid "{} • {}"
+msgstr "{} • {}"
+
 msgid "{}: off"
 msgstr "{}: aus"
 
 msgid "{}: on"
 msgstr "{}: an"
+
+msgid "{}: {}"
+msgstr "{}: {}"
 
 msgid "{}: {} (dark)"
 msgstr "{}: {} (dunkel)"

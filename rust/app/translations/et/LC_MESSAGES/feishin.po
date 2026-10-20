@@ -5,6 +5,9 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 
+msgid "\"{}\""
+msgstr "\"{}\""
+
 msgid "\"{}\" plays next"
 msgstr "\"{}\" esitatakse järgmisena"
 
@@ -59,6 +62,9 @@ msgstr "Lisa server"
 msgid "Add station"
 msgstr "Lisa jaam"
 
+msgid "Add the selected songs to a playlist"
+msgstr "Lisa valitud lood esitusloendisse"
+
 msgid "Add this link to the end of the queue"
 msgstr "Lisa see link järjekorra lõppu"
 
@@ -76,6 +82,9 @@ msgstr "Lisa järjekorda"
 
 msgid "Add to the server's stations"
 msgstr "Lisa serveri jaamade hulka"
+
+msgid "Add to {}"
+msgstr "Lisa esitusloendisse {}"
 
 msgid "Add {n} song to playlist"
 msgid_plural "Add {n} songs to playlist"
@@ -227,11 +236,23 @@ msgstr "Eemalda hinne"
 msgid "Clear the favorites and genre filters"
 msgstr "Tühjenda lemmikute ja žanrite filtrid"
 
+msgid "Click to close"
+msgstr "Klõpsa sulgemiseks"
+
+msgid "Click to dismiss"
+msgstr "Klõpsa peitmiseks"
+
 msgid "Close"
 msgstr "Sulge"
 
 msgid "Close now playing"
 msgstr "Sulge praegu mängiv"
+
+msgid "Close without adding the songs"
+msgstr "Sulge lugusid lisamata"
+
+msgid "Close without changes"
+msgstr "Sulge muudatusteta"
 
 msgid "Close without saving"
 msgstr "Sulge salvestamata"
@@ -239,8 +260,14 @@ msgstr "Sulge salvestamata"
 msgid "Colors used across the whole app."
 msgstr "Kogu rakenduses kasutatavad värvid."
 
+msgid "Connect to this server"
+msgstr "Ühenda selle serveriga"
+
 msgid "Connect to your music server"
 msgstr "Ühenda oma muusikaserveriga"
+
+msgid "Connect to {}"
+msgstr "Ühenda: {}"
 
 msgid "Connecting..."
 msgstr "Ühendamine..."
@@ -268,6 +295,9 @@ msgstr "Esitusloendi loomine ebaõnnestus: {}"
 
 msgid "Could not delete the playlist: {}"
 msgstr "Esitusloendi kustutamine ebaõnnestus: {}"
+
+msgid "Could not delete the saved login: {}"
+msgstr "Salvestatud sisselogimist ei õnnestunud kustutada: {}"
 
 msgid "Could not delete the station"
 msgstr "Jaama kustutamine ebaõnnestus"
@@ -347,6 +377,9 @@ msgstr "Kausta avamine ebaõnnestus: {}"
 msgid "Could not open YouTube Music: {}"
 msgstr "YouTube Musicu avamine ebaõnnestus: {}"
 
+msgid "Could not pause or resume playback: {}"
+msgstr "Esitust ei õnnestunud peatada ega jätkata: {}"
+
 msgid "Could not play \"{}\" from YouTube: {}"
 msgstr "\"{}\" esitamine YouTube'ist ebaõnnestus: {}"
 
@@ -365,11 +398,23 @@ msgstr "Laulude eemaldamine ebaõnnestus: {}"
 msgid "Could not rescan the library: {}"
 msgstr "Kogu uuesti skannimine ebaõnnestus: {}"
 
+msgid "Could not save the login for {}: {}"
+msgstr "Serveri {} sisselogimist ei õnnestunud salvestada: {}"
+
+msgid "Could not save the settings: {}"
+msgstr "Seadeid ei õnnestunud salvestada: {}"
+
+msgid "Could not seek: {}"
+msgstr "Kerimine ebaõnnestus: {}"
+
 msgid "Could not set the rating: {}"
 msgstr "Hinde määramine ebaõnnestus: {}"
 
 msgid "Could not sign in to YouTube Music ({}). Showing general picks instead."
 msgstr "YouTube Musicusse sisselogimine ebaõnnestus ({}). Selle asemel kuvatakse üldisi valikuid."
+
+msgid "Could not stop playback: {}"
+msgstr "Esituse lõpetamine ebaõnnestus: {}"
 
 msgid "Could not switch server: {}"
 msgstr "Serveri vahetamine ebaõnnestus: {}"
@@ -391,6 +436,15 @@ msgstr "Riik"
 
 msgid "Create"
 msgstr "Loo"
+
+msgid "Create a playlist with these songs"
+msgstr "Loo nende lugudega esitusloend"
+
+msgid "Create an empty playlist"
+msgstr "Loo tühi esitusloend"
+
+msgid "Create the playlist"
+msgstr "Loo esitusloend"
 
 msgid "Created \"{}\" with only {n} song: {}"
 msgid_plural "Created \"{}\" with only {n} songs: {}"
@@ -450,6 +504,9 @@ msgstr "Vaikimisi hele"
 msgid "Delete"
 msgstr "Kustuta"
 
+msgid "Delete \"{}\""
+msgstr "Kustuta \"{}\""
+
 msgid "Delete \"{}\" from the server? This cannot be undone."
 msgstr "Kas kustutada \"{}\" serverist? Seda ei saa tagasi võtta."
 
@@ -503,6 +560,15 @@ msgstr "Avasta YouTube Musicus uut muusikat"
 
 msgid "Discover Weekly"
 msgstr "Nädala avastused"
+
+msgid "Do not let \"{}\" control this player"
+msgstr "Ära luba seadmel \"{}\" seda mängijat juhtida"
+
+msgid "Double-click to play"
+msgstr "Topeltklõpsa esitamiseks"
+
+msgid "Double-click to play, drag to reorder"
+msgstr "Topeltklõpsa esitamiseks, lohista järjestuse muutmiseks"
 
 msgid "Duration"
 msgstr "Kestus"
@@ -582,6 +648,9 @@ msgstr "Unusta kõik"
 msgid "Forget this server?"
 msgstr "Kas unustada see server?"
 
+msgid "Forget {}"
+msgstr "Unusta {}"
+
 msgid "Format the server should transcode to. Applies from the next song."
 msgstr "Vorming, millesse server peaks transkodeerima. Kehtib alates järgmisest laulust."
 
@@ -592,6 +661,9 @@ msgstr[1] "Feishinist leiti {n} serverit, kuid ühelgi pole kasutatavat salvesta
 
 msgid "Gapless playback"
 msgstr "Pausideta taasesitus"
+
+msgid "Genre filter: {}"
+msgstr "Žanrifilter: {}"
 
 msgid "Genres"
 msgstr "Žanrid"
@@ -635,6 +707,9 @@ msgstr "Koduleht (valikuline)"
 msgid "Import from Feishin"
 msgstr "Impordi Feishinist"
 
+msgid "Import the servers saved by a previous Feishin install"
+msgstr "Impordi varasema Feishini paigalduse salvestatud serverid"
+
 msgid "Install yt-dlp to play YouTube tracks"
 msgstr "YouTube'i lugude esitamiseks paigalda yt-dlp"
 
@@ -668,14 +743,20 @@ msgstr "see peatus"
 msgid "item"
 msgstr "üksus"
 
-msgid "Jellyfin has no public share links"
-msgstr "Jellyfinil pole avalikke jagamislinke"
+msgid "Jump to this line"
+msgstr "Mine sellele reale"
 
 msgid "Keep this station in the favorites on this device"
 msgstr "Hoia see jaam selles seadmes lemmikutes"
 
+msgid "Keep {}"
+msgstr "Jäta alles: {}"
+
 msgid "Language"
 msgstr "Keel"
+
+msgid "Let \"{}\" control this player"
+msgstr "Luba seadmel \"{}\" seda mängijat juhtida"
 
 msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
 msgstr "Luba teistel selle võrgu Feishini mängijatel seda juhtida. Iga seade küsib esimesel korral sinu luba."
@@ -705,6 +786,9 @@ msgstr "LIVE"
 
 msgid "Load more"
 msgstr "Laadi rohkem"
+
+msgid "Load more results"
+msgstr "Laadi rohkem tulemusi"
 
 msgid "Load this section again"
 msgstr "Laadi see jaotis uuesti"
@@ -1145,6 +1229,9 @@ msgstr "Eemalda esitusloendist"
 msgid "Remove from queue"
 msgstr "Eemalda järjekorrast"
 
+msgid "Remove the selected songs from this playlist"
+msgstr "Eemalda valitud lood sellest esitusloendist"
+
 msgid "Removed {n} song from \"{}\""
 msgid_plural "Removed {n} songs from \"{}\""
 msgstr[0] "Loendist \"{}\" eemaldati {n} laul"
@@ -1164,6 +1251,9 @@ msgstr "Kordus: üks"
 
 msgid "ReplayGain"
 msgstr "ReplayGain"
+
+msgid "ReplayGain could not be changed: {}"
+msgstr "ReplayGaini ei õnnestunud muuta: {}"
 
 msgid "Report what you play to the server."
 msgstr "Teavita serverit, mida kuulad."
@@ -1270,6 +1360,9 @@ msgstr "Server"
 msgid "Server type"
 msgstr "Serveri tüüp"
 
+msgid "Server type: {}"
+msgstr "Serveri tüüp: {}"
+
 msgid "Servers"
 msgstr "Serverid"
 
@@ -1294,8 +1387,17 @@ msgstr "Jaga see {}: kopeeri avalik link"
 msgid "Sharing is unavailable: {}"
 msgstr "Jagamine pole saadaval: {}"
 
+msgid "Show all top songs"
+msgstr "Näita kõiki populaarseimaid lugusid"
+
+msgid "Show fewer top songs"
+msgstr "Näita vähem populaarseimaid lugusid"
+
 msgid "SHOW LESS"
 msgstr "NÄITA VÄHEM"
+
+msgid "Show less of the biography"
+msgstr "Näita elulugu lühemalt"
 
 msgid "Show lyrics"
 msgstr "Näita laulusõnu"
@@ -1323,6 +1425,9 @@ msgstr "Näita järjekorda kogu kõrval; jäetakse järgmiseks käivituseks meel
 
 msgid "Show the server and saved stations"
 msgstr "Näita serveri ja salvestatud jaamu"
+
+msgid "Show the whole biography"
+msgstr "Näita kogu elulugu"
 
 msgid "Show {}"
 msgstr "Näita: {}"
@@ -1357,6 +1462,9 @@ msgstr "Segamine: sees"
 msgid "Sign in"
 msgstr "Logi sisse"
 
+msgid "Sign in to another server"
+msgstr "Logi sisse teise serverisse"
+
 msgid "Sign in with browser"
 msgstr "Logi sisse brauseriga"
 
@@ -1365,6 +1473,9 @@ msgstr "Kas logida välja ja unustada selle serveri salvestatud sisselogimine?"
 
 msgid "Sign out and forget this server?"
 msgstr "Kas logida välja ja unustada see server?"
+
+msgid "Sign out of {}"
+msgstr "Logi välja: {}"
 
 msgid "Similar"
 msgstr "Sarnased"
@@ -1411,6 +1522,9 @@ msgstr "Jaama nimi"
 msgid "Stations"
 msgstr "Jaamad"
 
+msgid "Stay signed in"
+msgstr "Jää sisselogituks"
+
 msgid "Stop {}"
 msgstr "Peata {}"
 
@@ -1440,6 +1554,9 @@ msgstr "Silt, näiteks jazz"
 
 msgid "That device is no longer on the network"
 msgstr "See seade pole enam võrgus"
+
+msgid "The audio device could not be changed: {}"
+msgstr "Heliseadet ei õnnestunud muuta: {}"
 
 msgid "the connection was not allowed"
 msgstr "ühendust ei lubatud"
@@ -1666,11 +1783,23 @@ msgstr "{} kbps"
 msgid "{} s"
 msgstr "{} s"
 
+msgid "{} {} kbps"
+msgstr "{} {} kbps"
+
+msgid "{} · {}"
+msgstr "{} · {}"
+
+msgid "{} • {}"
+msgstr "{} • {}"
+
 msgid "{}: off"
 msgstr "{}: väljas"
 
 msgid "{}: on"
 msgstr "{}: sees"
+
+msgid "{}: {}"
+msgstr "{}: {}"
 
 msgid "{}: {} (dark)"
 msgstr "{}: {} (tume)"

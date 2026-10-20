@@ -5,6 +5,9 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 
+msgid "\"{}\""
+msgstr "\"{}\""
+
 msgid "\"{}\" plays next"
 msgstr "\"{}\"을(를) 다음에 재생합니다"
 
@@ -59,6 +62,9 @@ msgstr "서버 추가하기"
 msgid "Add station"
 msgstr "방송국 추가"
 
+msgid "Add the selected songs to a playlist"
+msgstr "선택한 곡을 플레이리스트에 추가"
+
 msgid "Add this link to the end of the queue"
 msgstr "이 링크를 대기열 끝에 추가"
 
@@ -76,6 +82,9 @@ msgstr "대기열에 추가"
 
 msgid "Add to the server's stations"
 msgstr "서버 방송국에 추가"
+
+msgid "Add to {}"
+msgstr "{}에 추가"
 
 msgid "Add {n} song to playlist"
 msgid_plural "Add {n} songs to playlist"
@@ -221,11 +230,23 @@ msgstr "평점 지우기"
 msgid "Clear the favorites and genre filters"
 msgstr "즐겨찾기 및 장르 필터 지우기"
 
+msgid "Click to close"
+msgstr "클릭하여 닫기"
+
+msgid "Click to dismiss"
+msgstr "클릭하여 숨기기"
+
 msgid "Close"
 msgstr "닫기"
 
 msgid "Close now playing"
 msgstr "지금 재생 중 닫기"
+
+msgid "Close without adding the songs"
+msgstr "곡을 추가하지 않고 닫기"
+
+msgid "Close without changes"
+msgstr "변경하지 않고 닫기"
 
 msgid "Close without saving"
 msgstr "저장하지 않고 닫기"
@@ -233,8 +254,14 @@ msgstr "저장하지 않고 닫기"
 msgid "Colors used across the whole app."
 msgstr "앱 전체에서 사용되는 색상입니다."
 
+msgid "Connect to this server"
+msgstr "이 서버에 연결"
+
 msgid "Connect to your music server"
 msgstr "음악 서버에 연결"
+
+msgid "Connect to {}"
+msgstr "{}에 연결"
 
 msgid "Connecting..."
 msgstr "연결 중..."
@@ -262,6 +289,9 @@ msgstr "플레이리스트를 만들 수 없습니다: {}"
 
 msgid "Could not delete the playlist: {}"
 msgstr "플레이리스트를 삭제할 수 없습니다: {}"
+
+msgid "Could not delete the saved login: {}"
+msgstr "저장된 로그인 정보를 삭제할 수 없습니다: {}"
 
 msgid "Could not delete the station"
 msgstr "방송국을 삭제할 수 없습니다"
@@ -341,6 +371,9 @@ msgstr "폴더를 열 수 없습니다: {}"
 msgid "Could not open YouTube Music: {}"
 msgstr "YouTube Music을 열 수 없습니다: {}"
 
+msgid "Could not pause or resume playback: {}"
+msgstr "재생을 일시 정지하거나 다시 시작할 수 없습니다: {}"
+
 msgid "Could not play \"{}\" from YouTube: {}"
 msgstr "YouTube에서 \"{}\"을(를) 재생할 수 없습니다: {}"
 
@@ -359,11 +392,23 @@ msgstr "곡을 제거할 수 없습니다: {}"
 msgid "Could not rescan the library: {}"
 msgstr "라이브러리를 다시 스캔할 수 없습니다: {}"
 
+msgid "Could not save the login for {}: {}"
+msgstr "{}의 로그인 정보를 저장할 수 없습니다: {}"
+
+msgid "Could not save the settings: {}"
+msgstr "설정을 저장할 수 없습니다: {}"
+
+msgid "Could not seek: {}"
+msgstr "탐색할 수 없습니다: {}"
+
 msgid "Could not set the rating: {}"
 msgstr "평점을 지정할 수 없습니다: {}"
 
 msgid "Could not sign in to YouTube Music ({}). Showing general picks instead."
 msgstr "YouTube Music에 로그인할 수 없습니다({}). 대신 일반 추천을 표시합니다."
+
+msgid "Could not stop playback: {}"
+msgstr "재생을 정지할 수 없습니다: {}"
 
 msgid "Could not switch server: {}"
 msgstr "서버를 전환할 수 없습니다: {}"
@@ -385,6 +430,15 @@ msgstr "국가"
 
 msgid "Create"
 msgstr "만들기"
+
+msgid "Create a playlist with these songs"
+msgstr "이 곡들로 플레이리스트 만들기"
+
+msgid "Create an empty playlist"
+msgstr "빈 플레이리스트 만들기"
+
+msgid "Create the playlist"
+msgstr "플레이리스트 만들기"
 
 msgid "Created \"{}\" with only {n} song: {}"
 msgid_plural "Created \"{}\" with only {n} songs: {}"
@@ -442,6 +496,9 @@ msgstr "기본 라이트"
 msgid "Delete"
 msgstr "삭제"
 
+msgid "Delete \"{}\""
+msgstr "\"{}\" 삭제"
+
 msgid "Delete \"{}\" from the server? This cannot be undone."
 msgstr "서버에서 \"{}\"을(를) 삭제할까요? 이 작업은 되돌릴 수 없습니다."
 
@@ -495,6 +552,15 @@ msgstr "YouTube Music에서 새로운 음악 발견하기"
 
 msgid "Discover Weekly"
 msgstr "이번 주 발견"
+
+msgid "Do not let \"{}\" control this player"
+msgstr "\"{}\"이(가) 이 플레이어를 제어하지 못하게 하기"
+
+msgid "Double-click to play"
+msgstr "두 번 클릭하여 재생"
+
+msgid "Double-click to play, drag to reorder"
+msgstr "두 번 클릭하여 재생, 끌어서 순서 변경"
 
 msgid "Duration"
 msgstr "길이"
@@ -574,6 +640,9 @@ msgstr "모두 지우기"
 msgid "Forget this server?"
 msgstr "이 서버를 삭제할까요?"
 
+msgid "Forget {}"
+msgstr "{} 삭제"
+
 msgid "Format the server should transcode to. Applies from the next song."
 msgstr "서버가 트랜스코딩할 형식입니다. 다음 곡부터 적용됩니다."
 
@@ -583,6 +652,9 @@ msgstr[0] "Feishin에서 서버 {n}개를 찾았지만 사용할 수 있는 저�
 
 msgid "Gapless playback"
 msgstr "갭리스 재생"
+
+msgid "Genre filter: {}"
+msgstr "장르 필터: {}"
 
 msgid "Genres"
 msgstr "장르"
@@ -626,6 +698,9 @@ msgstr "홈페이지 (선택 사항)"
 msgid "Import from Feishin"
 msgstr "Feishin에서 가져오기"
 
+msgid "Import the servers saved by a previous Feishin install"
+msgstr "이전 Feishin 설치에서 저장한 서버 가져오기"
+
 msgid "Install yt-dlp to play YouTube tracks"
 msgstr "YouTube 트랙을 재생하려면 yt-dlp를 설치하세요"
 
@@ -659,14 +734,20 @@ msgstr "중지되었습니다"
 msgid "item"
 msgstr "항목"
 
-msgid "Jellyfin has no public share links"
-msgstr "Jellyfin에는 공개 공유 링크가 없습니다"
+msgid "Jump to this line"
+msgstr "이 줄로 이동"
 
 msgid "Keep this station in the favorites on this device"
 msgstr "이 방송국을 이 기기의 즐겨찾기에 보관"
 
+msgid "Keep {}"
+msgstr "{} 유지"
+
 msgid "Language"
 msgstr "언어"
+
+msgid "Let \"{}\" control this player"
+msgstr "\"{}\"이(가) 이 플레이어를 제어하도록 허용"
 
 msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
 msgstr "이 네트워크의 다른 Feishin 플레이어가 이 플레이어를 제어하도록 허용합니다. 각 기기는 처음에 승인을 요청합니다."
@@ -695,6 +776,9 @@ msgstr "라이브"
 
 msgid "Load more"
 msgstr "더 불러오기"
+
+msgid "Load more results"
+msgstr "결과 더 불러오기"
 
 msgid "Load this section again"
 msgstr "이 섹션 다시 불러오기"
@@ -1133,6 +1217,9 @@ msgstr "플레이리스트에서 제거"
 msgid "Remove from queue"
 msgstr "대기열에서 제거"
 
+msgid "Remove the selected songs from this playlist"
+msgstr "선택한 곡을 이 플레이리스트에서 제거"
+
 msgid "Removed {n} song from \"{}\""
 msgid_plural "Removed {n} songs from \"{}\""
 msgstr[0] "\"{}\"에서 {n}곡을 제거했습니다"
@@ -1151,6 +1238,9 @@ msgstr "반복: 한 곡"
 
 msgid "ReplayGain"
 msgstr "ReplayGain"
+
+msgid "ReplayGain could not be changed: {}"
+msgstr "ReplayGain을 변경할 수 없습니다: {}"
 
 msgid "Report what you play to the server."
 msgstr "재생한 곡을 서버에 보고합니다."
@@ -1257,6 +1347,9 @@ msgstr "서버"
 msgid "Server type"
 msgstr "서버 유형"
 
+msgid "Server type: {}"
+msgstr "서버 유형: {}"
+
 msgid "Servers"
 msgstr "서버"
 
@@ -1281,8 +1374,17 @@ msgstr "이 {} 공유: 공개 링크 복사"
 msgid "Sharing is unavailable: {}"
 msgstr "공유할 수 없음: {}"
 
+msgid "Show all top songs"
+msgstr "인기 곡 모두 보기"
+
+msgid "Show fewer top songs"
+msgstr "인기 곡 적게 보기"
+
 msgid "SHOW LESS"
 msgstr "간략히"
+
+msgid "Show less of the biography"
+msgstr "약력 접기"
 
 msgid "Show lyrics"
 msgstr "가사 보기"
@@ -1310,6 +1412,9 @@ msgstr "라이브러리 옆에 대기열을 표시합니다. 다음 실행 시�
 
 msgid "Show the server and saved stations"
 msgstr "서버 및 저장된 방송국 보기"
+
+msgid "Show the whole biography"
+msgstr "약력 전체 보기"
 
 msgid "Show {}"
 msgstr "{} 보기"
@@ -1344,6 +1449,9 @@ msgstr "셔플: 켬"
 msgid "Sign in"
 msgstr "로그인"
 
+msgid "Sign in to another server"
+msgstr "다른 서버에 로그인"
+
 msgid "Sign in with browser"
 msgstr "브라우저로 로그인"
 
@@ -1352,6 +1460,9 @@ msgstr "로그아웃하고 이 서버에 저장된 로그인 정보를 삭제할
 
 msgid "Sign out and forget this server?"
 msgstr "로그아웃하고 이 서버를 삭제할까요?"
+
+msgid "Sign out of {}"
+msgstr "{}에서 로그아웃"
 
 msgid "Similar"
 msgstr "비슷한 곡"
@@ -1398,6 +1509,9 @@ msgstr "방송국 이름"
 msgid "Stations"
 msgstr "방송국"
 
+msgid "Stay signed in"
+msgstr "로그인 상태 유지"
+
 msgid "Stop {}"
 msgstr "{} 정지"
 
@@ -1427,6 +1541,9 @@ msgstr "태그 (예: jazz)"
 
 msgid "That device is no longer on the network"
 msgstr "해당 기기가 더 이상 네트워크에 없습니다"
+
+msgid "The audio device could not be changed: {}"
+msgstr "오디오 장치를 변경할 수 없습니다: {}"
 
 msgid "the connection was not allowed"
 msgstr "연결이 허용되지 않았습니다"
@@ -1644,11 +1761,23 @@ msgstr "{} kbps"
 msgid "{} s"
 msgstr "{}초"
 
+msgid "{} {} kbps"
+msgstr "{} {} kbps"
+
+msgid "{} · {}"
+msgstr "{} · {}"
+
+msgid "{} • {}"
+msgstr "{} • {}"
+
 msgid "{}: off"
 msgstr "{}: 끔"
 
 msgid "{}: on"
 msgstr "{}: 켬"
+
+msgid "{}: {}"
+msgstr "{}: {}"
 
 msgid "{}: {} (dark)"
 msgstr "{}: {} (어두움)"

@@ -5,6 +5,9 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 
+msgid "\"{}\""
+msgstr "\"{}\""
+
 msgid "\"{}\" plays next"
 msgstr "Susunod na tutugtog ang \"{}\""
 
@@ -59,6 +62,9 @@ msgstr "Magdagdag ng server"
 msgid "Add station"
 msgstr "Magdagdag ng istasyon"
 
+msgid "Add the selected songs to a playlist"
+msgstr "Idagdag ang mga napiling kanta sa isang playlist"
+
 msgid "Add this link to the end of the queue"
 msgstr "Idagdag ang link na ito sa dulo ng pila"
 
@@ -76,6 +82,9 @@ msgstr "Idagdag sa pila"
 
 msgid "Add to the server's stations"
 msgstr "Idagdag sa mga istasyon ng server"
+
+msgid "Add to {}"
+msgstr "Idagdag sa {}"
 
 msgid "Add {n} song to playlist"
 msgid_plural "Add {n} songs to playlist"
@@ -227,11 +236,23 @@ msgstr "I-clear ang rating"
 msgid "Clear the favorites and genre filters"
 msgstr "I-clear ang mga filter ng paborito at genre"
 
+msgid "Click to close"
+msgstr "I-click para isara"
+
+msgid "Click to dismiss"
+msgstr "I-click para i-dismiss"
+
 msgid "Close"
 msgstr "Isara"
 
 msgid "Close now playing"
 msgstr "Isara ang now playing"
+
+msgid "Close without adding the songs"
+msgstr "Isara nang hindi idinadagdag ang mga kanta"
+
+msgid "Close without changes"
+msgstr "Isara nang walang pagbabago"
 
 msgid "Close without saving"
 msgstr "Isara nang hindi sine-save"
@@ -239,8 +260,14 @@ msgstr "Isara nang hindi sine-save"
 msgid "Colors used across the whole app."
 msgstr "Mga kulay na ginagamit sa buong app."
 
+msgid "Connect to this server"
+msgstr "Kumonekta sa server na ito"
+
 msgid "Connect to your music server"
 msgstr "Kumonekta sa iyong music server"
+
+msgid "Connect to {}"
+msgstr "Kumonekta sa {}"
 
 msgid "Connecting..."
 msgstr "Kumokonekta..."
@@ -268,6 +295,9 @@ msgstr "Hindi magawa ang playlist: {}"
 
 msgid "Could not delete the playlist: {}"
 msgstr "Hindi mabura ang playlist: {}"
+
+msgid "Could not delete the saved login: {}"
+msgstr "Hindi mabura ang naka-save na login: {}"
 
 msgid "Could not delete the station"
 msgstr "Hindi mabura ang istasyon"
@@ -347,6 +377,9 @@ msgstr "Hindi mabuksan ang folder: {}"
 msgid "Could not open YouTube Music: {}"
 msgstr "Hindi mabuksan ang YouTube Music: {}"
 
+msgid "Could not pause or resume playback: {}"
+msgstr "Hindi ma-pause o maituloy ang pag-play: {}"
+
 msgid "Could not play \"{}\" from YouTube: {}"
 msgstr "Hindi ma-play ang \"{}\" mula sa YouTube: {}"
 
@@ -365,11 +398,23 @@ msgstr "Hindi maalis ang mga kanta: {}"
 msgid "Could not rescan the library: {}"
 msgstr "Hindi ma-rescan ang library: {}"
 
+msgid "Could not save the login for {}: {}"
+msgstr "Hindi ma-save ang login para sa {}: {}"
+
+msgid "Could not save the settings: {}"
+msgstr "Hindi ma-save ang mga setting: {}"
+
+msgid "Could not seek: {}"
+msgstr "Hindi makapag-seek: {}"
+
 msgid "Could not set the rating: {}"
 msgstr "Hindi maitakda ang rating: {}"
 
 msgid "Could not sign in to YouTube Music ({}). Showing general picks instead."
 msgstr "Hindi makapag-sign in sa YouTube Music ({}). Mga pangkalahatang mungkahi ang ipinapakita sa halip."
+
+msgid "Could not stop playback: {}"
+msgstr "Hindi maihinto ang pag-play: {}"
 
 msgid "Could not switch server: {}"
 msgstr "Hindi makalipat ng server: {}"
@@ -391,6 +436,15 @@ msgstr "Bansa"
 
 msgid "Create"
 msgstr "Gumawa"
+
+msgid "Create a playlist with these songs"
+msgstr "Gumawa ng playlist gamit ang mga kantang ito"
+
+msgid "Create an empty playlist"
+msgstr "Gumawa ng walang lamang playlist"
+
+msgid "Create the playlist"
+msgstr "Gawin ang playlist"
 
 msgid "Created \"{}\" with only {n} song: {}"
 msgid_plural "Created \"{}\" with only {n} songs: {}"
@@ -450,6 +504,9 @@ msgstr "Default na Maliwanag"
 msgid "Delete"
 msgstr "Burahin"
 
+msgid "Delete \"{}\""
+msgstr "Burahin ang \"{}\""
+
 msgid "Delete \"{}\" from the server? This cannot be undone."
 msgstr "Burahin ang \"{}\" sa server? Hindi na ito maibabalik."
 
@@ -503,6 +560,15 @@ msgstr "Tumuklas ng bagong musika sa YouTube Music"
 
 msgid "Discover Weekly"
 msgstr "Mga Tuklas ng Linggo"
+
+msgid "Do not let \"{}\" control this player"
+msgstr "Huwag hayaang kontrolin ng \"{}\" ang player na ito"
+
+msgid "Double-click to play"
+msgstr "I-double click para i-play"
+
+msgid "Double-click to play, drag to reorder"
+msgstr "I-double click para i-play, i-drag para ayusin ang pagkakasunod-sunod"
 
 msgid "Duration"
 msgstr "Haba"
@@ -582,6 +648,9 @@ msgstr "Kalimutan lahat"
 msgid "Forget this server?"
 msgstr "Kalimutan ang server na ito?"
 
+msgid "Forget {}"
+msgstr "Kalimutan ang {}"
+
 msgid "Format the server should transcode to. Applies from the next song."
 msgstr "Format na pagta-transcode-an ng server. Ilalapat simula sa susunod na kanta."
 
@@ -592,6 +661,9 @@ msgstr[1] "May nahanap na {n} na server sa Feishin pero wala sa mga ito ang may 
 
 msgid "Gapless playback"
 msgstr "Gapless na pag-play"
+
+msgid "Genre filter: {}"
+msgstr "Filter ng genre: {}"
 
 msgid "Genres"
 msgstr "Mga genre"
@@ -635,6 +707,9 @@ msgstr "Homepage (opsyonal)"
 msgid "Import from Feishin"
 msgstr "Mag-import mula sa Feishin"
 
+msgid "Import the servers saved by a previous Feishin install"
+msgstr "I-import ang mga server na na-save ng dating install ng Feishin"
+
 msgid "Install yt-dlp to play YouTube tracks"
 msgstr "I-install ang yt-dlp para ma-play ang mga track sa YouTube"
 
@@ -668,14 +743,20 @@ msgstr "huminto ito"
 msgid "item"
 msgstr "item"
 
-msgid "Jellyfin has no public share links"
-msgstr "Walang pampublikong share link ang Jellyfin"
+msgid "Jump to this line"
+msgstr "Pumunta sa linyang ito"
 
 msgid "Keep this station in the favorites on this device"
 msgstr "Itago ang istasyong ito sa mga paborito sa device na ito"
 
+msgid "Keep {}"
+msgstr "Panatilihin ang {}"
+
 msgid "Language"
 msgstr "Wika"
+
+msgid "Let \"{}\" control this player"
+msgstr "Hayaang kontrolin ng \"{}\" ang player na ito"
 
 msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
 msgstr "Payagan ang ibang Feishin player sa network na ito na kontrolin ang isang ito. Bawat device ay hihingi ng pahintulot mo sa unang beses."
@@ -705,6 +786,9 @@ msgstr "LIVE"
 
 msgid "Load more"
 msgstr "Mag-load pa"
+
+msgid "Load more results"
+msgstr "Mag-load pa ng mga resulta"
 
 msgid "Load this section again"
 msgstr "I-load muli ang seksyong ito"
@@ -1145,6 +1229,9 @@ msgstr "Alisin sa playlist"
 msgid "Remove from queue"
 msgstr "Alisin sa pila"
 
+msgid "Remove the selected songs from this playlist"
+msgstr "Alisin ang mga napiling kanta sa playlist na ito"
+
 msgid "Removed {n} song from \"{}\""
 msgid_plural "Removed {n} songs from \"{}\""
 msgstr[0] "Naalis ang {n} kanta sa \"{}\""
@@ -1164,6 +1251,9 @@ msgstr "Ulitin: isa"
 
 msgid "ReplayGain"
 msgstr "ReplayGain"
+
+msgid "ReplayGain could not be changed: {}"
+msgstr "Hindi mapalitan ang ReplayGain: {}"
 
 msgid "Report what you play to the server."
 msgstr "Iulat sa server ang mga pinapatugtog mo."
@@ -1270,6 +1360,9 @@ msgstr "Server"
 msgid "Server type"
 msgstr "Uri ng server"
 
+msgid "Server type: {}"
+msgstr "Uri ng server: {}"
+
 msgid "Servers"
 msgstr "Mga server"
 
@@ -1294,8 +1387,17 @@ msgstr "Ibahagi ang {} na ito: kopyahin ang pampublikong link"
 msgid "Sharing is unavailable: {}"
 msgstr "Hindi magagamit ang pagbabahagi: {}"
 
+msgid "Show all top songs"
+msgstr "Ipakita ang lahat ng nangungunang kanta"
+
+msgid "Show fewer top songs"
+msgstr "Magpakita ng mas kaunting nangungunang kanta"
+
 msgid "SHOW LESS"
 msgstr "IPAKITA ANG MAS KAUNTI"
+
+msgid "Show less of the biography"
+msgstr "Paikliin ang talambuhay"
 
 msgid "Show lyrics"
 msgstr "Ipakita ang liriko"
@@ -1323,6 +1425,9 @@ msgstr "Ipakita ang pila sa tabi ng library; tatandaan sa susunod na pagbukas."
 
 msgid "Show the server and saved stations"
 msgstr "Ipakita ang server at mga naka-save na istasyon"
+
+msgid "Show the whole biography"
+msgstr "Ipakita ang buong talambuhay"
 
 msgid "Show {}"
 msgstr "Ipakita ang {}"
@@ -1357,6 +1462,9 @@ msgstr "Shuffle: naka-on"
 msgid "Sign in"
 msgstr "Mag-sign in"
 
+msgid "Sign in to another server"
+msgstr "Mag-sign in sa ibang server"
+
 msgid "Sign in with browser"
 msgstr "Mag-sign in gamit ang browser"
 
@@ -1365,6 +1473,9 @@ msgstr "Mag-sign out at kalimutan ang naka-save na login ng server na ito?"
 
 msgid "Sign out and forget this server?"
 msgstr "Mag-sign out at kalimutan ang server na ito?"
+
+msgid "Sign out of {}"
+msgstr "Mag-sign out sa {}"
 
 msgid "Similar"
 msgstr "Katulad"
@@ -1411,6 +1522,9 @@ msgstr "Pangalan ng istasyon"
 msgid "Stations"
 msgstr "Mga istasyon"
 
+msgid "Stay signed in"
+msgstr "Manatiling naka-sign in"
+
 msgid "Stop {}"
 msgstr "Ihinto ang {}"
 
@@ -1440,6 +1554,9 @@ msgstr "Tag, halimbawa jazz"
 
 msgid "That device is no longer on the network"
 msgstr "Wala na sa network ang device na iyon"
+
+msgid "The audio device could not be changed: {}"
+msgstr "Hindi mapalitan ang audio device: {}"
 
 msgid "the connection was not allowed"
 msgstr "hindi pinayagan ang koneksyon"
@@ -1666,11 +1783,23 @@ msgstr "{} kbps"
 msgid "{} s"
 msgstr "{} s"
 
+msgid "{} {} kbps"
+msgstr "{} {} kbps"
+
+msgid "{} · {}"
+msgstr "{} · {}"
+
+msgid "{} • {}"
+msgstr "{} • {}"
+
 msgid "{}: off"
 msgstr "{}: naka-off"
 
 msgid "{}: on"
 msgstr "{}: naka-on"
+
+msgid "{}: {}"
+msgstr "{}: {}"
 
 msgid "{}: {} (dark)"
 msgstr "{}: {} (madilim)"

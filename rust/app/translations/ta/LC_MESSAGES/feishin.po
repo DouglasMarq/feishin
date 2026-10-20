@@ -5,6 +5,9 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 
+msgid "\"{}\""
+msgstr "\"{}\""
+
 msgid "\"{}\" plays next"
 msgstr "\"{}\" அடுத்து இயங்கும்"
 
@@ -59,6 +62,9 @@ msgstr "சேவையகத்தைச் சேர்க்கவும்"
 msgid "Add station"
 msgstr "நிலையத்தைச் சேர்"
 
+msgid "Add the selected songs to a playlist"
+msgstr "தேர்ந்தெடுத்த பாடல்களை பிளேலிஸ்ட்டில் சேர்"
+
 msgid "Add this link to the end of the queue"
 msgstr "இந்த இணைப்பை வரிசையின் இறுதியில் சேர்"
 
@@ -76,6 +82,9 @@ msgstr "வரிசையில் சேர்"
 
 msgid "Add to the server's stations"
 msgstr "சேவையகத்தின் நிலையங்களில் சேர்"
+
+msgid "Add to {}"
+msgstr "{}-இல் சேர்"
 
 msgid "Add {n} song to playlist"
 msgid_plural "Add {n} songs to playlist"
@@ -227,11 +236,23 @@ msgstr "மதிப்பீட்டை அழி"
 msgid "Clear the favorites and genre filters"
 msgstr "பிடித்தவை மற்றும் வகை வடிகட்டிகளை அழி"
 
+msgid "Click to close"
+msgstr "மூட கிளிக் செய்யவும்"
+
+msgid "Click to dismiss"
+msgstr "நிராகரிக்க கிளிக் செய்யவும்"
+
 msgid "Close"
 msgstr "மூடு"
 
 msgid "Close now playing"
 msgstr "இப்போது இயங்குவதை மூடு"
+
+msgid "Close without adding the songs"
+msgstr "பாடல்களைச் சேர்க்காமல் மூடு"
+
+msgid "Close without changes"
+msgstr "மாற்றங்கள் இல்லாமல் மூடு"
 
 msgid "Close without saving"
 msgstr "சேமிக்காமல் மூடு"
@@ -239,8 +260,14 @@ msgstr "சேமிக்காமல் மூடு"
 msgid "Colors used across the whole app."
 msgstr "முழு பயன்பாட்டிலும் பயன்படுத்தப்படும் நிறங்கள்."
 
+msgid "Connect to this server"
+msgstr "இந்தச் சேவையகத்துடன் இணை"
+
 msgid "Connect to your music server"
 msgstr "உங்கள் இசைச் சேவையகத்துடன் இணைக்கவும்"
+
+msgid "Connect to {}"
+msgstr "{} உடன் இணை"
 
 msgid "Connecting..."
 msgstr "இணைக்கிறது..."
@@ -268,6 +295,9 @@ msgstr "பிளேலிஸ்ட்டை உருவாக்க முட�
 
 msgid "Could not delete the playlist: {}"
 msgstr "பிளேலிஸ்ட்டை நீக்க முடியவில்லை: {}"
+
+msgid "Could not delete the saved login: {}"
+msgstr "சேமித்த உள்நுழைவை நீக்க முடியவில்லை: {}"
 
 msgid "Could not delete the station"
 msgstr "நிலையத்தை நீக்க முடியவில்லை"
@@ -347,6 +377,9 @@ msgstr "கோப்புறையைத் திறக்க முடிய�
 msgid "Could not open YouTube Music: {}"
 msgstr "YouTube Music ஐத் திறக்க முடியவில்லை: {}"
 
+msgid "Could not pause or resume playback: {}"
+msgstr "இயக்கத்தை இடைநிறுத்தவோ தொடரவோ முடியவில்லை: {}"
+
 msgid "Could not play \"{}\" from YouTube: {}"
 msgstr "YouTube இலிருந்து \"{}\" ஐ இயக்க முடியவில்லை: {}"
 
@@ -365,11 +398,23 @@ msgstr "பாடல்களை அகற்ற முடியவில்ல�
 msgid "Could not rescan the library: {}"
 msgstr "நூலகத்தை மீண்டும் ஸ்கேன் செய்ய முடியவில்லை: {}"
 
+msgid "Could not save the login for {}: {}"
+msgstr "{} க்கான உள்நுழைவைச் சேமிக்க முடியவில்லை: {}"
+
+msgid "Could not save the settings: {}"
+msgstr "அமைப்புகளைச் சேமிக்க முடியவில்லை: {}"
+
+msgid "Could not seek: {}"
+msgstr "முன்னோக்கி/பின்னோக்கி நகர்த்த முடியவில்லை: {}"
+
 msgid "Could not set the rating: {}"
 msgstr "மதிப்பீட்டை அமைக்க முடியவில்லை: {}"
 
 msgid "Could not sign in to YouTube Music ({}). Showing general picks instead."
 msgstr "YouTube Music இல் உள்நுழைய முடியவில்லை ({}). அதற்குப் பதிலாகப் பொதுவான தேர்வுகள் காட்டப்படுகின்றன."
+
+msgid "Could not stop playback: {}"
+msgstr "இயக்கத்தை நிறுத்த முடியவில்லை: {}"
 
 msgid "Could not switch server: {}"
 msgstr "சேவையகத்தை மாற்ற முடியவில்லை: {}"
@@ -391,6 +436,15 @@ msgstr "நாடு"
 
 msgid "Create"
 msgstr "உருவாக்கு"
+
+msgid "Create a playlist with these songs"
+msgstr "இந்தப் பாடல்களுடன் பிளேலிஸ்ட்டை உருவாக்கு"
+
+msgid "Create an empty playlist"
+msgstr "வெற்று பிளேலிஸ்ட்டை உருவாக்கு"
+
+msgid "Create the playlist"
+msgstr "பிளேலிஸ்ட்டை உருவாக்கு"
 
 msgid "Created \"{}\" with only {n} song: {}"
 msgid_plural "Created \"{}\" with only {n} songs: {}"
@@ -450,6 +504,9 @@ msgstr "இயல்பு ஒளிர்வு"
 msgid "Delete"
 msgstr "நீக்கு"
 
+msgid "Delete \"{}\""
+msgstr "\"{}\"-ஐ நீக்கு"
+
 msgid "Delete \"{}\" from the server? This cannot be undone."
 msgstr "\"{}\" ஐ சேவையகத்திலிருந்து நீக்கவா? இதைச் செயல்தவிர்க்க முடியாது."
 
@@ -503,6 +560,15 @@ msgstr "YouTube Music இல் புதிய இசையைக் கண்�
 
 msgid "Discover Weekly"
 msgstr "வாரத்தின் கண்டுபிடிப்புகள்"
+
+msgid "Do not let \"{}\" control this player"
+msgstr "\"{}\" இந்த பிளேயரைக் கட்டுப்படுத்த அனுமதிக்காதே"
+
+msgid "Double-click to play"
+msgstr "இயக்க இருமுறை கிளிக் செய்யவும்"
+
+msgid "Double-click to play, drag to reorder"
+msgstr "இயக்க இருமுறை கிளிக் செய்யவும், வரிசையை மாற்ற இழுக்கவும்"
 
 msgid "Duration"
 msgstr "காலம்"
@@ -582,6 +648,9 @@ msgstr "அனைத்தையும் மற"
 msgid "Forget this server?"
 msgstr "இந்தச் சேவையகத்தை மறக்கவா?"
 
+msgid "Forget {}"
+msgstr "{}-ஐ மற"
+
 msgid "Format the server should transcode to. Applies from the next song."
 msgstr "சேவையகம் டிரான்ஸ்கோட் செய்ய வேண்டிய வடிவம். அடுத்த பாடலிலிருந்து பொருந்தும்."
 
@@ -592,6 +661,9 @@ msgstr[1] "Feishin இல் {n} சேவையகங்கள் கிடை�
 
 msgid "Gapless playback"
 msgstr "இடைவெளியற்ற இயக்கம்"
+
+msgid "Genre filter: {}"
+msgstr "வகை வடிகட்டி: {}"
 
 msgid "Genres"
 msgstr "வகைகள்"
@@ -635,6 +707,9 @@ msgstr "இணையதளம் (விருப்பத்தேர்வு)
 msgid "Import from Feishin"
 msgstr "Feishin இலிருந்து இறக்குமதி செய்"
 
+msgid "Import the servers saved by a previous Feishin install"
+msgstr "முந்தைய Feishin நிறுவலில் சேமித்த சேவையகங்களை இறக்குமதி செய்"
+
 msgid "Install yt-dlp to play YouTube tracks"
 msgstr "YouTube தடங்களை இயக்க yt-dlp ஐ நிறுவவும்"
 
@@ -668,14 +743,20 @@ msgstr "அது நின்றுவிட்டது"
 msgid "item"
 msgstr "உருப்படி"
 
-msgid "Jellyfin has no public share links"
-msgstr "Jellyfin இல் பொதுப் பகிர்வு இணைப்புகள் இல்லை"
+msgid "Jump to this line"
+msgstr "இந்த வரிக்குச் செல்"
 
 msgid "Keep this station in the favorites on this device"
 msgstr "இந்தச் சாதனத்தில் இந்த நிலையத்தைப் பிடித்தவையில் வைத்திரு"
 
+msgid "Keep {}"
+msgstr "{}-ஐ வைத்திரு"
+
 msgid "Language"
 msgstr "மொழி"
+
+msgid "Let \"{}\" control this player"
+msgstr "\"{}\" இந்த பிளேயரைக் கட்டுப்படுத்த அனுமதி"
 
 msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
 msgstr "இந்த வலையமைப்பில் உள்ள மற்ற Feishin பிளேயர்கள் இதைக் கட்டுப்படுத்த அனுமதி. ஒவ்வொரு சாதனமும் முதல் முறை உங்கள் ஒப்புதலைக் கேட்கும்."
@@ -705,6 +786,9 @@ msgstr "நேரலை"
 
 msgid "Load more"
 msgstr "மேலும் ஏற்று"
+
+msgid "Load more results"
+msgstr "மேலும் முடிவுகளை ஏற்று"
 
 msgid "Load this section again"
 msgstr "இந்தப் பகுதியை மீண்டும் ஏற்று"
@@ -1145,6 +1229,9 @@ msgstr "பிளேலிஸ்ட்டிலிருந்து அகற�
 msgid "Remove from queue"
 msgstr "வரிசையிலிருந்து அகற்று"
 
+msgid "Remove the selected songs from this playlist"
+msgstr "தேர்ந்தெடுத்த பாடல்களை இந்த பிளேலிஸ்ட்டிலிருந்து அகற்று"
+
 msgid "Removed {n} song from \"{}\""
 msgid_plural "Removed {n} songs from \"{}\""
 msgstr[0] "\"{}\" இலிருந்து {n} பாடல் அகற்றப்பட்டது"
@@ -1164,6 +1251,9 @@ msgstr "மீண்டும் இயக்கு: ஒன்று"
 
 msgid "ReplayGain"
 msgstr "ReplayGain"
+
+msgid "ReplayGain could not be changed: {}"
+msgstr "ReplayGain-ஐ மாற்ற முடியவில்லை: {}"
 
 msgid "Report what you play to the server."
 msgstr "நீங்கள் இயக்குவதைச் சேவையகத்துக்குத் தெரிவி."
@@ -1270,6 +1360,9 @@ msgstr "சேவையகம்"
 msgid "Server type"
 msgstr "சேவையக வகை"
 
+msgid "Server type: {}"
+msgstr "சேவையக வகை: {}"
+
 msgid "Servers"
 msgstr "சேவையகங்கள்"
 
@@ -1294,8 +1387,17 @@ msgstr "இந்த {}-ஐப் பகிர்: பொது இணைப்�
 msgid "Sharing is unavailable: {}"
 msgstr "பகிர்வு கிடைக்கவில்லை: {}"
 
+msgid "Show all top songs"
+msgstr "எல்லா சிறந்த பாடல்களையும் காட்டு"
+
+msgid "Show fewer top songs"
+msgstr "குறைவான சிறந்த பாடல்களைக் காட்டு"
+
 msgid "SHOW LESS"
 msgstr "குறைவாகக் காட்டு"
+
+msgid "Show less of the biography"
+msgstr "வாழ்க்கை வரலாற்றைச் சுருக்கு"
 
 msgid "Show lyrics"
 msgstr "பாடல் வரிகளைக் காட்டு"
@@ -1323,6 +1425,9 @@ msgstr "நூலகத்துக்கு அருகில் வரிச�
 
 msgid "Show the server and saved stations"
 msgstr "சேவையகம் மற்றும் சேமித்த நிலையங்களைக் காட்டு"
+
+msgid "Show the whole biography"
+msgstr "முழு வாழ்க்கை வரலாற்றையும் காட்டு"
 
 msgid "Show {}"
 msgstr "{}-ஐக் காட்டு"
@@ -1357,6 +1462,9 @@ msgstr "கலக்கு: ஆன்"
 msgid "Sign in"
 msgstr "உள்நுழை"
 
+msgid "Sign in to another server"
+msgstr "வேறொரு சேவையகத்தில் உள்நுழை"
+
 msgid "Sign in with browser"
 msgstr "உலாவி மூலம் உள்நுழை"
 
@@ -1365,6 +1473,9 @@ msgstr "வெளியேறி இந்தச் சேவையகத்த�
 
 msgid "Sign out and forget this server?"
 msgstr "வெளியேறி இந்தச் சேவையகத்தை மறக்கவா?"
+
+msgid "Sign out of {}"
+msgstr "{} இலிருந்து வெளியேறு"
 
 msgid "Similar"
 msgstr "ஒத்தவை"
@@ -1411,6 +1522,9 @@ msgstr "நிலையப் பெயர்"
 msgid "Stations"
 msgstr "நிலையங்கள்"
 
+msgid "Stay signed in"
+msgstr "உள்நுழைந்தே இரு"
+
 msgid "Stop {}"
 msgstr "{}-ஐ நிறுத்து"
 
@@ -1440,6 +1554,9 @@ msgstr "குறிச்சொல், எடுத்துக்காட்�
 
 msgid "That device is no longer on the network"
 msgstr "அந்தச் சாதனம் இனி வலையமைப்பில் இல்லை"
+
+msgid "The audio device could not be changed: {}"
+msgstr "ஆடியோ சாதனத்தை மாற்ற முடியவில்லை: {}"
 
 msgid "the connection was not allowed"
 msgstr "இணைப்பு அனுமதிக்கப்படவில்லை"
@@ -1666,11 +1783,23 @@ msgstr "{} kbps"
 msgid "{} s"
 msgstr "{} வி"
 
+msgid "{} {} kbps"
+msgstr "{} {} kbps"
+
+msgid "{} · {}"
+msgstr "{} · {}"
+
+msgid "{} • {}"
+msgstr "{} • {}"
+
 msgid "{}: off"
 msgstr "{}: ஆஃப்"
 
 msgid "{}: on"
 msgstr "{}: ஆன்"
+
+msgid "{}: {}"
+msgstr "{}: {}"
 
 msgid "{}: {} (dark)"
 msgstr "{}: {} (இருண்டது)"

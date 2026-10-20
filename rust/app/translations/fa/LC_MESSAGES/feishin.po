@@ -5,6 +5,9 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 
+msgid "\"{}\""
+msgstr "\"{}\""
+
 msgid "\"{}\" plays next"
 msgstr "\"{}\" بعدی پخش می‌شود"
 
@@ -59,6 +62,9 @@ msgstr "افزودن سرور"
 msgid "Add station"
 msgstr "افزودن ایستگاه"
 
+msgid "Add the selected songs to a playlist"
+msgstr "افزودن آهنگ‌های انتخاب‌شده به فهرست پخش"
+
 msgid "Add this link to the end of the queue"
 msgstr "افزودن این پیوند به انتهای صف"
 
@@ -76,6 +82,9 @@ msgstr "افزودن به صف"
 
 msgid "Add to the server's stations"
 msgstr "افزودن به ایستگاه‌های سرور"
+
+msgid "Add to {}"
+msgstr "افزودن به {}"
 
 msgid "Add {n} song to playlist"
 msgid_plural "Add {n} songs to playlist"
@@ -227,11 +236,23 @@ msgstr "پاک کردن امتیاز"
 msgid "Clear the favorites and genre filters"
 msgstr "پاک کردن پالایش‌های علاقه‌مندی و ژانر"
 
+msgid "Click to close"
+msgstr "برای بستن کلیک کنید"
+
+msgid "Click to dismiss"
+msgstr "برای رد کردن کلیک کنید"
+
 msgid "Close"
 msgstr "بستن"
 
 msgid "Close now playing"
 msgstr "بستن صفحه‌ی در حال پخش"
+
+msgid "Close without adding the songs"
+msgstr "بستن بدون افزودن آهنگ‌ها"
+
+msgid "Close without changes"
+msgstr "بستن بدون تغییر"
 
 msgid "Close without saving"
 msgstr "بستن بدون ذخیره"
@@ -239,8 +260,14 @@ msgstr "بستن بدون ذخیره"
 msgid "Colors used across the whole app."
 msgstr "رنگ‌هایی که در کل برنامه به کار می‌روند."
 
+msgid "Connect to this server"
+msgstr "اتصال به این سرور"
+
 msgid "Connect to your music server"
 msgstr "به سرور موسیقی خود متصل شوید"
+
+msgid "Connect to {}"
+msgstr "اتصال به {}"
 
 msgid "Connecting..."
 msgstr "در حال اتصال..."
@@ -268,6 +295,9 @@ msgstr "ساخت فهرست پخش ممکن نشد: {}"
 
 msgid "Could not delete the playlist: {}"
 msgstr "حذف فهرست پخش ممکن نشد: {}"
+
+msgid "Could not delete the saved login: {}"
+msgstr "حذف ورود ذخیره‌شده ممکن نشد: {}"
 
 msgid "Could not delete the station"
 msgstr "حذف ایستگاه ممکن نشد"
@@ -347,6 +377,9 @@ msgstr "باز کردن پوشه ممکن نشد: {}"
 msgid "Could not open YouTube Music: {}"
 msgstr "باز کردن YouTube Music ممکن نشد: {}"
 
+msgid "Could not pause or resume playback: {}"
+msgstr "مکث یا ادامه‌ی پخش ممکن نشد: {}"
+
 msgid "Could not play \"{}\" from YouTube: {}"
 msgstr "پخش \"{}\" از YouTube ممکن نشد: {}"
 
@@ -365,11 +398,23 @@ msgstr "حذف آهنگ‌ها ممکن نشد: {}"
 msgid "Could not rescan the library: {}"
 msgstr "اسکن دوباره‌ی کتابخانه ممکن نشد: {}"
 
+msgid "Could not save the login for {}: {}"
+msgstr "ذخیره‌ی ورود برای {} ممکن نشد: {}"
+
+msgid "Could not save the settings: {}"
+msgstr "ذخیره‌ی تنظیمات ممکن نشد: {}"
+
+msgid "Could not seek: {}"
+msgstr "جابه‌جایی ممکن نشد: {}"
+
 msgid "Could not set the rating: {}"
 msgstr "تعیین امتیاز ممکن نشد: {}"
 
 msgid "Could not sign in to YouTube Music ({}). Showing general picks instead."
 msgstr "ورود به YouTube Music ممکن نشد ({}). به جای آن پیشنهادهای عمومی نمایش داده می‌شود."
+
+msgid "Could not stop playback: {}"
+msgstr "توقف پخش ممکن نشد: {}"
 
 msgid "Could not switch server: {}"
 msgstr "تعویض سرور ممکن نشد: {}"
@@ -391,6 +436,15 @@ msgstr "کشور"
 
 msgid "Create"
 msgstr "ساختن"
+
+msgid "Create a playlist with these songs"
+msgstr "ساخت فهرست پخش با این آهنگ‌ها"
+
+msgid "Create an empty playlist"
+msgstr "ساخت فهرست پخش خالی"
+
+msgid "Create the playlist"
+msgstr "ساخت فهرست پخش"
 
 msgid "Created \"{}\" with only {n} song: {}"
 msgid_plural "Created \"{}\" with only {n} songs: {}"
@@ -450,6 +504,9 @@ msgstr "روشن پیش‌فرض"
 msgid "Delete"
 msgstr "حذف"
 
+msgid "Delete \"{}\""
+msgstr "حذف \"{}\""
+
 msgid "Delete \"{}\" from the server? This cannot be undone."
 msgstr "\"{}\" از سرور حذف شود؟ این کار برگشت‌پذیر نیست."
 
@@ -503,6 +560,15 @@ msgstr "موسیقی تازه را در YouTube Music کشف کنید"
 
 msgid "Discover Weekly"
 msgstr "کشف‌های هفته"
+
+msgid "Do not let \"{}\" control this player"
+msgstr "اجازه ندهید \"{}\" این پخش‌کننده را کنترل کند"
+
+msgid "Double-click to play"
+msgstr "برای پخش دوبار کلیک کنید"
+
+msgid "Double-click to play, drag to reorder"
+msgstr "برای پخش دوبار کلیک کنید، برای تغییر ترتیب بکشید"
 
 msgid "Duration"
 msgstr "مدت"
@@ -582,6 +648,9 @@ msgstr "فراموش کردن همه"
 msgid "Forget this server?"
 msgstr "این سرور فراموش شود؟"
 
+msgid "Forget {}"
+msgstr "فراموش کردن {}"
+
 msgid "Format the server should transcode to. Applies from the next song."
 msgstr "قالبی که سرور باید به آن تبدیل کند. از آهنگ بعدی اعمال می‌شود."
 
@@ -592,6 +661,9 @@ msgstr[1] "{n} سرور در Feishin پیدا شد اما هیچ‌کدام ور
 
 msgid "Gapless playback"
 msgstr "پخش بی‌وقفه"
+
+msgid "Genre filter: {}"
+msgstr "فیلتر ژانر: {}"
 
 msgid "Genres"
 msgstr "ژانرها"
@@ -635,6 +707,9 @@ msgstr "وب‌سایت (اختیاری)"
 msgid "Import from Feishin"
 msgstr "وارد کردن از Feishin"
 
+msgid "Import the servers saved by a previous Feishin install"
+msgstr "وارد کردن سرورهای ذخیره‌شده در نصب قبلی Feishin"
+
 msgid "Install yt-dlp to play YouTube tracks"
 msgstr "برای پخش قطعه‌های YouTube، yt-dlp را نصب کنید"
 
@@ -668,14 +743,20 @@ msgstr "متوقف شد"
 msgid "item"
 msgstr "مورد"
 
-msgid "Jellyfin has no public share links"
-msgstr "Jellyfin پیوند اشتراک‌گذاری عمومی ندارد"
+msgid "Jump to this line"
+msgstr "رفتن به این خط"
 
 msgid "Keep this station in the favorites on this device"
 msgstr "نگه‌داشتن این ایستگاه در علاقه‌مندی‌ها روی این دستگاه"
 
+msgid "Keep {}"
+msgstr "نگه داشتن {}"
+
 msgid "Language"
 msgstr "زبان"
+
+msgid "Let \"{}\" control this player"
+msgstr "اجازه دهید \"{}\" این پخش‌کننده را کنترل کند"
 
 msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
 msgstr "به دیگر پخش‌کننده‌های Feishin در این شبکه اجازه می‌دهد این یکی را کنترل کنند. هر دستگاه بار اول از شما اجازه می‌گیرد."
@@ -705,6 +786,9 @@ msgstr "زنده"
 
 msgid "Load more"
 msgstr "بارگذاری بیشتر"
+
+msgid "Load more results"
+msgstr "بارگذاری نتایج بیشتر"
 
 msgid "Load this section again"
 msgstr "بارگذاری دوباره‌ی این بخش"
@@ -1145,6 +1229,9 @@ msgstr "حذف از فهرست پخش"
 msgid "Remove from queue"
 msgstr "حذف از صف"
 
+msgid "Remove the selected songs from this playlist"
+msgstr "حذف آهنگ‌های انتخاب‌شده از این فهرست پخش"
+
 msgid "Removed {n} song from \"{}\""
 msgid_plural "Removed {n} songs from \"{}\""
 msgstr[0] "{n} آهنگ از \"{}\" حذف شد"
@@ -1164,6 +1251,9 @@ msgstr "تکرار: یکی"
 
 msgid "ReplayGain"
 msgstr "ReplayGain"
+
+msgid "ReplayGain could not be changed: {}"
+msgstr "تغییر ReplayGain ممکن نشد: {}"
 
 msgid "Report what you play to the server."
 msgstr "آنچه پخش می‌کنید را به سرور گزارش می‌دهد."
@@ -1270,6 +1360,9 @@ msgstr "سرور"
 msgid "Server type"
 msgstr "نوع سرور"
 
+msgid "Server type: {}"
+msgstr "نوع سرور: {}"
+
 msgid "Servers"
 msgstr "سرورها"
 
@@ -1294,8 +1387,17 @@ msgstr "اشتراک‌گذاری این {}: کپی پیوند عمومی"
 msgid "Sharing is unavailable: {}"
 msgstr "اشتراک‌گذاری در دسترس نیست: {}"
 
+msgid "Show all top songs"
+msgstr "نمایش همه‌ی آهنگ‌های برتر"
+
+msgid "Show fewer top songs"
+msgstr "نمایش آهنگ‌های برتر کمتر"
+
 msgid "SHOW LESS"
 msgstr "نمایش کمتر"
+
+msgid "Show less of the biography"
+msgstr "نمایش خلاصه‌ی زندگی‌نامه"
 
 msgid "Show lyrics"
 msgstr "نمایش متن شعر"
@@ -1323,6 +1425,9 @@ msgstr "صف را کنار کتابخانه نشان می‌دهد؛ برای ا
 
 msgid "Show the server and saved stations"
 msgstr "نمایش ایستگاه‌های سرور و ذخیره‌شده"
+
+msgid "Show the whole biography"
+msgstr "نمایش کامل زندگی‌نامه"
 
 msgid "Show {}"
 msgstr "نمایش {}"
@@ -1357,6 +1462,9 @@ msgstr "درهم: روشن"
 msgid "Sign in"
 msgstr "ورود"
 
+msgid "Sign in to another server"
+msgstr "ورود به سرور دیگر"
+
 msgid "Sign in with browser"
 msgstr "ورود با مرورگر"
 
@@ -1365,6 +1473,9 @@ msgstr "از حساب خارج شوید و ورود ذخیره‌شده‌ی ا�
 
 msgid "Sign out and forget this server?"
 msgstr "از حساب خارج شوید و این سرور فراموش شود؟"
+
+msgid "Sign out of {}"
+msgstr "خروج از {}"
 
 msgid "Similar"
 msgstr "مشابه"
@@ -1411,6 +1522,9 @@ msgstr "نام ایستگاه"
 msgid "Stations"
 msgstr "ایستگاه‌ها"
 
+msgid "Stay signed in"
+msgstr "وارد بمانید"
+
 msgid "Stop {}"
 msgstr "توقف {}"
 
@@ -1440,6 +1554,9 @@ msgstr "برچسب، برای مثال jazz"
 
 msgid "That device is no longer on the network"
 msgstr "آن دستگاه دیگر در شبکه نیست"
+
+msgid "The audio device could not be changed: {}"
+msgstr "تغییر دستگاه صوتی ممکن نشد: {}"
 
 msgid "the connection was not allowed"
 msgstr "اتصال مجاز نشد"
@@ -1666,11 +1783,23 @@ msgstr "{} kbps"
 msgid "{} s"
 msgstr "{} ث"
 
+msgid "{} {} kbps"
+msgstr "{} {} kbps"
+
+msgid "{} · {}"
+msgstr "{} · {}"
+
+msgid "{} • {}"
+msgstr "{} • {}"
+
 msgid "{}: off"
 msgstr "{}: خاموش"
 
 msgid "{}: on"
 msgstr "{}: روشن"
+
+msgid "{}: {}"
+msgstr "{}: {}"
 
 msgid "{}: {} (dark)"
 msgstr "{}: {} (تیره)"

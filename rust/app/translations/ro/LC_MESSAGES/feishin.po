@@ -5,6 +5,9 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n==0 || (n%100>0 && n%100<20)) ? 1 : 2;\n"
 
 
+msgid "\"{}\""
+msgstr "„{}”"
+
 msgid "\"{}\" plays next"
 msgstr "„{}” urmează"
 
@@ -59,6 +62,9 @@ msgstr "Adaugă server"
 msgid "Add station"
 msgstr "Adaugă post"
 
+msgid "Add the selected songs to a playlist"
+msgstr "Adaugă melodiile selectate într-un playlist"
+
 msgid "Add this link to the end of the queue"
 msgstr "Adaugă acest link la finalul cozii"
 
@@ -76,6 +82,9 @@ msgstr "Adaugă în coadă"
 
 msgid "Add to the server's stations"
 msgstr "Adaugă la posturile serverului"
+
+msgid "Add to {}"
+msgstr "Adaugă în {}"
 
 msgid "Add {n} song to playlist"
 msgid_plural "Add {n} songs to playlist"
@@ -233,11 +242,23 @@ msgstr "Șterge evaluarea"
 msgid "Clear the favorites and genre filters"
 msgstr "Golește filtrele de favorite și gen"
 
+msgid "Click to close"
+msgstr "Clic pentru a închide"
+
+msgid "Click to dismiss"
+msgstr "Clic pentru a ascunde"
+
 msgid "Close"
 msgstr "Închide"
 
 msgid "Close now playing"
 msgstr "Închide redarea curentă"
+
+msgid "Close without adding the songs"
+msgstr "Închide fără a adăuga melodiile"
+
+msgid "Close without changes"
+msgstr "Închide fără modificări"
 
 msgid "Close without saving"
 msgstr "Închide fără a salva"
@@ -245,8 +266,14 @@ msgstr "Închide fără a salva"
 msgid "Colors used across the whole app."
 msgstr "Culorile folosite în întreaga aplicație."
 
+msgid "Connect to this server"
+msgstr "Conectează-te la acest server"
+
 msgid "Connect to your music server"
 msgstr "Conectează-te la serverul tău de muzică"
+
+msgid "Connect to {}"
+msgstr "Conectează-te la {}"
 
 msgid "Connecting..."
 msgstr "Se conectează..."
@@ -274,6 +301,9 @@ msgstr "Nu s-a putut crea playlistul: {}"
 
 msgid "Could not delete the playlist: {}"
 msgstr "Nu s-a putut șterge playlistul: {}"
+
+msgid "Could not delete the saved login: {}"
+msgstr "Nu s-au putut șterge datele de autentificare salvate: {}"
 
 msgid "Could not delete the station"
 msgstr "Nu s-a putut șterge postul"
@@ -353,6 +383,9 @@ msgstr "Nu s-a putut deschide dosarul: {}"
 msgid "Could not open YouTube Music: {}"
 msgstr "Nu s-a putut deschide YouTube Music: {}"
 
+msgid "Could not pause or resume playback: {}"
+msgstr "Nu s-a putut întrerupe sau relua redarea: {}"
+
 msgid "Could not play \"{}\" from YouTube: {}"
 msgstr "Nu s-a putut reda „{}” de pe YouTube: {}"
 
@@ -371,11 +404,23 @@ msgstr "Nu s-au putut elimina melodiile: {}"
 msgid "Could not rescan the library: {}"
 msgstr "Nu s-a putut rescana biblioteca: {}"
 
+msgid "Could not save the login for {}: {}"
+msgstr "Nu s-au putut salva datele de autentificare pentru {}: {}"
+
+msgid "Could not save the settings: {}"
+msgstr "Nu s-au putut salva setările: {}"
+
+msgid "Could not seek: {}"
+msgstr "Nu s-a putut derula: {}"
+
 msgid "Could not set the rating: {}"
 msgstr "Nu s-a putut seta evaluarea: {}"
 
 msgid "Could not sign in to YouTube Music ({}). Showing general picks instead."
 msgstr "Nu s-a putut face conectarea la YouTube Music ({}). Se afișează recomandări generale."
+
+msgid "Could not stop playback: {}"
+msgstr "Nu s-a putut opri redarea: {}"
 
 msgid "Could not switch server: {}"
 msgstr "Nu s-a putut schimba serverul: {}"
@@ -397,6 +442,15 @@ msgstr "Țară"
 
 msgid "Create"
 msgstr "Creează"
+
+msgid "Create a playlist with these songs"
+msgstr "Creează un playlist cu aceste melodii"
+
+msgid "Create an empty playlist"
+msgstr "Creează un playlist gol"
+
+msgid "Create the playlist"
+msgstr "Creează playlistul"
 
 msgid "Created \"{}\" with only {n} song: {}"
 msgid_plural "Created \"{}\" with only {n} songs: {}"
@@ -458,6 +512,9 @@ msgstr "Luminos implicit"
 msgid "Delete"
 msgstr "Șterge"
 
+msgid "Delete \"{}\""
+msgstr "Șterge „{}”"
+
 msgid "Delete \"{}\" from the server? This cannot be undone."
 msgstr "Ștergi „{}” de pe server? Acțiunea nu poate fi anulată."
 
@@ -511,6 +568,15 @@ msgstr "Descoperă muzică nouă pe YouTube Music"
 
 msgid "Discover Weekly"
 msgstr "Descoperirile săptămânii"
+
+msgid "Do not let \"{}\" control this player"
+msgstr "Nu permite ca „{}” să controleze acest player"
+
+msgid "Double-click to play"
+msgstr "Dublu clic pentru redare"
+
+msgid "Double-click to play, drag to reorder"
+msgstr "Dublu clic pentru redare, trage pentru reordonare"
 
 msgid "Duration"
 msgstr "Durată"
@@ -590,6 +656,9 @@ msgstr "Uită-le pe toate"
 msgid "Forget this server?"
 msgstr "Uiți acest server?"
 
+msgid "Forget {}"
+msgstr "Uită {}"
+
 msgid "Format the server should transcode to. Applies from the next song."
 msgstr "Formatul în care serverul ar trebui să transcodeze. Se aplică de la următoarea melodie."
 
@@ -601,6 +670,9 @@ msgstr[2] "S-au găsit {n} de servere în Feishin, dar niciunul nu are date de a
 
 msgid "Gapless playback"
 msgstr "Redare fără pauze"
+
+msgid "Genre filter: {}"
+msgstr "Filtru de gen: {}"
 
 msgid "Genres"
 msgstr "Genuri"
@@ -644,6 +716,9 @@ msgstr "Pagină web (opțional)"
 msgid "Import from Feishin"
 msgstr "Importă din Feishin"
 
+msgid "Import the servers saved by a previous Feishin install"
+msgstr "Importă serverele salvate de o instalare anterioară Feishin"
+
 msgid "Install yt-dlp to play YouTube tracks"
 msgstr "Instalează yt-dlp pentru a reda piese de pe YouTube"
 
@@ -677,14 +752,20 @@ msgstr "s-a oprit"
 msgid "item"
 msgstr "elementul"
 
-msgid "Jellyfin has no public share links"
-msgstr "Jellyfin nu are linkuri publice de partajare"
+msgid "Jump to this line"
+msgstr "Sari la acest rând"
 
 msgid "Keep this station in the favorites on this device"
 msgstr "Păstrează acest post la favorite pe acest dispozitiv"
 
+msgid "Keep {}"
+msgstr "Păstrează {}"
+
 msgid "Language"
 msgstr "Limbă"
+
+msgid "Let \"{}\" control this player"
+msgstr "Permite ca „{}” să controleze acest player"
 
 msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
 msgstr "Permite altor playere Feishin din această rețea să controleze acest player. Fiecare dispozitiv cere aprobarea ta prima dată."
@@ -715,6 +796,9 @@ msgstr "LIVE"
 
 msgid "Load more"
 msgstr "Încarcă mai multe"
+
+msgid "Load more results"
+msgstr "Încarcă mai multe rezultate"
 
 msgid "Load this section again"
 msgstr "Reîncarcă această secțiune"
@@ -1157,6 +1241,9 @@ msgstr "Elimină din playlist"
 msgid "Remove from queue"
 msgstr "Elimină din coadă"
 
+msgid "Remove the selected songs from this playlist"
+msgstr "Elimină melodiile selectate din acest playlist"
+
 msgid "Removed {n} song from \"{}\""
 msgid_plural "Removed {n} songs from \"{}\""
 msgstr[0] "S-a eliminat {n} melodie din „{}”"
@@ -1177,6 +1264,9 @@ msgstr "Repetare: una"
 
 msgid "ReplayGain"
 msgstr "ReplayGain"
+
+msgid "ReplayGain could not be changed: {}"
+msgstr "ReplayGain nu a putut fi schimbat: {}"
 
 msgid "Report what you play to the server."
 msgstr "Raportează serverului ce asculți."
@@ -1283,6 +1373,9 @@ msgstr "Server"
 msgid "Server type"
 msgstr "Tipul serverului"
 
+msgid "Server type: {}"
+msgstr "Tipul serverului: {}"
+
 msgid "Servers"
 msgstr "Servere"
 
@@ -1307,8 +1400,17 @@ msgstr "Partajează {}: copiază un link public"
 msgid "Sharing is unavailable: {}"
 msgstr "Partajarea nu este disponibilă: {}"
 
+msgid "Show all top songs"
+msgstr "Arată toate melodiile de top"
+
+msgid "Show fewer top songs"
+msgstr "Arată mai puține melodii de top"
+
 msgid "SHOW LESS"
 msgstr "AFIȘEAZĂ MAI PUȚIN"
+
+msgid "Show less of the biography"
+msgstr "Arată mai puțin din biografie"
 
 msgid "Show lyrics"
 msgstr "Afișează versurile"
@@ -1336,6 +1438,9 @@ msgstr "Afișează coada lângă bibliotecă; este reținută la următoarea por
 
 msgid "Show the server and saved stations"
 msgstr "Afișează posturile serverului și pe cele salvate"
+
+msgid "Show the whole biography"
+msgstr "Arată toată biografia"
 
 msgid "Show {}"
 msgstr "Afișează {}"
@@ -1370,6 +1475,9 @@ msgstr "Amestecare: activată"
 msgid "Sign in"
 msgstr "Conectează-te"
 
+msgid "Sign in to another server"
+msgstr "Conectează-te la alt server"
+
 msgid "Sign in with browser"
 msgstr "Conectează-te prin browser"
 
@@ -1378,6 +1486,9 @@ msgstr "Te deconectezi și uiți datele de autentificare salvate ale acestui ser
 
 msgid "Sign out and forget this server?"
 msgstr "Te deconectezi și uiți acest server?"
+
+msgid "Sign out of {}"
+msgstr "Deconectează-te de la {}"
 
 msgid "Similar"
 msgstr "Similare"
@@ -1424,6 +1535,9 @@ msgstr "Numele postului"
 msgid "Stations"
 msgstr "Posturi"
 
+msgid "Stay signed in"
+msgstr "Rămâi conectat"
+
 msgid "Stop {}"
 msgstr "Oprește {}"
 
@@ -1453,6 +1567,9 @@ msgstr "Etichetă, de exemplu jazz"
 
 msgid "That device is no longer on the network"
 msgstr "Acel dispozitiv nu mai este în rețea"
+
+msgid "The audio device could not be changed: {}"
+msgstr "Dispozitivul audio nu a putut fi schimbat: {}"
 
 msgid "the connection was not allowed"
 msgstr "conexiunea nu a fost permisă"
@@ -1688,11 +1805,23 @@ msgstr "{} kbps"
 msgid "{} s"
 msgstr "{} s"
 
+msgid "{} {} kbps"
+msgstr "{} {} kbps"
+
+msgid "{} · {}"
+msgstr "{} · {}"
+
+msgid "{} • {}"
+msgstr "{} • {}"
+
 msgid "{}: off"
 msgstr "{}: dezactivat"
 
 msgid "{}: on"
 msgstr "{}: activat"
+
+msgid "{}: {}"
+msgstr "{}: {}"
 
 msgid "{}: {} (dark)"
 msgstr "{}: {} (întunecată)"

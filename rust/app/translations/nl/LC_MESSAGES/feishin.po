@@ -5,6 +5,9 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 
+msgid "\"{}\""
+msgstr "\"{}\""
+
 msgid "\"{}\" plays next"
 msgstr "\"{}\" wordt hierna afgespeeld"
 
@@ -59,6 +62,9 @@ msgstr "Server toevoegen"
 msgid "Add station"
 msgstr "Zender toevoegen"
 
+msgid "Add the selected songs to a playlist"
+msgstr "Geselecteerde nummers aan een afspeellijst toevoegen"
+
 msgid "Add this link to the end of the queue"
 msgstr "Deze link aan het einde van de wachtrij toevoegen"
 
@@ -76,6 +82,9 @@ msgstr "Aan wachtrij toevoegen"
 
 msgid "Add to the server's stations"
 msgstr "Aan de zenders van de server toevoegen"
+
+msgid "Add to {}"
+msgstr "Aan {} toevoegen"
 
 msgid "Add {n} song to playlist"
 msgid_plural "Add {n} songs to playlist"
@@ -227,11 +236,23 @@ msgstr "Beoordeling wissen"
 msgid "Clear the favorites and genre filters"
 msgstr "De favorieten- en genrefilters wissen"
 
+msgid "Click to close"
+msgstr "Klik om te sluiten"
+
+msgid "Click to dismiss"
+msgstr "Klik om te verbergen"
+
 msgid "Close"
 msgstr "Sluiten"
 
 msgid "Close now playing"
 msgstr "Nu afspelen sluiten"
+
+msgid "Close without adding the songs"
+msgstr "Sluiten zonder de nummers toe te voegen"
+
+msgid "Close without changes"
+msgstr "Sluiten zonder wijzigingen"
 
 msgid "Close without saving"
 msgstr "Sluiten zonder opslaan"
@@ -239,8 +260,14 @@ msgstr "Sluiten zonder opslaan"
 msgid "Colors used across the whole app."
 msgstr "Kleuren die in de hele app worden gebruikt."
 
+msgid "Connect to this server"
+msgstr "Met deze server verbinden"
+
 msgid "Connect to your music server"
 msgstr "Verbind met je muziekserver"
+
+msgid "Connect to {}"
+msgstr "Met {} verbinden"
 
 msgid "Connecting..."
 msgstr "Verbinden..."
@@ -268,6 +295,9 @@ msgstr "Kan de afspeellijst niet maken: {}"
 
 msgid "Could not delete the playlist: {}"
 msgstr "Kan de afspeellijst niet verwijderen: {}"
+
+msgid "Could not delete the saved login: {}"
+msgstr "Kan de opgeslagen login niet verwijderen: {}"
 
 msgid "Could not delete the station"
 msgstr "Kan de zender niet verwijderen"
@@ -347,6 +377,9 @@ msgstr "Kan de map niet openen: {}"
 msgid "Could not open YouTube Music: {}"
 msgstr "Kan YouTube Music niet openen: {}"
 
+msgid "Could not pause or resume playback: {}"
+msgstr "Kan het afspelen niet pauzeren of hervatten: {}"
+
 msgid "Could not play \"{}\" from YouTube: {}"
 msgstr "Kan \"{}\" niet afspelen vanaf YouTube: {}"
 
@@ -365,11 +398,23 @@ msgstr "Kan nummers niet verwijderen: {}"
 msgid "Could not rescan the library: {}"
 msgstr "Kan de bibliotheek niet opnieuw scannen: {}"
 
+msgid "Could not save the login for {}: {}"
+msgstr "Kan de login voor {} niet opslaan: {}"
+
+msgid "Could not save the settings: {}"
+msgstr "Kan de instellingen niet opslaan: {}"
+
+msgid "Could not seek: {}"
+msgstr "Kan niet spoelen: {}"
+
 msgid "Could not set the rating: {}"
 msgstr "Kan de beoordeling niet instellen: {}"
 
 msgid "Could not sign in to YouTube Music ({}). Showing general picks instead."
 msgstr "Kan niet inloggen bij YouTube Music ({}). In plaats daarvan worden algemene suggesties getoond."
+
+msgid "Could not stop playback: {}"
+msgstr "Kan het afspelen niet stoppen: {}"
 
 msgid "Could not switch server: {}"
 msgstr "Kan niet van server wisselen: {}"
@@ -391,6 +436,15 @@ msgstr "Land"
 
 msgid "Create"
 msgstr "Aanmaken"
+
+msgid "Create a playlist with these songs"
+msgstr "Afspeellijst met deze nummers maken"
+
+msgid "Create an empty playlist"
+msgstr "Lege afspeellijst maken"
+
+msgid "Create the playlist"
+msgstr "Afspeellijst maken"
 
 msgid "Created \"{}\" with only {n} song: {}"
 msgid_plural "Created \"{}\" with only {n} songs: {}"
@@ -450,6 +504,9 @@ msgstr "Standaard licht"
 msgid "Delete"
 msgstr "Verwijderen"
 
+msgid "Delete \"{}\""
+msgstr "\"{}\" verwijderen"
+
 msgid "Delete \"{}\" from the server? This cannot be undone."
 msgstr "\"{}\" van de server verwijderen? Dit kan niet ongedaan worden gemaakt."
 
@@ -503,6 +560,15 @@ msgstr "Ontdek nieuwe muziek op YouTube Music"
 
 msgid "Discover Weekly"
 msgstr "Ontdekkingen van de week"
+
+msgid "Do not let \"{}\" control this player"
+msgstr "\"{}\" deze speler niet laten bedienen"
+
+msgid "Double-click to play"
+msgstr "Dubbelklik om af te spelen"
+
+msgid "Double-click to play, drag to reorder"
+msgstr "Dubbelklik om af te spelen, sleep om te herschikken"
 
 msgid "Duration"
 msgstr "Duur"
@@ -582,6 +648,9 @@ msgstr "Alles vergeten"
 msgid "Forget this server?"
 msgstr "Deze server vergeten?"
 
+msgid "Forget {}"
+msgstr "{} vergeten"
+
 msgid "Format the server should transcode to. Applies from the next song."
 msgstr "Formaat waarnaar de server moet transcoderen. Geldt vanaf het volgende nummer."
 
@@ -592,6 +661,9 @@ msgstr[1] "{n} servers gevonden in Feishin, maar geen met een bruikbare opgeslag
 
 msgid "Gapless playback"
 msgstr "Naadloos afspelen"
+
+msgid "Genre filter: {}"
+msgstr "Genrefilter: {}"
 
 msgid "Genres"
 msgstr "Genres"
@@ -635,6 +707,9 @@ msgstr "Website (optioneel)"
 msgid "Import from Feishin"
 msgstr "Importeren uit Feishin"
 
+msgid "Import the servers saved by a previous Feishin install"
+msgstr "Servers importeren die door een eerdere Feishin-installatie zijn opgeslagen"
+
 msgid "Install yt-dlp to play YouTube tracks"
 msgstr "Installeer yt-dlp om YouTube-tracks af te spelen"
 
@@ -668,14 +743,20 @@ msgstr "het is gestopt"
 msgid "item"
 msgstr "item"
 
-msgid "Jellyfin has no public share links"
-msgstr "Jellyfin heeft geen openbare deellinks"
+msgid "Jump to this line"
+msgstr "Naar deze regel springen"
 
 msgid "Keep this station in the favorites on this device"
 msgstr "Deze zender op dit apparaat in de favorieten bewaren"
 
+msgid "Keep {}"
+msgstr "{} behouden"
+
 msgid "Language"
 msgstr "Taal"
+
+msgid "Let \"{}\" control this player"
+msgstr "\"{}\" deze speler laten bedienen"
 
 msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
 msgstr "Laat andere Feishin-spelers op dit netwerk deze bedienen. Elk apparaat vraagt de eerste keer om je toestemming."
@@ -705,6 +786,9 @@ msgstr "LIVE"
 
 msgid "Load more"
 msgstr "Meer laden"
+
+msgid "Load more results"
+msgstr "Meer resultaten laden"
 
 msgid "Load this section again"
 msgstr "Deze sectie opnieuw laden"
@@ -1145,6 +1229,9 @@ msgstr "Uit afspeellijst verwijderen"
 msgid "Remove from queue"
 msgstr "Uit wachtrij verwijderen"
 
+msgid "Remove the selected songs from this playlist"
+msgstr "Geselecteerde nummers uit deze afspeellijst verwijderen"
+
 msgid "Removed {n} song from \"{}\""
 msgid_plural "Removed {n} songs from \"{}\""
 msgstr[0] "{n} nummer uit \"{}\" verwijderd"
@@ -1164,6 +1251,9 @@ msgstr "Herhalen: één"
 
 msgid "ReplayGain"
 msgstr "ReplayGain"
+
+msgid "ReplayGain could not be changed: {}"
+msgstr "ReplayGain kon niet worden gewijzigd: {}"
 
 msgid "Report what you play to the server."
 msgstr "Meld wat je afspeelt aan de server."
@@ -1270,6 +1360,9 @@ msgstr "Server"
 msgid "Server type"
 msgstr "Servertype"
 
+msgid "Server type: {}"
+msgstr "Servertype: {}"
+
 msgid "Servers"
 msgstr "Servers"
 
@@ -1294,8 +1387,17 @@ msgstr "{} delen: kopieer een openbare link"
 msgid "Sharing is unavailable: {}"
 msgstr "Delen is niet beschikbaar: {}"
 
+msgid "Show all top songs"
+msgstr "Alle topnummers tonen"
+
+msgid "Show fewer top songs"
+msgstr "Minder topnummers tonen"
+
 msgid "SHOW LESS"
 msgstr "MINDER TONEN"
+
+msgid "Show less of the biography"
+msgstr "Minder van de biografie tonen"
 
 msgid "Show lyrics"
 msgstr "Liedtekst tonen"
@@ -1323,6 +1425,9 @@ msgstr "Toon de wachtrij naast de bibliotheek; wordt onthouden bij de volgende s
 
 msgid "Show the server and saved stations"
 msgstr "De zenders van de server en opgeslagen zenders tonen"
+
+msgid "Show the whole biography"
+msgstr "Volledige biografie tonen"
 
 msgid "Show {}"
 msgstr "{} tonen"
@@ -1357,6 +1462,9 @@ msgstr "Willekeurig: aan"
 msgid "Sign in"
 msgstr "Inloggen"
 
+msgid "Sign in to another server"
+msgstr "Bij een andere server inloggen"
+
 msgid "Sign in with browser"
 msgstr "Inloggen met browser"
 
@@ -1365,6 +1473,9 @@ msgstr "Uitloggen en de opgeslagen login van deze server vergeten?"
 
 msgid "Sign out and forget this server?"
 msgstr "Uitloggen en deze server vergeten?"
+
+msgid "Sign out of {}"
+msgstr "Uitloggen bij {}"
 
 msgid "Similar"
 msgstr "Vergelijkbaar"
@@ -1411,6 +1522,9 @@ msgstr "Zendernaam"
 msgid "Stations"
 msgstr "Zenders"
 
+msgid "Stay signed in"
+msgstr "Ingelogd blijven"
+
 msgid "Stop {}"
 msgstr "{} stoppen"
 
@@ -1440,6 +1554,9 @@ msgstr "Tag, bijvoorbeeld jazz"
 
 msgid "That device is no longer on the network"
 msgstr "Dat apparaat is niet meer op het netwerk"
+
+msgid "The audio device could not be changed: {}"
+msgstr "Audioapparaat kon niet worden gewijzigd: {}"
 
 msgid "the connection was not allowed"
 msgstr "de verbinding werd niet toegestaan"
@@ -1666,11 +1783,23 @@ msgstr "{} kbps"
 msgid "{} s"
 msgstr "{} s"
 
+msgid "{} {} kbps"
+msgstr "{} {} kbps"
+
+msgid "{} · {}"
+msgstr "{} · {}"
+
+msgid "{} • {}"
+msgstr "{} • {}"
+
 msgid "{}: off"
 msgstr "{}: uit"
 
 msgid "{}: on"
 msgstr "{}: aan"
+
+msgid "{}: {}"
+msgstr "{}: {}"
 
 msgid "{}: {} (dark)"
 msgstr "{}: {} (donker)"

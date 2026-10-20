@@ -5,6 +5,9 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 
+msgid "\"{}\""
+msgstr "\"{}\""
+
 msgid "\"{}\" plays next"
 msgstr "\"{}\" hurrengoa da"
 
@@ -59,6 +62,9 @@ msgstr "Zerbitzaria gehitu"
 msgid "Add station"
 msgstr "Gehitu irratia"
 
+msgid "Add the selected songs to a playlist"
+msgstr "Gehitu hautatutako abestiak erreprodukzio-zerrenda batera"
+
 msgid "Add this link to the end of the queue"
 msgstr "Gehitu esteka hau ilararen amaieran"
 
@@ -76,6 +82,9 @@ msgstr "Gehitu ilarara"
 
 msgid "Add to the server's stations"
 msgstr "Gehitu zerbitzariaren irratietara"
+
+msgid "Add to {}"
+msgstr "Gehitu hona: {}"
 
 msgid "Add {n} song to playlist"
 msgid_plural "Add {n} songs to playlist"
@@ -227,11 +236,23 @@ msgstr "Kendu balorazioa"
 msgid "Clear the favorites and genre filters"
 msgstr "Garbitu gogokoen eta generoen iragazkiak"
 
+msgid "Click to close"
+msgstr "Egin klik ixteko"
+
+msgid "Click to dismiss"
+msgstr "Egin klik baztertzeko"
+
 msgid "Close"
 msgstr "Itxi"
 
 msgid "Close now playing"
 msgstr "Itxi \"Orain erreproduzitzen\""
+
+msgid "Close without adding the songs"
+msgstr "Itxi abestiak gehitu gabe"
+
+msgid "Close without changes"
+msgstr "Itxi aldaketarik gabe"
 
 msgid "Close without saving"
 msgstr "Itxi gorde gabe"
@@ -239,8 +260,14 @@ msgstr "Itxi gorde gabe"
 msgid "Colors used across the whole app."
 msgstr "Aplikazio osoan erabilitako koloreak."
 
+msgid "Connect to this server"
+msgstr "Konektatu zerbitzari honetara"
+
 msgid "Connect to your music server"
 msgstr "Konektatu zure musika-zerbitzarira"
+
+msgid "Connect to {}"
+msgstr "Konektatu hona: {}"
 
 msgid "Connecting..."
 msgstr "Konektatzen..."
@@ -268,6 +295,9 @@ msgstr "Ezin izan da erreprodukzio-zerrenda sortu: {}"
 
 msgid "Could not delete the playlist: {}"
 msgstr "Ezin izan da erreprodukzio-zerrenda ezabatu: {}"
+
+msgid "Could not delete the saved login: {}"
+msgstr "Ezin izan da gordetako saio-hasiera ezabatu: {}"
 
 msgid "Could not delete the station"
 msgstr "Ezin izan da irratia ezabatu"
@@ -347,6 +377,9 @@ msgstr "Ezin izan da karpeta ireki: {}"
 msgid "Could not open YouTube Music: {}"
 msgstr "Ezin izan da YouTube Music ireki: {}"
 
+msgid "Could not pause or resume playback: {}"
+msgstr "Ezin izan da erreprodukzioa pausatu edo berrekin: {}"
+
 msgid "Could not play \"{}\" from YouTube: {}"
 msgstr "Ezin izan da \"{}\" YouTube-tik erreproduzitu: {}"
 
@@ -365,11 +398,23 @@ msgstr "Ezin izan dira abestiak kendu: {}"
 msgid "Could not rescan the library: {}"
 msgstr "Ezin izan da liburutegia berriro eskaneatu: {}"
 
+msgid "Could not save the login for {}: {}"
+msgstr "Ezin izan da {} zerbitzariaren saio-hasiera gorde: {}"
+
+msgid "Could not save the settings: {}"
+msgstr "Ezin izan dira ezarpenak gorde: {}"
+
+msgid "Could not seek: {}"
+msgstr "Ezin izan da posizioz aldatu: {}"
+
 msgid "Could not set the rating: {}"
 msgstr "Ezin izan da balorazioa ezarri: {}"
 
 msgid "Could not sign in to YouTube Music ({}). Showing general picks instead."
 msgstr "Ezin izan da YouTube Music-en saioa hasi ({}). Hautaketa orokorrak erakusten dira horren ordez."
+
+msgid "Could not stop playback: {}"
+msgstr "Ezin izan da erreprodukzioa gelditu: {}"
 
 msgid "Could not switch server: {}"
 msgstr "Ezin izan da zerbitzariz aldatu: {}"
@@ -391,6 +436,15 @@ msgstr "Herrialdea"
 
 msgid "Create"
 msgstr "Sortu"
+
+msgid "Create a playlist with these songs"
+msgstr "Sortu erreprodukzio-zerrenda bat abesti hauekin"
+
+msgid "Create an empty playlist"
+msgstr "Sortu erreprodukzio-zerrenda huts bat"
+
+msgid "Create the playlist"
+msgstr "Sortu erreprodukzio-zerrenda"
 
 msgid "Created \"{}\" with only {n} song: {}"
 msgid_plural "Created \"{}\" with only {n} songs: {}"
@@ -450,6 +504,9 @@ msgstr "Argi lehenetsia"
 msgid "Delete"
 msgstr "Ezabatu"
 
+msgid "Delete \"{}\""
+msgstr "Ezabatu \"{}\""
+
 msgid "Delete \"{}\" from the server? This cannot be undone."
 msgstr "\"{}\" zerbitzaritik ezabatu? Ezin da desegin."
 
@@ -503,6 +560,15 @@ msgstr "Aurkitu musika berria YouTube Music-en"
 
 msgid "Discover Weekly"
 msgstr "Asteko aurkikuntzak"
+
+msgid "Do not let \"{}\" control this player"
+msgstr "Ez utzi \"{}\" gailuari erreproduzitzaile hau kontrolatzen"
+
+msgid "Double-click to play"
+msgstr "Egin klik bikoitza erreproduzitzeko"
+
+msgid "Double-click to play, drag to reorder"
+msgstr "Egin klik bikoitza erreproduzitzeko, arrastatu berrantolatzeko"
 
 msgid "Duration"
 msgstr "Iraupena"
@@ -582,6 +648,9 @@ msgstr "Ahaztu denak"
 msgid "Forget this server?"
 msgstr "Zerbitzari hau ahaztu?"
 
+msgid "Forget {}"
+msgstr "Ahaztu {}"
+
 msgid "Format the server should transcode to. Applies from the next song."
 msgstr "Zerbitzariak transkodetzeko erabili behar duen formatua. Hurrengo abestitik aurrera aplikatzen da."
 
@@ -592,6 +661,9 @@ msgstr[1] "{n} zerbitzari aurkitu dira Feishin-en, baina bakar batek ere ez du g
 
 msgid "Gapless playback"
 msgstr "Etenik gabeko erreprodukzioa"
+
+msgid "Genre filter: {}"
+msgstr "Genero-iragazkia: {}"
 
 msgid "Genres"
 msgstr "Generoak"
@@ -635,6 +707,9 @@ msgstr "Webgune nagusia (aukerakoa)"
 msgid "Import from Feishin"
 msgstr "Inportatu Feishin-etik"
 
+msgid "Import the servers saved by a previous Feishin install"
+msgstr "Inportatu aurreko Feishin instalazio batek gordetako zerbitzariak"
+
 msgid "Install yt-dlp to play YouTube tracks"
 msgstr "Instalatu yt-dlp YouTube-ko pistak erreproduzitzeko"
 
@@ -668,14 +743,20 @@ msgstr "gelditu egin da"
 msgid "item"
 msgstr "elementua"
 
-msgid "Jellyfin has no public share links"
-msgstr "Jellyfin-ek ez du partekatzeko esteka publikorik"
+msgid "Jump to this line"
+msgstr "Joan lerro honetara"
 
 msgid "Keep this station in the favorites on this device"
 msgstr "Gorde irrati hau gailu honetako gogokoetan"
 
+msgid "Keep {}"
+msgstr "Mantendu {}"
+
 msgid "Language"
 msgstr "Hizkuntza"
+
+msgid "Let \"{}\" control this player"
+msgstr "Utzi \"{}\" gailuari erreproduzitzaile hau kontrolatzen"
 
 msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
 msgstr "Utzi sare honetako beste Feishin erreproduzitzaileei hau kontrolatzen. Gailu bakoitzak zure baimena eskatzen du lehen aldian."
@@ -705,6 +786,9 @@ msgstr "ZUZENEAN"
 
 msgid "Load more"
 msgstr "Kargatu gehiago"
+
+msgid "Load more results"
+msgstr "Kargatu emaitza gehiago"
 
 msgid "Load this section again"
 msgstr "Kargatu berriro atal hau"
@@ -1145,6 +1229,9 @@ msgstr "Kendu erreprodukzio-zerrendatik"
 msgid "Remove from queue"
 msgstr "Kendu ilaratik"
 
+msgid "Remove the selected songs from this playlist"
+msgstr "Kendu hautatutako abestiak erreprodukzio-zerrenda honetatik"
+
 msgid "Removed {n} song from \"{}\""
 msgid_plural "Removed {n} songs from \"{}\""
 msgstr[0] "{n} abesti kendu da \"{}\" zerrendatik"
@@ -1164,6 +1251,9 @@ msgstr "Errepikatu: bat"
 
 msgid "ReplayGain"
 msgstr "ReplayGain"
+
+msgid "ReplayGain could not be changed: {}"
+msgstr "Ezin izan da ReplayGain aldatu: {}"
 
 msgid "Report what you play to the server."
 msgstr "Jakinarazi zerbitzariari zer erreproduzitzen duzun."
@@ -1270,6 +1360,9 @@ msgstr "Zerbitzaria"
 msgid "Server type"
 msgstr "Zerbitzari mota"
 
+msgid "Server type: {}"
+msgstr "Zerbitzari mota: {}"
+
 msgid "Servers"
 msgstr "Zerbitzariak"
 
@@ -1294,8 +1387,17 @@ msgstr "Partekatu {}: kopiatu esteka publiko bat"
 msgid "Sharing is unavailable: {}"
 msgstr "Partekatzea ez dago erabilgarri: {}"
 
+msgid "Show all top songs"
+msgstr "Erakutsi abesti nagusi guztiak"
+
+msgid "Show fewer top songs"
+msgstr "Erakutsi abesti nagusi gutxiago"
+
 msgid "SHOW LESS"
 msgstr "ERAKUTSI GUTXIAGO"
+
+msgid "Show less of the biography"
+msgstr "Laburtu biografia"
 
 msgid "Show lyrics"
 msgstr "Erakutsi letrak"
@@ -1323,6 +1425,9 @@ msgstr "Erakutsi ilara liburutegiaren ondoan; hurrengo abiaraztean gogoratuko da
 
 msgid "Show the server and saved stations"
 msgstr "Erakutsi zerbitzariko eta gordetako irratiak"
+
+msgid "Show the whole biography"
+msgstr "Erakutsi biografia osoa"
 
 msgid "Show {}"
 msgstr "Erakutsi {}"
@@ -1357,6 +1462,9 @@ msgstr "Nahastea: aktibatuta"
 msgid "Sign in"
 msgstr "Hasi saioa"
 
+msgid "Sign in to another server"
+msgstr "Hasi saioa beste zerbitzari batean"
+
 msgid "Sign in with browser"
 msgstr "Hasi saioa nabigatzailearekin"
 
@@ -1365,6 +1473,9 @@ msgstr "Saioa amaitu eta zerbitzari honen gordetako saio-hasiera ahaztu?"
 
 msgid "Sign out and forget this server?"
 msgstr "Saioa amaitu eta zerbitzari hau ahaztu?"
+
+msgid "Sign out of {}"
+msgstr "Amaitu saioa hemen: {}"
 
 msgid "Similar"
 msgstr "Antzekoak"
@@ -1411,6 +1522,9 @@ msgstr "Irratiaren izena"
 msgid "Stations"
 msgstr "Irratiak"
 
+msgid "Stay signed in"
+msgstr "Mantendu saioa hasita"
+
 msgid "Stop {}"
 msgstr "Gelditu {}"
 
@@ -1440,6 +1554,9 @@ msgstr "Etiketa, adibidez jazz"
 
 msgid "That device is no longer on the network"
 msgstr "Gailu hori ez dago sarean jada"
+
+msgid "The audio device could not be changed: {}"
+msgstr "Ezin izan da audio gailua aldatu: {}"
 
 msgid "the connection was not allowed"
 msgstr "konexioa ez da baimendu"
@@ -1666,11 +1783,23 @@ msgstr "{} kbps"
 msgid "{} s"
 msgstr "{} s"
 
+msgid "{} {} kbps"
+msgstr "{} {} kbps"
+
+msgid "{} · {}"
+msgstr "{} · {}"
+
+msgid "{} • {}"
+msgstr "{} • {}"
+
 msgid "{}: off"
 msgstr "{}: desaktibatuta"
 
 msgid "{}: on"
 msgstr "{}: aktibatuta"
+
+msgid "{}: {}"
+msgstr "{}: {}"
 
 msgid "{}: {} (dark)"
 msgstr "{}: {} (iluna)"

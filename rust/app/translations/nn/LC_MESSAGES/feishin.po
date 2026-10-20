@@ -5,6 +5,9 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 
+msgid "\"{}\""
+msgstr "\"{}\""
+
 msgid "\"{}\" plays next"
 msgstr "\"{}\" vert spelt neste"
 
@@ -59,6 +62,9 @@ msgstr "Legg til tenar"
 msgid "Add station"
 msgstr "Legg til stasjon"
 
+msgid "Add the selected songs to a playlist"
+msgstr "Legg dei valde songane til i ei speleliste"
+
 msgid "Add this link to the end of the queue"
 msgstr "Legg denne lenkja til sist i køen"
 
@@ -76,6 +82,9 @@ msgstr "Legg til i kø"
 
 msgid "Add to the server's stations"
 msgstr "Legg til i stasjonane på tenaren"
+
+msgid "Add to {}"
+msgstr "Legg til i {}"
 
 msgid "Add {n} song to playlist"
 msgid_plural "Add {n} songs to playlist"
@@ -227,11 +236,23 @@ msgstr "Fjern vurdering"
 msgid "Clear the favorites and genre filters"
 msgstr "Tøm favoritt- og sjangerfiltera"
 
+msgid "Click to close"
+msgstr "Klikk for å lukke"
+
+msgid "Click to dismiss"
+msgstr "Klikk for å avvise"
+
 msgid "Close"
 msgstr "Lukk"
 
 msgid "Close now playing"
 msgstr "Lukk «Spelar no»"
+
+msgid "Close without adding the songs"
+msgstr "Lukk utan å leggje til songane"
+
+msgid "Close without changes"
+msgstr "Lukk utan endringar"
 
 msgid "Close without saving"
 msgstr "Lukk utan å lagre"
@@ -239,8 +260,14 @@ msgstr "Lukk utan å lagre"
 msgid "Colors used across the whole app."
 msgstr "Fargar som vert brukte i heile appen."
 
+msgid "Connect to this server"
+msgstr "Kopla til denne tenaren"
+
 msgid "Connect to your music server"
 msgstr "Kopla til musikktenaren din"
+
+msgid "Connect to {}"
+msgstr "Kopla til {}"
 
 msgid "Connecting..."
 msgstr "Koplar til..."
@@ -268,6 +295,9 @@ msgstr "Kunne ikkje lage spelelista: {}"
 
 msgid "Could not delete the playlist: {}"
 msgstr "Kunne ikkje slette spelelista: {}"
+
+msgid "Could not delete the saved login: {}"
+msgstr "Kunne ikkje slette den lagra innlogginga: {}"
 
 msgid "Could not delete the station"
 msgstr "Kunne ikkje slette stasjonen"
@@ -347,6 +377,9 @@ msgstr "Kunne ikkje opne mappa: {}"
 msgid "Could not open YouTube Music: {}"
 msgstr "Kunne ikkje opne YouTube Music: {}"
 
+msgid "Could not pause or resume playback: {}"
+msgstr "Kunne ikkje pause eller halde fram med avspelinga: {}"
+
 msgid "Could not play \"{}\" from YouTube: {}"
 msgstr "Kunne ikkje spele av \"{}\" frå YouTube: {}"
 
@@ -365,11 +398,23 @@ msgstr "Kunne ikkje fjerne songar: {}"
 msgid "Could not rescan the library: {}"
 msgstr "Kunne ikkje skanne biblioteket på nytt: {}"
 
+msgid "Could not save the login for {}: {}"
+msgstr "Kunne ikkje lagre innlogginga for {}: {}"
+
+msgid "Could not save the settings: {}"
+msgstr "Kunne ikkje lagre innstillingane: {}"
+
+msgid "Could not seek: {}"
+msgstr "Kunne ikkje spole: {}"
+
 msgid "Could not set the rating: {}"
 msgstr "Kunne ikkje setje vurderinga: {}"
 
 msgid "Could not sign in to YouTube Music ({}). Showing general picks instead."
 msgstr "Kunne ikkje logge inn på YouTube Music ({}). Viser generelle forslag i staden."
+
+msgid "Could not stop playback: {}"
+msgstr "Kunne ikkje stoppe avspelinga: {}"
 
 msgid "Could not switch server: {}"
 msgstr "Kunne ikkje byte tenar: {}"
@@ -391,6 +436,15 @@ msgstr "Land"
 
 msgid "Create"
 msgstr "Lag"
+
+msgid "Create a playlist with these songs"
+msgstr "Lag ei speleliste med desse songane"
+
+msgid "Create an empty playlist"
+msgstr "Lag ei tom speleliste"
+
+msgid "Create the playlist"
+msgstr "Lag spelelista"
 
 msgid "Created \"{}\" with only {n} song: {}"
 msgid_plural "Created \"{}\" with only {n} songs: {}"
@@ -450,6 +504,9 @@ msgstr "Standard lys"
 msgid "Delete"
 msgstr "Slett"
 
+msgid "Delete \"{}\""
+msgstr "Slett \"{}\""
+
 msgid "Delete \"{}\" from the server? This cannot be undone."
 msgstr "Slette \"{}\" frå tenaren? Dette kan ikkje angrast."
 
@@ -503,6 +560,15 @@ msgstr "Oppdag ny musikk på YouTube Music"
 
 msgid "Discover Weekly"
 msgstr "Veka sine oppdagingar"
+
+msgid "Do not let \"{}\" control this player"
+msgstr "Ikkje la \"{}\" styre denne spelaren"
+
+msgid "Double-click to play"
+msgstr "Dobbeltklikk for å spele"
+
+msgid "Double-click to play, drag to reorder"
+msgstr "Dobbeltklikk for å spele, dra for å endre rekkjefølgje"
 
 msgid "Duration"
 msgstr "Varigheit"
@@ -582,6 +648,9 @@ msgstr "Gløym alle"
 msgid "Forget this server?"
 msgstr "Gløyme denne tenaren?"
 
+msgid "Forget {}"
+msgstr "Gløym {}"
+
 msgid "Format the server should transcode to. Applies from the next song."
 msgstr "Formatet tenaren skal omkode til. Gjeld frå neste song."
 
@@ -592,6 +661,9 @@ msgstr[1] "Fann {n} tenarar i Feishin, men ingen med brukande lagra innlogging"
 
 msgid "Gapless playback"
 msgstr "Sømlaus avspeling"
+
+msgid "Genre filter: {}"
+msgstr "Sjangerfilter: {}"
 
 msgid "Genres"
 msgstr "Sjangrar"
@@ -635,6 +707,9 @@ msgstr "Heimeside (valfritt)"
 msgid "Import from Feishin"
 msgstr "Importer frå Feishin"
 
+msgid "Import the servers saved by a previous Feishin install"
+msgstr "Importer tenarane som vart lagra av ein tidlegare Feishin-installasjon"
+
 msgid "Install yt-dlp to play YouTube tracks"
 msgstr "Installer yt-dlp for å spele av YouTube-spor"
 
@@ -668,14 +743,20 @@ msgstr "ho stoppa"
 msgid "item"
 msgstr "elementet"
 
-msgid "Jellyfin has no public share links"
-msgstr "Jellyfin har ikkje offentlege delingslenkjer"
+msgid "Jump to this line"
+msgstr "Gå til denne lina"
 
 msgid "Keep this station in the favorites on this device"
 msgstr "Ta vare på denne stasjonen i favorittane på denne eininga"
 
+msgid "Keep {}"
+msgstr "Behald {}"
+
 msgid "Language"
 msgstr "Språk"
+
+msgid "Let \"{}\" control this player"
+msgstr "La \"{}\" styre denne spelaren"
 
 msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
 msgstr "Lat andre Feishin-spelarar på dette nettverket styre denne. Kvar eining ber om godkjenninga di første gongen."
@@ -705,6 +786,9 @@ msgstr "DIREKTE"
 
 msgid "Load more"
 msgstr "Last fleire"
+
+msgid "Load more results"
+msgstr "Last fleire resultat"
 
 msgid "Load this section again"
 msgstr "Last denne delen på nytt"
@@ -1145,6 +1229,9 @@ msgstr "Fjern frå speleliste"
 msgid "Remove from queue"
 msgstr "Fjern frå kø"
 
+msgid "Remove the selected songs from this playlist"
+msgstr "Fjern dei valde songane frå denne spelelista"
+
 msgid "Removed {n} song from \"{}\""
 msgid_plural "Removed {n} songs from \"{}\""
 msgstr[0] "Fjerna {n} song frå \"{}\""
@@ -1164,6 +1251,9 @@ msgstr "Gjenta: éin"
 
 msgid "ReplayGain"
 msgstr "ReplayGain"
+
+msgid "ReplayGain could not be changed: {}"
+msgstr "Kunne ikkje endre ReplayGain: {}"
 
 msgid "Report what you play to the server."
 msgstr "Rapporter det du spelar til tenaren."
@@ -1270,6 +1360,9 @@ msgstr "Tenar"
 msgid "Server type"
 msgstr "Tenartype"
 
+msgid "Server type: {}"
+msgstr "Tenartype: {}"
+
 msgid "Servers"
 msgstr "Tenarar"
 
@@ -1294,8 +1387,17 @@ msgstr "Del {}: kopier ei offentleg lenkje"
 msgid "Sharing is unavailable: {}"
 msgstr "Deling er ikkje tilgjengeleg: {}"
 
+msgid "Show all top songs"
+msgstr "Vis alle toppsongane"
+
+msgid "Show fewer top songs"
+msgstr "Vis færre toppsongar"
+
 msgid "SHOW LESS"
 msgstr "VIS MINDRE"
+
+msgid "Show less of the biography"
+msgstr "Vis mindre av biografien"
 
 msgid "Show lyrics"
 msgstr "Vis songtekst"
@@ -1323,6 +1425,9 @@ msgstr "Vis køen ved sida av biblioteket; vert hugsa til neste oppstart."
 
 msgid "Show the server and saved stations"
 msgstr "Vis tenaren og lagra stasjonar"
+
+msgid "Show the whole biography"
+msgstr "Vis heile biografien"
 
 msgid "Show {}"
 msgstr "Vis {}"
@@ -1357,6 +1462,9 @@ msgstr "Stokk om: på"
 msgid "Sign in"
 msgstr "Logg inn"
 
+msgid "Sign in to another server"
+msgstr "Logg inn på ein annan tenar"
+
 msgid "Sign in with browser"
 msgstr "Logg inn med nettlesar"
 
@@ -1365,6 +1473,9 @@ msgstr "Logge ut og gløyme den lagra innlogginga for denne tenaren?"
 
 msgid "Sign out and forget this server?"
 msgstr "Logge ut og gløyme denne tenaren?"
+
+msgid "Sign out of {}"
+msgstr "Logg ut av {}"
 
 msgid "Similar"
 msgstr "Liknande"
@@ -1411,6 +1522,9 @@ msgstr "Stasjonsnamn"
 msgid "Stations"
 msgstr "Stasjonar"
 
+msgid "Stay signed in"
+msgstr "Hald fram å vere innlogga"
+
 msgid "Stop {}"
 msgstr "Stopp {}"
 
@@ -1440,6 +1554,9 @@ msgstr "Tagg, til dømes jazz"
 
 msgid "That device is no longer on the network"
 msgstr "Den eininga er ikkje lenger på nettverket"
+
+msgid "The audio device could not be changed: {}"
+msgstr "Kunne ikkje endre lydeininga: {}"
 
 msgid "the connection was not allowed"
 msgstr "sambandet vart ikkje tillate"
@@ -1666,11 +1783,23 @@ msgstr "{} kbps"
 msgid "{} s"
 msgstr "{} s"
 
+msgid "{} {} kbps"
+msgstr "{} {} kbps"
+
+msgid "{} · {}"
+msgstr "{} · {}"
+
+msgid "{} • {}"
+msgstr "{} • {}"
+
 msgid "{}: off"
 msgstr "{}: av"
 
 msgid "{}: on"
 msgstr "{}: på"
+
+msgid "{}: {}"
+msgstr "{}: {}"
 
 msgid "{}: {} (dark)"
 msgstr "{}: {} (mørkt)"
