@@ -5,7 +5,7 @@ import { Sidebar } from "sidebar.slint";
 import { TracksView } from "tracks.slint";
 import { QueuePanel } from "queue_panel.slint";
 import { PlayerBar } from "player_bar.slint";
-import { TooltipOverlay } from "widgets.slint";
+import { TooltipAnchor, TooltipOverlay } from "widgets.slint";
 import { HomeView } from "home.slint";
 import { AlbumsView } from "albums.slint";
 import { AlbumDetailView } from "album_detail.slint";
@@ -46,6 +46,7 @@ export { FoldersState } from "folders.slint";
 export { ShareState } from "share.slint";
 export { RadioRow, RadioSource, RadioState, RadioTab } from "radio.slint";
 export { DevicesState, RemoteDevice } from "devices.slint";
+export { Tooltip } from "widgets.slint";
 
 
 export component AppWindow inherits Window {
@@ -167,10 +168,15 @@ export component AppWindow inherits Window {
                 wrap: word-wrap;
             }
 
-            TouchArea {
+            dismiss-touch := TouchArea {
                 clicked => {
                     AppState.status = "";
                 }
+            }
+
+            TooltipAnchor {
+                text: @tr("Click to dismiss");
+                hovered: dismiss-touch.has-hover;
             }
 
             Timer {

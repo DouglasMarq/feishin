@@ -1,7 +1,7 @@
-import { ComboBox, LineEdit } from "std-widgets.slint";
+import { LineEdit } from "std-widgets.slint";
 import { Theme, Icons } from "theme.slint";
 import { AppState, Route } from "globals.slint";
-import { IconButton } from "widgets.slint";
+import { IconButton, TooltipComboBox } from "widgets.slint";
 import { AlbumGrid, AlbumGridRow } from "album_grid.slint";
 
 export global AlbumsState {
@@ -28,7 +28,8 @@ component AlbumsControls inherits HorizontalLayout {
     property <length> search-max-width: root.compact ? 4000px : 240px;
     spacing: 12px;
 
-    ComboBox {
+    TooltipComboBox {
+        tooltip: @tr("Sort by {}", self.current-value);
         min-width: 90px;
         preferred-width: 170px;
         max-width: 170px;

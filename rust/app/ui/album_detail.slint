@@ -221,6 +221,11 @@ component AlbumTrackRowView inherits Rectangle {
                     AlbumDetailState.play-track(root.track.id);
                 }
 
+                TooltipAnchor {
+                    text: @tr("Double-click to play");
+                    hovered: touch.has-hover;
+                }
+
                 HorizontalLayout {
                     padding-left: 8px;
                     padding-right: 8px;

@@ -1,7 +1,7 @@
-import { Button, ComboBox, LineEdit } from "std-widgets.slint";
+import { LineEdit } from "std-widgets.slint";
 import { Theme, Icons } from "theme.slint";
 import { LoginState } from "globals.slint";
-import { Icon } from "widgets.slint";
+import { Icon, TooltipButton, TooltipComboBox } from "widgets.slint";
 
 component Label inherits Text {
     color: Theme.muted;
@@ -61,7 +61,8 @@ export component LoginView inherits Rectangle {
                         text: @tr("Server type");
                     }
 
-                    ComboBox {
+                    TooltipComboBox {
+                        tooltip: @tr("Server type: {}", self.current-value);
                         model: ["Navidrome", "Subsonic", "Jellyfin"];
                         current-index <=> LoginState.server-type;
                         enabled: !LoginState.busy;
@@ -109,8 +110,9 @@ export component LoginView inherits Rectangle {
                         height: 6px;
                     }
 
-                    Button {
+                    TooltipButton {
                         text: LoginState.busy ? @tr("Connecting...") : @tr("Sign in");
+                        tooltip: @tr("Connect to this server");
                         primary: true;
                         enabled: !LoginState.busy;
                         clicked => {
@@ -118,8 +120,9 @@ export component LoginView inherits Rectangle {
                         }
                     }
 
-                    Button {
+                    TooltipButton {
                         text: @tr("Import from Feishin");
+                        tooltip: @tr("Import the servers saved by a previous Feishin install");
                         enabled: !LoginState.busy;
                         clicked => {
                             LoginState.import-feishin();

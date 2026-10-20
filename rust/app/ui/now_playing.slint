@@ -2,6 +2,7 @@ import { ListView } from "std-widgets.slint";
 import { Theme, Icons } from "theme.slint";
 import { AppState, PlayerState, QueueRow, QueueState, Route, TrackRow } from "globals.slint";
 import { Icon, IconButton, TooltipAnchor } from "widgets.slint";
+import { TabButton } from "radio_widgets.slint";
 
 export struct ArtistLink {
     id: string,
@@ -39,36 +40,6 @@ export global NowPlayingState {
     callback position-changed();
     callback refresh-up-next();
     callback play-similar(string);
-}
-
-component TabButton inherits Rectangle {
-    in property <string> text;
-    in property <bool> active;
-    callback clicked();
-    height: 36px;
-    width: label.preferred-width + 8px;
-
-    label := Text {
-        text: root.text;
-        color: root.active ? Theme.foreground : (touch.has-hover ? Theme.foreground : Theme.muted);
-        font-size: 15px;
-        font-weight: 600;
-        vertical-alignment: center;
-    }
-
-    if root.active: Rectangle {
-        y: parent.height - 2px;
-        height: 2px;
-        border-radius: 1px;
-        background: Theme.primary;
-    }
-
-    touch := TouchArea {
-        mouse-cursor: pointer;
-        clicked => {
-            root.clicked();
-        }
-    }
 }
 
 component Link inherits Rectangle {
@@ -193,6 +164,11 @@ component LyricsPanel inherits Rectangle {
                         PlayerState.seek(line.time-ms);
                     }
                 }
+
+                TooltipAnchor {
+                    text: line-view.seekable ? @tr("Jump to this line") : "";
+                    hovered: touch.has-hover;
+                }
             }
         }
     }
@@ -224,6 +200,11 @@ component UpNextPanel inherits Rectangle {
                 double-clicked => {
                     QueueState.play(row.uid);
                 }
+            }
+
+            TooltipAnchor {
+                text: @tr("Double-click to play");
+                hovered: touch.has-hover;
             }
 
             HorizontalLayout {
@@ -296,6 +277,11 @@ component SimilarPanel inherits Rectangle {
                 double-clicked => {
                     NowPlayingState.play-similar(track.id);
                 }
+            }
+
+            TooltipAnchor {
+                text: @tr("Double-click to play");
+                hovered: touch.has-hover;
             }
 
             HorizontalLayout {
@@ -506,6 +492,7 @@ export component NowPlayingView inherits Rectangle {
 
                 TabButton {
                     text: @tr("Lyrics");
+                    tooltip: self.active ? @tr("{} is shown", self.text) : @tr("Show {}", self.text);
                     active: NowPlayingState.tab == NowPlayingTab.lyrics;
                     clicked => {
                         NowPlayingState.tab = NowPlayingTab.lyrics;
@@ -514,6 +501,7 @@ export component NowPlayingView inherits Rectangle {
 
                 TabButton {
                     text: @tr("Up next");
+                    tooltip: self.active ? @tr("{} is shown", self.text) : @tr("Show {}", self.text);
                     active: NowPlayingState.tab == NowPlayingTab.up-next;
                     clicked => {
                         NowPlayingState.tab = NowPlayingTab.up-next;
@@ -523,6 +511,7 @@ export component NowPlayingView inherits Rectangle {
 
                 TabButton {
                     text: @tr("Similar");
+                    tooltip: self.active ? @tr("{} is shown", self.text) : @tr("Show {}", self.text);
                     active: NowPlayingState.tab == NowPlayingTab.similar;
                     clicked => {
                         NowPlayingState.tab = NowPlayingTab.similar;

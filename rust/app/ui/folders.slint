@@ -264,6 +264,11 @@ component SongRowView inherits Rectangle {
             }
         }
 
+        TooltipAnchor {
+            text: root.item.track.loaded ? @tr("Double-click to play") : "";
+            hovered: touch.has-hover;
+        }
+
         SongMenu {
             enabled: root.item.track.loaded;
             item: root.item;

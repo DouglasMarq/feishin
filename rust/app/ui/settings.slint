@@ -1,7 +1,7 @@
-import { Button, ComboBox, LineEdit, ScrollView, Switch } from "std-widgets.slint";
+import { LineEdit, ScrollView } from "std-widgets.slint";
 import { Theme, Icons } from "theme.slint";
 import { AppState, PlayerState } from "globals.slint";
-import { Bar, IconButton, TooltipAnchor } from "widgets.slint";
+import { Bar, IconButton, TooltipAnchor, TooltipButton, TooltipComboBox, TooltipSwitch } from "widgets.slint";
 import { AppearanceOptions } from "appearance_settings.slint";
 import { TextAction } from "devices.slint";
 
@@ -122,8 +122,10 @@ component Option inherits HorizontalLayout {
     }
 }
 
-component Picker inherits ComboBox {
+component Picker inherits TooltipComboBox {
+    in property <string> label;
     width: 220px;
+    tooltip: @tr("{}: {}", root.label, root.current-value);
 }
 
 component ActionChip inherits Rectangle {
@@ -196,6 +198,7 @@ component YouTubeSection inherits Section {
         description: @tr("Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Feishin deletes right after reading.");
 
         Picker {
+            label: @tr("Sign in with browser");
             model: SettingsState.cookie-browsers;
             current-index <=> SettingsState.cookie-browser-index;
             selected => {
@@ -209,6 +212,7 @@ component YouTubeSection inherits Section {
         description: @tr("Default country for the Discover charts. Automatic follows your system region.");
 
         Picker {
+            label: @tr("Chart country");
             model: SettingsState.chart-countries;
             current-index <=> SettingsState.chart-country-index;
             selected => {
@@ -313,7 +317,8 @@ component LyricsSourceItem inherits Rectangle {
             }
         }
 
-        Switch {
+        TooltipSwitch {
+            label: root.source.name;
             checked: root.source.enabled;
             toggled => {
                 SettingsState.toggle-lyrics-source(root.index);
@@ -390,16 +395,18 @@ component ServerItem inherits Rectangle {
             }
         }
 
-        if !root.server.current && !root.confirm: Button {
+        if !root.server.current && !root.confirm: TooltipButton {
             text: SettingsState.switching == root.server.id ? @tr("Connecting...") : @tr("Switch");
+            tooltip: @tr("Connect to {}", root.server.name);
             enabled: !root.busy;
             clicked => {
                 SettingsState.switch-server(root.server.id);
             }
         }
 
-        if !root.confirm: Button {
+        if !root.confirm: TooltipButton {
             text: @tr("Remove");
+            tooltip: @tr("Forget {}", root.server.name);
             enabled: !root.busy;
             clicked => {
                 root.confirming = root.server.id;
@@ -412,15 +419,17 @@ component ServerItem inherits Rectangle {
             vertical-alignment: center;
         }
 
-        if root.confirm: Button {
+        if root.confirm: TooltipButton {
             text: @tr("Cancel");
+            tooltip: @tr("Keep {}", root.server.name);
             clicked => {
                 root.confirming = "";
             }
         }
 
-        if root.confirm: Button {
+        if root.confirm: TooltipButton {
             text: @tr("Remove");
+            tooltip: @tr("Forget {}", root.server.name);
             primary: true;
             clicked => {
                 root.confirming = "";
@@ -489,6 +498,7 @@ export component SettingsView inherits Rectangle {
                     description: @tr("Normalize loudness using the track or album gain tags.");
 
                     Picker {
+                        label: @tr("ReplayGain");
                         model: [@tr("Off"), @tr("Track"), @tr("Album")];
                         current-index <=> SettingsState.replay-gain;
                         selected => {
@@ -501,7 +511,8 @@ export component SettingsView inherits Rectangle {
                     title: @tr("Gapless playback");
                     description: @tr("Preload the next song so it starts without a pause.");
 
-                    Switch {
+                    TooltipSwitch {
+                        label: @tr("Gapless playback");
                         checked <=> SettingsState.gapless;
                         toggled => {
                             SettingsState.playback-changed();
@@ -544,6 +555,7 @@ export component SettingsView inherits Rectangle {
                     description: @tr("Output used by the player.");
 
                     Picker {
+                        label: @tr("Audio device");
                         model: SettingsState.devices;
                         current-index <=> SettingsState.device-index;
                         selected => {
@@ -557,6 +569,7 @@ export component SettingsView inherits Rectangle {
                     description: @tr("Ask the server to transcode down to this bitrate. Applies from the next song.");
 
                     Picker {
+                        label: @tr("Maximum bitrate");
                         model: SettingsState.bitrates;
                         current-index <=> SettingsState.bitrate-index;
                         selected => {
@@ -570,6 +583,7 @@ export component SettingsView inherits Rectangle {
                     description: @tr("Format the server should transcode to. Applies from the next song.");
 
                     Picker {
+                        label: @tr("Transcode format");
                         model: SettingsState.formats;
                         current-index <=> SettingsState.format-index;
                         selected => {
@@ -582,7 +596,8 @@ export component SettingsView inherits Rectangle {
                     title: @tr("Scrobble");
                     description: @tr("Report what you play to the server.");
 
-                    Switch {
+                    TooltipSwitch {
+                        label: @tr("Scrobble");
                         checked <=> SettingsState.scrobble;
                         toggled => {
                             SettingsState.playback-changed();
@@ -598,7 +613,8 @@ export component SettingsView inherits Rectangle {
                     title: @tr("MPRIS");
                     description: @tr("Media keys and desktop media controls. Takes effect after a restart.");
 
-                    Switch {
+                    TooltipSwitch {
+                        label: @tr("MPRIS");
                         checked <=> SettingsState.mpris;
                         toggled => {
                             SettingsState.integrations-changed();
@@ -610,7 +626,8 @@ export component SettingsView inherits Rectangle {
                     title: @tr("Discord Rich Presence");
                     description: @tr("Show the current song on your Discord profile.");
 
-                    Switch {
+                    TooltipSwitch {
+                        label: @tr("Discord Rich Presence");
                         checked <=> SettingsState.discord;
                         toggled => {
                             SettingsState.integrations-changed();
@@ -622,7 +639,8 @@ export component SettingsView inherits Rectangle {
                     title: @tr("Remote control");
                     description: @tr("Let other Feishin players on this network control this one. Each device asks for your approval the first time.");
 
-                    Switch {
+                    TooltipSwitch {
+                        label: @tr("Remote control");
                         checked <=> SettingsState.remote-control;
                         toggled => {
                             SettingsState.integrations-changed();
@@ -695,16 +713,18 @@ export component SettingsView inherits Rectangle {
                     spacing: 8px;
                     alignment: start;
 
-                    Button {
+                    TooltipButton {
                         text: @tr("Add server");
+                        tooltip: @tr("Sign in to another server");
                         enabled: SettingsState.switching == "";
                         clicked => {
                             SettingsState.add-server();
                         }
                     }
 
-                    if !root.confirm-logout: Button {
+                    if !root.confirm-logout: TooltipButton {
                         text: @tr("Log out");
+                        tooltip: @tr("Sign out of {}", AppState.server-name);
                         enabled: SettingsState.switching == "" && AppState.server-name != "";
                         clicked => {
                             root.confirm-logout = true;
@@ -717,15 +737,17 @@ export component SettingsView inherits Rectangle {
                         vertical-alignment: center;
                     }
 
-                    if root.confirm-logout: Button {
+                    if root.confirm-logout: TooltipButton {
                         text: @tr("Cancel");
+                        tooltip: @tr("Stay signed in");
                         clicked => {
                             root.confirm-logout = false;
                         }
                     }
 
-                    if root.confirm-logout: Button {
+                    if root.confirm-logout: TooltipButton {
                         text: @tr("Log out");
+                        tooltip: @tr("Sign out of {}", AppState.server-name);
                         primary: true;
                         clicked => {
                             root.confirm-logout = false;
@@ -749,6 +771,7 @@ export component SettingsView inherits Rectangle {
                     description: @tr("System default follows the language of the desktop.");
 
                     Picker {
+                        label: @tr("Language");
                         model: SettingsState.languages;
                         current-index <=> SettingsState.language-index;
                         selected => {
@@ -761,7 +784,8 @@ export component SettingsView inherits Rectangle {
                     title: @tr("Open the queue panel");
                     description: @tr("Show the queue next to the library; remembered on the next start.");
 
-                    Switch {
+                    TooltipSwitch {
+                        label: @tr("Open the queue panel");
                         checked <=> AppState.queue-open;
                         toggled => {
                             SettingsState.interface-changed();
@@ -773,7 +797,8 @@ export component SettingsView inherits Rectangle {
                     title: @tr("Follow current song");
                     description: @tr("Scroll lists and the queue to the song that is playing.");
 
-                    Switch {
+                    TooltipSwitch {
+                        label: @tr("Follow current song");
                         checked <=> SettingsState.follow-current-song;
                         toggled => {
                             SettingsState.interface-changed();

@@ -1,6 +1,6 @@
-import { Button, LineEdit, ListView } from "std-widgets.slint";
+import { LineEdit, ListView } from "std-widgets.slint";
 import { Theme, Icons } from "theme.slint";
-import { Icon } from "widgets.slint";
+import { Icon, TooltipAnchor, TooltipButton } from "widgets.slint";
 
 export struct PickerRow {
     id: string,
@@ -24,10 +24,15 @@ export component Modal inherits Rectangle {
             return reject;
         }
 
-        TouchArea {
+        backdrop-touch := TouchArea {
             clicked => {
                 root.cancel();
             }
+        }
+
+        TooltipAnchor {
+            text: @tr("Click to close");
+            hovered: backdrop-touch.has-hover;
         }
 
         card := Rectangle {
@@ -65,13 +70,16 @@ export component DialogButtons inherits HorizontalLayout {
     in property <string> confirm-text: @tr("OK");
     in property <bool> confirm-enabled: true;
     in property <bool> danger;
+    in property <string> confirm-tooltip;
+    in property <string> cancel-tooltip: @tr("Close without changes");
     callback confirm();
     callback cancel();
     spacing: 8px;
     alignment: end;
 
-    Button {
+    TooltipButton {
         text: @tr("Cancel");
+        tooltip: root.cancel-tooltip;
         clicked => {
             root.cancel();
         }
@@ -88,6 +96,11 @@ export component DialogButtons inherits HorizontalLayout {
             text: root.confirm-text;
             color: root.danger ? #ffffff : Theme.on-primary;
             font-weight: 600;
+        }
+
+        TooltipAnchor {
+            text: root.confirm-tooltip;
+            hovered: confirm-touch.has-hover;
         }
 
         confirm-touch := TouchArea {
@@ -122,6 +135,7 @@ export component NameDialog inherits Modal {
 
     DialogButtons {
         confirm-text: root.busy ? @tr("Creating...") : @tr("Create");
+        confirm-tooltip: @tr("Create the playlist");
         confirm-enabled: !root.busy && name-edit.text != "";
         cancel => {
             root.cancel();
@@ -151,6 +165,7 @@ component PickerItem inherits Rectangle {
     in property <string> name;
     in property <string> info;
     in property <bool> enabled: true;
+    in property <string> tooltip;
     callback clicked();
     height: 44px;
     border-radius: 4px;
@@ -184,6 +199,11 @@ component PickerItem inherits Rectangle {
             font-size: 12px;
             vertical-alignment: center;
         }
+    }
+
+    TooltipAnchor {
+        text: root.tooltip;
+        hovered: touch.has-hover;
     }
 
     touch := TouchArea {
@@ -220,6 +240,7 @@ component PickerList inherits Modal {
     PickerItem {
         icon: Icons.playlist;
         name: @tr("New playlist");
+        tooltip: @tr("Create a playlist with these songs");
         enabled: !PlaylistPickerState.busy;
         clicked => {
             PlaylistPickerState.creating = true;
@@ -239,6 +260,7 @@ component PickerList inherits Modal {
                 icon: Icons.note;
                 name: row.name;
                 info: row.info;
+                tooltip: @tr("Add to {}", row.name);
                 enabled: !PlaylistPickerState.busy;
                 clicked => {
                     PlaylistPickerState.pick(row.id);
@@ -257,8 +279,9 @@ component PickerList inherits Modal {
     HorizontalLayout {
         alignment: end;
 
-        Button {
+        TooltipButton {
             text: @tr("Cancel");
+            tooltip: @tr("Close without adding the songs");
             clicked => {
                 PlaylistPickerState.cancel();
             }
