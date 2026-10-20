@@ -75,8 +75,8 @@ impl ListState {
     fn loaded_row(&self, row: usize) -> Option<TrackRow> {
         let song = self.song(row)?;
         Some(TrackRow {
-            playing: self.current_song.as_deref() == Some(song.id.as_str()),
-            selected: self.selection.contains(row),
+            is_playing: self.current_song.as_deref() == Some(song.id.as_str()),
+            is_selected: self.selection.contains(row),
             ..track_row(song, row)
         })
     }
@@ -107,10 +107,10 @@ impl ListState {
     }
 }
 
-fn placeholder_row(row: usize, selected: bool) -> TrackRow {
+fn placeholder_row(row: usize, is_selected: bool) -> TrackRow {
     TrackRow {
         index: clamp_i32(row as u64 + 1),
-        selected,
+        is_selected,
         ..TrackRow::default()
     }
 }

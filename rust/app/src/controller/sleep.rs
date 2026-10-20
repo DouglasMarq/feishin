@@ -14,7 +14,7 @@ impl Controller {
     }
 
     pub(super) fn sleep_tick(&mut self, elapsed_ms: u64) {
-        if self.sleep_timer.tick(elapsed_ms, self.playing) && self.playing {
+        if self.sleep_timer.tick(elapsed_ms, self.is_playing) && self.is_playing {
             self.toggle_pause();
         }
         self.deps.ui.sleep_timer(self.sleep_timer.status());

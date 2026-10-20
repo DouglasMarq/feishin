@@ -92,8 +92,9 @@ impl FolderWalk {
 
     fn advance(&mut self, open: OpenFolder, received: usize, total: Option<usize>, asked: usize) {
         let next_song = open.next_song + received;
-        let finished = received == 0 || total.map_or(received < asked, |total| next_song >= total);
-        self.current = (!finished).then_some(OpenFolder { next_song, ..open });
+        let is_finished =
+            received == 0 || total.map_or(received < asked, |total| next_song >= total);
+        self.current = (!is_finished).then_some(OpenFolder { next_song, ..open });
     }
 
     async fn open_folder<Source: FolderSource + ?Sized>(

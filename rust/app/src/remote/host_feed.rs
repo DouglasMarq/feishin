@@ -23,20 +23,23 @@ fn record(state: &mut HostState, update: &UiUpdate) {
             state.now_playing = track.as_deref().cloned().map(Arc::new);
         }
         UiUpdate::Playback {
-            playing,
+            is_playing,
             position_ms,
             duration_ms,
         } => {
-            state.playing = *playing;
+            state.is_playing = *is_playing;
             state.position_ms = *position_ms;
             state.duration_ms = *duration_ms;
         }
-        UiUpdate::Volume { volume, muted } => {
+        UiUpdate::Volume { volume, is_muted } => {
             state.volume = *volume;
-            state.muted = *muted;
+            state.is_muted = *is_muted;
         }
-        UiUpdate::Modes { shuffle, repeat } => {
-            state.shuffle = *shuffle;
+        UiUpdate::Modes {
+            is_shuffled,
+            repeat,
+        } => {
+            state.is_shuffled = *is_shuffled;
             state.repeat = *repeat;
         }
         UiUpdate::Queue(view) => state.queue = view.clone(),
@@ -91,19 +94,19 @@ mod tests {
         let sink = HostFeed::new(LocalGate::new(Arc::clone(&shown), target.clone()), state);
         sink.send(UiUpdate::Volume {
             volume: 20,
-            muted: false,
+            is_muted: false,
         });
         let (messages, _sent) = tokio::sync::mpsc::unbounded_channel();
         target.set(Some(RemoteTarget { messages }));
         sink.send(UiUpdate::Modes {
-            shuffle: true,
+            is_shuffled: true,
             repeat: RepeatMode::One,
         });
         sink.send(UiUpdate::Error("boom".into()));
         assert_eq!(shown.0.lock().unwrap().len(), 2, "volume and the error");
         let host = watched.borrow();
         assert_eq!(
-            (host.volume, host.shuffle, host.repeat),
+            (host.volume, host.is_shuffled, host.repeat),
             (20, true, RepeatMode::One)
         );
     }

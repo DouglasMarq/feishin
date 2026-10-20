@@ -65,7 +65,7 @@ export component LoginView inherits Rectangle {
                         tooltip: @tr("Server type: {}", self.current-value);
                         model: ["Navidrome", "Subsonic", "Jellyfin"];
                         current-index: LoginState.server-type == ServerKind.subsonic ? 1 : (LoginState.server-type == ServerKind.jellyfin ? 2 : 0);
-                        enabled: !LoginState.busy;
+                        is-enabled: !LoginState.is-busy;
                         selected => {
                             LoginState.server-type = [ServerKind.navidrome, ServerKind.subsonic, ServerKind.jellyfin][self.current-index];
                         }
@@ -78,7 +78,7 @@ export component LoginView inherits Rectangle {
                     LineEdit {
                         placeholder-text: "https://music.example.com";
                         text <=> LoginState.url;
-                        enabled: !LoginState.busy;
+                        enabled: !LoginState.is-busy;
                     }
 
                     Label {
@@ -87,7 +87,7 @@ export component LoginView inherits Rectangle {
 
                     LineEdit {
                         text <=> LoginState.username;
-                        enabled: !LoginState.busy;
+                        enabled: !LoginState.is-busy;
                     }
 
                     Label {
@@ -97,7 +97,7 @@ export component LoginView inherits Rectangle {
                     LineEdit {
                         input-type: password;
                         text <=> LoginState.password;
-                        enabled: !LoginState.busy;
+                        enabled: !LoginState.is-busy;
                         accepted => {
                             LoginState.login();
                         }
@@ -114,10 +114,10 @@ export component LoginView inherits Rectangle {
                     }
 
                     TooltipButton {
-                        text: LoginState.busy ? @tr("Connecting...") : @tr("Sign in");
+                        text: LoginState.is-busy ? @tr("Connecting...") : @tr("Sign in");
                         tooltip: @tr("Connect to this server");
-                        primary: true;
-                        enabled: !LoginState.busy;
+                        is-primary: true;
+                        is-enabled: !LoginState.is-busy;
                         clicked => {
                             LoginState.login();
                         }
@@ -126,7 +126,7 @@ export component LoginView inherits Rectangle {
                     TooltipButton {
                         text: @tr("Import from Feishin");
                         tooltip: @tr("Import the servers saved by a previous Feishin install");
-                        enabled: !LoginState.busy;
+                        is-enabled: !LoginState.is-busy;
                         clicked => {
                             LoginState.import-feishin();
                         }

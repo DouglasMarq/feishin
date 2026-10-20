@@ -79,7 +79,7 @@ impl RemoteService {
         });
     }
 
-    pub(super) fn release_link(&mut self, republish: bool) {
+    pub(super) fn release_link(&mut self, should_republish: bool) {
         let Some(link) = self.link.take() else {
             return;
         };
@@ -88,7 +88,7 @@ impl RemoteService {
         on_ui(&self.deps.window, |window| {
             devices::show_target(window, None)
         });
-        if republish {
+        if should_republish {
             forward_command(
                 &self.deps.commands,
                 Command::Remote(RemoteCommand::Republish),
@@ -114,9 +114,9 @@ impl RemoteService {
         }
     }
 
-    fn show_connecting(&self, connecting: bool) {
+    fn show_connecting(&self, is_connecting: bool) {
         on_ui(&self.deps.window, move |window| {
-            devices::show_connecting(window, connecting)
+            devices::show_connecting(window, is_connecting)
         });
     }
 

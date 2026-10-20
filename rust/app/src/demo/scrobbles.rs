@@ -3,7 +3,7 @@ use super::server::FakeServer;
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct ScrobbleCall {
     pub song_id: String,
-    pub submission: bool,
+    pub is_submission: bool,
     pub timestamp_ms: Option<i64>,
 }
 

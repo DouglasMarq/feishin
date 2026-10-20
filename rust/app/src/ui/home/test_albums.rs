@@ -18,7 +18,7 @@ pub fn album(id: &str) -> Album {
         cover_art_id: Some(format!("al-{id}")),
         play_count: 0,
         user_rating: None,
-        favorite: false,
+        is_favorite: false,
         created_at: None,
         last_played_at: None,
     }

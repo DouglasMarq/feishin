@@ -34,7 +34,7 @@ impl<Inner: UiSink> UiSink for SleepTimerUi<Inner> {
     fn sleep_timer(&self, status: Option<SleepStatus>) {
         on_ui(&self.window, move |window| {
             let state = window.global::<PlayerState>();
-            state.set_sleep_active(status.is_some());
+            state.set_is_sleep_active(status.is_some());
             state.set_sleep_label(status.map(sleep_label).unwrap_or_default().into());
         });
     }

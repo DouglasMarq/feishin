@@ -40,8 +40,8 @@ impl<Key: Clone + Eq + Hash> CoverSlots<Key> {
         self.evict_hidden_excess()
     }
 
-    pub fn set_visible(&mut self, key: Key, visible: bool) -> Vec<Key> {
-        match visible {
+    pub fn set_visible(&mut self, key: Key, is_visible: bool) -> Vec<Key> {
+        match is_visible {
             true => {
                 self.visible.insert(key);
             }
@@ -62,12 +62,12 @@ impl<Key: Clone + Eq + Hash> CoverSlots<Key> {
         let mut evicted = Vec::new();
         let visible = &self.visible;
         self.shown.retain(|shown| {
-            let evict = excess > 0 && !visible.contains(shown);
-            if evict {
+            let should_evict = excess > 0 && !visible.contains(shown);
+            if should_evict {
                 excess -= 1;
                 evicted.push(shown.clone());
             }
-            !evict
+            !should_evict
         });
         evicted
     }

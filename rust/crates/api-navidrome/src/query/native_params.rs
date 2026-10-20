@@ -31,7 +31,7 @@ pub(crate) fn song_list(
     push_all(&mut params, "genre_id", &query.genre_ids);
     push_all(&mut params, song_artist_key(features), &query.artist_ids);
     push_optional(&mut params, "library_id", query.music_folder_id.clone());
-    push_optional(&mut params, "starred", favorite_filter(query.favorite));
+    push_optional(&mut params, "starred", favorite_filter(query.is_favorite));
     push_optional(&mut params, "title", search_filter(query.search.as_ref()));
     push_optional(
         &mut params,
@@ -61,7 +61,7 @@ pub(crate) fn album_list(
     );
     push_optional(&mut params, "library_id", query.music_folder_id.clone());
     push_optional(&mut params, "name", search_filter(query.search.as_ref()));
-    push_optional(&mut params, "starred", favorite_filter(query.favorite));
+    push_optional(&mut params, "starred", favorite_filter(query.is_favorite));
     push_optional(
         &mut params,
         "year",
@@ -80,7 +80,7 @@ pub(crate) fn artist_list(
     let mut params = sorted_page(start, end, artist_sort(query.sort), order(query.order));
     push_optional(&mut params, "library_id", query.music_folder_id.clone());
     push_optional(&mut params, "name", search_filter(query.search.as_ref()));
-    push_optional(&mut params, "starred", favorite_filter(query.favorite));
+    push_optional(&mut params, "starred", favorite_filter(query.is_favorite));
     if features.has_big_feature_release() {
         params.push(("role", "albumartist".into()));
     }
@@ -145,8 +145,8 @@ fn repeatable<'values>(values: &'values [String], features: &Features) -> &'valu
     values.get(..1).unwrap_or(values)
 }
 
-fn favorite_filter(favorite: Option<bool>) -> Option<String> {
-    favorite.map(|favorite| favorite.to_string())
+fn favorite_filter(is_favorite: Option<bool>) -> Option<String> {
+    is_favorite.map(|is_favorite| is_favorite.to_string())
 }
 
 fn search_filter(search: Option<&String>) -> Option<String> {

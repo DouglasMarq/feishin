@@ -27,8 +27,8 @@ pub fn cloned_page<T: Clone>(page: Page<&T>) -> Page<T> {
     }
 }
 
-pub fn wants_favorites_only(favorite: Option<bool>) -> bool {
-    favorite == Some(true)
+pub fn wants_favorites_only(is_favorite: Option<bool>) -> bool {
+    is_favorite == Some(true)
 }
 
 pub fn non_empty_search(search: Option<&String>) -> Option<&str> {

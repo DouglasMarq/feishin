@@ -19,7 +19,7 @@ struct Opened {
     page: PageNumber,
     first_page: PageNumber,
     total: Option<usize>,
-    reached_end: bool,
+    has_reached_end: bool,
 }
 
 fn is_last_page(received: usize, total: Option<usize>) -> bool {
@@ -60,7 +60,7 @@ impl StreamRunner {
             return Ok(());
         };
         let opened = self.open(start, first_row).await?;
-        if !opened.reached_end {
+        if !opened.has_reached_end {
             self.stream_following(&opened).await?;
         }
         self.stream_preceding(&opened).await
@@ -74,7 +74,7 @@ impl StreamRunner {
             page,
             first_page: PageNumber::of(first_row),
             total: fetched.total_count,
-            reached_end: is_last_page(fetched.items.len(), fetched.total_count),
+            has_reached_end: is_last_page(fetched.items.len(), fetched.total_count),
         };
         let kept = keep_listed_rows(page, fetched.items, &self.listed);
         let start_index = start_index_in(&kept, row, song_id.as_deref());

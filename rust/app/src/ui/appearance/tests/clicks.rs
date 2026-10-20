@@ -83,10 +83,10 @@ fn clicking_the_follow_system_switch_turns_it_on_and_saves() {
     let mut page = open_settings(&AppearanceSettings::default());
     let switches = elements(&page, "ToggleSwitch::toggle");
     click(&page, &switches[0]);
-    assert!(page.state().get_follow_system());
+    assert!(page.state().get_is_following_system());
     let saved = page.saved();
     assert_eq!(saved.len(), 1);
-    assert!(saved[0].follow_system);
+    assert!(saved[0].is_following_system);
 }
 
 #[test]
@@ -108,7 +108,7 @@ fn picking_a_theme_from_the_list_applies_and_saves_it() {
 #[test]
 fn clicking_an_accent_swatch_uses_it() {
     let settings = AppearanceSettings {
-        use_theme_accent: false,
+        is_using_theme_accent: false,
         ..AppearanceSettings::default()
     };
     let mut page = open_settings(&settings);
@@ -123,7 +123,7 @@ fn clicking_an_accent_swatch_uses_it() {
 #[test]
 fn typing_an_accent_and_pressing_enter_uses_it() {
     let settings = AppearanceSettings {
-        use_theme_accent: false,
+        is_using_theme_accent: false,
         ..AppearanceSettings::default()
     };
     let mut page = open_settings(&settings);

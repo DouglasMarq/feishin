@@ -9,7 +9,7 @@ const MAX_YEAR: i32 = 9999;
 
 #[derive(Debug, Clone, Default, PartialEq, Eq)]
 pub struct Filters {
-    pub favorite_only: bool,
+    pub is_favorite_only: bool,
     pub genre_id: Option<String>,
     pub year_from: Option<i32>,
     pub year_to: Option<i32>,
@@ -22,7 +22,7 @@ impl Filters {
             years => years,
         };
         SongListQuery {
-            favorite: self.favorite_only.then_some(true),
+            is_favorite: self.is_favorite_only.then_some(true),
             genre_ids: self.genre_id.iter().cloned().collect(),
             year_from,
             year_to,
@@ -48,7 +48,7 @@ fn selected_genre_id(state: &TracksState<'_>) -> Option<String> {
 fn filters_from_window(window: &AppWindow) -> Filters {
     let state = window.global::<TracksState>();
     Filters {
-        favorite_only: state.get_filter_favorite(),
+        is_favorite_only: state.get_is_favorite_filter_on(),
         genre_id: selected_genre_id(&state),
         year_from: parse_year(&state.get_year_from()),
         year_to: parse_year(&state.get_year_to()),
@@ -62,7 +62,7 @@ pub(super) fn current_query(window: &AppWindow) -> Option<SongListQuery> {
 
 pub(super) fn reload(window: &AppWindow, query: SongListQuery) {
     let state = window.global::<TracksState>();
-    state.set_loading(true);
+    state.set_is_loading(true);
     state.set_selected_count(0);
     with_model(window, |model| model.reset(query));
 }

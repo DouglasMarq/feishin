@@ -76,8 +76,8 @@ fn open_now_playing_page(screen: Screen) -> NowPlayingPage {
     let mut settings = Settings::default();
     settings.integrations.lyrics_sources = vec![LyricsSourceSetting::Server];
     session.publish_settings(&settings);
-    let ctx = Context {
-        rt: runtime.handle().clone(),
+    let context = Context {
+        runtime: runtime.handle().clone(),
         commands: sender,
         session,
         store: Arc::new(store),
@@ -86,7 +86,7 @@ fn open_now_playing_page(screen: Screen) -> NowPlayingPage {
         remote: crate::remote::Remote::default(),
     };
     let window = AppWindow::new().unwrap();
-    crate::ui::install(&window, &ctx, &Default::default());
+    crate::ui::install(&window, &context, &Default::default());
     let player = window.global::<PlayerState>();
     player.set_has_song(true);
     player.set_song_id("song-3".into());
@@ -109,7 +109,7 @@ fn open_now_playing_page(screen: Screen) -> NowPlayingPage {
 fn is_fully_loaded(state: &NowPlayingState) -> bool {
     state.get_lyrics_status() == LyricsStatus::Found
         && state.get_similar().row_count() > 0
-        && state.get_loaded()
+        && state.get_is_loaded()
         && state.get_has_cover()
 }
 
@@ -117,7 +117,7 @@ fn assert_song_details(state: &NowPlayingState) {
     assert_eq!(state.get_song_id(), "song-3");
     assert_eq!(state.get_lyrics_status(), LyricsStatus::Found);
     assert_eq!(state.get_lyrics_source(), "Server");
-    assert!(state.get_lyrics_synced());
+    assert!(state.get_has_synced_lyrics());
     assert!(state.get_lyrics().row_count() > 3);
     assert_eq!(state.get_album_id(), "album-0");
     assert_eq!(state.get_artists().row_count(), 1);
@@ -161,8 +161,8 @@ fn played_songs(commands: &mut UnboundedReceiver<Command>) -> Option<(Vec<Song>,
 }
 
 fn is_youtube_track_loaded(state: &NowPlayingState) -> bool {
-    state.get_external()
-        && state.get_loaded()
+    state.get_is_external()
+        && state.get_is_loaded()
         && state.get_has_cover()
         && state.get_lyrics_status() == LyricsStatus::Missing
 }
@@ -188,7 +188,7 @@ fn assert_youtube_track_details(page: &NowPlayingPage, state: &NowPlayingState) 
     assert_eq!(artists[0].id, "");
     assert_eq!(state.get_album_id(), "");
     assert_eq!(state.get_similar().row_count(), 0);
-    assert!(!state.get_similar_loading());
+    assert!(!state.get_is_similar_loading());
 }
 
 #[test]

@@ -11,29 +11,29 @@ export struct RadioRow {
     name: string,
     details: string,
     source: RadioSource,
-    favorite: bool,
-    on-server: bool,
+    is-favorite: bool,
+    is-on-server: bool,
 }
 
 export global RadioState {
-    in property <bool> active;
+    in property <bool> is-active;
     in property <string> playing-id;
     in property <string> station-name;
     in property <string> stream-title;
     in-out property <RadioTab> tab;
     in property <[RadioRow]> stations;
-    in property <bool> stations-loading;
+    in property <bool> is-stations-loading;
     in property <bool> can-manage;
-    in property <bool> server-has-radio: true;
+    in property <bool> has-server-radio: true;
     in property <[RadioRow]> results;
-    in property <bool> searching;
+    in property <bool> is-searching;
     in property <bool> has-more;
     in property <string> results-message: @tr("Find stations by name, country or tag");
     in-out property <string> search-name;
     in-out property <string> search-country;
     in-out property <string> search-tag;
-    in property <bool> busy;
-    in-out property <bool> editing;
+    in property <bool> is-busy;
+    in-out property <bool> is-editing;
     in-out property <string> edit-id;
     in-out property <RadioSource> edit-source;
     in-out property <string> edit-name;
@@ -56,12 +56,12 @@ export global RadioState {
 
 component PlayStationButton inherits IconButton {
     in property <RadioRow> item;
-    property <bool> playing: RadioState.active && RadioState.playing-id == root.item.id;
-    icon: root.playing ? RadioIcons.stop : Icons.play;
-    active: root.playing;
-    tooltip: root.playing ? @tr("Stop {}", root.item.name) : @tr("Play {}", root.item.name);
+    property <bool> is-playing: RadioState.is-active && RadioState.playing-id == root.item.id;
+    icon: root.is-playing ? RadioIcons.stop : Icons.play;
+    is-active: root.is-playing;
+    tooltip: root.is-playing ? @tr("Stop {}", root.item.name) : @tr("Play {}", root.item.name);
     clicked => {
-        if (root.playing) {
+        if (root.is-playing) {
             RadioState.stop();
         } else {
             RadioState.play(root.item.source, root.item.id);
@@ -71,7 +71,7 @@ component PlayStationButton inherits IconButton {
 
 component StationActions inherits HorizontalLayout {
     in property <RadioRow> item;
-    property <bool> local: root.item.source != RadioSource.server;
+    property <bool> is-local: root.item.source != RadioSource.server;
     spacing: 2px;
     alignment: end;
 
@@ -80,23 +80,23 @@ component StationActions inherits HorizontalLayout {
         item: root.item;
     }
 
-    if root.local: IconButton {
+    if root.is-local: IconButton {
         y: (parent.height - self.height) / 2;
-        icon: root.item.favorite ? Icons.heart : RadioIcons.heart-outline;
+        icon: root.item.is-favorite ? Icons.heart : RadioIcons.heart-outline;
         icon-size: 18px;
-        active: root.item.favorite;
-        tooltip: root.item.favorite ? @tr("Saved on this device, click to remove") : @tr("Save to favorites on this device");
+        is-active: root.item.is-favorite;
+        tooltip: root.item.is-favorite ? @tr("Saved on this device, click to remove") : @tr("Save to favorites on this device");
         clicked => {
             RadioState.toggle-favorite(root.item.source, root.item.id);
         }
     }
 
-    if root.local && RadioState.can-manage: IconButton {
+    if root.is-local && RadioState.can-manage: IconButton {
         y: (parent.height - self.height) / 2;
         icon: RadioIcons.upload;
         icon-size: 18px;
-        enabled: !root.item.on-server && !RadioState.busy;
-        tooltip: root.item.on-server ? @tr("Already on the server") : RadioState.busy ? @tr("Saving to the server...") : @tr("Add to the server's stations");
+        is-enabled: !root.item.is-on-server && !RadioState.is-busy;
+        tooltip: root.item.is-on-server ? @tr("Already on the server") : RadioState.is-busy ? @tr("Saving to the server...") : @tr("Add to the server's stations");
         clicked => {
             RadioState.save-to-server(root.item.source, root.item.id);
         }
@@ -126,7 +126,7 @@ component StationActions inherits HorizontalLayout {
 
 export component RadioRowView inherits Rectangle {
     in property <RadioRow> item;
-    property <bool> playing: RadioState.active && RadioState.playing-id == root.item.id;
+    property <bool> is-playing: RadioState.is-active && RadioState.playing-id == root.item.id;
     height: 56px;
     background: touch.has-hover ? Theme.hover : transparent;
 
@@ -138,7 +138,7 @@ export component RadioRowView inherits Rectangle {
 
     TooltipAnchor {
         text: @tr("Double-click to play");
-        hovered: touch.has-hover;
+        is-hovered: touch.has-hover;
     }
 
     HorizontalLayout {
@@ -153,7 +153,7 @@ export component RadioRowView inherits Rectangle {
 
             Text {
                 text: root.item.name;
-                color: root.playing ? Theme.primary : Theme.foreground;
+                color: root.is-playing ? Theme.primary : Theme.foreground;
                 font-weight: 600;
                 overflow: elide;
             }

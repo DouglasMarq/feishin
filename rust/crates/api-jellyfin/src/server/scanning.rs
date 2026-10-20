@@ -10,12 +10,12 @@ const LIBRARY_SCAN_TASK_KEY: &str = "RefreshLibrary";
 const IDLE_TASK_STATE: &str = "Idle";
 
 fn library_scan_of(tasks: &[dto::ScheduledTask]) -> LibraryScan {
-    let scanning = tasks
+    let is_scanning = tasks
         .iter()
         .find(|task| task.key == LIBRARY_SCAN_TASK_KEY)
         .is_some_and(|task| task.state != IDLE_TASK_STATE);
     LibraryScan {
-        scanning,
+        is_scanning,
         scanned_items: None,
     }
 }
@@ -25,7 +25,7 @@ impl JellyfinServer {
         self.execute(self.request(Method::POST, &["library", "refresh"]))
             .await?;
         Ok(LibraryScan {
-            scanning: true,
+            is_scanning: true,
             scanned_items: None,
         })
     }
@@ -54,12 +54,12 @@ mod tests {
             task("CleanCache", "Idle"),
             task("RefreshLibrary", "Running"),
         ];
-        assert!(library_scan_of(&tasks).scanning);
+        assert!(library_scan_of(&tasks).is_scanning);
     }
 
     #[test]
     fn an_idle_or_missing_library_task_means_done() {
-        assert!(!library_scan_of(&[task("RefreshLibrary", "Idle")]).scanning);
-        assert!(!library_scan_of(&[task("CleanCache", "Running")]).scanning);
+        assert!(!library_scan_of(&[task("RefreshLibrary", "Idle")]).is_scanning);
+        assert!(!library_scan_of(&[task("CleanCache", "Running")]).is_scanning);
     }
 }

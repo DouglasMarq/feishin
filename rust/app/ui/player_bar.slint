@@ -7,8 +7,8 @@ import { DevicesButton } from "devices.slint";
 import { RadioIcons, RadioState } from "radio.slint";
 
 export component PlayerBar inherits Rectangle {
-    property <bool> radio: RadioState.active;
-    property <bool> can-play: PlayerState.has-song || root.radio;
+    property <bool> is-radio: RadioState.is-active;
+    property <bool> can-play: PlayerState.has-song || root.is-radio;
     height: 88px;
     background: Theme.background-alt;
 
@@ -36,15 +36,15 @@ export component PlayerBar inherits Rectangle {
                 background: Theme.surface-raised;
                 clip: true;
 
-                if PlayerState.has-cover && !root.radio: Image {
+                if PlayerState.has-cover && !root.is-radio: Image {
                     source: PlayerState.cover;
                     width: parent.width;
                     height: parent.height;
                     image-fit: cover;
                 }
 
-                if !PlayerState.has-cover || root.radio: Icon {
-                    path: root.radio ? RadioIcons.radio : Icons.note;
+                if !PlayerState.has-cover || root.is-radio: Icon {
+                    path: root.is-radio ? RadioIcons.radio : Icons.note;
                     color: Theme.muted;
                     width: 28px;
                     height: 28px;
@@ -56,14 +56,14 @@ export component PlayerBar inherits Rectangle {
                 spacing: 4px;
 
                 Text {
-                    text: !root.radio ? PlayerState.title : (RadioState.stream-title != "" ? RadioState.stream-title : RadioState.station-name);
+                    text: !root.is-radio ? PlayerState.title : (RadioState.stream-title != "" ? RadioState.stream-title : RadioState.station-name);
                     color: Theme.foreground;
                     font-weight: 600;
                     overflow: elide;
                 }
 
                 Text {
-                    text: !root.radio ? PlayerState.artists : (RadioState.stream-title != "" ? RadioState.station-name : @tr("Internet radio"));
+                    text: !root.is-radio ? PlayerState.artists : (RadioState.stream-title != "" ? RadioState.station-name : @tr("Internet radio"));
                     color: Theme.muted;
                     font-size: 12px;
                     overflow: elide;
@@ -82,8 +82,8 @@ export component PlayerBar inherits Rectangle {
 
                 IconButton {
                     icon: Icons.shuffle;
-                    active: PlayerState.shuffle;
-                    tooltip: PlayerState.shuffle ? @tr("Shuffle: on") : @tr("Shuffle: off");
+                    is-active: PlayerState.is-shuffled;
+                    tooltip: PlayerState.is-shuffled ? @tr("Shuffle: on") : @tr("Shuffle: off");
                     clicked => {
                         PlayerState.toggle-shuffle();
                     }
@@ -92,8 +92,8 @@ export component PlayerBar inherits Rectangle {
                 IconButton {
                     icon: Icons.previous;
                     icon-size: 24px;
-                    tooltip: root.radio ? @tr("Previous is unavailable while a radio station plays") : @tr("Previous");
-                    enabled: PlayerState.has-song && !root.radio;
+                    tooltip: root.is-radio ? @tr("Previous is unavailable while a radio station plays") : @tr("Previous");
+                    is-enabled: PlayerState.has-song && !root.is-radio;
                     clicked => {
                         PlayerState.previous();
                     }
@@ -103,19 +103,19 @@ export component PlayerBar inherits Rectangle {
                     width: 38px;
                     height: 38px;
                     border-radius: 19px;
-                    background: play-touch.has-hover ? (Theme.dark ? #ffffff : Theme.foreground.mix(Theme.background, 0.8)) : Theme.foreground;
+                    background: play-touch.has-hover ? (Theme.is-dark ? #ffffff : Theme.foreground.mix(Theme.background, 0.8)) : Theme.foreground;
                     opacity: root.can-play ? 1 : 0.4;
 
                     Icon {
-                        path: PlayerState.playing ? Icons.pause : Icons.play;
+                        path: PlayerState.is-playing ? Icons.pause : Icons.play;
                         color: Theme.background;
                         width: 24px;
                         height: 24px;
                     }
 
                     TooltipAnchor {
-                        text: PlayerState.playing ? (root.radio ? @tr("Pause the radio station") : @tr("Pause")) : (root.radio ? @tr("Play the radio station") : @tr("Play"));
-                        hovered: play-touch.has-hover;
+                        text: PlayerState.is-playing ? (root.is-radio ? @tr("Pause the radio station") : @tr("Pause")) : (root.is-radio ? @tr("Play the radio station") : @tr("Play"));
+                        is-hovered: play-touch.has-hover;
                     }
 
                     play-touch := TouchArea {
@@ -130,8 +130,8 @@ export component PlayerBar inherits Rectangle {
                 IconButton {
                     icon: Icons.next;
                     icon-size: 24px;
-                    tooltip: root.radio ? @tr("Next is unavailable while a radio station plays") : @tr("Next");
-                    enabled: PlayerState.has-song && !root.radio;
+                    tooltip: root.is-radio ? @tr("Next is unavailable while a radio station plays") : @tr("Next");
+                    is-enabled: PlayerState.has-song && !root.is-radio;
                     clicked => {
                         PlayerState.next();
                     }
@@ -139,7 +139,7 @@ export component PlayerBar inherits Rectangle {
 
                 IconButton {
                     icon: PlayerState.repeat == RepeatState.one ? Icons.repeat-one : Icons.repeat;
-                    active: PlayerState.repeat != RepeatState.off;
+                    is-active: PlayerState.repeat != RepeatState.off;
                     tooltip: PlayerState.repeat == RepeatState.off ? @tr("Repeat: off") : PlayerState.repeat == RepeatState.all ? @tr("Repeat: all") : @tr("Repeat: one");
                     clicked => {
                         PlayerState.cycle-repeat();
@@ -152,7 +152,7 @@ export component PlayerBar inherits Rectangle {
 
                 Text {
                     width: 44px;
-                    text: Format.time(seek.holding ? seek.preview-ms : PlayerState.position-ms);
+                    text: Format.time(seek.is-holding ? seek.preview-ms : PlayerState.position-ms);
                     color: Theme.muted;
                     font-size: 11px;
                     horizontal-alignment: right;
@@ -161,9 +161,9 @@ export component PlayerBar inherits Rectangle {
 
                 seek := Bar {
                     property <int> preview-ms;
-                    enabled: !root.radio;
-                    tooltip: root.radio ? @tr("Seeking is unavailable for live radio") : PlayerState.duration-ms > 0 ? Format.time((self.dragging ? self.drag-preview : self.hover-value) * PlayerState.duration-ms) : "";
-                    tooltip-follows-pointer: true;
+                    is-enabled: !root.is-radio;
+                    tooltip: root.is-radio ? @tr("Seeking is unavailable for live radio") : PlayerState.duration-ms > 0 ? Format.time((self.is-dragging ? self.drag-preview : self.hover-value) * PlayerState.duration-ms) : "";
+                    is-tooltip-following-pointer: true;
                     value: PlayerState.duration-ms > 0 ? PlayerState.position-ms / PlayerState.duration-ms : 0;
                     changed(value) => {
                         self.preview-ms = value * PlayerState.duration-ms;
@@ -175,7 +175,7 @@ export component PlayerBar inherits Rectangle {
 
                 Text {
                     width: 44px;
-                    text: root.radio ? @tr("LIVE") : Format.time(PlayerState.duration-ms);
+                    text: root.is-radio ? @tr("LIVE") : Format.time(PlayerState.duration-ms);
                     color: Theme.muted;
                     font-size: 11px;
                     vertical-alignment: center;
@@ -199,10 +199,10 @@ export component PlayerBar inherits Rectangle {
             IconButton {
                 y: (parent.height - self.height) / 2;
                 icon: "M12 14c1.66 0 2.99-1.34 2.99-3L15 5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z";
-                active: AppState.route == Route.now-playing && NowPlayingState.tab == NowPlayingTab.lyrics;
-                tooltip: self.active ? @tr("Hide lyrics") : @tr("Show lyrics");
+                is-active: AppState.route == Route.now-playing && NowPlayingState.tab == NowPlayingTab.lyrics;
+                tooltip: self.is-active ? @tr("Hide lyrics") : @tr("Show lyrics");
                 clicked => {
-                    if (self.active) {
+                    if (self.is-active) {
                         AppState.back();
                     } else {
                         NowPlayingState.tab = NowPlayingTab.lyrics;
@@ -214,17 +214,17 @@ export component PlayerBar inherits Rectangle {
             IconButton {
                 y: (parent.height - self.height) / 2;
                 icon: Icons.queue;
-                active: AppState.queue-open;
-                tooltip: AppState.queue-open ? @tr("Hide queue") : @tr("Show queue");
+                is-active: AppState.is-queue-open;
+                tooltip: AppState.is-queue-open ? @tr("Hide queue") : @tr("Show queue");
                 clicked => {
-                    AppState.queue-open = !AppState.queue-open;
+                    AppState.is-queue-open = !AppState.is-queue-open;
                 }
             }
 
             IconButton {
                 y: (parent.height - self.height) / 2;
-                icon: PlayerState.muted || PlayerState.volume == 0 ? Icons.volume-off : Icons.volume;
-                tooltip: PlayerState.muted ? @tr("Unmute") : @tr("Mute");
+                icon: PlayerState.is-muted || PlayerState.volume == 0 ? Icons.volume-off : Icons.volume;
+                tooltip: PlayerState.is-muted ? @tr("Unmute") : @tr("Mute");
                 clicked => {
                     PlayerState.toggle-mute();
                 }
@@ -233,9 +233,9 @@ export component PlayerBar inherits Rectangle {
             Bar {
                 y: (parent.height - self.height) / 2;
                 width: 110px;
-                value: PlayerState.muted ? 0 : PlayerState.volume / 100;
+                value: PlayerState.is-muted ? 0 : PlayerState.volume / 100;
                 scroll-step: Behaviour.volume-step / Behaviour.max-volume;
-                tooltip: @tr("Volume {}%", self.adjusting ? Math.round(self.drag-preview * 100) : (PlayerState.muted ? 0 : PlayerState.volume));
+                tooltip: @tr("Volume {}%", self.is-adjusting ? Math.round(self.drag-preview * 100) : (PlayerState.is-muted ? 0 : PlayerState.volume));
                 changed(value) => {
                     PlayerState.set-volume(Math.round(value * 100));
                 }
@@ -246,8 +246,8 @@ export component PlayerBar inherits Rectangle {
     TooltipAnchor {
         x: song-info.x;
         width: song-info.width;
-        text: root.radio ? (AppState.route == Route.radio ? @tr("Listening to {}", RadioState.station-name) : @tr("Open radio")) : AppState.route == Route.now-playing ? @tr("Close now playing") : @tr("Open now playing");
-        hovered: info-touch.has-hover;
+        text: root.is-radio ? (AppState.route == Route.radio ? @tr("Listening to {}", RadioState.station-name) : @tr("Open radio")) : AppState.route == Route.now-playing ? @tr("Close now playing") : @tr("Open now playing");
+        is-hovered: info-touch.has-hover;
     }
 
     info-touch := TouchArea {
@@ -256,7 +256,7 @@ export component PlayerBar inherits Rectangle {
         enabled: root.can-play;
         mouse-cursor: pointer;
         clicked => {
-            if (root.radio) {
+            if (root.is-radio) {
                 AppState.navigate(Route.radio, "");
             } else if (AppState.route == Route.now-playing) {
                 AppState.back();

@@ -10,7 +10,7 @@ pub enum SortValue {
 
 struct SortField {
     value: SortValue,
-    descending: bool,
+    is_descending: bool,
 }
 
 struct SortKey(Vec<SortField>);
@@ -38,7 +38,7 @@ fn compare_values(left: &SortValue, right: &SortValue) -> Ordering {
 
 fn compare_fields(left: &SortField, right: &SortField) -> Ordering {
     let ordering = compare_values(&left.value, &right.value);
-    match left.descending {
+    match left.is_descending {
         true => ordering.reverse(),
         false => ordering,
     }
@@ -81,12 +81,19 @@ pub fn created_day(created_at: Option<&str>) -> SortValue {
     SortValue::Text(created_at.map(|timestamp| timestamp.chars().take(ISO_DAY_LENGTH).collect()))
 }
 
-pub fn order_by<T>(items: &mut [T], descending: bool, sort_values: impl Fn(&T) -> Vec<SortValue>) {
+pub fn order_by<T>(
+    items: &mut [T],
+    is_descending: bool,
+    sort_values: impl Fn(&T) -> Vec<SortValue>,
+) {
     items.sort_by_cached_key(|item| {
         SortKey(
             sort_values(item)
                 .into_iter()
-                .map(|value| SortField { value, descending })
+                .map(|value| SortField {
+                    value,
+                    is_descending,
+                })
                 .collect(),
         )
     });

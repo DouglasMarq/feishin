@@ -17,11 +17,11 @@ pub fn install_selection(window: &AppWindow) {
     let state = window.global::<PlaylistDetailState>();
 
     let weak = window.as_weak();
-    state.on_select(move |index, toggle_held, range_held| {
+    state.on_select(move |index, is_toggle_held, is_range_held| {
         let (Some(window), Ok(index)) = (weak.upgrade(), usize::try_from(index)) else {
             return;
         };
-        let mode = ClickMode::from_modifiers(toggle_held, range_held);
+        let mode = ClickMode::from_modifiers(is_toggle_held, is_range_held);
         update_selection(&window, |model| model.click(index, mode));
     });
 

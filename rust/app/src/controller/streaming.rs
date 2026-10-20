@@ -39,7 +39,7 @@ impl Controller {
         ranges: Vec<Range<usize>>,
         placement: Placement,
     ) {
-        let start = match (placement, self.queue.shuffle()) {
+        let start = match (placement, self.queue.is_shuffled()) {
             (Placement::Now, true) => StreamStart::RandomRow,
             _ => StreamStart::FirstRow,
         };

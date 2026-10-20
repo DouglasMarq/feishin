@@ -73,7 +73,7 @@ impl View {
             .collect();
         *self.line_times_ms.borrow_mut() = lyrics.line_times_ms();
         state.set_lyrics(ModelRc::new(VecModel::from(rows)));
-        state.set_lyrics_synced(lyrics.synced);
+        state.set_has_synced_lyrics(lyrics.is_synced);
         state.set_lyrics_source(lyrics.source.as_str().into());
         state.set_lyrics_status(LyricsStatus::Found);
         state.set_active_line(NO_INDEX);
@@ -97,19 +97,19 @@ impl View {
     pub(super) fn clear(&self, window: &AppWindow, song_id: &str) {
         let state = window.global::<NowPlayingState>();
         state.set_song_id(song_id.into());
-        state.set_loaded(false);
+        state.set_is_loaded(false);
         state.set_artists(ModelRc::default());
         state.set_album_id(SharedString::default());
         state.set_has_cover(false);
         state.set_cover(slint::Image::default());
         state.set_lyrics(ModelRc::default());
-        state.set_lyrics_synced(false);
+        state.set_has_synced_lyrics(false);
         state.set_lyrics_source(SharedString::default());
         state.set_lyrics_status(LyricsStatus::Idle);
         state.set_active_line(NO_INDEX);
         state.set_similar(ModelRc::default());
-        state.set_similar_loading(false);
-        state.set_external(false);
+        state.set_is_similar_loading(false);
+        state.set_is_external(false);
         self.line_times_ms.borrow_mut().clear();
         self.similar.borrow_mut().clear();
     }

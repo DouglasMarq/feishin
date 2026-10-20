@@ -21,7 +21,7 @@ impl MixerState {
 
     pub(crate) fn preload_next(&mut self, source: MediaSource<'_>) -> Result<()> {
         self.durations.remember(source.uid, source.duration_ms);
-        if !self.config.crossfade_enabled() {
+        if !self.config.is_crossfade_enabled() {
             return self.lead_deck()?.append_next(source.uid, source.url);
         }
         self.pending_next = Some(PendingTrack {
@@ -53,15 +53,15 @@ impl MixerState {
         self.lead_deck()?.seek(position_ms)
     }
 
-    pub(crate) fn set_paused(&mut self, paused: bool) -> Result<()> {
+    pub(crate) fn set_paused(&mut self, is_paused: bool) -> Result<()> {
         if self.routing.is_fading() {
-            self.apply_to_standby(&DeckSetting::Paused(paused));
+            self.apply_to_standby(&DeckSetting::Paused(is_paused));
         }
-        self.set_lead_paused(paused)
+        self.set_lead_paused(is_paused)
     }
 
     pub(crate) fn toggle_pause(&mut self) -> Result<()> {
-        let paused = self.lead_deck()?.is_paused();
-        self.set_paused(!paused)
+        let is_paused = self.lead_deck()?.is_paused();
+        self.set_paused(!is_paused)
     }
 }

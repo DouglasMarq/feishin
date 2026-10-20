@@ -7,7 +7,8 @@ pub struct Playlist {
     pub name: String,
     pub comment: Option<String>,
     pub owner: Option<String>,
-    pub public: bool,
+    #[serde(rename = "public")]
+    pub is_public: bool,
     pub song_count: u32,
     pub duration_ms: u64,
     pub cover_art_id: Option<String>,

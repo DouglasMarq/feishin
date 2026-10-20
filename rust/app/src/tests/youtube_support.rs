@@ -77,14 +77,14 @@ impl FakeYtDlp {
             .collect()
     }
 
-    pub(super) fn settings(&self, gapless: bool, scrobble: bool) -> Settings {
-        let mut settings = test_settings(gapless, scrobble);
+    pub(super) fn settings(&self, is_gapless: bool, is_scrobbling_enabled: bool) -> Settings {
+        let mut settings = test_settings(is_gapless, is_scrobbling_enabled);
         settings.youtube.yt_dlp_path = Some(self.program.to_string_lossy().into_owned());
         settings
     }
 
-    pub(super) fn harness(&self, gapless: bool, scrobble: bool) -> Harness {
-        start_harness(self.settings(gapless, scrobble))
+    pub(super) fn harness(&self, is_gapless: bool, is_scrobbling_enabled: bool) -> Harness {
+        start_harness(self.settings(is_gapless, is_scrobbling_enabled))
     }
 }
 

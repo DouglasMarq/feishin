@@ -32,7 +32,7 @@ pub async fn library_scan_starts_and_finishes(backend: Backend) {
     server.start_library_scan().await.expect("start scan");
     for _ in 0..120 {
         let status = server.library_scan().await.expect("scan status");
-        if !status.scanning {
+        if !status.is_scanning {
             return;
         }
         tokio::time::sleep(Duration::from_millis(500)).await;

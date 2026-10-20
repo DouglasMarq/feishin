@@ -20,8 +20,8 @@ fn radio(harness: &mut Harness, command: RadioCommand) {
     harness.controller.handle(Command::Radio(command));
 }
 
-fn queue_at_thirty_seconds(gapless: bool) -> (Harness, Uid) {
-    let mut harness = start_harness(test_settings(gapless, false));
+fn queue_at_thirty_seconds(is_gapless: bool) -> (Harness, Uid) {
+    let mut harness = start_harness(test_settings(is_gapless, false));
     harness.controller.play_now(test_songs(3, 100_000), "s1");
     let current = harness.start_current();
     harness.player(PlayerEvent::Position {
@@ -132,7 +132,7 @@ async fn stopping_the_station_resumes_the_queue_track_where_it_was() {
     assert!(harness.ui.any(|update| matches!(
         update,
         UiUpdate::Playback {
-            playing: false,
+            is_playing: false,
             position_ms: 30_000,
             duration_ms: 100_000
         }

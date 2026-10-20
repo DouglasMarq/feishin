@@ -13,7 +13,7 @@ use crate::ui::{AppWindow, on_ui};
 #[derive(Default)]
 pub struct MixState {
     set: Option<MixSet>,
-    building: bool,
+    is_building: bool,
     revision: u64,
 }
 
@@ -35,7 +35,7 @@ impl MixState {
             .set
             .as_ref()
             .is_some_and(|set| set.is_fresh_for(server_id, today));
-        if self.building || fresh {
+        if self.is_building || fresh {
             return None;
         }
         if self
@@ -45,7 +45,7 @@ impl MixState {
         {
             self.show(None);
         }
-        self.building = true;
+        self.is_building = true;
         Some(self.set.clone())
     }
 
@@ -57,7 +57,7 @@ impl MixState {
     }
 
     fn finish_build(&mut self, set: Option<MixSet>) {
-        self.building = false;
+        self.is_building = false;
         self.show(set);
     }
 }
@@ -67,7 +67,7 @@ pub fn mix_page(window: &AppWindow, id: MixId) -> Option<CollectionPage> {
 }
 
 pub fn ensure_mixes(window: &AppWindow, deps: &DiscoverDeps) {
-    let Some(server) = deps.ctx.session.get() else {
+    let Some(server) = deps.context.session.get() else {
         return;
     };
     let server_id = server.config().id.clone();
@@ -82,13 +82,13 @@ pub fn ensure_mixes(window: &AppWindow, deps: &DiscoverDeps) {
     let job = MixJob {
         server,
         source: Arc::clone(&deps.source),
-        store: Arc::clone(&deps.ctx.store),
-        session: deps.ctx.session.clone(),
+        store: Arc::clone(&deps.context.store),
+        session: deps.context.session.clone(),
         matcher: deps.matcher.clone(),
         today,
     };
-    let (weak_window, session) = (window.as_weak(), deps.ctx.session.clone());
-    deps.ctx.rt.spawn(job.run(shown, move |delivery| {
+    let (weak_window, session) = (window.as_weak(), deps.context.session.clone());
+    deps.context.runtime.spawn(job.run(shown, move |delivery| {
         deliver(&weak_window, &session, delivery);
     }));
 }

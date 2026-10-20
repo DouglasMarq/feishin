@@ -22,12 +22,19 @@ impl Selection {
         &self.ranges
     }
 
-    pub fn click(&mut self, index: usize, toggle: bool, extend: bool) -> SelectionRanges {
-        self.changing(|selection| match selection.anchor.filter(|_| extend) {
-            Some(anchor) => selection.extend_from_anchor(anchor, index, toggle),
-            None if toggle => selection.toggle_row(index),
-            None => selection.select_only(index),
-        })
+    pub fn click(
+        &mut self,
+        index: usize,
+        is_toggling: bool,
+        is_extending: bool,
+    ) -> SelectionRanges {
+        self.changing(
+            |selection| match selection.anchor.filter(|_| is_extending) {
+                Some(anchor) => selection.extend_from_anchor(anchor, index, is_toggling),
+                None if is_toggling => selection.toggle_row(index),
+                None => selection.select_only(index),
+            },
+        )
     }
 
     pub fn focus(&mut self, index: usize) -> SelectionRanges {
@@ -53,8 +60,8 @@ impl Selection {
         before.symmetric_difference(&self.ranges)
     }
 
-    fn extend_from_anchor(&mut self, anchor: usize, index: usize, keep_existing: bool) {
-        if !keep_existing {
+    fn extend_from_anchor(&mut self, anchor: usize, index: usize, should_keep_existing: bool) {
+        if !should_keep_existing {
             self.ranges = SelectionRanges::default();
         }
         self.ranges

@@ -11,12 +11,12 @@ const SEEK_THRESHOLD_MS: u64 = 2_000;
 #[derive(Debug, Clone, Default, PartialEq)]
 pub struct HostState {
     pub now_playing: Option<Arc<QueueTrack>>,
-    pub playing: bool,
+    pub is_playing: bool,
     pub position_ms: u64,
     pub duration_ms: u64,
     pub volume: u8,
-    pub muted: bool,
-    pub shuffle: bool,
+    pub is_muted: bool,
+    pub is_shuffled: bool,
     pub repeat: RepeatMode,
     pub queue: QueueView,
 }
@@ -56,7 +56,7 @@ impl Outbox {
             return full_state(state);
         };
         let mut updates = changed_parts(&sent.state, state);
-        let playback_due = playback_changed(sent, state, now);
+        let playback_due = has_playback_changed(sent, state, now);
         if playback_due {
             updates.push(playback_of(state));
         }
@@ -83,10 +83,10 @@ fn full_state(state: &HostState) -> Vec<StateUpdate> {
     vec![
         StateUpdate::Volume {
             volume: state.volume,
-            muted: state.muted,
+            is_muted: state.is_muted,
         },
         StateUpdate::Modes {
-            shuffle: state.shuffle,
+            is_shuffled: state.is_shuffled,
             repeat: state.repeat,
         },
         StateUpdate::Queue {
@@ -99,15 +99,15 @@ fn full_state(state: &HostState) -> Vec<StateUpdate> {
 
 fn changed_parts(sent: &HostState, state: &HostState) -> Vec<StateUpdate> {
     let mut updates = Vec::new();
-    if (sent.volume, sent.muted) != (state.volume, state.muted) {
+    if (sent.volume, sent.is_muted) != (state.volume, state.is_muted) {
         updates.push(StateUpdate::Volume {
             volume: state.volume,
-            muted: state.muted,
+            is_muted: state.is_muted,
         });
     }
-    if (sent.shuffle, sent.repeat) != (state.shuffle, state.repeat) {
+    if (sent.is_shuffled, sent.repeat) != (state.is_shuffled, state.repeat) {
         updates.push(StateUpdate::Modes {
-            shuffle: state.shuffle,
+            is_shuffled: state.is_shuffled,
             repeat: state.repeat,
         });
     }
@@ -129,14 +129,14 @@ fn changed_parts(sent: &HostState, state: &HostState) -> Vec<StateUpdate> {
     updates
 }
 
-fn playback_changed(sent: &Sent, state: &HostState, now: Instant) -> bool {
+fn has_playback_changed(sent: &Sent, state: &HostState, now: Instant) -> bool {
     let previous = &sent.state;
-    if (previous.playing, previous.duration_ms) != (state.playing, state.duration_ms) {
+    if (previous.is_playing, previous.duration_ms) != (state.is_playing, state.duration_ms) {
         return true;
     }
     let elapsed = now.saturating_duration_since(sent.playback_at);
     let elapsed_ms = u64::try_from(elapsed.as_millis()).unwrap_or(u64::MAX);
-    let expected = match state.playing {
+    let expected = match state.is_playing {
         true => previous.position_ms.saturating_add(elapsed_ms),
         false => previous.position_ms,
     };
@@ -152,7 +152,7 @@ fn now_playing_of(state: &HostState) -> StateUpdate {
 
 fn playback_of(state: &HostState) -> StateUpdate {
     StateUpdate::Playback {
-        playing: state.playing,
+        is_playing: state.is_playing,
         position_ms: state.position_ms,
         duration_ms: state.duration_ms,
     }
@@ -216,7 +216,7 @@ mod tests {
         let start = Instant::now();
         let mut outbox = Outbox::default();
         let mut state = HostState {
-            playing: true,
+            is_playing: true,
             duration_ms: 200_000,
             ..HostState::default()
         };
@@ -237,7 +237,7 @@ mod tests {
             kinds(&outbox.updates(&state, start + Duration::from_millis(1_100))),
             ["playback"]
         );
-        state.playing = false;
+        state.is_playing = false;
         assert_eq!(
             kinds(&outbox.updates(&state, start + Duration::from_millis(1_150))),
             ["playback"]
@@ -261,7 +261,7 @@ mod tests {
         state.queue = more.view();
         assert_eq!(kinds(&outbox.updates(&state, start)), ["queue"]);
         state.volume = 40;
-        state.shuffle = true;
+        state.is_shuffled = true;
         assert_eq!(kinds(&outbox.updates(&state, start)), ["volume", "modes"]);
     }
 

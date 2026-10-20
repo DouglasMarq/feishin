@@ -159,11 +159,11 @@ struct FavoriteListings {
 
 async fn favorite_listings(server: &dyn MusicServer) -> FavoriteListings {
     let favorite_albums = AlbumListQuery {
-        favorite: Some(true),
+        is_favorite: Some(true),
         ..AlbumListQuery::default()
     };
     let favorite_artists = ArtistListQuery {
-        favorite: Some(true),
+        is_favorite: Some(true),
         ..ArtistListQuery::default()
     };
     let albums = server
@@ -187,13 +187,18 @@ async fn favorite_listings(server: &dyn MusicServer) -> FavoriteListings {
     }
 }
 
-async fn mark_favorites(server: &dyn MusicServer, album_id: &str, artist_id: &str, favorite: bool) {
+async fn mark_favorites(
+    server: &dyn MusicServer,
+    album_id: &str,
+    artist_id: &str,
+    is_favorite: bool,
+) {
     server
-        .set_favorite(ItemKind::Album, &[album_id.to_owned()], favorite)
+        .set_favorite(ItemKind::Album, &[album_id.to_owned()], is_favorite)
         .await
         .expect("album favorite");
     server
-        .set_favorite(ItemKind::Artist, &[artist_id.to_owned()], favorite)
+        .set_favorite(ItemKind::Artist, &[artist_id.to_owned()], is_favorite)
         .await
         .expect("artist favorite");
 }

@@ -84,7 +84,7 @@ async fn fetches_synced_lyrics_for_best_match() {
         .unwrap()
         .unwrap();
     assert_eq!(lyrics.source, LyricsSource::NetEase);
-    assert!(lyrics.synced);
+    assert!(lyrics.is_synced);
     assert_eq!(lyrics.lines.len(), 2);
     assert_eq!(lyrics.lines[1].time_ms, Some(12_345));
     assert_eq!(lyrics.lines[1].text, "星がきらめく夜の港で");
@@ -108,7 +108,7 @@ async fn prefers_a_synced_candidate_over_plain_one() {
         .await
         .unwrap()
         .unwrap();
-    assert!(lyrics.synced);
+    assert!(lyrics.is_synced);
     assert_eq!(lyrics.lines[0].text, "synced");
 }
 

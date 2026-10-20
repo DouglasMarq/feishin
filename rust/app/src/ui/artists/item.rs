@@ -10,7 +10,7 @@ pub struct ArtistItem {
     pub name: String,
     pub album_count: Option<u32>,
     pub song_count: Option<u32>,
-    pub favorite: bool,
+    pub is_favorite: bool,
     pub cover_art_id: Option<String>,
 }
 
@@ -21,7 +21,7 @@ impl From<Artist> for ArtistItem {
             name: artist.name,
             album_count: artist.album_count,
             song_count: artist.song_count,
-            favorite: artist.favorite,
+            is_favorite: artist.is_favorite,
             cover_art_id: artist.cover_art_id,
         }
     }
@@ -34,7 +34,7 @@ impl ArtistItem {
             songs: song_count_label(self.song_count).into(),
             id: self.id.into(),
             name: self.name.into(),
-            favorite: self.favorite,
+            is_favorite: self.is_favorite,
             has_image: image.is_some(),
             image: image.unwrap_or_default(),
         }

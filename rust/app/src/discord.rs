@@ -74,7 +74,7 @@ impl Backoff {
 struct Activity<'desired> {
     now_playing: &'desired NowPlaying,
     position_ms: u64,
-    paused: bool,
+    is_paused: bool,
 }
 
 #[derive(Default)]
@@ -99,13 +99,13 @@ impl Desired {
                 Some(Activity {
                     now_playing,
                     position_ms: position_ms.saturating_add(elapsed_ms),
-                    paused: false,
+                    is_paused: false,
                 })
             }
             (PlaybackStatus::Paused { position_ms }, _) => Some(Activity {
                 now_playing,
                 position_ms,
-                paused: true,
+                is_paused: true,
             }),
             (PlaybackStatus::Stopped, _) => None,
         }
@@ -124,7 +124,7 @@ struct PresenceWorker<'client> {
     desired: Desired,
     presence: Option<DiscordPresence>,
     backoff: Backoff,
-    dirty: bool,
+    is_dirty: bool,
 }
 
 impl<'client> PresenceWorker<'client> {
@@ -134,7 +134,7 @@ impl<'client> PresenceWorker<'client> {
             desired: Desired::default(),
             presence: None,
             backoff: Backoff::new(Instant::now()),
-            dirty: false,
+            is_dirty: false,
         }
     }
 
@@ -145,7 +145,7 @@ impl<'client> PresenceWorker<'client> {
                 updates
                     .try_iter()
                     .for_each(|update| self.desired.apply(update));
-                self.dirty = true;
+                self.is_dirty = true;
                 true
             }
             Err(RecvTimeoutError::Timeout) => true,
@@ -182,7 +182,7 @@ impl<'client> PresenceWorker<'client> {
             Ok(connected) => {
                 self.presence = Some(connected);
                 self.backoff.reset(now);
-                self.dirty = true;
+                self.is_dirty = true;
                 true
             }
             Err(error) => {
@@ -194,15 +194,15 @@ impl<'client> PresenceWorker<'client> {
     }
 
     fn push_activity(&mut self) {
-        let Some(client) = self.presence.as_mut().filter(|_| self.dirty) else {
+        let Some(client) = self.presence.as_mut().filter(|_| self.is_dirty) else {
             return;
         };
-        self.dirty = false;
+        self.is_dirty = false;
         let result = match self.desired.activity(Instant::now()) {
             Some(activity) => client.set_activity(
                 activity.now_playing,
                 Some(activity.position_ms),
-                activity.paused,
+                activity.is_paused,
             ),
             None => client.clear(),
         };
@@ -254,7 +254,7 @@ mod tests {
             Some(Activity {
                 now_playing: &song,
                 position_ms: 3_000,
-                paused: false,
+                is_paused: false,
             })
         );
 
@@ -267,7 +267,7 @@ mod tests {
             Some(Activity {
                 now_playing: &song,
                 position_ms: 4_000,
-                paused: true,
+                is_paused: true,
             })
         );
 

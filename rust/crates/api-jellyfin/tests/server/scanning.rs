@@ -18,7 +18,7 @@ async fn starting_a_scan_refreshes_the_library() {
 
     let scan = server(&mock).start_library_scan().await.unwrap();
 
-    assert!(scan.scanning);
+    assert!(scan.is_scanning);
 }
 
 #[tokio::test]
@@ -37,7 +37,7 @@ async fn scan_status_follows_the_refresh_library_task() {
 
     let scan = server(&mock).library_scan().await.unwrap();
 
-    assert!(scan.scanning);
+    assert!(scan.is_scanning);
 }
 
 #[tokio::test]

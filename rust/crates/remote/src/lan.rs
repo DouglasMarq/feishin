@@ -14,7 +14,7 @@ pub fn is_lan_peer(address: IpAddr) -> bool {
 mod tests {
     use super::*;
 
-    fn lan(text: &str) -> bool {
+    fn is_lan(text: &str) -> bool {
         is_lan_peer(text.parse().unwrap())
     }
 
@@ -31,10 +31,10 @@ mod tests {
             "fe80::1",
             "::ffff:192.168.0.7",
         ] {
-            assert!(lan(local), "{local}");
+            assert!(is_lan(local), "{local}");
         }
         for public in ["8.8.8.8", "1.1.1.1", "2001:4860::8888", "::ffff:8.8.8.8"] {
-            assert!(!lan(public), "{public}");
+            assert!(!is_lan(public), "{public}");
         }
     }
 }

@@ -34,7 +34,7 @@ fn progress_reporter(
 
 pub fn add_listed(
     window: &AppWindow,
-    ctx: &Context,
+    context: &Context,
     server: Arc<dyn MusicServer>,
     picked: PickedPlaylist,
     listed: ListedSongs,
@@ -42,8 +42,8 @@ pub fn add_listed(
     let report = progress_reporter(window, &picked.name, listed.song_count());
     report(0);
     let weak = window.as_weak();
-    let work = ctx.session.background_work();
-    ctx.rt.spawn(async move {
+    let work = context.session.background_work();
+    context.runtime.spawn(async move {
         let adding = add_listed_to_existing(server.as_ref(), &picked.id, listed, report);
         if let Some(outcome) = work.run(adding).await {
             on_ui(&weak, move |window| finish_add(window, &picked, outcome));
@@ -79,7 +79,7 @@ fn finish_add(window: &AppWindow, picked: &PickedPlaylist, outcome: ListedAdd) {
 
 pub fn create_listed(
     window: &AppWindow,
-    ctx: &Context,
+    context: &Context,
     server: Arc<dyn MusicServer>,
     name: String,
     listed: ListedSongs,
@@ -87,8 +87,8 @@ pub fn create_listed(
     let report = progress_reporter(window, &name, listed.song_count());
     report(0);
     let weak = window.as_weak();
-    let work = ctx.session.background_work();
-    ctx.rt.spawn(async move {
+    let work = context.session.background_work();
+    context.runtime.spawn(async move {
         let creating = create_and_fill(server.as_ref(), &name, listed, report);
         let Some((created, outcome)) = work.run(creating).await else {
             return;

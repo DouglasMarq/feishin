@@ -140,7 +140,7 @@ mod tests {
         .unwrap();
 
         assert_eq!(lyrics.source, LyricsSource::NetEase);
-        assert!(lyrics.synced);
+        assert!(lyrics.is_synced);
         assert_eq!(lyrics.lines[0].text, "Do the lanterns still glow?");
     }
 
@@ -203,6 +203,6 @@ mod tests {
         .unwrap()
         .unwrap();
         assert_eq!(lyrics.source, LyricsSource::Lrclib);
-        assert!(lyrics.synced);
+        assert!(lyrics.is_synced);
     }
 }

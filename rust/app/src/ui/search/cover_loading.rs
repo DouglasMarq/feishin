@@ -9,7 +9,7 @@ use crate::ui::{AppWindow, Context, SearchKind};
 
 const SEARCH_COVER_SIZE: u32 = 192;
 
-pub fn load_cover(window: &AppWindow, ctx: &Context, kind: SearchKind, index: i32) {
+pub fn load_cover(window: &AppWindow, context: &Context, kind: SearchKind, index: i32) {
     let kind = CardKind::from(kind);
     let Ok(index) = usize::try_from(index) else {
         return;
@@ -18,11 +18,11 @@ pub fn load_cover(window: &AppWindow, ctx: &Context, kind: SearchKind, index: i3
     let Some((id, cover_id)) = claimed else {
         return;
     };
-    let covers = Arc::clone(&ctx.covers);
+    let covers = Arc::clone(&context.covers);
     let key = CoverKey::new(kind, id.clone());
     let sent = fetch(
         window,
-        ctx,
+        context,
         move |server| async move {
             covers
                 .cover(server.as_ref(), &cover_id, SEARCH_COVER_SIZE)

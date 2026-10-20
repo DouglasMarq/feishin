@@ -23,15 +23,15 @@ use view::{View, register_view};
 fn install_view_callbacks(
     state: &NowPlayingState,
     window: &AppWindow,
-    ctx: &Context,
+    context: &Context,
     view: &Rc<View>,
 ) {
     let weak_window = window.as_weak();
-    let load_ctx = ctx.clone();
+    let load_context = context.clone();
     let load_view = Rc::clone(view);
     state.on_load(move |song_id| {
         if let Some(window) = weak_window.upgrade() {
-            loading::load(&window, &load_ctx, &load_view, &song_id);
+            loading::load(&window, &load_context, &load_view, &song_id);
         }
     });
 
@@ -52,12 +52,12 @@ fn install_view_callbacks(
     });
 }
 
-fn install_play_similar(state: &NowPlayingState, ctx: &Context, view: Rc<View>) {
-    let play_ctx = ctx.clone();
+fn install_play_similar(state: &NowPlayingState, context: &Context, view: Rc<View>) {
+    let play_context = context.clone();
     state.on_play_similar(move |song_id| {
         let songs = view.similar.borrow().clone();
         if !songs.is_empty() {
-            play_ctx.send(Command::PlaySongs {
+            play_context.send(Command::PlaySongs {
                 songs,
                 song_id: Some(song_id.to_string()),
             });
@@ -65,12 +65,12 @@ fn install_play_similar(state: &NowPlayingState, ctx: &Context, view: Rc<View>) 
     });
 }
 
-pub fn install(window: &AppWindow, ctx: &Context) {
+pub fn install(window: &AppWindow, context: &Context) {
     let state = window.global::<NowPlayingState>();
     let up_next = Rc::new(UpNextModel::new(queue::shared_view(window)));
     let view = Rc::new(View::new(Rc::clone(&up_next)));
     register_view(&view);
     state.set_up_next(ModelRc::from(up_next));
-    install_view_callbacks(&state, window, ctx, &view);
-    install_play_similar(&state, ctx, view);
+    install_view_callbacks(&state, window, context, &view);
+    install_play_similar(&state, context, view);
 }

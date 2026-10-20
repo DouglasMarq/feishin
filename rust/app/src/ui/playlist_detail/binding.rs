@@ -18,22 +18,22 @@ pub fn with_model<Output>(
         .map(action)
 }
 
-pub fn install_model(window: &AppWindow, ctx: &Context) {
+pub fn install_model(window: &AppWindow, context: &Context) {
     let weak = window.as_weak();
-    let fetch_ctx = ctx.clone();
+    let fetch_context = context.clone();
     let model = Rc::new(PlaylistSongsModel::new(move |request| {
-        spawn_page_load(weak.clone(), &fetch_ctx, request);
+        spawn_page_load(weak.clone(), &fetch_context, request);
     }));
     window
         .global::<PlaylistDetailState>()
         .set_rows(ModelRc::from(model));
 }
 
-fn spawn_page_load(window: slint::Weak<AppWindow>, ctx: &Context, request: PageRequest) {
-    let Some(server) = ctx.session.get() else {
+fn spawn_page_load(window: slint::Weak<AppWindow>, context: &Context, request: PageRequest) {
+    let Some(server) = context.session.get() else {
         return;
     };
-    ctx.rt.spawn(async move {
+    context.runtime.spawn(async move {
         let paging = paging_for_page(request.page);
         let result = server
             .playlist_song_page(&request.playlist_id, paging)
@@ -51,8 +51,8 @@ fn show_page(window: &AppWindow, request: &PageRequest, result: feishin_api::Res
             }
         }
         Err(error) => {
-            let current = with_model(window, |model| model.page_failed(request));
-            if current == Some(true) {
+            let is_current = with_model(window, |model| model.page_failed(request));
+            if is_current == Some(true) {
                 show_status(window, &tr!("Could not load the playlist: {}", error));
             }
         }

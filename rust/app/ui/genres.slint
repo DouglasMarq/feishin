@@ -12,8 +12,8 @@ export struct Card {
     subtitle: string,
     cover: image,
     has-cover: bool,
-    favorite: bool,
-    loaded: bool,
+    is-favorite: bool,
+    is-loaded: bool,
 }
 
 export struct CardRow {
@@ -22,7 +22,7 @@ export struct CardRow {
 
 export struct TrackItem {
     track: TrackRow,
-    favorite: bool,
+    is-favorite: bool,
 }
 
 export struct GenreRow {
@@ -39,14 +39,14 @@ export global LibraryIcons {
 
 export global GenresState {
     in property <[GenreRow]> genres;
-    in property <bool> genres-loading;
+    in property <bool> is-genres-loading;
     in property <string> title;
     in property <string> album-count;
     in property <string> track-count;
     in property <[CardRow]> albums;
-    in property <bool> albums-loading;
+    in property <bool> is-albums-loading;
     in property <[TrackItem]> tracks;
-    in property <bool> tracks-loading;
+    in property <bool> is-tracks-loading;
     in-out property <GenresTab> tab;
     callback load(string);
     callback filter-edited(string);
@@ -57,19 +57,19 @@ export global GenresState {
 export component Tab inherits Rectangle {
     in property <string> text;
     in property <string> count;
-    in property <bool> active;
+    in property <bool> is-active;
     callback clicked();
     accessible-role: button;
     accessible-label: root.text;
     accessible-checkable: true;
-    accessible-checked: root.active;
+    accessible-checked: root.is-active;
     accessible-action-default => {
         root.clicked();
     }
     width: layout.preferred-width;
     height: 32px;
     border-radius: 16px;
-    background: root.active ? Theme.surface-raised : (touch.has-hover ? Theme.hover : transparent);
+    background: root.is-active ? Theme.surface-raised : (touch.has-hover ? Theme.hover : transparent);
 
     layout := HorizontalLayout {
         padding-left: 14px;
@@ -78,7 +78,7 @@ export component Tab inherits Rectangle {
 
         Text {
             text: root.text;
-            color: root.active ? Theme.foreground : Theme.muted;
+            color: root.is-active ? Theme.foreground : Theme.muted;
             font-weight: 600;
             vertical-alignment: center;
         }
@@ -91,8 +91,8 @@ export component Tab inherits Rectangle {
     }
 
     TooltipAnchor {
-        text: root.active ? @tr("{} is shown", root.text) : @tr("Show {}", root.text);
-        hovered: touch.has-hover;
+        text: root.is-active ? @tr("{} is shown", root.text) : @tr("Show {}", root.text);
+        is-hovered: touch.has-hover;
     }
 
     touch := TouchArea {
@@ -104,10 +104,10 @@ export component Tab inherits Rectangle {
 }
 
 export component FavoriteButton inherits Rectangle {
-    in property <bool> favorite;
+    in property <bool> is-favorite;
     callback clicked();
     accessible-role: button;
-    accessible-label: root.favorite ? @tr("Remove from favorites") : @tr("Add to favorites");
+    accessible-label: root.is-favorite ? @tr("Remove from favorites") : @tr("Add to favorites");
     accessible-action-default => {
         root.clicked();
     }
@@ -117,15 +117,15 @@ export component FavoriteButton inherits Rectangle {
     background: touch.has-hover ? Theme.hover : transparent;
 
     Icon {
-        path: root.favorite ? Icons.heart : LibraryIcons.heart-outline;
-        color: root.favorite ? Theme.primary : (touch.has-hover ? Theme.foreground : Theme.muted);
+        path: root.is-favorite ? Icons.heart : LibraryIcons.heart-outline;
+        color: root.is-favorite ? Theme.primary : (touch.has-hover ? Theme.foreground : Theme.muted);
         width: 18px;
         height: 18px;
     }
 
     TooltipAnchor {
-        text: root.favorite ? @tr("Remove from favorites") : @tr("Add to favorites");
-        hovered: touch.has-hover;
+        text: root.is-favorite ? @tr("Remove from favorites") : @tr("Add to favorites");
+        is-hovered: touch.has-hover;
     }
 
     touch := TouchArea {
@@ -138,24 +138,24 @@ export component FavoriteButton inherits Rectangle {
 
 export component CardView inherits Rectangle {
     in property <Card> card;
-    in property <bool> round;
-    in property <bool> show-favorite;
+    in property <bool> is-round;
+    in property <bool> is-favorite-shown;
     callback open();
     callback toggle-favorite();
     height: self.width + 52px;
 
     touch := TouchArea {
-        mouse-cursor: root.card.loaded ? pointer : default;
+        mouse-cursor: root.card.is-loaded ? pointer : default;
         clicked => {
-            if (root.card.loaded) {
+            if (root.card.is-loaded) {
                 root.open();
             }
         }
     }
 
     TooltipAnchor {
-        text: root.card.loaded ? @tr("Open {}", root.card.title) : "";
-        hovered: touch.has-hover;
+        text: root.card.is-loaded ? @tr("Open {}", root.card.title) : "";
+        is-hovered: touch.has-hover;
     }
 
     Rectangle {
@@ -163,7 +163,7 @@ export component CardView inherits Rectangle {
         y: 0;
         width: root.width;
         height: root.width;
-        border-radius: root.round ? self.width / 2 : Theme.radius;
+        border-radius: root.is-round ? self.width / 2 : Theme.radius;
         background: Theme.surface-raised;
         clip: true;
 
@@ -174,8 +174,8 @@ export component CardView inherits Rectangle {
             image-fit: cover;
         }
 
-        if !root.card.has-cover && root.card.loaded: Icon {
-            path: root.round ? Icons.artist : Icons.album;
+        if !root.card.has-cover && root.card.is-loaded: Icon {
+            path: root.is-round ? Icons.artist : Icons.album;
             color: Theme.muted;
             width: parent.width * 0.35;
             height: parent.width * 0.35;
@@ -186,23 +186,23 @@ export component CardView inherits Rectangle {
         }
     }
 
-    if root.show-favorite && root.card.loaded && (touch.has-hover || !root.card.favorite): Rectangle {
+    if root.is-favorite-shown && root.card.is-loaded && (touch.has-hover || !root.card.is-favorite): Rectangle {
         x: root.width - self.width - 8px;
-        y: root.round ? root.width - self.height - 8px : 8px;
+        y: root.is-round ? root.width - self.height - 8px : 8px;
         width: 32px;
         height: 32px;
         border-radius: 16px;
         background: #000000b0;
 
         FavoriteButton {
-            favorite: root.card.favorite;
+            is-favorite: root.card.is-favorite;
             clicked => {
                 root.toggle-favorite();
             }
         }
     }
 
-    if root.card.loaded: VerticalLayout {
+    if root.card.is-loaded: VerticalLayout {
         y: root.width + 8px;
         height: 44px;
         spacing: 2px;
@@ -213,7 +213,7 @@ export component CardView inherits Rectangle {
             color: Theme.foreground;
             font-weight: 600;
             overflow: elide;
-            horizontal-alignment: root.round ? center : left;
+            horizontal-alignment: root.is-round ? center : left;
         }
 
         Text {
@@ -221,11 +221,11 @@ export component CardView inherits Rectangle {
             color: Theme.muted;
             font-size: 12px;
             overflow: elide;
-            horizontal-alignment: root.round ? center : left;
+            horizontal-alignment: root.is-round ? center : left;
         }
     }
 
-    if !root.card.loaded: Skeleton {
+    if !root.card.is-loaded: Skeleton {
         x: 0;
         y: root.width + 12px;
         width: root.width * 0.7;
@@ -234,9 +234,9 @@ export component CardView inherits Rectangle {
 
 export component CardGrid inherits Rectangle {
     in property <[CardRow]> rows;
-    in property <bool> round;
-    in property <bool> show-favorite;
-    in property <bool> loading;
+    in property <bool> is-round;
+    in property <bool> is-favorite-shown;
+    in property <bool> is-loading;
     in property <string> empty-text;
     property <length> gap: 16px;
     property <length> side-padding: 20px;
@@ -265,8 +265,8 @@ export component CardGrid inherits Rectangle {
             for card in row.cards: CardView {
                 width: root.card-width;
                 card: card;
-                round: root.round;
-                show-favorite: root.show-favorite;
+                is-round: root.is-round;
+                is-favorite-shown: root.is-favorite-shown;
                 open => {
                     root.open(card.id);
                 }
@@ -277,7 +277,7 @@ export component CardGrid inherits Rectangle {
         }
     }
 
-    if !root.loading && root.rows.length == 0: Text {
+    if !root.is-loading && root.rows.length == 0: Text {
         text: root.empty-text;
         color: Theme.muted;
         horizontal-alignment: center;
@@ -287,8 +287,8 @@ export component CardGrid inherits Rectangle {
 
 export component TrackTable inherits Rectangle {
     in property <[TrackItem]> rows;
-    in property <bool> loading;
-    in property <bool> show-favorite;
+    in property <bool> is-loading;
+    in property <bool> is-favorite-shown;
     in property <string> empty-text: @tr("No tracks found");
     callback play(int);
     callback toggle-favorite(int);
@@ -305,44 +305,44 @@ export component TrackTable inherits Rectangle {
 
                 HeaderCell {
                     text: "#";
-                    sortable: false;
+                    is-sortable: false;
                     align: right;
                     column-width <=> TracksState.w-index;
                 }
 
                 HeaderCell {
                     text: @tr("Title");
-                    sortable: false;
+                    is-sortable: false;
                     column-width <=> TracksState.w-title;
                 }
 
                 HeaderCell {
                     text: @tr("Artist");
-                    sortable: false;
+                    is-sortable: false;
                     column-width <=> TracksState.w-artist;
                 }
 
                 HeaderCell {
                     text: @tr("Album");
-                    sortable: false;
+                    is-sortable: false;
                     column-width <=> TracksState.w-album;
                 }
 
                 HeaderCell {
                     text: @tr("Year");
-                    sortable: false;
+                    is-sortable: false;
                     column-width <=> TracksState.w-year;
                 }
 
                 HeaderCell {
                     text: @tr("Plays");
-                    sortable: false;
+                    is-sortable: false;
                     column-width <=> TracksState.w-plays;
                 }
 
                 HeaderCell {
                     text: @tr("Time");
-                    sortable: false;
+                    is-sortable: false;
                     column-width <=> TracksState.w-duration;
                 }
 
@@ -374,17 +374,17 @@ export component TrackTable inherits Rectangle {
                             duration: item.track.duration,
                             year: item.track.year,
                             plays: item.track.plays,
-                            loaded: item.track.loaded,
-                            playing: item.track.loaded && item.track.id == PlayerState.song-id,
+                            is-loaded: item.track.is-loaded,
+                            is-playing: item.track.is-loaded && item.track.id == PlayerState.song-id,
                         };
                         play => {
                             root.play(item.track.index - 1);
                         }
                     }
 
-                    if root.show-favorite && item.track.loaded: FavoriteButton {
+                    if root.is-favorite-shown && item.track.is-loaded: FavoriteButton {
                         x: parent.width - self.width - 12px;
-                        favorite: item.favorite;
+                        is-favorite: item.is-favorite;
                         clicked => {
                             root.toggle-favorite(item.track.index - 1);
                         }
@@ -392,7 +392,7 @@ export component TrackTable inherits Rectangle {
                 }
             }
 
-            if !root.loading && root.rows.length == 0: Text {
+            if !root.is-loading && root.rows.length == 0: Text {
                 text: root.empty-text;
                 color: Theme.muted;
                 horizontal-alignment: center;
@@ -417,7 +417,7 @@ component GenreList inherits VerticalLayout {
         }
 
         Text {
-            text: GenresState.genres-loading ? "" : GenresState.genres.length;
+            text: GenresState.is-genres-loading ? "" : GenresState.genres.length;
             color: Theme.muted;
             vertical-alignment: center;
         }
@@ -497,7 +497,7 @@ component GenreList inherits VerticalLayout {
 
                 TooltipAnchor {
                     text: @tr("Open {}", genre.name);
-                    hovered: touch.has-hover;
+                    is-hovered: touch.has-hover;
                 }
 
                 HorizontalLayout {
@@ -540,7 +540,7 @@ component GenreList inherits VerticalLayout {
             }
         }
 
-        if !GenresState.genres-loading && GenresState.genres.length == 0: Text {
+        if !GenresState.is-genres-loading && GenresState.genres.length == 0: Text {
             text: @tr("No genres found");
             color: Theme.muted;
             horizontal-alignment: center;
@@ -581,7 +581,7 @@ component GenreDetail inherits VerticalLayout {
             y: (parent.height - self.height) / 2;
             text: @tr("Albums");
             count: GenresState.album-count;
-            active: GenresState.tab == GenresTab.albums;
+            is-active: GenresState.tab == GenresTab.albums;
             clicked => {
                 GenresState.tab = GenresTab.albums;
             }
@@ -591,7 +591,7 @@ component GenreDetail inherits VerticalLayout {
             y: (parent.height - self.height) / 2;
             text: @tr("Tracks");
             count: GenresState.track-count;
-            active: GenresState.tab == GenresTab.tracks;
+            is-active: GenresState.tab == GenresTab.tracks;
             clicked => {
                 GenresState.tab = GenresTab.tracks;
             }
@@ -601,7 +601,7 @@ component GenreDetail inherits VerticalLayout {
     Rectangle {
         if GenresState.tab == GenresTab.albums: CardGrid {
             rows: GenresState.albums;
-            loading: GenresState.albums-loading;
+            is-loading: GenresState.is-albums-loading;
             empty-text: @tr("No albums found");
             columns-changed(columns) => {
                 GenresState.album-columns(columns);
@@ -613,7 +613,7 @@ component GenreDetail inherits VerticalLayout {
 
         if GenresState.tab == GenresTab.tracks: TrackTable {
             rows: GenresState.tracks;
-            loading: GenresState.tracks-loading;
+            is-loading: GenresState.is-tracks-loading;
             play(index) => {
                 GenresState.play-track(index);
             }

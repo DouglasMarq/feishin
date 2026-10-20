@@ -84,14 +84,14 @@ pub fn show_genre(window: &AppWindow, list: &GenreList) {
     state.set_track_count(count_label(genre.and_then(|genre| genre.song_count)).into());
 }
 
-pub fn fetch_genres(window: &AppWindow, ctx: &Context, list: &Rc<RefCell<GenreList>>) {
-    let Some(server) = ctx.session.get() else {
+pub fn fetch_genres(window: &AppWindow, context: &Context, list: &Rc<RefCell<GenreList>>) {
+    let Some(server) = context.session.get() else {
         return;
     };
     let generation = list.borrow_mut().next_generation();
-    window.global::<GenresState>().set_genres_loading(true);
+    window.global::<GenresState>().set_is_genres_loading(true);
     let (sender, receiver) = tokio::sync::oneshot::channel();
-    ctx.rt.spawn(async move {
+    context.runtime.spawn(async move {
         if sender.send(server.genre_list().await).is_err() {
             tracing::debug!("genre list receiver is gone");
         }
@@ -118,7 +118,7 @@ fn apply_genres(
     if list.generation != generation {
         return;
     }
-    window.global::<GenresState>().set_genres_loading(false);
+    window.global::<GenresState>().set_is_genres_loading(false);
     match result {
         Ok(genres) => {
             list.genres = genres;
@@ -165,6 +165,6 @@ mod tests {
     fn genre_queries_filter_by_genre_id() {
         assert_eq!(genre_song_query("g1").genre_ids, ["g1"]);
         assert_eq!(genre_album_query("g1").genre_ids, ["g1"]);
-        assert_eq!(genre_song_query("g1").favorite, None);
+        assert_eq!(genre_song_query("g1").is_favorite, None);
     }
 }

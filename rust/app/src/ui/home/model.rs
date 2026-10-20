@@ -67,11 +67,11 @@ impl Default for HomeModel {
 }
 
 impl HomeModel {
-    fn set_loading(&self, shelf: usize, loading: bool) {
+    fn set_loading(&self, shelf: usize, is_loading: bool) {
         let Some(slot) = self.slots.get(shelf) else {
             return;
         };
-        if slot.loading.replace(loading) != loading {
+        if slot.loading.replace(is_loading) != is_loading {
             self.notify.row_changed(shelf);
         }
     }
@@ -88,8 +88,8 @@ impl HomeModel {
     }
 
     pub fn visit(&self, server_id: &str) -> Vec<usize> {
-        let switched_server = self.server_id.borrow().as_deref() != Some(server_id);
-        if switched_server {
+        let has_switched_server = self.server_id.borrow().as_deref() != Some(server_id);
+        if has_switched_server {
             self.forget_previous_server(server_id);
         }
         self.slots
@@ -222,8 +222,8 @@ impl Model for HomeModel {
         Some(HomeShelf {
             title: slot.shelf.title().into(),
             albums: ModelRc::from(Rc::clone(&slot.albums)),
-            loading: slot.loading.get(),
-            refreshable: slot.shelf.is_refreshable(),
+            is_loading: slot.loading.get(),
+            is_refreshable: slot.shelf.is_refreshable(),
         })
     }
 
@@ -262,12 +262,12 @@ mod tests {
         assert_eq!(model.visit("s1"), [0, 1, 2, 3]);
         let first = model.begin_fetch(0).map(|(generation, _)| generation);
         let second = model.begin_fetch(0).map(|(generation, _)| generation);
-        assert!(model.row_data(0).is_some_and(|shelf| shelf.loading));
+        assert!(model.row_data(0).is_some_and(|shelf| shelf.is_loading));
 
         assert!(!model.apply_fetched(0, first.unwrap_or_default(), &albums(&["old"])));
         assert!(model.cards(0).is_empty());
         assert!(model.apply_fetched(0, second.unwrap_or_default(), &albums(&["a", "b"])));
-        assert!(model.row_data(0).is_some_and(|shelf| !shelf.loading));
+        assert!(model.row_data(0).is_some_and(|shelf| !shelf.is_loading));
         assert_eq!(model.cards(0).len(), 2);
     }
 

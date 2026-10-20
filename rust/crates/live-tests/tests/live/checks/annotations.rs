@@ -11,9 +11,9 @@ pub async fn favorites_songs(backend: Backend) {
         .set_favorite(ItemKind::Song, &ids, true)
         .await
         .expect("favorite");
-    assert!(server.song(&song.id).await.expect("song").favorite);
+    assert!(server.song(&song.id).await.expect("song").is_favorite);
     let favorites = SongListQuery {
-        favorite: Some(true),
+        is_favorite: Some(true),
         ..SongListQuery::default()
     };
     let listed = server
@@ -25,14 +25,14 @@ pub async fn favorites_songs(backend: Backend) {
         .set_favorite(ItemKind::Song, &ids, false)
         .await
         .expect("unfavorite");
-    assert!(!server.song(&song.id).await.expect("song").favorite);
+    assert!(!server.song(&song.id).await.expect("song").is_favorite);
 }
 
 async fn is_favorite(server: &dyn MusicServer, kind: ItemKind, id: &str) -> bool {
     match kind {
-        ItemKind::Song => server.song(id).await.expect("song").favorite,
-        ItemKind::Album => server.album(id).await.expect("album").album.favorite,
-        ItemKind::Artist => server.artist(id).await.expect("artist").artist.favorite,
+        ItemKind::Song => server.song(id).await.expect("song").is_favorite,
+        ItemKind::Album => server.album(id).await.expect("album").album.is_favorite,
+        ItemKind::Artist => server.artist(id).await.expect("artist").artist.is_favorite,
         ItemKind::Playlist => panic!("playlists have no favorite flag"),
     }
 }

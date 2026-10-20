@@ -105,8 +105,8 @@ pub(super) fn parse_duration(text: &str) -> Option<u64> {
     parts
         .iter()
         .try_fold(0_u64, |total, part| {
-            let valid = !part.is_empty() && part.chars().all(|digit| digit.is_ascii_digit());
-            let value: u64 = valid.then(|| part.parse().ok()).flatten()?;
+            let is_valid = !part.is_empty() && part.chars().all(|digit| digit.is_ascii_digit());
+            let value: u64 = is_valid.then(|| part.parse().ok()).flatten()?;
             total.checked_mul(SECONDS_PER_MINUTE)?.checked_add(value)
         })
         .and_then(|seconds| seconds.checked_mul(MILLISECONDS_PER_SECOND))

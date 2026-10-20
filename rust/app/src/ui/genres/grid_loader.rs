@@ -13,11 +13,15 @@ use crate::ui::{AppWindow, CardRow, Context, on_ui, show_status};
 
 const GRID_COVER_SIZE: u32 = 200;
 
-pub fn card_grid(window: &AppWindow, ctx: &Context, binding: Binding<CardRow>) -> ModelRc<CardRow> {
+pub fn card_grid(
+    window: &AppWindow,
+    context: &Context,
+    binding: Binding<CardRow>,
+) -> ModelRc<CardRow> {
     let weak = window.as_weak();
-    let ctx = ctx.clone();
+    let context = context.clone();
     ModelRc::new(CardGrid::new(move |request| {
-        spawn_grid(weak.clone(), &ctx, binding, request);
+        spawn_grid(weak.clone(), &context, binding, request);
     }))
 }
 
@@ -30,11 +34,11 @@ fn grid_paging(page: usize) -> Paging {
 
 fn spawn_grid(
     window: slint::Weak<AppWindow>,
-    ctx: &Context,
+    context: &Context,
     binding: Binding<CardRow>,
     request: GridRequest,
 ) {
-    let Some(server) = ctx.session.get() else {
+    let Some(server) = context.session.get() else {
         return;
     };
     match request {
@@ -43,7 +47,7 @@ fn spawn_grid(
             source,
             page,
         } => {
-            ctx.rt.spawn(async move {
+            context.runtime.spawn(async move {
                 let result = source.fetch(server.as_ref(), grid_paging(page)).await;
                 on_ui(&window, move |window| {
                     apply_grid_page(window, binding, generation, page, result);
@@ -51,8 +55,8 @@ fn spawn_grid(
             });
         }
         GridRequest::Cover { cover_id } => {
-            let covers = ctx.covers.clone();
-            ctx.rt.spawn(async move {
+            let covers = context.covers.clone();
+            context.runtime.spawn(async move {
                 let result = covers
                     .cover(server.as_ref(), &cover_id, GRID_COVER_SIZE)
                     .await;

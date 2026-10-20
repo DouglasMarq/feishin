@@ -6,15 +6,20 @@ use crate::ui::{AppWindow, Context};
 #[derive(Clone)]
 pub struct PlaylistPicker {
     shared: SharedPicker,
-    ctx: Context,
+    context: Context,
 }
 
 impl PlaylistPicker {
-    pub fn new(shared: SharedPicker, ctx: Context) -> Self {
-        Self { shared, ctx }
+    pub fn new(shared: SharedPicker, context: Context) -> Self {
+        Self { shared, context }
     }
 
     pub fn open_listed(&self, window: &AppWindow, listed: ListedSongs) {
-        open(window, &self.ctx, &self.shared, PickedSongs::Listed(listed));
+        open(
+            window,
+            &self.context,
+            &self.shared,
+            PickedSongs::Listed(listed),
+        );
     }
 }

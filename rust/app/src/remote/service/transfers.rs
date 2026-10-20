@@ -17,7 +17,7 @@ impl RemoteService {
                 return;
             }
         };
-        let was_playing = payload.playing;
+        let was_playing = payload.is_playing;
         if !self.control(id).await {
             self.resume_if(was_playing);
             return;

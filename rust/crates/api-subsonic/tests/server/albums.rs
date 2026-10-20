@@ -116,7 +116,7 @@ async fn album_list_favorites_and_search() {
     let server = server(&mock);
 
     let query = AlbumListQuery {
-        favorite: Some(true),
+        is_favorite: Some(true),
         sort: AlbumSort::Name,
         ..Default::default()
     };
@@ -127,7 +127,7 @@ async fn album_list_favorites_and_search() {
     let names: Vec<&str> = page.items.iter().map(|album| album.name.as_str()).collect();
     assert_eq!(names, ["Alpha", "Beta"]);
     assert_eq!(page.total_count, Some(3));
-    assert!(page.items[1].favorite);
+    assert!(page.items[1].is_favorite);
     assert_eq!(server.album_count(&query).await.ok(), Some(3));
 
     let search = AlbumListQuery {

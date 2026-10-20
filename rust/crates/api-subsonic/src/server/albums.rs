@@ -26,7 +26,7 @@ impl<'query> AlbumSource<'query> {
         if !query.artist_ids.is_empty() {
             return Self::ArtistAlbums;
         }
-        match wants_favorites_only(query.favorite) {
+        match wants_favorites_only(query.is_favorite) {
             true => Self::Favorites,
             false => Self::ServerList,
         }

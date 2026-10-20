@@ -178,7 +178,7 @@ fn album_id_batches(album_ids: &[String]) -> Vec<&[String]> {
 }
 
 fn has_native_only_song_filters(query: &SongListQuery) -> bool {
-    query.favorite.is_some()
+    query.is_favorite.is_some()
         || !query.genre_ids.is_empty()
         || !query.artist_ids.is_empty()
         || !query.album_ids.is_empty()

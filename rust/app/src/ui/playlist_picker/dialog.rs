@@ -22,14 +22,14 @@ pub fn show_rows(window: &AppWindow, shared: &SharedPicker) {
 pub fn close(window: &AppWindow, shared: &SharedPicker) {
     lock(shared).restart(PickedSongs::default());
     let state = window.global::<PlaylistPickerState>();
-    state.set_open(false);
-    state.set_creating(false);
-    state.set_busy(false);
+    state.set_is_open(false);
+    state.set_is_creating(false);
+    state.set_is_busy(false);
     state.set_rows(ModelRc::default());
 }
 
-pub fn open(window: &AppWindow, ctx: &Context, shared: &SharedPicker, songs: PickedSongs) {
-    let Some(server) = ctx.session.get() else {
+pub fn open(window: &AppWindow, context: &Context, shared: &SharedPicker, songs: PickedSongs) {
+    let Some(server) = context.session.get() else {
         return;
     };
     let song_count = songs.song_count();
@@ -39,7 +39,7 @@ pub fn open(window: &AppWindow, ctx: &Context, shared: &SharedPicker, songs: Pic
     let generation = lock(shared).restart(songs);
     show_opened(window, song_count);
     let (weak, shared) = (window.as_weak(), Arc::clone(shared));
-    ctx.rt.spawn(async move {
+    context.runtime.spawn(async move {
         let result = fetch_all(server.as_ref()).await;
         on_ui(&weak, move |window| {
             apply_playlists(window, &shared, generation, result);
@@ -52,10 +52,10 @@ fn show_opened(window: &AppWindow, song_count: usize) {
     state.set_song_count(clamp_i32(song_count as u64));
     state.set_filter("".into());
     state.set_rows(ModelRc::default());
-    state.set_creating(false);
-    state.set_busy(false);
-    state.set_loading(true);
-    state.set_open(true);
+    state.set_is_creating(false);
+    state.set_is_busy(false);
+    state.set_is_loading(true);
+    state.set_is_open(true);
 }
 
 fn apply_playlists(
@@ -70,6 +70,6 @@ fn apply_playlists(
     if let Err(error) = accepted {
         show_status(window, &tr!("Could not load playlists: {}", error));
     }
-    window.global::<PlaylistPickerState>().set_loading(false);
+    window.global::<PlaylistPickerState>().set_is_loading(false);
     show_rows(window, shared);
 }

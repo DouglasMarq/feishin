@@ -76,7 +76,7 @@ fn realistic_song(number: usize) -> Song {
         bitrate_kbps: Some(320),
         play_count: 4,
         user_rating: None,
-        favorite: false,
+        is_favorite: false,
         cover_art_id: Some(format!("al-{album_id}_66f1c0de")),
         replay_gain: Some(ReplayGain::default()),
         path: Some(format!(

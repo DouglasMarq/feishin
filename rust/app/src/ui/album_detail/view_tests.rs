@@ -121,7 +121,7 @@ fn box_set() -> AlbumDetail {
             cover_art_id: None,
             play_count: 0,
             user_rating: None,
-            favorite: false,
+            is_favorite: false,
             created_at: None,
             last_played_at: None,
         },

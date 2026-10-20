@@ -20,22 +20,22 @@ type WindowAction = fn(&AppWindow, &Context, &Arc<Shared>);
 #[derive(Clone)]
 struct Binding {
     weak_window: slint::Weak<AppWindow>,
-    ctx: Context,
+    context: Context,
     shared: Arc<Shared>,
 }
 
 impl Binding {
-    fn new(window: &AppWindow, ctx: &Context, shared: &Arc<Shared>) -> Self {
+    fn new(window: &AppWindow, context: &Context, shared: &Arc<Shared>) -> Self {
         Self {
             weak_window: window.as_weak(),
-            ctx: ctx.clone(),
+            context: context.clone(),
             shared: Arc::clone(shared),
         }
     }
 
     fn run(&self, action: impl FnOnce(&AppWindow, &Context, &Arc<Shared>)) {
         if let Some(window) = self.weak_window.upgrade() {
-            action(&window, &self.ctx, &self.shared);
+            action(&window, &self.context, &self.shared);
         }
     }
 
@@ -45,35 +45,36 @@ impl Binding {
     }
 }
 
-fn apply_playback(window: &AppWindow, ctx: &Context, shared: &Arc<Shared>) {
+fn apply_playback(window: &AppWindow, context: &Context, shared: &Arc<Shared>) {
     let state = window.global::<SettingsState>();
     let form = PlaybackForm {
         replay_gain: replay_gain_setting(state.get_replay_gain()),
-        gapless: state.get_gapless(),
+        is_gapless: state.get_is_gapless(),
         crossfade_seconds: state.get_crossfade_seconds(),
         device: state.get_device_index(),
         bitrate: state.get_bitrate_index(),
         format: state.get_format_index(),
-        scrobble: state.get_scrobble(),
+        is_scrobbling_enabled: state.get_is_scrobbling_enabled(),
     };
     let mut view = shared.view();
     let playback = view.playback(form);
     view.settings.playback = playback.clone();
-    ctx.send(Command::ApplyPlayback(playback));
+    context.send(Command::ApplyPlayback(playback));
 }
 
-fn apply_integrations(window: &AppWindow, ctx: &Context, shared: &Arc<Shared>) {
+fn apply_integrations(window: &AppWindow, context: &Context, shared: &Arc<Shared>) {
     let state = window.global::<SettingsState>();
     let mut view = shared.view();
-    view.settings.integrations.mpris = state.get_mpris();
-    view.settings.integrations.discord_rich_presence = state.get_discord();
-    view.settings.integrations.remote_control = state.get_remote_control();
-    ctx.remote
-        .request(RemoteRequest::SetHosting(state.get_remote_control()));
-    save_integrations(ctx, &mut view);
+    view.settings.integrations.is_mpris_enabled = state.get_is_mpris_enabled();
+    view.settings.integrations.is_discord_rich_presence_enabled = state.get_is_discord_enabled();
+    view.settings.integrations.is_remote_control_enabled = state.get_is_remote_control_enabled();
+    context.remote.request(RemoteRequest::SetHosting(
+        state.get_is_remote_control_enabled(),
+    ));
+    save_integrations(context, &mut view);
 }
 
-fn toggle_lyrics_source(window: &AppWindow, ctx: &Context, shared: &Shared, row: i32) {
+fn toggle_lyrics_source(window: &AppWindow, context: &Context, shared: &Shared, row: i32) {
     let mut view = shared.view();
     let Some(source) = usize::try_from(row)
         .ok()
@@ -81,57 +82,67 @@ fn toggle_lyrics_source(window: &AppWindow, ctx: &Context, shared: &Shared, row:
     else {
         return;
     };
-    source.enabled = !source.enabled;
+    source.is_enabled = !source.is_enabled;
     set_lyrics_rows(&window.global::<SettingsState>(), &view.lyrics);
-    save_integrations(ctx, &mut view);
+    save_integrations(context, &mut view);
 }
 
-fn reorder_lyrics_source(window: &AppWindow, ctx: &Context, shared: &Shared, row: i32, delta: i32) {
+fn reorder_lyrics_source(
+    window: &AppWindow,
+    context: &Context,
+    shared: &Shared,
+    row: i32,
+    delta: i32,
+) {
     let mut view = shared.view();
     let (Ok(row), Ok(delta)) = (usize::try_from(row), isize::try_from(delta)) else {
         return;
     };
     if move_lyrics_source(&mut view.lyrics, row, delta) {
         set_lyrics_rows(&window.global::<SettingsState>(), &view.lyrics);
-        save_integrations(ctx, &mut view);
+        save_integrations(context, &mut view);
     }
 }
 
-fn apply_interface(window: &AppWindow, ctx: &Context, shared: &Arc<Shared>) {
-    let follow_current_song = window.global::<SettingsState>().get_follow_current_song();
-    let queue_panel_open = window.global::<AppState>().get_queue_open();
+fn apply_interface(window: &AppWindow, context: &Context, shared: &Arc<Shared>) {
+    let is_following_current_song = window
+        .global::<SettingsState>()
+        .get_is_following_current_song();
+    let is_queue_panel_open = window.global::<AppState>().get_is_queue_open();
     let mut view = shared.view();
-    view.settings.ui.follow_current_song = follow_current_song;
-    view.settings.ui.queue_panel_open = queue_panel_open;
-    ctx.send(Command::SaveInterface {
-        queue_panel_open,
-        follow_current_song,
+    view.settings.ui.is_following_current_song = is_following_current_song;
+    view.settings.ui.is_queue_panel_open = is_queue_panel_open;
+    context.send(Command::SaveInterface {
+        is_queue_panel_open,
+        is_following_current_song,
     });
 }
 
 fn install_lyrics_source_callbacks(state: &SettingsState, binding: &Binding) {
     let toggle_binding = binding.clone();
     state.on_toggle_lyrics_source(move |row| {
-        toggle_binding.run(|window, ctx, shared| toggle_lyrics_source(window, ctx, shared, row));
+        toggle_binding
+            .run(|window, context, shared| toggle_lyrics_source(window, context, shared, row));
     });
     let reorder_binding = binding.clone();
     state.on_move_lyrics_source(move |row, delta| {
-        reorder_binding
-            .run(|window, ctx, shared| reorder_lyrics_source(window, ctx, shared, row, delta));
+        reorder_binding.run(|window, context, shared| {
+            reorder_lyrics_source(window, context, shared, row, delta)
+        });
     });
 }
 
 fn install_server_callbacks(state: &SettingsState, binding: &Binding) {
     let switch_binding = binding.clone();
     state.on_switch_server(move |id| {
-        switch_binding.run(|window, ctx, shared| switch_server(window, ctx, shared, id));
+        switch_binding.run(|window, context, shared| switch_server(window, context, shared, id));
     });
     let remove_binding = binding.clone();
     state.on_remove_server(move |id| {
-        remove_binding.run(|window, ctx, shared| remove_server(window, ctx, shared, &id));
+        remove_binding.run(|window, context, shared| remove_server(window, context, shared, &id));
     });
     state.on_add_server(binding.action(|window, _, _| login::show_login(window, "")));
-    state.on_log_out(binding.action(|window, ctx, shared| log_out(window, ctx, shared)));
+    state.on_log_out(binding.action(|window, context, shared| log_out(window, context, shared)));
 }
 
 fn install_youtube_callbacks(state: &SettingsState, binding: &Binding) {
@@ -141,19 +152,19 @@ fn install_youtube_callbacks(state: &SettingsState, binding: &Binding) {
     state.on_add_youtube_link(binding.action(add_link));
 }
 
-pub(super) fn install_with(window: &AppWindow, ctx: &Context, shared: &Arc<Shared>) {
+pub(super) fn install_with(window: &AppWindow, context: &Context, shared: &Arc<Shared>) {
     let state = window.global::<SettingsState>();
-    let binding = Binding::new(window, ctx, shared);
+    let binding = Binding::new(window, context, shared);
     let reload = binding.action(load);
     state.on_load(move |_| reload());
     state.on_playback_changed(binding.action(apply_playback));
     state.on_integrations_changed(binding.action(apply_integrations));
-    let forget_ctx = ctx.clone();
-    state.on_forget_devices(move || forget_ctx.remote.request(RemoteRequest::ForgetDevices));
+    let forget_context = context.clone();
+    state.on_forget_devices(move || forget_context.remote.request(RemoteRequest::ForgetDevices));
     install_lyrics_source_callbacks(&state, &binding);
     state.on_interface_changed(binding.action(apply_interface));
     state.on_language_changed(binding.action(apply_language));
     install_server_callbacks(&state, &binding);
     install_youtube_callbacks(&state, &binding);
-    load(window, ctx, shared);
+    load(window, context, shared);
 }

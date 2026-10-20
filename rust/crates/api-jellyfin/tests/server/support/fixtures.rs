@@ -1,9 +1,9 @@
 use feishin_core::model::Song;
 use serde_json::{Value, json};
 
-pub fn user_data(favorite: bool, plays: u32) -> Value {
+pub fn user_data(is_favorite: bool, plays: u32) -> Value {
     json!({
-        "IsFavorite": favorite,
+        "IsFavorite": is_favorite,
         "Key": "k",
         "PlaybackPositionTicks": 0,
         "PlayCount": plays,
@@ -155,7 +155,7 @@ pub fn sample_song(id: &str) -> Song {
         bitrate_kbps: None,
         play_count: 0,
         user_rating: None,
-        favorite: false,
+        is_favorite: false,
         cover_art_id: None,
         replay_gain: None,
         path: None,

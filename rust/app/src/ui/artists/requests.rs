@@ -33,8 +33,8 @@ pub fn with_list<Output>(
 
 fn finish_loading(window: &AppWindow, list: &ArtistList) {
     let state = window.global::<ArtistsState>();
-    state.set_loading(false);
-    state.set_complete(list.is_complete());
+    state.set_is_loading(false);
+    state.set_is_complete(list.is_complete());
 }
 
 fn apply_page_result(
@@ -101,12 +101,12 @@ async fn fetch_cover(
     });
 }
 
-pub fn spawn_request(weak_window: Weak<AppWindow>, ctx: &Context, request: Request) {
-    let Some(server) = ctx.session.get() else {
+pub fn spawn_request(weak_window: Weak<AppWindow>, context: &Context, request: Request) {
+    let Some(server) = context.session.get() else {
         return;
     };
-    let covers = ctx.covers.clone();
-    ctx.rt.spawn(async move {
+    let covers = context.covers.clone();
+    context.runtime.spawn(async move {
         match request {
             Request::Page {
                 generation,
@@ -128,11 +128,11 @@ pub fn reload(window: &AppWindow, search: &str) {
     let state = window.global::<ArtistsState>();
     let query = build_query(
         state.get_sort_index(),
-        state.get_descending(),
-        state.get_favorites_only(),
+        state.get_is_descending(),
+        state.get_is_favorites_only(),
         search,
     );
-    state.set_loading(true);
-    state.set_complete(false);
+    state.set_is_loading(true);
+    state.set_is_complete(false);
     with_list(window, |list| list.reset(query));
 }

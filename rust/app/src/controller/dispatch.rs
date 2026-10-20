@@ -40,9 +40,9 @@ impl Controller {
             Command::ApplyPlayback(playback) => self.apply_playback(playback),
             Command::SaveIntegrations(integrations) => self.save_integrations(integrations),
             Command::SaveInterface {
-                queue_panel_open,
-                follow_current_song,
-            } => self.save_interface(queue_panel_open, follow_current_song),
+                is_queue_panel_open,
+                is_following_current_song,
+            } => self.save_interface(is_queue_panel_open, is_following_current_song),
             Command::SaveLanguage(language) => self.save_language(language),
             Command::SaveAppearance(appearance) => self.save_appearance(appearance),
             command => self.dispatch_source_command(command),

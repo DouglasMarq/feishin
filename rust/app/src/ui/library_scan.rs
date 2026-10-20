@@ -17,29 +17,29 @@ enum ScanOutcome {
     StillRunning,
 }
 
-pub fn install(window: &AppWindow, ctx: &Context) {
+pub fn install(window: &AppWindow, context: &Context) {
     let weak = window.as_weak();
-    let ctx = ctx.clone();
+    let context = context.clone();
     window.global::<AppState>().on_rescan_library(move || {
         if let Some(window) = weak.upgrade() {
-            start_scan(&window, &ctx);
+            start_scan(&window, &context);
         }
     });
 }
 
-fn start_scan(window: &AppWindow, ctx: &Context) {
+fn start_scan(window: &AppWindow, context: &Context) {
     let state = window.global::<AppState>();
-    if state.get_library_scanning() {
+    if state.get_is_library_scanning() {
         return;
     }
-    let Some(server) = ctx.session.get() else {
+    let Some(server) = context.session.get() else {
         show_status(window, &tr!("Not connected to a server"));
         return;
     };
     show_progress(window, None);
     let weak = window.as_weak();
-    let work = ctx.session.background_work();
-    ctx.rt.spawn(async move {
+    let work = context.session.background_work();
+    context.runtime.spawn(async move {
         let outcome = follow_scan_while_connected(work, server, progress_reporter(&weak)).await;
         on_ui(&weak, move |window| match outcome {
             Some(outcome) => finish_scan(window, outcome),
@@ -71,7 +71,7 @@ async fn follow_scan(
     for _ in 0..MAX_SCAN_POLLS {
         tokio::time::sleep(SCAN_POLL_INTERVAL).await;
         let scan = server.library_scan().await?;
-        if !scan.scanning {
+        if !scan.is_scanning {
             return Ok(ScanOutcome::Finished(scan));
         }
         report(scan.scanned_items);
@@ -81,7 +81,7 @@ async fn follow_scan(
 
 fn show_progress(window: &AppWindow, scanned_items: Option<u64>) {
     let state = window.global::<AppState>();
-    state.set_library_scanning(true);
+    state.set_is_library_scanning(true);
     let progress = scanned_items.map_or_else(String::new, |count| {
         tr_plural!("{n} item so far", "{n} items so far", count)
     });
@@ -90,7 +90,7 @@ fn show_progress(window: &AppWindow, scanned_items: Option<u64>) {
 
 fn hide_progress(window: &AppWindow) {
     let state = window.global::<AppState>();
-    state.set_library_scanning(false);
+    state.set_is_library_scanning(false);
     state.set_library_scan_progress("".into());
 }
 
@@ -152,7 +152,7 @@ mod tests {
 
     fn finished(scanned_items: Option<u64>) -> Result<ScanOutcome, ApiError> {
         Ok(ScanOutcome::Finished(LibraryScan {
-            scanning: false,
+            is_scanning: false,
             scanned_items,
         }))
     }

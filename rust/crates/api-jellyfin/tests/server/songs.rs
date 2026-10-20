@@ -37,7 +37,7 @@ fn filtered_song_query() -> SongListQuery {
         sort: SongSort::PlayCount,
         order: SortOrder::Desc,
         search: Some("foo".into()),
-        favorite: Some(true),
+        is_favorite: Some(true),
         genre_ids: vec!["g1".into(), "g2".into()],
         year_from: Some(2000),
         year_to: Some(2002),
@@ -56,7 +56,7 @@ fn assert_song_is_normalized(song: &Song) {
     assert_eq!(song.year, Some(2010));
     assert_eq!(song.bitrate_kbps, Some(912));
     assert_eq!(song.play_count, 7);
-    assert!(song.favorite);
+    assert!(song.is_favorite);
     assert_eq!(song.user_rating, None);
     assert_eq!(song.artists[0].name, "Artist B");
     assert_eq!(song.album_artists[0].id, "ar1");

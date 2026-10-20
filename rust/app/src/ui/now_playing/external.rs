@@ -34,16 +34,21 @@ fn external_lyrics_sources(session: &Session) -> Vec<LyricsSource> {
     remote_sources(&configured_lyrics_sources(session))
 }
 
-pub(super) fn load_external(window: &AppWindow, ctx: &Context, view: &View, track: &QueueTrack) {
+pub(super) fn load_external(
+    window: &AppWindow,
+    context: &Context,
+    view: &View,
+    track: &QueueTrack,
+) {
     let state = window.global::<NowPlayingState>();
-    state.set_external(true);
+    state.set_is_external(true);
     state.set_artists(ModelRc::new(VecModel::from(artist_links(track))));
-    state.set_loaded(true);
+    state.set_is_loaded(true);
     let song_id = track.song_id.to_string();
     if let Some(video) = track.youtube_video() {
-        fetch_thumbnail(window, ctx, &song_id, video);
+        fetch_thumbnail(window, context, &song_id, video);
     }
-    let sources = external_lyrics_sources(&ctx.session);
+    let sources = external_lyrics_sources(&context.session);
     match view.cached_lyrics(&song_id) {
         Some(lyrics) => view.show_lyrics(window, lyrics.as_deref()),
         None if sources.is_empty() => view.show_lyrics(window, None),
@@ -51,7 +56,7 @@ pub(super) fn load_external(window: &AppWindow, ctx: &Context, view: &View, trac
             state.set_lyrics_status(LyricsStatus::Loading);
             fetch_lyrics(
                 window,
-                ctx,
+                context,
                 LyricsRequest {
                     song_id,
                     query: lyrics_query(track),
@@ -62,13 +67,14 @@ pub(super) fn load_external(window: &AppWindow, ctx: &Context, view: &View, trac
     }
 }
 
-fn fetch_thumbnail(window: &AppWindow, ctx: &Context, song_id: &str, video: &YouTubeVideo) {
+fn fetch_thumbnail(window: &AppWindow, context: &Context, song_id: &str, video: &YouTubeVideo) {
     let Some(source) = CoverSource::thumbnail(video) else {
         return;
     };
-    let (show_ctx, weak_window, song_id) = (ctx.clone(), window.as_weak(), song_id.to_owned());
-    ctx.rt.spawn(async move {
-        show_cover(&weak_window, &show_ctx, &source, song_id).await;
+    let (show_context, weak_window, song_id) =
+        (context.clone(), window.as_weak(), song_id.to_owned());
+    context.runtime.spawn(async move {
+        show_cover(&weak_window, &show_context, &source, song_id).await;
     });
 }
 
@@ -78,10 +84,10 @@ struct LyricsRequest {
     sources: Vec<LyricsSource>,
 }
 
-fn fetch_lyrics(window: &AppWindow, ctx: &Context, request: LyricsRequest) {
+fn fetch_lyrics(window: &AppWindow, context: &Context, request: LyricsRequest) {
     let weak_window = window.as_weak();
-    let provider = ctx.connector.lyrics();
-    ctx.rt.spawn(async move {
+    let provider = context.connector.lyrics();
+    context.runtime.spawn(async move {
         let LyricsRequest {
             song_id,
             query,

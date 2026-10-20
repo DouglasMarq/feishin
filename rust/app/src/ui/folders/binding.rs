@@ -21,22 +21,26 @@ pub fn first_song_page() -> Paging {
     }
 }
 
-pub fn install_model(window: &AppWindow, ctx: &Context) {
+pub fn install_model(window: &AppWindow, context: &Context) {
     let weak = window.as_weak();
-    let fetch_ctx = ctx.clone();
+    let fetch_context = context.clone();
     let model = Rc::new(FolderRowsModel::new(move |request| {
-        spawn_song_page_load(weak.clone(), &fetch_ctx, request);
+        spawn_song_page_load(weak.clone(), &fetch_context, request);
     }));
     window
         .global::<FoldersState>()
         .set_rows(ModelRc::from(model));
 }
 
-fn spawn_song_page_load(window: slint::Weak<AppWindow>, ctx: &Context, request: SongPageRequest) {
-    let Some(server) = ctx.session.get() else {
+fn spawn_song_page_load(
+    window: slint::Weak<AppWindow>,
+    context: &Context,
+    request: SongPageRequest,
+) {
+    let Some(server) = context.session.get() else {
         return;
     };
-    ctx.rt.spawn(async move {
+    context.runtime.spawn(async move {
         let paging = Paging {
             start_index: request.page * SONG_PAGE_SIZE,
             limit: SONG_PAGE_SIZE,
@@ -58,8 +62,8 @@ fn show_song_page(
             with_model(window, |model| model.apply_song_page(request, page.items));
         }
         Err(error) => {
-            let current = with_model(window, |model| model.song_page_failed(request));
-            if current == Some(true) {
+            let is_current = with_model(window, |model| model.song_page_failed(request));
+            if is_current == Some(true) {
                 show_status(window, &tr!("Could not load the folder: {}", error));
             }
         }

@@ -8,7 +8,7 @@ use crate::ui::{AppWindow, Context, RadioSource, RadioState};
 
 #[derive(Clone)]
 pub(super) struct RadioView {
-    pub(super) ctx: Context,
+    pub(super) context: Context,
     pub(super) window: slint::Weak<AppWindow>,
     pub(super) directory: Arc<dyn StationDirectory>,
     model: Arc<Mutex<RadioModel>>,
@@ -44,17 +44,17 @@ impl RadioView {
     }
 }
 
-pub fn install(window: &AppWindow, ctx: &Context) {
-    install_with(window, ctx, ctx.connector.station_directory());
+pub fn install(window: &AppWindow, context: &Context) {
+    install_with(window, context, context.connector.station_directory());
 }
 
 pub(super) fn install_with(
     window: &AppWindow,
-    ctx: &Context,
+    context: &Context,
     directory: Arc<dyn StationDirectory>,
 ) -> RadioView {
     let view = RadioView {
-        ctx: ctx.clone(),
+        context: context.clone(),
         window: window.as_weak(),
         directory,
         model: Arc::default(),

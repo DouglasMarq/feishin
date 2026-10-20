@@ -63,7 +63,7 @@ fn payload_of(count: usize, position_ms: u64) -> TransferPayload {
     TransferPayload {
         snapshot: queue.snapshot(),
         position_ms,
-        playing: true,
+        is_playing: true,
         server: None,
     }
 }
@@ -201,7 +201,7 @@ async fn moving_the_music_here_adopts_the_other_queue() {
         panic!("expected the queue to be adopted");
     };
     assert_eq!(adopted.snapshot.items.len(), 2);
-    assert_eq!((adopted.position_ms, adopted.playing), (7_000, true));
+    assert_eq!((adopted.position_ms, adopted.is_playing), (7_000, true));
     assert!(!setup.target.is_remote());
 }
 

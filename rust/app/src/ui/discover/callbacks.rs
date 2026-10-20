@@ -116,13 +116,13 @@ fn install_navigation(window: &AppWindow, deps: &DiscoverDeps) {
 fn install_visibility(window: &AppWindow) {
     let state = window.global::<DiscoverState>();
     let weak_window = window.as_weak();
-    state.on_card_visibility_changed(move |shelf, card, visible| {
+    state.on_card_visibility_changed(move |shelf, card, is_visible| {
         if let (Some(window), Ok(shelf), Ok(card)) = (
             weak_window.upgrade(),
             usize::try_from(shelf),
             usize::try_from(card),
         ) {
-            card_visibility_changed(&window, shelf, card, visible);
+            card_visibility_changed(&window, shelf, card, is_visible);
         }
     });
     let weak_window = window.as_weak();

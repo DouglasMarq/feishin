@@ -47,7 +47,7 @@ pub fn album(item: SubsonicAlbum, server_id: &str) -> (Album, Vec<Song>) {
         cover_art_id: non_empty_text(item.cover_art),
         play_count: non_negative_u32(item.play_count).unwrap_or(0),
         user_rating: capped_rating(item.user_rating),
-        favorite: item.starred.is_starred(),
+        is_favorite: item.starred.is_starred(),
         created_at: item.created,
         last_played_at: None,
     };

@@ -198,7 +198,7 @@ pub fn server_song(server: &SubsonicServer) -> Song {
         bitrate_kbps: None,
         play_count: 0,
         user_rating: None,
-        favorite: false,
+        is_favorite: false,
         cover_art_id: None,
         replay_gain: None,
         path: None,

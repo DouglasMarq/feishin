@@ -12,38 +12,38 @@ export global RadioIcons {
 export component TextButton inherits Rectangle {
     in property <string> text;
     in property <string> tooltip;
-    in property <bool> primary;
-    in property <bool> enabled: true;
+    in property <bool> is-primary;
+    in property <bool> is-enabled: true;
     callback clicked();
     accessible-role: button;
     accessible-label: root.text;
-    accessible-enabled: root.enabled;
+    accessible-enabled: root.is-enabled;
     accessible-action-default => {
-        if (root.enabled) {
+        if (root.is-enabled) {
             root.clicked();
         }
     }
     min-width: label.preferred-width + 28px;
     height: 32px;
     border-radius: 4px;
-    background: root.primary ? Theme.primary : (touch.has-hover && root.enabled ? Theme.hover : Theme.surface-raised);
-    opacity: root.enabled ? (root.primary && touch.has-hover ? 0.85 : 1) : 0.4;
+    background: root.is-primary ? Theme.primary : (touch.has-hover && root.is-enabled ? Theme.hover : Theme.surface-raised);
+    opacity: root.is-enabled ? (root.is-primary && touch.has-hover ? 0.85 : 1) : 0.4;
 
     label := Text {
         text: root.text;
-        color: root.primary ? white : Theme.foreground;
+        color: root.is-primary ? white : Theme.foreground;
         font-weight: 600;
     }
 
     TooltipAnchor {
         text: root.tooltip;
-        hovered: touch.has-hover;
+        is-hovered: touch.has-hover;
     }
 
     touch := TouchArea {
-        mouse-cursor: root.enabled ? pointer : default;
+        mouse-cursor: root.is-enabled ? pointer : default;
         clicked => {
-            if (root.enabled) {
+            if (root.is-enabled) {
                 root.clicked();
             }
         }
@@ -53,29 +53,29 @@ export component TextButton inherits Rectangle {
 export component TabButton inherits Rectangle {
     in property <string> text;
     in property <string> tooltip;
-    in property <bool> active;
+    in property <bool> is-active;
     callback clicked();
     accessible-role: button;
     accessible-label: root.text;
     accessible-checkable: true;
-    accessible-checked: root.active;
+    accessible-checked: root.is-active;
     accessible-action-default => {
         root.clicked();
     }
     width: tab-label.preferred-width + 28px;
     height: 32px;
     border-radius: 16px;
-    background: root.active ? Theme.surface-raised : (touch.has-hover ? Theme.hover : transparent);
+    background: root.is-active ? Theme.surface-raised : (touch.has-hover ? Theme.hover : transparent);
 
     tab-label := Text {
         text: root.text;
-        color: root.active ? Theme.foreground : Theme.muted;
+        color: root.is-active ? Theme.foreground : Theme.muted;
         font-weight: 600;
     }
 
     TooltipAnchor {
         text: root.tooltip;
-        hovered: touch.has-hover;
+        is-hovered: touch.has-hover;
     }
 
     touch := TouchArea {

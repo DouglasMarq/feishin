@@ -11,22 +11,22 @@ export { DiscoverIcons, DiscoverState } from "discover_state.slint";
 component SectionTab inherits Rectangle {
     in property <string> text;
     in property <DiscoverSection> section;
-    property <bool> active: DiscoverState.section == root.section;
+    property <bool> is-active: DiscoverState.section == root.section;
     height: 32px;
     width: label.preferred-width + 28px;
     border-radius: 16px;
-    background: root.active ? Theme.foreground : (touch.has-hover ? Theme.surface-raised : Theme.surface);
+    background: root.is-active ? Theme.foreground : (touch.has-hover ? Theme.surface-raised : Theme.surface);
 
     label := Text {
         text: root.text;
-        color: root.active ? Theme.background : Theme.foreground;
+        color: root.is-active ? Theme.background : Theme.foreground;
         font-weight: 600;
         vertical-alignment: center;
     }
 
     TooltipAnchor {
-        text: root.active ? @tr("{} is shown", root.text) : @tr("Show {}", root.text);
-        hovered: touch.has-hover;
+        text: root.is-active ? @tr("{} is shown", root.text) : @tr("Show {}", root.text);
+        is-hovered: touch.has-hover;
     }
 
     touch := TouchArea {
@@ -56,7 +56,7 @@ component ActionChip inherits Rectangle {
 
     TooltipAnchor {
         text: root.tooltip;
-        hovered: touch.has-hover;
+        is-hovered: touch.has-hover;
     }
 
     touch := TouchArea {
@@ -93,7 +93,7 @@ component CountryPicker inherits HorizontalLayout {
 
         TooltipAnchor {
             text: @tr("Showing the charts for {}", root.country);
-            hovered: hover.has-hover;
+            is-hovered: hover.has-hover;
         }
     }
 }
@@ -125,8 +125,8 @@ component SectionHeader inherits VerticalLayout {
         IconButton {
             y: (parent.height - self.height) / 2;
             icon: DiscoverIcons.refresh;
-            enabled: !DiscoverState.loading;
-            tooltip: DiscoverState.loading ? @tr("Loading...") : @tr("Refresh this section");
+            is-enabled: !DiscoverState.is-loading;
+            tooltip: DiscoverState.is-loading ? @tr("Loading...") : @tr("Refresh this section");
             clicked => {
                 DiscoverState.refresh();
             }
@@ -171,8 +171,8 @@ component SectionHeader inherits VerticalLayout {
 }
 
 component SectionsPage inherits Rectangle {
-    property <bool> showing-moods: DiscoverState.section == DiscoverSection.moods;
-    property <bool> empty: !DiscoverState.loading && DiscoverState.error == "" && DiscoverState.shelves.length == 0;
+    property <bool> is-showing-moods: DiscoverState.section == DiscoverSection.moods;
+    property <bool> is-empty: !DiscoverState.is-loading && DiscoverState.error == "" && DiscoverState.shelves.length == 0;
 
     page := Flickable {
         content-width: self.width;
@@ -187,7 +187,7 @@ component SectionsPage inherits Rectangle {
 
             SectionHeader { }
 
-            if root.showing-moods: MoodGrid {
+            if root.is-showing-moods: MoodGrid {
                 moods: DiscoverState.moods;
                 selected: DiscoverState.mood-index;
             }
@@ -215,18 +215,18 @@ component SectionsPage inherits Rectangle {
                 }
             }
 
-            if DiscoverState.loading && DiscoverState.shelves.length == 0: VerticalLayout {
+            if DiscoverState.is-loading && DiscoverState.shelves.length == 0: VerticalLayout {
                 spacing: 28px;
 
                 for _ in 3: SkeletonShelf { }
             }
 
-            if root.empty && root.showing-moods && DiscoverState.mood-index < 0 && DiscoverState.moods.length > 0: Text {
+            if root.is-empty && root.is-showing-moods && DiscoverState.mood-index < 0 && DiscoverState.moods.length > 0: Text {
                 text: @tr("Pick a mood or genre to see its playlists");
                 color: Theme.muted;
             }
 
-            if root.empty && !(root.showing-moods && DiscoverState.mood-index < 0): Text {
+            if root.is-empty && !(root.is-showing-moods && DiscoverState.mood-index < 0): Text {
                 text: @tr("Nothing to show here right now");
                 color: Theme.muted;
             }
@@ -234,12 +234,12 @@ component SectionsPage inherits Rectangle {
             for shelf[shelf-index] in DiscoverState.shelves: DiscoverShelfView {
                 shelf: shelf;
                 index: shelf-index;
-                on-screen: self.y + page.content-y + self.height > 0 && self.y + page.content-y < page.height;
+                is-on-screen: self.y + page.content-y + self.height > 0 && self.y + page.content-y < page.height;
             }
         }
     }
 
-    if DiscoverState.loading && DiscoverState.shelves.length > 0: Rectangle {
+    if DiscoverState.is-loading && DiscoverState.shelves.length > 0: Rectangle {
         y: 0;
         height: 2px;
         background: Theme.primary;

@@ -11,7 +11,7 @@ pub fn artist(item: SubsonicArtist, server_id: &str) -> Artist {
         album_count: Some(non_negative_u32(item.album_count).unwrap_or(0)),
         song_count: None,
         cover_art_id: non_empty_text(item.cover_art),
-        favorite: item.starred.is_starred(),
+        is_favorite: item.starred.is_starred(),
         user_rating: capped_rating(item.user_rating),
         biography: None,
     }
@@ -24,7 +24,7 @@ pub fn playlist(item: SubsonicPlaylist, server_id: &str) -> Playlist {
         name: item.name,
         comment: non_empty_text(item.comment),
         owner: non_empty_text(item.owner),
-        public: item.public.unwrap_or(false),
+        is_public: item.is_public.unwrap_or(false),
         song_count: non_negative_u32(item.song_count).unwrap_or(0),
         duration_ms: seconds_to_milliseconds(item.duration),
         cover_art_id: non_empty_text(item.cover_art),

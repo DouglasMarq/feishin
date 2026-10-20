@@ -37,7 +37,7 @@ pub trait AudioOutput: Send {
     fn stop(&self) -> Result<()>;
     fn seek(&self, position_ms: u64) -> Result<()>;
     fn set_volume(&self, volume: u8) -> Result<()>;
-    fn set_muted(&self, muted: bool) -> Result<()>;
+    fn set_muted(&self, is_muted: bool) -> Result<()>;
     fn set_replay_gain(&self, _mode: ReplayGainSetting) -> Result<()> {
         Ok(())
     }
@@ -67,9 +67,9 @@ impl MpvOutput {
         let config = PlayerConfig {
             audio_device: settings.audio_device.clone(),
             replay_gain: replay_gain_mode(settings.replay_gain),
-            gapless: settings.gapless,
+            is_gapless: settings.is_gapless,
             volume: settings.volume_percent,
-            muted: settings.muted,
+            is_muted: settings.is_muted,
             crossfade: settings.crossfade(),
         };
         Ok(Self(Player::new(config, on_event)?))
@@ -101,8 +101,8 @@ impl AudioOutput for MpvOutput {
     fn set_volume(&self, volume: u8) -> Result<()> {
         Ok(self.0.set_volume(volume)?)
     }
-    fn set_muted(&self, muted: bool) -> Result<()> {
-        Ok(self.0.set_muted(muted)?)
+    fn set_muted(&self, is_muted: bool) -> Result<()> {
+        Ok(self.0.set_muted(is_muted)?)
     }
     fn set_replay_gain(&self, mode: ReplayGainSetting) -> Result<()> {
         Ok(self.0.set_replay_gain(replay_gain_mode(mode))?)

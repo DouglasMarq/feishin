@@ -65,8 +65,8 @@ fn initial_options<'value>(
         ("idle", "yes"),
         ("load-scripts", "no"),
         ("ytdl", "no"),
-        ("gapless-audio", gapless_audio_value(config.gapless)),
-        ("prefetch-playlist", mpv_flag(config.gapless)),
+        ("gapless-audio", gapless_audio_value(config.is_gapless)),
+        ("prefetch-playlist", mpv_flag(config.is_gapless)),
         ("network-timeout", NETWORK_TIMEOUT_SECONDS),
         (
             "stream-lavf-o",
@@ -76,7 +76,7 @@ fn initial_options<'value>(
         ("replaygain-clip", "no"),
         ("volume", volume),
         ("audio-buffer", audio_buffer),
-        ("mute", mpv_flag(config.muted)),
+        ("mute", mpv_flag(config.is_muted)),
         (
             "audio-device",
             config
@@ -91,8 +91,8 @@ fn initial_options<'value>(
     options
 }
 
-fn gapless_audio_value(gapless: bool) -> &'static str {
-    match gapless {
+fn gapless_audio_value(is_gapless: bool) -> &'static str {
+    match is_gapless {
         true => "weak",
         false => "no",
     }

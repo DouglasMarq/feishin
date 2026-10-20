@@ -49,22 +49,22 @@ fn restored_queue(store: &dyn Store) -> Option<Box<RestoredQueue>> {
 impl Controller {
     pub fn expect_saved_queue(&mut self) {
         self.persistence.restore = RestoreState::Awaiting {
-            server_queue_wanted: false,
+            is_server_queue_wanted: false,
         };
     }
 
     pub(super) fn restore_saved_queue(&mut self, restored: Option<Box<RestoredQueue>>) {
-        let server_queue_wanted = matches!(
+        let is_server_queue_wanted = matches!(
             self.persistence.restore,
             RestoreState::Awaiting {
-                server_queue_wanted: true
+                is_server_queue_wanted: true
             }
         );
         if let Some(restored) = restored.filter(|_| self.queue_is_untouched()) {
             self.adopt_restored_queue(*restored);
         }
         self.persistence.restore = RestoreState::Settled;
-        if server_queue_wanted && self.queue.is_empty() {
+        if is_server_queue_wanted && self.queue.is_empty() {
             self.fetch_server_queue();
         }
     }
@@ -76,8 +76,8 @@ impl Controller {
         self.persistence.schedule.mark_saved(self.queue.revision());
         self.queue_sync.forget_song_ids();
         self.publish_all();
-        let connected = self.deps.session.get().is_some();
-        if let Some(track) = self.current_track().filter(|_| connected) {
+        let is_connected = self.deps.session.get().is_some();
+        if let Some(track) = self.current_track().filter(|_| is_connected) {
             self.update_media_metadata(&track);
         }
     }

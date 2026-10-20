@@ -31,8 +31,8 @@ pub(crate) struct InternetRadioStations {
 #[derive(Debug, Default, Deserialize)]
 #[serde(rename_all = "camelCase", default)]
 pub(crate) struct SubsonicUser {
-    #[serde(deserialize_with = "truthy")]
-    pub admin_role: bool,
+    #[serde(rename = "adminRole", deserialize_with = "truthy")]
+    pub has_admin_role: bool,
 }
 
 #[derive(Debug, Default, Deserialize)]

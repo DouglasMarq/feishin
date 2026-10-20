@@ -40,7 +40,7 @@ impl FolderPage {
     fn wait_for_rows(&self, count: usize) -> bool {
         self.view.pump(|| {
             let state = self.state();
-            !state.get_loading() && state.get_rows().row_count() == count
+            !state.get_is_loading() && state.get_rows().row_count() == count
         })
     }
 
@@ -78,7 +78,7 @@ fn assert_album_rows_are_tracks(page: &FolderPage) {
     let rows = page.state().get_rows();
     let first = rows.row_data(0).unwrap();
     assert!(!first.is_folder);
-    assert!(first.track.loaded);
+    assert!(first.track.is_loaded);
     assert_eq!(first.track.index, 1);
     assert_eq!(page.state().get_summary(), "12 songs");
 }

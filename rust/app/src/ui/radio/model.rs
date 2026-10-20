@@ -109,8 +109,8 @@ impl RadioModel {
                     name: station.name.as_str().into(),
                     details: directory_details(station).into(),
                     source: RadioSource::Directory,
-                    favorite: self.saved_favorite(&as_saved).is_some(),
-                    on_server: self.is_on_server(&station.stream_url),
+                    is_favorite: self.saved_favorite(&as_saved).is_some(),
+                    is_on_server: self.is_on_server(&station.stream_url),
                 }
             })
             .collect()
@@ -126,8 +126,8 @@ impl RadioModel {
             name: station.name.as_str().into(),
             details: saved_details(&place, station).into(),
             source,
-            favorite: source == RadioSource::Favorite,
-            on_server: self.is_on_server(&station.stream_url),
+            is_favorite: source == RadioSource::Favorite,
+            is_on_server: self.is_on_server(&station.stream_url),
         }
     }
 
@@ -233,9 +233,9 @@ mod tests {
         assert_eq!(rows.len(), 2);
         assert_eq!(rows[0].source, RadioSource::Server);
         assert_eq!(rows[0].details, "On the server \u{b7} http://a");
-        assert!(rows[0].on_server && !rows[0].favorite);
+        assert!(rows[0].is_on_server && !rows[0].is_favorite);
         assert_eq!(rows[1].source, RadioSource::Favorite);
-        assert!(rows[1].favorite && !rows[1].on_server);
+        assert!(rows[1].is_favorite && !rows[1].is_on_server);
     }
 
     #[test]
@@ -243,7 +243,7 @@ mod tests {
         let rows = model().result_rows();
         let flags: Vec<(bool, bool)> = rows
             .iter()
-            .map(|row| (row.on_server, row.favorite))
+            .map(|row| (row.is_on_server, row.is_favorite))
             .collect();
         assert_eq!(flags, [(true, false), (false, true), (false, false)]);
         assert_eq!(

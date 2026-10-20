@@ -47,8 +47,8 @@ pub(crate) struct SubsonicAlbum {
     pub play_count: Option<u32>,
     #[serde(deserialize_with = "optional_u32")]
     pub user_rating: Option<u32>,
-    #[serde(deserialize_with = "truthy")]
-    pub starred: bool,
+    #[serde(rename = "starred", deserialize_with = "truthy")]
+    pub is_starred: bool,
     #[serde(deserialize_with = "optional_string")]
     pub created: Option<String>,
     #[serde(deserialize_with = "optional_string")]
@@ -94,7 +94,7 @@ pub(crate) fn normalize_album(album: SubsonicAlbum, server_id: &str) -> Album {
         cover_art_id: non_empty(album.cover_art),
         play_count: album.play_count.unwrap_or(0),
         user_rating: rating(album.user_rating),
-        favorite: album.starred,
+        is_favorite: album.is_starred,
         created_at: album.created,
         last_played_at: non_empty(album.played),
     }

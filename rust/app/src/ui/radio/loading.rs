@@ -43,16 +43,16 @@ async fn saved_favorites(reply: oneshot::Receiver<SettingsSnapshot>) -> Vec<Radi
 
 impl RadioView {
     pub(super) fn load(&self) {
-        let server = self.ctx.session.get();
+        let server = self.context.session.get();
         if let Some(window) = self.window.upgrade() {
             let state = window.global::<RadioState>();
-            state.set_stations_loading(true);
+            state.set_is_stations_loading(true);
         }
         let ticket = self.with_model(RadioModel::begin_load);
         let (reply, answer) = oneshot::channel();
-        self.ctx.send(Command::GetSettings(reply));
+        self.context.send(Command::GetSettings(reply));
         let view = self.clone();
-        self.ctx.rt.spawn(async move {
+        self.context.runtime.spawn(async move {
             let favorites = saved_favorites(answer).await;
             let server_stations = fetch_server_stations(server).await;
             let shown = view.clone();
@@ -87,8 +87,8 @@ impl RadioView {
             show_status(window, &tr!("Could not load the radio stations: {}", error));
         }
         let state = window.global::<RadioState>();
-        state.set_server_has_radio(has_radio);
-        state.set_stations_loading(false);
+        state.set_has_server_radio(has_radio);
+        state.set_is_stations_loading(false);
         self.render(window);
     }
 }

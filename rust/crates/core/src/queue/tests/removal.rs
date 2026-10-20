@@ -6,9 +6,9 @@ use crate::queue::{Advance, Queue, RepeatMode};
 
 #[test]
 fn remove_non_current_items() {
-    for shuffle in [false, true] {
+    for is_shuffled in [false, true] {
         let mut queue = Queue::with_seed(19);
-        queue.set_shuffle(shuffle);
+        queue.set_shuffle(is_shuffled);
         queue.play_now(songs(&["a", "b", "c", "d"]), Some("b"));
         let before: Vec<String> = play_ids(&queue)
             .into_iter()
@@ -25,9 +25,9 @@ fn remove_non_current_items() {
 
 #[test]
 fn remove_current_moves_to_following_item_in_play_order() {
-    for shuffle in [false, true] {
+    for is_shuffled in [false, true] {
         let mut queue = Queue::with_seed(20);
-        queue.set_shuffle(shuffle);
+        queue.set_shuffle(is_shuffled);
         queue.play_now(numbered_songs(8), Some("s0"));
         queue.next(Advance::Manual);
         queue.next(Advance::Manual);
@@ -42,9 +42,9 @@ fn remove_current_moves_to_following_item_in_play_order() {
 
 #[test]
 fn remove_current_at_end_moves_to_first_item() {
-    for shuffle in [false, true] {
+    for is_shuffled in [false, true] {
         let mut queue = Queue::with_seed(21);
-        queue.set_shuffle(shuffle);
+        queue.set_shuffle(is_shuffled);
         queue.play_now(numbered_songs(4), None);
         let play_order = play_uids(&queue);
         queue.play_uid(play_order[3]);
@@ -56,15 +56,15 @@ fn remove_current_at_end_moves_to_first_item() {
 
 #[test]
 fn remove_everything_leaves_no_current() {
-    for shuffle in [false, true] {
+    for is_shuffled in [false, true] {
         let mut queue = Queue::with_seed(22);
-        queue.set_shuffle(shuffle);
+        queue.set_shuffle(is_shuffled);
         queue.play_now(numbered_songs(3), None);
         let all_uids = play_uids(&queue);
         queue.remove(&all_uids);
         assert!(queue.is_empty());
         assert!(queue.current().is_none());
-        assert_eq!(queue.shuffle(), shuffle);
+        assert_eq!(queue.is_shuffled(), is_shuffled);
         assert_invariants(&queue);
     }
 }
@@ -87,7 +87,7 @@ fn clear_keeps_modes() {
     queue.clear();
     assert!(queue.is_empty());
     assert!(queue.current().is_none());
-    assert!(queue.shuffle());
+    assert!(queue.is_shuffled());
     assert_eq!(queue.repeat(), RepeatMode::All);
     let current = queue
         .play_now(numbered_songs(3), Some("s1"))

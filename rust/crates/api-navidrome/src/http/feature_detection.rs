@@ -7,8 +7,8 @@ use crate::features::{Features, parse_version};
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
 struct Ping {
-    #[serde(default)]
-    open_subsonic: bool,
+    #[serde(rename = "openSubsonic", default)]
+    is_open_subsonic: bool,
     server_version: Option<String>,
 }
 
@@ -47,7 +47,7 @@ impl NavidromeServer {
             version: ping.server_version.as_deref().and_then(parse_version),
             ..Features::default()
         };
-        if ping.open_subsonic {
+        if ping.is_open_subsonic {
             let extensions: Extensions = self.subsonic("getOpenSubsonicExtensions", &[]).await?;
             features.extensions = extensions
                 .open_subsonic_extensions

@@ -46,7 +46,7 @@ async fn song_list_without_filters_uses_empty_search3() {
     assert_eq!(first.container.as_deref(), Some("mp3"));
     assert_eq!(first.cover_art_id.as_deref(), Some("mf-s1"));
     assert_eq!(first.play_count, 3);
-    assert!(!first.favorite);
+    assert!(!first.is_favorite);
 }
 
 async fn mount_search_genre_and_random(mock: &MockServer) {
@@ -147,7 +147,7 @@ async fn song_list_favorites_are_filtered_sorted_and_paged() {
     let server = server(&mock);
 
     let query = SongListQuery {
-        favorite: Some(true),
+        is_favorite: Some(true),
         sort: SongSort::Name,
         order: SortOrder::Desc,
         artist_ids: vec!["ar-1".into()],
@@ -160,7 +160,7 @@ async fn song_list_favorites_are_filtered_sorted_and_paged() {
     assert_eq!(page.total_count, Some(3));
     assert_eq!(page.items.len(), 1);
     assert_eq!(page.items[0].title, "bravo");
-    assert!(page.items[0].favorite);
+    assert!(page.items[0].is_favorite);
     assert_eq!(server.song_count(&query).await.ok(), Some(3));
 }
 

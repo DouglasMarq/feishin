@@ -24,14 +24,14 @@ impl ReplayGainMode {
 pub struct PlayerConfig {
     pub audio_device: Option<String>,
     pub replay_gain: ReplayGainMode,
-    pub gapless: bool,
+    pub is_gapless: bool,
     pub volume: u8,
-    pub muted: bool,
+    pub is_muted: bool,
     pub crossfade: Duration,
 }
 
 impl PlayerConfig {
-    pub(crate) fn crossfade_enabled(&self) -> bool {
+    pub(crate) fn is_crossfade_enabled(&self) -> bool {
         !self.crossfade.is_zero()
     }
 }
@@ -41,9 +41,9 @@ impl Default for PlayerConfig {
         Self {
             audio_device: None,
             replay_gain: ReplayGainMode::Off,
-            gapless: true,
+            is_gapless: true,
             volume: DEFAULT_VOLUME,
-            muted: false,
+            is_muted: false,
             crossfade: Duration::ZERO,
         }
     }

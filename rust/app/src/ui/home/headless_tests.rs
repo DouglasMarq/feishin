@@ -75,8 +75,8 @@ fn demo_context(
     let session = Session::default();
     session.set(Some(server.clone()));
     let (commands, received) = mpsc::unbounded_channel();
-    let ctx = Context {
-        rt: runtime.handle().clone(),
+    let context = Context {
+        runtime: runtime.handle().clone(),
         commands,
         session,
         store: Arc::new(JsonStore::new(store_dir.path())),
@@ -84,13 +84,13 @@ fn demo_context(
         covers: Arc::new(DemoCovers),
         remote: crate::remote::Remote::default(),
     };
-    (ctx, received)
+    (context, received)
 }
 
-fn open_home(ctx: &Context) -> AppWindow {
+fn open_home(context: &Context) -> AppWindow {
     let window = AppWindow::new().unwrap_or_else(|error| panic!("window: {error}"));
     crate::ui::nav::install(&window);
-    install(&window, ctx);
+    install(&window, context);
     window
         .show()
         .unwrap_or_else(|error| panic!("show: {error}"));
@@ -100,7 +100,7 @@ fn open_home(ctx: &Context) -> AppWindow {
     window
 }
 
-fn shelves_loaded(window: &AppWindow) -> bool {
+fn has_loaded_shelves(window: &AppWindow) -> bool {
     with_home_model(window, |model| {
         (0..4).all(|shelf| model.cards(shelf).len() == SHELF_SIZE)
             && model.cards(0).first().is_some_and(|card| card.has_cover)
@@ -110,13 +110,13 @@ fn shelves_loaded(window: &AppWindow) -> bool {
 
 fn wait_for_shelves(window: &AppWindow, screen: &Screen) {
     let deadline = Instant::now() + Duration::from_secs(10);
-    while !shelves_loaded(window) && Instant::now() < deadline {
+    while !has_loaded_shelves(window) && Instant::now() < deadline {
         screen.pump_briefly();
     }
     for _ in 0..20 {
         screen.pump_briefly();
     }
-    assert!(shelves_loaded(window), "home shelves did not load");
+    assert!(has_loaded_shelves(window), "home shelves did not load");
 }
 
 fn assert_first_shelf_matches_server(cards: &[HomeAlbum], runtime: &Runtime, server: &FakeServer) {
@@ -185,9 +185,9 @@ fn home_route_renders_shelves_with_lazy_covers_and_plays_albums() {
     let runtime = routed_runtime(1);
     let store_dir = tempfile::tempdir().unwrap_or_else(|error| panic!("temp dir: {error}"));
     let server = Arc::new(FakeServer::new(2_400));
-    let (ctx, mut received) = demo_context(&runtime, &store_dir, &server);
+    let (context, mut received) = demo_context(&runtime, &store_dir, &server);
 
-    let window = open_home(&ctx);
+    let window = open_home(&context);
     wait_for_shelves(&window, &screen);
 
     let cards = with_home_model(&window, |model| model.cards(0)).unwrap_or_default();

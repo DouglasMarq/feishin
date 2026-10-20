@@ -7,13 +7,13 @@ export struct TrackRow {
     duration: string,
     year: string,
     plays: string,
-    loaded: bool,
-    playing: bool,
+    is-loaded: bool,
+    is-playing: bool,
     album-id: string,
     artist-id: string,
-    favorite: bool,
+    is-favorite: bool,
     rating: int,
-    selected: bool,
+    is-selected: bool,
 }
 
 export struct QueueRow {
@@ -21,7 +21,7 @@ export struct QueueRow {
     title: string,
     artists: string,
     duration: string,
-    current: bool,
+    is-current: bool,
 }
 
 export enum Page { loading, login, main }
@@ -30,10 +30,10 @@ export enum Route { home, tracks, albums, album-detail, artists, artist-detail, 
 
 export global AppState {
     in-out property <Page> page: Page.loading;
-    in-out property <bool> queue-open: true;
+    in-out property <bool> is-queue-open: true;
     in-out property <string> status;
     in property <string> server-name;
-    in property <bool> library-scanning;
+    in property <bool> is-library-scanning;
     in property <string> library-scan-progress;
     callback rescan-library();
     in property <Route> route: Route.tracks;
@@ -54,7 +54,7 @@ export global LoginState {
     in-out property <string> url;
     in-out property <string> username;
     in-out property <string> password;
-    in-out property <bool> busy;
+    in-out property <bool> is-busy;
     in-out property <string> error;
     callback login();
     callback import-feishin();
@@ -65,9 +65,9 @@ export enum TrackColumn { index, title, artist, album, year, plays, duration, fa
 export global TracksState {
     in property <[TrackRow]> rows;
     in property <int> total;
-    in property <bool> loading;
+    in property <bool> is-loading;
     in-out property <TrackColumn> sort-column: TrackColumn.title;
-    in-out property <bool> sort-desc;
+    in-out property <bool> is-sort-descending;
     in-out property <length> w-index: 56px;
     in-out property <length> w-title: 320px;
     in-out property <length> w-artist: 200px;
@@ -78,33 +78,33 @@ export global TracksState {
     callback search-edited(text: string);
     callback sort-by(column: TrackColumn);
     callback play-row(row-index: int);
-    in-out property <bool> show-artist: true;
-    in-out property <bool> show-album: true;
-    in-out property <bool> show-year: true;
-    in-out property <bool> show-plays: true;
-    in-out property <bool> show-duration: true;
-    in-out property <bool> show-favorite: true;
-    in-out property <bool> show-rating: true;
+    in-out property <bool> is-artist-shown: true;
+    in-out property <bool> is-album-shown: true;
+    in-out property <bool> is-year-shown: true;
+    in-out property <bool> is-plays-shown: true;
+    in-out property <bool> is-duration-shown: true;
+    in-out property <bool> is-favorite-shown: true;
+    in-out property <bool> is-rating-shown: true;
     in-out property <length> w-favorite: 44px;
     in-out property <length> w-rating: 104px;
     in-out property <string> search-text;
-    in-out property <bool> filter-favorite;
+    in-out property <bool> is-favorite-filter-on;
     in property <[string]> genres: [@tr("All genres")];
     in property <[string]> genre-ids;
     in-out property <int> genre-index;
     in-out property <string> year-from;
     in-out property <string> year-to;
     in property <int> selected-count;
-    callback filters-changed(debounced: bool);
+    callback filters-changed(is-debounced: bool);
     callback load-genres();
-    callback select-row(row-index: int, ctrl-held: bool, shift-held: bool);
+    callback select-row(row-index: int, is-control-held: bool, is-shift-held: bool);
     callback context-row(row-index: int);
     callback select-all();
     callback clear-selection();
     callback play-selected();
-    callback queue-selected(play-next: bool);
+    callback queue-selected(is-play-next: bool);
     callback add-selected-to-playlist();
-    callback favorite-selected(favorite: bool);
+    callback favorite-selected(is-favorite: bool);
     callback rate-selected(rating: int);
     callback go-to-album();
     callback go-to-artist();
@@ -122,14 +122,14 @@ export global PlayerState {
     in property <string> album;
     in property <image> cover;
     in property <bool> has-cover;
-    in property <bool> playing;
+    in property <bool> is-playing;
     in property <int> position-ms;
     in property <int> duration-ms;
     in property <int> volume: 70;
-    in property <bool> muted;
-    in property <bool> shuffle;
+    in property <bool> is-muted;
+    in property <bool> is-shuffled;
     in property <RepeatState> repeat;
-    in property <bool> sleep-active;
+    in property <bool> is-sleep-active;
     in property <string> sleep-label;
     callback start-sleep-timer(minutes: int);
     callback sleep-at-end-of-track();

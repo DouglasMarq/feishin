@@ -61,7 +61,7 @@ impl Queue {
     }
 
     fn apply_play_order(&mut self, play_order: Vec<usize>) {
-        if self.shuffle() {
+        if self.is_shuffled() {
             self.shuffled_play_order = Some(play_order);
             return;
         }

@@ -11,7 +11,8 @@ pub struct SubsonicPlaylist {
     pub name: String,
     pub comment: Option<String>,
     pub owner: Option<String>,
-    pub public: Option<bool>,
+    #[serde(rename = "public")]
+    pub is_public: Option<bool>,
     #[serde(deserialize_with = "lenient_number")]
     pub song_count: Option<f64>,
     #[serde(deserialize_with = "lenient_number")]

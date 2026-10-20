@@ -66,16 +66,16 @@ fn scrolling_back_refetches_evicted_pages_with_placeholders_meanwhile() {
         scroll_to(&model, &log, row);
     }
     model.set_current(Some("s5"));
-    assert!(model.row_data(5).is_some_and(|row| !row.loaded));
+    assert!(model.row_data(5).is_some_and(|row| !row.is_loaded));
     assert_eq!(requested_pages(&log), [0]);
-    assert!(model.row_data(6).is_some_and(|row| !row.loaded));
+    assert!(model.row_data(6).is_some_and(|row| !row.is_loaded));
     assert!(requested_pages(&log).is_empty());
 
     model.apply_page(1, 0, page_of(0, PAGE_SIZE));
     assert!(
         model
             .row_data(5)
-            .is_some_and(|row| row.loaded && row.playing)
+            .is_some_and(|row| row.is_loaded && row.is_playing)
     );
     model.row_data(150);
     assert_eq!(requested_pages(&log), [1, 2]);
@@ -103,14 +103,16 @@ fn edits_and_highlights_skip_evicted_rows() {
     for row in (0..TOTAL).step_by(PAGE_SIZE) {
         scroll_to(&model, &log, row);
     }
-    model.update_songs(&["s5".into(), "s3990".into()], |song| song.favorite = true);
+    model.update_songs(&["s5".into(), "s3990".into()], |song| {
+        song.is_favorite = true
+    });
     model.set_current(Some("s7"));
-    assert!(model.row_data(3990).is_some_and(|row| row.favorite));
+    assert!(model.row_data(3990).is_some_and(|row| row.is_favorite));
     scroll_to(&model, &log, 0);
     assert!(
         model
             .row_data(7)
-            .is_some_and(|row| row.playing && !row.favorite)
+            .is_some_and(|row| row.is_playing && !row.is_favorite)
     );
 }
 
@@ -136,7 +138,7 @@ async fn selections_spanning_evicted_pages_resolve_through_the_server() {
     assert!(
         model
             .row_data(5)
-            .is_some_and(|row| row.selected && !row.loaded)
+            .is_some_and(|row| row.is_selected && !row.is_loaded)
     );
 
     let Some(first) = model.first_selected() else {

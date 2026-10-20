@@ -32,7 +32,7 @@ export component Modal inherits Rectangle {
 
         TooltipAnchor {
             text: @tr("Click to close");
-            hovered: backdrop-touch.has-hover;
+            is-hovered: backdrop-touch.has-hover;
         }
 
         card := Rectangle {
@@ -68,8 +68,8 @@ export component Modal inherits Rectangle {
 
 export component DialogButtons inherits HorizontalLayout {
     in property <string> confirm-text: @tr("OK");
-    in property <bool> confirm-enabled: true;
-    in property <bool> danger;
+    in property <bool> is-confirm-enabled: true;
+    in property <bool> is-danger;
     in property <string> confirm-tooltip;
     in property <string> cancel-tooltip: @tr("Close without changes");
     callback confirm();
@@ -89,22 +89,22 @@ export component DialogButtons inherits HorizontalLayout {
         min-width: confirm-text.preferred-width + 28px;
         height: 32px;
         border-radius: 4px;
-        background: root.danger ? Theme.danger : Theme.primary;
-        opacity: root.confirm-enabled ? (confirm-touch.has-hover ? 0.85 : 1) : 0.4;
+        background: root.is-danger ? Theme.danger : Theme.primary;
+        opacity: root.is-confirm-enabled ? (confirm-touch.has-hover ? 0.85 : 1) : 0.4;
 
         confirm-text := Text {
             text: root.confirm-text;
-            color: root.danger ? #ffffff : Theme.on-primary;
+            color: root.is-danger ? #ffffff : Theme.on-primary;
             font-weight: 600;
         }
 
         TooltipAnchor {
             text: root.confirm-tooltip;
-            hovered: confirm-touch.has-hover;
+            is-hovered: confirm-touch.has-hover;
         }
 
         confirm-touch := TouchArea {
-            enabled: root.confirm-enabled;
+            enabled: root.is-confirm-enabled;
             mouse-cursor: pointer;
             clicked => {
                 root.confirm();
@@ -115,7 +115,7 @@ export component DialogButtons inherits HorizontalLayout {
 
 export component NameDialog inherits Modal {
     in property <string> initial-name;
-    in property <bool> busy;
+    in property <bool> is-busy;
     callback submit(string);
     title: @tr("New playlist");
 
@@ -127,16 +127,16 @@ export component NameDialog inherits Modal {
         placeholder-text: @tr("Playlist name");
         text: root.initial-name;
         accepted(text) => {
-            if (!root.busy && text != "") {
+            if (!root.is-busy && text != "") {
                 root.submit(text);
             }
         }
     }
 
     DialogButtons {
-        confirm-text: root.busy ? @tr("Creating...") : @tr("Create");
+        confirm-text: root.is-busy ? @tr("Creating...") : @tr("Create");
         confirm-tooltip: @tr("Create the playlist");
-        confirm-enabled: !root.busy && name-edit.text != "";
+        is-confirm-enabled: !root.is-busy && name-edit.text != "";
         cancel => {
             root.cancel();
         }
@@ -147,12 +147,12 @@ export component NameDialog inherits Modal {
 }
 
 export global PlaylistPickerState {
-    in property <bool> open;
+    in property <bool> is-open;
     in property <[PickerRow]> rows;
     in property <int> song-count;
-    in property <bool> loading;
-    in property <bool> busy;
-    in-out property <bool> creating;
+    in property <bool> is-loading;
+    in property <bool> is-busy;
+    in-out property <bool> is-creating;
     in-out property <string> filter;
     callback filter-edited(string);
     callback pick(string);
@@ -164,13 +164,13 @@ component PickerItem inherits Rectangle {
     in property <string> icon;
     in property <string> name;
     in property <string> info;
-    in property <bool> enabled: true;
+    in property <bool> is-enabled: true;
     in property <string> tooltip;
     callback clicked();
     height: 44px;
     border-radius: 4px;
-    background: touch.has-hover && root.enabled ? Theme.hover : transparent;
-    opacity: root.enabled ? 1 : 0.5;
+    background: touch.has-hover && root.is-enabled ? Theme.hover : transparent;
+    opacity: root.is-enabled ? 1 : 0.5;
 
     HorizontalLayout {
         padding-left: 10px;
@@ -203,11 +203,11 @@ component PickerItem inherits Rectangle {
 
     TooltipAnchor {
         text: root.tooltip;
-        hovered: touch.has-hover;
+        is-hovered: touch.has-hover;
     }
 
     touch := TouchArea {
-        enabled: root.enabled;
+        enabled: root.is-enabled;
         mouse-cursor: pointer;
         clicked => {
             root.clicked();
@@ -231,7 +231,7 @@ component PickerList inherits Modal {
             PlaylistPickerState.filter-edited(text);
         }
         accepted => {
-            if (PlaylistPickerState.rows.length == 1 && !PlaylistPickerState.busy) {
+            if (PlaylistPickerState.rows.length == 1 && !PlaylistPickerState.is-busy) {
                 PlaylistPickerState.pick(PlaylistPickerState.rows[0].id);
             }
         }
@@ -241,9 +241,9 @@ component PickerList inherits Modal {
         icon: Icons.playlist;
         name: @tr("New playlist");
         tooltip: @tr("Create a playlist with these songs");
-        enabled: !PlaylistPickerState.busy;
+        is-enabled: !PlaylistPickerState.is-busy;
         clicked => {
-            PlaylistPickerState.creating = true;
+            PlaylistPickerState.is-creating = true;
         }
     }
 
@@ -261,7 +261,7 @@ component PickerList inherits Modal {
                 name: row.name;
                 info: row.info;
                 tooltip: @tr("Add to {}", row.name);
-                enabled: !PlaylistPickerState.busy;
+                is-enabled: !PlaylistPickerState.is-busy;
                 clicked => {
                     PlaylistPickerState.pick(row.id);
                 }
@@ -269,7 +269,7 @@ component PickerList inherits Modal {
         }
 
         if PlaylistPickerState.rows.length == 0: Text {
-            text: PlaylistPickerState.loading ? @tr("Loading playlists...") : @tr("No playlists found");
+            text: PlaylistPickerState.is-loading ? @tr("Loading playlists...") : @tr("No playlists found");
             color: Theme.muted;
             horizontal-alignment: center;
             vertical-alignment: center;
@@ -290,17 +290,17 @@ component PickerList inherits Modal {
 }
 
 export component PlaylistPicker inherits Rectangle {
-    if !PlaylistPickerState.creating: PickerList {
+    if !PlaylistPickerState.is-creating: PickerList {
         cancel => {
             PlaylistPickerState.cancel();
         }
     }
 
-    if PlaylistPickerState.creating: NameDialog {
+    if PlaylistPickerState.is-creating: NameDialog {
         initial-name: PlaylistPickerState.filter;
-        busy: PlaylistPickerState.busy;
+        is-busy: PlaylistPickerState.is-busy;
         cancel => {
-            PlaylistPickerState.creating = false;
+            PlaylistPickerState.is-creating = false;
         }
         submit(name) => {
             PlaylistPickerState.create(name);

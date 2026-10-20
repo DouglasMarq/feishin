@@ -89,7 +89,7 @@ mod tests {
         assert_eq!(model.refresh(), Some(1));
         assert_eq!(model.row_count(), 2);
         assert_eq!(model.row_data(0).map(|row| row.title), Some("2".into()));
-        assert!(model.row_data(0).is_some_and(|row| row.current));
+        assert!(model.row_data(0).is_some_and(|row| row.is_current));
         queue.next(Advance::Manual);
         queue_model.set_view(queue.view());
         assert_eq!(model.refresh(), Some(2));

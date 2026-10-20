@@ -21,19 +21,19 @@ pub struct MoreRequest {
 pub struct Searches {
     generation: u64,
     query: Option<String>,
-    pub pending: bool,
+    pub is_pending: bool,
     pub songs: Section<Song>,
     pub albums: Section<Album>,
     pub artists: Section<Artist>,
 }
 
 impl Searches {
-    pub fn begin(&mut self, query: Option<String>, force: bool) -> Option<u64> {
-        if self.query == query && !force {
+    pub fn begin(&mut self, query: Option<String>, is_forced: bool) -> Option<u64> {
+        if self.query == query && !is_forced {
             return None;
         }
         self.generation += 1;
-        self.pending = query.is_some();
+        self.is_pending = query.is_some();
         if query.is_none() {
             self.clear_sections();
         }
@@ -56,7 +56,7 @@ impl Searches {
         if generation != self.generation {
             return false;
         }
-        self.pending = false;
+        self.is_pending = false;
         if let Some(results) = results {
             self.songs = Section::new(results.songs, limit);
             self.albums = Section::new(results.albums, limit);
@@ -66,7 +66,7 @@ impl Searches {
     }
 
     pub fn more(&mut self, kind: SearchKind) -> Option<MoreRequest> {
-        if self.pending {
+        if self.is_pending {
             return None;
         }
         let query = self.query.clone()?;
@@ -87,9 +87,9 @@ impl Searches {
             return;
         }
         match kind {
-            SearchKind::Songs => self.songs.busy = false,
-            SearchKind::Albums => self.albums.busy = false,
-            SearchKind::Artists => self.artists.busy = false,
+            SearchKind::Songs => self.songs.is_busy = false,
+            SearchKind::Albums => self.albums.is_busy = false,
+            SearchKind::Artists => self.artists.is_busy = false,
         }
     }
 
@@ -177,7 +177,7 @@ mod tests {
         let first = searches.begin(Some("riv".into()), false);
         let second = searches.begin(Some("river".into()), false);
         assert_eq!(searches.begin(Some("river".into()), false), None);
-        assert!(searches.pending);
+        assert!(searches.is_pending);
         assert!(searches.more(SearchKind::Songs).is_none());
 
         assert!(!searches.finish(
@@ -191,7 +191,7 @@ mod tests {
             Some(results_with_songs(SEARCH_LIMIT)),
             SEARCH_LIMIT
         ));
-        assert!(!searches.pending);
+        assert!(!searches.is_pending);
         assert_eq!(searches.song(0).map(|song| song.id.as_str()), Some("s0"));
 
         let request = requested_more(&mut searches);
@@ -207,7 +207,7 @@ mod tests {
         );
 
         searches.begin(None, false);
-        assert!(!searches.pending);
+        assert!(!searches.is_pending);
         assert!(searches.songs.items.is_empty());
     }
 }

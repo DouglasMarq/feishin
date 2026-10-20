@@ -52,12 +52,12 @@ impl DiscordPresence {
         &mut self,
         now_playing: &NowPlaying,
         position_ms: Option<u64>,
-        paused: bool,
+        is_paused: bool,
     ) -> Result<()> {
         let activity = activity_for(
             now_playing,
             position_ms,
-            paused,
+            is_paused,
             &self.options,
             unix_now_ms(),
         );

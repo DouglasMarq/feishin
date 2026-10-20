@@ -45,7 +45,7 @@ pub(crate) async fn fetch(
         .duration_ms
         .map(|duration_ms| duration_ms as f64 / MILLISECONDS_PER_SECOND as f64);
     let exact_match = fetch_exact_match(client, base, query, duration_secs).await?;
-    if exact_match.as_ref().is_some_and(|lyrics| lyrics.synced) {
+    if exact_match.as_ref().is_some_and(|lyrics| lyrics.is_synced) {
         return Ok(exact_match);
     }
     let tracks = search_tracks(client, base, query).await?;
@@ -116,7 +116,7 @@ fn best_search_match(
         let Some(lyrics) = track_lyrics(track) else {
             continue;
         };
-        if lyrics.synced {
+        if lyrics.is_synced {
             return Some(lyrics);
         }
         fallback.get_or_insert(lyrics);

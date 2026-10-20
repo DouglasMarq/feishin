@@ -84,8 +84,8 @@ fn open_with(settings: &AppearanceSettings) -> AppearancePage {
         .build()
         .unwrap();
     let (commands, received) = tokio::sync::mpsc::unbounded_channel();
-    let ctx = Context {
-        rt: runtime.handle().clone(),
+    let context = Context {
+        runtime: runtime.handle().clone(),
         commands,
         session: Session::default(),
         store: Arc::new(JsonStore::new(dir.path())),
@@ -93,7 +93,7 @@ fn open_with(settings: &AppearanceSettings) -> AppearancePage {
         covers: Arc::new(DemoCovers),
         remote: crate::remote::Remote::default(),
     };
-    install(&window, &ctx, settings);
+    install(&window, &context, settings);
     AppearancePage {
         window,
         received,
@@ -123,7 +123,7 @@ fn every_electron_theme_has_a_palette() {
 fn the_default_theme_keeps_the_original_look() {
     let page = open_with(&AppearanceSettings::default());
     let theme = page.theme();
-    assert!(theme.get_dark());
+    assert!(theme.get_is_dark());
     assert_eq!(theme.get_background(), Color::from_rgb_u8(0x0c, 0x0c, 0x0c));
     assert_eq!(theme.get_background_alt(), Color::from_rgb_u8(8, 8, 8));
     assert_eq!(theme.get_surface(), Color::from_rgb_u8(0x14, 0x14, 0x14));
@@ -151,7 +151,7 @@ fn the_default_theme_keeps_the_original_look() {
 fn a_saved_light_theme_is_applied_on_start() {
     let page = open_with(&themed("githubLight"));
     let theme = page.theme();
-    assert!(!theme.get_dark());
+    assert!(!theme.get_is_dark());
     assert_eq!(theme.get_background(), Color::from_rgb_u8(255, 255, 255));
     assert_eq!(theme.get_hover(), Color::from_argb_u8(0x0f, 0, 0, 0));
 }
@@ -180,13 +180,13 @@ fn picking_a_theme_applies_it_live_and_saves_it() {
     let saved = page.saved();
     assert_eq!(saved.len(), 1);
     assert_eq!(saved[0].theme, ThemeId::new("nord"));
-    assert!(!saved[0].follow_system);
+    assert!(!saved[0].is_following_system);
 }
 
 #[test]
 fn following_the_system_tracks_the_desktop_scheme() {
     let settings = AppearanceSettings {
-        follow_system: true,
+        is_following_system: true,
         dark_theme: ThemeId::new("dracula"),
         light_theme: ThemeId::new("solarizedLight"),
         ..AppearanceSettings::default()
@@ -201,7 +201,7 @@ fn following_the_system_tracks_the_desktop_scheme() {
         page.theme().get_background(),
         Color::from_rgb_u8(253, 246, 227)
     );
-    assert!(!page.theme().get_dark());
+    assert!(!page.theme().get_is_dark());
     system_scheme_changed(&page.window, SystemColorScheme::Dark);
     assert_eq!(
         page.theme().get_background(),
@@ -212,7 +212,7 @@ fn following_the_system_tracks_the_desktop_scheme() {
 #[test]
 fn a_custom_accent_replaces_the_theme_primary() {
     let mut page = open_with(&AppearanceSettings::default());
-    page.state().set_use_theme_accent(false);
+    page.state().set_is_using_theme_accent(false);
     page.state().invoke_accent_entered("#1db954".into());
     let theme = page.theme();
     assert_eq!(theme.get_primary(), Color::from_rgb_u8(0x1d, 0xb9, 0x54));
@@ -223,14 +223,14 @@ fn a_custom_accent_replaces_the_theme_primary() {
     assert_eq!(page.state().get_accent_text(), "#1db954");
     let saved = page.saved();
     assert_eq!(saved.len(), 1);
-    assert!(!saved[0].use_theme_accent);
+    assert!(!saved[0].is_using_theme_accent);
     assert_eq!(saved[0].accent, AccentColor::new(0x1d, 0xb9, 0x54));
 }
 
 #[test]
 fn a_malformed_accent_is_reported_and_reverted() {
     let mut page = open_with(&AppearanceSettings::default());
-    page.state().set_use_theme_accent(false);
+    page.state().set_is_using_theme_accent(false);
     page.state().invoke_accent_entered("#nothex".into());
     assert_eq!(page.state().get_accent_text(), "#3574fc");
     assert!(

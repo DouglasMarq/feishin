@@ -18,23 +18,23 @@ pub fn sort_artists<Entry: Borrow<SubsonicArtist>>(
     sort: ArtistSort,
     order: SortOrder,
 ) {
-    let descending = order == SortOrder::Desc;
+    let is_descending = order == SortOrder::Desc;
     match sort {
         ArtistSort::AlbumCount => {
             order_by(items, false, |entry| vec![artist_name(artist_of(entry))]);
-            order_by(items, descending, |entry| {
+            order_by(items, is_descending, |entry| {
                 vec![number(
                     artist_of(entry).album_count.map(|count| count as i64),
                 )]
             });
         }
-        ArtistSort::Favorited => order_by(items, descending, |entry| {
+        ArtistSort::Favorited => order_by(items, is_descending, |entry| {
             vec![SortValue::Text(artist_of(entry).starred.sort_value())]
         }),
-        ArtistSort::Name => order_by(items, descending, |entry| {
+        ArtistSort::Name => order_by(items, is_descending, |entry| {
             vec![artist_name(artist_of(entry))]
         }),
-        ArtistSort::Rating => order_by(items, descending, |entry| {
+        ArtistSort::Rating => order_by(items, is_descending, |entry| {
             vec![number(
                 artist_of(entry).user_rating.map(|rating| rating as i64),
             )]

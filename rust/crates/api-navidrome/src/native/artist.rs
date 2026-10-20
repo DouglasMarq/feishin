@@ -32,8 +32,8 @@ pub(crate) struct NativeArtist {
     #[serde(deserialize_with = "optional_u32")]
     pub song_count: Option<u32>,
     pub stats: Option<StatsByRole>,
-    #[serde(deserialize_with = "truthy")]
-    pub starred: bool,
+    #[serde(rename = "starred", deserialize_with = "truthy")]
+    pub is_starred: bool,
     #[serde(deserialize_with = "optional_u32")]
     pub rating: Option<u32>,
     #[serde(deserialize_with = "optional_string")]
@@ -62,7 +62,7 @@ pub(crate) fn normalize_artist(artist: NativeArtist, server_id: &str) -> Artist 
         album_count: Some(counts.albums),
         song_count: Some(counts.songs),
         cover_art_id: Some(cover_art_id),
-        favorite: artist.starred,
+        is_favorite: artist.is_starred,
         user_rating: rating(artist.rating),
         biography: non_empty(artist.biography),
     }

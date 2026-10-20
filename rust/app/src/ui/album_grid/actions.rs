@@ -25,33 +25,33 @@ fn offer_songs_for_playlist(window: &AppWindow, songs: &[Song]) {
 }
 
 fn run_action(
-    ctx: &Context,
+    context: &Context,
     weak_window: &slint::Weak<AppWindow>,
     songs: Vec<Song>,
     action: AlbumAction,
 ) {
     match action {
-        AlbumAction::Play => ctx.send(Command::PlaySongs {
+        AlbumAction::Play => context.send(Command::PlaySongs {
             songs,
             song_id: None,
         }),
-        AlbumAction::PlayNext => ctx.send(Command::AddNext(songs)),
-        AlbumAction::AddToQueue => ctx.send(Command::AddLast(songs)),
+        AlbumAction::PlayNext => context.send(Command::AddNext(songs)),
+        AlbumAction::AddToQueue => context.send(Command::AddLast(songs)),
         AlbumAction::AddToPlaylist => on_ui(weak_window, move |window| {
             offer_songs_for_playlist(window, &songs);
         }),
     }
 }
 
-pub fn album_action(window: &AppWindow, ctx: &Context, album_id: String, action: AlbumAction) {
-    let Some(server) = ctx.session.get() else {
+pub fn album_action(window: &AppWindow, context: &Context, album_id: String, action: AlbumAction) {
+    let Some(server) = context.session.get() else {
         return;
     };
     let weak_window = window.as_weak();
-    let ctx = ctx.clone();
-    ctx.rt.clone().spawn(async move {
+    let context = context.clone();
+    context.runtime.clone().spawn(async move {
         match album_songs(server.as_ref(), &album_id).await {
-            Ok(songs) => run_action(&ctx, &weak_window, songs, action),
+            Ok(songs) => run_action(&context, &weak_window, songs, action),
             Err(error) => on_ui(&weak_window, move |window| {
                 show_status(
                     window,

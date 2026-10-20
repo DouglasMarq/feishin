@@ -14,10 +14,10 @@ pub(super) fn is_current(window: &AppWindow, song_id: &str) -> bool {
 }
 
 fn is_already_shown(state: &NowPlayingState, song_id: &str) -> bool {
-    state.get_song_id() == song_id && (state.get_loaded() || song_id.is_empty())
+    state.get_song_id() == song_id && (state.get_is_loaded() || song_id.is_empty())
 }
 
-pub(super) fn load(window: &AppWindow, ctx: &Context, view: &View, song_id: &str) {
+pub(super) fn load(window: &AppWindow, context: &Context, view: &View, song_id: &str) {
     view.refresh_up_next(window);
     let state = window.global::<NowPlayingState>();
     if is_already_shown(&state, song_id) {
@@ -25,10 +25,10 @@ pub(super) fn load(window: &AppWindow, ctx: &Context, view: &View, song_id: &str
     }
     view.clear(window, song_id);
     if let Some(track) = view.external_track(song_id) {
-        load_external(window, ctx, view, &track);
+        load_external(window, context, view, &track);
         return;
     }
-    let Some(server) = ctx.session.get().filter(|_| !song_id.is_empty()) else {
+    let Some(server) = context.session.get().filter(|_| !song_id.is_empty()) else {
         return;
     };
 
@@ -37,39 +37,39 @@ pub(super) fn load(window: &AppWindow, ctx: &Context, view: &View, song_id: &str
         Some(lyrics) => view.show_lyrics(window, lyrics.as_deref()),
         None => state.set_lyrics_status(LyricsStatus::Loading),
     }
-    state.set_similar_loading(true);
+    state.set_is_similar_loading(true);
 
     let request = DetailsRequest {
         weak_window: window.as_weak(),
-        ctx: ctx.clone(),
+        context: context.clone(),
         server,
         song_id: song_id.to_owned(),
-        want_lyrics: cached.is_none(),
+        is_lyrics_wanted: cached.is_none(),
     };
     request.spawn();
 }
 
 struct DetailsRequest {
     weak_window: slint::Weak<AppWindow>,
-    ctx: Context,
+    context: Context,
     server: Arc<dyn MusicServer>,
     song_id: String,
-    want_lyrics: bool,
+    is_lyrics_wanted: bool,
 }
 
 impl DetailsRequest {
     fn spawn(self) {
-        let runtime = self.ctx.rt.clone();
+        let runtime = self.context.runtime.clone();
         runtime.spawn(self.run());
     }
 
     async fn run(self) {
         let Self {
             weak_window,
-            ctx,
+            context,
             server,
             song_id,
-            want_lyrics,
+            is_lyrics_wanted,
         } = self;
         let song = match server.song(&song_id).await {
             Ok(song) => song,
@@ -81,11 +81,11 @@ impl DetailsRequest {
         };
         show_song(&weak_window, &song);
         tokio::join!(
-            fetch_cover(&weak_window, &ctx, &server, &song),
+            fetch_cover(&weak_window, &context, &server, &song),
             fetch_similar(&weak_window, server.as_ref(), &song_id),
             async {
-                if want_lyrics {
-                    fetch_lyrics(&weak_window, &ctx, server.as_ref(), &song).await;
+                if is_lyrics_wanted {
+                    fetch_lyrics(&weak_window, &context, server.as_ref(), &song).await;
                 }
             },
         );
@@ -98,7 +98,7 @@ fn show_details_failed(weak_window: &slint::Weak<AppWindow>, song_id: String) {
             return;
         }
         let state = window.global::<NowPlayingState>();
-        state.set_similar_loading(false);
+        state.set_is_similar_loading(false);
         if state.get_lyrics_status() == LyricsStatus::Loading {
             state.set_lyrics_status(LyricsStatus::Failed);
         }
@@ -126,6 +126,6 @@ fn show_song(weak_window: &slint::Weak<AppWindow>, song: &Song) {
         let state = window.global::<NowPlayingState>();
         state.set_artists(ModelRc::new(VecModel::from(artists)));
         state.set_album_id(album_id.into());
-        state.set_loaded(true);
+        state.set_is_loaded(true);
     });
 }

@@ -17,15 +17,19 @@ fn song_command(window: &AppWindow, index: i32, command: SongCommand) -> Option<
     .flatten()
 }
 
-fn song_handler(window: &AppWindow, ctx: &Context, command: SongCommand) -> impl Fn(i32) + 'static {
+fn song_handler(
+    window: &AppWindow,
+    context: &Context,
+    command: SongCommand,
+) -> impl Fn(i32) + 'static {
     let weak = window.as_weak();
-    let ctx = ctx.clone();
+    let context = context.clone();
     move |index: i32| {
         let command = weak
             .upgrade()
             .and_then(|window| song_command(&window, index, command));
         if let Some(command) = command {
-            ctx.send(command);
+            context.send(command);
         }
     }
 }
@@ -52,10 +56,10 @@ fn add_to_queue(_: &Searches, song: Song) -> Command {
     Command::AddLast(vec![song])
 }
 
-pub fn install_song_commands(window: &AppWindow, ctx: &Context) {
+pub fn install_song_commands(window: &AppWindow, context: &Context) {
     let state = window.global::<SearchState>();
-    state.on_play(song_handler(window, ctx, play_from_results));
-    state.on_play_only(song_handler(window, ctx, play_only));
-    state.on_play_next(song_handler(window, ctx, play_next));
-    state.on_add_to_queue(song_handler(window, ctx, add_to_queue));
+    state.on_play(song_handler(window, context, play_from_results));
+    state.on_play_only(song_handler(window, context, play_only));
+    state.on_play_next(song_handler(window, context, play_next));
+    state.on_add_to_queue(song_handler(window, context, add_to_queue));
 }

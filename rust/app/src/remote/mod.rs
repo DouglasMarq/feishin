@@ -65,7 +65,7 @@ impl Remote {
 
 pub struct RemoteStart {
     pub mode: Mode,
-    pub hosting: bool,
+    pub is_hosting: bool,
     pub window: slint::Weak<AppWindow>,
     pub host_state: watch::Receiver<HostState>,
     pub mirror: Arc<dyn UiSink>,
@@ -105,5 +105,7 @@ pub fn start(context: &Context, start: RemoteStart) {
         host_state: start.host_state,
         delegate,
     });
-    context.rt.spawn(service.run(start.requests, start.hosting));
+    context
+        .runtime
+        .spawn(service.run(start.requests, start.is_hosting));
 }

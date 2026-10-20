@@ -24,7 +24,7 @@ const AUTOMATIC_AUDIO_DEVICE: &str = "auto";
 pub(crate) struct DeckClock {
     pub(crate) position_seconds: Option<f64>,
     pub(crate) duration_seconds: Option<f64>,
-    pub(crate) paused: bool,
+    pub(crate) is_paused: bool,
 }
 
 pub(crate) struct Deck {
@@ -84,7 +84,7 @@ impl Deck {
         DeckClock {
             position_seconds: self.position_seconds(),
             duration_seconds: self.duration_seconds(),
-            paused: self.is_paused(),
+            is_paused: self.is_paused(),
         }
     }
 

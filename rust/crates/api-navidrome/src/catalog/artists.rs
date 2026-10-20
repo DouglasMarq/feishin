@@ -154,7 +154,7 @@ impl NavidromeServer {
 }
 
 fn has_native_only_artist_filters(query: &ArtistListQuery) -> bool {
-    query.favorite.is_some()
+    query.is_favorite.is_some()
         || query
             .search
             .as_ref()

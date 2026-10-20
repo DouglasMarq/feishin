@@ -146,14 +146,14 @@ fn has_native_only_album_filters(query: &AlbumListQuery) -> bool {
             .is_some_and(|search| !search.is_empty())
         || query.year_from.is_some()
         || query.year_to.is_some()
-        || query.favorite == Some(false)
+        || query.is_favorite == Some(false)
 }
 
 fn subsonic_album_list_type(query: &AlbumListQuery) -> Option<SubsonicAlbumListType> {
     if has_native_only_album_filters(query) {
         return None;
     }
-    match query.favorite {
+    match query.is_favorite {
         Some(true) => Some(SubsonicAlbumListType::Starred),
         _ => SubsonicAlbumListType::for_sort(query.sort),
     }

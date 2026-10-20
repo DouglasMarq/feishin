@@ -32,16 +32,22 @@ impl Mirror {
         let shown = match update {
             StateUpdate::NowPlaying { track } => UiUpdate::NowPlaying(track.map(Box::new)),
             StateUpdate::Playback {
-                playing,
+                is_playing,
                 position_ms,
                 duration_ms,
             } => UiUpdate::Playback {
-                playing,
+                is_playing,
                 position_ms,
                 duration_ms,
             },
-            StateUpdate::Volume { volume, muted } => UiUpdate::Volume { volume, muted },
-            StateUpdate::Modes { shuffle, repeat } => UiUpdate::Modes { shuffle, repeat },
+            StateUpdate::Volume { volume, is_muted } => UiUpdate::Volume { volume, is_muted },
+            StateUpdate::Modes {
+                is_shuffled,
+                repeat,
+            } => UiUpdate::Modes {
+                is_shuffled,
+                repeat,
+            },
             StateUpdate::Queue { queue } => {
                 self.queue = mirrored_queue(queue);
                 UiUpdate::Queue(self.queue.view())

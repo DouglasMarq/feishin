@@ -30,8 +30,8 @@ impl FakeServer {
         let artist = self.library.album_artist(album);
         search.is_none_or(|search| album_matches_search(album, artist, search))
             && query
-                .favorite
-                .is_none_or(|favorite| favorite == album_is_favorite(album))
+                .is_favorite
+                .is_none_or(|is_favorite| is_favorite == album_is_favorite(album))
             && (query.artist_ids.is_empty() || query.artist_ids.contains(&artist_id(artist)))
             && (query.genre_ids.is_empty()
                 || query

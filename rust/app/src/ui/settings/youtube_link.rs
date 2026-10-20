@@ -36,7 +36,12 @@ fn added_message(placement: LinkPlacement, title: &str) -> Option<String> {
     }
 }
 
-fn enqueue_link(window: &AppWindow, ctx: &Context, shared: &Arc<Shared>, placement: LinkPlacement) {
+fn enqueue_link(
+    window: &AppWindow,
+    context: &Context,
+    shared: &Arc<Shared>,
+    placement: LinkPlacement,
+) {
     let state = window.global::<SettingsState>();
     let Some(video_id) = video_id_from_link(&state.get_youtube_link()) else {
         show_status(window, &tr!("Paste a YouTube or YouTube Music link first"));
@@ -45,11 +50,11 @@ fn enqueue_link(window: &AppWindow, ctx: &Context, shared: &Arc<Shared>, placeme
     let yt_dlp = yt_dlp_for(&youtube_form(&state, &shared.view()));
     show_status(window, &tr!("Looking up the YouTube link..."));
     let weak_window = window.as_weak();
-    let commands_ctx = ctx.clone();
-    ctx.rt.spawn(async move {
+    let commands_context = context.clone();
+    context.runtime.spawn(async move {
         let message = match yt_dlp.video(&video_id).await {
             Ok(video) => {
-                commands_ctx.send(command_for(placement, queue_track_of(&video)));
+                commands_context.send(command_for(placement, queue_track_of(&video)));
                 added_message(placement, &video.title)
             }
             Err(error) => Some(link_failure_message(&error)),
@@ -67,14 +72,14 @@ fn link_failure_message(error: &YouTubeError) -> String {
     }
 }
 
-pub(super) fn play_link(window: &AppWindow, ctx: &Context, shared: &Arc<Shared>) {
-    enqueue_link(window, ctx, shared, LinkPlacement::PlayNow);
+pub(super) fn play_link(window: &AppWindow, context: &Context, shared: &Arc<Shared>) {
+    enqueue_link(window, context, shared, LinkPlacement::PlayNow);
 }
 
-pub(super) fn play_link_next(window: &AppWindow, ctx: &Context, shared: &Arc<Shared>) {
-    enqueue_link(window, ctx, shared, LinkPlacement::Next);
+pub(super) fn play_link_next(window: &AppWindow, context: &Context, shared: &Arc<Shared>) {
+    enqueue_link(window, context, shared, LinkPlacement::Next);
 }
 
-pub(super) fn add_link(window: &AppWindow, ctx: &Context, shared: &Arc<Shared>) {
-    enqueue_link(window, ctx, shared, LinkPlacement::Last);
+pub(super) fn add_link(window: &AppWindow, context: &Context, shared: &Arc<Shared>) {
+    enqueue_link(window, context, shared, LinkPlacement::Last);
 }

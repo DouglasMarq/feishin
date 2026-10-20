@@ -65,7 +65,7 @@ impl AudioOutput for RecordingAudio {
     fn set_volume(&self, _volume: u8) -> Result<()> {
         Ok(())
     }
-    fn set_muted(&self, _muted: bool) -> Result<()> {
+    fn set_muted(&self, _is_muted: bool) -> Result<()> {
         Ok(())
     }
     fn set_replay_gain(&self, mode: ReplayGainSetting) -> Result<()> {
@@ -177,7 +177,7 @@ async fn applying_playback_reaches_the_player_and_is_saved() {
     harness
         .controller
         .handle(Command::ApplyPlayback(PlaybackSettings {
-            gapless: false,
+            is_gapless: false,
             ..saved
         }));
     assert_eq!(harness.audio.take(), ["clear"]);
@@ -267,14 +267,14 @@ async fn connecting_to_another_server_clears_the_queue() {
 async fn interface_and_integrations_are_saved_and_survive_shutdown() {
     let mut harness = harness(Settings::default());
     harness.controller.handle(Command::SaveInterface {
-        queue_panel_open: true,
-        follow_current_song: true,
+        is_queue_panel_open: true,
+        is_following_current_song: true,
     });
     harness
         .controller
         .handle(Command::SaveLanguage(Some("de".into())));
     let integrations = IntegrationSettings {
-        discord_rich_presence: true,
+        is_discord_rich_presence_enabled: true,
         lyrics_sources: vec![LyricsSourceSetting::Genius],
         ..IntegrationSettings::default()
     };
@@ -284,7 +284,7 @@ async fn interface_and_integrations_are_saved_and_survive_shutdown() {
     let (reply, snapshot) = oneshot::channel();
     harness.controller.handle(Command::GetSettings(reply));
     let snapshot = snapshot.await.unwrap_or_else(|error| panic!("{error}"));
-    assert!(snapshot.settings.ui.follow_current_song);
+    assert!(snapshot.settings.ui.is_following_current_song);
     assert_eq!(snapshot.devices.len(), 1);
 
     let (done, _finished) = oneshot::channel();
@@ -293,9 +293,9 @@ async fn interface_and_integrations_are_saved_and_survive_shutdown() {
         done,
     });
     let saved = harness.saved();
-    assert!(saved.ui.follow_current_song);
+    assert!(saved.ui.is_following_current_song);
     assert_eq!(saved.ui.language.as_deref(), Some("de"));
-    assert!(!saved.ui.queue_panel_open);
+    assert!(!saved.ui.is_queue_panel_open);
     assert_eq!(saved.integrations, integrations);
 }
 
@@ -304,7 +304,7 @@ async fn appearance_is_saved_and_survives_shutdown() {
     let mut harness = harness(Settings::default());
     let appearance = AppearanceSettings {
         theme: ThemeId::new("nord"),
-        use_theme_accent: false,
+        is_using_theme_accent: false,
         accent: AccentColor::new(0xaa, 0x6e, 0xd8),
         ..AppearanceSettings::default()
     };

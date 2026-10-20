@@ -9,7 +9,7 @@ pub fn playlist(item: dto::Playlist, server_id: &str) -> Playlist {
         name: item.name.clone(),
         comment: non_empty(item.overview),
         owner: None,
-        public: false,
+        is_public: false,
         song_count: item.child_count.unwrap_or(0),
         duration_ms: ticks_to_ms(item.run_time_ticks),
         cover_art_id: primary_image(&item.id, item.image_tags.as_ref()),

@@ -10,9 +10,9 @@ impl MixerState {
         self.apply_to_every_deck(&DeckSetting::Volume(volume))
     }
 
-    pub(crate) fn set_muted(&mut self, muted: bool) -> Result<()> {
-        self.config.muted = muted;
-        self.apply_to_every_deck(&DeckSetting::Muted(muted))
+    pub(crate) fn set_muted(&mut self, is_muted: bool) -> Result<()> {
+        self.config.is_muted = is_muted;
+        self.apply_to_every_deck(&DeckSetting::Muted(is_muted))
     }
 
     pub(crate) fn set_replay_gain(&mut self, mode: ReplayGainMode) -> Result<()> {

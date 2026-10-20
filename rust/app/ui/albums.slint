@@ -7,11 +7,11 @@ import { AlbumGrid, AlbumGridRow } from "album_grid.slint";
 export global AlbumsState {
     in property <[AlbumGridRow]> rows;
     in property <int> total;
-    in property <bool> loading;
+    in property <bool> is-loading;
     in property <[string]> sort-options;
     in-out property <int> sort;
-    in-out property <bool> sort-desc;
-    in-out property <bool> favorites-only;
+    in-out property <bool> is-sort-descending;
+    in-out property <bool> is-favorites-only;
     in-out property <string> search;
     callback load(string);
     callback columns-changed(int);
@@ -24,8 +24,8 @@ export global AlbumsState {
 }
 
 component AlbumsControls inherits HorizontalLayout {
-    in property <bool> compact;
-    property <length> search-max-width: root.compact ? 4000px : 240px;
+    in property <bool> is-compact;
+    property <length> search-max-width: root.is-compact ? 4000px : 240px;
     spacing: 12px;
 
     TooltipComboBox {
@@ -43,11 +43,11 @@ component AlbumsControls inherits HorizontalLayout {
 
     IconButton {
         y: (parent.height - self.height) / 2;
-        icon: AlbumsState.sort-desc ? Icons.arrow-down : Icons.arrow-up;
+        icon: AlbumsState.is-sort-descending ? Icons.arrow-down : Icons.arrow-up;
         icon-size: 24px;
-        tooltip: AlbumsState.sort-desc ? @tr("Sort: descending") : @tr("Sort: ascending");
+        tooltip: AlbumsState.is-sort-descending ? @tr("Sort: descending") : @tr("Sort: ascending");
         clicked => {
-            AlbumsState.sort-desc = !AlbumsState.sort-desc;
+            AlbumsState.is-sort-descending = !AlbumsState.is-sort-descending;
             AlbumsState.query-changed();
         }
     }
@@ -55,10 +55,10 @@ component AlbumsControls inherits HorizontalLayout {
     IconButton {
         y: (parent.height - self.height) / 2;
         icon: Icons.heart;
-        active: AlbumsState.favorites-only;
-        tooltip: AlbumsState.favorites-only ? @tr("Favorites only: on") : @tr("Favorites only: off");
+        is-active: AlbumsState.is-favorites-only;
+        tooltip: AlbumsState.is-favorites-only ? @tr("Favorites only: on") : @tr("Favorites only: off");
         clicked => {
-            AlbumsState.favorites-only = !AlbumsState.favorites-only;
+            AlbumsState.is-favorites-only = !AlbumsState.is-favorites-only;
             AlbumsState.query-changed();
         }
     }
@@ -77,7 +77,7 @@ component AlbumsControls inherits HorizontalLayout {
 }
 
 export component AlbumsView inherits Rectangle {
-    property <bool> compact-header: root.width < 580px;
+    property <bool> has-compact-header: root.width < 580px;
     min-width: 320px;
     background: Theme.background;
 
@@ -103,7 +103,7 @@ export component AlbumsView inherits Rectangle {
                 }
 
                 Text {
-                    text: AlbumsState.loading ? "" : AlbumsState.total;
+                    text: AlbumsState.is-loading ? "" : AlbumsState.total;
                     color: Theme.muted;
                     vertical-alignment: center;
                 }
@@ -112,11 +112,11 @@ export component AlbumsView inherits Rectangle {
                     horizontal-stretch: 1;
                 }
 
-                if !root.compact-header: AlbumsControls { }
+                if !root.has-compact-header: AlbumsControls { }
             }
 
-            if root.compact-header: AlbumsControls {
-                compact: true;
+            if root.has-compact-header: AlbumsControls {
+                is-compact: true;
             }
         }
 
@@ -146,7 +146,7 @@ export component AlbumsView inherits Rectangle {
                 }
             }
 
-            if !AlbumsState.loading && AlbumsState.total == 0: Text {
+            if !AlbumsState.is-loading && AlbumsState.total == 0: Text {
                 text: @tr("No albums found");
                 color: Theme.muted;
                 horizontal-alignment: center;

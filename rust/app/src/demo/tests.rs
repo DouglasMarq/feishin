@@ -50,7 +50,7 @@ async fn albums_filter_and_sort() {
         Some(100)
     );
     let favorites = AlbumListQuery {
-        favorite: Some(true),
+        is_favorite: Some(true),
         ..AlbumListQuery::default()
     };
     let count = MusicServer::album_count(&server, &favorites)

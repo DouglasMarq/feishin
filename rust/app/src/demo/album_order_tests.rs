@@ -16,7 +16,7 @@ fn materialized_key(album: &Album, sort: AlbumSort) -> (String, i64) {
         AlbumSort::Year => numeric(i64::from(album.year.unwrap_or_default())),
         AlbumSort::SongCount => numeric(i64::from(album.song_count)),
         AlbumSort::Duration => numeric(album.duration_ms as i64),
-        AlbumSort::Favorited => numeric(i64::from(album.favorite)),
+        AlbumSort::Favorited => numeric(i64::from(album.is_favorite)),
         _ => numeric(0),
     }
 }
@@ -27,8 +27,8 @@ fn materialized_order(server: &FakeServer, query: &AlbumListQuery) -> Vec<usize>
         .map(|album| (album, server.album_at(album)))
         .filter(|(_, album)| {
             query
-                .favorite
-                .is_none_or(|favorite| favorite == album.favorite)
+                .is_favorite
+                .is_none_or(|is_favorite| is_favorite == album.is_favorite)
         })
         .filter(|(_, album)| {
             search.as_deref().is_none_or(|search| {
@@ -75,10 +75,10 @@ fn cheap_album_keys_sort_like_the_materialized_albums() {
 #[test]
 fn cheap_album_filters_match_the_materialized_albums() {
     let server = FakeServer::new(PARTIAL_LAST_ALBUM_SONGS);
-    for favorite in [None, Some(true), Some(false)] {
+    for is_favorite in [None, Some(true), Some(false)] {
         for search in [None, Some("a"), Some("ada")] {
             let query = AlbumListQuery {
-                favorite,
+                is_favorite,
                 search: search.map(str::to_owned),
                 ..AlbumListQuery::default()
             };

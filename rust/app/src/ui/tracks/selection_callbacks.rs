@@ -19,11 +19,13 @@ fn install_row_selection(window: &AppWindow) {
     let state = window.global::<TracksState>();
 
     let weak = window.as_weak();
-    state.on_select_row(move |index, toggle, extend| {
+    state.on_select_row(move |index, is_toggling, is_extending| {
         let (Some(window), Ok(index)) = (weak.upgrade(), usize::try_from(index)) else {
             return;
         };
-        update_selected_count(&window, |model| model.select(index, toggle, extend));
+        update_selected_count(&window, |model| {
+            model.select(index, is_toggling, is_extending)
+        });
     });
 
     let weak = window.as_weak();
@@ -70,14 +72,14 @@ fn install_selection_actions(window: &AppWindow, target: &ActionTarget) {
 
     let play_next = action_callback(window, target, SongAction::PlayNext);
     let add_last = action_callback(window, target, SongAction::AddLast);
-    state.on_queue_selected(move |next| match next {
+    state.on_queue_selected(move |is_play_next| match is_play_next {
         true => play_next(),
         false => add_last(),
     });
 
     let add_favorite = action_callback(window, target, SongAction::Favorite(true));
     let remove_favorite = action_callback(window, target, SongAction::Favorite(false));
-    state.on_favorite_selected(move |favorite| match favorite {
+    state.on_favorite_selected(move |is_favorite| match is_favorite {
         true => add_favorite(),
         false => remove_favorite(),
     });
@@ -95,63 +97,63 @@ fn install_selection_actions(window: &AppWindow, target: &ActionTarget) {
     });
 }
 
-fn install_navigation(window: &AppWindow, ctx: &Context) {
+fn install_navigation(window: &AppWindow, context: &Context) {
     let state = window.global::<TracksState>();
 
     let weak = window.as_weak();
-    let album_ctx = ctx.clone();
+    let album_context = context.clone();
     state.on_go_to_album(move || {
         if let Some(window) = weak.upgrade() {
-            go_to(&window, &album_ctx, Route::AlbumDetail, |song| {
+            go_to(&window, &album_context, Route::AlbumDetail, |song| {
                 song.album_id.clone()
             });
         }
     });
 
     let weak = window.as_weak();
-    let artist_ctx = ctx.clone();
+    let artist_context = context.clone();
     state.on_go_to_artist(move || {
         if let Some(window) = weak.upgrade() {
-            go_to(&window, &artist_ctx, Route::ArtistDetail, |song| {
+            go_to(&window, &artist_context, Route::ArtistDetail, |song| {
                 primary_artist_id(song).map(str::to_owned)
             });
         }
     });
 }
 
-fn install_row_edits(window: &AppWindow, ctx: &Context) {
+fn install_row_edits(window: &AppWindow, context: &Context) {
     let state = window.global::<TracksState>();
 
     let weak = window.as_weak();
-    let favorite_ctx = ctx.clone();
+    let favorite_context = context.clone();
     state.on_toggle_favorite(move |index| {
         let (Some(window), Ok(index)) = (weak.upgrade(), usize::try_from(index)) else {
             return;
         };
         if let Some(song) = with_model(&window, |model| model.song_at(index)).flatten() {
-            set_favorite(&window, &favorite_ctx, vec![song.id], !song.favorite);
+            set_favorite(&window, &favorite_context, vec![song.id], !song.is_favorite);
         }
     });
 
     let weak = window.as_weak();
-    let rating_ctx = ctx.clone();
+    let rating_context = context.clone();
     state.on_rate_row(move |index, rating| {
         let (Some(window), Ok(index)) = (weak.upgrade(), usize::try_from(index)) else {
             return;
         };
         if let Some(id) = with_model(&window, |model| model.song_id_at(index)).flatten() {
-            set_rating(&window, &rating_ctx, vec![id], rating_stars(rating));
+            set_rating(&window, &rating_context, vec![id], rating_stars(rating));
         }
     });
 }
 
-pub(super) fn install(window: &AppWindow, ctx: &Context, picker: &PlaylistPicker) {
+pub(super) fn install(window: &AppWindow, context: &Context, picker: &PlaylistPicker) {
     let target = ActionTarget {
-        ctx: ctx.clone(),
+        context: context.clone(),
         picker: picker.clone(),
     };
     install_row_selection(window);
     install_selection_actions(window, &target);
-    install_navigation(window, ctx);
-    install_row_edits(window, ctx);
+    install_navigation(window, context);
+    install_row_edits(window, context);
 }

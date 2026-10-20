@@ -19,27 +19,27 @@ impl ShareRequest {
     }
 }
 
-pub fn install(window: &AppWindow, ctx: &Context) {
+pub fn install(window: &AppWindow, context: &Context) {
     let state = window.global::<ShareState>();
 
-    let (weak, share_ctx) = (window.as_weak(), ctx.clone());
+    let (weak, share_context) = (window.as_weak(), context.clone());
     state.on_share(move |_kind: ShareKind, id, name| {
         if let Some(window) = weak.upgrade() {
-            start_share(&window, &share_ctx, ShareRequest::single(&id, &name));
+            start_share(&window, &share_context, ShareRequest::single(&id, &name));
         }
     });
 
-    let (weak, tracks_ctx) = (window.as_weak(), ctx.clone());
+    let (weak, tracks_context) = (window.as_weak(), context.clone());
     state.on_share_selected_tracks(move || {
         if let Some(window) = weak.upgrade() {
-            share_selected_tracks(&window, &tracks_ctx);
+            share_selected_tracks(&window, &tracks_context);
         }
     });
 }
 
 pub fn show_availability(window: &AppWindow, server: &dyn MusicServer) {
     let state = window.global::<ShareState>();
-    state.set_available(server.can_share());
+    state.set_is_available(server.can_share());
     state.set_unavailable_reason(unavailable_reason().into());
 }
 
@@ -47,12 +47,12 @@ fn unavailable_reason() -> String {
     tr!("this server has no public share links")
 }
 
-fn share_selected_tracks(window: &AppWindow, ctx: &Context) {
+fn share_selected_tracks(window: &AppWindow, context: &Context) {
     match tracks::selected_song_ids(window) {
         Some(item_ids) if item_ids.is_empty() => {}
         Some(item_ids) => start_share(
             window,
-            ctx,
+            context,
             ShareRequest {
                 item_ids,
                 description: None,
@@ -67,12 +67,12 @@ fn share_selected_tracks(window: &AppWindow, ctx: &Context) {
     }
 }
 
-fn start_share(window: &AppWindow, ctx: &Context, request: ShareRequest) {
+fn start_share(window: &AppWindow, context: &Context, request: ShareRequest) {
     let state = window.global::<ShareState>();
-    if state.get_busy() {
+    if state.get_is_busy() {
         return;
     }
-    let Some(server) = ctx.session.get() else {
+    let Some(server) = context.session.get() else {
         show_status(window, &tr!("Not connected to a server"));
         return;
     };
@@ -80,9 +80,9 @@ fn start_share(window: &AppWindow, ctx: &Context, request: ShareRequest) {
         show_status(window, &tr!("Cannot share: {}", unavailable_reason()));
         return;
     }
-    state.set_busy(true);
+    state.set_is_busy(true);
     let weak = window.as_weak();
-    ctx.rt.spawn(async move {
+    context.runtime.spawn(async move {
         let description = request.description.as_deref();
         let result = server.create_share(&request.item_ids, description).await;
         on_ui(&weak, move |window| finish_share(window, result));
@@ -90,7 +90,7 @@ fn start_share(window: &AppWindow, ctx: &Context, request: ShareRequest) {
 }
 
 fn finish_share(window: &AppWindow, result: Result<Share, ApiError>) {
-    window.global::<ShareState>().set_busy(false);
+    window.global::<ShareState>().set_is_busy(false);
     match result {
         Ok(share) => {
             copy_link(window, &share.url);

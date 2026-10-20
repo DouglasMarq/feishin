@@ -103,8 +103,8 @@ impl MusicServer for SubsonicServer {
         self.search_everything(query, limit).await
     }
 
-    async fn set_favorite(&self, kind: ItemKind, ids: &[String], favorite: bool) -> Result<()> {
-        self.update_favorite(kind, ids, favorite).await
+    async fn set_favorite(&self, kind: ItemKind, ids: &[String], is_favorite: bool) -> Result<()> {
+        self.update_favorite(kind, ids, is_favorite).await
     }
 
     async fn set_rating(&self, kind: ItemKind, id: &str, rating: u8) -> Result<()> {
@@ -114,10 +114,10 @@ impl MusicServer for SubsonicServer {
     async fn scrobble(
         &self,
         song_id: &str,
-        submission: bool,
+        is_submission: bool,
         timestamp_ms: Option<i64>,
     ) -> Result<()> {
-        self.submit_scrobble(song_id, submission, timestamp_ms)
+        self.submit_scrobble(song_id, is_submission, timestamp_ms)
             .await
     }
 

@@ -44,9 +44,9 @@ impl RadioView {
 
     fn run_search(&self, window: &AppWindow, query: StationQuery) {
         let generation = self.with_model(|model| model.begin_search(query.clone()));
-        window.global::<RadioState>().set_searching(true);
+        window.global::<RadioState>().set_is_searching(true);
         let view = self.clone();
-        self.ctx.rt.spawn(async move {
+        self.context.runtime.spawn(async move {
             let found = view.directory.search(&query).await;
             let shown = view.clone();
             view.on_window(move |window| shown.apply_search(window, generation, found));
@@ -72,7 +72,7 @@ impl RadioView {
             SearchOutcome::Shown => {}
             SearchOutcome::Explained(message) => state.set_results_message(message.into()),
         }
-        state.set_searching(false);
+        state.set_is_searching(false);
         self.render(window);
     }
 
@@ -90,8 +90,8 @@ impl RadioView {
     }
 
     fn search_failed(&self, window: &AppWindow, generation: u64, error: &anyhow::Error) -> bool {
-        let current = self.with_model(|model| model.search_failed(generation));
-        if current {
+        let is_current = self.with_model(|model| model.search_failed(generation));
+        if is_current {
             show_status(
                 window,
                 &tr!(
@@ -100,6 +100,6 @@ impl RadioView {
                 ),
             );
         }
-        current
+        is_current
     }
 }

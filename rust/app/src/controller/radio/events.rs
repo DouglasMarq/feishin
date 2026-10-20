@@ -23,7 +23,7 @@ impl Controller {
             return;
         }
         self.loading = None;
-        self.playing = true;
+        self.is_playing = true;
         self.update_media_status();
         self.publish_playback();
     }
@@ -65,7 +65,7 @@ impl Controller {
     fn lose_station(&mut self, message: String) {
         self.loaded = None;
         self.loading = None;
-        self.playing = false;
+        self.is_playing = false;
         self.update_media_status();
         self.publish_playback();
         self.deps.ui.send(UiUpdate::Error(message));

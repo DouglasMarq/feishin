@@ -49,8 +49,8 @@ fn open_radio_page() -> RadioPage {
     let server = Arc::new(FakeServer::new(20));
     let session = Session::default();
     session.set(Some(server.clone()));
-    let ctx = Context {
-        rt: runtime.handle().clone(),
+    let context = Context {
+        runtime: runtime.handle().clone(),
         commands,
         session,
         store: Arc::new(JsonStore::new(dir.path())),
@@ -58,7 +58,7 @@ fn open_radio_page() -> RadioPage {
         covers: Arc::new(DemoCovers),
         remote: crate::remote::Remote::default(),
     };
-    let view = install_with(&window, &ctx, Arc::new(DemoDirectory));
+    let view = install_with(&window, &context, Arc::new(DemoDirectory));
     let app = window.global::<AppState>();
     app.set_page(Page::Main);
     app.set_route(Route::Radio);
@@ -126,7 +126,7 @@ fn the_view_lists_server_and_saved_stations_and_plays_them() {
         page.received.try_recv(),
         Ok(Command::GetSettings(_))
     ));
-    assert!(page.state().get_stations_loading());
+    assert!(page.state().get_is_stations_loading());
 
     page.finish_loading();
 
@@ -135,9 +135,9 @@ fn the_view_lists_server_and_saved_stations_and_plays_them() {
     assert_eq!(stations[1].name, "Demo Classic Rock");
     assert_eq!(stations[1].source, RadioSource::Server);
     assert_eq!(stations[4].source, RadioSource::Favorite);
-    assert!(stations[4].favorite);
+    assert!(stations[4].is_favorite);
     assert!(page.state().get_can_manage());
-    assert!(!page.state().get_stations_loading());
+    assert!(!page.state().get_is_stations_loading());
 
     page.state()
         .invoke_play(RadioSource::Server, "radio-1".into());
@@ -171,20 +171,20 @@ fn the_directory_search_finds_and_saves_stations() {
 
     state.set_search_tag("jazz".into());
     state.invoke_search();
-    assert!(state.get_searching());
+    assert!(state.get_is_searching());
     page.finish_search(&StationQuery {
         tag: "jazz".into(),
         ..StationQuery::default()
     });
     let results = page.results();
     assert_eq!(results.len(), 2);
-    assert!(!page.state().get_searching());
+    assert!(!page.state().get_is_searching());
     assert!(!page.state().get_has_more());
     assert_eq!(
         results[0].details,
         "Germany \u{b7} jazz, smooth jazz \u{b7} MP3 128 kbps"
     );
-    assert!(!results[0].favorite);
+    assert!(!results[0].is_favorite);
 
     page.state()
         .invoke_toggle_favorite(RadioSource::Directory, "demo-directory-0".into());
@@ -192,7 +192,7 @@ fn the_directory_search_finds_and_saves_stations() {
         page.next_radio_command(),
         Some(RadioCommand::AddFavorite(station)) if station.id == "demo-directory-0"
     ));
-    assert!(page.results()[0].favorite);
+    assert!(page.results()[0].is_favorite);
     assert_eq!(page.stations().len(), 6);
 
     page.state()
@@ -213,7 +213,7 @@ fn an_unreachable_directory_is_explained() {
     page.view
         .apply_search(&page.window, generation, Err(anyhow::anyhow!("no network")));
 
-    assert!(!page.state().get_searching());
+    assert!(!page.state().get_is_searching());
     assert_eq!(
         page.state().get_results_message(),
         "The radio directory could not be reached"
@@ -233,7 +233,7 @@ fn the_editor_validates_and_saves_on_this_device() {
     let state = page.state();
 
     state.invoke_edit(RadioSource::Server, "radio-0".into());
-    assert!(state.get_editing());
+    assert!(state.get_is_editing());
     assert_eq!(state.get_edit_name(), "Demo Jazz Lounge");
     assert_eq!(state.get_edit_url(), "https://radio.demo.invalid/0");
     state.set_edit_url("ftp://radio.demo.invalid/0".into());
@@ -245,7 +245,7 @@ fn the_editor_validates_and_saves_on_this_device() {
     state.set_edit_url("https://owl.example.com/live".into());
     state.set_edit_homepage("".into());
     state.invoke_save_edit(RadioSource::Favorite);
-    assert!(!page.state().get_editing());
+    assert!(!page.state().get_is_editing());
     assert!(matches!(
         page.next_radio_command(),
         Some(RadioCommand::AddFavorite(station))
@@ -265,13 +265,13 @@ fn the_playing_station_is_shown() {
 
     show_now_playing(&page.window, Some(&now_playing));
     let state = page.state();
-    assert!(state.get_active());
+    assert!(state.get_is_active());
     assert_eq!(state.get_playing_id(), "radio-1");
     assert_eq!(state.get_station_name(), "Demo Classic Rock");
     assert_eq!(state.get_stream_title(), "Band - Hit");
 
     show_now_playing(&page.window, None);
-    assert!(!page.state().get_active());
+    assert!(!page.state().get_is_active());
     assert_eq!(page.state().get_stream_title(), "");
 }
 
@@ -279,7 +279,7 @@ fn the_playing_station_is_shown() {
 fn server_changes_without_a_connection_are_explained() {
     let page = open_radio_page();
     page.finish_loading();
-    page.view.ctx.session.set(None);
+    page.view.context.session.set(None);
     let state = page.state();
     state.set_delete_name("Demo Jazz Lounge".into());
     state.set_delete_id("radio-0".into());
@@ -287,7 +287,7 @@ fn server_changes_without_a_connection_are_explained() {
     state.invoke_delete("radio-0".into());
 
     assert_eq!(state.get_delete_id(), "");
-    assert!(!state.get_busy());
+    assert!(!state.get_is_busy());
     assert_eq!(
         page.window.global::<AppState>().get_status(),
         "Not connected to a server"
@@ -313,11 +313,11 @@ fn a_slow_load_keeps_a_favorite_saved_meanwhile() {
 #[test]
 fn given_a_server_with_radio_its_stations_are_listed_as_server_radio() {
     let page = open_radio_page();
-    page.state().set_server_has_radio(false);
+    page.state().set_has_server_radio(false);
 
     page.finish_loading();
 
-    assert!(page.state().get_server_has_radio());
+    assert!(page.state().get_has_server_radio());
 }
 
 #[test]
@@ -326,7 +326,7 @@ fn given_a_server_without_radio_the_view_explains_it_without_an_error() {
 
     page.finish_loading_with(Err(ApiError::Unsupported("internet radio stations")));
 
-    assert!(!page.state().get_server_has_radio());
+    assert!(!page.state().get_has_server_radio());
     assert_eq!(page.window.global::<AppState>().get_status(), "");
     assert_eq!(page.stations().len(), 1);
 }

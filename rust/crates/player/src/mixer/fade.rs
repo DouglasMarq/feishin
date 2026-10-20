@@ -33,7 +33,7 @@ impl MixerState {
     pub(super) fn fader_tick(&mut self) -> FaderTick {
         match self.fade {
             Some(window) => self.ramp_fade(window),
-            None if !self.config.crossfade_enabled() => FaderTick::idle(),
+            None if !self.config.is_crossfade_enabled() => FaderTick::idle(),
             None if self.routing.standby_is_ready() => self.watch_for_fade_start(),
             None if self.standby_load_is_waiting() => self.watch_for_standby_load(),
             None => FaderTick::idle(),

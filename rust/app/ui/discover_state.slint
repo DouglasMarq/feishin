@@ -45,7 +45,7 @@ export global DiscoverIcons {
 export global DiscoverState {
     in-out property <DiscoverSection> section: DiscoverSection.for-you;
     in property <[DiscoverShelf]> shelves;
-    in property <bool> loading;
+    in property <bool> is-loading;
     in property <string> error;
     in property <string> notice;
     in property <DiscoverNotice> notice-kind;
@@ -58,10 +58,10 @@ export global DiscoverState {
     in property <string> page-title;
     in property <string> page-subtitle;
     in property <image> page-cover;
-    in property <bool> page-has-cover;
-    in property <bool> page-loading;
+    in property <bool> has-page-cover;
+    in property <bool> is-page-loading;
     in property <string> page-error;
-    in property <bool> page-has-link;
+    in property <bool> has-page-link;
     in property <[DiscoverSong]> songs;
     callback open(detail-id: string);
     callback select-section(section: DiscoverSection);
@@ -71,7 +71,7 @@ export global DiscoverState {
     callback search(query: string);
     callback cover-needed(shelf: int, card: int);
     callback song-cover-needed(index: int);
-    callback card-visibility-changed(shelf: int, card: int, visible: bool);
+    callback card-visibility-changed(shelf: int, card: int, is-visible: bool);
     callback song-rows-shown(first-row: int, row-count: int);
     callback play-from-card(shelf: int, card: int);
     callback play-card(shelf: int, card: int);

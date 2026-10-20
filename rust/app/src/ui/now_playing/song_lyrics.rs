@@ -27,7 +27,7 @@ impl Display for LyricsLookupError {
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub(super) struct SongLyrics {
     pub(super) source: String,
-    pub(super) synced: bool,
+    pub(super) is_synced: bool,
     pub(super) lines: Vec<LyricLine>,
 }
 
@@ -37,16 +37,16 @@ impl SongLyrics {
         if lines.iter().all(|line| line.text.trim().is_empty()) {
             return None;
         }
-        let synced = lines.iter().any(|line| line.time_ms.is_some());
+        let is_synced = lines.iter().any(|line| line.time_ms.is_some());
         Some(Self {
             source: source.into(),
-            synced,
+            is_synced,
             lines,
         })
     }
 
     pub(super) fn line_times_ms(&self) -> Vec<u64> {
-        if !self.synced {
+        if !self.is_synced {
             return Vec::new();
         }
         self.lines
@@ -89,7 +89,7 @@ pub(super) async fn remote_lyrics_for(
         .map_err(LyricsLookupError::Remote)?;
     Ok(found.map(|found| SongLyrics {
         source: lyrics_source_label(lyrics_source_setting(found.source)),
-        synced: found.synced,
+        is_synced: found.is_synced,
         lines: found.lines,
     }))
 }
@@ -154,7 +154,7 @@ mod tests {
         ) -> feishin_lyrics::Result<Option<Lyrics>> {
             Ok(sources.contains(&LyricsSource::Genius).then(|| Lyrics {
                 source: LyricsSource::Genius,
-                synced: false,
+                is_synced: false,
                 lines: feishin_lyrics::parse_lrc("First line\nSecond line"),
             }))
         }
@@ -173,10 +173,10 @@ mod tests {
     #[test]
     fn lyrics_text_maps_to_synced_or_plain() {
         let synced = SongLyrics::from_text("Server", "[00:01.00]One\n[00:02.50]Two").unwrap();
-        assert!(synced.synced);
+        assert!(synced.is_synced);
         assert_eq!(synced.line_times_ms(), vec![1_000, 2_500]);
         let plain = SongLyrics::from_text("Server", "One\nTwo").unwrap();
-        assert!(!plain.synced);
+        assert!(!plain.is_synced);
         assert!(plain.line_times_ms().is_empty());
         assert_eq!(SongLyrics::from_text("Server", "  \n"), None);
     }
@@ -191,7 +191,7 @@ mod tests {
             .unwrap()
             .unwrap();
         assert_eq!(lyrics.source, "Server");
-        assert!(lyrics.synced);
+        assert!(lyrics.is_synced);
         let unplanned = resolve_lyrics(&server, &NoRemoteLyrics, &song, &[]).await;
         assert!(unplanned.unwrap().is_none());
     }

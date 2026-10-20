@@ -14,12 +14,12 @@ use crate::controller::SettingsSnapshot;
 #[derive(Debug, Clone, Copy)]
 pub(super) struct PlaybackForm {
     pub(super) replay_gain: ReplayGainSetting,
-    pub(super) gapless: bool,
+    pub(super) is_gapless: bool,
     pub(super) crossfade_seconds: i32,
     pub(super) device: i32,
     pub(super) bitrate: i32,
     pub(super) format: i32,
-    pub(super) scrobble: bool,
+    pub(super) is_scrobbling_enabled: bool,
 }
 
 #[derive(Default)]
@@ -55,7 +55,7 @@ impl View {
         let current = &self.settings.playback;
         PlaybackSettings {
             replay_gain: form.replay_gain,
-            gapless: form.gapless,
+            is_gapless: form.is_gapless,
             crossfade_seconds: crossfade_seconds_from_form(form.crossfade_seconds),
             audio_device: self
                 .devices
@@ -69,7 +69,7 @@ impl View {
                 .formats
                 .value(form.format)
                 .unwrap_or_else(|| current.transcode_format.clone()),
-            scrobble: form.scrobble,
+            is_scrobbling_enabled: form.is_scrobbling_enabled,
             ..current.clone()
         }
     }
@@ -112,16 +112,16 @@ mod tests {
         });
         let form = PlaybackForm {
             replay_gain: ReplayGainSetting::Album,
-            gapless: false,
+            is_gapless: false,
             crossfade_seconds: 7,
             device: 0,
             bitrate: 3,
             format: 2,
-            scrobble: false,
+            is_scrobbling_enabled: false,
         };
         let playback = view.playback(form);
         assert_eq!(playback.replay_gain, ReplayGainSetting::Album);
-        assert!(!playback.gapless && !playback.scrobble);
+        assert!(!playback.is_gapless && !playback.is_scrobbling_enabled);
         assert_eq!(playback.crossfade_seconds, 7);
         assert_eq!(playback.audio_device, None);
         assert_eq!(playback.max_bitrate_kbps, Some(192));

@@ -13,11 +13,11 @@ use crate::ui::{AppWindow, Context, TrackColumn, TracksState, sort_order};
 
 const SEARCH_DEBOUNCE: Duration = Duration::from_millis(300);
 
-pub(super) fn install_model(window: &AppWindow, ctx: &Context) {
+pub(super) fn install_model(window: &AppWindow, context: &Context) {
     let weak = window.as_weak();
-    let fetch_ctx = ctx.clone();
+    let fetch_context = context.clone();
     let model = Rc::new(TracksModel::new(move |request| {
-        spawn_request(weak.clone(), &fetch_ctx, request);
+        spawn_request(weak.clone(), &fetch_context, request);
     }));
     window
         .global::<TracksState>()
@@ -26,12 +26,12 @@ pub(super) fn install_model(window: &AppWindow, ctx: &Context) {
 
 fn sort_by(window: &AppWindow, column: TrackColumn) {
     let state = window.global::<TracksState>();
-    let descending = state.get_sort_column() == column && !state.get_sort_desc();
+    let is_descending = state.get_sort_column() == column && !state.get_is_sort_descending();
     state.set_sort_column(column);
-    state.set_sort_desc(descending);
+    state.set_is_sort_descending(is_descending);
     if let Some(mut query) = with_model(window, TracksModel::query) {
         query.sort = column.sort();
-        query.order = sort_order(descending);
+        query.order = sort_order(is_descending);
         reload(window, query);
     }
 }
@@ -82,14 +82,14 @@ pub(super) fn install_filters(window: &AppWindow) {
     let debounce = Rc::new(Timer::default());
     window
         .global::<TracksState>()
-        .on_filters_changed(move |debounced| {
+        .on_filters_changed(move |is_debounced| {
             let weak = weak.clone();
             let apply = move || {
                 if let Some(window) = weak.upgrade() {
                     apply_filters(&window);
                 }
             };
-            match debounced {
+            match is_debounced {
                 true => debounce.start(TimerMode::SingleShot, SEARCH_DEBOUNCE, apply),
                 false => {
                     debounce.stop();
@@ -99,16 +99,16 @@ pub(super) fn install_filters(window: &AppWindow) {
         });
 }
 
-pub(super) fn install_play_row(window: &AppWindow, ctx: &Context) {
+pub(super) fn install_play_row(window: &AppWindow, context: &Context) {
     let weak = window.as_weak();
-    let play_ctx = ctx.clone();
+    let play_context = context.clone();
     window.global::<TracksState>().on_play_row(move |index| {
         let (Some(window), Ok(index)) = (weak.upgrade(), usize::try_from(index)) else {
             return;
         };
         let target = with_model(&window, |model| (model.query(), model.song_id_at(index)));
         if let Some((query, song_id)) = target {
-            play_ctx.send(Command::PlayFromList {
+            play_context.send(Command::PlayFromList {
                 source: SongSource::Library(query),
                 song_id,
                 row_index: ListRow(index),

@@ -23,18 +23,18 @@ pub fn clear(window: &AppWindow) {
     state.set_info("".into());
     state.set_image(Image::default());
     state.set_has_image(false);
-    state.set_favorite(false);
+    state.set_is_favorite(false);
     state.set_biography("".into());
-    state.set_bio_expanded(false);
-    state.set_top_expanded(false);
+    state.set_is_bio_expanded(false);
+    state.set_is_top_expanded(false);
     state.set_top_songs(ModelRc::default());
     state.set_albums(ModelRc::default());
 }
 
 fn remember_loaded(detail: ArtistDetail) {
     update_current(|current| {
-        current.loaded = true;
-        current.favorite = detail.artist.favorite;
+        current.is_loaded = true;
+        current.is_favorite = detail.artist.is_favorite;
         current.album_covers = detail
             .albums
             .iter()
@@ -46,10 +46,10 @@ fn remember_loaded(detail: ArtistDetail) {
 
 pub fn show(window: &AppWindow, detail: ArtistDetail, image: Option<Image>) {
     let state = window.global::<ArtistDetailState>();
-    state.set_loading(false);
+    state.set_is_loading(false);
     state.set_name(detail.artist.name.as_str().into());
     state.set_info(info_line(&detail).into());
-    state.set_favorite(detail.artist.favorite);
+    state.set_is_favorite(detail.artist.is_favorite);
     state.set_biography(plain_text(detail.artist.biography.as_deref().unwrap_or_default()).into());
     if let Some(image) = image {
         state.set_image(image);

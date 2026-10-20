@@ -13,8 +13,8 @@ fn next_repeat_mode(mode: RepeatMode) -> RepeatMode {
 
 impl Controller {
     pub(super) fn toggle_shuffle(&mut self) {
-        let shuffled = !self.queue.shuffle();
-        self.queue.set_shuffle(shuffled);
+        let is_shuffled = !self.queue.is_shuffled();
+        self.queue.set_shuffle(is_shuffled);
         self.queue_changed();
     }
 
@@ -55,12 +55,12 @@ impl Controller {
 
     pub(super) fn remove(&mut self, uids: &[Uid]) {
         let active = self.loaded.or_else(|| self.youtube.loading_uid());
-        let loaded_removed = active.is_some_and(|uid| uids.contains(&uid));
+        let is_loaded_removed = active.is_some_and(|uid| uids.contains(&uid));
         self.queue.remove(uids);
         match (
             self.is_radio_playing(),
             self.queue.is_empty(),
-            loaded_removed,
+            is_loaded_removed,
         ) {
             (true, _, _) | (false, false, false) => {}
             (false, true, _) => self.stop_with_empty_queue(),
@@ -70,7 +70,7 @@ impl Controller {
     }
 
     fn move_past_removed_track(&mut self) {
-        if self.playing || self.youtube.is_loading() {
+        if self.is_playing || self.youtube.is_loading() {
             self.load_current(0);
             return;
         }

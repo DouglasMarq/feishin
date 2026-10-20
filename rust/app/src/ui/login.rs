@@ -35,14 +35,14 @@ fn host_of(url: &str) -> String {
 }
 
 pub fn enter_session(
-    ctx: &Context,
+    context: &Context,
     server: &Arc<dyn MusicServer>,
     config: ServerConfig,
     credential: Option<Credential>,
     others: Vec<ImportedServer>,
 ) {
-    ctx.session.set(Some(Arc::clone(server)));
-    ctx.send(Command::Connected {
+    context.session.set(Some(Arc::clone(server)));
+    context.send(Command::Connected {
         config,
         credential,
         others,
@@ -65,7 +65,7 @@ pub fn show_login(window: &AppWindow, error: &str) {
 fn finish(window: &slint::Weak<AppWindow>, result: Result<Arc<dyn MusicServer>>) {
     on_ui(window, move |window| {
         let login = window.global::<LoginState>();
-        login.set_busy(false);
+        login.set_is_busy(false);
         match result {
             Ok(server) => {
                 login.set_password("".into());
@@ -78,22 +78,23 @@ fn finish(window: &slint::Weak<AppWindow>, result: Result<Arc<dyn MusicServer>>)
 }
 
 async fn login(
-    ctx: &Context,
+    context: &Context,
     config: ServerConfig,
     password: String,
 ) -> Result<Arc<dyn MusicServer>> {
-    let (server, credential) = ctx.connector.login(config.clone(), &password).await?;
-    enter_session(ctx, &server, config, Some(credential), Vec::new());
+    let (server, credential) = context.connector.login(config.clone(), &password).await?;
+    enter_session(context, &server, config, Some(credential), Vec::new());
     Ok(server)
 }
 
 fn first_restored_session(
-    ctx: &Context,
+    context: &Context,
     imported: &[ImportedServer],
 ) -> Option<(ServerConfig, Arc<dyn MusicServer>)> {
     imported.iter().find_map(|server| {
         let credential = server.credential.as_ref()?;
-        ctx.connector
+        context
+            .connector
             .restore(&server.config, credential)
             .inspect_err(|error| tracing::warn!("{}: {error:#}", server.config.name))
             .ok()
@@ -101,17 +102,17 @@ fn first_restored_session(
     })
 }
 
-async fn import(ctx: &Context) -> Result<Arc<dyn MusicServer>> {
-    let store = Arc::clone(&ctx.store);
+async fn import(context: &Context) -> Result<Arc<dyn MusicServer>> {
+    let store = Arc::clone(&context.store);
     let imported = tokio::task::spawn_blocking(move || store.import_feishin()).await??;
-    let (config, server) = first_restored_session(ctx, &imported).ok_or_else(|| {
+    let (config, server) = first_restored_session(context, &imported).ok_or_else(|| {
         anyhow!(tr_plural!(
             "Found {n} server in Feishin but it has no usable saved login",
             "Found {n} servers in Feishin but none with a usable saved login",
             imported.len()
         ))
     })?;
-    enter_session(ctx, &server, config, None, imported);
+    enter_session(context, &server, config, None, imported);
     Ok(server)
 }
 
@@ -125,9 +126,9 @@ fn config_from_form(state: &LoginState<'_>, url: String) -> ServerConfig {
     }
 }
 
-fn install_login(window: &AppWindow, ctx: &Context) {
+fn install_login(window: &AppWindow, context: &Context) {
     let weak = window.as_weak();
-    let login_ctx = ctx.clone();
+    let login_context = context.clone();
     window.global::<LoginState>().on_login(move || {
         let Some(window) = weak.upgrade() else {
             return;
@@ -139,39 +140,39 @@ fn install_login(window: &AppWindow, ctx: &Context) {
         };
         let config = config_from_form(&state, url);
         let password = state.get_password().to_string();
-        state.set_busy(true);
+        state.set_is_busy(true);
         state.set_error("".into());
-        let ctx = login_ctx.clone();
+        let context = login_context.clone();
         let weak = weak.clone();
-        login_ctx.rt.spawn(async move {
-            let result = login(&ctx, config, password).await;
+        login_context.runtime.spawn(async move {
+            let result = login(&context, config, password).await;
             finish(&weak, result);
         });
     });
 }
 
-fn install_import(window: &AppWindow, ctx: &Context) {
+fn install_import(window: &AppWindow, context: &Context) {
     let weak = window.as_weak();
-    let import_ctx = ctx.clone();
+    let import_context = context.clone();
     window.global::<LoginState>().on_import_feishin(move || {
         let Some(window) = weak.upgrade() else {
             return;
         };
         let state = window.global::<LoginState>();
-        state.set_busy(true);
+        state.set_is_busy(true);
         state.set_error("".into());
-        let ctx = import_ctx.clone();
+        let context = import_context.clone();
         let weak = weak.clone();
-        import_ctx.rt.spawn(async move {
-            let result = import(&ctx).await;
+        import_context.runtime.spawn(async move {
+            let result = import(&context).await;
             finish(&weak, result);
         });
     });
 }
 
-pub fn install(window: &AppWindow, ctx: &Context) {
-    install_login(window, ctx);
-    install_import(window, ctx);
+pub fn install(window: &AppWindow, context: &Context) {
+    install_login(window, context);
+    install_import(window, context);
 }
 
 #[cfg(test)]
@@ -197,8 +198,8 @@ mod tests {
         let directory = tempfile::tempdir().unwrap();
         let store = Arc::new(JsonStore::new(directory.path()));
         let (commands, mut received) = mpsc::unbounded_channel();
-        let ctx = Context {
-            rt: tokio::runtime::Handle::current(),
+        let context = Context {
+            runtime: tokio::runtime::Handle::current(),
             commands,
             session: Session::default(),
             store: store.clone(),
@@ -208,22 +209,24 @@ mod tests {
         };
         let config = FakeServer::config_for_demo();
 
-        login(&ctx, config.clone(), "secret".into()).await.unwrap();
+        login(&context, config.clone(), "secret".into())
+            .await
+            .unwrap();
 
         assert_eq!(store.credential(&config.id).unwrap(), None);
         let Some(Command::Connected { credential, .. }) = received.recv().await else {
             panic!("expected Connected");
         };
         assert_eq!(credential, Some(demo_credential()));
-        assert!(ctx.session.get().is_some());
+        assert!(context.session.get().is_some());
     }
 
     #[tokio::test]
     async fn given_an_entered_session_the_server_is_current_and_the_controller_learns_the_others() {
         let directory = tempfile::tempdir().unwrap();
         let (commands, mut received) = mpsc::unbounded_channel();
-        let ctx = Context {
-            rt: tokio::runtime::Handle::current(),
+        let context = Context {
+            runtime: tokio::runtime::Handle::current(),
             commands,
             session: Session::default(),
             store: Arc::new(JsonStore::new(directory.path())),
@@ -238,10 +241,11 @@ mod tests {
             credential: None,
         };
 
-        enter_session(&ctx, &server, config.clone(), None, vec![other.clone()]);
+        enter_session(&context, &server, config.clone(), None, vec![other.clone()]);
 
         assert!(
-            ctx.session
+            context
+                .session
                 .get()
                 .is_some_and(|current| current.config().id == config.id)
         );

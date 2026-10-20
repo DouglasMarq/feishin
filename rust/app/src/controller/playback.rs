@@ -99,12 +99,12 @@ impl Controller {
             Ok(()) => {
                 self.loaded = Some(track.uid);
                 self.loading = Some(track.uid);
-                self.playing = true;
+                self.is_playing = true;
             }
             Err(error) => {
                 self.loaded = None;
                 self.loading = None;
-                self.playing = false;
+                self.is_playing = false;
                 self.deps.ui.send(UiUpdate::Error(tr!(
                     "Playback failed: {}",
                     format!("{error:#}")
@@ -125,7 +125,7 @@ impl Controller {
         self.loaded = None;
         self.loading = None;
         self.preloaded = None;
-        self.playing = false;
+        self.is_playing = false;
         self.position_ms = 0;
         self.scrobble_tracker.stop();
         self.update_media_status();
@@ -137,16 +137,16 @@ impl Controller {
             self.resume_from_saved_position();
             return;
         }
-        if self.playing && self.is_radio_playing() {
+        if self.is_playing && self.is_radio_playing() {
             self.pause_station();
             return;
         }
-        let result = match self.playing {
+        let result = match self.is_playing {
             true => self.deps.audio.pause(),
             false => self.deps.audio.play(),
         };
         match result {
-            Ok(()) => self.set_playing(!self.playing),
+            Ok(()) => self.set_playing(!self.is_playing),
             Err(error) => {
                 tracing::warn!("toggling playback failed: {error:#}");
                 self.deps.ui.send(UiUpdate::Error(tr!(
@@ -165,14 +165,14 @@ impl Controller {
         }
     }
 
-    pub(super) fn set_playing(&mut self, playing: bool) {
-        if self.playing == playing {
+    pub(super) fn set_playing(&mut self, is_playing: bool) {
+        if self.is_playing == is_playing {
             return;
         }
-        self.playing = playing;
+        self.is_playing = is_playing;
         self.update_media_status();
         self.publish_playback();
-        if !playing {
+        if !is_playing {
             self.schedule_queue_sync();
         }
     }

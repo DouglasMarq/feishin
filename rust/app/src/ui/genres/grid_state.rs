@@ -168,13 +168,13 @@ impl GridState {
             .collect()
     }
 
-    pub fn favorite(&self, id: &str) -> Option<bool> {
+    pub fn is_favorite(&self, id: &str) -> Option<bool> {
         let (_, card) = self.card_with_id(id)?;
-        Some(self.overrides.get(id).copied().unwrap_or(card.favorite))
+        Some(self.overrides.get(id).copied().unwrap_or(card.is_favorite))
     }
 
-    pub fn override_favorite(&mut self, id: &str, favorite: bool) -> Option<usize> {
-        self.overrides.insert(id.to_owned(), favorite);
+    pub fn override_favorite(&mut self, id: &str, is_favorite: bool) -> Option<usize> {
+        self.overrides.insert(id.to_owned(), is_favorite);
         let columns = self.columns();
         self.card_with_id(id).map(|(index, _)| index / columns)
     }
@@ -211,12 +211,12 @@ impl GridState {
                 cover_id: cover_id.clone(),
             });
         }
-        let favorite = self
+        let is_favorite = self
             .overrides
             .get(&data.id)
             .copied()
-            .unwrap_or(data.favorite);
-        loaded_card(data, cover, favorite)
+            .unwrap_or(data.is_favorite);
+        loaded_card(data, cover, is_favorite)
     }
 
     fn request_pages_around(&mut self, index: usize, requests: &mut Vec<GridRequest>) {
@@ -233,14 +233,14 @@ impl GridState {
     }
 }
 
-fn loaded_card(data: &CardData, cover: Option<Image>, favorite: bool) -> Card {
+fn loaded_card(data: &CardData, cover: Option<Image>, is_favorite: bool) -> Card {
     Card {
         id: data.id.as_str().into(),
         title: data.title.as_str().into(),
         subtitle: data.subtitle.as_str().into(),
         has_cover: cover.is_some(),
         cover: cover.unwrap_or_default(),
-        favorite,
-        loaded: true,
+        is_favorite,
+        is_loaded: true,
     }
 }

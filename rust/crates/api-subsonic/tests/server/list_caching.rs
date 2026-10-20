@@ -148,11 +148,11 @@ async fn mount_starred(mock: &MockServer, expected_fetches: u64) {
 
 async fn read_every_favorites_view(server: &SubsonicServer) -> (usize, usize) {
     let albums = AlbumListQuery {
-        favorite: Some(true),
+        is_favorite: Some(true),
         ..Default::default()
     };
     let songs = SongListQuery {
-        favorite: Some(true),
+        is_favorite: Some(true),
         sort: SongSort::Name,
         ..Default::default()
     };
@@ -270,10 +270,10 @@ async fn search_count_probes_instead_of_paging_every_match() {
     assert!(downloaded_songs.load(Ordering::SeqCst) <= 520);
 }
 
-async fn mount_scan_status(mock: &MockServer, scanning: bool) {
+async fn mount_scan_status(mock: &MockServer, is_scanning: bool) {
     Mock::given(path("/rest/getScanStatus.view"))
         .respond_with(ok(
-            json!({ "scanStatus": { "scanning": scanning, "count": 250 } }),
+            json!({ "scanStatus": { "scanning": is_scanning, "count": 250 } }),
         ))
         .expect(1)
         .mount(mock)
@@ -288,7 +288,7 @@ async fn a_finished_library_scan_refreshes_the_artist_index() {
     let server = server(&mock);
 
     artist_page(&server, "1", 0).await;
-    let scan = server.library_scan().await.map(|scan| scan.scanning);
+    let scan = server.library_scan().await.map(|scan| scan.is_scanning);
     artist_page(&server, "1", 0).await;
 
     assert_eq!(scan.ok(), Some(false));
@@ -302,7 +302,7 @@ async fn a_running_library_scan_keeps_the_artist_index() {
     let server = server(&mock);
 
     artist_page(&server, "1", 0).await;
-    let scan = server.library_scan().await.map(|scan| scan.scanning);
+    let scan = server.library_scan().await.map(|scan| scan.is_scanning);
     artist_page(&server, "1", 0).await;
 
     assert_eq!(scan.ok(), Some(true));

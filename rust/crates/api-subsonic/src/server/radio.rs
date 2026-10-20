@@ -30,7 +30,7 @@ impl SubsonicServer {
     pub(super) async fn is_admin(&self) -> Result<bool> {
         let params = Params::new().add("username", &self.config.username);
         let response: UserResponse = self.fetch("getUser.view", params).await?;
-        Ok(response.user.is_some_and(|user| user.admin_role))
+        Ok(response.user.is_some_and(|user| user.has_admin_role))
     }
 
     pub(super) async fn add_radio_station(&self, station: &RadioStationDraft) -> Result<()> {

@@ -22,7 +22,7 @@ fn lrc_timestamp(milliseconds: u64) -> String {
 fn preferred_lyric(lyrics: &[StructuredLyric]) -> Option<&StructuredLyric> {
     lyrics
         .iter()
-        .find(|lyric| lyric.synced && is_main_lyric(lyric))
+        .find(|lyric| lyric.is_synced && is_main_lyric(lyric))
         .or_else(|| lyrics.iter().find(|lyric| is_main_lyric(lyric)))
         .or_else(|| lyrics.first())
 }
@@ -60,7 +60,7 @@ fn lrc_text(lyric: &StructuredLyric) -> String {
 
 pub fn lyrics_to_lrc_or_plain_text(lyrics: &[StructuredLyric]) -> Option<String> {
     let lyric = preferred_lyric(lyrics)?;
-    match (has_only_blank_lines(lyric), lyric.synced) {
+    match (has_only_blank_lines(lyric), lyric.is_synced) {
         (true, _) => None,
         (false, true) => Some(lrc_text(lyric)),
         (false, false) => Some(plain_text(lyric)),
@@ -72,7 +72,7 @@ mod tests {
     use super::*;
     use crate::types::LyricLine;
 
-    fn lyric(synced: bool, kind: Option<&str>, lines: &[(u64, &str)]) -> StructuredLyric {
+    fn lyric(is_synced: bool, kind: Option<&str>, lines: &[(u64, &str)]) -> StructuredLyric {
         StructuredLyric {
             kind: kind.map(Into::into),
             lang: Some("eng".into()),
@@ -84,7 +84,7 @@ mod tests {
                 })
                 .collect(),
             offset: None,
-            synced,
+            is_synced,
         }
     }
 

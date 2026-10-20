@@ -30,8 +30,8 @@ fn open_settings_page() -> SettingsPage {
         .build()
         .unwrap_or_else(|error| panic!("runtime: {error}"));
     let (commands, received) = tokio::sync::mpsc::unbounded_channel();
-    let ctx = Context {
-        rt: runtime.handle().clone(),
+    let context = Context {
+        runtime: runtime.handle().clone(),
         commands,
         session: Session::default(),
         store: Arc::new(JsonStore::new(dir.path())),
@@ -40,7 +40,7 @@ fn open_settings_page() -> SettingsPage {
         remote: crate::remote::Remote::default(),
     };
     let shared = Arc::new(Shared::default());
-    install_with(&window, &ctx, &shared);
+    install_with(&window, &context, &shared);
     let app = window.global::<AppState>();
     app.set_page(Page::Main);
     app.set_route(Route::Settings);
@@ -67,7 +67,7 @@ fn assert_rendered(state: &SettingsState) {
     let servers: Vec<_> = state.get_servers().iter().collect();
     assert_eq!(servers.len(), 2);
     assert_eq!(servers[0].name, "Demo library");
-    assert!(servers[0].current && !servers[1].current);
+    assert!(servers[0].is_current && !servers[1].is_current);
     let sources: Vec<_> = state
         .get_lyrics_sources()
         .iter()
@@ -78,7 +78,7 @@ fn assert_rendered(state: &SettingsState) {
     assert_eq!(devices, ["Autoselect device", "Speakers"]);
     assert_eq!(state.get_crossfade_seconds(), 0);
     assert_eq!(state.get_max_crossfade_seconds(), 12);
-    assert!(state.get_loaded());
+    assert!(state.get_is_loaded());
 }
 
 fn assert_saves_lyrics_and_playback(
@@ -202,7 +202,7 @@ mod tooltips {
     fn shown_tooltip(window: &AppWindow) -> String {
         mock_elapsed_time(Duration::ZERO);
         let tooltip = window.global::<Tooltip>();
-        assert!(tooltip.get_visible());
+        assert!(tooltip.get_is_visible());
         tooltip.get_text().into()
     }
 
@@ -227,10 +227,10 @@ mod tooltips {
     fn given_the_pointer_over_a_setting_switch_it_shows_the_setting_and_its_state() {
         let page = open_settings_page();
         let state = page.window.global::<SettingsState>();
-        state.set_gapless(true);
+        state.set_is_gapless(true);
         hover(&page.window, "TooltipSwitch::toggle", "Gapless playback");
         assert_eq!(shown_tooltip(&page.window), "Gapless playback: on");
-        state.set_gapless(false);
+        state.set_is_gapless(false);
         assert_eq!(shown_tooltip(&page.window), "Gapless playback: off");
     }
 

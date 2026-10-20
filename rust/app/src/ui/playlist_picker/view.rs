@@ -8,24 +8,29 @@ use super::picker::{PickedSongs, SharedPicker};
 use super::requests::{create, pick};
 use crate::ui::{Actions, AppWindow, Context, PlaylistPickerState};
 
-pub fn install(window: &AppWindow, ctx: &Context) -> PlaylistPicker {
+pub fn install(window: &AppWindow, context: &Context) -> PlaylistPicker {
     let shared: SharedPicker = Arc::default();
-    install_open(window, ctx, &shared);
+    install_open(window, context, &shared);
     install_filter(window, &shared);
-    install_pick(window, ctx, &shared);
-    install_create(window, ctx, &shared);
+    install_pick(window, context, &shared);
+    install_create(window, context, &shared);
     install_cancel(window, &shared);
-    PlaylistPicker::new(shared, ctx.clone())
+    PlaylistPicker::new(shared, context.clone())
 }
 
-fn install_open(window: &AppWindow, ctx: &Context, shared: &SharedPicker) {
-    let (weak, open_ctx, open_shared) = (window.as_weak(), ctx.clone(), Arc::clone(shared));
+fn install_open(window: &AppWindow, context: &Context, shared: &SharedPicker) {
+    let (weak, open_context, open_shared) = (window.as_weak(), context.clone(), Arc::clone(shared));
     window
         .global::<Actions>()
         .on_add_to_playlist(move |song_ids| {
             if let Some(window) = weak.upgrade() {
                 let song_ids = song_ids.iter().map(|song_id| song_id.to_string()).collect();
-                open(&window, &open_ctx, &open_shared, PickedSongs::Ids(song_ids));
+                open(
+                    &window,
+                    &open_context,
+                    &open_shared,
+                    PickedSongs::Ids(song_ids),
+                );
             }
         });
 }
@@ -41,24 +46,30 @@ fn install_filter(window: &AppWindow, shared: &SharedPicker) {
         });
 }
 
-fn install_pick(window: &AppWindow, ctx: &Context, shared: &SharedPicker) {
-    let (weak, pick_ctx, pick_shared) = (window.as_weak(), ctx.clone(), Arc::clone(shared));
+fn install_pick(window: &AppWindow, context: &Context, shared: &SharedPicker) {
+    let (weak, pick_context, pick_shared) = (window.as_weak(), context.clone(), Arc::clone(shared));
     window
         .global::<PlaylistPickerState>()
         .on_pick(move |playlist_id| {
             if let Some(window) = weak.upgrade() {
-                pick(&window, &pick_ctx, &pick_shared, playlist_id.to_string());
+                pick(
+                    &window,
+                    &pick_context,
+                    &pick_shared,
+                    playlist_id.to_string(),
+                );
             }
         });
 }
 
-fn install_create(window: &AppWindow, ctx: &Context, shared: &SharedPicker) {
-    let (weak, create_ctx, create_shared) = (window.as_weak(), ctx.clone(), Arc::clone(shared));
+fn install_create(window: &AppWindow, context: &Context, shared: &SharedPicker) {
+    let (weak, create_context, create_shared) =
+        (window.as_weak(), context.clone(), Arc::clone(shared));
     window
         .global::<PlaylistPickerState>()
         .on_create(move |name| {
             if let Some(window) = weak.upgrade() {
-                create(&window, &create_ctx, &create_shared, &name);
+                create(&window, &create_context, &create_shared, &name);
             }
         });
 }

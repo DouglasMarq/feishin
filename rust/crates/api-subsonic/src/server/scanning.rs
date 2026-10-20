@@ -7,7 +7,7 @@ use crate::types::{ScanStatus, ScanStatusResponse};
 
 fn library_scan_of(status: ScanStatus) -> LibraryScan {
     LibraryScan {
-        scanning: status.scanning,
+        is_scanning: status.is_scanning,
         scanned_items: status
             .count
             .filter(|count| *count >= 0.0)
@@ -27,7 +27,7 @@ impl SubsonicServer {
     async fn scan_status(&self, endpoint: &str) -> Result<LibraryScan> {
         let response: ScanStatusResponse = self.fetch(endpoint, Params::new()).await?;
         let scan = library_scan_of(response.scan_status.unwrap_or_default());
-        if !scan.scanning {
+        if !scan.is_scanning {
             self.list_caches.forget_annotations();
             self.list_caches.forget_playlists();
             self.latest_folder.invalidate();
@@ -43,13 +43,13 @@ mod tests {
     #[test]
     fn negative_counts_are_ignored() {
         let status = ScanStatus {
-            scanning: true,
+            is_scanning: true,
             count: Some(-1.0),
         };
         assert_eq!(
             library_scan_of(status),
             LibraryScan {
-                scanning: true,
+                is_scanning: true,
                 scanned_items: None
             }
         );
@@ -58,7 +58,7 @@ mod tests {
     #[test]
     fn counts_become_scanned_items() {
         let status = ScanStatus {
-            scanning: false,
+            is_scanning: false,
             count: Some(1234.0),
         };
         assert_eq!(library_scan_of(status).scanned_items, Some(1234));

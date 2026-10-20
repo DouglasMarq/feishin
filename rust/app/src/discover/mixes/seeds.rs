@@ -31,8 +31,8 @@ pub fn rank_seeds(most_played: Vec<Song>, favorites: Vec<Song>) -> Vec<Song> {
 }
 
 fn seed_score(song: &Song, favorite_ids: &HashSet<String>) -> u64 {
-    let favorite = song.favorite || favorite_ids.contains(&song.id);
-    u64::from(song.play_count) + if favorite { FAVORITE_BONUS } else { 0 }
+    let is_favorite = song.is_favorite || favorite_ids.contains(&song.id);
+    u64::from(song.play_count) + if is_favorite { FAVORITE_BONUS } else { 0 }
 }
 
 pub fn primary_artist(song: &Song) -> Option<&str> {

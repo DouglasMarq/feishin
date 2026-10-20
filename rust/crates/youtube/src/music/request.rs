@@ -107,7 +107,8 @@ pub(crate) struct NextRequest<'request> {
     video_id: &'request str,
     playlist_id: String,
     is_audio_only: bool,
-    enable_persistent_playlist_panel: bool,
+    #[serde(rename = "enablePersistentPlaylistPanel")]
+    is_persistent_playlist_panel_enabled: bool,
     tuner_setting_value: &'static str,
 }
 
@@ -118,7 +119,7 @@ impl<'request> NextRequest<'request> {
             video_id,
             playlist_id: format!("{RADIO_PLAYLIST_PREFIX}{video_id}"),
             is_audio_only: true,
-            enable_persistent_playlist_panel: true,
+            is_persistent_playlist_panel_enabled: true,
             tuner_setting_value: NORMAL_AUTOMIX,
         }
     }

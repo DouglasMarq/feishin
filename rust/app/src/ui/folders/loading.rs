@@ -16,7 +16,7 @@ struct Loaded {
     songs: feishin_api::Result<Page<Song>>,
 }
 
-pub fn load(window: &AppWindow, ctx: &Context, trail: &SharedTrail, detail_id: &str) {
+pub fn load(window: &AppWindow, context: &Context, trail: &SharedTrail, detail_id: &str) {
     if window.global::<AppState>().get_route() != Route::Folders {
         return;
     }
@@ -29,13 +29,13 @@ pub fn load(window: &AppWindow, ctx: &Context, trail: &SharedTrail, detail_id: &
     let state = window.global::<FoldersState>();
     state.set_summary("".into());
     state.set_error("".into());
-    let Some(server) = ctx.session.get() else {
-        state.set_loading(false);
+    let Some(server) = context.session.get() else {
+        state.set_is_loading(false);
         return;
     };
-    state.set_loading(true);
+    state.set_is_loading(true);
     let weak = window.as_weak();
-    ctx.rt.spawn(async move {
+    context.runtime.spawn(async move {
         let loaded = fetch_folder(server, folder, generation).await;
         on_ui(&weak, move |window| apply_loaded(window, loaded));
     });
@@ -75,7 +75,7 @@ fn apply_loaded(window: &AppWindow, loaded: Loaded) {
         return;
     }
     let state = window.global::<FoldersState>();
-    state.set_loading(false);
+    state.set_is_loading(false);
     let (folders, page) = match (loaded.folders, loaded.songs) {
         (Ok(folders), Ok(page)) => (folders, page),
         (Err(error), _) | (_, Err(error)) => {

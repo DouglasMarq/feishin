@@ -39,7 +39,7 @@ async fn a_transferred_queue_plays_from_its_position() {
     let adopted = AdoptedQueue {
         snapshot: elsewhere.snapshot(),
         position_ms: 61_000,
-        playing: false,
+        is_playing: false,
     };
     harness
         .controller
@@ -73,7 +73,7 @@ async fn handing_over_the_queue_pauses_this_player() {
         .handle(Command::Remote(RemoteCommand::TakeTransfer(reply)));
     let payload = replied.await.unwrap().unwrap();
     assert_eq!(payload.snapshot.current_uid, Some(uid));
-    assert_eq!((payload.position_ms, payload.playing), (42_000, true));
+    assert_eq!((payload.position_ms, payload.is_playing), (42_000, true));
     assert_eq!(
         payload.server,
         harness
@@ -227,7 +227,7 @@ async fn another_device_takes_the_music_from_this_player() {
     let payload = TransferPayload {
         snapshot: queue.snapshot(),
         position_ms: 5_000,
-        playing: true,
+        is_playing: true,
         server: player.local_key.clone(),
     };
     reply.send(Ok(payload.clone())).unwrap();

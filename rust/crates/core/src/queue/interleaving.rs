@@ -64,8 +64,8 @@ impl Queue {
         let entries: Vec<(usize, Ownership)> = upcoming_order
             .into_iter()
             .map(|item_index| {
-                let own = self.uid_at_index(item_index).is_some_and(is_own);
-                let ownership = match own {
+                let is_owned = self.uid_at_index(item_index).is_some_and(is_own);
+                let ownership = match is_owned {
                     true => Ownership::Own,
                     false => Ownership::Foreign,
                 };

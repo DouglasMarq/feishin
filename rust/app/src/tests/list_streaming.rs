@@ -56,8 +56,8 @@ fn enqueue(harness: &mut Harness, ranges: Vec<Range<usize>>, placement: Placemen
     });
 }
 
-async fn streaming_harness(gapless: bool) -> (Harness, Vec<String>) {
-    let harness = start_harness_with(test_settings(gapless, false), 1234, None);
+async fn streaming_harness(is_gapless: bool) -> (Harness, Vec<String>) {
+    let harness = start_harness_with(test_settings(is_gapless, false), 1234, None);
     let expected = listed_ids(&harness, &by_name()).await;
     (harness, expected)
 }

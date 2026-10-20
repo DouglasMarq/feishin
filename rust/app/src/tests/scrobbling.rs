@@ -24,7 +24,7 @@ async fn scrobbles_now_playing_on_start_and_submits_at_half() {
         harness.server.scrobbles(),
         [ScrobbleCall {
             song_id: "s0".into(),
-            submission: false,
+            is_submission: false,
             timestamp_ms: None
         }]
     );
@@ -41,7 +41,7 @@ async fn scrobbles_now_playing_on_start_and_submits_at_half() {
     settle().await;
     let calls = harness.server.scrobbles();
     assert_eq!(calls.len(), 2);
-    assert!(calls[1].submission && calls[1].song_id == "s0");
+    assert!(calls[1].is_submission && calls[1].song_id == "s0");
 }
 
 #[tokio::test]

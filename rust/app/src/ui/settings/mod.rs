@@ -20,6 +20,6 @@ mod test_support;
 #[cfg(test)]
 mod view_tests;
 
-pub fn install(window: &AppWindow, ctx: &Context) {
-    callbacks::install_with(window, ctx, &Arc::new(view::Shared::default()));
+pub fn install(window: &AppWindow, context: &Context) {
+    callbacks::install_with(window, context, &Arc::new(view::Shared::default()));
 }

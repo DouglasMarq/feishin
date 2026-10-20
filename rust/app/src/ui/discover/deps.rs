@@ -10,7 +10,7 @@ use crate::ui::Context;
 
 #[derive(Clone)]
 pub struct DiscoverDeps {
-    pub ctx: Context,
+    pub context: Context,
     pub source: Arc<dyn DiscoverSource>,
     pub matcher: LibraryMatcher,
     pub system: Arc<SystemLocale>,
@@ -19,9 +19,9 @@ pub struct DiscoverDeps {
 }
 
 impl DiscoverDeps {
-    pub fn new(ctx: &Context, source: Arc<dyn DiscoverSource>) -> Self {
+    pub fn new(context: &Context, source: Arc<dyn DiscoverSource>) -> Self {
         Self {
-            ctx: ctx.clone(),
+            context: context.clone(),
             source,
             matcher: LibraryMatcher::default(),
             system: Arc::new(SystemLocale::from_env()),
@@ -31,6 +31,6 @@ impl DiscoverDeps {
     }
 
     pub fn settings(&self) -> YouTubeSettings {
-        self.ctx.session.settings().youtube.clone()
+        self.context.session.settings().youtube.clone()
     }
 }

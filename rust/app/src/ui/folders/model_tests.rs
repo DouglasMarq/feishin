@@ -50,12 +50,12 @@ fn folders_come_first_and_songs_page_in_on_demand() {
     let folder = model.row_data(0).unwrap();
     assert!(folder.is_folder && folder.folder_id == "dir-0");
     let song = model.row_data(4).unwrap();
-    assert!(!song.is_folder && song.track.loaded && song.track.id == "s1");
+    assert!(!song.is_folder && song.track.is_loaded && song.track.id == "s1");
     assert_eq!(model.song_at(4).map(|(position, _)| position), Some(1));
     assert!(model.song_at(1).is_none());
 
     let placeholder = model.row_data(3 + 150).unwrap();
-    assert!(!placeholder.track.loaded);
+    assert!(!placeholder.track.is_loaded);
     assert_eq!(placeholder.track.index, 151);
     assert_eq!(taken_pages(&requests), [1, 2]);
     assert!(model.row_data(353).is_none());

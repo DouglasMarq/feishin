@@ -66,13 +66,13 @@ fn width_of(state: &TracksState<'_>, column: TrackColumn) -> f32 {
 fn is_visible(state: &TracksState<'_>, column: TrackColumn) -> bool {
     match column {
         TrackColumn::Index | TrackColumn::Title => true,
-        TrackColumn::Artist => state.get_show_artist(),
-        TrackColumn::Album => state.get_show_album(),
-        TrackColumn::Year => state.get_show_year(),
-        TrackColumn::Plays => state.get_show_plays(),
-        TrackColumn::Duration => state.get_show_duration(),
-        TrackColumn::Favorite => state.get_show_favorite(),
-        TrackColumn::Rating => state.get_show_rating(),
+        TrackColumn::Artist => state.get_is_artist_shown(),
+        TrackColumn::Album => state.get_is_album_shown(),
+        TrackColumn::Year => state.get_is_year_shown(),
+        TrackColumn::Plays => state.get_is_plays_shown(),
+        TrackColumn::Duration => state.get_is_duration_shown(),
+        TrackColumn::Favorite => state.get_is_favorite_shown(),
+        TrackColumn::Rating => state.get_is_rating_shown(),
     }
 }
 
@@ -90,16 +90,16 @@ fn set_width(state: &TracksState<'_>, column: TrackColumn, width: f32) {
     }
 }
 
-fn set_visible(state: &TracksState<'_>, column: TrackColumn, visible: bool) {
+fn set_visible(state: &TracksState<'_>, column: TrackColumn, is_visible: bool) {
     match column {
         TrackColumn::Index | TrackColumn::Title => {}
-        TrackColumn::Artist => state.set_show_artist(visible),
-        TrackColumn::Album => state.set_show_album(visible),
-        TrackColumn::Year => state.set_show_year(visible),
-        TrackColumn::Plays => state.set_show_plays(visible),
-        TrackColumn::Duration => state.set_show_duration(visible),
-        TrackColumn::Favorite => state.set_show_favorite(visible),
-        TrackColumn::Rating => state.set_show_rating(visible),
+        TrackColumn::Artist => state.set_is_artist_shown(is_visible),
+        TrackColumn::Album => state.set_is_album_shown(is_visible),
+        TrackColumn::Year => state.set_is_year_shown(is_visible),
+        TrackColumn::Plays => state.set_is_plays_shown(is_visible),
+        TrackColumn::Duration => state.set_is_duration_shown(is_visible),
+        TrackColumn::Favorite => state.set_is_favorite_shown(is_visible),
+        TrackColumn::Rating => state.set_is_rating_shown(is_visible),
     }
 }
 
@@ -110,7 +110,7 @@ pub fn columns(window: &AppWindow) -> Vec<ColumnSetting> {
         .map(|column| ColumnSetting {
             id: column.id().to_owned(),
             width_pixels: width_of(&state, column),
-            visible: is_visible(&state, column),
+            is_visible: is_visible(&state, column),
         })
         .collect()
 }
@@ -123,6 +123,6 @@ pub(super) fn apply_columns(window: &AppWindow, columns: &[ColumnSetting]) {
         .filter_map(|setting| TrackColumn::from_id(&setting.id).map(|column| (column, setting)));
     for (column, setting) in known_columns {
         set_width(&state, column, setting.width_pixels);
-        set_visible(&state, column, setting.visible);
+        set_visible(&state, column, setting.is_visible);
     }
 }

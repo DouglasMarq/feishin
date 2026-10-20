@@ -32,7 +32,7 @@ pub enum PersistenceEvent {
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 enum RestoreState {
     Settled,
-    Awaiting { server_queue_wanted: bool },
+    Awaiting { is_server_queue_wanted: bool },
 }
 
 pub(super) struct QueuePersistence {
@@ -55,7 +55,7 @@ impl QueuePersistence {
             RestoreState::Settled => false,
             RestoreState::Awaiting { .. } => {
                 self.restore = RestoreState::Awaiting {
-                    server_queue_wanted: true,
+                    is_server_queue_wanted: true,
                 };
                 true
             }

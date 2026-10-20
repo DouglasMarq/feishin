@@ -15,7 +15,7 @@ pub enum RemoteCommand {
 pub struct AdoptedQueue {
     pub snapshot: QueueSnapshot,
     pub position_ms: u64,
-    pub playing: bool,
+    pub is_playing: bool,
 }
 
 impl Controller {
@@ -39,7 +39,7 @@ impl Controller {
         let payload = TransferPayload {
             snapshot: self.queue.snapshot(),
             position_ms: self.position_ms,
-            playing: self.playing,
+            is_playing: self.is_playing,
             server: self
                 .deps
                 .session
@@ -58,7 +58,7 @@ impl Controller {
         self.duration_ms = self.current_duration_ms();
         self.schedule_queue_sync();
         self.publish_all();
-        match adopted.playing {
+        match adopted.is_playing {
             true => self.load_current(adopted.position_ms),
             false => {
                 if let Some(track) = self.current_track() {

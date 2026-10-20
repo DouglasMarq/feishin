@@ -20,7 +20,7 @@ pub(crate) fn spawn_fader(mixer: Arc<Mixer>) -> Result<JoinHandle<()>> {
 
 fn run_fader(mixer: &Mixer) {
     let mut state = mixer.lock_state();
-    while !state.shutting_down {
+    while !state.is_shutting_down {
         let tick = state.fader_tick();
         if !tick.events.is_empty() {
             drop(state);
@@ -28,7 +28,7 @@ fn run_fader(mixer: &Mixer) {
             state = mixer.lock_state();
             continue;
         }
-        if std::mem::take(&mut state.fader_woken) {
+        if std::mem::take(&mut state.is_fader_woken) {
             continue;
         }
         state = wait_for_wake(mixer, state, tick.wait);
@@ -50,6 +50,6 @@ fn wait_for_wake<'state>(
             .wait(state)
             .unwrap_or_else(PoisonError::into_inner),
     };
-    state.fader_woken = false;
+    state.is_fader_woken = false;
     state
 }

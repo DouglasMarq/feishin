@@ -25,7 +25,7 @@ fn fill_editor(state: &RadioState<'_>, source: RadioSource, station: &RadioStati
     state.set_edit_url(station.stream_url.as_str().into());
     state.set_edit_homepage(station.homepage_url.as_deref().unwrap_or_default().into());
     state.set_edit_error("".into());
-    state.set_editing(true);
+    state.set_is_editing(true);
 }
 
 impl RadioView {
@@ -68,7 +68,7 @@ impl RadioView {
             false => id,
         };
         self.keep_favorite(saved_station(id, draft));
-        window.global::<RadioState>().set_editing(false);
+        window.global::<RadioState>().set_is_editing(false);
     }
 
     fn save_on_server(&self, id: String, draft: RadioStationDraft) {
@@ -77,7 +77,7 @@ impl RadioView {
         };
         self.set_busy(true);
         let view = self.clone();
-        self.ctx.rt.spawn(async move {
+        self.context.runtime.spawn(async move {
             let saved = match id.is_empty() {
                 true => server.create_radio_station(&draft).await,
                 false => server.update_radio_station(&id, &draft).await,
@@ -89,10 +89,10 @@ impl RadioView {
 
     fn finish_server_edit(&self, window: &AppWindow, saved: feishin_api::Result<()>) {
         let state = window.global::<RadioState>();
-        state.set_busy(false);
+        state.set_is_busy(false);
         match saved {
             Ok(()) => {
-                state.set_editing(false);
+                state.set_is_editing(false);
                 self.load();
             }
             Err(error) => {

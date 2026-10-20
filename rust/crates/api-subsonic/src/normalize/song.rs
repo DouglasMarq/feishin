@@ -59,7 +59,7 @@ pub fn song(item: SubsonicSong, server_id: &str) -> Song {
         bitrate_kbps: positive_u32(item.bit_rate),
         play_count: non_negative_u32(item.play_count).unwrap_or(0),
         user_rating: capped_rating(item.user_rating),
-        favorite: item.starred.is_starred(),
+        is_favorite: item.starred.is_starred(),
         cover_art_id: non_empty_text(item.cover_art),
         replay_gain: item.replay_gain.and_then(replay_gain),
         path: non_empty_text(item.path),
@@ -107,7 +107,7 @@ mod tests {
         assert_eq!(song.year, Some(2001));
         assert_eq!(song.container.as_deref(), Some("flac"));
         assert_eq!(song.user_rating, Some(4));
-        assert!(song.favorite);
+        assert!(song.is_favorite);
         assert_eq!(song.genres, vec!["Rock".to_owned()]);
         let gain = song.replay_gain.unwrap_or_default();
         assert_eq!(gain.track_gain_db, Some(-6.5));
@@ -141,7 +141,7 @@ mod tests {
         );
         assert_eq!(song.album_artists, song.artists);
         assert_eq!(song.genres, vec!["Pop".to_owned()]);
-        assert!(!song.favorite);
+        assert!(!song.is_favorite);
         assert_eq!(song.replay_gain, None);
     }
 }

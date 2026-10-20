@@ -123,10 +123,12 @@ impl<'de> Deserialize<'de> for AccentColor {
 #[serde(default)]
 pub struct AppearanceSettings {
     pub theme: ThemeId,
-    pub follow_system: bool,
+    #[serde(rename = "follow_system")]
+    pub is_following_system: bool,
     pub dark_theme: ThemeId,
     pub light_theme: ThemeId,
-    pub use_theme_accent: bool,
+    #[serde(rename = "use_theme_accent")]
+    pub is_using_theme_accent: bool,
     pub accent: AccentColor,
 }
 
@@ -134,10 +136,10 @@ impl Default for AppearanceSettings {
     fn default() -> Self {
         Self {
             theme: ThemeId::default_dark(),
-            follow_system: false,
+            is_following_system: false,
             dark_theme: ThemeId::default_dark(),
             light_theme: ThemeId::default_light(),
-            use_theme_accent: true,
+            is_using_theme_accent: true,
             accent: AccentColor::default(),
         }
     }
@@ -183,10 +185,10 @@ mod tests {
         let wrapper = Wrapper {
             appearance: AppearanceSettings {
                 theme: ThemeId::new("nord"),
-                follow_system: true,
+                is_following_system: true,
                 dark_theme: ThemeId::new("dracula"),
                 light_theme: ThemeId::new("githubLight"),
-                use_theme_accent: false,
+                is_using_theme_accent: false,
                 accent: AccentColor::new(170, 110, 216),
             },
         };
@@ -200,7 +202,7 @@ mod tests {
         let wrapper: Wrapper = toml::from_str("").unwrap();
         assert_eq!(wrapper.appearance, AppearanceSettings::default());
         assert_eq!(wrapper.appearance.theme.as_str(), DEFAULT_DARK_THEME);
-        assert!(wrapper.appearance.use_theme_accent);
+        assert!(wrapper.appearance.is_using_theme_accent);
     }
 
     #[test]

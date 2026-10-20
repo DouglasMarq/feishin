@@ -17,7 +17,8 @@ pub struct Artist {
     pub album_count: Option<u32>,
     pub song_count: Option<u32>,
     pub cover_art_id: Option<String>,
-    pub favorite: bool,
+    #[serde(rename = "favorite")]
+    pub is_favorite: bool,
     pub user_rating: Option<u8>,
     pub biography: Option<String>,
 }

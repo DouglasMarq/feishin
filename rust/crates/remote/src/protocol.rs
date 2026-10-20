@@ -171,16 +171,19 @@ pub enum StateUpdate {
         track: Option<QueueTrack>,
     },
     Playback {
-        playing: bool,
+        #[serde(rename = "playing")]
+        is_playing: bool,
         position_ms: u64,
         duration_ms: u64,
     },
     Volume {
         volume: u8,
-        muted: bool,
+        #[serde(rename = "muted")]
+        is_muted: bool,
     },
     Modes {
-        shuffle: bool,
+        #[serde(rename = "shuffle")]
+        is_shuffled: bool,
         repeat: RepeatMode,
     },
     Queue {
@@ -195,7 +198,8 @@ pub enum StateUpdate {
 pub struct TransferPayload {
     pub snapshot: QueueSnapshot,
     pub position_ms: u64,
-    pub playing: bool,
+    #[serde(rename = "playing")]
+    pub is_playing: bool,
     pub server: Option<ServerKey>,
 }
 
@@ -288,7 +292,7 @@ mod tests {
         }
         let update = HostMessage::State {
             update: Box::new(StateUpdate::Modes {
-                shuffle: true,
+                is_shuffled: true,
                 repeat: RepeatMode::All,
             }),
         };
@@ -301,5 +305,74 @@ mod tests {
             serde_json::to_string(&failure).unwrap(),
             r#"{"type":"failed","failure":"different_server"}"#
         );
+    }
+
+    fn keeps_its_json(text: &str) -> HostMessage {
+        let message: HostMessage = serde_json::from_str(text).unwrap();
+        assert_eq!(
+            serde_json::to_value(&message).unwrap(),
+            serde_json::from_str::<serde_json::Value>(text).unwrap()
+        );
+        message
+    }
+
+    fn state(update: StateUpdate) -> HostMessage {
+        HostMessage::State {
+            update: Box::new(update),
+        }
+    }
+
+    #[test]
+    fn given_state_updates_from_the_previous_release_they_keep_their_wire_names() {
+        let playback = r#"{"type":"state","update":{"kind":"playback","playing":true,"position_ms":1000,"duration_ms":2000}}"#;
+        let volume = r#"{"type":"state","update":{"kind":"volume","volume":40,"muted":true}}"#;
+        let modes = r#"{"type":"state","update":{"kind":"modes","shuffle":true,"repeat":"All"}}"#;
+
+        assert_eq!(
+            keeps_its_json(playback),
+            state(StateUpdate::Playback {
+                is_playing: true,
+                position_ms: 1000,
+                duration_ms: 2000,
+            })
+        );
+        assert_eq!(
+            keeps_its_json(volume),
+            state(StateUpdate::Volume {
+                volume: 40,
+                is_muted: true,
+            })
+        );
+        assert_eq!(
+            keeps_its_json(modes),
+            state(StateUpdate::Modes {
+                is_shuffled: true,
+                repeat: RepeatMode::All,
+            })
+        );
+    }
+
+    #[test]
+    fn given_a_transfer_and_a_favorites_list_they_keep_their_wire_names() {
+        let payload = TransferPayload {
+            snapshot: feishin_core::queue::Queue::new().snapshot(),
+            position_ms: 0,
+            is_playing: true,
+            server: None,
+        };
+        let list = RemoteList::Library {
+            query: SongListQuery {
+                is_favorite: Some(true),
+                ..SongListQuery::default()
+            },
+        };
+
+        let payload_json = serde_json::to_value(&payload).unwrap();
+        let list_json = serde_json::to_value(&list).unwrap();
+
+        assert_eq!(payload_json["playing"], true);
+        assert!(payload_json.get("is_playing").is_none());
+        assert_eq!(list_json["query"]["favorite"], true);
+        assert!(list_json["query"].get("is_favorite").is_none());
     }
 }

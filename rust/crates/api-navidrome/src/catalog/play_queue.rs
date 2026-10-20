@@ -96,7 +96,7 @@ impl NavidromeServer {
         snapshot: &QueueSnapshot<'_>,
         features: &Features,
     ) -> Result<()> {
-        if too_long_for_a_query_string(features, snapshot.song_ids) {
+        if is_too_long_for_a_query_string(features, snapshot.song_ids) {
             return Err(ApiError::Unsupported(QUEUE_TOO_LONG_FOR_A_QUERY_STRING));
         }
         let cursor = QueueCursor::for_features(features);
@@ -164,7 +164,7 @@ impl NavidromeServer {
     }
 }
 
-fn too_long_for_a_query_string(features: &Features, song_ids: &[String]) -> bool {
+fn is_too_long_for_a_query_string(features: &Features, song_ids: &[String]) -> bool {
     let id_bytes: usize = song_ids
         .iter()
         .map(|song_id| song_id.len() + ID_PARAMETER_BYTES)

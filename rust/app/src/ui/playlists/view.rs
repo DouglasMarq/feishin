@@ -8,57 +8,57 @@ use super::model::PlaylistsModel;
 use super::play_mode::{PlayMode, play};
 use crate::ui::{AppWindow, Context, PlaylistsState};
 
-pub fn install(window: &AppWindow, ctx: &Context) {
+pub fn install(window: &AppWindow, context: &Context) {
     let state = window.global::<PlaylistsState>();
     let weak = window.as_weak();
-    let cover_ctx = ctx.clone();
+    let cover_context = context.clone();
     state.set_rows(ModelRc::new(Rc::new(PlaylistsModel::new(
         move |cover_id| {
-            fetch_cover(weak.clone(), &cover_ctx, cover_id);
+            fetch_cover(weak.clone(), &cover_context, cover_id);
         },
     ))));
-    install_load(window, ctx);
-    install_play(window, ctx);
-    install_create(window, ctx);
-    install_delete(window, ctx);
+    install_load(window, context);
+    install_play(window, context);
+    install_create(window, context);
+    install_delete(window, context);
 }
 
-fn install_load(window: &AppWindow, ctx: &Context) {
+fn install_load(window: &AppWindow, context: &Context) {
     let weak = window.as_weak();
-    let load_ctx = ctx.clone();
+    let load_context = context.clone();
     window.global::<PlaylistsState>().on_load(move |_| {
         if let Some(window) = weak.upgrade() {
-            load(&window, &load_ctx);
+            load(&window, &load_context);
         }
     });
 }
 
-fn install_play(window: &AppWindow, ctx: &Context) {
+fn install_play(window: &AppWindow, context: &Context) {
     let weak = window.as_weak();
-    let play_ctx = ctx.clone();
+    let play_context = context.clone();
     window.global::<PlaylistsState>().on_play(move |id, mode| {
         if let Some(window) = weak.upgrade() {
-            play(&play_ctx, &window, &id, PlayMode::from(mode));
+            play(&play_context, &window, &id, PlayMode::from(mode));
         }
     });
 }
 
-fn install_create(window: &AppWindow, ctx: &Context) {
+fn install_create(window: &AppWindow, context: &Context) {
     let weak = window.as_weak();
-    let create_ctx = ctx.clone();
+    let create_context = context.clone();
     window.global::<PlaylistsState>().on_create(move |name| {
         if let Some(window) = weak.upgrade() {
-            create_playlist(&window, &create_ctx, &name);
+            create_playlist(&window, &create_context, &name);
         }
     });
 }
 
-fn install_delete(window: &AppWindow, ctx: &Context) {
+fn install_delete(window: &AppWindow, context: &Context) {
     let weak = window.as_weak();
-    let delete_ctx = ctx.clone();
+    let delete_context = context.clone();
     window.global::<PlaylistsState>().on_delete(move |id| {
         if let Some(window) = weak.upgrade() {
-            delete_playlist(&window, &delete_ctx, id);
+            delete_playlist(&window, &delete_context, id);
         }
     });
 }

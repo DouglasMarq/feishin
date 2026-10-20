@@ -91,7 +91,7 @@ fn apply_operation(queue: &mut Queue, operation: &Operation) {
             let before_uid = before.map(|before_index| uid_at(queue, before_index));
             queue.move_items(&uids, before_uid);
         }
-        Operation::Shuffle(enabled) => queue.set_shuffle(*enabled),
+        Operation::Shuffle(is_shuffled) => queue.set_shuffle(*is_shuffled),
         Operation::Repeat(mode) => queue.set_repeat(*mode),
         Operation::Clear => queue.clear(),
         Operation::Restore => *queue = Queue::from_snapshot(queue.snapshot()),
@@ -114,14 +114,14 @@ proptest! {
         let mut queue = Queue::with_seed(seed);
         for operation in &operations {
             let items_before: Vec<String> = item_ids(&queue);
-            let was_shuffled = queue.shuffle();
+            let was_shuffled = queue.is_shuffled();
             apply_operation(&mut queue, operation);
             assert_invariants(&queue);
 
             let peeked = queue.peek_next().cloned();
             prop_assert_eq!(queue.clone().next(Advance::Auto).cloned(), peeked);
 
-            if was_shuffled && queue.shuffle() && keeps_original_order(operation) {
+            if was_shuffled && queue.is_shuffled() && keeps_original_order(operation) {
                 prop_assert_eq!(item_ids(&queue), items_before);
             }
             if !queue.is_empty() && matches!(operation, Operation::PlayNow(..)) {

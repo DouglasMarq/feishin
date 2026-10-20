@@ -124,8 +124,8 @@ fn send_with_ticket(
     }
     let deps = deps.clone();
     let weak_window = window.as_weak();
-    deps.ctx.rt.clone().spawn(async move {
-        let tracks = resolve_tracks(&deps.matcher, deps.ctx.session.get(), &songs).await;
+    deps.context.runtime.clone().spawn(async move {
+        let tracks = resolve_tracks(&deps.matcher, deps.context.session.get(), &songs).await;
         ticket.turn.wait_for_earlier_turns().await;
         let superseded = ticket
             .play_request
@@ -133,7 +133,7 @@ fn send_with_ticket(
         if superseded {
             return;
         }
-        deps.ctx.send(command_for(placement, tracks));
+        deps.context.send(command_for(placement, tracks));
         if let Some(message) = message {
             on_ui(&weak_window, move |window| show_status(window, &message));
         }
@@ -155,7 +155,7 @@ pub fn play_collection(
     let ticket = ticket_for(deps, placement);
     let collection_deps = deps.clone();
     let weak_window = window.as_weak();
-    deps.ctx.rt.spawn(async move {
+    deps.context.runtime.spawn(async move {
         let result = source.collection(browse_id, settings).await;
         on_ui(&weak_window, move |window| match result {
             Ok(page) => {

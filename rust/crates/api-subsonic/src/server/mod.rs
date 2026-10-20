@@ -45,7 +45,7 @@ pub struct SubsonicServer {
 }
 
 fn is_open_subsonic(ping: &Ping) -> bool {
-    ping.open_subsonic.unwrap_or(false) && ping.server_version.is_some()
+    ping.is_open_subsonic.unwrap_or(false) && ping.server_version.is_some()
 }
 
 impl SubsonicServer {

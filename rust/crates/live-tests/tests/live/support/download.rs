@@ -27,11 +27,11 @@ pub async fn download(url: &str) -> Download {
 }
 
 pub fn is_audio(bytes: &[u8]) -> bool {
-    let mpeg_frame = bytes.len() > 1 && bytes[0] == 0xFF && bytes[1] & 0xE0 == 0xE0;
+    let is_mpeg_frame = bytes.len() > 1 && bytes[0] == 0xFF && bytes[1] & 0xE0 == 0xE0;
     [b"ID3".as_slice(), b"fLaC", b"OggS", b"RIFF"]
         .iter()
         .any(|magic| bytes.starts_with(magic))
-        || mpeg_frame
+        || is_mpeg_frame
 }
 
 pub fn is_image(bytes: &[u8]) -> bool {

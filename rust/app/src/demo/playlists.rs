@@ -88,7 +88,7 @@ impl FakeServer {
             name: playlist.name.clone(),
             comment: playlist.comment.clone(),
             owner: Some(self.config.username.clone()),
-            public: false,
+            is_public: false,
             song_count: playlist.songs.len() as u32,
             duration_ms: playlist
                 .songs

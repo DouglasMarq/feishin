@@ -16,7 +16,7 @@ pub(super) fn apply_theme(
     let index = catalog.index_or(theme, &fallback);
     window.global::<Theme>().invoke_apply(
         i32::try_from(index).unwrap_or_default(),
-        !settings.use_theme_accent,
+        !settings.is_using_theme_accent,
         slint_color(settings.accent),
     );
 }

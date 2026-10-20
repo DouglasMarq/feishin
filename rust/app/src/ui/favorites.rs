@@ -9,60 +9,60 @@ use super::{AppWindow, CardRow, Context, FavoritesState, TrackItem};
 
 pub fn favorite_song_query() -> SongListQuery {
     SongListQuery {
-        favorite: Some(true),
+        is_favorite: Some(true),
         ..SongListQuery::default()
     }
 }
 
 pub fn favorite_album_query() -> AlbumListQuery {
     AlbumListQuery {
-        favorite: Some(true),
+        is_favorite: Some(true),
         ..AlbumListQuery::default()
     }
 }
 
 pub fn favorite_artist_query() -> ArtistListQuery {
     ArtistListQuery {
-        favorite: Some(true),
+        is_favorite: Some(true),
         ..ArtistListQuery::default()
     }
 }
 
 const TRACKS: Binding<TrackItem> = Binding {
     rows: |window| window.global::<FavoritesState>().get_tracks(),
-    loading: |window, loading| {
+    loading: |window, is_loading| {
         window
             .global::<FavoritesState>()
-            .set_tracks_loading(loading)
+            .set_is_tracks_loading(is_loading)
     },
 };
 
 const ALBUMS: Binding<CardRow> = Binding {
     rows: |window| window.global::<FavoritesState>().get_albums(),
-    loading: |window, loading| {
+    loading: |window, is_loading| {
         window
             .global::<FavoritesState>()
-            .set_albums_loading(loading)
+            .set_is_albums_loading(is_loading)
     },
 };
 
 const ARTISTS: Binding<CardRow> = Binding {
     rows: |window| window.global::<FavoritesState>().get_artists(),
-    loading: |window, loading| {
+    loading: |window, is_loading| {
         window
             .global::<FavoritesState>()
-            .set_artists_loading(loading)
+            .set_is_artists_loading(is_loading)
     },
 };
 
-pub fn install(window: &AppWindow, ctx: &Context) {
+pub fn install(window: &AppWindow, context: &Context) {
     let state = window.global::<FavoritesState>();
-    state.set_tracks(track_table(window, ctx, true, TRACKS));
-    state.set_albums(card_grid(window, ctx, ALBUMS));
-    state.set_artists(card_grid(window, ctx, ARTISTS));
+    state.set_tracks(track_table(window, context, true, TRACKS));
+    state.set_albums(card_grid(window, context, ALBUMS));
+    state.set_artists(card_grid(window, context, ARTISTS));
     install_load(window);
-    install_play_track(window, ctx);
-    install_toggles(window, ctx);
+    install_play_track(window, context);
+    install_toggles(window, context);
     install_columns(window);
 }
 
@@ -77,9 +77,9 @@ fn install_load(window: &AppWindow) {
 
 fn load_favorites(window: &AppWindow) {
     let state = window.global::<FavoritesState>();
-    state.set_tracks_loading(true);
-    state.set_albums_loading(true);
-    state.set_artists_loading(true);
+    state.set_is_tracks_loading(true);
+    state.set_is_albums_loading(true);
+    state.set_is_artists_loading(true);
     with_table(window, TRACKS, |table| table.reset(favorite_song_query()));
     with_grid(window, ALBUMS, |grid| {
         grid.reset(Some(CardSource::Albums(favorite_album_query())));
@@ -89,42 +89,42 @@ fn load_favorites(window: &AppWindow) {
     });
 }
 
-fn install_play_track(window: &AppWindow, ctx: &Context) {
+fn install_play_track(window: &AppWindow, context: &Context) {
     let weak = window.as_weak();
-    let play_ctx = ctx.clone();
+    let play_context = context.clone();
     window
         .global::<FavoritesState>()
         .on_play_track(move |index| {
             if let Some(window) = weak.upgrade() {
-                play_track(&window, &play_ctx, TRACKS, index);
+                play_track(&window, &play_context, TRACKS, index);
             }
         });
 }
 
-fn install_toggles(window: &AppWindow, ctx: &Context) {
+fn install_toggles(window: &AppWindow, context: &Context) {
     let state = window.global::<FavoritesState>();
 
     let weak = window.as_weak();
-    let toggle_ctx = ctx.clone();
+    let toggle_context = context.clone();
     state.on_toggle_track(move |index| {
         if let (Some(window), Ok(index)) = (weak.upgrade(), usize::try_from(index)) {
-            toggle_track(&window, &toggle_ctx, TRACKS, index);
+            toggle_track(&window, &toggle_context, TRACKS, index);
         }
     });
 
     let weak = window.as_weak();
-    let toggle_ctx = ctx.clone();
+    let toggle_context = context.clone();
     state.on_toggle_album(move |id| {
         if let Some(window) = weak.upgrade() {
-            toggle_card(&window, &toggle_ctx, ALBUMS, &id);
+            toggle_card(&window, &toggle_context, ALBUMS, &id);
         }
     });
 
     let weak = window.as_weak();
-    let toggle_ctx = ctx.clone();
+    let toggle_context = context.clone();
     state.on_toggle_artist(move |id| {
         if let Some(window) = weak.upgrade() {
-            toggle_card(&window, &toggle_ctx, ARTISTS, &id);
+            toggle_card(&window, &toggle_context, ARTISTS, &id);
         }
     });
 }
@@ -161,9 +161,9 @@ mod tests {
 
     #[test]
     fn queries_ask_for_favorites_only() {
-        assert_eq!(favorite_song_query().favorite, Some(true));
-        assert_eq!(favorite_album_query().favorite, Some(true));
-        assert_eq!(favorite_artist_query().favorite, Some(true));
+        assert_eq!(favorite_song_query().is_favorite, Some(true));
+        assert_eq!(favorite_album_query().is_favorite, Some(true));
+        assert_eq!(favorite_artist_query().is_favorite, Some(true));
     }
 
     #[tokio::test]
@@ -174,19 +174,19 @@ mod tests {
             .await
             .map(|page| page.items)
             .unwrap_or_default();
-        assert!(!songs.is_empty() && songs.iter().all(|song| song.favorite));
+        assert!(!songs.is_empty() && songs.iter().all(|song| song.is_favorite));
         let albums = server
             .album_list(&favorite_album_query(), EVERYTHING)
             .await
             .map(|page| page.items)
             .unwrap_or_default();
         assert!(!albums.is_empty() && albums.len() < 100);
-        assert!(albums.iter().all(|album| album.favorite));
+        assert!(albums.iter().all(|album| album.is_favorite));
         let artists = server
             .artist_list(&favorite_artist_query(), EVERYTHING)
             .await
             .map(|page| page.items)
             .unwrap_or_default();
-        assert!(!artists.is_empty() && artists.iter().all(|artist| artist.favorite));
+        assert!(!artists.is_empty() && artists.iter().all(|artist| artist.is_favorite));
     }
 }

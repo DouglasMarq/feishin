@@ -40,30 +40,30 @@ pub(crate) fn equal_power_gains(progress: f64) -> FadeGains {
 mod tests {
     use super::*;
 
-    fn close(actual: f64, expected: f64) -> bool {
+    fn is_close(actual: f64, expected: f64) -> bool {
         (actual - expected).abs() < 1e-9
     }
 
     #[test]
     fn decibels_are_clamped_between_silence_and_unity() {
-        assert!(close(Gain::UNITY.decibels(), 0.0));
-        assert!(close(Gain::SILENT.decibels(), SILENT_DECIBELS));
-        assert!(close(Gain(0.5).decibels(), -6.020_599_913_279_624));
-        assert!(close(Gain(1e-9).decibels(), SILENT_DECIBELS));
-        assert!(close(Gain(2.0).decibels(), 0.0));
-        assert!(close(Gain(f64::NAN).decibels(), SILENT_DECIBELS));
+        assert!(is_close(Gain::UNITY.decibels(), 0.0));
+        assert!(is_close(Gain::SILENT.decibels(), SILENT_DECIBELS));
+        assert!(is_close(Gain(0.5).decibels(), -6.020_599_913_279_624));
+        assert!(is_close(Gain(1e-9).decibels(), SILENT_DECIBELS));
+        assert!(is_close(Gain(2.0).decibels(), 0.0));
+        assert!(is_close(Gain(f64::NAN).decibels(), SILENT_DECIBELS));
     }
 
     #[test]
     fn equal_power_gains_start_silent_and_keep_constant_power() {
         let start = equal_power_gains(0.0);
-        assert!(close(start.outgoing.linear(), 1.0) && close(start.incoming.linear(), 0.0));
+        assert!(is_close(start.outgoing.linear(), 1.0) && is_close(start.incoming.linear(), 0.0));
         let end = equal_power_gains(1.0);
-        assert!(close(end.outgoing.linear(), 0.0) && close(end.incoming.linear(), 1.0));
+        assert!(is_close(end.outgoing.linear(), 0.0) && is_close(end.incoming.linear(), 1.0));
         for step in 0..=20 {
             let gains = equal_power_gains(f64::from(step) / 20.0);
             let power = gains.outgoing.linear().powi(2) + gains.incoming.linear().powi(2);
-            assert!(close(power, 1.0), "{gains:?}");
+            assert!(is_close(power, 1.0), "{gains:?}");
         }
         assert_eq!(equal_power_gains(-1.0), start);
         assert_eq!(equal_power_gains(3.0), end);

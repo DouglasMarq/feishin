@@ -95,8 +95,8 @@ impl AudioOutput for RecordingAudio {
     fn set_volume(&self, _volume: u8) -> Result<()> {
         Ok(())
     }
-    fn set_muted(&self, muted: bool) -> Result<()> {
-        self.record(AudioCall::Mute(muted))
+    fn set_muted(&self, is_muted: bool) -> Result<()> {
+        self.record(AudioCall::Mute(is_muted))
     }
     fn set_replay_gain(&self, _mode: ReplayGainSetting) -> Result<()> {
         self.outcome()
@@ -211,10 +211,10 @@ pub(super) fn start_harness(settings: Settings) -> Harness {
     start_harness_with(settings, 100, None)
 }
 
-pub(super) fn test_settings(gapless: bool, scrobble: bool) -> Settings {
+pub(super) fn test_settings(is_gapless: bool, is_scrobbling_enabled: bool) -> Settings {
     let mut settings = Settings::default();
-    settings.playback.gapless = gapless;
-    settings.playback.scrobble = scrobble;
+    settings.playback.is_gapless = is_gapless;
+    settings.playback.is_scrobbling_enabled = is_scrobbling_enabled;
     settings
 }
 

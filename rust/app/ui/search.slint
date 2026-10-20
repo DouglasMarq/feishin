@@ -17,16 +17,16 @@ export struct SearchCard {
 
 export global SearchState {
     in-out property <string> query;
-    in property <bool> loading;
+    in property <bool> is-loading;
     in property <[TrackRow]> songs;
     in property <[SearchCard]> albums;
     in property <[SearchCard]> artists;
-    in property <bool> songs-more;
-    in property <bool> albums-more;
-    in property <bool> artists-more;
-    in property <bool> songs-busy;
-    in property <bool> albums-busy;
-    in property <bool> artists-busy;
+    in property <bool> has-more-songs;
+    in property <bool> has-more-albums;
+    in property <bool> has-more-artists;
+    in property <bool> is-songs-busy;
+    in property <bool> is-albums-busy;
+    in property <bool> is-artists-busy;
     callback load(string);
     callback edited(string);
     callback submit(string);
@@ -41,7 +41,7 @@ export global SearchState {
 component SectionTitle inherits HorizontalLayout {
     in property <string> text;
     in property <int> count;
-    in property <bool> more;
+    in property <bool> has-more;
     padding-top: 20px;
     padding-bottom: 8px;
     spacing: 8px;
@@ -55,7 +55,7 @@ component SectionTitle inherits HorizontalLayout {
     }
 
     Text {
-        text: root.count + (root.more ? "+" : "");
+        text: root.count + (root.has-more ? "+" : "");
         color: Theme.muted;
         vertical-alignment: center;
     }
@@ -66,7 +66,7 @@ component SectionTitle inherits HorizontalLayout {
 }
 
 component MoreButton inherits Rectangle {
-    in property <bool> busy;
+    in property <bool> is-busy;
     callback clicked();
     height: 44px;
 
@@ -77,21 +77,21 @@ component MoreButton inherits Rectangle {
         border-radius: self.height / 2;
         border-width: 1px;
         border-color: Theme.border;
-        background: touch.has-hover && !root.busy ? Theme.hover : transparent;
+        background: touch.has-hover && !root.is-busy ? Theme.hover : transparent;
 
         label := Text {
-            text: root.busy ? @tr("Loading...") : @tr("Show more");
+            text: root.is-busy ? @tr("Loading...") : @tr("Show more");
             color: touch.has-hover ? Theme.foreground : Theme.muted;
             font-weight: 600;
         }
 
         TooltipAnchor {
-            text: root.busy ? "" : @tr("Load more results");
-            hovered: touch.has-hover;
+            text: root.is-busy ? "" : @tr("Load more results");
+            is-hovered: touch.has-hover;
         }
 
         touch := TouchArea {
-            enabled: !root.busy;
+            enabled: !root.is-busy;
             mouse-cursor: pointer;
             clicked => {
                 root.clicked();
@@ -105,7 +105,7 @@ component SongRow inherits Rectangle {
     in property <length> title-width;
     in property <length> artist-width;
     in property <length> album-width;
-    property <bool> playing: root.track.id == PlayerState.song-id;
+    property <bool> is-playing: root.track.id == PlayerState.song-id;
     property <int> position: root.track.index - 1;
     background: touch.has-hover ? Theme.hover : transparent;
 
@@ -143,7 +143,7 @@ component SongRow inherits Rectangle {
 
             MenuItem {
                 title: ShareState.menu-title;
-                enabled: ShareState.available && !ShareState.busy;
+                enabled: ShareState.is-available && !ShareState.is-busy;
                 activated => {
                     ShareState.share(ShareKind.song, root.track.id, root.track.title);
                 }
@@ -162,14 +162,14 @@ component SongRow inherits Rectangle {
 
             TooltipAnchor {
                 text: @tr("Double-click to play");
-                hovered: touch.has-hover;
+                is-hovered: touch.has-hover;
             }
 
             HorizontalLayout {
                 Rectangle {
                     width: 48px;
 
-                    if !touch.has-hover && !root.playing: Text {
+                    if !touch.has-hover && !root.is-playing: Text {
                         x: 0;
                         width: parent.width - 16px;
                         text: root.track.index;
@@ -178,7 +178,7 @@ component SongRow inherits Rectangle {
                         vertical-alignment: center;
                     }
 
-                    if !touch.has-hover && root.playing: Icon {
+                    if !touch.has-hover && root.is-playing: Icon {
                         x: parent.width - 16px - self.width;
                         path: Icons.note;
                         color: Theme.primary;
@@ -201,7 +201,7 @@ component SongRow inherits Rectangle {
 
                         TooltipAnchor {
                             text: @tr("Play");
-                            hovered: play-touch.has-hover;
+                            is-hovered: play-touch.has-hover;
                         }
 
                         play-touch := TouchArea {
@@ -216,7 +216,7 @@ component SongRow inherits Rectangle {
                 Cell {
                     width: root.title-width;
                     text: root.track.title;
-                    text-color: root.playing ? Theme.primary : Theme.foreground;
+                    text-color: root.is-playing ? Theme.primary : Theme.foreground;
                 }
 
                 Cell {
@@ -282,15 +282,15 @@ component SongRows inherits Rectangle {
 
 component CardView inherits Rectangle {
     in property <SearchCard> card;
-    in property <bool> round;
+    in property <bool> is-round;
     in property <length> view-top;
     in property <length> view-bottom;
-    property <bool> in-view: self.absolute-position.y + self.height > root.view-top && self.absolute-position.y < root.view-bottom;
+    property <bool> is-in-view: self.absolute-position.y + self.height > root.view-top && self.absolute-position.y < root.view-bottom;
     callback open();
     callback need-cover();
     height: self.width + 52px;
 
-    if root.in-view: Rectangle {
+    if root.is-in-view: Rectangle {
         init => {
             root.need-cover();
         }
@@ -300,7 +300,7 @@ component CardView inherits Rectangle {
         y: 0;
         width: root.width;
         height: root.width;
-        border-radius: root.round ? self.width / 2 : Theme.radius;
+        border-radius: root.is-round ? self.width / 2 : Theme.radius;
         background: Theme.surface-raised;
         clip: true;
 
@@ -312,7 +312,7 @@ component CardView inherits Rectangle {
         }
 
         if !root.card.has-cover: Icon {
-            path: root.round ? Icons.artist : Icons.album;
+            path: root.is-round ? Icons.artist : Icons.album;
             color: Theme.muted;
             width: 48px;
             height: 48px;
@@ -334,7 +334,7 @@ component CardView inherits Rectangle {
             color: Theme.foreground;
             font-weight: 600;
             overflow: elide;
-            horizontal-alignment: root.round ? center : left;
+            horizontal-alignment: root.is-round ? center : left;
         }
 
         if root.card.subtitle != "": Text {
@@ -342,7 +342,7 @@ component CardView inherits Rectangle {
             color: Theme.muted;
             font-size: 12px;
             overflow: elide;
-            horizontal-alignment: root.round ? center : left;
+            horizontal-alignment: root.is-round ? center : left;
         }
     }
 
@@ -355,14 +355,14 @@ component CardView inherits Rectangle {
 
     TooltipAnchor {
         text: @tr("Open {}", root.card.title);
-        hovered: touch.has-hover;
+        is-hovered: touch.has-hover;
     }
 }
 
 component CardGrid inherits Rectangle {
     in property <[SearchCard]> cards;
     in property <SearchKind> kind;
-    in property <bool> round;
+    in property <bool> is-round;
     in property <length> view-top;
     in property <length> view-bottom;
     property <length> gap: 16px;
@@ -377,7 +377,7 @@ component CardGrid inherits Rectangle {
         y: floor(card-index / root.columns) * (root.card-height + root.gap);
         width: root.card-width;
         card: card;
-        round: root.round;
+        is-round: root.is-round;
         view-top: root.view-top;
         view-bottom: root.view-bottom;
         open => {
@@ -390,7 +390,7 @@ component CardGrid inherits Rectangle {
 }
 
 export component SearchView inherits Rectangle {
-    property <bool> empty: SearchState.songs.length == 0 && SearchState.albums.length == 0 && SearchState.artists.length == 0;
+    property <bool> is-empty: SearchState.songs.length == 0 && SearchState.albums.length == 0 && SearchState.artists.length == 0;
     property <length> title-width: max(160px, (scroll.visible-width - 40px - 48px - 72px) * 0.4);
     property <length> artist-width: max(120px, (scroll.visible-width - 40px - 48px - 72px) * 0.3);
     property <length> album-width: max(120px, (scroll.visible-width - 40px - 48px - 72px) * 0.3);
@@ -453,7 +453,7 @@ export component SearchView inherits Rectangle {
                         SectionTitle {
                             text: @tr("Songs");
                             count: SearchState.songs.length;
-                            more: SearchState.songs-more;
+                            has-more: SearchState.has-more-songs;
                         }
 
                         Rectangle {
@@ -462,32 +462,32 @@ export component SearchView inherits Rectangle {
                             HorizontalLayout {
                                 HeaderCell {
                                     text: "#";
-                                    sortable: false;
+                                    is-sortable: false;
                                     align: right;
                                     column-width: 48px;
                                 }
 
                                 HeaderCell {
                                     text: @tr("Title");
-                                    sortable: false;
+                                    is-sortable: false;
                                     column-width: root.title-width;
                                 }
 
                                 HeaderCell {
                                     text: @tr("Artist");
-                                    sortable: false;
+                                    is-sortable: false;
                                     column-width: root.artist-width;
                                 }
 
                                 HeaderCell {
                                     text: @tr("Album");
-                                    sortable: false;
+                                    is-sortable: false;
                                     column-width: root.album-width;
                                 }
 
                                 HeaderCell {
                                     text: @tr("Time");
-                                    sortable: false;
+                                    is-sortable: false;
                                     column-width: 72px;
                                 }
 
@@ -509,8 +509,8 @@ export component SearchView inherits Rectangle {
                             album-width: root.album-width;
                         }
 
-                        if SearchState.songs-more: MoreButton {
-                            busy: SearchState.songs-busy;
+                        if SearchState.has-more-songs: MoreButton {
+                            is-busy: SearchState.is-songs-busy;
                             clicked => {
                                 SearchState.show-more(SearchKind.songs);
                             }
@@ -521,7 +521,7 @@ export component SearchView inherits Rectangle {
                         SectionTitle {
                             text: @tr("Albums");
                             count: SearchState.albums.length;
-                            more: SearchState.albums-more;
+                            has-more: SearchState.has-more-albums;
                         }
 
                         CardGrid {
@@ -534,8 +534,8 @@ export component SearchView inherits Rectangle {
                             }
                         }
 
-                        if SearchState.albums-more: MoreButton {
-                            busy: SearchState.albums-busy;
+                        if SearchState.has-more-albums: MoreButton {
+                            is-busy: SearchState.is-albums-busy;
                             clicked => {
                                 SearchState.show-more(SearchKind.albums);
                             }
@@ -546,13 +546,13 @@ export component SearchView inherits Rectangle {
                         SectionTitle {
                             text: @tr("Artists");
                             count: SearchState.artists.length;
-                            more: SearchState.artists-more;
+                            has-more: SearchState.has-more-artists;
                         }
 
                         CardGrid {
                             cards: SearchState.artists;
                             kind: SearchKind.artists;
-                            round: true;
+                            is-round: true;
                             view-top: scroll.absolute-position.y;
                             view-bottom: scroll.absolute-position.y + scroll.height;
                             open(id) => {
@@ -560,8 +560,8 @@ export component SearchView inherits Rectangle {
                             }
                         }
 
-                        if SearchState.artists-more: MoreButton {
-                            busy: SearchState.artists-busy;
+                        if SearchState.has-more-artists: MoreButton {
+                            is-busy: SearchState.is-artists-busy;
                             clicked => {
                                 SearchState.show-more(SearchKind.artists);
                             }
@@ -570,7 +570,7 @@ export component SearchView inherits Rectangle {
                 }
             }
 
-            if root.empty: VerticalLayout {
+            if root.is-empty: VerticalLayout {
                 alignment: center;
                 spacing: 12px;
 
@@ -583,13 +583,13 @@ export component SearchView inherits Rectangle {
                 }
 
                 Text {
-                    text: SearchState.loading ? @tr("Searching...") : SearchState.query.is-empty ? @tr("Search your library for songs, albums and artists") : @tr("No results for \"{}\"", SearchState.query);
+                    text: SearchState.is-loading ? @tr("Searching...") : SearchState.query.is-empty ? @tr("Search your library for songs, albums and artists") : @tr("No results for \"{}\"", SearchState.query);
                     color: Theme.muted;
                     horizontal-alignment: center;
                 }
             }
 
-            if SearchState.loading && !root.empty: Rectangle {
+            if SearchState.is-loading && !root.is-empty: Rectangle {
                 y: 0;
                 height: 2px;
                 background: Theme.primary;

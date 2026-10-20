@@ -5,11 +5,11 @@ const ENHANCED_SONG_LYRICS_VERSION: u32 = 2;
 
 #[derive(Debug, Clone, Default, PartialEq, Eq)]
 pub struct Extensions {
-    pub form_post: bool,
-    pub index_based_queue: bool,
-    pub playback_report: bool,
-    pub top_songs_by_artist_id: bool,
-    pub transcoding: bool,
+    pub has_form_post: bool,
+    pub has_index_based_queue: bool,
+    pub has_playback_report: bool,
+    pub has_top_songs_by_artist_id: bool,
+    pub has_transcoding: bool,
     pub song_lyrics: Vec<u32>,
 }
 
@@ -24,11 +24,11 @@ impl Extensions {
         let mut extensions = Self::default();
         for extension in response.open_subsonic_extensions.unwrap_or_default() {
             match extension.name.as_str() {
-                "formPost" => extensions.form_post = true,
-                "indexBasedQueue" => extensions.index_based_queue = true,
-                "playbackReport" => extensions.playback_report = true,
-                "topSongsByArtistId" => extensions.top_songs_by_artist_id = true,
-                "transcoding" => extensions.transcoding = true,
+                "formPost" => extensions.has_form_post = true,
+                "indexBasedQueue" => extensions.has_index_based_queue = true,
+                "playbackReport" => extensions.has_playback_report = true,
+                "topSongsByArtistId" => extensions.has_top_songs_by_artist_id = true,
+                "transcoding" => extensions.has_transcoding = true,
                 "songLyrics" => extensions.song_lyrics = extension.versions,
                 _ => {}
             }
@@ -37,14 +37,14 @@ impl Extensions {
     }
 
     pub(crate) fn request_encoding(&self) -> RequestEncoding {
-        match self.form_post {
+        match self.has_form_post {
             true => RequestEncoding::FormPost,
             false => RequestEncoding::QueryString,
         }
     }
 
     pub(crate) fn play_queue_mode(&self) -> PlayQueueMode {
-        match self.index_based_queue {
+        match self.has_index_based_queue {
             true => PlayQueueMode::IndexBased,
             false => PlayQueueMode::CurrentSongId,
         }
