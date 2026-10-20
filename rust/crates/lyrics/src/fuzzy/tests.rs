@@ -10,16 +10,16 @@ fn item<'text>(name: &'text str, artist: &'text str, is_sync: Option<bool>) -> S
 
 #[test]
 fn exact_match_scores_near_zero() {
-    let items = [item("Bohemian Rhapsody", "Queen", None)];
-    let ranked = order_search_results("Bohemian Rhapsody", "Queen", &items);
+    let items = [item("Keqivuow Zqoxbemh", "Yaiiw", None)];
+    let ranked = order_search_results("Keqivuow Zqoxbemh", "Yaiiw", &items);
     assert_eq!(ranked.len(), 1);
     assert!(ranked[0].score < 1e-6);
 }
 
 #[test]
 fn unrelated_items_are_dropped() {
-    let items = [item("Completely Different", "Nobody Known", None)];
-    assert!(order_search_results("Bohemian Rhapsody", "Queen", &items).is_empty());
+    let items = [item("Levxticith Munniziwc", "Wekemh Swefw", None)];
+    assert!(order_search_results("Keqivuow Zqoxbemh", "Yaiiw", &items).is_empty());
 }
 
 #[test]
@@ -58,15 +58,15 @@ fn assert_matches_fuse_js_7_4_2(
 #[test]
 fn reference_scores_for_title_and_artist() {
     assert_matches_fuse_js_7_4_2(
-        "Bohemian Rhapsody",
-        "Queen",
+        "Keqivuow Zqoxbemh",
+        "Yaiiw",
         &[
-            ("Bohemian Rhapsody", "Queen", None),
-            ("Bohemian Rhapsody (Remastered 2011)", "Queen", Some(true)),
-            ("Bohemain Rapsody", "Queen", Some(false)),
-            ("Bohemian Rhapsody", "Panic! At The Disco", Some(true)),
-            ("Killer Queen", "Queen", None),
-            ("Bohemian Rhapsody by Queen", "Queen", None),
+            ("Keqivuow Zqoxbemh", "Yaiiw", None),
+            ("Keqivuow Zqoxbemh (Zivobcizim 2011)", "Yaiiw", Some(true)),
+            ("Keqivouw Zoxbemh", "Yaiiw", Some(false)),
+            ("Keqivuow Zqoxbemh", "Xowul! Oc Cqi Muble", Some(true)),
+            ("Suttiz Yaiiw", "Yaiiw", None),
+            ("Keqivuow Zqoxbemh kh Yaiiw", "Yaiiw", None),
         ],
         &[
             (1, 0.03162277660168379),
@@ -80,13 +80,13 @@ fn reference_scores_for_title_and_artist() {
 #[test]
 fn reference_scores_for_multi_word_artist() {
     assert_matches_fuse_js_7_4_2(
-        "Lemon",
-        "Kenshi Yonezu",
+        "Tivew",
+        "Siwbqu Hewija",
         &[
-            ("Lemon", "Kenshi Yonezu", None),
-            ("Lemon (Live)", "Kenshi Yonezu, Guest", None),
-            ("Lemon Tree", "Fools Garden", None),
-            ("Lemonade", "Kenshi", None),
+            ("Tivew", "Siwbqu Hewija", None),
+            ("Tivew (Tudi)", "Siwbqu Hewija, Paibc", None),
+            ("Tivew Czii", "Neetb Pozmiw", None),
+            ("Tivewomi", "Siwbqu", None),
         ],
         &[
             (0, 8.569061098350962e-12),
@@ -125,12 +125,12 @@ fn reference_scores_for_patterns_longer_than_32_characters() {
 #[test]
 fn reference_scores_for_accented_title() {
     assert_matches_fuse_js_7_4_2(
-        "Café del Mar",
-        "Energy 52",
+        "Loné mit Voz",
+        "Iwizph 52",
         &[
-            ("Café Del Mar", "Energy 52", None),
-            ("Cafe del Mar", "Energy52", None),
-            ("夢ならば", "Energy 52", None),
+            ("Loné Mit Voz", "Iwizph 52", None),
+            ("Loni mit Voz", "Iwizph52", None),
+            ("星めおょ", "Iwizph 52", None),
         ],
         &[(0, 9.287439764962262e-10), (1, 0.2384033869402615)],
     );
@@ -139,13 +139,13 @@ fn reference_scores_for_accented_title() {
 #[test]
 fn reference_scores_for_title_only() {
     assert_matches_fuse_js_7_4_2(
-        "Yesterday",
+        "Hibcizmoh",
         "",
         &[
-            ("Yesterday", "The Beatles", None),
-            ("Yesterday (Remastered)", "The Beatles", Some(true)),
-            ("Yesterdays", "Guns N Roses", None),
-            ("Today", "X", None),
+            ("Hibcizmoh", "Cqi Kioctib", None),
+            ("Hibcizmoh (Zivobcizim)", "Cqi Kioctib", Some(true)),
+            ("Hibcizmohb", "Pawb W Zebib", None),
+            ("Cemoh", "G", None),
         ],
         &[
             (1, 0.08699614330652679),
@@ -160,12 +160,12 @@ fn reference_scores_for_title_only() {
 fn reference_scores_for_artist_only() {
     assert_matches_fuse_js_7_4_2(
         "",
-        "Radiohead",
+        "Zomueqiom",
         &[
-            ("Creep", "Radiohead", None),
-            ("Karma Police", "Radiohead, Thom", None),
-            ("Creep", "Radio Head", None),
-            ("Creep", "TLC", None),
+            ("Lziix", "Zomueqiom", None),
+            ("Sozvo Xetuli", "Zomueqiom, Cqev", None),
+            ("Lziix", "Zomue Qiom", None),
+            ("Lziix", "CTL", None),
         ],
         &[
             (0, 1.4901161193847656e-8),
@@ -178,11 +178,11 @@ fn reference_scores_for_artist_only() {
 #[test]
 fn reference_scores_for_japanese_text() {
     assert_matches_fuse_js_7_4_2(
-        "夢ならばどれほどよかったでしょう",
-        "米津玄師",
+        "星めおょむきをむぉぢぺぶまのえそ",
+        "森川青木",
         &[
-            ("夢ならばどれほどよかったでしょう", "米津玄師", None),
-            ("夢ならば", "米津 玄師", None),
+            ("星めおょむきをむぉぢぺぶまのえそ", "森川青木", None),
+            ("星めおょ", "森川 青木", None),
         ],
         &[(0, 2.220446049250313e-16)],
     );
@@ -191,16 +191,16 @@ fn reference_scores_for_japanese_text() {
 #[test]
 fn reference_scores_skip_blank_names() {
     assert_matches_fuse_js_7_4_2(
-        "Under Pressure",
-        "Queen",
+        "Awmiz Xzibbazi",
+        "Yaiiw",
         &[
-            ("Bohemian Rhapsody by Queen", "Queen", None),
+            ("Keqivuow Zqoxbemh kh Yaiiw", "Yaiiw", None),
             (
-                "Under Pressure by Queen & David Bowie",
-                "Queen & David Bowie",
+                "Awmiz Xzibbazi kh Yaiiw & Modum Kefui",
+                "Yaiiw & Modum Kefui",
                 None,
             ),
-            ("  ", "Queen", None),
+            ("  ", "Yaiiw", None),
         ],
         &[(1, 0.07345138681571149)],
     );

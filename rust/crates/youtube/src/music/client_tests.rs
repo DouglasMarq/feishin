@@ -118,13 +118,16 @@ async fn song_search_uses_the_songs_filter() {
     Mock::given(method("POST"))
         .and(path("/search"))
         .and(body_partial_json(
-            json!({"query": "get lucky", "params": "EgWKAQIIAWoMEA4QChADEAQQCRAF"}),
+            json!({"query": "lucky static", "params": "EgWKAQIIAWoMEA4QChADEAQQCRAF"}),
         ))
         .respond_with(json_body(SEARCH))
         .expect(1)
         .mount(&server)
         .await;
-    let songs = client(&server).search_songs("  get lucky ").await.unwrap();
+    let songs = client(&server)
+        .search_songs("  lucky static ")
+        .await
+        .unwrap();
     assert_eq!(songs.len(), 4);
 }
 
@@ -134,14 +137,14 @@ async fn song_radio_asks_the_watch_endpoint_for_the_radio_playlist() {
     Mock::given(method("POST"))
         .and(path("/next"))
         .and(body_partial_json(
-            json!({"videoId": "4D7u5KF7SP8", "playlistId": "RDAMVM4D7u5KF7SP8"}),
+            json!({"videoId": "invented001", "playlistId": "RDAMVMinvented001"}),
         ))
         .respond_with(json_body(NEXT))
         .expect(1)
         .mount(&server)
         .await;
     let music = client(&server);
-    let radio = music.radio("4D7u5KF7SP8").await.unwrap();
+    let radio = music.radio("invented001").await.unwrap();
     assert_eq!(radio.len(), 5);
     assert_eq!(
         music.radio("../evil").await,
@@ -161,7 +164,7 @@ async fn a_watch_page_without_a_queue_is_a_decode_error() {
         .mount(&server)
         .await;
     assert!(matches!(
-        client(&server).radio("4D7u5KF7SP8").await,
+        client(&server).radio("invented001").await,
         Err(MusicError::Decode(_))
     ));
 }
@@ -226,7 +229,7 @@ async fn real_youtube_music_answers_every_discover_request() {
     assert!(!charts.is_empty());
     let moods = music.mood_categories().await.unwrap();
     assert!(!music.mood(&moods[0].params).await.unwrap().is_empty());
-    let found = music.search_songs("daft punk get lucky").await.unwrap();
+    let found = music.search_songs("classical piano").await.unwrap();
     let Some(first) = found.first() else {
         panic!("no search results");
     };

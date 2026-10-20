@@ -3,17 +3,17 @@ use serde_json::{Value, json};
 use wiremock::matchers::{method, path, query_param};
 use wiremock::{Mock, MockServer, ResponseTemplate};
 
-const PAGE: &str = r#"<!DOCTYPE html><html><head><title>Queen - Bohemian Rhapsody Lyrics | Genius Lyrics</title></head>
+const PAGE: &str = r#"<!DOCTYPE html><html><head><title>Velvet Comets - Lantern Harbor Lyrics | Genius Lyrics</title></head>
 <body><main>
-<div class="Lyrics__Container" data-lyrics-container="true"><div data-exclude-from-selection="true"><span>32 Contributors</span>Bohemian Rhapsody Lyrics</div>[Intro]<br/>Is this the real life?<br>Is this just <i>fantasy</i>?</div>
+<div class="Lyrics__Container" data-lyrics-container="true"><div data-exclude-from-selection="true"><span>32 Contributors</span>Lantern Harbor Lyrics</div>[Intro]<br/>Do the lanterns still glow?<br>Do they only <i>flicker</i>?</div>
 <div class="LyricsFooter">Embed</div>
-<div class="Lyrics__Container" data-lyrics-container="true">[Verse 1]<br/>Mama, just killed a man &amp; more</div>
+<div class="Lyrics__Container" data-lyrics-container="true">[Verse 1]<br/>Paper boats drift by &amp; more</div>
 </main></body></html>"#;
 
 fn query() -> LyricsQuery {
     LyricsQuery {
-        title: "Bohemian Rhapsody".to_owned(),
-        artist: "Queen".to_owned(),
+        title: "Lantern Harbor".to_owned(),
+        artist: "Velvet Comets".to_owned(),
         album: None,
         duration_ms: None,
     }
@@ -46,7 +46,7 @@ async fn mount_search(server: &MockServer, hits: Vec<Value>) {
     Mock::given(method("GET"))
         .and(path("/api/search/song"))
         .and(query_param("per_page", "5"))
-        .and(query_param("q", "Queen Bohemian Rhapsody"))
+        .and(query_param("q", "Velvet Comets Lantern Harbor"))
         .respond_with(ResponseTemplate::new(200).set_body_json(json!({
             "meta": { "status": 200 },
             "response": { "sections": [{ "type": "song", "hits": hits }], "next_page": 2 }
@@ -59,7 +59,7 @@ async fn mount_search(server: &MockServer, hits: Vec<Value>) {
 fn extracts_modern_containers() {
     assert_eq!(
         extract_lyrics(PAGE),
-        "[Intro]\nIs this the real life?\nIs this just fantasy?\n[Verse 1]\nMama, just killed a man & more"
+        "[Intro]\nDo the lanterns still glow?\nDo they only flicker?\n[Verse 1]\nPaper boats drift by & more"
     );
 }
 
@@ -79,21 +79,21 @@ async fn fetches_and_scrapes_best_hit() {
         vec![
             hit(
                 &server,
-                "Queen-bohemian-rhapsody-lyrics",
-                "Bohemian Rhapsody",
-                "Queen",
+                "Velvet-comets-lantern-harbor-lyrics",
+                "Lantern Harbor",
+                "Velvet Comets",
             ),
             hit(
                 &server,
                 "Other-song-lyrics",
-                "Under Pressure",
-                "Queen & David Bowie",
+                "Tidal Pressure",
+                "Velvet Comets & Iris Vale",
             ),
         ],
     )
     .await;
     Mock::given(method("GET"))
-        .and(path("/Queen-bohemian-rhapsody-lyrics"))
+        .and(path("/Velvet-comets-lantern-harbor-lyrics"))
         .respond_with(ResponseTemplate::new(200).set_body_string(PAGE))
         .expect(1)
         .mount(&server)
@@ -127,14 +127,14 @@ async fn page_without_lyrics_yields_none() {
         &server,
         vec![hit(
             &server,
-            "Queen-bohemian-rhapsody-lyrics",
-            "Bohemian Rhapsody",
-            "Queen",
+            "Velvet-comets-lantern-harbor-lyrics",
+            "Lantern Harbor",
+            "Velvet Comets",
         )],
     )
     .await;
     Mock::given(method("GET"))
-        .and(path("/Queen-bohemian-rhapsody-lyrics"))
+        .and(path("/Velvet-comets-lantern-harbor-lyrics"))
         .respond_with(
             ResponseTemplate::new(200).set_body_string("<html><body>nothing</body></html>"),
         )

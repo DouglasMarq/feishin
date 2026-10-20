@@ -153,18 +153,21 @@ mod tests {
     #[test]
     fn clusters_follow_genres_then_artists_and_prefer_different_artists() {
         let ranked = vec![
-            song("1", "Daft Punk", Some("Electronic"), 9),
-            song("2", "Daft Punk", Some("electronic"), 8),
-            song("3", "Justice", Some("Electronic"), 7),
-            song("4", "Cartola", Some("Samba"), 6),
+            song("1", "Velvet Comets", Some("Electronic"), 9),
+            song("2", "Velvet Comets", Some("electronic"), 8),
+            song("3", "Iron Verdict", Some("Electronic"), 7),
+            song("4", "Rosa Batuque", Some("Samba"), 6),
             song("5", "Untagged Band", None, 5),
-            song("6", "Air", Some("Electronic"), 4),
+            song("6", "Breeze Club", Some("Electronic"), 4),
         ];
         let clusters = cluster_seeds(&ranked, 3, 3);
         assert_eq!(clusters.len(), 3);
         let electronic = clusters.first().unwrap();
         assert_eq!(ids(&electronic.seeds), ["1", "3", "6"]);
-        assert_eq!(electronic.artists, ["Daft Punk", "Justice", "Air"]);
+        assert_eq!(
+            electronic.artists,
+            ["Velvet Comets", "Iron Verdict", "Breeze Club"]
+        );
         assert_eq!(ids(&clusters.get(1).unwrap().seeds), ["4"]);
         assert_eq!(clusters.get(2).unwrap().artists, ["Untagged Band"]);
         assert_eq!(cluster_seeds(&ranked, 1, 3).len(), 1);

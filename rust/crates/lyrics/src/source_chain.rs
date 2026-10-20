@@ -63,9 +63,9 @@ mod tests {
 
     fn query() -> LyricsQuery {
         LyricsQuery {
-            title: "Bohemian Rhapsody".to_owned(),
-            artist: "Queen".to_owned(),
-            album: Some("A Night at the Opera".to_owned()),
+            title: "Lantern Harbor".to_owned(),
+            artist: "Velvet Comets".to_owned(),
+            album: Some("Lights Over the Bay".to_owned()),
             duration_ms: Some(354_000),
         }
     }
@@ -99,9 +99,9 @@ mod tests {
             .respond_with(ResponseTemplate::new(200).set_body_json(serde_json::json!({
                 "result": {
                     "songs": [{
-                        "id": 1, "name": "Bohemian Rhapsody", "duration": 354_000,
-                        "artists": [{ "id": 2, "name": "Queen" }],
-                        "album": { "id": 3, "name": "A Night at the Opera" }
+                        "id": 1, "name": "Lantern Harbor", "duration": 354_000,
+                        "artists": [{ "id": 2, "name": "Velvet Comets" }],
+                        "album": { "id": 3, "name": "Lights Over the Bay" }
                     }],
                     "songCount": 1, "hasMore": false
                 },
@@ -112,7 +112,7 @@ mod tests {
         Mock::given(method("GET"))
             .and(path("/api/song/lyric"))
             .respond_with(ResponseTemplate::new(200).set_body_json(serde_json::json!({
-                "lrc": { "version": 1, "lyric": "[00:01.00]Is this the real life?" },
+                "lrc": { "version": 1, "lyric": "[00:01.00]Do the lanterns still glow?" },
                 "code": 200
             })))
             .mount(server)
@@ -141,7 +141,7 @@ mod tests {
 
         assert_eq!(lyrics.source, LyricsSource::NetEase);
         assert!(lyrics.synced);
-        assert_eq!(lyrics.lines[0].text, "Is this the real life?");
+        assert_eq!(lyrics.lines[0].text, "Do the lanterns still glow?");
     }
 
     #[tokio::test]
@@ -180,10 +180,10 @@ mod tests {
         Mock::given(method("GET"))
             .and(path("/api/get"))
             .respond_with(ResponseTemplate::new(200).set_body_json(serde_json::json!({
-                "id": 7, "name": "Bohemian Rhapsody", "trackName": "Bohemian Rhapsody",
-                "artistName": "Queen", "albumName": "A Night at the Opera", "duration": 354.0,
-                "instrumental": false, "plainLyrics": "Is this the real life?",
-                "syncedLyrics": "[00:01.00] Is this the real life?"
+                "id": 7, "name": "Lantern Harbor", "trackName": "Lantern Harbor",
+                "artistName": "Velvet Comets", "albumName": "Lights Over the Bay", "duration": 354.0,
+                "instrumental": false, "plainLyrics": "Do the lanterns still glow?",
+                "syncedLyrics": "[00:01.00] Do the lanterns still glow?"
             })))
             .mount(&working)
             .await;

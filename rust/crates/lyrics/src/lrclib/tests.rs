@@ -5,8 +5,8 @@ use wiremock::{Mock, MockServer, ResponseTemplate};
 
 fn query() -> LyricsQuery {
     LyricsQuery {
-        title: "Bohemian Rhapsody".to_owned(),
-        artist: "Queen".to_owned(),
+        title: "Lantern Harbor".to_owned(),
+        artist: "Velvet Comets".to_owned(),
         album: None,
         duration_ms: Some(354_000),
     }
@@ -17,8 +17,8 @@ fn track(id: u64, name: &str, duration: f64, plain: Value, synced: Value) -> Val
         "id": id,
         "name": name,
         "trackName": name,
-        "artistName": "Queen",
-        "albumName": "A Night at the Opera",
+        "artistName": "Velvet Comets",
+        "albumName": "Lights Over the Bay",
         "duration": duration,
         "instrumental": false,
         "plainLyrics": plain,
@@ -37,7 +37,7 @@ async fn mount_get(server: &MockServer, response: ResponseTemplate) {
 async fn mount_search(server: &MockServer, body: Value) {
     Mock::given(method("GET"))
         .and(path("/api/search"))
-        .and(query_param("q", "Bohemian Rhapsody Queen"))
+        .and(query_param("q", "Lantern Harbor Velvet Comets"))
         .respond_with(ResponseTemplate::new(200).set_body_json(body))
         .mount(server)
         .await;
@@ -54,17 +54,17 @@ async fn get_endpoint_sends_track_signature() {
     let server = MockServer::start().await;
     Mock::given(method("GET"))
         .and(path("/api/get"))
-        .and(query_param("track_name", "Bohemian Rhapsody"))
-        .and(query_param("artist_name", "Queen"))
-        .and(query_param("album_name", "Bohemian Rhapsody"))
+        .and(query_param("track_name", "Lantern Harbor"))
+        .and(query_param("artist_name", "Velvet Comets"))
+        .and(query_param("album_name", "Lantern Harbor"))
         .and(query_param("duration", "354"))
         .and(header("user-agent", AGENT))
         .respond_with(ResponseTemplate::new(200).set_body_json(track(
             1,
-            "Bohemian Rhapsody",
+            "Lantern Harbor",
             354.0,
-            json!("Is this the real life?"),
-            json!("[00:00.50] Is this the real life?\n[00:04.10] Is this just fantasy?"),
+            json!("Do the lanterns still glow?"),
+            json!("[00:00.50] Do the lanterns still glow?\n[00:04.10] Do they only flicker?"),
         )))
         .expect(1)
         .mount(&server)
@@ -78,7 +78,7 @@ async fn get_endpoint_sends_track_signature() {
     assert_eq!(lyrics.source, LyricsSource::Lrclib);
     assert_eq!(lyrics.lines.len(), 2);
     assert_eq!(lyrics.lines[1].time_ms, Some(4100));
-    assert_eq!(lyrics.lines[1].text, "Is this just fantasy?");
+    assert_eq!(lyrics.lines[1].text, "Do they only flicker?");
 }
 
 #[tokio::test]
@@ -88,7 +88,7 @@ async fn plain_get_result_prefers_synced_search_hit() {
         &server,
         ResponseTemplate::new(200).set_body_json(track(
             1,
-            "Bohemian Rhapsody",
+            "Lantern Harbor",
             354.0,
             json!("Plain only"),
             Value::Null,
@@ -98,10 +98,10 @@ async fn plain_get_result_prefers_synced_search_hit() {
     mount_search(
         &server,
         json!([
-            track(2, "Bohemian Rhapsody", 354.5, json!("Plain"), Value::Null),
+            track(2, "Lantern Harbor", 354.5, json!("Plain"), Value::Null),
             track(
                 3,
-                "Bohemian Rhapsody",
+                "Lantern Harbor",
                 355.0,
                 json!("Synced plain"),
                 json!("[00:01.00] Synced")
@@ -125,7 +125,7 @@ async fn keeps_plain_get_result_when_search_has_nothing_synced() {
         &server,
         ResponseTemplate::new(200).set_body_json(track(
             1,
-            "Bohemian Rhapsody",
+            "Lantern Harbor",
             354.0,
             json!("Line one\nLine two"),
             Value::Null,
@@ -152,7 +152,7 @@ async fn search_skips_wrong_duration_and_poor_matches() {
         json!([
             track(
                 2,
-                "Bohemian Rhapsody",
+                "Lantern Harbor",
                 300.0,
                 Value::Null,
                 json!("[00:01.00] wrong length")
@@ -166,7 +166,7 @@ async fn search_skips_wrong_duration_and_poor_matches() {
             ),
             track(
                 4,
-                "Bohemian Rhapsody (Remastered 2011)",
+                "Lantern Harbor (Remastered 2011)",
                 355.5,
                 json!("right"),
                 json!("[00:02.00] right")
@@ -189,13 +189,7 @@ async fn instrumental_and_missing_tracks_yield_none() {
     mount_get(&server, not_found()).await;
     mount_search(
         &server,
-        json!([track(
-            2,
-            "Bohemian Rhapsody",
-            354.0,
-            Value::Null,
-            Value::Null
-        )]),
+        json!([track(2, "Lantern Harbor", 354.0, Value::Null, Value::Null)]),
     )
     .await;
 

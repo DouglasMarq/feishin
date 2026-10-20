@@ -40,48 +40,48 @@ fn library_song(title: &str, artist: &str, duration_ms: u64) -> Song {
 #[test]
 fn only_the_same_song_by_the_same_artist_is_a_confident_match() {
     let song = youtube_song(
-        "Get Lucky (feat. Pharrell Williams)",
-        "Daft Punk",
+        "Lucky Static (feat. Juno Marsh)",
+        "Velvet Comets",
         Some(248_000),
     );
     assert!(is_confident_match(
         &song,
-        &library_song("Get Lucky", "daft punk", 250_000)
+        &library_song("Lucky Static", "velvet comets", 250_000)
     ));
     assert!(!is_confident_match(
         &song,
-        &library_song("Get Lucky", "Someone Else", 248_000)
+        &library_song("Lucky Static", "Someone Else", 248_000)
     ));
     assert!(!is_confident_match(
         &song,
-        &library_song("Get Luckier", "Daft Punk", 248_000)
+        &library_song("Lucky Statics", "Velvet Comets", 248_000)
     ));
     assert!(!is_confident_match(
         &song,
-        &library_song("Get Lucky", "Daft Punk", 260_000)
+        &library_song("Lucky Static", "Velvet Comets", 260_000)
     ));
 }
 
 #[test]
 fn unknown_durations_do_not_block_a_match() {
-    let without_duration = youtube_song("Hey Ya!", "Outkast", None);
+    let without_duration = youtube_song("Tide Pool!", "Moonkast", None);
     assert!(is_confident_match(
         &without_duration,
-        &library_song("Hey Ya", "OutKast", 235_000)
+        &library_song("Tide Pool", "MoonKast", 235_000)
     ));
-    let song = youtube_song("Hey Ya!", "Outkast", Some(235_000));
+    let song = youtube_song("Tide Pool!", "Moonkast", Some(235_000));
     assert!(is_confident_match(
         &song,
-        &library_song("Hey Ya", "Outkast", 0)
+        &library_song("Tide Pool", "Moonkast", 0)
     ));
 }
 
 #[test]
 fn songs_without_artists_never_match() {
-    let song = youtube_song("Hey Ya", "", Some(235_000));
+    let song = youtube_song("Tide Pool", "", Some(235_000));
     assert!(!is_confident_match(
         &song,
-        &library_song("Hey Ya", "", 235_000)
+        &library_song("Tide Pool", "", 235_000)
     ));
 }
 

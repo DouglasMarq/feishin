@@ -72,10 +72,13 @@ mod tests {
     #[test]
     fn names_ignore_case_punctuation_and_featured_artists() {
         assert_eq!(
-            normalized_name("Get Lucky (feat. Pharrell Williams and Nile Rodgers)"),
-            "get lucky"
+            normalized_name("Lucky Static (feat. Juno Marsh and Otis Fernwood)"),
+            "lucky static"
         );
-        assert_eq!(normalized_name("Buttons (part. Snoop Dogg)"), "buttons");
+        assert_eq!(
+            normalized_name("Copper Buttons (part. Dizzy Kettle)"),
+            "copper buttons"
+        );
         assert_eq!(normalized_name("Hey Ya!  "), "hey ya");
         assert_eq!(normalized_name("Song ft. Someone"), "song");
         assert_eq!(normalized_name("Peão Todo Tatuado"), "peão todo tatuado");
@@ -95,7 +98,7 @@ mod tests {
 
     #[test]
     fn search_queries_drop_featured_artists() {
-        assert_eq!(search_query("Get Lucky (feat. Pharrell)"), "get lucky");
+        assert_eq!(search_query("Lucky Static (feat. Juno)"), "lucky static");
         assert_eq!(search_query("The River"), "the river");
     }
 }

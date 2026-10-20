@@ -5,8 +5,8 @@ use wiremock::{Mock, MockServer, ResponseTemplate};
 
 fn query() -> LyricsQuery {
     LyricsQuery {
-        title: "Lemon".to_owned(),
-        artist: "Kenshi Yonezu".to_owned(),
+        title: "Lime Harbor".to_owned(),
+        artist: "Mizuho Lantern".to_owned(),
         album: None,
         duration_ms: Some(255_000),
     }
@@ -20,7 +20,7 @@ fn song(id: u64, name: &str, artists: &[&str]) -> Value {
             "id": artist_index, "name": artist_name, "picUrl": null, "alias": [], "albumSize": 0,
             "picId": 0, "fansGroup": null, "img1v1Url": "", "img1v1": 0, "trans": null
         })).collect::<Vec<_>>(),
-        "album": { "id": 9, "name": "Lemon", "artist": { "id": 0, "name": "" },
+        "album": { "id": 9, "name": "Lime Harbor", "artist": { "id": 0, "name": "" },
                    "publishTime": 0, "size": 1, "copyrightId": 0, "status": 0, "picId": 0, "mark": 0 },
         "duration": 255_000,
         "copyrightId": 0, "status": 0, "alias": [], "rtype": 0, "ftype": 0,
@@ -31,7 +31,7 @@ fn song(id: u64, name: &str, artists: &[&str]) -> Value {
 async fn mount_search(server: &MockServer, songs: Vec<Value>) {
     Mock::given(method("GET"))
         .and(path("/api/search/get"))
-        .and(query_param("s", "Kenshi Yonezu Lemon"))
+        .and(query_param("s", "Mizuho Lantern Lime Harbor"))
         .and(query_param("type", "1"))
         .and(query_param("limit", "5"))
         .and(query_param("offset", "0"))
@@ -67,7 +67,7 @@ async fn fetches_synced_lyrics_for_best_match() {
     mount_search(
         &server,
         vec![
-            song(111, "Lemon", &["Kenshi Yonezu"]),
+            song(111, "Lime Harbor", &["Mizuho Lantern"]),
             song(222, "Something Else", &["Other Person"]),
         ],
     )
@@ -75,7 +75,7 @@ async fn fetches_synced_lyrics_for_best_match() {
     mount_lyric(
         &server,
         "111",
-        "[by:someone]\n[00:00.00] 作词 : 米津玄師\n[00:12.345]夢ならばどれほどよかったでしょう\n",
+        "[by:someone]\n[00:00.00] 作词 : 森川青\n[00:12.345]星がきらめく夜の港で\n",
     )
     .await;
 
@@ -87,7 +87,7 @@ async fn fetches_synced_lyrics_for_best_match() {
     assert!(lyrics.synced);
     assert_eq!(lyrics.lines.len(), 2);
     assert_eq!(lyrics.lines[1].time_ms, Some(12_345));
-    assert_eq!(lyrics.lines[1].text, "夢ならばどれほどよかったでしょう");
+    assert_eq!(lyrics.lines[1].text, "星がきらめく夜の港で");
 }
 
 #[tokio::test]
@@ -96,8 +96,8 @@ async fn prefers_a_synced_candidate_over_plain_one() {
     mount_search(
         &server,
         vec![
-            song(111, "Lemon", &["Kenshi Yonezu"]),
-            song(333, "Lemon (Live)", &["Kenshi Yonezu", "Guest"]),
+            song(111, "Lime Harbor", &["Mizuho Lantern"]),
+            song(333, "Lime Harbor (Live)", &["Mizuho Lantern", "Guest"]),
         ],
     )
     .await;
@@ -138,7 +138,7 @@ async fn missing_result_or_lyric_yields_none() {
     assert!(lyrics.is_none());
 
     let server = MockServer::start().await;
-    mount_search(&server, vec![song(111, "Lemon", &["Kenshi Yonezu"])]).await;
+    mount_search(&server, vec![song(111, "Lime Harbor", &["Mizuho Lantern"])]).await;
     Mock::given(method("GET"))
         .and(path("/api/song/lyric"))
         .respond_with(ResponseTemplate::new(200).set_body_json(

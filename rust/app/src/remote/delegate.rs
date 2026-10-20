@@ -184,7 +184,7 @@ mod tests {
     fn local() -> LocalServer {
         LocalServer {
             key: ServerKey {
-                url: "http://nas".into(),
+                url: "http://navidrome.example".into(),
                 username: "me".into(),
             },
             id: Arc::from("local"),
@@ -206,7 +206,7 @@ mod tests {
     #[test]
     fn lists_play_only_from_the_same_server() {
         assert!(matches!(
-            command_of(play_list("http://nas"), Some(&local())),
+            command_of(play_list("http://navidrome.example"), Some(&local())),
             Ok(Command::PlayFromList {
                 row_index: ListRow(2),
                 ..
@@ -217,7 +217,7 @@ mod tests {
             Some(RemoteFailure::DifferentServer)
         );
         assert_eq!(
-            command_of(play_list("http://nas"), None).err(),
+            command_of(play_list("http://navidrome.example"), None).err(),
             Some(RemoteFailure::NotConnected)
         );
     }

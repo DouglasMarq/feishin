@@ -37,8 +37,8 @@ async fn the_root_lists_indexed_artist_folders_and_loose_songs() {
             "indexes": {
                 "ignoredArticles": "The",
                 "index": [
-                    { "name": "A", "artist": [{ "id": 1, "name": "ABBA" }] },
-                    { "name": "B", "artist": [{ "id": "2", "name": "Bach" }] }
+                    { "name": "A", "artist": [{ "id": 1, "name": "Amber Vale" }] },
+                    { "name": "B", "artist": [{ "id": "2", "name": "Birch Quartet" }] }
                 ],
                 "child": [song_child("loose-1")]
             }
@@ -55,7 +55,7 @@ async fn the_root_lists_indexed_artist_folders_and_loose_songs() {
         .unwrap();
 
     let names: Vec<&str> = folders.iter().map(|folder| folder.name.as_str()).collect();
-    assert_eq!(names, ["ABBA", "Bach"]);
+    assert_eq!(names, ["Amber Vale", "Birch Quartet"]);
     assert_eq!(folders[0].id, "1");
     assert_eq!(songs.total_count, Some(1));
     assert_eq!(songs.items[0].id, "loose-1");

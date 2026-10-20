@@ -269,7 +269,7 @@ mod tests {
                     list: RemoteList::Playlist { id: "p1".into() },
                     ranges: vec![0..10, 20..30],
                     placement: ListPlacement::Next,
-                    server: ServerKey::of(&config("http://nas:4533", "me")),
+                    server: ServerKey::of(&config("http://navidrome.example:4533", "me")),
                 },
             },
             ClientMessage::PullPlayback,
