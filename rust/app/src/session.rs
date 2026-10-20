@@ -1,12 +1,14 @@
 use std::future::Future;
-use std::sync::{Arc, RwLock};
+use std::sync::{Arc, PoisonError, RwLock};
 
 use feishin_api::MusicServer;
+use feishin_storage::settings::Settings;
 use tokio::sync::watch;
 
 #[derive(Clone)]
 pub struct Session {
     server: Arc<RwLock<Option<Arc<dyn MusicServer>>>>,
+    settings: Arc<RwLock<Arc<Settings>>>,
     work_epoch: Arc<watch::Sender<u64>>,
 }
 
@@ -14,6 +16,7 @@ impl Default for Session {
     fn default() -> Self {
         Self {
             server: Arc::default(),
+            settings: Arc::default(),
             work_epoch: Arc::new(watch::Sender::new(0)),
         }
     }
@@ -21,14 +24,26 @@ impl Default for Session {
 
 impl Session {
     pub fn get(&self) -> Option<Arc<dyn MusicServer>> {
-        self.server.read().ok().and_then(|server| server.clone())
+        self.server
+            .read()
+            .unwrap_or_else(PoisonError::into_inner)
+            .clone()
     }
 
     pub fn set(&self, server: Option<Arc<dyn MusicServer>>) {
-        if let Ok(mut current) = self.server.write() {
-            *current = server;
-        }
+        *self.server.write().unwrap_or_else(PoisonError::into_inner) = server;
         self.end_background_work();
+    }
+
+    pub fn settings(&self) -> Arc<Settings> {
+        Arc::clone(&self.settings.read().unwrap_or_else(PoisonError::into_inner))
+    }
+
+    pub fn publish_settings(&self, settings: &Settings) {
+        *self
+            .settings
+            .write()
+            .unwrap_or_else(PoisonError::into_inner) = Arc::new(settings.clone());
     }
 
     pub fn end_background_work(&self) {

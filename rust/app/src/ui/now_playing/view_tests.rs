@@ -13,7 +13,7 @@ use crate::controller::Command;
 use crate::covers::DemoCovers;
 use crate::demo::{FakeServer, test_song};
 use crate::session::Session;
-use crate::store::{JsonStore, Store};
+use crate::store::JsonStore;
 use crate::ui::test_window::{Jobs, SIZE, claim_routed_platform, pump_until, routed_runtime};
 use crate::ui::{
     AppState, AppWindow, Context, LyricsStatus, NowPlayingState, Page, PlayerState, Route, queue,
@@ -75,7 +75,7 @@ fn open_now_playing_page(screen: Screen) -> NowPlayingPage {
     let store = JsonStore::new(dir.path());
     let mut settings = Settings::default();
     settings.integrations.lyrics_sources = vec!["server".into()];
-    store.save_settings(&settings).unwrap();
+    session.publish_settings(&settings);
     let ctx = Context {
         rt: runtime.handle().clone(),
         commands: sender,

@@ -98,6 +98,7 @@ impl Controller {
         let (queue, position_ms) = initial_queue(stored, seed);
         let duration_ms = queue.current().map_or(0, |item| item.track.duration_ms);
         let persistence = QueuePersistence::new(Arc::clone(&deps.store), deps.commands.clone());
+        deps.session.publish_settings(&settings);
         let mut controller = Self {
             deps,
             queue,

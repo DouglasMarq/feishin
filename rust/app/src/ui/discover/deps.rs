@@ -31,13 +31,6 @@ impl DiscoverDeps {
     }
 
     pub fn settings(&self) -> YouTubeSettings {
-        self.ctx
-            .store
-            .load_settings()
-            .map(|settings| settings.youtube)
-            .unwrap_or_else(|error| {
-                tracing::warn!("reading the YouTube settings failed: {error:#}");
-                YouTubeSettings::default()
-            })
+        self.ctx.session.settings().youtube.clone()
     }
 }

@@ -94,6 +94,7 @@ impl Controller {
     pub(super) fn save_settings(&self) {
         if let Err(error) = self.deps.store.save_settings(&self.settings) {
             tracing::warn!("saving settings failed: {error:#}");
+        self.deps.session.publish_settings(&self.settings);
         }
     }
 

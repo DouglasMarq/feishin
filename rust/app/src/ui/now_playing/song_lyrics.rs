@@ -1,5 +1,4 @@
 use std::fmt::{self, Display};
-use std::sync::LazyLock;
 
 use feishin_api::{ApiError, MusicServer};
 use feishin_core::model::Song;
@@ -7,8 +6,7 @@ use feishin_lyrics::{LyricLine, LyricsError, LyricsQuery, LyricsSource};
 
 use super::lyrics_plan::LyricsStep;
 use crate::controller::artist_names;
-
-static LYRICS_HTTP_CLIENT: LazyLock<reqwest::Client> = LazyLock::new(reqwest::Client::new);
+use crate::lyrics_provider::LyricsProvider;
 
 #[derive(Debug)]
 pub(super) enum LyricsLookupError {
@@ -85,18 +83,13 @@ async fn server_lyrics(
     Ok(text.and_then(|text| SongLyrics::from_text(tr!("Server"), &text)))
 }
 
-async fn remote_lyrics(
-    song: &Song,
-    sources: &[LyricsSource],
-) -> Result<Option<SongLyrics>, LyricsLookupError> {
-    remote_lyrics_for(&lyrics_query(song), sources).await
-}
-
 pub(super) async fn remote_lyrics_for(
+    provider: &dyn LyricsProvider,
     query: &LyricsQuery,
     sources: &[LyricsSource],
 ) -> Result<Option<SongLyrics>, LyricsLookupError> {
-    let found = feishin_lyrics::fetch(&LYRICS_HTTP_CLIENT, query, sources)
+    let found = provider
+        .fetch(query, sources)
         .await
         .map_err(LyricsLookupError::Remote)?;
     Ok(found.map(|found| SongLyrics {
@@ -108,23 +101,27 @@ pub(super) async fn remote_lyrics_for(
 
 async fn resolve_step(
     server: &dyn MusicServer,
+    provider: &dyn LyricsProvider,
     song: &Song,
     step: &LyricsStep,
 ) -> Result<Option<SongLyrics>, LyricsLookupError> {
     match step {
         LyricsStep::Server => server_lyrics(server, song).await,
-        LyricsStep::Remote(sources) => remote_lyrics(song, sources).await,
+        LyricsStep::Remote(sources) => {
+            remote_lyrics_for(provider, &lyrics_query(song), sources).await
+        }
     }
 }
 
 pub(super) async fn resolve_lyrics(
     server: &dyn MusicServer,
+    provider: &dyn LyricsProvider,
     song: &Song,
     plan: &[LyricsStep],
 ) -> Result<Option<SongLyrics>, LyricsLookupError> {
     let mut first_error = None;
     for step in plan {
-        match resolve_step(server, song, step).await {
+        match resolve_step(server, provider, song, step).await {
             Ok(Some(lyrics)) => return Ok(Some(lyrics)),
             Ok(None) => {}
             Err(error) => {
@@ -143,9 +140,30 @@ pub(super) fn active_line(line_times_ms: &[u64], position_ms: u64) -> Option<usi
 
 #[cfg(test)]
 mod tests {
+    use async_trait::async_trait;
+    use feishin_lyrics::Lyrics;
+
     use super::*;
     use crate::demo::FakeServer;
+    use crate::lyrics_provider::NoRemoteLyrics;
     use crate::ui::now_playing::lyrics_plan::{lyrics_plan, source_names};
+
+    struct GeniusOnly;
+
+    #[async_trait]
+    impl LyricsProvider for GeniusOnly {
+        async fn fetch(
+            &self,
+            _query: &LyricsQuery,
+            sources: &[LyricsSource],
+        ) -> feishin_lyrics::Result<Option<Lyrics>> {
+            Ok(sources.contains(&LyricsSource::Genius).then(|| Lyrics {
+                source: LyricsSource::Genius,
+                synced: false,
+                lines: feishin_lyrics::parse_lrc("First line\nSecond line"),
+            }))
+        }
+    }
 
     #[test]
     fn active_line_tracks_the_last_started_line() {
@@ -172,12 +190,27 @@ mod tests {
     async fn server_lyrics_come_first() {
         let server = FakeServer::new(100);
         let song = server.song("song-3").await.unwrap();
-        let lyrics = resolve_lyrics(&server, &song, &lyrics_plan(&source_names(&["server"])))
+        let plan = lyrics_plan(&source_names(&["server"]));
+        let lyrics = resolve_lyrics(&server, &NoRemoteLyrics, &song, &plan)
             .await
             .unwrap()
             .unwrap();
         assert_eq!(lyrics.source, "Server");
         assert!(lyrics.synced);
-        assert!(resolve_lyrics(&server, &song, &[]).await.unwrap().is_none());
+        let unplanned = resolve_lyrics(&server, &NoRemoteLyrics, &song, &[]).await;
+        assert!(unplanned.unwrap().is_none());
+    }
+
+    #[tokio::test]
+    async fn given_a_remote_source_the_injected_provider_answers() {
+        let server = FakeServer::new(100);
+        let song = server.song("song-3").await.unwrap();
+        let plan = lyrics_plan(&source_names(&["genius", "server"]));
+        let lyrics = resolve_lyrics(&server, &GeniusOnly, &song, &plan)
+            .await
+            .unwrap()
+            .unwrap();
+        assert_eq!(lyrics.source, "Genius");
+        assert_eq!(lyrics.lines.len(), 2);
     }
 }

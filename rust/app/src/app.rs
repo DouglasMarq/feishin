@@ -64,7 +64,7 @@ fn real_backends() -> Result<Backends> {
     let covers = CachedCovers::new(store.paths())?;
     Ok(Backends {
         store: Arc::new(store),
-        connector: Arc::new(ServerConnector),
+        connector: Arc::new(ServerConnector::new()?),
         covers: Arc::new(covers),
         discover: Arc::new(YouTubeMusicSource::default()),
     })
