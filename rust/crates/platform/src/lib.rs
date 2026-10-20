@@ -1,6 +1,7 @@
 mod discord;
 #[cfg(all(unix, not(target_os = "macos")))]
 mod freedesktop;
+mod image_url;
 #[cfg(target_os = "macos")]
 mod macos;
 

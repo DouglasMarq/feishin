@@ -2,6 +2,7 @@ use mpris_server::{Metadata, TrackId};
 
 use super::conversions::time_from_ms;
 use crate::NowPlaying;
+use crate::image_url::is_free_of_credentials;
 
 const TRACK_PATH_PREFIX: &str = "/org/feishin/track/";
 const REPLACEMENT_CHARACTER: char = '_';
@@ -18,7 +19,9 @@ pub(super) fn metadata_for(now_playing: &NowPlaying) -> Metadata {
             .filter(|duration_ms| *duration_ms > 0)
             .map(time_from_ms),
     );
-    metadata.set_art_url(non_empty(now_playing.cover_url.as_ref()));
+    metadata.set_art_url(
+        non_empty(now_playing.cover_url.as_ref()).filter(|url| is_free_of_credentials(url)),
+    );
     metadata.set_album(non_empty(now_playing.album.as_ref()));
     metadata.set_artist((!now_playing.artists.is_empty()).then(|| now_playing.artists.clone()));
     metadata.set_title(non_empty(Some(&now_playing.title)));
@@ -95,6 +98,19 @@ mod tests {
         assert_eq!(metadata.album(), None);
         assert_eq!(metadata.artist(), None);
         assert_eq!(metadata.title(), None);
+    }
+
+    #[test]
+    fn given_a_cover_url_with_credentials_the_art_url_is_omitted() {
+        let metadata = metadata_for(&NowPlaying {
+            cover_url: Some(
+                "http://navidrome.example/rest/getCoverArt.view?id=1&u=feishin&t=token&s=salt"
+                    .to_owned(),
+            ),
+            ..song()
+        });
+        assert_eq!(metadata.art_url(), None);
+        assert_eq!(metadata.title(), Some("Song"));
     }
 
     #[test]
