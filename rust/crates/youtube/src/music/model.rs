@@ -1,10 +1,12 @@
+use serde::{Deserialize, Serialize};
+
 use crate::watch_url;
 
 const MUSIC_ORIGIN: &str = "https://music.youtube.com";
 const PLAYLIST_BROWSE_PREFIX: &str = "VL";
 const ALBUM_BROWSE_PREFIX: &str = "MPRE";
 
-#[derive(Debug, Clone, PartialEq, Eq)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 pub struct MusicSong {
     pub video_id: String,
     pub title: String,

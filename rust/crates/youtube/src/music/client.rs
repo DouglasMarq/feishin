@@ -11,8 +11,8 @@ use super::model::{
     CollectionPage, MoodCategory, MusicShelf, MusicSong, collection_kind, is_browse_id,
 };
 use super::raw;
-use super::request::{BrowseRequest, SearchRequest};
-use crate::unix_now;
+use super::request::{BrowseRequest, NextRequest, SearchRequest};
+use crate::{is_video_id, unix_now};
 
 pub const MUSIC_API_BASE: &str = "https://music.youtube.com/youtubei/v1";
 const MUSIC_ORIGIN: &str = "https://music.youtube.com";
@@ -111,6 +111,19 @@ impl MusicClient {
         match raw::has_search_sections(&response) {
             true => Ok(raw::search_songs(&response)),
             false => Ok(Vec::new()),
+        }
+    }
+
+    pub async fn radio(&self, video_id: &str) -> Result<Vec<MusicSong>, MusicError> {
+        if !is_video_id(video_id) {
+            return Err(MusicError::InvalidId(video_id.to_owned()));
+        }
+        let response = self
+            .post("next", &NextRequest::radio(&self.locale, video_id))
+            .await?;
+        match raw::has_watch_panel(&response) {
+            true => Ok(raw::watch_songs(&response)),
+            false => Err(MusicError::Decode(format!("no radio for {video_id}"))),
         }
     }
 

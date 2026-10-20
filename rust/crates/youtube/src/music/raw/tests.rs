@@ -13,6 +13,7 @@ fn fixture(name: &str) -> Value {
         "playlist" => include_str!("../fixtures/playlist.json"),
         "search" => include_str!("../fixtures/search.json"),
         "mood" => include_str!("../fixtures/mood.json"),
+        "next" => include_str!("../fixtures/next.json"),
         other => panic!("unknown fixture {other}"),
     };
     serde_json::from_str(text).unwrap()
@@ -189,4 +190,43 @@ fn unexpected_documents_parse_to_nothing() {
     assert!(!has_sections(&empty));
     assert!(collection_page(&empty, CollectionKind::Album).is_none());
     assert!(search_songs(&empty).is_empty());
+}
+
+#[test]
+fn radio_songs_come_from_the_watch_queue_including_wrapped_items() {
+    let response = fixture("next");
+    assert!(has_watch_panel(&response));
+    let songs = watch_songs(&response);
+    let ids: Vec<&str> = songs.iter().map(|song| song.video_id.as_str()).collect();
+    assert_eq!(
+        ids,
+        [
+            "4D7u5KF7SP8",
+            "qXI87eMP-bs",
+            "UJHEK0GIdYE",
+            "tOaWhRATZqk",
+            "3WzamI8QD2s"
+        ]
+    );
+    let Some(first) = songs.first() else {
+        panic!("no radio songs");
+    };
+    assert_eq!(
+        first.title,
+        "Get Lucky (feat. Pharrell Williams and Nile Rodgers)"
+    );
+    assert_eq!(
+        first.artists,
+        ["Daft Punk", "Pharrell Williams", "Nile Rodgers"]
+    );
+    assert_eq!(first.album.as_deref(), Some("Random Access Memories"));
+    assert_eq!(first.duration_ms, Some(370_000));
+    assert!(first.thumbnail_url.is_some());
+}
+
+#[test]
+fn a_response_without_a_watch_queue_has_no_radio() {
+    let empty = serde_json::json!({"contents": {}});
+    assert!(!has_watch_panel(&empty));
+    assert!(watch_songs(&empty).is_empty());
 }

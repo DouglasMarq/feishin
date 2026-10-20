@@ -71,7 +71,10 @@ fn list_item_video_id(renderer: &Value) -> Option<&str> {
     .find(|video_id| is_video_id(video_id))
 }
 
-fn artists_of(detail_runs: &[&Value], detail_groups: &[Vec<&Value>]) -> Option<Vec<String>> {
+pub(super) fn artists_of(
+    detail_runs: &[&Value],
+    detail_groups: &[Vec<&Value>],
+) -> Option<Vec<String>> {
     let linked: Vec<String> = detail_runs
         .iter()
         .filter(|run| is_artist_run(run))
@@ -88,7 +91,7 @@ fn artists_of(detail_runs: &[&Value], detail_groups: &[Vec<&Value>]) -> Option<V
     plain.then(|| vec![text.trim().to_owned()])
 }
 
-fn album_of(detail_runs: &[&Value]) -> Option<String> {
+pub(super) fn album_of(detail_runs: &[&Value]) -> Option<String> {
     detail_runs
         .iter()
         .find(|run| is_album_run(run))

@@ -10,6 +10,7 @@ const ALBUM: &str = include_str!("fixtures/album.json");
 const SEARCH: &str = include_str!("fixtures/search.json");
 const EXPLORE: &str = include_str!("fixtures/explore.json");
 const MOOD: &str = include_str!("fixtures/mood.json");
+const NEXT: &str = include_str!("fixtures/next.json");
 const COOKIES: &str = ".youtube.com\tTRUE\t/\tTRUE\t0\tSAPISID\tfixture-sapisid\n\
     .youtube.com\tTRUE\t/\tTRUE\t0\tSID\tfixture-sid\n";
 
@@ -128,6 +129,44 @@ async fn song_search_uses_the_songs_filter() {
 }
 
 #[tokio::test]
+async fn song_radio_asks_the_watch_endpoint_for_the_radio_playlist() {
+    let server = MockServer::start().await;
+    Mock::given(method("POST"))
+        .and(path("/next"))
+        .and(body_partial_json(
+            json!({"videoId": "4D7u5KF7SP8", "playlistId": "RDAMVM4D7u5KF7SP8"}),
+        ))
+        .respond_with(json_body(NEXT))
+        .expect(1)
+        .mount(&server)
+        .await;
+    let music = client(&server);
+    let radio = music.radio("4D7u5KF7SP8").await.unwrap();
+    assert_eq!(radio.len(), 5);
+    assert_eq!(
+        music.radio("../evil").await,
+        Err(MusicError::InvalidId("../evil".into()))
+    );
+    let requests = server.received_requests().await.unwrap();
+    assert_eq!(requests.len(), 1);
+    assert!(requests[0].headers.get("cookie").is_none());
+}
+
+#[tokio::test]
+async fn a_watch_page_without_a_queue_is_a_decode_error() {
+    let server = MockServer::start().await;
+    Mock::given(method("POST"))
+        .and(path("/next"))
+        .respond_with(json_body("{\"contents\": {}}"))
+        .mount(&server)
+        .await;
+    assert!(matches!(
+        client(&server).radio("4D7u5KF7SP8").await,
+        Err(MusicError::Decode(_))
+    ));
+}
+
+#[tokio::test]
 async fn failures_map_to_status_and_decode_errors() {
     let server = MockServer::start().await;
     Mock::given(method("POST"))
@@ -187,11 +226,9 @@ async fn real_youtube_music_answers_every_discover_request() {
     assert!(!charts.is_empty());
     let moods = music.mood_categories().await.unwrap();
     assert!(!music.mood(&moods[0].params).await.unwrap().is_empty());
-    assert!(
-        !music
-            .search_songs("daft punk get lucky")
-            .await
-            .unwrap()
-            .is_empty()
-    );
+    let found = music.search_songs("daft punk get lucky").await.unwrap();
+    let Some(first) = found.first() else {
+        panic!("no search results");
+    };
+    assert!(!music.radio(&first.video_id).await.unwrap().is_empty());
 }

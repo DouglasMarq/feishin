@@ -1,0 +1,443 @@
+{
+  "contents": {
+    "singleColumnMusicWatchNextResultsRenderer": {
+      "tabbedRenderer": {
+        "watchNextTabbedResultsRenderer": {
+          "tabs": [
+            {
+              "tabRenderer": {
+                "content": {
+                  "musicQueueRenderer": {
+                    "content": {
+                      "playlistPanelRenderer": {
+                        "contents": [
+                          {
+                            "playlistPanelVideoRenderer": {
+                              "title": {
+                                "runs": [
+                                  {
+                                    "text": "Get Lucky (feat. Pharrell Williams and Nile Rodgers)"
+                                  }
+                                ]
+                              },
+                              "longBylineText": {
+                                "runs": [
+                                  {
+                                    "text": "Daft Punk",
+                                    "navigationEndpoint": {
+                                      "browseEndpoint": {
+                                        "browseId": "UCRr1xG_2WIDs18a6cIiCxeA",
+                                        "browseEndpointContextSupportedConfigs": {
+                                          "browseEndpointContextMusicConfig": {
+                                            "pageType": "MUSIC_PAGE_TYPE_ARTIST"
+                                          }
+                                        }
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "text": ", "
+                                  },
+                                  {
+                                    "text": "Pharrell Williams",
+                                    "navigationEndpoint": {
+                                      "browseEndpoint": {
+                                        "browseId": "UCJw8VyO6e3v6S0327AsgwcQ",
+                                        "browseEndpointContextSupportedConfigs": {
+                                          "browseEndpointContextMusicConfig": {
+                                            "pageType": "MUSIC_PAGE_TYPE_ARTIST"
+                                          }
+                                        }
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "text": " & "
+                                  },
+                                  {
+                                    "text": "Nile Rodgers",
+                                    "navigationEndpoint": {
+                                      "browseEndpoint": {
+                                        "browseId": "UCThde8ccpEr6sP8dIHZ-ceQ",
+                                        "browseEndpointContextSupportedConfigs": {
+                                          "browseEndpointContextMusicConfig": {
+                                            "pageType": "MUSIC_PAGE_TYPE_ARTIST"
+                                          }
+                                        }
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "text": " • "
+                                  },
+                                  {
+                                    "text": "Random Access Memories",
+                                    "navigationEndpoint": {
+                                      "browseEndpoint": {
+                                        "browseId": "MPREb_K8qWMWVqXGi",
+                                        "browseEndpointContextSupportedConfigs": {
+                                          "browseEndpointContextMusicConfig": {
+                                            "pageType": "MUSIC_PAGE_TYPE_ALBUM"
+                                          }
+                                        }
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "text": " • "
+                                  },
+                                  {
+                                    "text": "2013"
+                                  }
+                                ]
+                              },
+                              "thumbnail": {
+                                "thumbnails": [
+                                  {
+                                    "url": "https://yt3.googleusercontent.com/N55arCGj69gtw6thXK8JUPisxoVYiwuIEQ7I6SGlkEyNcSJ7xIWPe76Vuu1SiUqRyx5w9qvR_zV8fV3CWQ=w302-h302-l90-rj",
+                                    "width": 302,
+                                    "height": 302
+                                  },
+                                  {
+                                    "url": "https://yt3.googleusercontent.com/N55arCGj69gtw6thXK8JUPisxoVYiwuIEQ7I6SGlkEyNcSJ7xIWPe76Vuu1SiUqRyx5w9qvR_zV8fV3CWQ=w544-h544-l90-rj",
+                                    "width": 544,
+                                    "height": 544
+                                  }
+                                ]
+                              },
+                              "lengthText": {
+                                "runs": [
+                                  {
+                                    "text": "6:10"
+                                  }
+                                ]
+                              },
+                              "videoId": "4D7u5KF7SP8"
+                            }
+                          },
+                          {
+                            "playlistPanelVideoRenderer": {
+                              "title": {
+                                "runs": [
+                                  {
+                                    "text": "Face to Face"
+                                  }
+                                ]
+                              },
+                              "longBylineText": {
+                                "runs": [
+                                  {
+                                    "text": "Daft Punk",
+                                    "navigationEndpoint": {
+                                      "browseEndpoint": {
+                                        "browseId": "UCRr1xG_2WIDs18a6cIiCxeA",
+                                        "browseEndpointContextSupportedConfigs": {
+                                          "browseEndpointContextMusicConfig": {
+                                            "pageType": "MUSIC_PAGE_TYPE_ARTIST"
+                                          }
+                                        }
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "text": " • "
+                                  },
+                                  {
+                                    "text": "Discovery",
+                                    "navigationEndpoint": {
+                                      "browseEndpoint": {
+                                        "browseId": "MPREb_7ltM34kr0mH",
+                                        "browseEndpointContextSupportedConfigs": {
+                                          "browseEndpointContextMusicConfig": {
+                                            "pageType": "MUSIC_PAGE_TYPE_ALBUM"
+                                          }
+                                        }
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "text": " • "
+                                  },
+                                  {
+                                    "text": "2001"
+                                  }
+                                ]
+                              },
+                              "thumbnail": {
+                                "thumbnails": [
+                                  {
+                                    "url": "https://yt3.googleusercontent.com/qrY7xjdjqL0FEneZKHk845JeeFjdWOgexUa_BhsUxskJ2iflhzpbofqGJZBcPHDGU9JjoZflE4yn3P74=w302-h302-l90-rj",
+                                    "width": 302,
+                                    "height": 302
+                                  },
+                                  {
+                                    "url": "https://yt3.googleusercontent.com/qrY7xjdjqL0FEneZKHk845JeeFjdWOgexUa_BhsUxskJ2iflhzpbofqGJZBcPHDGU9JjoZflE4yn3P74=w544-h544-l90-rj",
+                                    "width": 544,
+                                    "height": 544
+                                  }
+                                ]
+                              },
+                              "lengthText": {
+                                "runs": [
+                                  {
+                                    "text": "4:01"
+                                  }
+                                ]
+                              },
+                              "videoId": "qXI87eMP-bs"
+                            }
+                          },
+                          {
+                            "playlistPanelVideoRenderer": {
+                              "title": {
+                                "runs": [
+                                  {
+                                    "text": "Blurred Lines (feat. T.I. & Pharrell)"
+                                  }
+                                ]
+                              },
+                              "longBylineText": {
+                                "runs": [
+                                  {
+                                    "text": "Robin Thicke",
+                                    "navigationEndpoint": {
+                                      "browseEndpoint": {
+                                        "browseId": "UCyYnxJIyBDCIkDIpE7lsUkw",
+                                        "browseEndpointContextSupportedConfigs": {
+                                          "browseEndpointContextMusicConfig": {
+                                            "pageType": "MUSIC_PAGE_TYPE_ARTIST"
+                                          }
+                                        }
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "text": " • "
+                                  },
+                                  {
+                                    "text": "Blurred Lines",
+                                    "navigationEndpoint": {
+                                      "browseEndpoint": {
+                                        "browseId": "MPREb_VQ3Hfj9CRg5",
+                                        "browseEndpointContextSupportedConfigs": {
+                                          "browseEndpointContextMusicConfig": {
+                                            "pageType": "MUSIC_PAGE_TYPE_ALBUM"
+                                          }
+                                        }
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "text": " • "
+                                  },
+                                  {
+                                    "text": "2013"
+                                  }
+                                ]
+                              },
+                              "thumbnail": {
+                                "thumbnails": [
+                                  {
+                                    "url": "https://yt3.googleusercontent.com/L0-mNOG6kzyD8f8pe_98VWVGOBX6WEFH4LcvnGIrFCgGzntJ7sTgDM-pekFu494K3bI13cqwNbyBPhqF=w302-h302-l90-rj",
+                                    "width": 302,
+                                    "height": 302
+                                  },
+                                  {
+                                    "url": "https://yt3.googleusercontent.com/L0-mNOG6kzyD8f8pe_98VWVGOBX6WEFH4LcvnGIrFCgGzntJ7sTgDM-pekFu494K3bI13cqwNbyBPhqF=w544-h544-l90-rj",
+                                    "width": 544,
+                                    "height": 544
+                                  }
+                                ]
+                              },
+                              "lengthText": {
+                                "runs": [
+                                  {
+                                    "text": "4:24"
+                                  }
+                                ]
+                              },
+                              "videoId": "UJHEK0GIdYE"
+                            }
+                          },
+                          {
+                            "playlistPanelVideoRenderer": {
+                              "title": {
+                                "runs": [
+                                  {
+                                    "text": "lock / unlock (feat. benny blanco)"
+                                  }
+                                ]
+                              },
+                              "longBylineText": {
+                                "runs": [
+                                  {
+                                    "text": "j-hope",
+                                    "navigationEndpoint": {
+                                      "browseEndpoint": {
+                                        "browseId": "UChLNWcjgBfZ9RPnzR5LM1mQ",
+                                        "browseEndpointContextSupportedConfigs": {
+                                          "browseEndpointContextMusicConfig": {
+                                            "pageType": "MUSIC_PAGE_TYPE_ARTIST"
+                                          }
+                                        }
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "text": " & "
+                                  },
+                                  {
+                                    "text": "Nile Rodgers",
+                                    "navigationEndpoint": {
+                                      "browseEndpoint": {
+                                        "browseId": "UCThde8ccpEr6sP8dIHZ-ceQ",
+                                        "browseEndpointContextSupportedConfigs": {
+                                          "browseEndpointContextMusicConfig": {
+                                            "pageType": "MUSIC_PAGE_TYPE_ARTIST"
+                                          }
+                                        }
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "text": " • "
+                                  },
+                                  {
+                                    "text": "HOPE ON THE STREET VOL.1",
+                                    "navigationEndpoint": {
+                                      "browseEndpoint": {
+                                        "browseId": "MPREb_AHhXeRbqUOy",
+                                        "browseEndpointContextSupportedConfigs": {
+                                          "browseEndpointContextMusicConfig": {
+                                            "pageType": "MUSIC_PAGE_TYPE_ALBUM"
+                                          }
+                                        }
+                                      }
+                                    }
+                                  },
+                                  {
+                                    "text": " • "
+                                  },
+                                  {
+                                    "text": "2024"
+                                  }
+                                ]
+                              },
+                              "thumbnail": {
+                                "thumbnails": [
+                                  {
+                                    "url": "https://yt3.googleusercontent.com/I62Ur855ME58T3xNfTfiQzLmF-J4qnuqeULVbiTo7cuf5rIPY5USa_O8lXPbmRSI8Ihx6O0FDSDfXT_y=w302-h302-l90-rj",
+                                    "width": 302,
+                                    "height": 302
+                                  },
+                                  {
+                                    "url": "https://yt3.googleusercontent.com/I62Ur855ME58T3xNfTfiQzLmF-J4qnuqeULVbiTo7cuf5rIPY5USa_O8lXPbmRSI8Ihx6O0FDSDfXT_y=w544-h544-l90-rj",
+                                    "width": 544,
+                                    "height": 544
+                                  }
+                                ]
+                              },
+                              "lengthText": {
+                                "runs": [
+                                  {
+                                    "text": "3:02"
+                                  }
+                                ]
+                              },
+                              "videoId": "tOaWhRATZqk"
+                            }
+                          },
+                          {
+                            "playlistPanelVideoWrapperRenderer": {
+                              "primaryRenderer": {
+                                "playlistPanelVideoRenderer": {
+                                  "title": {
+                                    "runs": [
+                                      {
+                                        "text": "Rude"
+                                      }
+                                    ]
+                                  },
+                                  "longBylineText": {
+                                    "runs": [
+                                      {
+                                        "text": "MAGIC!",
+                                        "navigationEndpoint": {
+                                          "browseEndpoint": {
+                                            "browseId": "UCi7x9i4t7_KUX2-gWLnMNkQ",
+                                            "browseEndpointContextSupportedConfigs": {
+                                              "browseEndpointContextMusicConfig": {
+                                                "pageType": "MUSIC_PAGE_TYPE_ARTIST"
+                                              }
+                                            }
+                                          }
+                                        }
+                                      },
+                                      {
+                                        "text": " • "
+                                      },
+                                      {
+                                        "text": "Don't Kill the Magic",
+                                        "navigationEndpoint": {
+                                          "browseEndpoint": {
+                                            "browseId": "MPREb_YlFISwvglP9",
+                                            "browseEndpointContextSupportedConfigs": {
+                                              "browseEndpointContextMusicConfig": {
+                                                "pageType": "MUSIC_PAGE_TYPE_ALBUM"
+                                              }
+                                            }
+                                          }
+                                        }
+                                      },
+                                      {
+                                        "text": " • "
+                                      },
+                                      {
+                                        "text": "2014"
+                                      }
+                                    ]
+                                  },
+                                  "thumbnail": {
+                                    "thumbnails": [
+                                      {
+                                        "url": "https://yt3.googleusercontent.com/a-H-DATHq83Mn4N5MkCtiCYfTzL_TNPuDfVNwaTpRx0d-iqVCRZu_LBsKVFmHxRLujYw6VOg_Mgy3JHI=w302-h302-l90-rj",
+                                        "width": 302,
+                                        "height": 302
+                                      },
+                                      {
+                                        "url": "https://yt3.googleusercontent.com/a-H-DATHq83Mn4N5MkCtiCYfTzL_TNPuDfVNwaTpRx0d-iqVCRZu_LBsKVFmHxRLujYw6VOg_Mgy3JHI=w544-h544-l90-rj",
+                                        "width": 544,
+                                        "height": 544
+                                      }
+                                    ]
+                                  },
+                                  "lengthText": {
+                                    "runs": [
+                                      {
+                                        "text": "3:45"
+                                      }
+                                    ]
+                                  },
+                                  "videoId": "3WzamI8QD2s"
+                                }
+                              }
+                            }
+                          },
+                          {
+                            "automixPreviewVideoRenderer": {
+                              "content": {}
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  }
+}

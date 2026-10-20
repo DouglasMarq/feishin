@@ -97,6 +97,33 @@ impl<'request> SearchRequest<'request> {
     }
 }
 
+const RADIO_PLAYLIST_PREFIX: &str = "RDAMVM";
+const NORMAL_AUTOMIX: &str = "AUTOMIX_SETTING_NORMAL";
+
+#[derive(Debug, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub(crate) struct NextRequest<'request> {
+    context: RequestContext<'request>,
+    video_id: &'request str,
+    playlist_id: String,
+    is_audio_only: bool,
+    enable_persistent_playlist_panel: bool,
+    tuner_setting_value: &'static str,
+}
+
+impl<'request> NextRequest<'request> {
+    pub(crate) fn radio(locale: &'request MusicLocale, video_id: &'request str) -> Self {
+        Self {
+            context: RequestContext::new(locale),
+            video_id,
+            playlist_id: format!("{RADIO_PLAYLIST_PREFIX}{video_id}"),
+            is_audio_only: true,
+            enable_persistent_playlist_panel: true,
+            tuner_setting_value: NORMAL_AUTOMIX,
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use serde_json::json;
@@ -128,5 +155,22 @@ mod tests {
         let mood = serde_json::to_value(BrowseRequest::new(&locale, "X").with_params("p")).unwrap();
         assert_eq!(mood["params"], "p");
         assert!(mood.get("formData").is_none());
+    }
+
+    #[test]
+    fn radio_bodies_ask_for_the_song_radio_playlist() {
+        let locale = locale();
+        let body = serde_json::to_value(NextRequest::radio(&locale, "abc")).unwrap();
+        assert_eq!(
+            body,
+            json!({
+                "context": {"client": {"clientName": "WEB_REMIX", "clientVersion": "1.20260901.01.00", "hl": "pt", "gl": "BR"}},
+                "videoId": "abc",
+                "playlistId": "RDAMVMabc",
+                "isAudioOnly": true,
+                "enablePersistentPlaylistPanel": true,
+                "tunerSettingValue": "AUTOMIX_SETTING_NORMAL"
+            })
+        );
     }
 }
