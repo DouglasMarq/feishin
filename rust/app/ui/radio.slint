@@ -226,6 +226,7 @@ component DeleteConfirmation inherits Modal {
 
     DialogButtons {
         confirm-text: RadioState.busy ? @tr("Deleting...") : @tr("Delete");
+        confirm-tooltip: @tr("Delete \"{}\"", RadioState.delete-name);
         confirm-enabled: !RadioState.busy;
         danger: true;
         cancel => {

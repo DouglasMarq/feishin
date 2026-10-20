@@ -135,6 +135,11 @@ export component LinkCell inherits Rectangle {
                 root.context-menu(self.absolute-position.x + self.mouse-x, self.absolute-position.y + self.mouse-y);
             }
         }
+
+        TooltipAnchor {
+            text: root.enabled ? @tr("Go to {}", root.text) : "";
+            hovered: link.has-hover;
+        }
     }
 }
 

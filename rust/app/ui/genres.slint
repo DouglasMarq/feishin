@@ -88,6 +88,11 @@ export component Tab inherits Rectangle {
         }
     }
 
+    TooltipAnchor {
+        text: root.active ? @tr("{} is shown", root.text) : @tr("Show {}", root.text);
+        hovered: touch.has-hover;
+    }
+
     touch := TouchArea {
         mouse-cursor: pointer;
         clicked => {
@@ -144,6 +149,11 @@ export component CardView inherits Rectangle {
                 root.open();
             }
         }
+    }
+
+    TooltipAnchor {
+        text: root.card.loaded ? @tr("Open {}", root.card.title) : "";
+        hovered: touch.has-hover;
     }
 
     Rectangle {
@@ -481,6 +491,11 @@ component GenreList inherits VerticalLayout {
                     clicked => {
                         AppState.navigate(Route.genres, genre.id);
                     }
+                }
+
+                TooltipAnchor {
+                    text: @tr("Open {}", genre.name);
+                    hovered: touch.has-hover;
                 }
 
                 HorizontalLayout {

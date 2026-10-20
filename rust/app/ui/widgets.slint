@@ -1,3 +1,4 @@
+import { Button, ComboBox, Switch } from "std-widgets.slint";
 import { Theme } from "theme.slint";
 
 export global Tooltip {
@@ -107,6 +108,90 @@ export component TooltipAnchor {
         if (root.shown) {
             Tooltip.update(root.token, root.text, root.tip-x, root.tip-width);
         }
+    }
+}
+
+export component TooltipButton inherits Rectangle {
+    in property <string> text;
+    in property <string> tooltip;
+    in property <bool> primary;
+    in property <bool> enabled: true;
+    callback clicked();
+    min-width: button.min-width;
+    min-height: button.min-height;
+    preferred-width: button.preferred-width;
+    preferred-height: button.preferred-height;
+    horizontal-stretch: 0;
+    vertical-stretch: 0;
+
+    hover := TouchArea {
+        button := Button {
+            width: parent.width;
+            height: parent.height;
+            text: root.text;
+            primary: root.primary;
+            enabled: root.enabled;
+            accessible-description: root.tooltip;
+            clicked => {
+                root.clicked();
+            }
+        }
+    }
+
+    TooltipAnchor {
+        text: root.tooltip;
+        hovered: hover.has-hover;
+    }
+}
+
+export component TooltipComboBox inherits Rectangle {
+    in property <string> tooltip;
+    in property <[string]> model <=> combo.model;
+    in property <bool> enabled <=> combo.enabled;
+    in-out property <int> current-index <=> combo.current-index;
+    out property <string> current-value: combo.current-value;
+    callback selected <=> combo.selected;
+    min-width: combo.min-width;
+    min-height: combo.min-height;
+    preferred-width: combo.preferred-width;
+    preferred-height: combo.preferred-height;
+    horizontal-stretch: 1;
+    vertical-stretch: 0;
+
+    hover := TouchArea {
+        combo := ComboBox {
+            width: parent.width;
+            height: parent.height;
+            accessible-description: root.tooltip;
+        }
+    }
+
+    TooltipAnchor {
+        text: root.tooltip;
+        hovered: hover.has-hover;
+    }
+}
+
+export component TooltipSwitch inherits Rectangle {
+    in property <string> label;
+    in-out property <bool> checked;
+    callback toggled();
+    width: toggle.preferred-width;
+    height: toggle.preferred-height;
+
+    hover := TouchArea {
+        toggle := Switch {
+            checked <=> root.checked;
+            accessible-label: root.label;
+            toggled => {
+                root.toggled();
+            }
+        }
+    }
+
+    TooltipAnchor {
+        text: root.checked ? @tr("{}: on", root.label) : @tr("{}: off", root.label);
+        hovered: hover.has-hover;
     }
 }
 

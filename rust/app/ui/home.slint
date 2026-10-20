@@ -59,6 +59,11 @@ component AlbumCard inherits Rectangle {
         }
     }
 
+    TooltipAnchor {
+        text: @tr("Open {}", root.album.name);
+        hovered: card-touch.has-hover;
+    }
+
     Rectangle {
         y: 0;
         width: root.width;
@@ -139,6 +144,11 @@ component AlbumCard inherits Rectangle {
             clicked => {
                 AppState.navigate(Route.artist-detail, root.album.artist-id);
             }
+        }
+
+        TooltipAnchor {
+            text: root.album.artist-id != "" ? @tr("Go to {}", root.album.artist) : "";
+            hovered: artist-touch.has-hover;
         }
     }
 }

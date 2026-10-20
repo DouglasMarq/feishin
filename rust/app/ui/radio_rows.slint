@@ -1,5 +1,5 @@
 import { Theme, Icons } from "theme.slint";
-import { IconButton } from "widgets.slint";
+import { IconButton, TooltipAnchor } from "widgets.slint";
 import { RadioIcons } from "radio_widgets.slint";
 
 export enum RadioSource { server, favorite, directory }
@@ -134,6 +134,11 @@ export component RadioRowView inherits Rectangle {
         double-clicked => {
             RadioState.play(root.item.source, root.item.id);
         }
+    }
+
+    TooltipAnchor {
+        text: @tr("Double-click to play");
+        hovered: touch.has-hover;
     }
 
     HorizontalLayout {

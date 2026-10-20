@@ -71,6 +71,11 @@ component SongRowView inherits Rectangle {
                 }
             }
 
+            TooltipAnchor {
+                text: @tr("Double-click to play");
+                hovered: touch.has-hover;
+            }
+
             HorizontalLayout {
                 padding-left: 24px;
                 padding-right: 24px;

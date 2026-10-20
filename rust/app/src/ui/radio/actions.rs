@@ -131,7 +131,7 @@ impl RadioView {
     ) {
         window.global::<RadioState>().set_busy(false);
         if let Err(error) = outcome {
-            show_status(window, &format!("{failure}: {error}"));
+            show_status(window, &tr!("{}: {}", failure, error));
         }
         self.load();
     }

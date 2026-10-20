@@ -110,6 +110,11 @@ export component AlbumGridCardView inherits Rectangle {
                         root.open();
                     }
 
+                    TooltipAnchor {
+                        text: @tr("Open {}", root.card.name);
+                        hovered: touch.has-hover;
+                    }
+
                     if touch.has-hover: Rectangle {
                         background: #00000059;
 
@@ -155,16 +160,21 @@ export component AlbumGridCardView inherits Rectangle {
                     font-weight: 600;
                     overflow: elide;
 
-                    TouchArea {
+                    name-touch := TouchArea {
                         mouse-cursor: pointer;
                         clicked => {
                             root.open();
                         }
                     }
+
+                    TooltipAnchor {
+                        text: @tr("Open {}", root.card.name);
+                        hovered: name-touch.has-hover;
+                    }
                 }
 
                 Text {
-                    text: root.card.year == "" ? root.card.artists : root.card.artists + " • " + root.card.year;
+                    text: root.card.year == "" ? root.card.artists : @tr("{} • {}", root.card.artists, root.card.year);
                     color: Theme.muted;
                     font-size: 12px;
                     overflow: elide;

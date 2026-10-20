@@ -182,3 +182,69 @@ fn a_link_that_is_not_youtube_is_refused() {
         "Paste a YouTube or YouTube Music link first"
     );
 }
+
+mod tooltips {
+    use std::time::Duration;
+
+    use i_slint_backend_testing::{ElementHandle, mock_elapsed_time};
+    use slint::platform::WindowEvent;
+    use slint::{ComponentHandle, LogicalPosition, LogicalSize};
+
+    use super::open_settings_page;
+    use crate::ui::{AppWindow, SettingsState, Tooltip};
+
+    const TALL_WINDOW: LogicalSize = LogicalSize::new(1400.0, 4000.0);
+    const PAST_THE_TOOLTIP_DELAY: Duration = Duration::from_millis(500);
+
+    fn element(window: &AppWindow, id: &str, label: &str) -> ElementHandle {
+        ElementHandle::find_by_element_id(window, id)
+            .find(|element| element.accessible_label().as_deref() == Some(label))
+            .unwrap()
+    }
+
+    fn shown_tooltip(window: &AppWindow) -> String {
+        mock_elapsed_time(Duration::ZERO);
+        let tooltip = window.global::<Tooltip>();
+        assert!(tooltip.get_visible());
+        tooltip.get_text().into()
+    }
+
+    fn hover(window: &AppWindow, id: &str, label: &str) -> ElementHandle {
+        window.window().set_size(TALL_WINDOW);
+        let target = element(window, id, label);
+        let position = target.absolute_position();
+        let size = target.size();
+        let center = LogicalPosition::new(
+            position.x + size.width / 2.0,
+            position.y + size.height / 2.0,
+        );
+        window
+            .window()
+            .dispatch_event(WindowEvent::PointerMoved { position: center });
+        mock_elapsed_time(Duration::ZERO);
+        mock_elapsed_time(PAST_THE_TOOLTIP_DELAY);
+        target
+    }
+
+    #[test]
+    fn given_the_pointer_over_a_setting_switch_it_shows_the_setting_and_its_state() {
+        let page = open_settings_page();
+        let state = page.window.global::<SettingsState>();
+        state.set_gapless(true);
+        hover(&page.window, "TooltipSwitch::toggle", "Gapless playback");
+        assert_eq!(shown_tooltip(&page.window), "Gapless playback: on");
+        state.set_gapless(false);
+        assert_eq!(shown_tooltip(&page.window), "Gapless playback: off");
+    }
+
+    #[test]
+    fn given_the_pointer_over_a_server_button_it_shows_what_the_button_does() {
+        let page = open_settings_page();
+        let button = hover(&page.window, "TooltipButton::button", "Add server");
+        assert_eq!(shown_tooltip(&page.window), "Sign in to another server");
+        assert_eq!(
+            button.accessible_description().as_deref(),
+            Some("Sign in to another server")
+        );
+    }
+}

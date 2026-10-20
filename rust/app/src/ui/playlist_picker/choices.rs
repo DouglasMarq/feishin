@@ -29,7 +29,7 @@ pub fn picker_row(playlist: &Playlist) -> PickerRow {
     PickerRow {
         id: playlist.id.as_str().into(),
         name: playlist.name.as_str().into(),
-        info: format!(
+        info: tr!(
             "{} • {}",
             song_count_label(playlist.song_count as usize),
             format_duration(playlist.duration_ms)

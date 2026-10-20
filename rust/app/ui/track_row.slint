@@ -33,6 +33,11 @@ export component TrackRowView inherits Rectangle {
             }
         }
 
+        TooltipAnchor {
+            text: root.track.loaded ? @tr("Double-click to play") : "";
+            hovered: touch.has-hover;
+        }
+
         HorizontalLayout {
             Rectangle {
                 width: TracksState.w-index;

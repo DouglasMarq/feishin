@@ -1,7 +1,7 @@
-import { ComboBox, LineEdit } from "std-widgets.slint";
+import { LineEdit } from "std-widgets.slint";
 import { Theme, Icons } from "theme.slint";
 import { TracksState } from "globals.slint";
-import { Icon, TooltipAnchor } from "widgets.slint";
+import { Icon, TooltipAnchor, TooltipComboBox } from "widgets.slint";
 
 component FilterChip inherits Rectangle {
     in property <string> text;
@@ -66,8 +66,9 @@ component TracksFilters inherits HorizontalLayout {
         }
     }
 
-    ComboBox {
+    TooltipComboBox {
         y: (parent.height - self.height) / 2;
+        tooltip: @tr("Genre filter: {}", self.current-value);
         min-width: 100px;
         preferred-width: 180px;
         max-width: 180px;

@@ -226,6 +226,8 @@ export component DeviceApprovalDialog inherits Modal {
 
     DialogButtons {
         confirm-text: @tr("Allow");
+        confirm-tooltip: @tr("Let \"{}\" control this player", DevicesState.approval-name);
+        cancel-tooltip: @tr("Do not let \"{}\" control this player", DevicesState.approval-name);
         cancel => {
             DevicesState.deny-device();
         }

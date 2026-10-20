@@ -33,15 +33,13 @@ fn joined_details(parts: &[String]) -> String {
         .iter()
         .filter(|part| !part.is_empty())
         .cloned()
-        .collect::<Vec<_>>()
-        .join(" \u{b7} ")
+        .reduce(|joined, part| tr!("{} · {}", joined, part))
+        .unwrap_or_default()
 }
 
 fn audio_details(station: &DirectoryStation) -> String {
     match station.bitrate_kbps {
-        Some(bitrate) => format!("{} {bitrate} kbps", station.codec)
-            .trim()
-            .to_owned(),
+        Some(bitrate) => tr!("{} {} kbps", station.codec, bitrate).trim().to_owned(),
         None => station.codec.clone(),
     }
 }
@@ -252,6 +250,16 @@ mod tests {
             rows[0].details,
             "Germany \u{b7} jazz, swing, bebop \u{b7} MP3 128 kbps"
         );
+    }
+
+    #[test]
+    fn given_a_station_without_country_tags_or_codec_the_details_skip_the_empty_parts() {
+        let bare = DirectoryStation {
+            bitrate_kbps: Some(64),
+            ..DirectoryStation::default()
+        };
+        assert_eq!(directory_details(&bare), "64 kbps");
+        assert_eq!(directory_details(&DirectoryStation::default()), "");
     }
 
     #[test]

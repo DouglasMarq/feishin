@@ -85,6 +85,11 @@ component MoreButton inherits Rectangle {
             font-weight: 600;
         }
 
+        TooltipAnchor {
+            text: root.busy ? "" : @tr("Load more results");
+            hovered: touch.has-hover;
+        }
+
         touch := TouchArea {
             enabled: !root.busy;
             mouse-cursor: pointer;
@@ -153,6 +158,11 @@ component SongRow inherits Rectangle {
                 if (event.kind == PointerEventKind.down && event.button == PointerEventButton.right) {
                     menu.show({ x: self.mouse-x, y: self.mouse-y });
                 }
+            }
+
+            TooltipAnchor {
+                text: @tr("Double-click to play");
+                hovered: touch.has-hover;
             }
 
             HorizontalLayout {
@@ -341,6 +351,11 @@ component CardView inherits Rectangle {
         clicked => {
             root.open();
         }
+    }
+
+    TooltipAnchor {
+        text: @tr("Open {}", root.card.title);
+        hovered: touch.has-hover;
     }
 }
 
