@@ -1,5 +1,5 @@
 ---
-status: in-progress # draft | approved | in-progress | done
+status: done # draft | approved | in-progress | done
 branch: feat/rust-native
 ticket: .scratch/apply-agent-rules/audit.md
 ---
@@ -47,23 +47,23 @@ Servers affected: Navidrome, Subsonic (gonic), Jellyfin - error mapping, URL bui
 
 ### Phase 3 - one agent, after Phase 2 is merged
 
-- [ ] 7. W7 consistency: M1-M5 (named consts, units in names, shared helpers, `FakeAudio` to `demo/`, split `ui/player.rs`, `sleep_timer.rs`, `remote/service.rs`), plus N1 (`ctx` → `context`) and N2 (boolean prefixes, wire names kept with `#[serde(rename)]`, persisted names with `#[serde(alias)]`) → verify: `cargo test --workspace` unchanged results; `settings.toml` compat test for aliased fields
+- [x] 7. W7 consistency: M1-M5 (named consts, units in names, shared helpers, `FakeAudio` to `demo/`, split `ui/player.rs`, `sleep_timer.rs`, `remote/service.rs`), plus N1 (`ctx` → `context`) and N2 (boolean prefixes, wire names kept with `#[serde(rename)]`, persisted names with `#[serde(alias)]`) → verify: `cargo test --workspace` unchanged results; `settings.toml` compat test for aliased fields
 
 ### Phase 4 - finish
 
-- [ ] 8. Run `python3 scripts/translations.py`, translate every new entry in the 39 catalogs → verify: `python3 scripts/translations.py check` reports every language complete
-- [ ] 9. Full checks, live tests, RAM → verify: success criteria below; `scripts/measure-ram.sh` with `--demo --demo-songs 100000` (covers and caches changed) compared to `feat/rust-native`
+- [x] 8. Run `python3 scripts/translations.py`, translate every new entry in the 39 catalogs → verify: `python3 scripts/translations.py check` reports every language complete
+- [x] 9. Full checks, live tests, RAM → verify: success criteria below; `scripts/measure-ram.sh` with `--demo --demo-songs 100000` (covers and caches changed) compared to `feat/rust-native`
 
 ## Success criteria
 
 - Tests: the Given-It cases named in each step, plus a reproducing test for each security fix (S1, S2, S4, S6).
-- [ ] `cargo fmt --all --check` passes
-- [ ] `cargo clippy --workspace --all-targets -- -D warnings` passes
-- [ ] `cargo build --workspace` succeeds
-- [ ] `cargo test --workspace` passes
-- [ ] Every new or changed branch of logic has a test
-- [ ] `python3 scripts/translations.py check` reports every language complete
-- [ ] Tests follow Given-It naming and cover the happy path, empty lists and missing items, invalid input and boundaries (paging edges, unpaired or non-local remote devices)
+- [x] `cargo fmt --all --check` passes
+- [x] `cargo clippy --workspace --all-targets -- -D warnings` passes
+- [x] `cargo build --workspace` succeeds
+- [x] `cargo test --workspace` passes
+- [x] Every new or changed branch of logic has a test
+- [x] `python3 scripts/translations.py check` reports every language complete
+- [x] Tests follow Given-It naming and cover the happy path, empty lists and missing items, invalid input and boundaries (paging edges, unpaired or non-local remote devices)
 
 ## Open questions
 
@@ -77,3 +77,4 @@ Servers affected: Navidrome, Subsonic (gonic), Jellyfin - error mapping, URL bui
 - 2026-10-20: Phase 1 merged (W1-W4). W2 renamed the fuzzy lyrics cases by letter substitution to keep the fuse.js reference scores; real artists remain in recorded YouTube fixtures outside the audit lines. W3 keeps the settings snapshot in `Session` and reaches the lyrics provider through `Connector`. `crossfade::pausing_during_a_fade_freezes_it` is flaky under heavy load (pre-existing, left for a follow-up).
 - 2026-10-20: Phase 2 merged (W5, W6), plus two side fixes: the mixer now reports pause changes it makes itself (the crossfade flake was a player bug), and `scripts/live-servers.sh` runs on macOS bash 3.2 without `--test-threads=1`. W5 kept `can_share()` and `Unsupported` for radio instead of new trait methods; MPRIS art falls back to the cached cover file. W6 chose a `TranscodeFormat` newtype (custom formats keep working). Phase 3 splits W7 into W7a (crates) and W7b (app) in parallel, then W7c renames (N1, N2) alone.
 - 2026-10-20: W7a (crates) and W7b (app) merged. Persisted settings fields renamed with `#[serde(rename)]` so `settings.toml` keeps its keys; `lru`/`rand` moved to `[workspace.dependencies]`. RAM (macOS `footprint`, `--demo-songs 100000`, idle): 68 MB before and after; `scripts/measure-ram.sh` reads `/proc` and does not run on macOS. Translations (step 8) run in parallel with W7c since the catalogs carry no source locations.
+- 2026-10-20: W7c renamed `ctx`/`rt` and every unprefixed boolean (crates, app, Slint); wire and persisted names kept with `#[serde(rename)]` and covered by literal old-file tests; a few intent flags use `should_` where no is/has/can name reads naturally. Translations: 44 new entries in all 38 catalogs (the script lists 38 languages, not 39), one obsolete entry dropped. Final: fmt, clippy, build clean; 1194 tests pass; live tests 328/328 on the W7c branch (the merge after it only added catalogs); translations 586/586. The UI was smoke-run in `--demo` without errors but not inspected visually.
