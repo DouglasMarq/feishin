@@ -4,6 +4,8 @@ import { AppState, PlayerState, Route, TrackRow, TracksState } from "globals.sli
 import { HeaderCell, Skeleton, TrackRowView } from "tracks.slint";
 import { Icon, IconButton, TooltipAnchor } from "widgets.slint";
 
+export enum GenresTab { albums, tracks }
+
 export struct Card {
     id: string,
     title: string,
@@ -45,7 +47,7 @@ export global GenresState {
     in property <bool> albums-loading;
     in property <[TrackItem]> tracks;
     in property <bool> tracks-loading;
-    in-out property <int> tab;
+    in-out property <GenresTab> tab;
     callback load(string);
     callback filter-edited(string);
     callback album-columns(int);
@@ -579,9 +581,9 @@ component GenreDetail inherits VerticalLayout {
             y: (parent.height - self.height) / 2;
             text: @tr("Albums");
             count: GenresState.album-count;
-            active: GenresState.tab == 0;
+            active: GenresState.tab == GenresTab.albums;
             clicked => {
-                GenresState.tab = 0;
+                GenresState.tab = GenresTab.albums;
             }
         }
 
@@ -589,15 +591,15 @@ component GenreDetail inherits VerticalLayout {
             y: (parent.height - self.height) / 2;
             text: @tr("Tracks");
             count: GenresState.track-count;
-            active: GenresState.tab == 1;
+            active: GenresState.tab == GenresTab.tracks;
             clicked => {
-                GenresState.tab = 1;
+                GenresState.tab = GenresTab.tracks;
             }
         }
     }
 
     Rectangle {
-        if GenresState.tab == 0: CardGrid {
+        if GenresState.tab == GenresTab.albums: CardGrid {
             rows: GenresState.albums;
             loading: GenresState.albums-loading;
             empty-text: @tr("No albums found");
@@ -609,7 +611,7 @@ component GenreDetail inherits VerticalLayout {
             }
         }
 
-        if GenresState.tab == 1: TrackTable {
+        if GenresState.tab == GenresTab.tracks: TrackTable {
             rows: GenresState.tracks;
             loading: GenresState.tracks-loading;
             play(index) => {

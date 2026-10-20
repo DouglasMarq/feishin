@@ -218,7 +218,7 @@ pub async fn streams_transcode_to_opus(backend: Backend) {
     let song = song_titled(&*server, "Dawn Chorus").await;
     let options = feishin_api::StreamOptions {
         max_bitrate_kbps: Some(96),
-        format: Some("opus".into()),
+        format: feishin_api::TranscodeFormat::parse("opus"),
     };
     let stream = crate::support::download(&server.stream_url(&song.id, &options)).await;
     assert!(

@@ -2,20 +2,7 @@ use feishin_core::model::SongSort;
 use feishin_storage::settings::ColumnSetting;
 use slint::ComponentHandle;
 
-use crate::ui::{AppWindow, TracksState};
-
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub enum TrackColumn {
-    Index,
-    Title,
-    Artist,
-    Album,
-    Year,
-    Plays,
-    Duration,
-    Favorite,
-    Rating,
-}
+use crate::ui::{AppWindow, TrackColumn, TracksState};
 
 impl TrackColumn {
     pub const ALL: [Self; 9] = [

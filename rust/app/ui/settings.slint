@@ -19,9 +19,11 @@ export struct LyricsSourceRow {
     enabled: bool,
 }
 
+export enum ReplayGain { off, track, album }
+
 export global SettingsState {
     in property <bool> loaded;
-    in-out property <int> replay-gain;
+    in-out property <ReplayGain> replay-gain;
     in-out property <bool> gapless: true;
     in-out property <int> crossfade-seconds;
     in property <int> max-crossfade-seconds: 12;
@@ -126,6 +128,23 @@ component Picker inherits TooltipComboBox {
     in property <string> label;
     width: 220px;
     tooltip: @tr("{}: {}", root.label, root.current-value);
+}
+
+component ReplayGainPicker inherits Picker {
+    property <ReplayGain> mode: SettingsState.replay-gain;
+    current-index: root.index-of(root.mode);
+
+    pure function index-of(mode: ReplayGain) -> int {
+        return mode == ReplayGain.track ? 1 : (mode == ReplayGain.album ? 2 : 0);
+    }
+
+    changed mode => {
+        root.current-index = root.index-of(root.mode);
+    }
+    selected => {
+        SettingsState.replay-gain = [ReplayGain.off, ReplayGain.track, ReplayGain.album][root.current-index];
+        SettingsState.playback-changed();
+    }
 }
 
 component ActionChip inherits Rectangle {
@@ -497,13 +516,9 @@ export component SettingsView inherits Rectangle {
                     title: @tr("ReplayGain");
                     description: @tr("Normalize loudness using the track or album gain tags.");
 
-                    Picker {
+                    ReplayGainPicker {
                         label: @tr("ReplayGain");
                         model: [@tr("Off"), @tr("Track"), @tr("Album")];
-                        current-index <=> SettingsState.replay-gain;
-                        selected => {
-                            SettingsState.playback-changed();
-                        }
                     }
                 }
 

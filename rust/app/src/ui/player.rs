@@ -2,7 +2,10 @@ use feishin_core::queue::{QueueTrack, RepeatMode, YouTubeVideo};
 use feishin_storage::cover_cache::DecodedImage;
 use slint::{ComponentHandle, Image, Rgba8Pixel, SharedPixelBuffer};
 
-use super::{AppWindow, Context, PlayerState, clamp_i32, on_ui, queue, radio, show_status, tracks};
+use super::{
+    AppWindow, Context, PlayerState, RepeatState, clamp_i32, on_ui, queue, radio, show_status,
+    tracks,
+};
 use crate::controller::{Command, UiSink, UiUpdate};
 
 const COVER_SIZE: u32 = 128;
@@ -146,11 +149,11 @@ fn clear_song(window: &AppWindow) {
     tracks::set_current(window, None);
 }
 
-fn repeat_index(repeat: RepeatMode) -> i32 {
+fn repeat_state(repeat: RepeatMode) -> RepeatState {
     match repeat {
-        RepeatMode::None => 0,
-        RepeatMode::All => 1,
-        RepeatMode::One => 2,
+        RepeatMode::None => RepeatState::Off,
+        RepeatMode::All => RepeatState::All,
+        RepeatMode::One => RepeatState::One,
     }
 }
 
@@ -186,12 +189,24 @@ fn apply(window: &AppWindow, update: UiUpdate) {
         }
         UiUpdate::Modes { shuffle, repeat } => {
             state.set_shuffle(shuffle);
-            state.set_repeat(repeat_index(repeat));
+            state.set_repeat(repeat_state(repeat));
         }
         UiUpdate::Queue(view) => queue::set_view(window, view),
         UiUpdate::Radio(now_playing) => radio::show_now_playing(window, now_playing.as_ref()),
         UiUpdate::Error(message) => show_status(window, &message),
         UiUpdate::Raise => raise(window),
         UiUpdate::Quit => quit(),
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn given_each_repeat_mode_the_player_bar_shows_the_matching_state() {
+        assert_eq!(repeat_state(RepeatMode::None), RepeatState::Off);
+        assert_eq!(repeat_state(RepeatMode::All), RepeatState::All);
+        assert_eq!(repeat_state(RepeatMode::One), RepeatState::One);
     }
 }

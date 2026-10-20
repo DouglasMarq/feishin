@@ -2,6 +2,7 @@ use std::sync::Arc;
 
 use slint::ComponentHandle;
 
+use super::choices::replay_gain_setting;
 use super::display::set_lyrics_rows;
 use super::language::apply_language;
 use super::loading::{load, save_integrations};
@@ -47,7 +48,7 @@ impl Binding {
 fn apply_playback(window: &AppWindow, ctx: &Context, shared: &Arc<Shared>) {
     let state = window.global::<SettingsState>();
     let form = PlaybackForm {
-        replay_gain: state.get_replay_gain(),
+        replay_gain: replay_gain_setting(state.get_replay_gain()),
         gapless: state.get_gapless(),
         crossfade_seconds: state.get_crossfade_seconds(),
         device: state.get_device_index(),

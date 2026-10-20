@@ -18,7 +18,8 @@ use crate::session::Session;
 use crate::store::JsonStore;
 use crate::ui::test_window::{Jobs, claim_routed_platform, routed_runtime};
 use crate::ui::{
-    AppState, AppWindow, Context, DiscoverCardKind, DiscoverSection, DiscoverState, Page, Route,
+    AppState, AppWindow, Context, DiscoverCardKind, DiscoverPageKind, DiscoverSection,
+    DiscoverState, Page, Route,
 };
 
 const SONGS: usize = 2_400;
@@ -200,7 +201,7 @@ fn mixes_open_as_pages_and_play(fixture: &mut Fixture, screen: &Screen) {
     screen.wait_until("the mix opens", || {
         fixture.state().get_songs().row_count() >= 12
     });
-    assert_eq!(fixture.state().get_page_kind(), "MIX");
+    assert_eq!(fixture.state().get_page_kind(), DiscoverPageKind::Mix);
     assert!(!fixture.state().get_page_has_link());
     fixture.state().invoke_play_page();
     let Command::Tracks(TrackCommand::PlayNow { tracks, .. }) = fixture.next_command() else {
@@ -259,7 +260,7 @@ fn playlists_open_as_pages(fixture: &Fixture, screen: &Screen) {
     screen.wait_until("the playlist loads", || {
         fixture.state().get_songs().row_count() == 15
     });
-    assert_eq!(fixture.state().get_page_kind(), "PLAYLIST");
+    assert_eq!(fixture.state().get_page_kind(), DiscoverPageKind::Playlist);
     assert!(fixture.state().get_page_has_link());
     screen.wait_until("the page cover loads", || {
         fixture.state().get_page_has_cover()
@@ -302,7 +303,10 @@ fn search_lists_songs_and_back_returns(fixture: &Fixture, screen: &Screen) {
             && !state.get_page_loading()
             && state.get_songs().row_count() > 0
     });
-    assert_eq!(fixture.state().get_page_kind(), "SEARCH RESULTS");
+    assert_eq!(
+        fixture.state().get_page_kind(),
+        DiscoverPageKind::SearchResults
+    );
     assert!(!fixture.state().get_page_has_link());
     fixture.window.global::<AppState>().invoke_back();
     screen.pump();

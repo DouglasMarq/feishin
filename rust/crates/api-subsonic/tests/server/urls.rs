@@ -1,4 +1,4 @@
-use feishin_api::{Credential, MusicServer, StreamOptions};
+use feishin_api::{Credential, MusicServer, StreamOptions, TranscodeFormat};
 use feishin_api_subsonic::SubsonicServer;
 
 use crate::support::{CREDENTIAL, config};
@@ -19,7 +19,7 @@ fn url_builders() {
     );
     let options = StreamOptions {
         max_bitrate_kbps: Some(192),
-        format: Some("opus".into()),
+        format: TranscodeFormat::parse("opus"),
     };
     assert_eq!(
         server.stream_url("a b/c", &options),
@@ -39,21 +39,4 @@ fn url_builders() {
             "https://music.example.com/rest/getCoverArt.view?id=al-1&{CREDENTIAL}&v=1.13.0&c=Feishin"
         )
     );
-}
-
-#[test]
-fn given_a_transcode_format_with_query_characters_it_is_encoded() {
-    let credential = Credential::Subsonic {
-        subsonic: CREDENTIAL.into(),
-    };
-    let server = SubsonicServer::with_credential(config("https://music.example.com/"), &credential)
-        .expect("server");
-    let options = StreamOptions {
-        max_bitrate_kbps: None,
-        format: Some("mp3&t=stolen".into()),
-    };
-
-    let url = server.stream_url("s1", &options);
-
-    assert!(url.ends_with("&format=mp3%26t%3Dstolen"), "{url}");
 }

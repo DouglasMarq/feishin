@@ -2,12 +2,13 @@ use feishin_core::model::ServerType;
 use feishin_storage::settings::{MAX_CROSSFADE_SECONDS, Settings};
 use slint::{ComponentHandle, ModelRc, SharedString, VecModel};
 
-use super::choices::replay_gain_index;
+use super::choices::replay_gain_choice;
 use super::language::show_languages;
-use super::lyrics_sources::{LyricsSource, lyrics_source_name};
+use super::lyrics_sources::LyricsSource;
 use super::view::{Shared, View};
 use super::youtube::show_youtube;
 use crate::controller::SettingsSnapshot;
+use crate::lyrics_provider::lyrics_source_label;
 use crate::ui::{AppWindow, LyricsSourceRow, ServerRow, SettingsState};
 
 pub(super) fn server_rows(settings: &Settings) -> Vec<ServerRow> {
@@ -49,8 +50,8 @@ pub(super) fn set_lyrics_rows(state: &SettingsState, sources: &[LyricsSource]) {
     let rows: Vec<LyricsSourceRow> = sources
         .iter()
         .map(|source| LyricsSourceRow {
-            id: source.id.as_str().into(),
-            name: lyrics_source_name(&source.id).into(),
+            id: source.source.name().into(),
+            name: lyrics_source_label(source.source).into(),
             enabled: source.enabled,
         })
         .collect();
@@ -59,7 +60,7 @@ pub(super) fn set_lyrics_rows(state: &SettingsState, sources: &[LyricsSource]) {
 
 fn set_playback_fields(state: &SettingsState, view: &View) {
     let playback = &view.settings.playback;
-    state.set_replay_gain(replay_gain_index(playback.replay_gain));
+    state.set_replay_gain(replay_gain_choice(playback.replay_gain));
     state.set_gapless(playback.gapless);
     state.set_max_crossfade_seconds(i32::from(MAX_CROSSFADE_SECONDS));
     state.set_crossfade_seconds(i32::from(

@@ -93,12 +93,7 @@ fn render_page_of(window: &AppWindow, model: &DiscoverModel) {
     let state = window.global::<DiscoverState>();
     let page = model.page.borrow();
     let target = page.target.as_ref();
-    state.set_page_kind(
-        target
-            .map(|target| target.kind_label())
-            .unwrap_or_default()
-            .into(),
-    );
+    state.set_page_kind(target.map(|target| target.page_kind()).unwrap_or_default());
     state.set_page_title(page.title.as_str().into());
     state.set_page_subtitle(page.subtitle.as_str().into());
     state.set_page_loading(page.loading);

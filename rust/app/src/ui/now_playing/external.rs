@@ -116,7 +116,7 @@ fn fetch_lyrics(window: &AppWindow, ctx: &Context, request: LyricsRequest) {
 #[cfg(test)]
 mod tests {
     use feishin_core::queue::YouTubeTrack;
-    use feishin_storage::settings::Settings;
+    use feishin_storage::settings::{LyricsSourceSetting, Settings};
 
     use super::*;
 
@@ -141,7 +141,8 @@ mod tests {
     fn given_an_external_track_lyrics_sources_come_from_the_settings_snapshot() {
         let session = Session::default();
         let mut settings = Settings::default();
-        settings.integrations.lyrics_sources = vec!["server".into(), "genius".into()];
+        settings.integrations.lyrics_sources =
+            vec![LyricsSourceSetting::Server, LyricsSourceSetting::Genius];
         session.publish_settings(&settings);
         assert_eq!(
             external_lyrics_sources(&session),

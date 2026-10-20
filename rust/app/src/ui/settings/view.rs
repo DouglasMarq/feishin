@@ -1,18 +1,19 @@
 use std::sync::atomic::AtomicU64;
 use std::sync::{Mutex, MutexGuard};
 
-use feishin_storage::settings::{MAX_CROSSFADE_SECONDS, PlaybackSettings, Settings};
-
-use super::choices::{
-    Choices, bitrate_choices, device_choices, format_choices, replay_gain_from_index,
+use feishin_api::TranscodeFormat;
+use feishin_storage::settings::{
+    MAX_CROSSFADE_SECONDS, PlaybackSettings, ReplayGainSetting, Settings,
 };
+
+use super::choices::{Choices, bitrate_choices, device_choices, format_choices};
 use super::lyrics_sources::{LyricsSource, lyrics_sources};
 use super::youtube::{chart_country_choices, cookie_browser_choices};
 use crate::controller::SettingsSnapshot;
 
 #[derive(Debug, Clone, Copy)]
 pub(super) struct PlaybackForm {
-    pub(super) replay_gain: i32,
+    pub(super) replay_gain: ReplayGainSetting,
     pub(super) gapless: bool,
     pub(super) crossfade_seconds: i32,
     pub(super) device: i32,
@@ -26,7 +27,7 @@ pub(super) struct View {
     pub(super) settings: Settings,
     pub(super) devices: Choices<Option<String>>,
     pub(super) bitrates: Choices<Option<u32>>,
-    pub(super) formats: Choices<Option<String>>,
+    pub(super) formats: Choices<Option<TranscodeFormat>>,
     pub(super) lyrics: Vec<LyricsSource>,
     pub(super) cookie_browsers: Choices<Option<feishin_youtube::CookieBrowser>>,
     pub(super) chart_countries: Choices<Option<String>>,
@@ -39,7 +40,7 @@ impl View {
         Self {
             devices: device_choices(&devices, playback.audio_device.as_deref()),
             bitrates: bitrate_choices(playback.max_bitrate_kbps),
-            formats: format_choices(playback.transcode_format.as_deref()),
+            formats: format_choices(playback.transcode_format.as_ref()),
             lyrics: lyrics_sources(&settings.integrations.lyrics_sources),
             cookie_browsers: cookie_browser_choices(settings.youtube.cookies_from_browser),
             chart_countries: chart_country_choices(
@@ -53,7 +54,7 @@ impl View {
     pub(super) fn playback(&self, form: PlaybackForm) -> PlaybackSettings {
         let current = &self.settings.playback;
         PlaybackSettings {
-            replay_gain: replay_gain_from_index(form.replay_gain),
+            replay_gain: form.replay_gain,
             gapless: form.gapless,
             crossfade_seconds: crossfade_seconds_from_form(form.crossfade_seconds),
             audio_device: self
@@ -94,8 +95,6 @@ impl Shared {
 
 #[cfg(test)]
 mod tests {
-    use feishin_storage::settings::ReplayGainSetting;
-
     use super::*;
     use crate::ui::settings::test_support::device;
 
@@ -112,7 +111,7 @@ mod tests {
             ],
         });
         let form = PlaybackForm {
-            replay_gain: 2,
+            replay_gain: ReplayGainSetting::Album,
             gapless: false,
             crossfade_seconds: 7,
             device: 0,
@@ -126,7 +125,7 @@ mod tests {
         assert_eq!(playback.crossfade_seconds, 7);
         assert_eq!(playback.audio_device, None);
         assert_eq!(playback.max_bitrate_kbps, Some(192));
-        assert_eq!(playback.transcode_format.as_deref(), Some("opus"));
+        assert_eq!(playback.transcode_format, TranscodeFormat::parse("opus"));
         assert_eq!(playback.volume, 12);
 
         let out_of_range = view.playback(PlaybackForm { device: 99, ..form });

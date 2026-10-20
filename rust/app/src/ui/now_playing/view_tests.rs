@@ -3,7 +3,7 @@ use std::time::Duration;
 
 use feishin_core::model::Song;
 use feishin_core::queue::{Queue, QueueTrack, YouTubeTrack};
-use feishin_storage::settings::Settings;
+use feishin_storage::settings::{LyricsSourceSetting, Settings};
 use slint::platform::software_renderer::{MinimalSoftwareWindow, RepaintBufferType};
 use slint::{ComponentHandle, Model, SharedString};
 use tokio::sync::mpsc::UnboundedReceiver;
@@ -74,7 +74,7 @@ fn open_now_playing_page(screen: Screen) -> NowPlayingPage {
     let (sender, commands) = tokio::sync::mpsc::unbounded_channel();
     let store = JsonStore::new(dir.path());
     let mut settings = Settings::default();
-    settings.integrations.lyrics_sources = vec!["server".into()];
+    settings.integrations.lyrics_sources = vec![LyricsSourceSetting::Server];
     session.publish_settings(&settings);
     let ctx = Context {
         rt: runtime.handle().clone(),

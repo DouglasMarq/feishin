@@ -76,7 +76,7 @@ export component SleepTimerButton inherits Rectangle {
             MenuItem {
                 text: @tr("End of current track");
                 clicked => {
-                    PlayerState.start-sleep-timer(0);
+                    PlayerState.sleep-at-end-of-track();
                 }
             }
 

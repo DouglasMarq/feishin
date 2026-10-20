@@ -1,5 +1,5 @@
 import { Theme, Icons, Format } from "theme.slint";
-import { AppState, PlayerState, Route } from "globals.slint";
+import { AppState, PlayerState, RepeatState, Route } from "globals.slint";
 import { NowPlayingState, NowPlayingTab } from "now_playing.slint";
 import { Bar, Icon, IconButton, TooltipAnchor } from "widgets.slint";
 import { SleepTimerButton } from "sleep_timer.slint";
@@ -138,9 +138,9 @@ export component PlayerBar inherits Rectangle {
                 }
 
                 IconButton {
-                    icon: PlayerState.repeat == 2 ? Icons.repeat-one : Icons.repeat;
-                    active: PlayerState.repeat != 0;
-                    tooltip: PlayerState.repeat == 0 ? @tr("Repeat: off") : PlayerState.repeat == 1 ? @tr("Repeat: all") : @tr("Repeat: one");
+                    icon: PlayerState.repeat == RepeatState.one ? Icons.repeat-one : Icons.repeat;
+                    active: PlayerState.repeat != RepeatState.off;
+                    tooltip: PlayerState.repeat == RepeatState.off ? @tr("Repeat: off") : PlayerState.repeat == RepeatState.all ? @tr("Repeat: all") : @tr("Repeat: one");
                     clicked => {
                         PlayerState.cycle-repeat();
                     }

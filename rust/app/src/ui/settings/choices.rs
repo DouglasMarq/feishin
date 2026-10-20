@@ -1,5 +1,8 @@
+use feishin_api::TranscodeFormat;
 use feishin_player::AudioDevice;
 use feishin_storage::settings::ReplayGainSetting;
+
+use crate::ui::ReplayGain;
 
 const BITRATES_KBPS: [u32; 7] = [320, 256, 192, 160, 128, 96, 64];
 const FORMATS: [&str; 5] = ["mp3", "opus", "aac", "ogg", "flac"];
@@ -54,21 +57,25 @@ fn bitrate_label(bitrate_kbps: Option<u32>) -> String {
     bitrate_kbps.map_or_else(|| tr!("Original"), |kbps| tr!("{} kbps", kbps))
 }
 
-pub(super) fn format_choices(current: Option<&str>) -> Choices<Option<String>> {
-    let current = current
-        .map(|format| format.trim().to_ascii_lowercase())
-        .filter(|format| !format.is_empty());
-    let mut values: Vec<Option<String>> = std::iter::once(None)
-        .chain(FORMATS.map(|format| Some(format.to_owned())))
+pub(super) fn format_choices(
+    current: Option<&TranscodeFormat>,
+) -> Choices<Option<TranscodeFormat>> {
+    let current = current.cloned();
+    let mut values: Vec<Option<TranscodeFormat>> = std::iter::once(None)
+        .chain(FORMATS.map(TranscodeFormat::parse))
         .collect();
     if !values.contains(&current) {
         values.push(current.clone());
     }
     let options = values
         .into_iter()
-        .map(|value| (value.clone().unwrap_or_else(|| tr!("Original")), value))
+        .map(|value| (format_label(value.as_ref()), value))
         .collect();
     Choices::new(options, &current)
+}
+
+fn format_label(format: Option<&TranscodeFormat>) -> String {
+    format.map_or_else(|| tr!("Original"), |format| format.as_str().to_owned())
 }
 
 pub(super) fn device_choices(
@@ -105,19 +112,19 @@ fn device_option(device: &AudioDevice) -> (String, Option<String>) {
     (label, value)
 }
 
-pub(super) fn replay_gain_index(setting: ReplayGainSetting) -> i32 {
+pub(super) fn replay_gain_choice(setting: ReplayGainSetting) -> ReplayGain {
     match setting {
-        ReplayGainSetting::Off => 0,
-        ReplayGainSetting::Track => 1,
-        ReplayGainSetting::Album => 2,
+        ReplayGainSetting::Off => ReplayGain::Off,
+        ReplayGainSetting::Track => ReplayGain::Track,
+        ReplayGainSetting::Album => ReplayGain::Album,
     }
 }
 
-pub(super) fn replay_gain_from_index(index: i32) -> ReplayGainSetting {
-    match index {
-        1 => ReplayGainSetting::Track,
-        2 => ReplayGainSetting::Album,
-        _ => ReplayGainSetting::Off,
+pub(super) fn replay_gain_setting(choice: ReplayGain) -> ReplayGainSetting {
+    match choice {
+        ReplayGain::Off => ReplayGainSetting::Off,
+        ReplayGain::Track => ReplayGainSetting::Track,
+        ReplayGain::Album => ReplayGainSetting::Album,
     }
 }
 
@@ -141,14 +148,12 @@ mod tests {
 
     #[test]
     fn formats_are_normalized_and_custom_ones_kept() {
-        let choices = format_choices(Some(" OPUS "));
+        let choices = format_choices(TranscodeFormat::parse(" OPUS ").as_ref());
         assert_eq!(choices.labels[choices.selected], "opus");
-        let custom = format_choices(Some("alac"));
-        assert_eq!(
-            custom.value(slint_index(custom.selected)),
-            Some(Some("alac".into()))
-        );
-        assert_eq!(format_choices(Some("")).selected, 0);
+        let alac = TranscodeFormat::parse("alac");
+        let custom = format_choices(alac.as_ref());
+        assert_eq!(custom.value(slint_index(custom.selected)), Some(alac));
+        assert_eq!(format_choices(None).selected, 0);
     }
 
     #[test]
@@ -178,8 +183,7 @@ mod tests {
             ReplayGainSetting::Track,
             ReplayGainSetting::Album,
         ] {
-            assert_eq!(replay_gain_from_index(replay_gain_index(setting)), setting);
+            assert_eq!(replay_gain_setting(replay_gain_choice(setting)), setting);
         }
-        assert_eq!(replay_gain_from_index(7), ReplayGainSetting::Off);
     }
 }

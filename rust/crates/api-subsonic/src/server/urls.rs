@@ -18,13 +18,9 @@ impl SubsonicServer {
             self.item_url("stream.view", song_id),
             self.client.auth()
         );
-        if let Some(format) = options
-            .format
-            .as_deref()
-            .filter(|format| !format.is_empty())
-        {
+        if let Some(format) = &options.format {
             url.push_str("&format=");
-            url.push_str(&encode_uri_component(format));
+            url.push_str(&encode_uri_component(format.as_str()));
         }
         if let Some(bitrate) = options.max_bitrate_kbps {
             url.push_str(&format!("&maxBitRate={bitrate}"));

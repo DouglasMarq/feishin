@@ -10,6 +10,7 @@ use crate::AudioDevice;
 use crate::audio_device::audio_devices_from_mpv_list;
 use crate::error::{Result, error_from_mpv, error_from_mpv_code};
 use crate::ffi::{self, Node};
+use crate::observed_property::ObservedProperty;
 use crate::shared::Shared;
 use crate::time::mpv_seconds_from_milliseconds;
 
@@ -51,7 +52,7 @@ impl Deck {
     pub(crate) fn is_paused(&self) -> bool {
         self.shared
             .mpv
-            .get_property::<bool>("pause")
+            .get_property::<bool>(ObservedProperty::Pause.mpv_name())
             .unwrap_or(false)
     }
 
@@ -67,11 +68,17 @@ impl Deck {
     }
 
     pub(crate) fn position_seconds(&self) -> Option<f64> {
-        self.shared.mpv.get_property::<f64>("time-pos").ok()
+        self.shared
+            .mpv
+            .get_property::<f64>(ObservedProperty::TimePosition.mpv_name())
+            .ok()
     }
 
     pub(crate) fn duration_seconds(&self) -> Option<f64> {
-        self.shared.mpv.get_property::<f64>("duration").ok()
+        self.shared
+            .mpv
+            .get_property::<f64>(ObservedProperty::Duration.mpv_name())
+            .ok()
     }
 
     pub(crate) fn clock(&self) -> DeckClock {

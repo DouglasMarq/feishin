@@ -1,28 +1,12 @@
 use feishin_lyrics::LyricsSource;
+use feishin_storage::settings::LyricsSourceSetting;
+
+use crate::lyrics_provider::remote_lyrics_source;
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub(super) enum LyricsStep {
     Server,
     Remote(Vec<LyricsSource>),
-}
-
-enum ConfiguredSource {
-    Server,
-    Remote(LyricsSource),
-    Unknown,
-}
-
-fn parse_source(name: &str) -> ConfiguredSource {
-    match name.trim().to_ascii_lowercase().as_str() {
-        "server" => ConfiguredSource::Server,
-        "lrclib" => ConfiguredSource::Remote(LyricsSource::Lrclib),
-        "netease" => ConfiguredSource::Remote(LyricsSource::NetEase),
-        "genius" => ConfiguredSource::Remote(LyricsSource::Genius),
-        other => {
-            tracing::debug!("unknown lyrics source {other}");
-            ConfiguredSource::Unknown
-        }
-    }
 }
 
 fn add_server_step(plan: &mut Vec<LyricsStep>) {
@@ -44,20 +28,19 @@ fn add_remote_source(plan: &mut Vec<LyricsStep>, source: LyricsSource) {
     }
 }
 
-pub(super) fn lyrics_plan(names: &[String]) -> Vec<LyricsStep> {
+pub(super) fn lyrics_plan(configured: &[LyricsSourceSetting]) -> Vec<LyricsStep> {
     let mut plan: Vec<LyricsStep> = Vec::new();
-    for name in names {
-        match parse_source(name) {
-            ConfiguredSource::Server => add_server_step(&mut plan),
-            ConfiguredSource::Remote(source) => add_remote_source(&mut plan, source),
-            ConfiguredSource::Unknown => {}
+    for &source in configured {
+        match remote_lyrics_source(source) {
+            None => add_server_step(&mut plan),
+            Some(remote) => add_remote_source(&mut plan, remote),
         }
     }
     plan
 }
 
-pub(super) fn remote_sources(names: &[String]) -> Vec<LyricsSource> {
-    lyrics_plan(names)
+pub(super) fn remote_sources(configured: &[LyricsSourceSetting]) -> Vec<LyricsSource> {
+    lyrics_plan(configured)
         .into_iter()
         .flat_map(|step| match step {
             LyricsStep::Server => Vec::new(),
@@ -67,27 +50,29 @@ pub(super) fn remote_sources(names: &[String]) -> Vec<LyricsSource> {
 }
 
 #[cfg(test)]
-pub(super) fn source_names(names: &[&str]) -> Vec<String> {
-    names.iter().map(|name| (*name).to_owned()).collect()
-}
-
-#[cfg(test)]
 mod tests {
     use super::*;
 
     #[test]
     fn plan_follows_settings_order_and_groups_remote_sources() {
         assert_eq!(
-            lyrics_plan(&source_names(&[
-                "server", "lrclib", "NetEase", "bogus", "lrclib"
-            ])),
+            lyrics_plan(&[
+                LyricsSourceSetting::Server,
+                LyricsSourceSetting::Lrclib,
+                LyricsSourceSetting::NetEase,
+                LyricsSourceSetting::Lrclib
+            ]),
             vec![
                 LyricsStep::Server,
                 LyricsStep::Remote(vec![LyricsSource::Lrclib, LyricsSource::NetEase])
             ]
         );
         assert_eq!(
-            lyrics_plan(&source_names(&["genius", "server", "lrclib"])),
+            lyrics_plan(&[
+                LyricsSourceSetting::Genius,
+                LyricsSourceSetting::Server,
+                LyricsSourceSetting::Lrclib
+            ]),
             vec![
                 LyricsStep::Remote(vec![LyricsSource::Genius]),
                 LyricsStep::Server,
@@ -100,9 +85,13 @@ mod tests {
     #[test]
     fn remote_sources_skip_the_server() {
         assert_eq!(
-            remote_sources(&source_names(&["server", "genius", "lrclib"])),
+            remote_sources(&[
+                LyricsSourceSetting::Server,
+                LyricsSourceSetting::Genius,
+                LyricsSourceSetting::Lrclib
+            ]),
             vec![LyricsSource::Genius, LyricsSource::Lrclib]
         );
-        assert!(remote_sources(&source_names(&["server"])).is_empty());
+        assert!(remote_sources(&[LyricsSourceSetting::Server]).is_empty());
     }
 }

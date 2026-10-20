@@ -1,4 +1,4 @@
-use feishin_api::StreamOptions;
+use feishin_api::{StreamOptions, TranscodeFormat};
 
 use super::JellyfinServer;
 use crate::transport::endpoint;
@@ -43,9 +43,9 @@ impl JellyfinServer {
     fn transcoding_url(&self, song_id: &str, options: &StreamOptions) -> String {
         let format = options
             .format
-            .as_deref()
-            .unwrap_or(DEFAULT_TRANSCODE_FORMAT);
-        let session = format!("feishin-{song_id}-{}-0-0", format.to_lowercase());
+            .as_ref()
+            .map_or(DEFAULT_TRANSCODE_FORMAT, TranscodeFormat::as_str);
+        let session = format!("feishin-{song_id}-{format}-0-0");
         let mut url = endpoint(&self.base_url, &["audio", song_id, "universal"]);
         let mut query = url.query_pairs_mut();
         query

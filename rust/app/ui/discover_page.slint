@@ -3,7 +3,7 @@ import { Theme, Icons } from "theme.slint";
 import { AppState, PlayerState } from "globals.slint";
 import { Icon, IconButton, TooltipAnchor } from "widgets.slint";
 import { Cell, Skeleton } from "tracks.slint";
-import { DiscoverIcons, DiscoverSong, DiscoverState } from "discover_state.slint";
+import { DiscoverIcons, DiscoverPageKind, DiscoverSong, DiscoverState } from "discover_state.slint";
 
 component SongRowView inherits Rectangle {
     in property <DiscoverSong> song;
@@ -239,7 +239,7 @@ component PageHeader inherits HorizontalLayout {
         }
 
         if !DiscoverState.page-has-cover: Icon {
-            path: DiscoverState.page-kind == "SEARCH RESULTS" ? Icons.search : (DiscoverState.page-kind == "ALBUM" ? Icons.album : Icons.playlist);
+            path: DiscoverState.page-kind == DiscoverPageKind.search-results ? Icons.search : (DiscoverState.page-kind == DiscoverPageKind.album ? Icons.album : Icons.playlist);
             color: Theme.border;
             width: 80px;
             height: 80px;
@@ -252,7 +252,7 @@ component PageHeader inherits HorizontalLayout {
         horizontal-stretch: 1;
 
         Text {
-            text: DiscoverState.page-kind == "SEARCH RESULTS" ? @tr("SEARCH RESULTS") : (DiscoverState.page-kind == "ALBUM" ? @tr("ALBUM") : (DiscoverState.page-kind == "MIX" ? @tr("MIX") : @tr("PLAYLIST")));
+            text: DiscoverState.page-kind == DiscoverPageKind.search-results ? @tr("SEARCH RESULTS") : (DiscoverState.page-kind == DiscoverPageKind.album ? @tr("ALBUM") : (DiscoverState.page-kind == DiscoverPageKind.mix ? @tr("MIX") : @tr("PLAYLIST")));
             color: Theme.muted;
             font-size: 11px;
             font-weight: 600;

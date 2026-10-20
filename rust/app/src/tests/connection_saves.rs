@@ -5,7 +5,7 @@ use feishin_api::Credential;
 use feishin_core::model::{ServerConfig, ServerType};
 use feishin_storage::feishin_import::ImportedServer;
 use feishin_storage::queue_store::{EncodedQueue, PlaybackState, StoredQueue};
-use feishin_storage::settings::{IntegrationSettings, Settings};
+use feishin_storage::settings::{IntegrationSettings, LyricsSourceSetting, Settings};
 use tokio::sync::mpsc;
 
 use super::harness::{RecordingAudio, RecordingUi, start_harness};
@@ -182,7 +182,7 @@ async fn given_a_failed_login_delete_on_server_removal_the_status_shows_an_error
 async fn given_saved_settings_the_session_holds_the_same_snapshot() {
     let mut harness = start_harness(Settings::default());
     let integrations = IntegrationSettings {
-        lyrics_sources: vec!["genius".into()],
+        lyrics_sources: vec![LyricsSourceSetting::Genius],
         ..IntegrationSettings::default()
     };
     harness

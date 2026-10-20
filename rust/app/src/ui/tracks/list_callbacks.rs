@@ -1,15 +1,15 @@
 use std::rc::Rc;
 use std::time::Duration;
 
-use slint::{ComponentHandle, ModelRc, SharedString, Timer, TimerMode};
+use slint::{ComponentHandle, ModelRc, Timer, TimerMode};
 
 use super::fetch::spawn_request;
 use super::model::TracksModel;
-use super::query::{current_query, reload, sort_for, sort_order};
+use super::query::{current_query, reload, sort_order};
 use super::with_model;
 use crate::controller::Command;
 use crate::list_stream::{ListRow, SongSource};
-use crate::ui::{AppWindow, Context, TracksState};
+use crate::ui::{AppWindow, Context, TrackColumn, TracksState};
 
 const SEARCH_DEBOUNCE: Duration = Duration::from_millis(300);
 
@@ -24,13 +24,13 @@ pub(super) fn install_model(window: &AppWindow, ctx: &Context) {
         .set_rows(ModelRc::from(model));
 }
 
-fn sort_by(window: &AppWindow, column: &SharedString) {
+fn sort_by(window: &AppWindow, column: TrackColumn) {
     let state = window.global::<TracksState>();
-    let descending = state.get_sort_column() == *column && !state.get_sort_desc();
-    state.set_sort_column(column.clone());
+    let descending = state.get_sort_column() == column && !state.get_sort_desc();
+    state.set_sort_column(column);
     state.set_sort_desc(descending);
     if let Some(mut query) = with_model(window, TracksModel::query) {
-        query.sort = sort_for(column);
+        query.sort = column.sort();
         query.order = sort_order(descending);
         reload(window, query);
     }
@@ -40,7 +40,7 @@ pub(super) fn install_sorting(window: &AppWindow) {
     let weak = window.as_weak();
     window.global::<TracksState>().on_sort_by(move |column| {
         if let Some(window) = weak.upgrade() {
-            sort_by(&window, &column);
+            sort_by(&window, column);
         }
     });
 }
