@@ -160,7 +160,7 @@ mod tests {
 
     fn server() -> ServerKey {
         ServerKey {
-            url: "http://nas".into(),
+            url: "http://navidrome.example".into(),
             username: "me".into(),
         }
     }

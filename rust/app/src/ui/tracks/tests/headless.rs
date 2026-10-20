@@ -1,3 +1,4 @@
+use std::path::Path;
 use std::rc::Rc;
 use std::sync::Arc;
 use std::time::{Duration, Instant};
@@ -111,15 +112,13 @@ fn install_test_platform() -> Option<(Rc<MinimalSoftwareWindow>, Jobs)> {
     Some((window, jobs))
 }
 
-fn demo_context(runtime: &Runtime) -> (Context, UnboundedReceiver<Command>) {
+fn demo_context(runtime: &Runtime, store_dir: &Path) -> (Context, UnboundedReceiver<Command>) {
     let (commands, received) = mpsc::unbounded_channel();
     let ctx = Context {
         rt: runtime.handle().clone(),
         commands,
         session: Session::default(),
-        store: Arc::new(JsonStore::new(
-            std::env::temp_dir().join("feishin-rs-ui-test"),
-        )),
+        store: Arc::new(JsonStore::new(store_dir)),
         connector: Arc::new(DemoConnector::default()),
         covers: Arc::new(DemoCovers),
         remote: crate::remote::Remote::default(),
@@ -271,7 +270,8 @@ fn tracks_view_lists_selects_filters_and_acts_on_demo_songs() {
         return;
     };
     let runtime = routed_runtime(1);
-    let (ctx, mut received) = demo_context(&runtime);
+    let store_dir = tempfile::tempdir().unwrap();
+    let (ctx, mut received) = demo_context(&runtime, store_dir.path());
     let harness = start_tracks_view(window, jobs, &ctx);
 
     assert_songs_and_genres_load(&harness);

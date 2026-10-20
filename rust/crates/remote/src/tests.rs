@@ -244,7 +244,7 @@ async fn connected_device() -> (Running, ClientLink) {
 async fn refused_controls_get_the_reason() {
     let (_host, mut link) = connected_device().await;
     let server = ServerKey {
-        url: "http://nas".into(),
+        url: "http://navidrome.example".into(),
         username: "me".into(),
     };
     let control = RemoteControl::PlayTracks {
@@ -301,15 +301,17 @@ async fn a_host_without_state_updates_still_takes_controls() {
     .unwrap();
     drain_initial_state(&mut link).await;
     drop(host.state);
-    tokio::time::sleep(Duration::from_millis(50)).await;
-    let control = RemoteControl::Next;
-    link.outgoing
-        .send(ClientMessage::Control { control })
-        .unwrap();
-    let received = tokio::time::timeout(Duration::from_secs(5), host.controls.recv())
-        .await
-        .unwrap();
-    assert_eq!(received, Some(RemoteControl::Next));
+    for control in [RemoteControl::Next, RemoteControl::Previous] {
+        link.outgoing
+            .send(ClientMessage::Control {
+                control: control.clone(),
+            })
+            .unwrap();
+        let received = tokio::time::timeout(Duration::from_secs(5), host.controls.recv())
+            .await
+            .unwrap();
+        assert_eq!(received, Some(control));
+    }
 }
 
 #[tokio::test]

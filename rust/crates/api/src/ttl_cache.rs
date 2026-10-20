@@ -2,12 +2,15 @@ use std::collections::HashMap;
 use std::future::Future;
 use std::hash::Hash;
 use std::sync::{Arc, Mutex, MutexGuard, PoisonError, Weak};
-use std::time::{Duration, Instant};
+use std::time::Duration;
 
 use tokio::runtime::Handle;
 use tokio::sync::OnceCell;
+use tokio::time::Instant;
 
 use crate::error::Result;
+
+const MAX_ENTRIES: usize = 16;
 
 struct Fetched<Value> {
     value: Arc<Value>,
@@ -33,6 +36,27 @@ fn locked<Key, Value>(slots: &Slots<Key, Value>) -> MutexGuard<'_, HashMap<Key, 
 
 fn remove_expired<Key, Value>(slots: &mut HashMap<Key, Slot<Value>>, time_to_live: Duration) {
     slots.retain(|_, slot| !is_expired(slot, time_to_live));
+}
+
+fn oldest_key<Key: Clone, Value>(slots: &HashMap<Key, Slot<Value>>) -> Option<Key> {
+    slots
+        .iter()
+        .min_by_key(|(_, slot)| {
+            (
+                !slot.initialized(),
+                slot.get().map(|fetched| fetched.fetched_at),
+            )
+        })
+        .map(|(key, _)| key.clone())
+}
+
+fn make_room<Key: Eq + Hash + Clone, Value>(slots: &mut HashMap<Key, Slot<Value>>) {
+    while slots.len() >= MAX_ENTRIES {
+        let Some(oldest) = oldest_key(slots) else {
+            return;
+        };
+        slots.remove(&oldest);
+    }
 }
 
 async fn fetch_now<Value, Pending>(pending: Pending) -> Result<Fetched<Value>>
@@ -91,6 +115,9 @@ where
     fn live_slot(&self, key: &Key) -> Slot<Value> {
         let mut slots = locked(&self.slots);
         remove_expired(&mut slots, self.time_to_live);
+        if !slots.contains_key(key) {
+            make_room(&mut slots);
+        }
         Arc::clone(slots.entry(key.clone()).or_default())
     }
 
@@ -115,7 +142,7 @@ mod tests {
 
     async fn counted_fetch(fetches: &AtomicUsize, value: u32) -> Result<u32> {
         fetches.fetch_add(1, Ordering::SeqCst);
-        tokio::time::sleep(Duration::from_millis(5)).await;
+        tokio::task::yield_now().await;
         Ok(value)
     }
 
@@ -177,14 +204,29 @@ mod tests {
         assert_eq!(fetches.load(Ordering::SeqCst), 1);
     }
 
-    #[tokio::test]
+    #[tokio::test(start_paused = true)]
     async fn expired_entries_are_released_without_further_use() {
-        let cache = TtlCache::new(Duration::from_millis(20));
+        let time_to_live = Duration::from_millis(20);
+        let cache = TtlCache::new(time_to_live);
         let fetches = AtomicUsize::new(0);
         cached_value(&cache, 1, &fetches).await;
         assert_eq!(locked(&cache.slots).len(), 1);
-        tokio::time::sleep(Duration::from_millis(200)).await;
+        tokio::time::sleep(time_to_live * 2).await;
         assert!(locked(&cache.slots).is_empty());
+    }
+
+    #[tokio::test(start_paused = true)]
+    async fn given_more_keys_than_the_limit_evicts_the_oldest_entry() {
+        let cache = TtlCache::new(MINUTE);
+        let fetches = AtomicUsize::new(0);
+        for key in 0..=MAX_ENTRIES {
+            cached_value(&cache, u8::try_from(key).unwrap(), &fetches).await;
+            tokio::time::advance(Duration::from_secs(1)).await;
+        }
+        let slots = locked(&cache.slots);
+        assert_eq!(slots.len(), MAX_ENTRIES);
+        assert!(!slots.contains_key(&0));
+        assert!(slots.contains_key(&1));
     }
 
     #[tokio::test]

@@ -32,12 +32,11 @@ impl HostDelegate for SpeakerDelegate {
     }
 }
 
-#[derive(Default)]
-struct Shown(Mutex<Vec<crate::controller::UiUpdate>>);
+struct Shown(mpsc::UnboundedSender<crate::controller::UiUpdate>);
 
 impl UiSink for Shown {
     fn send(&self, update: crate::controller::UiUpdate) {
-        self.0.lock().unwrap().push(update);
+        self.0.send(update).ok();
     }
 }
 
@@ -75,7 +74,7 @@ struct Setup {
     service: RemoteService,
     commands: mpsc::UnboundedReceiver<Command>,
     speaker: Arc<SpeakerDelegate>,
-    shown: Arc<Shown>,
+    shown: mpsc::UnboundedReceiver<crate::controller::UiUpdate>,
     target: PlayerTarget,
     _store: tempfile::TempDir,
 }
@@ -136,10 +135,11 @@ fn client_deps(
 async fn setup() -> Setup {
     let speaker = start_speaker().await;
     let (commands_sender, commands) = mpsc::unbounded_channel();
-    let shown = Arc::new(Shown::default());
+    let (shown_sender, shown) = mpsc::unbounded_channel();
+    let mirror = Arc::new(Shown(shown_sender));
     let target = PlayerTarget::default();
     let service = RemoteService {
-        deps: client_deps(&speaker, commands_sender, shown.clone(), target.clone()),
+        deps: client_deps(&speaker, commands_sender, mirror, target.clone()),
         discovery: None,
         found: vec![Discovered {
             device: device("speaker"),
@@ -174,11 +174,8 @@ async fn controlling_a_device_pauses_this_one_and_shows_the_other() {
         next_command(&mut setup.commands).await,
         Command::Media(MediaControlEvent::Pause)
     ));
-    tokio::time::sleep(Duration::from_millis(200)).await;
-    assert!(
-        !setup.shown.0.lock().unwrap().is_empty(),
-        "the remote state is shown"
-    );
+    let shown = tokio::time::timeout(Duration::from_secs(5), setup.shown.recv()).await;
+    assert!(matches!(shown, Ok(Some(_))), "the remote state is shown");
     setup.service.release_link(true);
     assert!(!setup.target.is_remote());
     assert!(matches!(

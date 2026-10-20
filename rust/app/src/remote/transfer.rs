@@ -139,7 +139,7 @@ mod tests {
 
     fn local() -> LocalServer {
         LocalServer {
-            key: key("http://nas"),
+            key: key("http://navidrome.example"),
             id: Arc::from("local-id"),
         }
     }
@@ -166,8 +166,13 @@ mod tests {
     #[test]
     fn tracks_from_the_same_server_are_moved_to_the_local_server_id() {
         let tracks = vec![server_track("a"), youtube_track("y")];
-        let adapted =
-            adapt_tracks(tracks, Some(1), Some(&key("http://nas")), Some(&local())).unwrap();
+        let adapted = adapt_tracks(
+            tracks,
+            Some(1),
+            Some(&key("http://navidrome.example")),
+            Some(&local()),
+        )
+        .unwrap();
         assert_eq!(adapted.tracks.len(), 2);
         assert_eq!(&*adapted.tracks[0].server_id, "local-id");
         assert_eq!(adapted.start_index, Some(1));
@@ -202,7 +207,10 @@ mod tests {
     #[test]
     fn a_transfer_from_the_same_server_keeps_the_position_and_the_current_song() {
         let adopted = adapt_payload(
-            payload(vec![server_track("a"), server_track("b")], "http://nas"),
+            payload(
+                vec![server_track("a"), server_track("b")],
+                "http://navidrome.example",
+            ),
             Some(&local()),
         )
         .unwrap();

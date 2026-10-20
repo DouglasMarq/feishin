@@ -3,10 +3,11 @@ use std::time::{Duration, Instant};
 
 use feishin_player::{MediaSource, Player, PlayerConfig, PlayerEvent};
 
-use crate::support::{Recorder, has_error, player_with, sine_wave_url};
+use crate::support::{Recorder, has_error, player_with, position_of, sine_wave_url};
 
 const POLL_INTERVAL: Duration = Duration::from_millis(20);
 const POLL_TIMEOUT: Duration = Duration::from_secs(10);
+const PLAYED_AFTER_PRELOAD_MS: u64 = 500;
 
 fn crossfade_player(crossfade: Duration) -> (Player, std::sync::Arc<Recorder>) {
     player_with(PlayerConfig {
@@ -51,8 +52,11 @@ fn next_track_is_only_loaded_shortly_before_the_fade() {
     let (player, recorder) = crossfade_player(Duration::from_secs(1));
     load_track(&player, 1, 40, 40);
     recorder.wait_for_event(started(1));
+    let event_count_before = recorder.event_count();
     preload_track(&player, 2, 2);
-    thread::sleep(Duration::from_millis(500));
+    recorder.wait_after(event_count_before, "positions after the preload", |event| {
+        position_of(event).is_some_and(|position| position >= PLAYED_AFTER_PRELOAD_MS)
+    });
     assert!(!player.holds_next_track());
 
     player.seek(37_000).unwrap();

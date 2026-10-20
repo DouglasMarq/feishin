@@ -1,11 +1,12 @@
 use std::collections::HashMap;
 use std::future::Future;
 use std::sync::Arc;
-use std::time::{Duration, Instant};
+use std::time::Duration;
 
 use feishin_api::Result;
 use feishin_core::model::{Page, Paging, Playlist, Song};
 use tokio::sync::Mutex;
+use tokio::time::Instant;
 
 const DEFAULT_TIME_TO_LIVE: Duration = Duration::from_secs(30);
 const MAX_CACHED_PLAYLISTS: usize = 4;
@@ -132,21 +133,55 @@ mod tests {
     use std::sync::atomic::{AtomicUsize, Ordering};
 
     use super::*;
-    use crate::normalize;
-    use crate::types::{SubsonicPlaylist, SubsonicSong};
+
+    const SERVER_ID: &str = "navidrome-example";
+
+    fn song(index: usize) -> Song {
+        Song {
+            id: format!("s{index}"),
+            server_id: SERVER_ID.to_owned(),
+            title: format!("Invented Song {index}"),
+            artists: Vec::new(),
+            album_artists: Vec::new(),
+            album: None,
+            album_id: None,
+            duration_ms: 0,
+            track_number: None,
+            disc_number: None,
+            year: None,
+            genres: Vec::new(),
+            bitrate_kbps: None,
+            play_count: 0,
+            user_rating: None,
+            favorite: false,
+            cover_art_id: None,
+            replay_gain: None,
+            path: None,
+            size_bytes: None,
+            container: None,
+            created_at: None,
+            last_played_at: None,
+        }
+    }
+
+    fn playlist() -> Playlist {
+        Playlist {
+            id: "p1".to_owned(),
+            server_id: SERVER_ID.to_owned(),
+            name: "Invented Playlist".to_owned(),
+            comment: None,
+            owner: None,
+            public: false,
+            song_count: 0,
+            duration_ms: 0,
+            cover_art_id: None,
+            created_at: None,
+            updated_at: None,
+        }
+    }
 
     fn cached(count: usize) -> CachedPlaylist {
-        let songs = (0..count)
-            .map(|index| {
-                let entry = SubsonicSong {
-                    id: format!("s{index}"),
-                    ..SubsonicSong::default()
-                };
-                normalize::song(entry, "srv")
-            })
-            .collect();
-        let playlist = normalize::playlist(SubsonicPlaylist::default(), "srv");
-        CachedPlaylist::new(playlist, songs)
+        CachedPlaylist::new(playlist(), (0..count).map(song).collect())
     }
 
     async fn load_counted(
@@ -202,14 +237,14 @@ mod tests {
         assert_eq!(loads.load(Ordering::SeqCst), 2);
     }
 
-    #[tokio::test]
+    #[tokio::test(start_paused = true)]
     async fn expired_playlists_are_released_without_another_request() {
         let time_to_live = Duration::from_millis(20);
         let cache = PlaylistCache::new(time_to_live);
         let loads = AtomicUsize::new(0);
         load_counted(&cache, "p1", &loads).await;
         assert_eq!(cache.entries.lock().await.len(), 1);
-        tokio::time::sleep(time_to_live * 5).await;
+        tokio::time::sleep(time_to_live * 2).await;
         assert!(cache.entries.lock().await.is_empty());
     }
 

@@ -172,7 +172,7 @@ mod tests {
             day: MixDay(100),
             daily: vec![DailyMix {
                 number: 1,
-                artists: vec!["Daft Punk".into(), "Justice".into()],
+                artists: vec!["Velvet Comets".into(), "Iron Verdict".into()],
                 songs: vec![song("a"), song("b")],
             }],
             weekly: Some(WeeklyMix {
@@ -219,7 +219,7 @@ mod tests {
         assert_eq!(ids, ["mix:daily-1", "mix:weekly"]);
         let page = mixes.page(MixId::Daily(1)).unwrap();
         assert_eq!(page.title, "Daily Mix 1");
-        assert_eq!(page.subtitle, "With Daft Punk, Justice");
+        assert_eq!(page.subtitle, "With Velvet Comets, Iron Verdict");
         assert_eq!(page.songs.len(), 2);
         assert_eq!(
             page.thumbnail_url.as_deref(),

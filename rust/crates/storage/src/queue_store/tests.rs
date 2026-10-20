@@ -154,12 +154,24 @@ fn shared_values_are_written_once() {
     assert_eq!(load(&data_dir).unwrap(), Some(many));
 }
 
+fn legacy_song(id: &str) -> serde_json::Value {
+    serde_json::json!({
+        "id": id, "server_id": "srv", "title": format!("Song {id}"),
+        "artists": [{ "id": "ar", "name": "Artist" }], "album_artists": [],
+        "album": "Album", "album_id": "al", "duration_ms": 180_000,
+        "track_number": 1, "disc_number": null, "year": 2020, "genres": ["Rock"],
+        "bitrate_kbps": 320, "play_count": 3, "user_rating": null, "favorite": true,
+        "cover_art_id": "cov", "replay_gain": null, "path": null, "size_bytes": null,
+        "container": "flac", "created_at": null, "last_played_at": null,
+    })
+}
+
 #[test]
 fn queue_saved_as_json_still_loads_and_is_migrated() {
     let (_directory, data_dir) = data_dir();
     let legacy = serde_json::json!({
         "snapshot": {
-            "items": [{ "uid": 1, "song": song("a") }, { "uid": 2, "song": song("b") }],
+            "items": [{ "uid": 1, "song": legacy_song("a") }, { "uid": 2, "song": legacy_song("b") }],
             "shuffled": [1, 0],
             "current_uid": 2,
             "repeat": "All",
@@ -176,10 +188,43 @@ fn queue_saved_as_json_still_loads_and_is_migrated() {
 #[test]
 fn compact_json_queue_still_loads() {
     let (_directory, data_dir) = data_dir();
-    let json = serde_json::to_vec(&sample()).unwrap();
-    std::fs::write(data_dir.join(LEGACY_QUEUE_FILE), json).unwrap();
+    std::fs::write(data_dir.join(LEGACY_QUEUE_FILE), COMPACT_JSON_QUEUE).unwrap();
     assert_eq!(load(&data_dir).unwrap(), Some(sample()));
 }
+
+const COMPACT_JSON_QUEUE: &str = r#"{
+  "snapshot": {
+    "items": [
+      {"uid": 1, "track": {"song_id":"a","server_id":"srv","title":"Song a","artists":[{"id":"ar","name":"Artist"}],"album":"Album","album_id":"al","cover_art_id":"cov","duration_ms":180000}},
+      {"uid": 2, "track": {"song_id":"b","server_id":"srv","title":"Song b","artists":[{"id":"ar","name":"Artist"}],"album":"Album","album_id":"al","cover_art_id":"cov","duration_ms":180000}}
+    ],
+    "shuffled": [1, 0],
+    "current_uid": 2,
+    "repeat": "All",
+    "next_uid": 3
+  },
+  "position_ms": 12345
+}"#;
+
+const YOUTUBE_JSON_QUEUE: &str = r#"{
+  "snapshot": {
+    "items": [
+      {"uid": 1, "track": {"song_id":"a","server_id":"srv","title":"Song a","artists":[{"id":"ar","name":"Artist"}],"album":"Album","album_id":"al","cover_art_id":"cov","duration_ms":180000}},
+      {"uid": 2, "track": {"song_id":"b","server_id":"srv","title":"Song b","artists":[{"id":"ar","name":"Artist"}],"album":"Album","album_id":"al","cover_art_id":"cov","duration_ms":180000}},
+      {"uid": 3, "track": {"song_id": "yt:abc", "server_id": "youtube", "title": "Video abc",
+        "artists": [{"id": "", "name": "Singer"}], "duration_ms": 1000,
+        "source": {"YouTube": {"video_id": "abc", "thumbnail_url": "https://i.ytimg.com/vi/abc/hqdefault.jpg"}}}},
+      {"uid": 4, "track": {"song_id": "yt:def", "server_id": "youtube", "title": "Video def",
+        "artists": [{"id": "", "name": "Singer"}], "duration_ms": 1000,
+        "source": {"YouTube": {"video_id": "def"}}}}
+    ],
+    "shuffled": null,
+    "current_uid": 2,
+    "repeat": "All",
+    "next_uid": 5
+  },
+  "position_ms": 12345
+}"#;
 
 #[test]
 fn playback_save_moves_the_current_track_and_position() {
@@ -345,9 +390,31 @@ fn youtube_tracks_round_trip_with_their_video() {
 fn youtube_tracks_in_a_json_queue_still_load() {
     let (_directory, data_dir) = data_dir();
     let queue = with_youtube_tracks(sample());
-    let json = serde_json::to_vec(&queue).unwrap();
-    std::fs::write(data_dir.join(LEGACY_QUEUE_FILE), json).unwrap();
+    std::fs::write(data_dir.join(LEGACY_QUEUE_FILE), YOUTUBE_JSON_QUEUE).unwrap();
     assert_eq!(load(&data_dir).unwrap(), Some(queue));
     let bytes = std::fs::read(data_dir.join(QUEUE_FILE)).unwrap();
     assert!(bytes.starts_with(b"FSQ2"));
+}
+
+const CURRENT_FORMAT_SAMPLE: &[u8] = &[
+    70, 83, 81, 50, 5, 3, 115, 114, 118, 5, 65, 108, 98, 117, 109, 2, 97, 108, 3, 99, 111, 118, 7,
+    121, 111, 117, 116, 117, 98, 101, 2, 1, 2, 97, 114, 6, 65, 114, 116, 105, 115, 116, 1, 0, 6,
+    83, 105, 110, 103, 101, 114, 4, 1, 1, 97, 6, 83, 111, 110, 103, 32, 97, 0, 0, 1, 1, 1, 2, 1, 3,
+    252, 32, 191, 2, 0, 0, 2, 1, 98, 6, 83, 111, 110, 103, 32, 98, 0, 0, 1, 1, 1, 2, 1, 3, 252, 32,
+    191, 2, 0, 0, 3, 6, 121, 116, 58, 97, 98, 99, 9, 86, 105, 100, 101, 111, 32, 97, 98, 99, 4, 1,
+    0, 0, 0, 251, 232, 3, 1, 3, 97, 98, 99, 1, 40, 104, 116, 116, 112, 115, 58, 47, 47, 105, 46,
+    121, 116, 105, 109, 103, 46, 99, 111, 109, 47, 118, 105, 47, 97, 98, 99, 47, 104, 113, 100,
+    101, 102, 97, 117, 108, 116, 46, 106, 112, 103, 4, 6, 121, 116, 58, 100, 101, 102, 9, 86, 105,
+    100, 101, 111, 32, 100, 101, 102, 4, 1, 0, 0, 0, 251, 232, 3, 1, 3, 100, 101, 102, 0, 0, 1, 2,
+    1, 5, 251, 57, 48,
+];
+
+#[test]
+fn given_a_queue_file_in_the_current_format_it_loads_unchanged() {
+    let (_directory, data_dir) = data_dir();
+    std::fs::write(data_dir.join(QUEUE_FILE), CURRENT_FORMAT_SAMPLE).unwrap();
+    assert_eq!(
+        load(&data_dir).unwrap(),
+        Some(with_youtube_tracks(sample()))
+    );
 }

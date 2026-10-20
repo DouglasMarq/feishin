@@ -174,12 +174,12 @@ fn search_results_parse_artists_album_and_duration_from_the_details() {
     let songs = search_songs(&response);
     assert_eq!(songs.len(), 4);
     let first = &songs[0];
-    assert_eq!(first.video_id, "4D7u5KF7SP8");
+    assert_eq!(first.video_id, "invented001");
     assert_eq!(
         first.artists,
-        ["Daft Punk", "Pharrell Williams", "Nile Rodgers"]
+        ["Velvet Comets", "Juno Marsh", "Otis Fernwood"]
     );
-    assert_eq!(first.album.as_deref(), Some("Random Access Memories"));
+    assert_eq!(first.album.as_deref(), Some("Borrowed Daylight"));
     assert_eq!(first.duration_ms, Some(370_000));
 }
 
@@ -201,11 +201,11 @@ fn radio_songs_come_from_the_watch_queue_including_wrapped_items() {
     assert_eq!(
         ids,
         [
-            "4D7u5KF7SP8",
-            "qXI87eMP-bs",
-            "UJHEK0GIdYE",
-            "tOaWhRATZqk",
-            "3WzamI8QD2s"
+            "invented001",
+            "invented002",
+            "invented003",
+            "invented004",
+            "invented005"
         ]
     );
     let Some(first) = songs.first() else {
@@ -213,13 +213,13 @@ fn radio_songs_come_from_the_watch_queue_including_wrapped_items() {
     };
     assert_eq!(
         first.title,
-        "Get Lucky (feat. Pharrell Williams and Nile Rodgers)"
+        "Lucky Static (feat. Juno Marsh and Otis Fernwood)"
     );
     assert_eq!(
         first.artists,
-        ["Daft Punk", "Pharrell Williams", "Nile Rodgers"]
+        ["Velvet Comets", "Juno Marsh", "Otis Fernwood"]
     );
-    assert_eq!(first.album.as_deref(), Some("Random Access Memories"));
+    assert_eq!(first.album.as_deref(), Some("Borrowed Daylight"));
     assert_eq!(first.duration_ms, Some(370_000));
     assert!(first.thumbnail_url.is_some());
 }

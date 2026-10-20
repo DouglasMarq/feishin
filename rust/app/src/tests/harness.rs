@@ -9,6 +9,7 @@ use feishin_player::PlayerEvent;
 use feishin_storage::settings::{ReplayGainSetting, Settings, UiSettings};
 use tokio::sync::{mpsc, oneshot};
 
+use super::recording_store::RecordingStore;
 use crate::audio::{AudioOutput, Track};
 use crate::controller::{Command, Controller, Deps, UiSink, UiUpdate};
 use crate::demo::{FakeServer, test_song};
@@ -162,6 +163,7 @@ pub(super) struct Harness {
     pub(super) server: Arc<FakeServer>,
     pub(super) commands: mpsc::UnboundedReceiver<Command>,
     pub(super) store: Arc<JsonStore>,
+    pub(super) saves: mpsc::UnboundedReceiver<()>,
     pub(super) session: Session,
     pub(super) temp_dir: tempfile::TempDir,
 }
@@ -176,6 +178,7 @@ pub(super) fn start_harness_with(
         .unwrap_or_else(|| panic!("temp dir"));
     let store = Arc::new(JsonStore::new(temp_dir.path()));
     let stored = store.load_queue().ok().flatten();
+    let (recording_store, saves) = RecordingStore::new(Arc::clone(&store));
     let server = Arc::new(FakeServer::new(song_count));
     let session = Session::default();
     session.set(Some(server.clone()));
@@ -185,7 +188,7 @@ pub(super) fn start_harness_with(
     let deps = Deps {
         audio: Box::new(audio.clone()),
         media: Box::new(NoMediaSession),
-        store: store.clone(),
+        store: Arc::new(recording_store),
         session: session.clone(),
         ui: ui.clone(),
         commands: sender,
@@ -197,6 +200,7 @@ pub(super) fn start_harness_with(
         server,
         commands,
         store,
+        saves,
         session,
         temp_dir,
     }

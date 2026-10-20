@@ -4,7 +4,9 @@ use std::time::Duration;
 
 use feishin_player::{Player, PlayerConfig, PlayerEvent, ReplayGainMode};
 
-use crate::support::{Recorder, has_error, player, player_with, sine_wave_url};
+use crate::support::{Recorder, has_error, player, player_with, position_of, sine_wave_url};
+
+const POSITION_WINDOW_MS: u64 = 1_600;
 
 #[test]
 fn load_plays_to_natural_end() {
@@ -39,7 +41,9 @@ fn position_events_arrive_about_every_250ms() {
     player.load(1, &sine_wave_url(3), 0).unwrap();
     recorder.wait_for_event(PlayerEvent::Started { uid: 1 });
     let event_count_before = recorder.event_count();
-    thread::sleep(Duration::from_millis(1600));
+    recorder.wait_after(event_count_before, "1.6 s of positions", |event| {
+        position_of(event).is_some_and(|position| position >= POSITION_WINDOW_MS)
+    });
     let count = recorder.snapshot()[event_count_before..]
         .iter()
         .filter(|event| matches!(event, PlayerEvent::Position { .. }))

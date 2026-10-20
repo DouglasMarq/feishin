@@ -46,7 +46,7 @@ impl FakeYtDlp {
 async fn audio_stream_returns_the_printed_address_and_its_expiry() {
     let _spawning = SPAWNING.lock().await;
     let fake = FakeYtDlp::printing(AUDIO_URL);
-    let stream = fake.yt_dlp().audio_stream("dQw4w9WgXcQ").await.unwrap();
+    let stream = fake.yt_dlp().audio_stream("feishinVid1").await.unwrap();
     assert_eq!(stream.url, AUDIO_URL);
     assert_eq!(stream.expires_at, Some(FUTURE_EXPIRY));
     assert_eq!(
@@ -58,7 +58,7 @@ async fn audio_stream_returns_the_printed_address_and_its_expiry() {
             "bestaudio",
             "-g",
             "--",
-            "https://music.youtube.com/watch?v=dQw4w9WgXcQ"
+            "https://music.youtube.com/watch?v=feishinVid1"
         ]
     );
 }
@@ -131,20 +131,24 @@ async fn video_ids_that_could_be_options_are_refused() {
 async fn search_lists_songs_from_the_flat_playlist() {
     let _spawning = SPAWNING.lock().await;
     let lines = [
-        r#"{"id":"wU26xVT_vBU","title":"One More Time","url":"https://music.youtube.com/watch?v=wU26xVT_vBU"}"#,
-        r#"{"id":"AIKwmk4mnNw","title":"Around the World","duration":421.5,"channel":"Daft Punk"}"#,
+        r#"{"id":"feishinVid2","title":"Paper Lanterns","url":"https://music.youtube.com/watch?v=feishinVid2"}"#,
+        r#"{"id":"feishinVid3","title":"Glass Harbor","duration":421.5,"channel":"Velvet Comets"}"#,
     ];
     let fake = FakeYtDlp::printing(&lines.join("\n"));
-    let hits = fake.yt_dlp().search_songs("daft punk", 2).await.unwrap();
+    let hits = fake
+        .yt_dlp()
+        .search_songs("velvet comets", 2)
+        .await
+        .unwrap();
     assert_eq!(hits.len(), 2);
-    assert_eq!(hits[0].video_id, "wU26xVT_vBU");
-    assert_eq!(hits[1].artist.as_deref(), Some("Daft Punk"));
+    assert_eq!(hits[0].video_id, "feishinVid2");
+    assert_eq!(hits[1].artist.as_deref(), Some("Velvet Comets"));
     assert_eq!(hits[1].duration_ms, Some(421_500));
     let arguments = fake.arguments();
     assert_eq!(arguments[arguments.len() - 3..][0], "1:2");
     assert_eq!(
         arguments.last().unwrap(),
-        "https://music.youtube.com/search?q=daft%20punk#songs"
+        "https://music.youtube.com/search?q=velvet%20comets#songs"
     );
 }
 
@@ -250,7 +254,7 @@ fn browsers_are_found_by_their_yt_dlp_name() {
 
 #[test]
 fn video_ids_and_links() {
-    assert!(is_video_id("dQw4w9WgXcQ"));
+    assert!(is_video_id("feishinVid1"));
     assert!(!is_video_id(""));
     assert!(!is_video_id("a b"));
     assert_eq!(
@@ -261,18 +265,18 @@ fn video_ids_and_links() {
 
 #[test]
 fn links_are_turned_into_video_ids() {
-    let expected = Some("dQw4w9WgXcQ".to_owned());
+    let expected = Some("feishinVid1".to_owned());
     for link in [
-        "dQw4w9WgXcQ",
-        "https://music.youtube.com/watch?v=dQw4w9WgXcQ&list=RDAMVM",
-        " https://www.youtube.com/watch?feature=share&v=dQw4w9WgXcQ ",
-        "youtube.com/watch?v=dQw4w9WgXcQ#t=10",
-        "https://youtu.be/dQw4w9WgXcQ?si=abc",
+        "feishinVid1",
+        "https://music.youtube.com/watch?v=feishinVid1&list=RDAMVM",
+        " https://www.youtube.com/watch?feature=share&v=feishinVid1 ",
+        "youtube.com/watch?v=feishinVid1#t=10",
+        "https://youtu.be/feishinVid1?si=abc",
     ] {
         assert_eq!(video_id_from_link(link), expected, "{link}");
     }
     for link in [
-        "https://example.com/watch?v=dQw4w9WgXcQ",
+        "https://example.com/watch?v=feishinVid1",
         "https://music.youtube.com/playlist?list=abc",
         "not a link",
         "",
@@ -285,16 +289,16 @@ fn links_are_turned_into_video_ids() {
 async fn video_details_come_from_one_printed_object() {
     let _spawning = SPAWNING.lock().await;
     let fake = FakeYtDlp::printing(
-        r#"{"id": "abc", "title": "One More Time", "artists": ["Daft Punk"], "album": "Discovery", "duration": 320, "thumbnail": "https://i.ytimg.com/vi/abc/maxresdefault.jpg"}"#,
+        r#"{"id": "abc", "title": "Paper Lanterns", "artists": ["Velvet Comets"], "album": "Night Ferry", "duration": 320, "thumbnail": "https://i.ytimg.com/vi/abc/maxresdefault.jpg"}"#,
     );
     let video = fake.yt_dlp().video("abc").await.unwrap();
     assert_eq!(
         video,
         YouTubeHit {
             video_id: "abc".into(),
-            title: "One More Time".into(),
-            artist: Some("Daft Punk".into()),
-            album: Some("Discovery".into()),
+            title: "Paper Lanterns".into(),
+            artist: Some("Velvet Comets".into()),
+            album: Some("Night Ferry".into()),
             thumbnail_url: Some("https://i.ytimg.com/vi/abc/maxresdefault.jpg".into()),
             duration_ms: Some(320_000),
         }
@@ -323,10 +327,7 @@ async fn real_yt_dlp_finds_and_resolves_a_song() {
         return;
     };
     let yt_dlp = YtDlp::new(program);
-    let hits = yt_dlp
-        .search_songs("daft punk one more time", 3)
-        .await
-        .unwrap();
+    let hits = yt_dlp.search_songs("classical piano", 3).await.unwrap();
     let first = hits.first().unwrap();
     let video = yt_dlp.video(&first.video_id).await.unwrap();
     assert!(!video.title.is_empty());

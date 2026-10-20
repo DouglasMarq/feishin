@@ -141,7 +141,7 @@ async fn pages_and_searches_do_not_wait_for_a_slow_sign_in() {
         let settings = settings(&fake);
         async move { discover.feed(FeedRequest::ForYou, settings).await }
     });
-    tokio::time::sleep(std::time::Duration::from_millis(300)).await;
+    fake.wait_for_calls(1).await;
     let search = tokio::time::timeout(
         std::time::Duration::from_secs(2),
         discover.search("anything".into(), settings(&fake)),

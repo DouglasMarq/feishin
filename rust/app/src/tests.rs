@@ -12,6 +12,7 @@ mod queue_saves;
 mod queue_scale;
 mod radio;
 mod radio_media;
+mod recording_store;
 mod remote_control;
 mod scrobbling;
 mod server_queue;

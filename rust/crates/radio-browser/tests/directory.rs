@@ -7,8 +7,8 @@ fn station_fixture() -> Value {
     json!([
         {
             "changeuuid": "c1",
-            "stationuuid": "9617a958-0601-11e8-ae97-52543be04c81",
-            "name": "Smooth Jazz Radio",
+            "stationuuid": "00000000-0000-4000-8000-000000000001",
+            "name": "Harbor Jazz Radio",
             "url": "http://jazz.example.com/listen.pls",
             "url_resolved": "http://jazz.example.com/stream.mp3",
             "homepage": "https://jazz.example.com/",
@@ -88,8 +88,8 @@ async fn search_resolves_a_mirror_and_decodes_stations() {
     assert_eq!(page.stations.len(), 1);
     assert!(!page.has_more);
     let station = &page.stations[0];
-    assert_eq!(station.uuid, "9617a958-0601-11e8-ae97-52543be04c81");
-    assert_eq!(station.name, "Smooth Jazz Radio");
+    assert_eq!(station.uuid, "00000000-0000-4000-8000-000000000001");
+    assert_eq!(station.name, "Harbor Jazz Radio");
     assert_eq!(station.stream_url, "http://jazz.example.com/stream.mp3");
     assert_eq!(
         station.homepage_url.as_deref(),
@@ -259,10 +259,10 @@ async fn clicks_are_counted_for_the_station() {
     let mock = MockServer::start().await;
     mount_servers(&mock, json!([{ "name": mock_host(&mock) }])).await;
     Mock::given(method("GET"))
-        .and(path("/json/url/9617a958"))
+        .and(path("/json/url/00000000"))
         .and(header("user-agent", USER_AGENT))
         .respond_with(ResponseTemplate::new(200).set_body_json(json!({
-            "ok": true, "message": "retrieved station url", "name": "Smooth Jazz Radio",
+            "ok": true, "message": "retrieved station url", "name": "Harbor Jazz Radio",
             "url": "http://jazz.example.com/stream.mp3"
         })))
         .expect(1)
@@ -270,5 +270,5 @@ async fn clicks_are_counted_for_the_station() {
         .await;
     let directory = RadioBrowser::with_discovery_url(&mock.uri()).expect("client");
 
-    directory.count_click("9617a958").await.expect("click");
+    directory.count_click("00000000").await.expect("click");
 }

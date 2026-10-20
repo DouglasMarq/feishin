@@ -10,6 +10,7 @@ use std::time::Duration;
 use feishin_platform::{
     MediaControlEvent, MediaControls, MediaIdentity, NowPlaying, PlaybackStatus,
 };
+use futures_util::StreamExt;
 use zbus::fdo::PropertiesProxy;
 use zbus::names::InterfaceName;
 use zbus::zvariant::{OwnedValue, Value};
@@ -19,7 +20,6 @@ const ROOT_INTERFACE: &str = "org.mpris.MediaPlayer2";
 const PLAYER_INTERFACE: &str = "org.mpris.MediaPlayer2.Player";
 const TEST_DESKTOP_ENTRY: &str = "org.example.feishin.test";
 const RECEIVE_TIMEOUT: Duration = Duration::from_secs(5);
-const STATUS_POLL_INTERVAL: Duration = Duration::from_millis(20);
 
 struct PrivateBus(Child);
 
@@ -50,23 +50,20 @@ fn spawn_private_bus() -> Option<(PrivateBus, String)> {
     (!address.is_empty()).then_some((bus, address))
 }
 
-fn test_bus() -> Option<TestBus> {
+fn test_bus() -> TestBus {
     match spawn_private_bus() {
         Some((bus, address)) => {
             unsafe { std::env::set_var("DBUS_SESSION_BUS_ADDRESS", &address) };
-            Some(TestBus {
+            TestBus {
                 private_bus: Some(bus),
                 app_name: "Feishin".to_owned(),
-            })
+            }
         }
-        None if std::env::var_os("DBUS_SESSION_BUS_ADDRESS").is_some() => Some(TestBus {
+        None if std::env::var_os("DBUS_SESSION_BUS_ADDRESS").is_some() => TestBus {
             private_bus: None,
             app_name: format!("FeishinTest{}", std::process::id()),
-        }),
-        None => {
-            eprintln!("skipping: no D-Bus session bus available");
-            None
-        }
+        },
+        None => panic!("no D-Bus session bus: install dbus-daemon or start a session bus"),
     }
 }
 
@@ -82,14 +79,15 @@ async fn playback_status(properties: &PropertiesProxy<'_>) -> String {
 }
 
 async fn wait_for_status(properties: &PropertiesProxy<'_>, expected: &str) {
-    let deadline = tokio::time::Instant::now() + RECEIVE_TIMEOUT;
-    while playback_status(properties).await != expected {
-        assert!(
-            tokio::time::Instant::now() < deadline,
-            "PlaybackStatus never became {expected}"
-        );
-        tokio::time::sleep(STATUS_POLL_INTERVAL).await;
-    }
+    let mut changes = properties.receive_properties_changed().await.unwrap();
+    let reached = async {
+        while playback_status(properties).await != expected {
+            changes.next().await;
+        }
+    };
+    tokio::time::timeout(RECEIVE_TIMEOUT, reached)
+        .await
+        .unwrap_or_else(|_| panic!("PlaybackStatus never became {expected}"));
 }
 
 fn publish_test_track(controls: &mut MediaControls) {
@@ -221,13 +219,10 @@ async fn assert_dispatches_events(
 
 #[test]
 fn mpris_registers_and_dispatches_events() {
-    let Some(TestBus {
+    let TestBus {
         private_bus,
         app_name,
-    }) = test_bus()
-    else {
-        return;
-    };
+    } = test_bus();
     let bus_name = format!("org.mpris.MediaPlayer2.{}", app_name.to_lowercase());
 
     let (event_sender, events) = mpsc::channel();
@@ -240,14 +235,7 @@ fn mpris_registers_and_dispatches_events() {
             let _ = event_sender.send(event);
         }),
     );
-    let mut controls = match controls {
-        Ok(controls) => controls,
-        Err(error) if private_bus.is_none() => {
-            eprintln!("skipping: session bus unusable: {error}");
-            return;
-        }
-        Err(error) => panic!("{error}"),
-    };
+    let mut controls = controls.unwrap();
     publish_test_track(&mut controls);
 
     let runtime = tokio::runtime::Builder::new_current_thread()

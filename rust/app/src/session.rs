@@ -88,10 +88,13 @@ mod tests {
     use super::*;
     use crate::demo::FakeServer;
 
+    const COUNT_STEP: Duration = Duration::from_millis(1);
+    const WORK_TIME: Duration = Duration::from_millis(5);
+
     async fn count_forever(steps: &AtomicUsize) {
         loop {
             steps.fetch_add(1, Ordering::SeqCst);
-            tokio::time::sleep(Duration::from_millis(1)).await;
+            tokio::time::sleep(COUNT_STEP).await;
         }
     }
 
@@ -100,23 +103,23 @@ mod tests {
         let counting = Arc::clone(&steps);
         let work = session.background_work();
         let task = tokio::spawn(async move { work.run(count_forever(&counting)).await });
-        tokio::time::sleep(Duration::from_millis(5)).await;
+        tokio::time::advance(WORK_TIME).await;
         end(session);
         let stopped = tokio::time::timeout(Duration::from_secs(5), task).await;
         assert!(matches!(stopped, Ok(Ok(None))));
         let steps_at_stop = steps.load(Ordering::SeqCst);
-        tokio::time::sleep(Duration::from_millis(5)).await;
+        tokio::time::advance(WORK_TIME).await;
         assert_eq!(steps.load(Ordering::SeqCst), steps_at_stop);
     }
 
-    #[tokio::test]
+    #[tokio::test(start_paused = true)]
     async fn logging_out_stops_background_work() {
         let session = Session::default();
         session.set(Some(Arc::new(FakeServer::new(10))));
         stops_when(&session, |session| session.set(None)).await;
     }
 
-    #[tokio::test]
+    #[tokio::test(start_paused = true)]
     async fn shutting_down_stops_background_work_but_keeps_the_server() {
         let session = Session::default();
         session.set(Some(Arc::new(FakeServer::new(10))));
