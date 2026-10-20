@@ -37,6 +37,7 @@ pub use radio::RADIO_STREAM_UID;
 pub use radio::{RadioCommand, RadioNowPlaying};
 pub use remote::{AdoptedQueue, RemoteCommand};
 pub use ui_update::{UiSink, UiUpdate, artist_names};
+pub use volume::MAX_VOLUME;
 pub use youtube::YouTubeResolution;
 
 use crate::audio::AudioOutput;

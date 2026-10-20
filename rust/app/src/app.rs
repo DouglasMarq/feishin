@@ -27,6 +27,7 @@ use feishin_remote as remote_state;
 
 const SHUTDOWN_SAVE_TIMEOUT: Duration = Duration::from_secs(6);
 const RUNTIME_SHUTDOWN_TIMEOUT: Duration = Duration::from_secs(1);
+const IO_WORKER_THREADS: usize = 2;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Mode {
@@ -182,15 +183,6 @@ fn restored_login(context: &Context, settings: &Settings, mode: Mode) -> Result<
     Ok(Some((config, server)))
 }
 
-fn enter_restored_session(context: &Context, config: ServerConfig, server: &Arc<dyn MusicServer>) {
-    context.session.set(Some(Arc::clone(server)));
-    context.send(Command::Connected {
-        config,
-        credential: None,
-        others: Vec::new(),
-    });
-}
-
 fn show_restored_session(window: &AppWindow, restored: Result<RestoredLogin>) {
     match restored {
         Ok(Some((_, server))) => login::enter_main(window, &server),
@@ -210,7 +202,7 @@ fn restore_session(window: &AppWindow, context: &Context, settings: &Settings, m
                 .map_err(anyhow::Error::from)
                 .and_then(|restored| restored);
         if let Ok(Some((config, server))) = &restored {
-            enter_restored_session(&context, config.clone(), server);
+            login::enter_session(&context, server, config.clone(), None, Vec::new());
         }
         on_ui(&weak_window, move |window| {
             show_restored_session(window, restored);
@@ -220,7 +212,7 @@ fn restore_session(window: &AppWindow, context: &Context, settings: &Settings, m
 
 fn build_runtime() -> Result<Runtime> {
     Ok(tokio::runtime::Builder::new_multi_thread()
-        .worker_threads(2)
+        .worker_threads(IO_WORKER_THREADS)
         .thread_name("feishin-io")
         .enable_all()
         .build()?)

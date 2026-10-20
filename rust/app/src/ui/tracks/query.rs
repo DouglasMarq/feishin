@@ -1,9 +1,11 @@
-use feishin_core::model::{SongListQuery, SortOrder};
+use feishin_core::model::SongListQuery;
 use slint::{ComponentHandle, Model};
 
 use super::model::TracksModel;
 use super::with_model;
 use crate::ui::{AppWindow, TracksState};
+
+const MAX_YEAR: i32 = 9999;
 
 #[derive(Debug, Clone, Default, PartialEq, Eq)]
 pub struct Filters {
@@ -33,14 +35,7 @@ pub fn parse_year(text: &str) -> Option<i32> {
     text.trim()
         .parse()
         .ok()
-        .filter(|year| (1..=9999).contains(year))
-}
-
-pub(super) fn sort_order(descending: bool) -> SortOrder {
-    match descending {
-        true => SortOrder::Desc,
-        false => SortOrder::Asc,
-    }
+        .filter(|year| (1..=MAX_YEAR).contains(year))
 }
 
 fn selected_genre_id(state: &TracksState<'_>) -> Option<String> {

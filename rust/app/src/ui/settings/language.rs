@@ -2,12 +2,12 @@ use std::sync::Arc;
 
 use slint::ComponentHandle;
 
-use super::display::{slint_index, string_model};
+use super::display::string_model;
 use super::loading::load;
 use super::view::Shared;
 use crate::controller::Command;
 use crate::i18n::{self, LANGUAGES};
-use crate::ui::{AppWindow, Context, SettingsState};
+use crate::ui::{AppWindow, Context, SettingsState, slint_index};
 
 fn language_labels() -> Vec<String> {
     std::iter::once(tr!("System default"))

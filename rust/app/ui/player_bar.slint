@@ -1,4 +1,4 @@
-import { Theme, Icons, Format } from "theme.slint";
+import { Behaviour, Theme, Icons, Format } from "theme.slint";
 import { AppState, PlayerState, RepeatState, Route } from "globals.slint";
 import { NowPlayingState, NowPlayingTab } from "now_playing.slint";
 import { Bar, Icon, IconButton, TooltipAnchor } from "widgets.slint";
@@ -234,7 +234,7 @@ export component PlayerBar inherits Rectangle {
                 y: (parent.height - self.height) / 2;
                 width: 110px;
                 value: PlayerState.muted ? 0 : PlayerState.volume / 100;
-                scroll-step: 0.05;
+                scroll-step: Behaviour.volume-step / Behaviour.max-volume;
                 tooltip: @tr("Volume {}%", self.adjusting ? Math.round(self.drag-preview * 100) : (PlayerState.muted ? 0 : PlayerState.volume));
                 changed(value) => {
                     PlayerState.set-volume(Math.round(value * 100));

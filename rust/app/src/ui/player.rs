@@ -6,7 +6,7 @@ use super::{
     AppWindow, Context, PlayerState, RepeatState, clamp_i32, on_ui, queue, radio, show_status,
     tracks,
 };
-use crate::controller::{Command, UiSink, UiUpdate};
+use crate::controller::{Command, MAX_VOLUME, UiSink, UiUpdate};
 
 const COVER_SIZE: u32 = 128;
 
@@ -29,7 +29,7 @@ pub fn install(window: &AppWindow, ctx: &Context) {
     let volume_ctx = ctx.clone();
     state.on_set_volume(move |volume| {
         volume_ctx.send(Command::SetVolume(
-            u8::try_from(volume.clamp(0, 100)).unwrap_or_default(),
+            u8::try_from(volume.clamp(0, i32::from(MAX_VOLUME))).unwrap_or_default(),
         ));
     });
 }

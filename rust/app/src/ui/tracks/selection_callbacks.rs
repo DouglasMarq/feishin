@@ -5,13 +5,7 @@ use super::model::TracksModel;
 use super::row::primary_artist_id;
 use super::with_model;
 use crate::ui::playlist_picker::PlaylistPicker;
-use crate::ui::{AppWindow, Context, Route, TracksState, clamp_i32};
-
-const MAX_RATING: i32 = 5;
-
-fn rating_from(value: i32) -> Option<u8> {
-    u8::try_from(value.clamp(0, MAX_RATING)).ok()
-}
+use crate::ui::{AppWindow, Context, Route, TracksState, clamp_i32, rating_stars};
 
 fn update_selected_count(window: &AppWindow, change: impl FnOnce(&TracksModel) -> usize) {
     if let Some(count) = with_model(window, change) {
@@ -91,8 +85,12 @@ fn install_selection_actions(window: &AppWindow, target: &ActionTarget) {
     let weak = window.as_weak();
     let rate_target = target.clone();
     state.on_rate_selected(move |rating| {
-        if let (Some(window), Some(rating)) = (weak.upgrade(), rating_from(rating)) {
-            act_on_selection(&window, &rate_target, SongAction::Rate(rating));
+        if let Some(window) = weak.upgrade() {
+            act_on_selection(
+                &window,
+                &rate_target,
+                SongAction::Rate(rating_stars(rating)),
+            );
         }
     });
 }
@@ -138,13 +136,11 @@ fn install_row_edits(window: &AppWindow, ctx: &Context) {
     let weak = window.as_weak();
     let rating_ctx = ctx.clone();
     state.on_rate_row(move |index, rating| {
-        let (Some(window), Ok(index), Some(rating)) =
-            (weak.upgrade(), usize::try_from(index), rating_from(rating))
-        else {
+        let (Some(window), Ok(index)) = (weak.upgrade(), usize::try_from(index)) else {
             return;
         };
         if let Some(id) = with_model(&window, |model| model.song_id_at(index)).flatten() {
-            set_rating(&window, &rating_ctx, vec![id], rating);
+            set_rating(&window, &rating_ctx, vec![id], rating_stars(rating));
         }
     });
 }

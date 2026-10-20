@@ -1,4 +1,6 @@
-use feishin_core::model::{ArtistListQuery, ArtistSort, SortOrder};
+use feishin_core::model::{ArtistListQuery, ArtistSort};
+
+use crate::ui::sort_order;
 
 pub const SORTS: [ArtistSort; 7] = [
     ArtistSort::Name,
@@ -30,13 +32,6 @@ fn sort_at(sort_index: i32) -> ArtistSort {
         .unwrap_or(ArtistSort::Name)
 }
 
-fn sort_order(descending: bool) -> SortOrder {
-    match descending {
-        true => SortOrder::Desc,
-        false => SortOrder::Asc,
-    }
-}
-
 pub fn build_query(
     sort_index: i32,
     descending: bool,
@@ -55,6 +50,8 @@ pub fn build_query(
 
 #[cfg(test)]
 mod tests {
+    use feishin_core::model::SortOrder;
+
     use super::*;
 
     #[test]

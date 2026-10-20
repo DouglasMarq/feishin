@@ -5,11 +5,11 @@ use slint::{ComponentHandle, ModelRc, Timer, TimerMode};
 
 use super::fetch::spawn_request;
 use super::model::TracksModel;
-use super::query::{current_query, reload, sort_order};
+use super::query::{current_query, reload};
 use super::with_model;
 use crate::controller::Command;
 use crate::list_stream::{ListRow, SongSource};
-use crate::ui::{AppWindow, Context, TrackColumn, TracksState};
+use crate::ui::{AppWindow, Context, TrackColumn, TracksState, sort_order};
 
 const SEARCH_DEBOUNCE: Duration = Duration::from_millis(300);
 

@@ -1,5 +1,5 @@
 import { LineEdit, ScrollView } from "std-widgets.slint";
-import { Theme, Icons } from "theme.slint";
+import { Behaviour, Theme, Icons } from "theme.slint";
 import { AppState, PlayerState } from "globals.slint";
 import { Bar, IconButton, TooltipAnchor, TooltipButton, TooltipComboBox, TooltipSwitch } from "widgets.slint";
 import { AppearanceOptions } from "appearance_settings.slint";
@@ -495,7 +495,7 @@ export component SettingsView inherits Rectangle {
                         volume-bar := Bar {
                             width: 160px;
                             value: PlayerState.volume / 100;
-                            scroll-step: 0.05;
+                            scroll-step: Behaviour.volume-step / Behaviour.max-volume;
                             tooltip: @tr("Volume {}%", self.adjusting ? Math.round(self.drag-preview * 100) : PlayerState.volume);
                             changed(value) => {
                                 PlayerState.set-volume(Math.round(value * 100));

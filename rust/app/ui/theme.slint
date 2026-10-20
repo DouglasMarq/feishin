@@ -32,6 +32,17 @@ export global Theme {
     }
 }
 
+export global Behaviour {
+    out property <int> max-volume: 100;
+    out property <int> volume-step: 5;
+    out property <duration> status-dismiss-delay: 6s;
+    out property <length> drag-threshold: 6px;
+    out property <duration> tooltip-delay: 450ms;
+    out property <duration> bar-settle-timeout: 1500ms;
+    out property <duration> bar-scroll-timeout: 800ms;
+    out property <int> collapsed-top-songs: 5;
+}
+
 export global Icons {
     out property <string> play: "M8 5v14l11-7z";
     out property <string> pause: "M6 19h4V5H6v14zm8-14v14h4V5h-4z";

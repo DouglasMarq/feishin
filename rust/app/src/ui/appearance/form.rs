@@ -3,7 +3,7 @@ use feishin_storage::appearance::{AccentColor, AppearanceSettings, ThemeId};
 use slint::{Color, ComponentHandle};
 
 use super::catalog::PaletteCatalog;
-use crate::ui::{AppWindow, AppearanceState, SystemScheme};
+use crate::ui::{AppWindow, AppearanceState, SystemScheme, slint_index};
 
 pub(super) fn slint_color(accent: AccentColor) -> Color {
     Color::from_rgb_u8(accent.red, accent.green, accent.blue)
@@ -11,10 +11,6 @@ pub(super) fn slint_color(accent: AccentColor) -> Color {
 
 fn accent_color(color: Color) -> AccentColor {
     AccentColor::new(color.red(), color.green(), color.blue())
-}
-
-fn slint_index(index: usize) -> i32 {
-    i32::try_from(index).unwrap_or_default()
 }
 
 pub(super) fn system_scheme(state: &AppearanceState) -> SystemColorScheme {

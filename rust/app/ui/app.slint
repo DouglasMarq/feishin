@@ -1,4 +1,4 @@
-import { Theme } from "theme.slint";
+import { Behaviour, Theme } from "theme.slint";
 import { AppState, Page, PlayerState, Route } from "globals.slint";
 import { LoginView } from "login.slint";
 import { Sidebar } from "sidebar.slint";
@@ -77,9 +77,9 @@ export component AppWindow inherits Window {
                 } else if (event.text == Key.LeftArrow) {
                     PlayerState.previous();
                 } else if (event.text == Key.UpArrow) {
-                    PlayerState.set-volume(Math.min(100, PlayerState.volume + 5));
+                    PlayerState.set-volume(Math.min(Behaviour.max-volume, PlayerState.volume + Behaviour.volume-step));
                 } else if (event.text == Key.DownArrow) {
-                    PlayerState.set-volume(Math.max(0, PlayerState.volume - 5));
+                    PlayerState.set-volume(Math.max(0, PlayerState.volume - Behaviour.volume-step));
                 } else if (event.text == "s" || event.text == "S") {
                     PlayerState.toggle-shuffle();
                 } else if (event.text == "r" || event.text == "R") {
@@ -180,7 +180,7 @@ export component AppWindow inherits Window {
             }
 
             Timer {
-                interval: 6s;
+                interval: Behaviour.status-dismiss-delay;
                 triggered => {
                     AppState.status = "";
                 }

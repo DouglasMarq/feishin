@@ -1,17 +1,12 @@
-use std::time::{SystemTime, UNIX_EPOCH};
-
 use feishin_core::model::{RadioStation, RadioStationDraft};
 use slint::ComponentHandle;
 
 use super::form::draft_from_form;
 use super::view::RadioView;
-use crate::ui::{AppWindow, RadioSource, RadioState};
+use crate::ui::{AppWindow, RadioSource, RadioState, time_based_id};
 
 fn local_station_id() -> String {
-    let since_epoch = SystemTime::now()
-        .duration_since(UNIX_EPOCH)
-        .unwrap_or_default();
-    format!("local-{}", since_epoch.as_nanos())
+    format!("local-{}", time_based_id())
 }
 
 fn saved_station(id: String, draft: RadioStationDraft) -> RadioStation {

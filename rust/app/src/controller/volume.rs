@@ -1,6 +1,6 @@
 use super::Controller;
 
-const MAX_VOLUME: u8 = 100;
+pub const MAX_VOLUME: u8 = 100;
 
 impl Controller {
     pub(super) fn set_volume(&mut self, volume: u8) {
