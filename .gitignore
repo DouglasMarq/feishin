@@ -2,3 +2,6 @@
 *.log*
 .idea
 .scratch
+
+### Claude Code ###
+.claude/settings.local.json
