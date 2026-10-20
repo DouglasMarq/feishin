@@ -1,4 +1,4 @@
-use std::sync::{Arc, Mutex};
+use std::sync::{Arc, Mutex, PoisonError};
 
 use feishin_remote::{DeviceId, DeviceInfo, PairingToken, TrustStore, new_device_id};
 use serde::{Deserialize, Serialize};
@@ -69,21 +69,18 @@ impl FileTrust {
 
     pub fn device_id(&self) -> DeviceId {
         self.read(|book| book.device_id.clone())
-            .unwrap_or_else(|| DeviceId(new_device_id()))
     }
 
     pub fn forget_trusted(&self) {
         self.change(|book| book.trusted.clear());
     }
 
-    fn read<Output>(&self, reading: impl FnOnce(&DeviceBook) -> Output) -> Option<Output> {
-        self.book.lock().ok().map(|book| reading(&book))
+    fn read<Output>(&self, reading: impl FnOnce(&DeviceBook) -> Output) -> Output {
+        reading(&self.book.lock().unwrap_or_else(PoisonError::into_inner))
     }
 
     fn change(&self, changing: impl FnOnce(&mut DeviceBook)) {
-        if let Ok(mut book) = self.book.lock() {
-            changing(&mut book);
-        }
+        changing(&mut self.book.lock().unwrap_or_else(PoisonError::into_inner));
         self.save();
     }
 
@@ -91,8 +88,12 @@ impl FileTrust {
         if !self.persists {
             return;
         }
-        let Some(bytes) = self.read(serde_json::to_vec).and_then(Result::ok) else {
-            return;
+        let bytes = match self.read(serde_json::to_vec) {
+            Ok(bytes) => bytes,
+            Err(error) => {
+                tracing::warn!("encoding the approved devices failed: {error}");
+                return;
+            }
         };
         if let Err(error) = self.store.write_state(StateFile::RemoteDevices, &bytes) {
             tracing::warn!("saving the approved devices failed: {error:#}");
@@ -119,7 +120,6 @@ impl TrustStore for FileTrust {
                 .find(|trusted| trusted.id == *device)
                 .map(|trusted| trusted.token)
         })
-        .flatten()
     }
 
     fn trust(&self, device: &DeviceInfo, token: PairingToken) {
@@ -140,7 +140,6 @@ impl TrustStore for FileTrust {
                 .find(|known| known.id == *host)
                 .map(|known| known.token)
         })
-        .flatten()
     }
 
     fn remember_host(&self, host: &DeviceId, token: PairingToken) {
