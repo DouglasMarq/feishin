@@ -61,17 +61,17 @@ mp3_tone() {
     tone "$path" "$frequency" "$seconds" -c:a libmp3lame -b:a 128k -id3v2_version 3 "$@"
 }
 
+# Sets tag_arguments to the ffmpeg metadata flags; bash 3.2 (macOS) has no mapfile to read them from a pipe.
 tags() {
     local artist="$1" album="$2" year="$3" genre="$4" track="$5" title="$6"
-    printf -- '-metadata\nartist=%s\n-metadata\nalbum_artist=%s\n-metadata\nalbum=%s\n-metadata\ndate=%s\n-metadata\ngenre=%s\n-metadata\ntrack=%s\n-metadata\ntitle=%s\n' \
-        "$artist" "$artist" "$album" "$year" "$genre" "$track" "$title"
+    tag_arguments=(-metadata "artist=$artist" -metadata "album_artist=$artist" -metadata "album=$album"
+        -metadata "date=$year" -metadata "genre=$genre" -metadata "track=$track" -metadata "title=$title")
 }
 
 tagged_mp3() {
     local directory="$1" frequency="$2" seconds="$3" artist="$4" album="$5" year="$6" genre="$7" track="$8" title="$9"
-    local arguments
-    mapfile -t arguments < <(tags "$artist" "$album" "$year" "$genre" "$track" "$title")
-    mp3_tone "$directory/$(printf '%02d' "$track") $title.mp3" "$frequency" "$seconds" "${arguments[@]}"
+    tags "$artist" "$album" "$year" "$genre" "$track" "$title"
+    mp3_tone "$directory/$(printf '%02d' "$track") $title.mp3" "$frequency" "$seconds" "${tag_arguments[@]}"
 }
 
 synced_lyrics() {
@@ -79,9 +79,9 @@ synced_lyrics() {
 }
 
 lyrics_track() {
-    local directory="$1" arguments
-    mapfile -t arguments < <(tags "Bravo Sine" "Second Wave" 2021 "Rock" 1 "Tidal Pull")
-    tone "$directory/01 Tidal Pull.flac" 523 6 -c:a flac "${arguments[@]}" -metadata "LYRICS=$(synced_lyrics)"
+    local directory="$1"
+    tags "Bravo Sine" "Second Wave" 2021 "Rock" 1 "Tidal Pull"
+    tone "$directory/01 Tidal Pull.flac" 523 6 -c:a flac "${tag_arguments[@]}" -metadata "LYRICS=$(synced_lyrics)"
     synced_lyrics >"$directory/01 Tidal Pull.lrc"
 }
 
@@ -282,7 +282,7 @@ run_tests() {
     [[ -f "$env_file" ]] || fail "servers are not up, run: $0 up"
     source "$env_file"
     cd "$workspace_dir"
-    cargo test -p feishin-live-tests -- --ignored --test-threads=1 "$@"
+    cargo test -p feishin-live-tests -- --ignored "$@"
 }
 
 down() {
