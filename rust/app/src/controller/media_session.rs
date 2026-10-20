@@ -5,12 +5,12 @@ use feishin_core::queue::QueueTrack;
 use feishin_platform::{MediaControlEvent, NowPlaying, PlaybackStatus};
 
 use super::command::forward_command;
-use super::{Command, Controller, UiUpdate};
+use super::{Command, Controller, MAX_VOLUME, UiUpdate};
 
 const MEDIA_COVER_SIZE: u32 = 512;
 
 fn volume_percent(fraction: f64) -> u8 {
-    (fraction.clamp(0.0, 1.0) * 100.0).round() as u8
+    (fraction.clamp(0.0, 1.0) * f64::from(MAX_VOLUME)).round() as u8
 }
 
 fn now_playing_of(
@@ -170,7 +170,11 @@ impl Controller {
             true => 0,
             false => playback.volume_percent,
         };
-        if let Err(error) = self.deps.media.set_volume(f64::from(volume) / 100.0) {
+        if let Err(error) = self
+            .deps
+            .media
+            .set_volume(f64::from(volume) / f64::from(MAX_VOLUME))
+        {
             tracing::debug!("media session volume: {error:#}");
         }
     }

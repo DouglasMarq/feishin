@@ -1,4 +1,5 @@
 use std::rc::Rc;
+use std::sync::Arc;
 
 use feishin_api::MusicServer;
 use feishin_core::model::Song;
@@ -10,9 +11,8 @@ use super::lyrics_plan::lyrics_plan;
 use super::song_lyrics::{LyricsLookupError, SongLyrics, resolve_lyrics};
 use super::view::{View, with_view};
 use crate::session::Session;
-use crate::ui::{
-    AppWindow, Context, LyricsStatus, NowPlayingState, TrackRow, on_ui, player, tracks,
-};
+use crate::ui::images::{CoverSource, to_image};
+use crate::ui::{AppWindow, Context, LyricsStatus, NowPlayingState, TrackRow, on_ui, tracks};
 
 const COVER_SIZE: u32 = 600;
 const SIMILAR_COUNT: usize = 20;
@@ -20,23 +20,31 @@ const SIMILAR_COUNT: usize = 20;
 pub(super) async fn fetch_cover(
     weak_window: &slint::Weak<AppWindow>,
     ctx: &Context,
-    server: &dyn MusicServer,
+    server: &Arc<dyn MusicServer>,
     song: &Song,
 ) {
-    let Some(cover_id) = song.cover_art_id.as_deref() else {
+    let Some(cover_id) = song.cover_art_id.clone() else {
         return;
     };
-    let cover = match ctx.covers.cover(server, cover_id, COVER_SIZE).await {
-        Ok(cover) => cover,
-        Err(error) => {
-            tracing::debug!("cover {cover_id}: {error:#}");
-            return;
-        }
+    let source = CoverSource::Server {
+        server: Arc::clone(server),
+        cover_id,
     };
-    let song_id = song.id.clone();
+    show_cover(weak_window, ctx, &source, song.id.clone()).await;
+}
+
+pub(super) async fn show_cover(
+    weak_window: &slint::Weak<AppWindow>,
+    ctx: &Context,
+    source: &CoverSource,
+    song_id: String,
+) {
+    let Some(cover) = source.fetch(ctx.covers.as_ref(), COVER_SIZE).await else {
+        return;
+    };
     on_ui(weak_window, move |window| {
         if is_current(window, &song_id)
-            && let Some(image) = player::to_image(&cover)
+            && let Some(image) = to_image(&cover)
         {
             let state = window.global::<NowPlayingState>();
             state.set_cover(image);

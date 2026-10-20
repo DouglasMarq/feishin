@@ -6,10 +6,10 @@ use feishin_youtube::music::{CHART_COUNTRIES, SystemLocale, chart_country_or_fal
 use slint::ComponentHandle;
 
 use super::choices::Choices;
-use super::display::{slint_index, string_model};
+use super::display::string_model;
 use super::view::{Shared, View};
 use crate::controller::{Command, YouTubeCommand};
-use crate::ui::{AppWindow, Context, SettingsState};
+use crate::ui::{AppWindow, Context, SettingsState, slint_index};
 
 pub(super) fn cookie_browser_choices(
     current: Option<CookieBrowser>,

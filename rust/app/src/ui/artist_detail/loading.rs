@@ -5,7 +5,7 @@ use feishin_core::model::ArtistDetail;
 use feishin_storage::cover_cache::DecodedImage;
 use slint::{ComponentHandle, Image};
 
-use super::super::player::to_image;
+use super::super::images::to_image;
 use super::super::{AppWindow, ArtistDetailState, Context, on_ui};
 use super::current::{begin, is_current, update_current};
 use super::view::{clear, set_album_image, show};
@@ -74,7 +74,7 @@ fn claim_album_cover(index: usize) -> Option<(u64, String)> {
         let cover_id = current.album_covers.get(index).cloned().flatten()?;
         current
             .covers
-            .begin(index)
+            .begin(&index)
             .then_some((current.generation, cover_id))
     })
 }
@@ -108,7 +108,7 @@ fn apply_album_cover(window: &AppWindow, generation: u64, index: usize, image: O
         match &image {
             Some(image) => Some(current.covers.insert(index, image.clone())),
             None => {
-                current.covers.failed(index);
+                current.covers.retry_later(&index);
                 None
             }
         }
@@ -116,7 +116,7 @@ fn apply_album_cover(window: &AppWindow, generation: u64, index: usize, image: O
     let Some(evicted) = evicted else {
         return;
     };
-    for evicted_index in evicted {
+    if let Some(evicted_index) = evicted {
         set_album_image(window, evicted_index, None);
     }
     set_album_image(window, index, image);

@@ -9,7 +9,7 @@ use super::binding::with_model;
 use super::detail::{SharedDetail, lock};
 use super::pages::paging_for_page;
 use super::rows::{HeaderSummary, header_info};
-use crate::ui::player::to_image;
+use crate::ui::images::to_image;
 use crate::ui::{AppState, AppWindow, Context, PlaylistDetailState, Route, on_ui, show_status};
 
 const COVER_SIZE: u32 = 300;

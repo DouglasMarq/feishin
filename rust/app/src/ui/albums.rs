@@ -1,11 +1,11 @@
 use std::rc::Rc;
 use std::time::Duration;
 
-use feishin_core::model::{AlbumListQuery, AlbumSort, SortOrder};
+use feishin_core::model::{AlbumListQuery, AlbumSort};
 use slint::{ComponentHandle, ModelRc, SharedString, Timer, TimerMode, VecModel};
 
 use super::album_grid::{AlbumAction, AlbumGridModel, album_action, spawn_request, with_model};
-use super::{AlbumGridRow, AlbumsState, AppWindow, Context, clamp_i32, show_status};
+use super::{AlbumGridRow, AlbumsState, AppWindow, Context, clamp_i32, show_status, sort_order};
 
 const SEARCH_DEBOUNCE: Duration = Duration::from_millis(300);
 
@@ -45,13 +45,6 @@ fn sort_at(sort_index: i32) -> AlbumSort {
         .and_then(|index| SORTS.get(index))
         .copied()
         .unwrap_or(AlbumSort::Name)
-}
-
-fn sort_order(descending: bool) -> SortOrder {
-    match descending {
-        true => SortOrder::Desc,
-        false => SortOrder::Asc,
-    }
 }
 
 pub fn album_query(
@@ -190,6 +183,8 @@ pub fn install(window: &AppWindow, ctx: &Context) {
 
 #[cfg(test)]
 mod tests {
+    use feishin_core::model::SortOrder;
+
     use super::*;
 
     #[test]

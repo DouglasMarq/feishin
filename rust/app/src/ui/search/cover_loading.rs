@@ -4,7 +4,7 @@ use super::cards::CardKind;
 use super::covers::CoverKey;
 use super::fetch::fetch;
 use super::results::with_results;
-use crate::ui::player::to_image;
+use crate::ui::images::to_image;
 use crate::ui::{AppWindow, Context, SearchKind};
 
 const SEARCH_COVER_SIZE: u32 = 192;

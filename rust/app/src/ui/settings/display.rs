@@ -9,7 +9,7 @@ use super::view::{Shared, View};
 use super::youtube::show_youtube;
 use crate::controller::SettingsSnapshot;
 use crate::lyrics_provider::lyrics_source_label;
-use crate::ui::{AppWindow, LyricsSourceRow, ServerRow, SettingsState};
+use crate::ui::{AppWindow, LyricsSourceRow, ServerRow, SettingsState, slint_index};
 
 pub(super) fn server_rows(settings: &Settings) -> Vec<ServerRow> {
     settings
@@ -40,10 +40,6 @@ pub(super) fn string_model(values: &[String]) -> ModelRc<SharedString> {
             .map(|value| SharedString::from(value.as_str()))
             .collect::<Vec<_>>(),
     ))
-}
-
-pub(super) fn slint_index(value: usize) -> i32 {
-    i32::try_from(value).unwrap_or(0)
 }
 
 pub(super) fn set_lyrics_rows(state: &SettingsState, sources: &[LyricsSource]) {

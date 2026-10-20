@@ -1,5 +1,5 @@
 import { ListView } from "std-widgets.slint";
-import { Theme, Icons } from "theme.slint";
+import { Behaviour, Theme, Icons } from "theme.slint";
 import { QueueState } from "globals.slint";
 import { Icon, IconButton, TooltipAnchor } from "widgets.slint";
 import { SettingsState } from "settings.slint";
@@ -69,7 +69,7 @@ export component QueuePanel inherits Rectangle {
                         QueueState.play(row.uid);
                     }
                     moved => {
-                        if (self.pressed && abs(self.mouse-y - self.pressed-y) > 6px) {
+                        if (self.pressed && abs(self.mouse-y - self.pressed-y) > Behaviour.drag-threshold) {
                             root.drag-from = row-index;
                             root.drag-to = max(0, min(QueueState.rows.length - 1, row-index + Math.round((self.mouse-y - self.pressed-y) / root.row-height)));
                         }

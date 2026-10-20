@@ -40,12 +40,7 @@ pub(super) fn switch_server(window: &AppWindow, ctx: &Context, shared: &Shared, 
     ctx.rt.clone().spawn(async move {
         let result = restore_in_background(&ctx, &config).await;
         if let Ok(server) = &result {
-            ctx.session.set(Some(Arc::clone(server)));
-            ctx.send(Command::Connected {
-                config,
-                credential: None,
-                others: Vec::new(),
-            });
+            login::enter_session(&ctx, server, config, None, Vec::new());
         }
         on_ui(&weak_window, move |window| {
             show_switch_result(window, result);

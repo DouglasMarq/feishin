@@ -6,7 +6,7 @@ use slint::{ComponentHandle, Image};
 use super::cards::cover_key;
 use super::deps::DiscoverDeps;
 use super::model::with_discover;
-use crate::ui::player::to_image;
+use crate::ui::images::to_image;
 use crate::ui::{AppWindow, DiscoverState, on_ui};
 
 const CARD_COVER_SIZE: u32 = 192;

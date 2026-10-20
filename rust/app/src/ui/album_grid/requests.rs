@@ -4,8 +4,8 @@ use feishin_api::MusicServer;
 use feishin_core::model::{AlbumListQuery, Paging};
 use slint::{Model, ModelRc, Weak};
 
+use super::super::images::to_image;
 use super::super::page_cache::PageApplied;
-use super::super::player::to_image;
 use super::super::{AlbumGridRow, AppWindow, Context, on_ui, show_status};
 use super::card::CardData;
 use super::model::{AlbumGridModel, GridRequest, PAGE_SIZE};

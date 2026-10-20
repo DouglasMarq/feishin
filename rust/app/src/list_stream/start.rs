@@ -1,6 +1,3 @@
-use std::hash::{BuildHasher, RandomState};
-use std::time::SystemTime;
-
 use feishin_core::model::{Page, Song};
 
 use super::fetching::StreamStop;
@@ -79,14 +76,24 @@ pub fn start_index_in(kept: &KeptSongs, row: ListRow, song_id: Option<&str>) -> 
 }
 
 fn random_below(bound: usize) -> usize {
-    let seed = SystemTime::now()
-        .duration_since(SystemTime::UNIX_EPOCH)
-        .map(|elapsed| elapsed.as_nanos())
-        .unwrap_or_default();
-    let random = RandomState::new().hash_one(seed);
-    let bound = u64::try_from(bound).unwrap_or(u64::MAX);
-    random
-        .checked_rem(bound)
-        .and_then(|offset| usize::try_from(offset).ok())
-        .unwrap_or(0)
+    match bound {
+        0 => 0,
+        _ => rand::random_range(0..bound),
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn given_no_rows_the_random_offset_is_the_first_row() {
+        assert_eq!(random_below(0), 0);
+    }
+
+    #[test]
+    fn given_rows_the_random_offset_stays_below_their_count() {
+        assert!((0..200).all(|_| random_below(3) < 3));
+        assert_eq!(random_below(1), 0);
+    }
 }

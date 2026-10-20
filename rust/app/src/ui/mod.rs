@@ -1,5 +1,6 @@
 use std::sync::Arc;
 
+use feishin_core::model::SortOrder;
 use feishin_remote::ServerKey;
 use feishin_storage::settings::{Settings, UiSettings};
 use slint::ComponentHandle;
@@ -25,12 +26,14 @@ pub mod albums;
 pub mod appearance;
 pub mod artist_detail;
 pub mod artists;
+pub mod cover_lru;
 pub mod devices;
 pub mod discover;
 pub mod favorites;
 pub mod folders;
 pub mod genres;
 pub mod home;
+pub mod images;
 pub mod library_scan;
 pub mod login;
 pub mod nav;
@@ -52,6 +55,8 @@ pub mod tracks;
 mod sharing_view_tests;
 #[cfg(test)]
 pub mod test_window;
+
+pub const MAX_RATING: u8 = 5;
 
 #[derive(Clone)]
 pub struct Context {
@@ -156,6 +161,29 @@ pub fn clamp_i32(value: u64) -> i32 {
     i32::try_from(value).unwrap_or(i32::MAX)
 }
 
+pub fn sort_order(descending: bool) -> SortOrder {
+    match descending {
+        true => SortOrder::Desc,
+        false => SortOrder::Asc,
+    }
+}
+
+pub fn time_based_id() -> String {
+    let nanos = std::time::SystemTime::now()
+        .duration_since(std::time::UNIX_EPOCH)
+        .map(|elapsed| elapsed.as_nanos())
+        .unwrap_or_default();
+    format!("{nanos:x}")
+}
+
+pub fn slint_index(index: usize) -> i32 {
+    i32::try_from(index).unwrap_or_default()
+}
+
+pub fn rating_stars(rating: i32) -> u8 {
+    u8::try_from(rating.clamp(0, i32::from(MAX_RATING))).unwrap_or_default()
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -165,5 +193,24 @@ mod tests {
         assert_eq!(format_duration(0), "0:00");
         assert_eq!(format_duration(61_000), "1:01");
         assert_eq!(format_duration(3_723_000), "1:02:03");
+    }
+
+    #[test]
+    fn given_a_rating_outside_the_star_range_it_is_clamped_to_zero_or_five_stars() {
+        assert_eq!(rating_stars(-1), 0);
+        assert_eq!(rating_stars(3), 3);
+        assert_eq!(rating_stars(9), 5);
+    }
+
+    #[test]
+    fn given_a_time_based_id_it_is_a_hexadecimal_timestamp() {
+        let id = time_based_id();
+        assert!(u128::from_str_radix(&id, 16).is_ok_and(|nanos| nanos > 0));
+    }
+
+    #[test]
+    fn given_an_index_beyond_slint_range_it_falls_back_to_the_first_row() {
+        assert_eq!(slint_index(7), 7);
+        assert_eq!(slint_index(usize::MAX), 0);
     }
 }

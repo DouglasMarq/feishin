@@ -1,12 +1,15 @@
 use std::sync::Arc;
 
 use anyhow::{Result, anyhow};
-use feishin_api::MusicServer;
+use feishin_api::{Credential, MusicServer};
 use feishin_core::model::{ServerConfig, ServerType};
 use feishin_storage::feishin_import::ImportedServer;
 use slint::ComponentHandle;
 
-use super::{AppState, AppWindow, Context, LoginState, Page, ServerKind, on_ui, sharing, tracks};
+use super::{
+    AppState, AppWindow, Context, LoginState, Page, ServerKind, on_ui, sharing, time_based_id,
+    tracks,
+};
 use crate::controller::Command;
 
 fn server_type(kind: ServerKind) -> ServerType {
@@ -15,14 +18,6 @@ fn server_type(kind: ServerKind) -> ServerType {
         ServerKind::Subsonic => ServerType::Subsonic,
         ServerKind::Jellyfin => ServerType::Jellyfin,
     }
-}
-
-fn new_server_id() -> String {
-    let nanos = std::time::SystemTime::now()
-        .duration_since(std::time::UNIX_EPOCH)
-        .map(|elapsed| elapsed.as_nanos())
-        .unwrap_or_default();
-    format!("{nanos:x}")
 }
 
 pub fn normalize_url(input: &str) -> Option<String> {
@@ -37,6 +32,21 @@ pub fn normalize_url(input: &str) -> Option<String> {
 fn host_of(url: &str) -> String {
     let rest = url.split_once("://").map_or(url, |(_, rest)| rest);
     rest.split('/').next().unwrap_or(rest).to_owned()
+}
+
+pub fn enter_session(
+    ctx: &Context,
+    server: &Arc<dyn MusicServer>,
+    config: ServerConfig,
+    credential: Option<Credential>,
+    others: Vec<ImportedServer>,
+) {
+    ctx.session.set(Some(Arc::clone(server)));
+    ctx.send(Command::Connected {
+        config,
+        credential,
+        others,
+    });
 }
 
 pub fn enter_main(window: &AppWindow, server: &Arc<dyn MusicServer>) {
@@ -73,12 +83,7 @@ async fn login(
     password: String,
 ) -> Result<Arc<dyn MusicServer>> {
     let (server, credential) = ctx.connector.login(config.clone(), &password).await?;
-    ctx.session.set(Some(Arc::clone(&server)));
-    ctx.send(Command::Connected {
-        config,
-        credential: Some(credential),
-        others: Vec::new(),
-    });
+    enter_session(ctx, &server, config, Some(credential), Vec::new());
     Ok(server)
 }
 
@@ -106,18 +111,13 @@ async fn import(ctx: &Context) -> Result<Arc<dyn MusicServer>> {
             imported.len()
         ))
     })?;
-    ctx.session.set(Some(Arc::clone(&server)));
-    ctx.send(Command::Connected {
-        config,
-        credential: None,
-        others: imported,
-    });
+    enter_session(ctx, &server, config, None, imported);
     Ok(server)
 }
 
 fn config_from_form(state: &LoginState<'_>, url: String) -> ServerConfig {
     ServerConfig {
-        id: new_server_id(),
+        id: time_based_id(),
         name: host_of(&url),
         server_type: server_type(state.get_server_type()),
         url,
@@ -216,6 +216,44 @@ mod tests {
         };
         assert_eq!(credential, Some(demo_credential()));
         assert!(ctx.session.get().is_some());
+    }
+
+    #[tokio::test]
+    async fn given_an_entered_session_the_server_is_current_and_the_controller_learns_the_others() {
+        let directory = tempfile::tempdir().unwrap();
+        let (commands, mut received) = mpsc::unbounded_channel();
+        let ctx = Context {
+            rt: tokio::runtime::Handle::current(),
+            commands,
+            session: Session::default(),
+            store: Arc::new(JsonStore::new(directory.path())),
+            connector: Arc::new(DemoConnector::default()),
+            covers: Arc::new(DemoCovers),
+            remote: crate::remote::Remote::default(),
+        };
+        let server: Arc<dyn MusicServer> = Arc::new(FakeServer::new(3));
+        let config = FakeServer::config_for_demo();
+        let other = ImportedServer {
+            config: config.clone(),
+            credential: None,
+        };
+
+        enter_session(&ctx, &server, config.clone(), None, vec![other.clone()]);
+
+        assert!(
+            ctx.session
+                .get()
+                .is_some_and(|current| current.config().id == config.id)
+        );
+        let Some(Command::Connected {
+            config: connected,
+            credential,
+            others,
+        }) = received.recv().await
+        else {
+            panic!("expected Connected");
+        };
+        assert_eq!((connected, credential, others), (config, None, vec![other]));
     }
 
     #[test]

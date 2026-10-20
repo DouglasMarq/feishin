@@ -6,6 +6,8 @@ use super::delivery::Cancelled;
 use super::pages::PageNumber;
 use super::runner::StreamRunner;
 
+const MAX_RETRY_DOUBLINGS: u32 = 8;
+
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct RetryPolicy {
     pub attempts: u32,
@@ -19,7 +21,7 @@ impl RetryPolicy {
     };
 
     fn delay_after(self, failed_attempts: u32) -> Duration {
-        let doublings = failed_attempts.saturating_sub(1).min(8);
+        let doublings = failed_attempts.saturating_sub(1).min(MAX_RETRY_DOUBLINGS);
         self.first_delay.saturating_mul(1 << doublings)
     }
 }

@@ -1,6 +1,5 @@
 mod actions;
 mod card;
-mod cover_cache;
 mod model;
 mod requests;
 

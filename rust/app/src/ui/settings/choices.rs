@@ -131,8 +131,8 @@ pub(super) fn replay_gain_setting(choice: ReplayGain) -> ReplayGainSetting {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::ui::settings::display::slint_index;
     use crate::ui::settings::test_support::device;
+    use crate::ui::slint_index;
 
     #[test]
     fn bitrates_offer_original_and_keep_custom_values() {

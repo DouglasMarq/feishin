@@ -1,5 +1,5 @@
 import { Button, ComboBox, Switch } from "std-widgets.slint";
-import { Theme } from "theme.slint";
+import { Behaviour, Theme } from "theme.slint";
 
 export global Tooltip {
     out property <string> text;
@@ -78,7 +78,7 @@ export component TooltipAnchor {
     }
 
     Timer {
-        interval: 450ms;
+        interval: Behaviour.tooltip-delay;
         running: root.wanted && !root.shown && !root.active;
         triggered => {
             root.open();
@@ -321,7 +321,7 @@ export component Bar inherits Rectangle {
     }
 
     settle-timer := Timer {
-        interval: 1500ms;
+        interval: Behaviour.bar-settle-timeout;
         running: root.settling;
         triggered => {
             root.settling = false;
@@ -335,7 +335,7 @@ export component Bar inherits Rectangle {
     }
 
     scroll-timer := Timer {
-        interval: 800ms;
+        interval: Behaviour.bar-scroll-timeout;
         running: root.scrolling;
         triggered => {
             root.scrolling = false;
