@@ -33,8 +33,8 @@ impl Controller {
         self.update_media_status();
     }
 
-    pub(super) fn set_media_live_stream(&mut self, live: bool) {
-        if let Err(error) = self.deps.media.set_live_stream(live) {
+    pub(super) fn set_media_live_stream(&mut self, is_live: bool) {
+        if let Err(error) = self.deps.media.set_live_stream(is_live) {
             tracing::debug!("media session live stream: {error:#}");
         }
     }

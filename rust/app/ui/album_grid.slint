@@ -12,7 +12,7 @@ export struct AlbumGridCard {
     year: string,
     cover: image,
     has-cover: bool,
-    loaded: bool,
+    is-loaded: bool,
 }
 
 export struct AlbumGridRow {
@@ -30,7 +30,7 @@ export component AlbumGridCardView inherits Rectangle {
     height: self.width + 52px;
 
     ContextMenuArea {
-        enabled: root.card.loaded;
+        enabled: root.card.is-loaded;
 
         Menu {
             MenuItem {
@@ -65,7 +65,7 @@ export component AlbumGridCardView inherits Rectangle {
 
             MenuItem {
                 title: ShareState.menu-title;
-                enabled: ShareState.available && !ShareState.busy;
+                enabled: ShareState.is-available && !ShareState.is-busy;
                 activated => {
                     ShareState.share(ShareKind.album, root.card.id, root.card.name);
                 }
@@ -104,7 +104,7 @@ export component AlbumGridCardView inherits Rectangle {
                 }
 
                 touch := TouchArea {
-                    enabled: root.card.loaded;
+                    enabled: root.card.is-loaded;
                     mouse-cursor: pointer;
                     clicked => {
                         root.open();
@@ -112,7 +112,7 @@ export component AlbumGridCardView inherits Rectangle {
 
                     TooltipAnchor {
                         text: @tr("Open {}", root.card.name);
-                        hovered: touch.has-hover;
+                        is-hovered: touch.has-hover;
                     }
 
                     if touch.has-hover: Rectangle {
@@ -137,7 +137,7 @@ export component AlbumGridCardView inherits Rectangle {
 
                             TooltipAnchor {
                                 text: @tr("Play");
-                                hovered: play-touch.has-hover;
+                                is-hovered: play-touch.has-hover;
                             }
 
                             play-touch := TouchArea {
@@ -151,7 +151,7 @@ export component AlbumGridCardView inherits Rectangle {
                 }
             }
 
-            if root.card.loaded: VerticalLayout {
+            if root.card.is-loaded: VerticalLayout {
                 spacing: 4px;
 
                 name-text := Text {
@@ -169,7 +169,7 @@ export component AlbumGridCardView inherits Rectangle {
 
                     TooltipAnchor {
                         text: @tr("Open {}", root.card.name);
-                        hovered: name-touch.has-hover;
+                        is-hovered: name-touch.has-hover;
                     }
                 }
 
@@ -181,7 +181,7 @@ export component AlbumGridCardView inherits Rectangle {
                 }
             }
 
-            if !root.card.loaded: VerticalLayout {
+            if !root.card.is-loaded: VerticalLayout {
                 spacing: 10px;
                 padding-top: 4px;
                 alignment: start;

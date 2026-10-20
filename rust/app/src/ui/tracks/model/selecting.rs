@@ -24,9 +24,9 @@ impl ListState {
 }
 
 impl TracksModel {
-    pub fn select(&self, index: usize, toggle: bool, extend: bool) -> usize {
+    pub fn select(&self, index: usize, is_toggling: bool, is_extending: bool) -> usize {
         self.change_selection(Some(index), |selection, _| {
-            selection.click(index, toggle, extend)
+            selection.click(index, is_toggling, is_extending)
         })
     }
 

@@ -40,7 +40,7 @@ fn show_result(
         Err(error) => {
             update_current(|current| current.id.clear());
             let state = window.global::<ArtistDetailState>();
-            state.set_loading(false);
+            state.set_is_loading(false);
             state.set_error(tr!("Could not load the artist: {}", error).into());
         }
     }
@@ -51,7 +51,7 @@ pub fn load(window: &AppWindow, context: &Context, artist_id: &str) {
         return;
     };
     clear(window);
-    window.global::<ArtistDetailState>().set_loading(true);
+    window.global::<ArtistDetailState>().set_is_loading(true);
     let Some(server) = context.session.get() else {
         return;
     };

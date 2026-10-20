@@ -9,7 +9,7 @@ pub struct CardData {
     pub title: String,
     pub subtitle: String,
     pub cover_id: Option<String>,
-    pub favorite: bool,
+    pub is_favorite: bool,
 }
 
 pub struct CardPage {
@@ -44,7 +44,7 @@ pub fn album_card(album: &Album) -> CardData {
         title: album.name.clone(),
         subtitle: album_artist_names(album),
         cover_id: album.cover_art_id.clone(),
-        favorite: album.is_favorite,
+        is_favorite: album.is_favorite,
     }
 }
 
@@ -54,7 +54,7 @@ pub fn artist_card(artist: &Artist) -> CardData {
         title: artist.name.clone(),
         subtitle: album_count_label(artist.album_count),
         cover_id: artist.cover_art_id.clone(),
-        favorite: artist.is_favorite,
+        is_favorite: artist.is_favorite,
     }
 }
 
@@ -144,7 +144,7 @@ mod tests {
             (
                 card.subtitle.as_str(),
                 card.cover_id.as_deref(),
-                card.favorite
+                card.is_favorite
             ),
             ("Ada", Some("c"), true)
         );

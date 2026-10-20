@@ -83,7 +83,7 @@ export component TracksView inherits Rectangle {
 
                         MenuItem {
                             title: ShareState.menu-title;
-                            enabled: ShareState.available && !ShareState.busy && TracksState.selected-count > 0;
+                            enabled: ShareState.is-available && !ShareState.is-busy && TracksState.selected-count > 0;
                             activated => {
                                 ShareState.share-selected-tracks();
                             }
@@ -201,7 +201,7 @@ export component TracksView inherits Rectangle {
                     }
                 }
 
-                if !TracksState.loading && TracksState.total == 0: Text {
+                if !TracksState.is-loading && TracksState.total == 0: Text {
                     text: @tr("No tracks found");
                     color: Theme.muted;
                     horizontal-alignment: center;

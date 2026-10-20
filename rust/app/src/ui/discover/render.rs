@@ -40,7 +40,7 @@ fn render_sections_of(window: &AppWindow, model: &DiscoverModel) {
     state.set_country_index(country_index(sections.chart_country.as_deref()));
     state.set_moods(ModelRc::new(VecModel::from(moods)));
     state.set_mood_index(sections.mood.map_or(-1, |mood| clamp_i32(mood as u64)));
-    state.set_loading(sections.is_loading());
+    state.set_is_loading(sections.is_loading());
     state.set_error(
         sections
             .error()
@@ -96,7 +96,7 @@ fn render_page_of(window: &AppWindow, model: &DiscoverModel) {
     state.set_page_kind(target.map(|target| target.page_kind()).unwrap_or_default());
     state.set_page_title(page.title.as_str().into());
     state.set_page_subtitle(page.subtitle.as_str().into());
-    state.set_page_loading(page.loading);
+    state.set_is_page_loading(page.is_loading);
     state.set_page_error(
         page.error
             .as_deref()
@@ -104,5 +104,5 @@ fn render_page_of(window: &AppWindow, model: &DiscoverModel) {
             .unwrap_or_default()
             .into(),
     );
-    state.set_page_has_link(target.and_then(|target| target.web_url()).is_some());
+    state.set_has_page_link(target.and_then(|target| target.web_url()).is_some());
 }

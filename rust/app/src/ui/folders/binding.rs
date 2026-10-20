@@ -62,8 +62,8 @@ fn show_song_page(
             with_model(window, |model| model.apply_song_page(request, page.items));
         }
         Err(error) => {
-            let current = with_model(window, |model| model.song_page_failed(request));
-            if current == Some(true) {
+            let is_current = with_model(window, |model| model.song_page_failed(request));
+            if is_current == Some(true) {
                 show_status(window, &tr!("Could not load the folder: {}", error));
             }
         }

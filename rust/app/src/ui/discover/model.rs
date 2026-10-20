@@ -126,7 +126,7 @@ impl DiscoverModel {
         }
     }
 
-    pub fn set_card_visible(&self, shelf: usize, card: usize, visible: bool) {
+    pub fn set_card_visible(&self, shelf: usize, card: usize, is_visible: bool) {
         let card_id = self
             .slots
             .borrow()
@@ -139,7 +139,7 @@ impl DiscoverModel {
         let evicted = self
             .card_covers
             .borrow_mut()
-            .set_visible((shelf, card_id), visible);
+            .set_visible((shelf, card_id), is_visible);
         for (evicted_shelf, evicted_id) in evicted {
             self.update_card(evicted_shelf, &evicted_id, None);
         }

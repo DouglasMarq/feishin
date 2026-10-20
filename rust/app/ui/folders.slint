@@ -27,7 +27,7 @@ export global FoldersState {
     in property <string> folder-id;
     in property <string> name;
     in property <string> summary;
-    in property <bool> loading;
+    in property <bool> is-loading;
     in property <string> error;
     callback load(detail-id: string);
     callback open(folder-id: string, name: string);
@@ -45,26 +45,26 @@ global FolderColumns {
 
 component CrumbLink inherits Rectangle {
     in property <FolderCrumb> crumb;
-    in property <bool> current;
+    in property <bool> is-current;
     width: label.preferred-width + 8px;
 
     label := Text {
         x: 4px;
         text: root.crumb.name;
-        color: root.current ? Theme.foreground : (touch.has-hover ? Theme.foreground : Theme.muted);
-        font-weight: root.current ? 600 : 400;
+        color: root.is-current ? Theme.foreground : (touch.has-hover ? Theme.foreground : Theme.muted);
+        font-weight: root.is-current ? 600 : 400;
         vertical-alignment: center;
     }
 
     TooltipAnchor {
-        text: root.current ? @tr("You are here: {}", root.crumb.name) : @tr("Go back to {}", root.crumb.name);
-        hovered: touch.has-hover;
+        text: root.is-current ? @tr("You are here: {}", root.crumb.name) : @tr("Go back to {}", root.crumb.name);
+        is-hovered: touch.has-hover;
     }
 
     touch := TouchArea {
-        mouse-cursor: root.current ? default : pointer;
+        mouse-cursor: root.is-current ? default : pointer;
         clicked => {
-            if (!root.current) {
+            if (!root.is-current) {
                 AppState.navigate(Route.folders, root.crumb.id);
             }
         }
@@ -87,7 +87,7 @@ component Breadcrumbs inherits HorizontalLayout {
 
         CrumbLink {
             crumb: crumb;
-            current: crumb-index == FoldersState.crumbs.length - 1;
+            is-current: crumb-index == FoldersState.crumbs.length - 1;
         }
     }
 }
@@ -99,7 +99,7 @@ component FolderRowView inherits Rectangle {
 
     TooltipAnchor {
         text: @tr("Open {}", root.item.name);
-        hovered: touch.has-hover;
+        is-hovered: touch.has-hover;
     }
 
     touch := TouchArea {
@@ -224,7 +224,7 @@ component SongMenu inherits ContextMenuArea {
 
         MenuItem {
             title: ShareState.menu-title;
-            enabled: ShareState.available && !ShareState.busy;
+            enabled: ShareState.is-available && !ShareState.is-busy;
             activated => {
                 ShareState.share(ShareKind.song, root.item.track.id, root.item.track.title);
             }
@@ -253,24 +253,24 @@ component SongMenu inherits ContextMenuArea {
 component SongRowView inherits Rectangle {
     in property <FolderListRow> item;
     in property <int> row-index;
-    property <bool> playing: root.item.track.loaded && root.item.track.id == PlayerState.song-id;
+    property <bool> is-playing: root.item.track.is-loaded && root.item.track.id == PlayerState.song-id;
     height: 36px;
     background: touch.has-hover ? Theme.hover : transparent;
 
     touch := TouchArea {
         double-clicked => {
-            if (root.item.track.loaded) {
+            if (root.item.track.is-loaded) {
                 FoldersState.play-row(root.row-index);
             }
         }
 
         TooltipAnchor {
-            text: root.item.track.loaded ? @tr("Double-click to play") : "";
-            hovered: touch.has-hover;
+            text: root.item.track.is-loaded ? @tr("Double-click to play") : "";
+            is-hovered: touch.has-hover;
         }
 
         SongMenu {
-            enabled: root.item.track.loaded;
+            enabled: root.item.track.is-loaded;
             item: root.item;
             row-index: root.row-index;
 
@@ -280,7 +280,7 @@ component SongRowView inherits Rectangle {
                 Rectangle {
                     width: FolderColumns.index;
 
-                    if !touch.has-hover && !root.playing: Text {
+                    if !touch.has-hover && !root.is-playing: Text {
                         x: 0;
                         width: parent.width - 16px;
                         text: root.item.track.index;
@@ -289,7 +289,7 @@ component SongRowView inherits Rectangle {
                         vertical-alignment: center;
                     }
 
-                    if !touch.has-hover && root.playing: Icon {
+                    if !touch.has-hover && root.is-playing: Icon {
                         x: parent.width - 16px - self.width;
                         path: Icons.note;
                         color: Theme.primary;
@@ -297,7 +297,7 @@ component SongRowView inherits Rectangle {
                         height: 16px;
                     }
 
-                    if touch.has-hover && root.item.track.loaded: IconButton {
+                    if touch.has-hover && root.item.track.is-loaded: IconButton {
                         x: parent.width - 12px - self.width;
                         y: (parent.height - self.height) / 2;
                         width: 28px;
@@ -311,13 +311,13 @@ component SongRowView inherits Rectangle {
                     }
                 }
 
-                if root.item.track.loaded: Cell {
+                if root.item.track.is-loaded: Cell {
                     horizontal-stretch: 1;
                     text: root.item.track.title;
-                    text-color: root.playing ? Theme.primary : Theme.foreground;
+                    text-color: root.is-playing ? Theme.primary : Theme.foreground;
                 }
 
-                if !root.item.track.loaded: Rectangle {
+                if !root.item.track.is-loaded: Rectangle {
                     horizontal-stretch: 1;
 
                     Skeleton {
@@ -329,7 +329,7 @@ component SongRowView inherits Rectangle {
                 LinkCell {
                     width: FolderColumns.artist;
                     text: root.item.track.artists;
-                    enabled: root.item.track.artist-id != "";
+                    is-enabled: root.item.track.artist-id != "";
                     clicked => {
                         AppState.navigate(Route.artist-detail, root.item.track.artist-id);
                     }
@@ -338,7 +338,7 @@ component SongRowView inherits Rectangle {
                 LinkCell {
                     width: FolderColumns.album;
                     text: root.item.track.album;
-                    enabled: root.item.track.album-id != "";
+                    is-enabled: root.item.track.album-id != "";
                     clicked => {
                         AppState.navigate(Route.album-detail, root.item.track.album-id);
                     }
@@ -362,7 +362,7 @@ component FolderActions inherits HorizontalLayout {
         height: 40px;
         icon: Icons.play;
         icon-size: 24px;
-        enabled: !FoldersState.loading;
+        is-enabled: !FoldersState.is-loading;
         tooltip: @tr("Play every song in {} and its subfolders", FoldersState.name);
         clicked => {
             FoldersState.play-folder(FoldersState.folder-id, FolderPlayMode.now);
@@ -374,7 +374,7 @@ component FolderActions inherits HorizontalLayout {
         height: 40px;
         icon: Icons.shuffle;
         icon-size: 24px;
-        enabled: !FoldersState.loading;
+        is-enabled: !FoldersState.is-loading;
         tooltip: @tr("Shuffle every song in {} and its subfolders", FoldersState.name);
         clicked => {
             FoldersState.play-folder(FoldersState.folder-id, FolderPlayMode.shuffle);
@@ -386,7 +386,7 @@ component FolderActions inherits HorizontalLayout {
         height: 40px;
         icon: Icons.next;
         icon-size: 24px;
-        enabled: !FoldersState.loading;
+        is-enabled: !FoldersState.is-loading;
         tooltip: @tr("Play {} next", FoldersState.name);
         clicked => {
             FoldersState.play-folder(FoldersState.folder-id, FolderPlayMode.next);
@@ -398,7 +398,7 @@ component FolderActions inherits HorizontalLayout {
         height: 40px;
         icon: Icons.queue;
         icon-size: 24px;
-        enabled: !FoldersState.loading;
+        is-enabled: !FoldersState.is-loading;
         tooltip: @tr("Add {} to the queue", FoldersState.name);
         clicked => {
             FoldersState.play-folder(FoldersState.folder-id, FolderPlayMode.last);
@@ -469,7 +469,7 @@ export component FoldersView inherits Rectangle {
                 }
             }
 
-            if FoldersState.loading && FoldersState.rows.length == 0: VerticalLayout {
+            if FoldersState.is-loading && FoldersState.rows.length == 0: VerticalLayout {
                 alignment: start;
 
                 for placeholder in 8: Rectangle {
@@ -482,7 +482,7 @@ export component FoldersView inherits Rectangle {
                 }
             }
 
-            if !FoldersState.loading && FoldersState.rows.length == 0: Text {
+            if !FoldersState.is-loading && FoldersState.rows.length == 0: Text {
                 text: FoldersState.error != "" ? FoldersState.error : @tr("This folder is empty");
                 color: Theme.muted;
                 horizontal-alignment: center;

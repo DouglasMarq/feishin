@@ -10,11 +10,11 @@ export struct AccentPreset {
 }
 
 export global AppearanceState {
-    in-out property <bool> follow-system;
+    in-out property <bool> is-following-system;
     in-out property <int> theme-index;
     in-out property <int> dark-theme-index;
     in-out property <int> light-theme-index;
-    in-out property <bool> use-theme-accent: true;
+    in-out property <bool> is-using-theme-accent: true;
     in-out property <color> accent: #3574fc;
     in-out property <string> accent-text: "#3574fc";
     in property <SystemScheme> system-scheme;
@@ -49,11 +49,11 @@ component PaletteSwatches inherits VerticalLayout {
 
 component ThemeListItem inherits Rectangle {
     in property <ThemePalette> palette;
-    in property <bool> current;
+    in property <bool> is-current;
     callback clicked();
     height: 32px;
     border-radius: 4px;
-    background: root.current ? Theme.selected : (touch.has-hover ? Theme.hover : transparent);
+    background: root.is-current ? Theme.selected : (touch.has-hover ? Theme.hover : transparent);
 
     HorizontalLayout {
         padding-left: 10px;
@@ -75,8 +75,8 @@ component ThemeListItem inherits Rectangle {
     }
 
     TooltipAnchor {
-        text: root.current ? @tr("{} (current theme)", root.palette.name) : @tr("Use {}", root.palette.name);
-        hovered: touch.has-hover;
+        text: root.is-current ? @tr("{} (current theme)", root.palette.name) : @tr("Use {}", root.palette.name);
+        is-hovered: touch.has-hover;
     }
 
     touch := TouchArea {
@@ -134,8 +134,8 @@ export component ThemePicker inherits Rectangle {
     }
 
     TooltipAnchor {
-        text: root.palette.dark ? @tr("{}: {} (dark)", root.label, root.palette.name) : @tr("{}: {} (light)", root.label, root.palette.name);
-        hovered: touch.has-hover;
+        text: root.palette.is-dark ? @tr("{}: {} (dark)", root.label, root.palette.name) : @tr("{}: {} (light)", root.label, root.palette.name);
+        is-hovered: touch.has-hover;
     }
 
     touch := TouchArea {
@@ -169,13 +169,13 @@ export component ThemePicker inherits Rectangle {
                 }
 
                 for entry[index] in Palettes.all: VerticalLayout {
-                    if index > 0 && !entry.dark && Palettes.all[index - 1].dark: GroupHeading {
+                    if index > 0 && !entry.is-dark && Palettes.all[index - 1].is-dark: GroupHeading {
                         text: @tr("LIGHT THEMES");
                     }
 
                     ThemeListItem {
                         palette: entry;
-                        current: index == root.selected;
+                        is-current: index == root.selected;
                         clicked => {
                             root.selected = index;
                             root.chosen();
@@ -190,14 +190,14 @@ export component ThemePicker inherits Rectangle {
 
 export component ToggleSwitch inherits Rectangle {
     in property <string> label;
-    in-out property <bool> checked;
+    in-out property <bool> is-checked;
     callback toggled();
     width: toggle.preferred-width;
     height: toggle.preferred-height;
 
     hover := TouchArea {
         toggle := Switch {
-            checked <=> root.checked;
+            checked <=> root.is-checked;
             toggled => {
                 root.toggled();
             }
@@ -205,31 +205,31 @@ export component ToggleSwitch inherits Rectangle {
     }
 
     TooltipAnchor {
-        text: root.checked ? @tr("{}: on", root.label) : @tr("{}: off", root.label);
-        hovered: hover.has-hover;
+        text: root.is-checked ? @tr("{}: on", root.label) : @tr("{}: off", root.label);
+        is-hovered: hover.has-hover;
     }
 }
 
 component AccentSwatch inherits Rectangle {
     in property <AccentPreset> preset;
-    in property <bool> current;
-    in property <bool> enabled;
+    in property <bool> is-current;
+    in property <bool> is-enabled;
     callback clicked();
     width: 24px;
     height: 24px;
     border-radius: 12px;
     background: root.preset.swatch;
-    border-width: root.current ? 2px : 0px;
+    border-width: root.is-current ? 2px : 0px;
     border-color: Theme.foreground;
-    opacity: root.enabled ? 1 : 0.4;
+    opacity: root.is-enabled ? 1 : 0.4;
 
     TooltipAnchor {
-        text: root.current ? @tr("Accent color {} (selected)", root.preset.name) : (root.enabled ? @tr("Accent color {}", root.preset.name) : @tr("Accent color {} (theme accent in use)", root.preset.name));
-        hovered: touch.has-hover;
+        text: root.is-current ? @tr("Accent color {} (selected)", root.preset.name) : (root.is-enabled ? @tr("Accent color {}", root.preset.name) : @tr("Accent color {} (theme accent in use)", root.preset.name));
+        is-hovered: touch.has-hover;
     }
 
     touch := TouchArea {
-        enabled: root.enabled;
+        enabled: root.is-enabled;
         mouse-cursor: pointer;
         clicked => {
             root.clicked();
@@ -244,7 +244,7 @@ component AccentInput inherits Rectangle {
     hover := TouchArea {
         input := LineEdit {
             width: parent.width;
-            enabled: !AppearanceState.use-theme-accent;
+            enabled: !AppearanceState.is-using-theme-accent;
             placeholder-text: "#3574fc";
             text <=> AppearanceState.accent-text;
             accepted(text) => {
@@ -254,8 +254,8 @@ component AccentInput inherits Rectangle {
     }
 
     TooltipAnchor {
-        text: AppearanceState.use-theme-accent ? @tr("Custom accent color: {} (theme accent in use)", AppearanceState.accent-text) : @tr("Custom accent color: {}, press Enter to apply", AppearanceState.accent-text);
-        hovered: hover.has-hover;
+        text: AppearanceState.is-using-theme-accent ? @tr("Custom accent color: {} (theme accent in use)", AppearanceState.accent-text) : @tr("Custom accent color: {}, press Enter to apply", AppearanceState.accent-text);
+        is-hovered: hover.has-hover;
     }
 }
 
@@ -305,14 +305,14 @@ export component AppearanceOptions inherits VerticalLayout {
 
         ToggleSwitch {
             label: @tr("Follow system color scheme");
-            checked <=> AppearanceState.follow-system;
+            is-checked <=> AppearanceState.is-following-system;
             toggled => {
                 AppearanceState.changed();
             }
         }
     }
 
-    if !AppearanceState.follow-system: SettingRow {
+    if !AppearanceState.is-following-system: SettingRow {
         title: @tr("Theme");
         description: @tr("Colors used across the whole app.");
 
@@ -325,7 +325,7 @@ export component AppearanceOptions inherits VerticalLayout {
         }
     }
 
-    if AppearanceState.follow-system: SettingRow {
+    if AppearanceState.is-following-system: SettingRow {
         title: @tr("Dark theme");
         description: @tr("Used while the desktop prefers dark.");
 
@@ -338,7 +338,7 @@ export component AppearanceOptions inherits VerticalLayout {
         }
     }
 
-    if AppearanceState.follow-system: SettingRow {
+    if AppearanceState.is-following-system: SettingRow {
         title: @tr("Light theme");
         description: @tr("Used while the desktop prefers light.");
 
@@ -357,7 +357,7 @@ export component AppearanceOptions inherits VerticalLayout {
 
         ToggleSwitch {
             label: @tr("Use the theme accent color");
-            checked <=> AppearanceState.use-theme-accent;
+            is-checked <=> AppearanceState.is-using-theme-accent;
             toggled => {
                 AppearanceState.changed();
             }
@@ -366,13 +366,13 @@ export component AppearanceOptions inherits VerticalLayout {
 
     SettingRow {
         title: @tr("Accent color");
-        description: AppearanceState.use-theme-accent ? @tr("Turn off the theme accent color to pick your own.") : @tr("Pick a color, or type one as #rrggbb and press Enter.");
+        description: AppearanceState.is-using-theme-accent ? @tr("Turn off the theme accent color to pick your own.") : @tr("Pick a color, or type one as #rrggbb and press Enter.");
 
         for preset in AppearanceState.accent-presets: AccentSwatch {
             y: (parent.height - self.height) / 2;
             preset: preset;
-            enabled: !AppearanceState.use-theme-accent;
-            current: !AppearanceState.use-theme-accent && AppearanceState.accent == preset.swatch;
+            is-enabled: !AppearanceState.is-using-theme-accent;
+            is-current: !AppearanceState.is-using-theme-accent && AppearanceState.accent == preset.swatch;
             clicked => {
                 AppearanceState.accent = preset.swatch;
                 AppearanceState.changed();

@@ -100,7 +100,7 @@ fn open_home(context: &Context) -> AppWindow {
     window
 }
 
-fn shelves_loaded(window: &AppWindow) -> bool {
+fn has_loaded_shelves(window: &AppWindow) -> bool {
     with_home_model(window, |model| {
         (0..4).all(|shelf| model.cards(shelf).len() == SHELF_SIZE)
             && model.cards(0).first().is_some_and(|card| card.has_cover)
@@ -110,13 +110,13 @@ fn shelves_loaded(window: &AppWindow) -> bool {
 
 fn wait_for_shelves(window: &AppWindow, screen: &Screen) {
     let deadline = Instant::now() + Duration::from_secs(10);
-    while !shelves_loaded(window) && Instant::now() < deadline {
+    while !has_loaded_shelves(window) && Instant::now() < deadline {
         screen.pump_briefly();
     }
     for _ in 0..20 {
         screen.pump_briefly();
     }
-    assert!(shelves_loaded(window), "home shelves did not load");
+    assert!(has_loaded_shelves(window), "home shelves did not load");
 }
 
 fn assert_first_shelf_matches_server(cards: &[HomeAlbum], runtime: &Runtime, server: &FakeServer) {

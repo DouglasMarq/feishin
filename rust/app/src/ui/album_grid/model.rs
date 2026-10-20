@@ -100,7 +100,7 @@ impl GridState {
             year: data.year,
             has_cover: cover.is_some(),
             cover: cover.unwrap_or_default(),
-            loaded: true,
+            is_loaded: true,
         }
     }
 
@@ -328,7 +328,7 @@ mod tests {
     fn assert_missing_page_is_requested_once(log: &RequestLog, model: &AlbumGridModel) {
         let row = model.row_data(15).expect("row");
         assert_eq!(row.cards.row_count(), 4);
-        assert!(row.cards.iter().all(|card| !card.loaded));
+        assert!(row.cards.iter().all(|card| !card.is_loaded));
         model.row_data(16);
         assert!(matches!(
             drain(log).as_slice(),
@@ -357,7 +357,11 @@ mod tests {
             row.cards.row_data(0).map(|card| card.id),
             Some("album-60".into())
         );
-        assert!(row.cards.iter().all(|card| card.loaded && !card.has_cover));
+        assert!(
+            row.cards
+                .iter()
+                .all(|card| card.is_loaded && !card.has_cover)
+        );
         let covers = drain(log)
             .iter()
             .filter(|request| matches!(request, GridRequest::Cover { .. }))
@@ -417,12 +421,12 @@ mod tests {
             }
         }
         let first = model.row_data(0).expect("row");
-        assert!(first.cards.iter().all(|card| !card.loaded));
+        assert!(first.cards.iter().all(|card| !card.is_loaded));
         assert_eq!(requested_pages(&log), [0]);
         let kept = model.row_data(39 - CACHED_PAGES + 1).expect("row");
-        assert!(kept.cards.iter().all(|card| card.loaded));
+        assert!(kept.cards.iter().all(|card| card.is_loaded));
         let evicted = model.row_data(39 - CACHED_PAGES).expect("row");
-        assert!(evicted.cards.iter().all(|card| !card.loaded));
+        assert!(evicted.cards.iter().all(|card| !card.is_loaded));
     }
 
     #[test]
@@ -440,7 +444,7 @@ mod tests {
         assert_eq!(grown, PageApplied::TotalChanged(PAGE_SIZE * 10 - 1));
         assert_eq!(model.row_count(), 10);
         let first = model.row_data(0).expect("row");
-        assert!(first.cards.iter().all(|card| !card.loaded));
+        assert!(first.cards.iter().all(|card| !card.is_loaded));
         assert!(matches!(
             drain(&log).as_slice(),
             [GridRequest::Page {

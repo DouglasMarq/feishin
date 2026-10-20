@@ -20,9 +20,9 @@ export enum PlaylistPlayMode { now, next, last }
 
 export global PlaylistsState {
     in property <[PlaylistRow]> rows;
-    in property <bool> loading;
-    in property <bool> busy;
-    in-out property <bool> creating;
+    in property <bool> is-loading;
+    in property <bool> is-busy;
+    in-out property <bool> is-creating;
     in-out property <string> delete-id;
     in-out property <string> delete-name;
     callback load(string);
@@ -54,7 +54,7 @@ component PlaylistRowView inherits Rectangle {
 
     TooltipAnchor {
         text: @tr("Open {}", root.item.name);
-        hovered: touch.has-hover;
+        is-hovered: touch.has-hover;
     }
 
     touch := TouchArea {
@@ -88,7 +88,7 @@ component PlaylistRowView inherits Rectangle {
 
                 MenuItem {
                     title: ShareState.menu-title;
-                    enabled: ShareState.available && !ShareState.busy;
+                    enabled: ShareState.is-available && !ShareState.is-busy;
                     activated => {
                         ShareState.share(ShareKind.playlist, root.item.id, root.item.name);
                     }
@@ -231,7 +231,7 @@ export component PlaylistsView inherits Rectangle {
             }
 
             Text {
-                text: PlaylistsState.loading ? "" : PlaylistsState.rows.length;
+                text: PlaylistsState.is-loading ? "" : PlaylistsState.rows.length;
                 color: Theme.muted;
                 vertical-alignment: center;
             }
@@ -243,9 +243,9 @@ export component PlaylistsView inherits Rectangle {
             TooltipButton {
                 text: @tr("New playlist");
                 tooltip: @tr("Create an empty playlist");
-                primary: true;
+                is-primary: true;
                 clicked => {
-                    PlaylistsState.creating = true;
+                    PlaylistsState.is-creating = true;
                 }
             }
         }
@@ -297,7 +297,7 @@ export component PlaylistsView inherits Rectangle {
         }
 
         Rectangle {
-            if PlaylistsState.loading && PlaylistsState.rows.length == 0: VerticalLayout {
+            if PlaylistsState.is-loading && PlaylistsState.rows.length == 0: VerticalLayout {
                 alignment: start;
 
                 for placeholder in 6: SkeletonRow { }
@@ -309,7 +309,7 @@ export component PlaylistsView inherits Rectangle {
                 }
             }
 
-            if !PlaylistsState.loading && PlaylistsState.rows.length == 0: Text {
+            if !PlaylistsState.is-loading && PlaylistsState.rows.length == 0: Text {
                 text: @tr("No playlists yet");
                 color: Theme.muted;
                 horizontal-alignment: center;
@@ -318,10 +318,10 @@ export component PlaylistsView inherits Rectangle {
         }
     }
 
-    if PlaylistsState.creating: NameDialog {
-        busy: PlaylistsState.busy;
+    if PlaylistsState.is-creating: NameDialog {
+        is-busy: PlaylistsState.is-busy;
         cancel => {
-            PlaylistsState.creating = false;
+            PlaylistsState.is-creating = false;
         }
         submit(name) => {
             PlaylistsState.create(name);
@@ -344,10 +344,10 @@ export component PlaylistsView inherits Rectangle {
         }
 
         DialogButtons {
-            confirm-text: PlaylistsState.busy ? @tr("Deleting...") : @tr("Delete");
+            confirm-text: PlaylistsState.is-busy ? @tr("Deleting...") : @tr("Delete");
             confirm-tooltip: @tr("Delete \"{}\"", PlaylistsState.delete-name);
-            confirm-enabled: !PlaylistsState.busy;
-            danger: true;
+            is-confirm-enabled: !PlaylistsState.is-busy;
+            is-danger: true;
             cancel => {
                 PlaylistsState.delete-id = "";
             }

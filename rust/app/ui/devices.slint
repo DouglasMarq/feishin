@@ -11,9 +11,9 @@ export global DevicesState {
     in property <[RemoteDevice]> devices;
     in property <string> active-id;
     in property <string> active-name;
-    in property <bool> controlling;
-    in property <bool> connecting;
-    in property <bool> approval-open;
+    in property <bool> is-controlling;
+    in property <bool> is-connecting;
+    in property <bool> is-approval-open;
     in property <string> approval-name;
     out property <string> icon: "M4 6h18V4H4c-1.1 0-2 .9-2 2v11H0v3h14v-3H4V6zm19 2h-6c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h6c.55 0 1-.45 1-1V9c0-.55-.45-1-1-1zm-1 9h-4v-7h4v7z";
     callback control-device(string);
@@ -27,12 +27,12 @@ export global DevicesState {
 export component TextAction inherits Rectangle {
     in property <string> text;
     in property <string> tooltip;
-    in property <bool> enabled: true;
+    in property <bool> is-enabled: true;
     callback clicked();
     accessible-role: button;
     accessible-label: root.text;
     accessible-action-default => {
-        if (root.enabled) {
+        if (root.is-enabled) {
             root.clicked();
         }
     }
@@ -41,8 +41,8 @@ export component TextAction inherits Rectangle {
     border-radius: 4px;
     border-width: 1px;
     border-color: Theme.border;
-    background: touch.has-hover && root.enabled ? Theme.hover : transparent;
-    opacity: root.enabled ? 1 : 0.5;
+    background: touch.has-hover && root.is-enabled ? Theme.hover : transparent;
+    opacity: root.is-enabled ? 1 : 0.5;
 
     label := Text {
         text: root.text;
@@ -53,7 +53,7 @@ export component TextAction inherits Rectangle {
     }
 
     touch := TouchArea {
-        enabled: root.enabled;
+        enabled: root.is-enabled;
         mouse-cursor: pointer;
         clicked => {
             root.clicked();
@@ -62,15 +62,15 @@ export component TextAction inherits Rectangle {
 
     TooltipAnchor {
         text: root.tooltip;
-        hovered: touch.has-hover;
+        is-hovered: touch.has-hover;
     }
 }
 
 component DeviceRow inherits Rectangle {
     in property <string> name;
-    in property <bool> active;
+    in property <bool> is-active;
     in property <string> tooltip;
-    in property <bool> show-action;
+    in property <bool> is-action-shown;
     in property <string> action-text;
     in property <string> action-tooltip;
     callback clicked();
@@ -88,7 +88,7 @@ component DeviceRow inherits Rectangle {
 
     TooltipAnchor {
         text: root.tooltip;
-        hovered: touch.has-hover;
+        is-hovered: touch.has-hover;
     }
 
     HorizontalLayout {
@@ -98,14 +98,14 @@ component DeviceRow inherits Rectangle {
 
         Text {
             text: root.name;
-            color: root.active ? Theme.primary : Theme.foreground;
-            font-weight: root.active ? 600 : 400;
+            color: root.is-active ? Theme.primary : Theme.foreground;
+            font-weight: root.is-active ? 600 : 400;
             vertical-alignment: center;
             overflow: elide;
             horizontal-stretch: 1;
         }
 
-        if root.show-action: TextAction {
+        if root.is-action-shown: TextAction {
             y: (parent.height - self.height) / 2;
             text: root.action-text;
             tooltip: root.action-tooltip;
@@ -126,14 +126,14 @@ export component DevicesButton inherits Rectangle {
 
         IconButton {
             icon: DevicesState.icon;
-            active: DevicesState.controlling;
-            tooltip: DevicesState.controlling ? @tr("Devices: controlling {}", DevicesState.active-name) : @tr("Devices: this computer");
+            is-active: DevicesState.is-controlling;
+            tooltip: DevicesState.is-controlling ? @tr("Devices: controlling {}", DevicesState.active-name) : @tr("Devices: this computer");
             clicked => {
                 menu.show();
             }
         }
 
-        if DevicesState.controlling: Text {
+        if DevicesState.is-controlling: Text {
             text: DevicesState.active-name;
             color: Theme.primary;
             font-size: 11px;
@@ -168,9 +168,9 @@ export component DevicesButton inherits Rectangle {
 
             DeviceRow {
                 name: @tr("This computer");
-                active: !DevicesState.controlling;
+                is-active: !DevicesState.is-controlling;
                 tooltip: @tr("Control the music playing on this computer");
-                show-action: DevicesState.controlling;
+                is-action-shown: DevicesState.is-controlling;
                 action-text: @tr("Move here");
                 action-tooltip: @tr("Move what is playing on {} to this computer", DevicesState.active-name);
                 clicked => {
@@ -183,9 +183,9 @@ export component DevicesButton inherits Rectangle {
 
             for device in DevicesState.devices: DeviceRow {
                 name: device.name;
-                active: DevicesState.controlling && DevicesState.active-id == device.id;
+                is-active: DevicesState.is-controlling && DevicesState.active-id == device.id;
                 tooltip: @tr("Control the music playing on {}", device.name);
-                show-action: !(DevicesState.controlling && DevicesState.active-id == device.id);
+                is-action-shown: !(DevicesState.is-controlling && DevicesState.active-id == device.id);
                 action-text: @tr("Move there");
                 action-tooltip: @tr("Move what is playing here to {}", device.name);
                 clicked => {
@@ -203,7 +203,7 @@ export component DevicesButton inherits Rectangle {
                 wrap: word-wrap;
             }
 
-            if DevicesState.connecting: Text {
+            if DevicesState.is-connecting: Text {
                 text: @tr("Connecting...");
                 color: Theme.muted;
                 font-size: 12px;

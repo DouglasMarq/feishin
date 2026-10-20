@@ -15,8 +15,8 @@ export struct HomeAlbum {
 export struct HomeShelf {
     title: string,
     albums: [HomeAlbum],
-    loading: bool,
-    refreshable: bool,
+    is-loading: bool,
+    is-refreshable: bool,
 }
 
 export global HomeState {
@@ -35,8 +35,8 @@ global HomeIcons {
 
 component AlbumCard inherits Rectangle {
     in property <HomeAlbum> album;
-    in property <bool> on-screen;
-    property <bool> wants-cover: root.on-screen && !root.album.has-cover && root.album.cover-id != "";
+    in property <bool> is-on-screen;
+    property <bool> wants-cover: root.is-on-screen && !root.album.has-cover && root.album.cover-id != "";
     callback cover-needed();
     width: 160px;
     height: 214px;
@@ -61,7 +61,7 @@ component AlbumCard inherits Rectangle {
 
     TooltipAnchor {
         text: @tr("Open {}", root.album.name);
-        hovered: card-touch.has-hover;
+        is-hovered: card-touch.has-hover;
     }
 
     Rectangle {
@@ -108,7 +108,7 @@ component AlbumCard inherits Rectangle {
 
             TooltipAnchor {
                 text: @tr("Play");
-                hovered: play-touch.has-hover;
+                is-hovered: play-touch.has-hover;
             }
 
             play-touch := TouchArea {
@@ -148,7 +148,7 @@ component AlbumCard inherits Rectangle {
 
         TooltipAnchor {
             text: root.album.artist-id != "" ? @tr("Go to {}", root.album.artist) : "";
-            hovered: artist-touch.has-hover;
+            is-hovered: artist-touch.has-hover;
         }
     }
 }
@@ -186,7 +186,7 @@ component SkeletonCard inherits Rectangle {
 component ShelfView inherits VerticalLayout {
     in property <HomeShelf> shelf;
     in property <int> index;
-    in property <bool> on-screen;
+    in property <bool> is-on-screen;
     property <length> stride: 176px;
     property <length> max-scroll: max(0px, strip.content-width - strip.width);
     spacing: 10px;
@@ -205,9 +205,9 @@ component ShelfView inherits VerticalLayout {
             overflow: elide;
         }
 
-        if root.shelf.refreshable: IconButton {
+        if root.shelf.is-refreshable: IconButton {
             icon: HomeIcons.refresh;
-            enabled: !root.shelf.loading;
+            is-enabled: !root.shelf.is-loading;
             tooltip: @tr("Refresh");
             clicked => {
                 HomeState.refresh(root.index);
@@ -216,7 +216,7 @@ component ShelfView inherits VerticalLayout {
 
         IconButton {
             icon: HomeIcons.left;
-            enabled: strip.content-x < 0;
+            is-enabled: strip.content-x < 0;
             tooltip: @tr("Scroll left");
             clicked => {
                 strip.content-x = min(0px, strip.content-x + strip.width * 0.8);
@@ -225,7 +225,7 @@ component ShelfView inherits VerticalLayout {
 
         IconButton {
             icon: HomeIcons.right;
-            enabled: -strip.content-x < root.max-scroll;
+            is-enabled: -strip.content-x < root.max-scroll;
             tooltip: @tr("Scroll right");
             clicked => {
                 strip.content-x = max(-root.max-scroll, strip.content-x - strip.width * 0.8);
@@ -245,21 +245,21 @@ component ShelfView inherits VerticalLayout {
             for album[album-index] in root.shelf.albums: AlbumCard {
                 x: album-index * root.stride;
                 album: album;
-                on-screen: root.on-screen && self.x + strip.content-x + self.width > 0 && self.x + strip.content-x < strip.width;
+                is-on-screen: root.is-on-screen && self.x + strip.content-x + self.width > 0 && self.x + strip.content-x < strip.width;
                 cover-needed => {
                     HomeState.cover-needed(root.index, album-index);
                 }
             }
         }
 
-        if root.shelf.loading && root.shelf.albums.length == 0: HorizontalLayout {
+        if root.shelf.is-loading && root.shelf.albums.length == 0: HorizontalLayout {
             alignment: start;
             spacing: root.stride - 160px;
 
             for _ in 8: SkeletonCard { }
         }
 
-        if !root.shelf.loading && root.shelf.albums.length == 0: Text {
+        if !root.shelf.is-loading && root.shelf.albums.length == 0: Text {
             x: 0;
             text: @tr("No albums");
             color: Theme.muted;
@@ -296,7 +296,7 @@ export component HomeView inherits Rectangle {
             for shelf[shelf-index] in HomeState.shelves: ShelfView {
                 shelf: shelf;
                 index: shelf-index;
-                on-screen: self.y + page.content-y + self.height > 0 && self.y + page.content-y < page.height;
+                is-on-screen: self.y + page.content-y + self.height > 0 && self.y + page.content-y < page.height;
             }
         }
     }

@@ -23,19 +23,22 @@ impl LocalServer {
 
 struct TrackAdapter<'local> {
     local: Option<&'local LocalServer>,
-    same_server: bool,
+    is_same_server: bool,
 }
 
 impl<'local> TrackAdapter<'local> {
     fn new(from: Option<&ServerKey>, local: Option<&'local LocalServer>) -> Self {
-        let same_server = from
+        let is_same_server = from
             .zip(local)
             .is_some_and(|(from, local)| *from == local.key);
-        Self { local, same_server }
+        Self {
+            local,
+            is_same_server,
+        }
     }
 
     fn adapt(&self, track: QueueTrack) -> Option<QueueTrack> {
-        match (track.source.is_server(), self.same_server, self.local) {
+        match (track.source.is_server(), self.is_same_server, self.local) {
             (false, _, _) => Some(track),
             (true, true, Some(local)) => Some(QueueTrack {
                 server_id: Arc::clone(&local.id),
@@ -108,17 +111,17 @@ pub fn adapt_payload(
         });
     }
     let current_kept = kept.iter().any(|item| Some(item.uid) == current_uid);
-    let everything_kept = kept.len() == original_count;
+    let is_everything_kept = kept.len() == original_count;
     Ok(AdoptedQueue {
         snapshot: QueueSnapshot {
             items: kept,
-            shuffled: shuffled.filter(|_| everything_kept),
+            shuffled: shuffled.filter(|_| is_everything_kept),
             current_uid: current_uid.filter(|_| current_kept),
             repeat,
             next_uid,
         },
         position_ms: if current_kept { payload.position_ms } else { 0 },
-        playing: payload.is_playing && current_kept,
+        is_playing: payload.is_playing && current_kept,
     })
 }
 
@@ -217,7 +220,7 @@ mod tests {
         assert_eq!(adopted.snapshot.items.len(), 2);
         assert_eq!(adopted.snapshot.current_uid, Some(2));
         assert_eq!(adopted.snapshot.repeat, RepeatMode::All);
-        assert_eq!((adopted.position_ms, adopted.playing), (30_000, true));
+        assert_eq!((adopted.position_ms, adopted.is_playing), (30_000, true));
     }
 
     #[test]
@@ -229,7 +232,7 @@ mod tests {
         .unwrap();
         assert_eq!(adopted.snapshot.items.len(), 1);
         assert_eq!(adopted.snapshot.current_uid, None);
-        assert_eq!((adopted.position_ms, adopted.playing), (0, false));
+        assert_eq!((adopted.position_ms, adopted.is_playing), (0, false));
         assert_eq!(
             adapt_payload(payload(vec![server_track("a")], "http://other"), None),
             Err(RemoteFailure::DifferentServer)

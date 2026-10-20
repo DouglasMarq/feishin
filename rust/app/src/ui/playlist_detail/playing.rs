@@ -8,7 +8,7 @@ use crate::ui::{AppWindow, Context, PlayerState};
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum PlayStart {
     FromTop {
-        shuffle: bool,
+        is_shuffled: bool,
     },
     AtRow {
         index: usize,
@@ -18,7 +18,7 @@ pub enum PlayStart {
 
 impl PlayStart {
     fn shuffles(&self) -> bool {
-        matches!(self, Self::FromTop { shuffle: true })
+        matches!(self, Self::FromTop { is_shuffled: true })
     }
 
     fn command(self, playlist_id: PlaylistId) -> Command {
@@ -48,7 +48,7 @@ pub fn play_playlist(
     if playlist_id.is_empty() {
         return;
     }
-    if start.shuffles() && !window.global::<PlayerState>().get_shuffle() {
+    if start.shuffles() && !window.global::<PlayerState>().get_is_shuffled() {
         context.send(Command::ToggleShuffle);
     }
     context.send(start.command(PlaylistId(playlist_id)));
@@ -60,7 +60,7 @@ mod tests {
 
     #[test]
     fn playing_from_the_top_streams_every_row_and_rows_start_at_their_song() {
-        let top = PlayStart::FromTop { shuffle: true };
+        let top = PlayStart::FromTop { is_shuffled: true };
         assert!(top.shuffles());
         assert!(matches!(
             top.command(PlaylistId("playlist-1".into())),

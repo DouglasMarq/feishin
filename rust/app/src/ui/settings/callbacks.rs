@@ -49,12 +49,12 @@ fn apply_playback(window: &AppWindow, context: &Context, shared: &Arc<Shared>) {
     let state = window.global::<SettingsState>();
     let form = PlaybackForm {
         replay_gain: replay_gain_setting(state.get_replay_gain()),
-        gapless: state.get_gapless(),
+        is_gapless: state.get_is_gapless(),
         crossfade_seconds: state.get_crossfade_seconds(),
         device: state.get_device_index(),
         bitrate: state.get_bitrate_index(),
         format: state.get_format_index(),
-        scrobble: state.get_scrobble(),
+        is_scrobbling_enabled: state.get_is_scrobbling_enabled(),
     };
     let mut view = shared.view();
     let playback = view.playback(form);
@@ -65,12 +65,12 @@ fn apply_playback(window: &AppWindow, context: &Context, shared: &Arc<Shared>) {
 fn apply_integrations(window: &AppWindow, context: &Context, shared: &Arc<Shared>) {
     let state = window.global::<SettingsState>();
     let mut view = shared.view();
-    view.settings.integrations.is_mpris_enabled = state.get_mpris();
-    view.settings.integrations.is_discord_rich_presence_enabled = state.get_discord();
-    view.settings.integrations.is_remote_control_enabled = state.get_remote_control();
-    context
-        .remote
-        .request(RemoteRequest::SetHosting(state.get_remote_control()));
+    view.settings.integrations.is_mpris_enabled = state.get_is_mpris_enabled();
+    view.settings.integrations.is_discord_rich_presence_enabled = state.get_is_discord_enabled();
+    view.settings.integrations.is_remote_control_enabled = state.get_is_remote_control_enabled();
+    context.remote.request(RemoteRequest::SetHosting(
+        state.get_is_remote_control_enabled(),
+    ));
     save_integrations(context, &mut view);
 }
 
@@ -82,7 +82,7 @@ fn toggle_lyrics_source(window: &AppWindow, context: &Context, shared: &Shared, 
     else {
         return;
     };
-    source.enabled = !source.enabled;
+    source.is_enabled = !source.is_enabled;
     set_lyrics_rows(&window.global::<SettingsState>(), &view.lyrics);
     save_integrations(context, &mut view);
 }
@@ -105,14 +105,16 @@ fn reorder_lyrics_source(
 }
 
 fn apply_interface(window: &AppWindow, context: &Context, shared: &Arc<Shared>) {
-    let follow_current_song = window.global::<SettingsState>().get_follow_current_song();
-    let queue_panel_open = window.global::<AppState>().get_queue_open();
+    let is_following_current_song = window
+        .global::<SettingsState>()
+        .get_is_following_current_song();
+    let is_queue_panel_open = window.global::<AppState>().get_is_queue_open();
     let mut view = shared.view();
-    view.settings.ui.is_following_current_song = follow_current_song;
-    view.settings.ui.is_queue_panel_open = queue_panel_open;
+    view.settings.ui.is_following_current_song = is_following_current_song;
+    view.settings.ui.is_queue_panel_open = is_queue_panel_open;
     context.send(Command::SaveInterface {
-        queue_panel_open,
-        follow_current_song,
+        is_queue_panel_open,
+        is_following_current_song,
     });
 }
 

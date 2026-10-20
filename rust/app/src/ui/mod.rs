@@ -129,13 +129,13 @@ pub fn install(window: &AppWindow, context: &Context, settings: &Settings) {
     devices::install(window, context);
     window
         .global::<AppState>()
-        .set_queue_open(settings.ui.is_queue_panel_open);
+        .set_is_queue_open(settings.ui.is_queue_panel_open);
 }
 
 pub fn ui_settings(window: &AppWindow, previous: &UiSettings) -> UiSettings {
     UiSettings {
         track_columns: tracks::columns(window),
-        is_queue_panel_open: window.global::<AppState>().get_queue_open(),
+        is_queue_panel_open: window.global::<AppState>().get_is_queue_open(),
         ..previous.clone()
     }
 }
@@ -161,8 +161,8 @@ pub fn clamp_i32(value: u64) -> i32 {
     i32::try_from(value).unwrap_or(i32::MAX)
 }
 
-pub fn sort_order(descending: bool) -> SortOrder {
-    match descending {
+pub fn sort_order(is_descending: bool) -> SortOrder {
+    match is_descending {
         true => SortOrder::Desc,
         false => SortOrder::Asc,
     }

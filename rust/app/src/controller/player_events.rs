@@ -41,7 +41,7 @@ impl Controller {
         if let Some(duration_ms) = duration_ms.filter(|reported_ms| *reported_ms > 0) {
             self.duration_ms = duration_ms;
         }
-        if let Some(submission) = self.scrobble_tracker.position(position_ms, self.playing) {
+        if let Some(submission) = self.scrobble_tracker.position(position_ms, self.is_playing) {
             self.send_scrobble(submission.song_id, true, Some(submission.timestamp_ms));
         }
         self.publish_playback();
@@ -107,7 +107,7 @@ impl Controller {
     }
 
     fn begin_playing_current(&mut self) {
-        self.playing = true;
+        self.is_playing = true;
         self.youtube.reset_failures();
         if let Some(track) = self.current_track() {
             self.start_scrobbling(&track);

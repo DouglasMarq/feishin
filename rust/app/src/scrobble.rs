@@ -16,7 +16,7 @@ pub struct ScrobbleTracker {
     started_at_ms: i64,
     listened_ms: u64,
     last_sample_ms: Option<u64>,
-    submitted: bool,
+    is_submitted: bool,
 }
 
 impl ScrobbleTracker {
@@ -33,20 +33,20 @@ impl ScrobbleTracker {
         *self = Self::default();
     }
 
-    pub fn position(&mut self, position_ms: u64, playing: bool) -> Option<Submission> {
+    pub fn position(&mut self, position_ms: u64, is_playing: bool) -> Option<Submission> {
         let song_id = self.song_id.clone()?;
         let previous_sample_ms = self.last_sample_ms;
         self.last_sample_ms = Some(position_ms);
-        if !playing {
+        if !is_playing {
             return None;
         }
         if let Some(previous_sample_ms) = previous_sample_ms {
             self.account_listening(previous_sample_ms, position_ms);
         }
-        if self.submitted || !self.eligible() {
+        if self.is_submitted || !self.is_eligible() {
             return None;
         }
-        self.submitted = true;
+        self.is_submitted = true;
         Some(Submission {
             song_id,
             timestamp_ms: self.started_at_ms,
@@ -54,12 +54,12 @@ impl ScrobbleTracker {
     }
 
     fn account_listening(&mut self, previous_sample_ms: u64, position_ms: u64) {
-        let restarted = position_ms < previous_sample_ms
+        let has_restarted = position_ms < previous_sample_ms
             && position_ms < TRACK_BEGIN_MS
             && previous_sample_ms >= TRACK_BEGIN_MS;
-        if restarted {
+        if has_restarted {
             self.listened_ms = 0;
-            self.submitted = false;
+            self.is_submitted = false;
             return;
         }
         let advanced_ms = position_ms.saturating_sub(previous_sample_ms);
@@ -68,7 +68,7 @@ impl ScrobbleTracker {
         }
     }
 
-    fn eligible(&self) -> bool {
+    fn is_eligible(&self) -> bool {
         let by_percent =
             self.duration_ms > 0 && self.listened_ms * 100 >= self.duration_ms * SUBMIT_PERCENT;
         by_percent || self.listened_ms >= SUBMIT_AFTER_MS

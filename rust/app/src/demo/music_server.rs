@@ -141,7 +141,12 @@ impl MusicServer for FakeServer {
         })
     }
 
-    async fn set_favorite(&self, _kind: ItemKind, _ids: &[String], _favorite: bool) -> Result<()> {
+    async fn set_favorite(
+        &self,
+        _kind: ItemKind,
+        _ids: &[String],
+        _is_favorite: bool,
+    ) -> Result<()> {
         Ok(())
     }
 
@@ -152,12 +157,12 @@ impl MusicServer for FakeServer {
     async fn scrobble(
         &self,
         song_id: &str,
-        submission: bool,
+        is_submission: bool,
         timestamp_ms: Option<i64>,
     ) -> Result<()> {
         self.record_scrobble(ScrobbleCall {
             song_id: song_id.to_owned(),
-            submission,
+            is_submission,
             timestamp_ms,
         });
         Ok(())

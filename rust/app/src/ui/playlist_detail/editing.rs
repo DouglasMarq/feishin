@@ -14,7 +14,7 @@ pub fn remove(window: &AppWindow, context: &Context, shared: &SharedDetail, inde
     let Some(target) = lock(shared).start_removal(&indexes) else {
         return;
     };
-    window.global::<PlaylistDetailState>().set_busy(true);
+    window.global::<PlaylistDetailState>().set_is_busy(true);
     let (weak, shared) = (window.as_weak(), Arc::clone(shared));
     context.runtime.spawn(async move {
         let result = server
@@ -36,7 +36,7 @@ fn finish_removal(
     if !lock(shared).finish_removal(target.generation) {
         return;
     }
-    window.global::<PlaylistDetailState>().set_busy(false);
+    window.global::<PlaylistDetailState>().set_is_busy(false);
     match result {
         Ok(()) => {
             let message = tr_plural!(

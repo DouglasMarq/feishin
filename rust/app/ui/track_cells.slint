@@ -11,23 +11,23 @@ export component HeaderCell inherits Rectangle {
     in property <string> text;
     in property <string> icon;
     in property <TrackColumn> column;
-    in property <bool> sortable: true;
+    in property <bool> is-sortable: true;
     in property <TextHorizontalAlignment> align: left;
     in-out property <length> column-width;
-    property <bool> sorted: root.sortable && TracksState.sort-column == root.column;
+    property <bool> is-sorted: root.is-sortable && TracksState.sort-column == root.column;
     callback context-menu(window-x: length, window-y: length);
     width: root.column-width;
     height: 32px;
 
     TooltipAnchor {
-        text: !root.sortable ? "" : !root.sorted ? @tr("Sort by {}", root.text) : TracksState.sort-desc ? @tr("Sort by {}: descending", root.text) : @tr("Sort by {}: ascending", root.text);
-        hovered: sort-touch.has-hover;
+        text: !root.is-sortable ? "" : !root.is-sorted ? @tr("Sort by {}", root.text) : TracksState.is-sort-descending ? @tr("Sort by {}: descending", root.text) : @tr("Sort by {}: ascending", root.text);
+        is-hovered: sort-touch.has-hover;
     }
 
     sort-touch := TouchArea {
-        mouse-cursor: root.sortable ? pointer : default;
+        mouse-cursor: root.is-sortable ? pointer : default;
         clicked => {
-            if (root.sortable) {
+            if (root.is-sortable) {
                 TracksState.sort-by(root.column);
             }
         }
@@ -45,7 +45,7 @@ export component HeaderCell inherits Rectangle {
 
         if root.icon == "": Text {
             text: root.text;
-            color: root.sorted ? Theme.foreground : Theme.muted;
+            color: root.is-sorted ? Theme.foreground : Theme.muted;
             font-size: 12px;
             font-weight: 600;
             vertical-alignment: center;
@@ -60,15 +60,15 @@ export component HeaderCell inherits Rectangle {
             Icon {
                 x: 0;
                 path: root.icon;
-                color: root.sorted ? Theme.foreground : Theme.muted;
+                color: root.is-sorted ? Theme.foreground : Theme.muted;
                 width: 14px;
                 height: 14px;
             }
         }
 
-        if root.sorted: Icon {
+        if root.is-sorted: Icon {
             y: (parent.height - self.height) / 2;
-            path: TracksState.sort-desc ? Icons.arrow-down : Icons.arrow-up;
+            path: TracksState.is-sort-descending ? Icons.arrow-down : Icons.arrow-up;
             color: Theme.foreground;
             width: 16px;
             height: 16px;
@@ -82,7 +82,7 @@ export component HeaderCell inherits Rectangle {
 
         TooltipAnchor {
             text: @tr("Resize column");
-            hovered: resize-touch.has-hover;
+            is-hovered: resize-touch.has-hover;
         }
 
         moved => {
@@ -109,7 +109,7 @@ export component Cell inherits Rectangle {
 
 export component LinkCell inherits Rectangle {
     in property <string> text;
-    in property <bool> enabled: true;
+    in property <bool> is-enabled: true;
     callback clicked();
     callback context-menu(window-x: length, window-y: length);
 
@@ -117,7 +117,7 @@ export component LinkCell inherits Rectangle {
         x: 8px;
         width: parent.width - 18px;
         text: root.text;
-        color: link.has-hover && root.enabled ? Theme.foreground : Theme.muted;
+        color: link.has-hover && root.is-enabled ? Theme.foreground : Theme.muted;
         vertical-alignment: center;
         overflow: elide;
     }
@@ -125,7 +125,7 @@ export component LinkCell inherits Rectangle {
     link := TouchArea {
         x: 8px;
         width: min(label.preferred-width, parent.width - 18px);
-        enabled: root.enabled;
+        enabled: root.is-enabled;
         mouse-cursor: pointer;
         clicked => {
             root.clicked();
@@ -137,22 +137,22 @@ export component LinkCell inherits Rectangle {
         }
 
         TooltipAnchor {
-            text: root.enabled ? @tr("Go to {}", root.text) : "";
-            hovered: link.has-hover;
+            text: root.is-enabled ? @tr("Go to {}", root.text) : "";
+            is-hovered: link.has-hover;
         }
     }
 }
 
 export component FavoriteCell inherits Rectangle {
-    in property <bool> favorite;
-    in property <bool> row-hover;
+    in property <bool> is-favorite;
+    in property <bool> is-row-hovered;
     callback toggle();
     callback context-menu(window-x: length, window-y: length);
 
-    if root.favorite || root.row-hover: Icon {
+    if root.is-favorite || root.is-row-hovered: Icon {
         x: 8px;
-        path: root.favorite ? Icons.heart : Glyphs.heart-outline;
-        color: root.favorite ? Theme.danger : (touch.has-hover ? Theme.foreground : Theme.muted);
+        path: root.is-favorite ? Icons.heart : Glyphs.heart-outline;
+        color: root.is-favorite ? Theme.danger : (touch.has-hover ? Theme.foreground : Theme.muted);
         width: 16px;
         height: 16px;
     }
@@ -160,8 +160,8 @@ export component FavoriteCell inherits Rectangle {
     TooltipAnchor {
         x: 4px;
         width: 24px;
-        text: root.favorite ? @tr("Remove from favorites") : @tr("Add to favorites");
-        hovered: touch.has-hover;
+        text: root.is-favorite ? @tr("Remove from favorites") : @tr("Add to favorites");
+        is-hovered: touch.has-hover;
     }
 
     touch := TouchArea {
@@ -201,7 +201,7 @@ export component RatingCell inherits Rectangle {
 
             TooltipAnchor {
                 text: star-index + 1 == root.rating ? @tr("Clear rating") : @tr("Rate {n} star" | "Rate {n} stars" % (star-index + 1));
-                hovered: star-touch.has-hover;
+                is-hovered: star-touch.has-hover;
             }
 
             star-touch := TouchArea {

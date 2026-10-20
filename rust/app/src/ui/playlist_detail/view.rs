@@ -38,14 +38,14 @@ fn install_play(window: &AppWindow, context: &Context, shared: &SharedDetail) {
     let (weak, play_context, play_shared) = (window.as_weak(), context.clone(), Arc::clone(shared));
     window
         .global::<PlaylistDetailState>()
-        .on_play(move |shuffle| {
+        .on_play(move |is_shuffled| {
             let Some(window) = weak.upgrade() else {
                 return;
             };
             if with_model(&window, |model| model.total()).unwrap_or_default() == 0 {
                 return;
             }
-            let start = PlayStart::FromTop { shuffle };
+            let start = PlayStart::FromTop { is_shuffled };
             play_playlist(&window, &play_context, &play_shared, start);
         });
 }

@@ -41,9 +41,9 @@ pub(super) fn load_external(
     track: &QueueTrack,
 ) {
     let state = window.global::<NowPlayingState>();
-    state.set_external(true);
+    state.set_is_external(true);
     state.set_artists(ModelRc::new(VecModel::from(artist_links(track))));
-    state.set_loaded(true);
+    state.set_is_loaded(true);
     let song_id = track.song_id.to_string();
     if let Some(video) = track.youtube_video() {
         fetch_thumbnail(window, context, &song_id, video);

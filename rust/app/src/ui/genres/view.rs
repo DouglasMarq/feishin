@@ -17,12 +17,20 @@ type SharedGenreList = Rc<RefCell<GenreList>>;
 
 const ALBUMS: Binding<CardRow> = Binding {
     rows: |window| window.global::<GenresState>().get_albums(),
-    loading: |window, loading| window.global::<GenresState>().set_albums_loading(loading),
+    loading: |window, is_loading| {
+        window
+            .global::<GenresState>()
+            .set_is_albums_loading(is_loading)
+    },
 };
 
 const TRACKS: Binding<TrackItem> = Binding {
     rows: |window| window.global::<GenresState>().get_tracks(),
-    loading: |window, loading| window.global::<GenresState>().set_tracks_loading(loading),
+    loading: |window, is_loading| {
+        window
+            .global::<GenresState>()
+            .set_is_tracks_loading(is_loading)
+    },
 };
 
 pub fn install(window: &AppWindow, context: &Context) {
@@ -65,8 +73,8 @@ fn open_genre(
     genre_id: &SharedString,
 ) {
     let state = window.global::<GenresState>();
-    state.set_albums_loading(true);
-    state.set_tracks_loading(true);
+    state.set_is_albums_loading(true);
+    state.set_is_tracks_loading(true);
     with_grid(window, ALBUMS, |grid| {
         grid.reset(Some(CardSource::Albums(genre_album_query(genre_id))));
     });
@@ -74,8 +82,8 @@ fn open_genre(
         table.reset(genre_song_query(genre_id))
     });
     show_genre(window, &list.borrow());
-    let known = list.borrow().contains(genre_id.as_str());
-    if !known {
+    let is_known = list.borrow().contains(genre_id.as_str());
+    if !is_known {
         fetch_genres(window, context, list);
     }
 }

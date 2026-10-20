@@ -32,10 +32,10 @@ fn search_now(
     weak: &slint::Weak<AppWindow>,
     context: &Context,
     query: Option<String>,
-    force: bool,
+    is_forced: bool,
 ) {
     if let Some(window) = weak.upgrade() {
-        search(&window, context, query, force);
+        search(&window, context, query, is_forced);
     }
 }
 

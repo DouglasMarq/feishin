@@ -39,7 +39,7 @@ pub fn show_devices(window: &AppWindow, devices: &[DeviceInfo]) {
 
 pub fn show_target(window: &AppWindow, device: Option<&DeviceInfo>) {
     let state = window.global::<DevicesState>();
-    state.set_controlling(device.is_some());
+    state.set_is_controlling(device.is_some());
     state.set_active_id(
         device
             .map(|device| device.id.0.as_str())
@@ -54,12 +54,14 @@ pub fn show_target(window: &AppWindow, device: Option<&DeviceInfo>) {
     );
 }
 
-pub fn show_connecting(window: &AppWindow, connecting: bool) {
-    window.global::<DevicesState>().set_connecting(connecting);
+pub fn show_connecting(window: &AppWindow, is_connecting: bool) {
+    window
+        .global::<DevicesState>()
+        .set_is_connecting(is_connecting);
 }
 
 pub fn show_approval(window: &AppWindow, device_name: Option<&str>) {
     let state = window.global::<DevicesState>();
-    state.set_approval_open(device_name.is_some());
+    state.set_is_approval_open(device_name.is_some());
     state.set_approval_name(device_name.unwrap_or_default().into());
 }

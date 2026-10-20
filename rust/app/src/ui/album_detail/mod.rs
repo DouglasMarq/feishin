@@ -31,7 +31,7 @@ fn shuffle_all(window: &AppWindow, context: &Context) {
     if songs.is_empty() {
         return;
     }
-    if !window.global::<PlayerState>().get_shuffle() {
+    if !window.global::<PlayerState>().get_is_shuffled() {
         context.send(Command::ToggleShuffle);
     }
     context.send(Command::PlaySongs {

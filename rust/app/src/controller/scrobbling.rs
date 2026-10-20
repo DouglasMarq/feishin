@@ -23,7 +23,7 @@ impl Controller {
     pub(super) fn send_scrobble(
         &self,
         song_id: String,
-        submission: bool,
+        is_submission: bool,
         timestamp_ms: Option<i64>,
     ) {
         if !self.settings.playback.is_scrobbling_enabled {
@@ -33,7 +33,7 @@ impl Controller {
             return;
         };
         tokio::spawn(async move {
-            if let Err(error) = server.scrobble(&song_id, submission, timestamp_ms).await {
+            if let Err(error) = server.scrobble(&song_id, is_submission, timestamp_ms).await {
                 tracing::warn!("scrobble failed: {error}");
             }
         });

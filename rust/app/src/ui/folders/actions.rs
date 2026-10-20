@@ -18,7 +18,7 @@ pub fn play_folder(window: &AppWindow, context: &Context, folder_id: &str, mode:
             return;
         }
         FolderPlayMode::Shuffle => {
-            if !window.global::<PlayerState>().get_shuffle() {
+            if !window.global::<PlayerState>().get_is_shuffled() {
                 context.send(Command::ToggleShuffle);
             }
             Placement::Now

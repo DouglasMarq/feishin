@@ -59,10 +59,10 @@ impl RemoteService {
     pub async fn run(
         mut self,
         mut requests: mpsc::UnboundedReceiver<RemoteRequest>,
-        hosting: bool,
+        is_hosting: bool,
     ) {
         let mut devices = self.browse();
-        self.set_hosting(hosting).await;
+        self.set_hosting(is_hosting).await;
         loop {
             tokio::select! {
                 request = requests.recv() => match request {

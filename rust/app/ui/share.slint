@@ -8,12 +8,12 @@ export global ShareIcons {
 }
 
 export global ShareState {
-    in property <bool> available: true;
+    in property <bool> is-available: true;
     in property <string> unavailable-reason;
-    in property <bool> busy;
+    in property <bool> is-busy;
     in property <string> link;
     in property <int> copy-request;
-    out property <string> menu-title: ShareState.available ? @tr("Share") : @tr("Share ({})", ShareState.unavailable-reason);
+    out property <string> menu-title: ShareState.is-available ? @tr("Share") : @tr("Share ({})", ShareState.unavailable-reason);
     callback share(kind: ShareKind, id: string, name: string);
     callback share-selected-tracks();
 }
@@ -23,29 +23,29 @@ export component ShareButton inherits Rectangle {
     in property <string> item-id;
     in property <string> item-name;
     in property <string> noun: @tr("item");
-    property <bool> usable: ShareState.available && !ShareState.busy && root.item-id != "";
+    property <bool> is-usable: ShareState.is-available && !ShareState.is-busy && root.item-id != "";
     width: 40px;
     height: 40px;
     border-radius: self.height / 2;
-    background: touch.has-hover && root.usable ? Theme.hover : transparent;
-    opacity: ShareState.available ? 1 : 0.4;
+    background: touch.has-hover && root.is-usable ? Theme.hover : transparent;
+    opacity: ShareState.is-available ? 1 : 0.4;
 
     Icon {
         path: ShareIcons.share;
-        color: touch.has-hover && root.usable ? Theme.foreground : Theme.muted;
+        color: touch.has-hover && root.is-usable ? Theme.foreground : Theme.muted;
         width: 22px;
         height: 22px;
     }
 
     TooltipAnchor {
-        text: !ShareState.available ? @tr("Sharing is unavailable: {}", ShareState.unavailable-reason) : (ShareState.busy ? @tr("Creating a share link...") : @tr("Share this {}: copy a public link", root.noun));
-        hovered: touch.has-hover;
+        text: !ShareState.is-available ? @tr("Sharing is unavailable: {}", ShareState.unavailable-reason) : (ShareState.is-busy ? @tr("Creating a share link...") : @tr("Share this {}: copy a public link", root.noun));
+        is-hovered: touch.has-hover;
     }
 
     touch := TouchArea {
-        mouse-cursor: root.usable ? pointer : default;
+        mouse-cursor: root.is-usable ? pointer : default;
         clicked => {
-            if (root.usable) {
+            if (root.is-usable) {
                 ShareState.share(root.kind, root.item-id, root.item-name);
             }
         }

@@ -7,7 +7,7 @@ import { DiscoverIcons, DiscoverPageKind, DiscoverSong, DiscoverState } from "di
 
 component SongRowView inherits Rectangle {
     in property <DiscoverSong> song;
-    property <bool> playing: root.song.id == PlayerState.song-id;
+    property <bool> is-playing: root.song.id == PlayerState.song-id;
     property <int> position: root.song.index - 1;
     property <bool> wants-cover: !root.song.has-cover && root.song.can-load-cover;
     background: touch.has-hover ? Theme.hover : transparent;
@@ -73,7 +73,7 @@ component SongRowView inherits Rectangle {
 
             TooltipAnchor {
                 text: @tr("Double-click to play");
-                hovered: touch.has-hover;
+                is-hovered: touch.has-hover;
             }
 
             HorizontalLayout {
@@ -84,7 +84,7 @@ component SongRowView inherits Rectangle {
                 Rectangle {
                     width: 40px;
 
-                    if !touch.has-hover && !root.playing: Text {
+                    if !touch.has-hover && !root.is-playing: Text {
                         x: 0;
                         width: parent.width - 12px;
                         text: root.song.index;
@@ -93,7 +93,7 @@ component SongRowView inherits Rectangle {
                         vertical-alignment: center;
                     }
 
-                    if !touch.has-hover && root.playing: Icon {
+                    if !touch.has-hover && root.is-playing: Icon {
                         x: parent.width - 12px - self.width;
                         path: Icons.note;
                         color: Theme.primary;
@@ -116,7 +116,7 @@ component SongRowView inherits Rectangle {
 
                         TooltipAnchor {
                             text: @tr("Play from this song");
-                            hovered: play-touch.has-hover;
+                            is-hovered: play-touch.has-hover;
                         }
 
                         play-touch := TouchArea {
@@ -150,7 +150,7 @@ component SongRowView inherits Rectangle {
                 Cell {
                     horizontal-stretch: 2;
                     text: root.song.title;
-                    text-color: root.playing ? Theme.primary : Theme.foreground;
+                    text-color: root.is-playing ? Theme.primary : Theme.foreground;
                 }
 
                 Cell {
@@ -231,14 +231,14 @@ component PageHeader inherits HorizontalLayout {
         background: Theme.surface-raised;
         clip: true;
 
-        if DiscoverState.page-has-cover: Image {
+        if DiscoverState.has-page-cover: Image {
             source: DiscoverState.page-cover;
             width: parent.width;
             height: parent.height;
             image-fit: cover;
         }
 
-        if !DiscoverState.page-has-cover: Icon {
+        if !DiscoverState.has-page-cover: Icon {
             path: DiscoverState.page-kind == DiscoverPageKind.search-results ? Icons.search : (DiscoverState.page-kind == DiscoverPageKind.album ? Icons.album : Icons.playlist);
             color: Theme.border;
             width: 80px;
@@ -258,13 +258,13 @@ component PageHeader inherits HorizontalLayout {
             font-weight: 600;
         }
 
-        if DiscoverState.page-loading && DiscoverState.page-title == "": Skeleton {
+        if DiscoverState.is-page-loading && DiscoverState.page-title == "": Skeleton {
             width: 280px;
             height: 28px;
             border-radius: 8px;
         }
 
-        if !(DiscoverState.page-loading && DiscoverState.page-title == ""): Text {
+        if !(DiscoverState.is-page-loading && DiscoverState.page-title == ""): Text {
             text: DiscoverState.page-title;
             color: Theme.foreground;
             font-size: 30px;
@@ -305,7 +305,7 @@ component PageActions inherits HorizontalLayout {
 
         TooltipAnchor {
             text: root.has-songs ? @tr("Play all {n} song" | "Play all {n} songs" % DiscoverState.songs.length) : @tr("Nothing to play yet");
-            hovered: play-touch.has-hover;
+            is-hovered: play-touch.has-hover;
         }
 
         play-touch := TouchArea {
@@ -323,14 +323,14 @@ component PageActions inherits HorizontalLayout {
         height: 40px;
         icon: Icons.queue;
         icon-size: 24px;
-        enabled: root.has-songs;
+        is-enabled: root.has-songs;
         tooltip: root.has-songs ? @tr("Add all songs to the queue") : @tr("Nothing to add yet");
         clicked => {
             DiscoverState.queue-page();
         }
     }
 
-    if DiscoverState.page-has-link: IconButton {
+    if DiscoverState.has-page-link: IconButton {
         y: (parent.height - self.height) / 2;
         width: 40px;
         height: 40px;
@@ -359,7 +359,7 @@ export component DiscoverCollectionPage inherits Rectangle {
 
                 IconButton {
                     icon: DiscoverIcons.back;
-                    enabled: AppState.can-go-back;
+                    is-enabled: AppState.can-go-back;
                     tooltip: AppState.can-go-back ? @tr("Back") : @tr("Nothing to go back to");
                     clicked => {
                         AppState.back();
@@ -382,7 +382,7 @@ export component DiscoverCollectionPage inherits Rectangle {
                 }
             }
 
-            if !DiscoverState.page-loading && DiscoverState.page-error == "" && DiscoverState.songs.length == 0: HorizontalLayout {
+            if !DiscoverState.is-page-loading && DiscoverState.page-error == "" && DiscoverState.songs.length == 0: HorizontalLayout {
                 padding-left: 24px;
 
                 Text {

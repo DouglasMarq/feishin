@@ -28,7 +28,7 @@ fn materialized_order(server: &FakeServer, query: &AlbumListQuery) -> Vec<usize>
         .filter(|(_, album)| {
             query
                 .is_favorite
-                .is_none_or(|favorite| favorite == album.is_favorite)
+                .is_none_or(|is_favorite| is_favorite == album.is_favorite)
         })
         .filter(|(_, album)| {
             search.as_deref().is_none_or(|search| {
@@ -75,10 +75,10 @@ fn cheap_album_keys_sort_like_the_materialized_albums() {
 #[test]
 fn cheap_album_filters_match_the_materialized_albums() {
     let server = FakeServer::new(PARTIAL_LAST_ALBUM_SONGS);
-    for favorite in [None, Some(true), Some(false)] {
+    for is_favorite in [None, Some(true), Some(false)] {
         for search in [None, Some("a"), Some("ada")] {
             let query = AlbumListQuery {
-                is_favorite: favorite,
+                is_favorite,
                 search: search.map(str::to_owned),
                 ..AlbumListQuery::default()
             };

@@ -24,12 +24,12 @@ pub fn track_row(song: &Song, index: usize) -> TrackRow {
             .unwrap_or_default()
             .into(),
         plays: song.play_count.to_string().into(),
-        loaded: true,
-        playing: false,
+        is_loaded: true,
+        is_playing: false,
         album_id: song.album_id.as_deref().unwrap_or_default().into(),
         artist_id: primary_artist_id(song).unwrap_or_default().into(),
-        favorite: song.is_favorite,
+        is_favorite: song.is_favorite,
         rating: i32::from(song.user_rating.unwrap_or_default()),
-        selected: false,
+        is_selected: false,
     }
 }

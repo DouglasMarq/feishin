@@ -23,7 +23,7 @@ pub fn load(window: &AppWindow, context: &Context) {
     let Some(generation) = with_model(window, PlaylistsModel::begin) else {
         return;
     };
-    window.global::<PlaylistsState>().set_loading(true);
+    window.global::<PlaylistsState>().set_is_loading(true);
     let weak = window.as_weak();
     context.runtime.spawn(async move {
         let result = fetch_all(server.as_ref()).await;
@@ -38,7 +38,7 @@ fn apply_loaded(window: &AppWindow, generation: u64, result: feishin_api::Result
         .inspect_err(|error| show_status(window, &tr!("Could not load playlists: {}", error)))
         .unwrap_or_default();
     if with_model(window, |model| model.set_playlists(generation, &playlists)) == Some(true) {
-        window.global::<PlaylistsState>().set_loading(false);
+        window.global::<PlaylistsState>().set_is_loading(false);
     }
 }
 

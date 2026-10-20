@@ -47,8 +47,8 @@ impl MediaSession for RecordingMedia {
     fn set_volume(&mut self, _volume: f64) -> Result<()> {
         Ok(())
     }
-    fn set_live_stream(&mut self, live: bool) -> Result<()> {
-        self.record(MediaCall::Live(live));
+    fn set_live_stream(&mut self, is_live: bool) -> Result<()> {
+        self.record(MediaCall::Live(is_live));
         Ok(())
     }
 }

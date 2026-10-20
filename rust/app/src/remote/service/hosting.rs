@@ -4,8 +4,8 @@ use tokio::net::TcpListener;
 use super::RemoteService;
 
 impl RemoteService {
-    pub(super) async fn set_hosting(&mut self, hosting: bool) {
-        match (hosting, self.hosting.is_some()) {
+    pub(super) async fn set_hosting(&mut self, is_hosting: bool) {
+        match (is_hosting, self.hosting.is_some()) {
             (true, false) => self.start_hosting().await,
             (false, true) => self.stop_hosting(),
             _ => {}

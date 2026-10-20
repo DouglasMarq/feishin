@@ -40,7 +40,7 @@ pub fn header_info(summary: &HeaderSummary) -> String {
     parts.join(" • ")
 }
 
-pub fn song_row(song: &Song, index: usize, selected: bool) -> PlaylistSongRow {
+pub fn song_row(song: &Song, index: usize, is_selected: bool) -> PlaylistSongRow {
     PlaylistSongRow {
         track: track_row(song, index),
         album_id: song.album_id.as_deref().unwrap_or_default().into(),
@@ -50,17 +50,17 @@ pub fn song_row(song: &Song, index: usize, selected: bool) -> PlaylistSongRow {
             .map(|artist| artist.id.as_str())
             .unwrap_or_default()
             .into(),
-        selected,
+        is_selected,
     }
 }
 
-pub fn placeholder_row(index: usize, selected: bool) -> PlaylistSongRow {
+pub fn placeholder_row(index: usize, is_selected: bool) -> PlaylistSongRow {
     PlaylistSongRow {
         track: TrackRow {
             index: clamp_i32(index as u64 + 1),
             ..TrackRow::default()
         },
-        selected,
+        is_selected,
         ..PlaylistSongRow::default()
     }
 }
@@ -122,9 +122,9 @@ mod tests {
         assert_eq!(row.album_id, "album-1");
         assert!(row.artist_id.starts_with("artist-"));
         assert_eq!(row.track.index, 1);
-        assert!(row.selected);
+        assert!(row.is_selected);
         let placeholder = placeholder_row(4, false);
         assert_eq!(placeholder.track.index, 5);
-        assert!(!placeholder.track.loaded);
+        assert!(!placeholder.track.is_loaded);
     }
 }

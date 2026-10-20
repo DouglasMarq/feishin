@@ -14,7 +14,7 @@ pub(super) fn is_current(window: &AppWindow, song_id: &str) -> bool {
 }
 
 fn is_already_shown(state: &NowPlayingState, song_id: &str) -> bool {
-    state.get_song_id() == song_id && (state.get_loaded() || song_id.is_empty())
+    state.get_song_id() == song_id && (state.get_is_loaded() || song_id.is_empty())
 }
 
 pub(super) fn load(window: &AppWindow, context: &Context, view: &View, song_id: &str) {
@@ -37,14 +37,14 @@ pub(super) fn load(window: &AppWindow, context: &Context, view: &View, song_id: 
         Some(lyrics) => view.show_lyrics(window, lyrics.as_deref()),
         None => state.set_lyrics_status(LyricsStatus::Loading),
     }
-    state.set_similar_loading(true);
+    state.set_is_similar_loading(true);
 
     let request = DetailsRequest {
         weak_window: window.as_weak(),
         context: context.clone(),
         server,
         song_id: song_id.to_owned(),
-        want_lyrics: cached.is_none(),
+        is_lyrics_wanted: cached.is_none(),
     };
     request.spawn();
 }
@@ -54,7 +54,7 @@ struct DetailsRequest {
     context: Context,
     server: Arc<dyn MusicServer>,
     song_id: String,
-    want_lyrics: bool,
+    is_lyrics_wanted: bool,
 }
 
 impl DetailsRequest {
@@ -69,7 +69,7 @@ impl DetailsRequest {
             context,
             server,
             song_id,
-            want_lyrics,
+            is_lyrics_wanted,
         } = self;
         let song = match server.song(&song_id).await {
             Ok(song) => song,
@@ -84,7 +84,7 @@ impl DetailsRequest {
             fetch_cover(&weak_window, &context, &server, &song),
             fetch_similar(&weak_window, server.as_ref(), &song_id),
             async {
-                if want_lyrics {
+                if is_lyrics_wanted {
                     fetch_lyrics(&weak_window, &context, server.as_ref(), &song).await;
                 }
             },
@@ -98,7 +98,7 @@ fn show_details_failed(weak_window: &slint::Weak<AppWindow>, song_id: String) {
             return;
         }
         let state = window.global::<NowPlayingState>();
-        state.set_similar_loading(false);
+        state.set_is_similar_loading(false);
         if state.get_lyrics_status() == LyricsStatus::Loading {
             state.set_lyrics_status(LyricsStatus::Failed);
         }
@@ -126,6 +126,6 @@ fn show_song(weak_window: &slint::Weak<AppWindow>, song: &Song) {
         let state = window.global::<NowPlayingState>();
         state.set_artists(ModelRc::new(VecModel::from(artists)));
         state.set_album_id(album_id.into());
-        state.set_loaded(true);
+        state.set_is_loaded(true);
     });
 }

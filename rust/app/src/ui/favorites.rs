@@ -30,28 +30,28 @@ pub fn favorite_artist_query() -> ArtistListQuery {
 
 const TRACKS: Binding<TrackItem> = Binding {
     rows: |window| window.global::<FavoritesState>().get_tracks(),
-    loading: |window, loading| {
+    loading: |window, is_loading| {
         window
             .global::<FavoritesState>()
-            .set_tracks_loading(loading)
+            .set_is_tracks_loading(is_loading)
     },
 };
 
 const ALBUMS: Binding<CardRow> = Binding {
     rows: |window| window.global::<FavoritesState>().get_albums(),
-    loading: |window, loading| {
+    loading: |window, is_loading| {
         window
             .global::<FavoritesState>()
-            .set_albums_loading(loading)
+            .set_is_albums_loading(is_loading)
     },
 };
 
 const ARTISTS: Binding<CardRow> = Binding {
     rows: |window| window.global::<FavoritesState>().get_artists(),
-    loading: |window, loading| {
+    loading: |window, is_loading| {
         window
             .global::<FavoritesState>()
-            .set_artists_loading(loading)
+            .set_is_artists_loading(is_loading)
     },
 };
 
@@ -77,9 +77,9 @@ fn install_load(window: &AppWindow) {
 
 fn load_favorites(window: &AppWindow) {
     let state = window.global::<FavoritesState>();
-    state.set_tracks_loading(true);
-    state.set_albums_loading(true);
-    state.set_artists_loading(true);
+    state.set_is_tracks_loading(true);
+    state.set_is_albums_loading(true);
+    state.set_is_artists_loading(true);
     with_table(window, TRACKS, |table| table.reset(favorite_song_query()));
     with_grid(window, ALBUMS, |grid| {
         grid.reset(Some(CardSource::Albums(favorite_album_query())));

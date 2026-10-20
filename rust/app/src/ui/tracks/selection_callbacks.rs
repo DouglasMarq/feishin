@@ -19,11 +19,13 @@ fn install_row_selection(window: &AppWindow) {
     let state = window.global::<TracksState>();
 
     let weak = window.as_weak();
-    state.on_select_row(move |index, toggle, extend| {
+    state.on_select_row(move |index, is_toggling, is_extending| {
         let (Some(window), Ok(index)) = (weak.upgrade(), usize::try_from(index)) else {
             return;
         };
-        update_selected_count(&window, |model| model.select(index, toggle, extend));
+        update_selected_count(&window, |model| {
+            model.select(index, is_toggling, is_extending)
+        });
     });
 
     let weak = window.as_weak();
@@ -70,14 +72,14 @@ fn install_selection_actions(window: &AppWindow, target: &ActionTarget) {
 
     let play_next = action_callback(window, target, SongAction::PlayNext);
     let add_last = action_callback(window, target, SongAction::AddLast);
-    state.on_queue_selected(move |next| match next {
+    state.on_queue_selected(move |is_play_next| match is_play_next {
         true => play_next(),
         false => add_last(),
     });
 
     let add_favorite = action_callback(window, target, SongAction::Favorite(true));
     let remove_favorite = action_callback(window, target, SongAction::Favorite(false));
-    state.on_favorite_selected(move |favorite| match favorite {
+    state.on_favorite_selected(move |is_favorite| match is_favorite {
         true => add_favorite(),
         false => remove_favorite(),
     });

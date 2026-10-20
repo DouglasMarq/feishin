@@ -106,12 +106,12 @@ impl CardGrid {
         }
     }
 
-    pub fn favorite(&self, id: &str) -> Option<bool> {
-        self.state.borrow().favorite(id)
+    pub fn is_favorite(&self, id: &str) -> Option<bool> {
+        self.state.borrow().is_favorite(id)
     }
 
-    pub fn set_favorite(&self, id: &str, favorite: bool) {
-        let row = self.state.borrow_mut().override_favorite(id, favorite);
+    pub fn set_favorite(&self, id: &str, is_favorite: bool) {
+        let row = self.state.borrow_mut().override_favorite(id, is_favorite);
         if let Some(row) = row {
             self.notify.row_changed(row);
         }
@@ -175,7 +175,7 @@ mod tests {
                 title: format!("Album {number}"),
                 subtitle: String::new(),
                 cover_id: Some(format!("al-{number}")),
-                favorite: true,
+                is_favorite: true,
             })
             .collect()
     }
@@ -199,7 +199,7 @@ mod tests {
         assert_eq!(row.row_count(), 4);
         assert!(
             row.row_data(0)
-                .is_some_and(|card| card.loaded && !card.has_cover)
+                .is_some_and(|card| card.is_loaded && !card.has_cover)
         );
         assert_eq!(
             drain(&log),
@@ -250,12 +250,12 @@ mod tests {
         grid.set_columns(2);
         grid.reset(Some(CardSource::Albums(AlbumListQuery::default())));
         grid.apply_page(1, 0, cards(0..3), Some(3));
-        assert_eq!(grid.favorite("album-2"), Some(true));
+        assert_eq!(grid.is_favorite("album-2"), Some(true));
         grid.set_favorite("album-2", false);
-        assert_eq!(grid.favorite("album-2"), Some(false));
+        assert_eq!(grid.is_favorite("album-2"), Some(false));
         let row = grid.row_data(1).map(|row| row.cards).unwrap_or_default();
-        assert!(row.row_data(0).is_some_and(|card| !card.favorite));
-        assert_eq!(grid.favorite("missing"), None);
+        assert!(row.row_data(0).is_some_and(|card| !card.is_favorite));
+        assert_eq!(grid.is_favorite("missing"), None);
     }
 
     fn requested_pages(log: &RequestLog) -> Vec<String> {
@@ -286,9 +286,9 @@ mod tests {
                 grid.apply_page(1, page, cards(range), total);
             }
         }
-        assert_eq!(grid.favorite("album-0"), None);
+        assert_eq!(grid.is_favorite("album-0"), None);
         let row = grid.row_data(0).map(|row| row.cards).unwrap_or_default();
-        assert!(row.iter().all(|card| !card.loaded));
+        assert!(row.iter().all(|card| !card.is_loaded));
         assert_eq!(requested_pages(&log), ["page 1:0"]);
         assert!(grid.page_failed(1, 0));
         assert!(!grid.page_failed(0, 0));
@@ -309,7 +309,7 @@ mod tests {
         assert_eq!(requested_pages(&log), ["page 1:1", "page 1:2"]);
         let changed = Some(total + 1);
         assert!(grid.apply_page(1, 1, cards(GRID_PAGE..GRID_PAGE * 2), changed));
-        assert_eq!(grid.favorite("album-0"), None);
+        assert_eq!(grid.is_favorite("album-0"), None);
         assert_eq!(grid.row_count(), 6);
         assert!(!grid.apply_page(1, 2, cards(0..GRID_PAGE), Some(total)));
         grid.row_data(0);

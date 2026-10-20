@@ -36,8 +36,8 @@ fn now_playing_of(
 impl Controller {
     pub(super) fn on_media_event(&mut self, event: MediaControlEvent) {
         match event {
-            MediaControlEvent::Play if !self.playing => self.toggle_pause(),
-            MediaControlEvent::Pause if self.playing => self.toggle_pause(),
+            MediaControlEvent::Play if !self.is_playing => self.toggle_pause(),
+            MediaControlEvent::Pause if self.is_playing => self.toggle_pause(),
             MediaControlEvent::Play | MediaControlEvent::Pause => {}
             MediaControlEvent::Toggle => self.toggle_pause(),
             MediaControlEvent::Next => self.next(),
@@ -56,7 +56,7 @@ impl Controller {
             self.stop_radio();
             return;
         }
-        if self.playing {
+        if self.is_playing {
             self.toggle_pause();
         }
         self.seek(0);
@@ -146,7 +146,7 @@ impl Controller {
     }
 
     fn playback_status(&self) -> PlaybackStatus {
-        match (self.loaded, self.playing) {
+        match (self.loaded, self.is_playing) {
             (None, _) => PlaybackStatus::Stopped,
             (Some(_), true) => PlaybackStatus::Playing {
                 position_ms: self.shown_position_ms(),

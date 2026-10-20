@@ -34,10 +34,10 @@ fn install_play(window: &AppWindow, context: &Context) {
     let context = context.clone();
     window
         .global::<ArtistDetailState>()
-        .on_play(move |shuffle| {
+        .on_play(move |is_shuffled| {
             let artist_id = read_current(|current| current.id.clone());
             if let (Some(window), false) = (weak_window.upgrade(), artist_id.is_empty()) {
-                play_artist(&window, &context, &artist_id, shuffle);
+                play_artist(&window, &context, &artist_id, is_shuffled);
             }
         });
 }

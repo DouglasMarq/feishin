@@ -21,21 +21,21 @@ export enum LyricsStatus { idle, loading, found, missing, failed }
 export global NowPlayingState {
     in-out property <NowPlayingTab> tab: NowPlayingTab.lyrics;
     in property <string> song-id;
-    in property <bool> loaded;
+    in property <bool> is-loaded;
     in property <[ArtistLink]> artists;
     in property <string> album-id;
     in property <image> cover;
     in property <bool> has-cover;
     in property <[LyricRow]> lyrics;
-    in property <bool> lyrics-synced;
+    in property <bool> has-synced-lyrics;
     in property <LyricsStatus> lyrics-status;
     in property <string> lyrics-source;
     in property <int> active-line: -1;
     in property <[QueueRow]> up-next;
     in property <int> up-next-offset: -1;
     in property <[TrackRow]> similar;
-    in property <bool> similar-loading;
-    in property <bool> external;
+    in property <bool> is-similar-loading;
+    in property <bool> is-external;
     callback load(string);
     callback position-changed();
     callback refresh-up-next();
@@ -45,7 +45,7 @@ export global NowPlayingState {
 component Link inherits Rectangle {
     in property <string> text;
     in property <length> font-size: 14px;
-    in property <bool> enabled: true;
+    in property <bool> is-enabled: true;
     in property <string> tooltip;
     callback clicked();
     min-width: 0px;
@@ -56,19 +56,19 @@ component Link inherits Rectangle {
         width: parent.width;
         text: root.text;
         font-size: root.font-size;
-        color: touch.has-hover && root.enabled ? Theme.foreground : Theme.muted;
+        color: touch.has-hover && root.is-enabled ? Theme.foreground : Theme.muted;
         overflow: elide;
     }
 
     TooltipAnchor {
         text: root.tooltip;
-        hovered: touch.has-hover;
+        is-hovered: touch.has-hover;
     }
 
     touch := TouchArea {
-        mouse-cursor: root.enabled ? pointer : default;
+        mouse-cursor: root.is-enabled ? pointer : default;
         clicked => {
-            if (root.enabled) {
+            if (root.is-enabled) {
                 root.clicked();
             }
         }
@@ -117,17 +117,17 @@ component LyricsPanel inherits Rectangle {
 
         VerticalLayout {
             width: parent.width;
-            padding-top: NowPlayingState.lyrics-synced ? lyrics-scroller.height / 3 : 8px;
-            padding-bottom: NowPlayingState.lyrics-synced ? lyrics-scroller.height / 2 : 8px;
+            padding-top: NowPlayingState.has-synced-lyrics ? lyrics-scroller.height / 3 : 8px;
+            padding-bottom: NowPlayingState.has-synced-lyrics ? lyrics-scroller.height / 2 : 8px;
             padding-left: 8px;
             padding-right: 8px;
-            spacing: NowPlayingState.lyrics-synced ? 18px : 4px;
+            spacing: NowPlayingState.has-synced-lyrics ? 18px : 4px;
 
             for line[line-index] in NowPlayingState.lyrics: line-view := Rectangle {
-                property <bool> active: NowPlayingState.lyrics-synced && line-index == NowPlayingState.active-line;
-                property <bool> seekable: NowPlayingState.lyrics-synced && line.time-ms >= 0;
+                property <bool> is-active: NowPlayingState.has-synced-lyrics && line-index == NowPlayingState.active-line;
+                property <bool> is-seekable: NowPlayingState.has-synced-lyrics && line.time-ms >= 0;
                 function report-active-position() {
-                    if (self.active) {
+                    if (self.is-active) {
                         root.active-y = self.y;
                         root.active-height = self.height;
                     }
@@ -135,7 +135,7 @@ component LyricsPanel inherits Rectangle {
                 init => {
                     self.report-active-position();
                 }
-                changed active => {
+                changed is-active => {
                     self.report-active-position();
                 }
                 changed y => {
@@ -148,26 +148,26 @@ component LyricsPanel inherits Rectangle {
 
                 text := Text {
                     width: parent.width;
-                    text: line.text == "" && NowPlayingState.lyrics-synced ? "..." : line.text;
+                    text: line.text == "" && NowPlayingState.has-synced-lyrics ? "..." : line.text;
                     wrap: word-wrap;
-                    horizontal-alignment: NowPlayingState.lyrics-synced ? center : left;
-                    font-size: NowPlayingState.lyrics-synced ? 24px : 16px;
-                    font-weight: NowPlayingState.lyrics-synced ? 700 : 400;
-                    color: !NowPlayingState.lyrics-synced ? Theme.foreground : (line-view.active ? Theme.foreground : (touch.has-hover ? Theme.foreground.mix(Theme.background, 0.8826) : Theme.foreground.mix(Theme.background, 0.385)));
+                    horizontal-alignment: NowPlayingState.has-synced-lyrics ? center : left;
+                    font-size: NowPlayingState.has-synced-lyrics ? 24px : 16px;
+                    font-weight: NowPlayingState.has-synced-lyrics ? 700 : 400;
+                    color: !NowPlayingState.has-synced-lyrics ? Theme.foreground : (line-view.is-active ? Theme.foreground : (touch.has-hover ? Theme.foreground.mix(Theme.background, 0.8826) : Theme.foreground.mix(Theme.background, 0.385)));
                     animate color { duration: 200ms; }
                 }
 
                 touch := TouchArea {
-                    enabled: line-view.seekable;
-                    mouse-cursor: line-view.seekable ? pointer : default;
+                    enabled: line-view.is-seekable;
+                    mouse-cursor: line-view.is-seekable ? pointer : default;
                     clicked => {
                         PlayerState.seek(line.time-ms);
                     }
                 }
 
                 TooltipAnchor {
-                    text: line-view.seekable ? @tr("Jump to this line") : "";
-                    hovered: touch.has-hover;
+                    text: line-view.is-seekable ? @tr("Jump to this line") : "";
+                    is-hovered: touch.has-hover;
                 }
             }
         }
@@ -194,7 +194,7 @@ component UpNextPanel inherits Rectangle {
         for row[row-index] in NowPlayingState.up-next: Rectangle {
             height: 52px;
             border-radius: Theme.radius;
-            background: row.current ? Theme.selected : (touch.has-hover ? Theme.hover : transparent);
+            background: row.is-current ? Theme.selected : (touch.has-hover ? Theme.hover : transparent);
 
             touch := TouchArea {
                 double-clicked => {
@@ -204,7 +204,7 @@ component UpNextPanel inherits Rectangle {
 
             TooltipAnchor {
                 text: @tr("Double-click to play");
-                hovered: touch.has-hover;
+                is-hovered: touch.has-hover;
             }
 
             HorizontalLayout {
@@ -215,13 +215,13 @@ component UpNextPanel inherits Rectangle {
                 Rectangle {
                     width: 24px;
 
-                    if row.current: Icon {
+                    if row.is-current: Icon {
                         path: Icons.note;
                         color: Theme.primary;
                         width: 16px;
                         height: 16px;
                     }
-                    if !row.current: Text {
+                    if !row.is-current: Text {
                         text: row-index;
                         color: Theme.muted;
                         font-size: 12px;
@@ -236,7 +236,7 @@ component UpNextPanel inherits Rectangle {
 
                     Text {
                         text: row.title;
-                        color: row.current ? Theme.primary : Theme.foreground;
+                        color: row.is-current ? Theme.primary : Theme.foreground;
                         overflow: elide;
                     }
 
@@ -260,11 +260,11 @@ component UpNextPanel inherits Rectangle {
 }
 
 component SimilarPanel inherits Rectangle {
-    if NowPlayingState.similar-loading: Placeholder {
+    if NowPlayingState.is-similar-loading: Placeholder {
         text: @tr("Loading similar songs...");
     }
-    if !NowPlayingState.similar-loading && NowPlayingState.similar.length == 0: Placeholder {
-        text: NowPlayingState.external ? @tr("Similar songs come from your server, so YouTube tracks have none") : @tr("No similar songs found");
+    if !NowPlayingState.is-similar-loading && NowPlayingState.similar.length == 0: Placeholder {
+        text: NowPlayingState.is-external ? @tr("Similar songs come from your server, so YouTube tracks have none") : @tr("No similar songs found");
     }
 
     ListView {
@@ -281,7 +281,7 @@ component SimilarPanel inherits Rectangle {
 
             TooltipAnchor {
                 text: @tr("Double-click to play");
-                hovered: touch.has-hover;
+                is-hovered: touch.has-hover;
             }
 
             HorizontalLayout {
@@ -457,8 +457,8 @@ export component NowPlayingView inherits Rectangle {
                         Link {
                             text: artist.name;
                             font-size: 16px;
-                            enabled: artist.id != "";
-                            tooltip: NowPlayingState.external ? @tr("YouTube artists are not in your library") : (artist.id != "" ? @tr("Go to {}", artist.name) : "");
+                            is-enabled: artist.id != "";
+                            tooltip: NowPlayingState.is-external ? @tr("YouTube artists are not in your library") : (artist.id != "" ? @tr("Go to {}", artist.name) : "");
                             clicked => {
                                 AppState.navigate(Route.artist-detail, artist.id);
                             }
@@ -472,8 +472,8 @@ export component NowPlayingView inherits Rectangle {
                     Link {
                         text: PlayerState.album;
                         font-size: 14px;
-                        enabled: NowPlayingState.album-id != "";
-                        tooltip: NowPlayingState.external ? @tr("YouTube albums are not in your library") : (NowPlayingState.album-id != "" ? @tr("Go to album") : "");
+                        is-enabled: NowPlayingState.album-id != "";
+                        tooltip: NowPlayingState.is-external ? @tr("YouTube albums are not in your library") : (NowPlayingState.album-id != "" ? @tr("Go to album") : "");
                         clicked => {
                             AppState.navigate(Route.album-detail, NowPlayingState.album-id);
                         }
@@ -492,8 +492,8 @@ export component NowPlayingView inherits Rectangle {
 
                 TabButton {
                     text: @tr("Lyrics");
-                    tooltip: self.active ? @tr("{} is shown", self.text) : @tr("Show {}", self.text);
-                    active: NowPlayingState.tab == NowPlayingTab.lyrics;
+                    tooltip: self.is-active ? @tr("{} is shown", self.text) : @tr("Show {}", self.text);
+                    is-active: NowPlayingState.tab == NowPlayingTab.lyrics;
                     clicked => {
                         NowPlayingState.tab = NowPlayingTab.lyrics;
                     }
@@ -501,8 +501,8 @@ export component NowPlayingView inherits Rectangle {
 
                 TabButton {
                     text: @tr("Up next");
-                    tooltip: self.active ? @tr("{} is shown", self.text) : @tr("Show {}", self.text);
-                    active: NowPlayingState.tab == NowPlayingTab.up-next;
+                    tooltip: self.is-active ? @tr("{} is shown", self.text) : @tr("Show {}", self.text);
+                    is-active: NowPlayingState.tab == NowPlayingTab.up-next;
                     clicked => {
                         NowPlayingState.tab = NowPlayingTab.up-next;
                         NowPlayingState.refresh-up-next();
@@ -511,8 +511,8 @@ export component NowPlayingView inherits Rectangle {
 
                 TabButton {
                     text: @tr("Similar");
-                    tooltip: self.active ? @tr("{} is shown", self.text) : @tr("Show {}", self.text);
-                    active: NowPlayingState.tab == NowPlayingTab.similar;
+                    tooltip: self.is-active ? @tr("{} is shown", self.text) : @tr("Show {}", self.text);
+                    is-active: NowPlayingState.tab == NowPlayingTab.similar;
                     clicked => {
                         NowPlayingState.tab = NowPlayingTab.similar;
                     }

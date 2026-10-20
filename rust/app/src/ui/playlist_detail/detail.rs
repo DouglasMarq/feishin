@@ -5,7 +5,7 @@ pub struct Detail {
     pub generation: u64,
     pub id: String,
     pub name: String,
-    busy: bool,
+    is_busy: bool,
 }
 
 pub type SharedDetail = Arc<Mutex<Detail>>;
@@ -31,10 +31,10 @@ impl Detail {
     }
 
     pub fn start_removal(&mut self, indexes: &[usize]) -> Option<RemovalTarget> {
-        if self.busy || indexes.is_empty() || self.id.is_empty() {
+        if self.is_busy || indexes.is_empty() || self.id.is_empty() {
             return None;
         }
-        self.busy = true;
+        self.is_busy = true;
         Some(RemovalTarget {
             generation: self.generation,
             playlist_id: self.id.clone(),
@@ -46,7 +46,7 @@ impl Detail {
         if self.generation != generation {
             return false;
         }
-        self.busy = false;
+        self.is_busy = false;
         true
     }
 }

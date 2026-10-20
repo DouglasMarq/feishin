@@ -84,7 +84,7 @@ fn record_plays(app: &AppWindow) -> Rc<RefCell<Vec<Uid>>> {
     played
 }
 
-fn open_queue_panel(follow_current_song: bool) -> QueuePage {
+fn open_queue_panel(is_following_current_song: bool) -> QueuePage {
     let window = MinimalSoftwareWindow::new(RepaintBufferType::NewBuffer);
     let platform = RenderOnlyPlatform {
         window: Rc::clone(&window),
@@ -94,11 +94,11 @@ fn open_queue_panel(follow_current_song: bool) -> QueuePage {
     app.global::<QueueState>()
         .set_rows(ModelRc::from(Rc::new(QueueModel::default())));
     app.global::<SettingsState>()
-        .set_follow_current_song(follow_current_song);
+        .set_is_following_current_song(is_following_current_song);
     let navigation = app.global::<AppState>();
     navigation.set_page(Page::Main);
     navigation.set_route(Route::Settings);
-    navigation.set_queue_open(true);
+    navigation.set_is_queue_open(true);
     let played = record_plays(&app);
     app.show().unwrap();
     window.set_size(SIZE);

@@ -33,7 +33,7 @@ pub(super) fn show(window: &AppWindow, catalog: &PaletteCatalog, settings: &Appe
     let state = window.global::<AppearanceState>();
     let dark_default = ThemeId::default_dark();
     let light_default = ThemeId::default_light();
-    state.set_follow_system(settings.is_following_system);
+    state.set_is_following_system(settings.is_following_system);
     state.set_theme_index(slint_index(
         catalog.index_or(&settings.theme, &dark_default),
     ));
@@ -43,7 +43,7 @@ pub(super) fn show(window: &AppWindow, catalog: &PaletteCatalog, settings: &Appe
     state.set_light_theme_index(slint_index(
         catalog.index_or(&settings.light_theme, &light_default),
     ));
-    state.set_use_theme_accent(settings.is_using_theme_accent);
+    state.set_is_using_theme_accent(settings.is_using_theme_accent);
     show_accent(&state, settings.accent);
 }
 
@@ -58,14 +58,14 @@ pub(super) fn read(window: &AppWindow, catalog: &PaletteCatalog) -> AppearanceSe
         theme: catalog
             .id_at(state.get_theme_index())
             .unwrap_or_else(ThemeId::default_dark),
-        is_following_system: state.get_follow_system(),
+        is_following_system: state.get_is_following_system(),
         dark_theme: catalog
             .id_at(state.get_dark_theme_index())
             .unwrap_or_else(ThemeId::default_dark),
         light_theme: catalog
             .id_at(state.get_light_theme_index())
             .unwrap_or_else(ThemeId::default_light),
-        is_using_theme_accent: state.get_use_theme_accent(),
+        is_using_theme_accent: state.get_is_using_theme_accent(),
         accent: accent_color(state.get_accent()),
     }
 }

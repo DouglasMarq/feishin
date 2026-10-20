@@ -5,10 +5,10 @@ export { Palettes, ThemePalette }
 
 export global Theme {
     in-out property <int> palette-index: 0;
-    in-out property <bool> custom-accent;
+    in-out property <bool> has-custom-accent;
     in-out property <color> accent: #3574fc;
     property <ThemePalette> palette: Palettes.all[palette-index];
-    out property <bool> dark: palette.dark;
+    out property <bool> is-dark: palette.is-dark;
     out property <color> background: palette.background;
     out property <color> background-alt: palette.background-alt;
     out property <color> surface: palette.surface;
@@ -16,19 +16,19 @@ export global Theme {
     out property <color> border: palette.border;
     out property <color> foreground: palette.foreground;
     out property <color> muted: palette.muted;
-    out property <color> primary: custom-accent ? accent : palette.primary;
+    out property <color> primary: has-custom-accent ? accent : palette.primary;
     out property <color> on-primary: primary.to-oklch().lightness > 0.65 ? #141414 : #ffffff;
     out property <color> danger: palette.danger;
-    out property <color> tint: dark ? #ffffff : #000000;
+    out property <color> tint: is-dark ? #ffffff : #000000;
     out property <color> hover: tint.with-alpha(15 / 255);
     out property <color> selected: primary.with-alpha(41 / 255);
     out property <length> radius: 6px;
 
-    public function apply(index: int, use-custom-accent: bool, accent-color: color) {
+    public function apply(index: int, is-custom-accent-used: bool, accent-color: color) {
         self.palette-index = index;
-        self.custom-accent = use-custom-accent;
+        self.has-custom-accent = is-custom-accent-used;
         self.accent = accent-color;
-        Palette.color-scheme = Palettes.all[index].dark ? ColorScheme.dark : ColorScheme.light;
+        Palette.color-scheme = Palettes.all[index].is-dark ? ColorScheme.dark : ColorScheme.light;
     }
 }
 

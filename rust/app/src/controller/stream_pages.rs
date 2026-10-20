@@ -84,11 +84,11 @@ impl Controller {
 
     fn after_stream_page(&mut self, stream: StreamId) {
         self.refresh_preload();
-        let publish_due = self
+        let is_publish_due = self
             .list_streams
             .get_mut(stream)
-            .is_some_and(ActiveStream::publish_due);
-        if publish_due {
+            .is_some_and(ActiveStream::is_publish_due);
+        if is_publish_due {
             self.publish_queue();
         }
     }

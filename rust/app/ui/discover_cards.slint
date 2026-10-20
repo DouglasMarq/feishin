@@ -4,15 +4,15 @@ import { Icon, IconButton, TooltipAnchor } from "widgets.slint";
 import { DiscoverCard, DiscoverCardKind, DiscoverIcons, DiscoverShelf, DiscoverState } from "discover_state.slint";
 
 component CardPlayButton inherits Rectangle {
-    in property <bool> shown;
+    in property <bool> is-shown;
     in property <string> tooltip;
-    out property <bool> hovered: touch.has-hover;
+    out property <bool> is-hovered: touch.has-hover;
     callback clicked();
     width: 40px;
     height: 40px;
     border-radius: self.height / 2;
     background: touch.has-hover ? Theme.primary.brighter(15%) : Theme.primary;
-    opacity: root.shown || touch.has-hover ? 1 : 0;
+    opacity: root.is-shown || touch.has-hover ? 1 : 0;
 
     Icon {
         path: Icons.play;
@@ -23,11 +23,11 @@ component CardPlayButton inherits Rectangle {
 
     TooltipAnchor {
         text: root.tooltip;
-        hovered: touch.has-hover;
+        is-hovered: touch.has-hover;
     }
 
     touch := TouchArea {
-        enabled: root.shown || self.has-hover;
+        enabled: root.is-shown || self.has-hover;
         mouse-cursor: pointer;
         clicked => {
             root.clicked();
@@ -39,24 +39,24 @@ export component DiscoverCardView inherits Rectangle {
     in property <DiscoverCard> card;
     in property <int> shelf-index;
     in property <int> card-index;
-    in property <bool> on-screen;
+    in property <bool> is-on-screen;
     property <bool> is-song: root.card.kind == DiscoverCardKind.song;
-    property <bool> wants-cover: root.on-screen && !root.card.has-cover && root.card.can-load-cover;
+    property <bool> wants-cover: root.is-on-screen && !root.card.has-cover && root.card.can-load-cover;
     property <bool> is-album: root.card.kind == DiscoverCardKind.album;
     property <bool> is-mix: root.card.kind == DiscoverCardKind.mix;
     width: 160px;
     height: 214px;
 
     init => {
-        if (root.on-screen) {
+        if (root.is-on-screen) {
             DiscoverState.card-visibility-changed(root.shelf-index, root.card-index, true);
         }
         if (root.wants-cover) {
             DiscoverState.cover-needed(root.shelf-index, root.card-index);
         }
     }
-    changed on-screen => {
-        DiscoverState.card-visibility-changed(root.shelf-index, root.card-index, self.on-screen);
+    changed is-on-screen => {
+        DiscoverState.card-visibility-changed(root.shelf-index, root.card-index, self.is-on-screen);
     }
     changed wants-cover => {
         if (self.wants-cover) {
@@ -127,7 +127,7 @@ export component DiscoverCardView inherits Rectangle {
 
     TooltipAnchor {
         text: root.is-song ? @tr("Play \"{}\" and the rest of this shelf", root.card.title) : root.is-album ? @tr("Open the album \"{}\"", root.card.title) : root.is-mix ? @tr("Open the mix \"{}\"", root.card.title) : @tr("Open the playlist \"{}\"", root.card.title);
-        hovered: card-touch.has-hover && !play-button.hovered;
+        is-hovered: card-touch.has-hover && !play-button.is-hovered;
     }
 
     Rectangle {
@@ -152,14 +152,14 @@ export component DiscoverCardView inherits Rectangle {
             image-fit: cover;
         }
 
-        if card-touch.has-hover || play-button.hovered: Rectangle {
+        if card-touch.has-hover || play-button.is-hovered: Rectangle {
             background: #00000040;
         }
 
         play-button := CardPlayButton {
             x: parent.width - self.width - 10px;
             y: parent.height - self.height - 10px;
-            shown: card-touch.has-hover;
+            is-shown: card-touch.has-hover;
             tooltip: root.is-song ? @tr("Play from here") : root.is-album ? @tr("Play the album") : root.is-mix ? @tr("Play the mix") : @tr("Play the playlist");
             clicked => {
                 if (root.is-song) {
@@ -251,7 +251,7 @@ export component SkeletonShelf inherits VerticalLayout {
 export component DiscoverShelfView inherits VerticalLayout {
     in property <DiscoverShelf> shelf;
     in property <int> index;
-    in property <bool> on-screen;
+    in property <bool> is-on-screen;
     property <length> stride: 176px;
     property <length> max-scroll: max(0px, strip.content-width - strip.width);
     spacing: 10px;
@@ -272,8 +272,8 @@ export component DiscoverShelfView inherits VerticalLayout {
 
         IconButton {
             icon: DiscoverIcons.left;
-            enabled: strip.content-x < 0;
-            tooltip: self.enabled ? @tr("Scroll left") : @tr("Already at the start");
+            is-enabled: strip.content-x < 0;
+            tooltip: self.is-enabled ? @tr("Scroll left") : @tr("Already at the start");
             clicked => {
                 strip.content-x = min(0px, strip.content-x + strip.width * 0.8);
             }
@@ -281,8 +281,8 @@ export component DiscoverShelfView inherits VerticalLayout {
 
         IconButton {
             icon: DiscoverIcons.right;
-            enabled: -strip.content-x < root.max-scroll;
-            tooltip: self.enabled ? @tr("Scroll right") : @tr("Already at the end");
+            is-enabled: -strip.content-x < root.max-scroll;
+            tooltip: self.is-enabled ? @tr("Scroll right") : @tr("Already at the end");
             clicked => {
                 strip.content-x = max(-root.max-scroll, strip.content-x - strip.width * 0.8);
             }
@@ -303,7 +303,7 @@ export component DiscoverShelfView inherits VerticalLayout {
                 card: card;
                 shelf-index: root.index;
                 card-index: card-index;
-                on-screen: root.on-screen && self.x + strip.content-x + self.width > 0 && self.x + strip.content-x < strip.width;
+                is-on-screen: root.is-on-screen && self.x + strip.content-x + self.width > 0 && self.x + strip.content-x < strip.width;
             }
         }
     }
@@ -340,7 +340,7 @@ export component MoodGrid inherits Rectangle {
 
         TooltipAnchor {
             text: mood-index == root.selected ? @tr("Showing playlists for {}", mood) : @tr("Show playlists for {}", mood);
-            hovered: mood-touch.has-hover;
+            is-hovered: mood-touch.has-hover;
         }
 
         mood-touch := TouchArea {

@@ -89,7 +89,7 @@ pub fn fetch_genres(window: &AppWindow, context: &Context, list: &Rc<RefCell<Gen
         return;
     };
     let generation = list.borrow_mut().next_generation();
-    window.global::<GenresState>().set_genres_loading(true);
+    window.global::<GenresState>().set_is_genres_loading(true);
     let (sender, receiver) = tokio::sync::oneshot::channel();
     context.runtime.spawn(async move {
         if sender.send(server.genre_list().await).is_err() {
@@ -118,7 +118,7 @@ fn apply_genres(
     if list.generation != generation {
         return;
     }
-    window.global::<GenresState>().set_genres_loading(false);
+    window.global::<GenresState>().set_is_genres_loading(false);
     match result {
         Ok(genres) => {
             list.genres = genres;

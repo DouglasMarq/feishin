@@ -10,12 +10,12 @@ use crate::ui::{AppWindow, Context, TrackItem, on_ui, show_status};
 pub fn track_table(
     window: &AppWindow,
     context: &Context,
-    favorite: bool,
+    is_favorite: bool,
     binding: Binding<TrackItem>,
 ) -> ModelRc<TrackItem> {
     let weak = window.as_weak();
     let context = context.clone();
-    ModelRc::new(TrackTable::new(favorite, move |request| {
+    ModelRc::new(TrackTable::new(is_favorite, move |request| {
         spawn_tracks(weak.clone(), &context, binding, request);
     }))
 }

@@ -20,18 +20,18 @@ pub fn toggle_favorite(window: &AppWindow, context: &Context) {
         return;
     };
     let state = window.global::<AlbumDetailState>();
-    let favorite = !state.get_favorite();
-    state.set_favorite(favorite);
+    let is_favorite = !state.get_is_favorite();
+    state.set_is_favorite(is_favorite);
     let weak_window = window.as_weak();
     context.runtime.spawn(async move {
         let result = server
-            .set_favorite(ItemKind::Album, &[album_id.to_string()], favorite)
+            .set_favorite(ItemKind::Album, &[album_id.to_string()], is_favorite)
             .await;
         if let Err(error) = result {
             on_ui(&weak_window, move |window| {
                 let state = window.global::<AlbumDetailState>();
                 if state.get_album_id() == album_id {
-                    state.set_favorite(!favorite);
+                    state.set_is_favorite(!is_favorite);
                 }
                 show_status(window, &tr!("Could not update favorite: {}", error));
             });

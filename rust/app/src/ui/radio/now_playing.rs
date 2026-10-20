@@ -5,7 +5,7 @@ use crate::ui::{AppWindow, RadioState};
 
 pub fn show_now_playing(window: &AppWindow, now_playing: Option<&RadioNowPlaying>) {
     let state = window.global::<RadioState>();
-    state.set_active(now_playing.is_some());
+    state.set_is_active(now_playing.is_some());
     let Some(now_playing) = now_playing else {
         state.set_playing_id("".into());
         state.set_station_name("".into());

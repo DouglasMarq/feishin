@@ -47,7 +47,7 @@ fn show_count(window: &AppWindow, generation: u64, result: feishin_api::Result<u
     }
     let state = window.global::<TracksState>();
     state.set_total(clamp_i32(total as u64));
-    state.set_loading(false);
+    state.set_is_loading(false);
     if let Err(error) = result {
         show_status(window, &tr!("Could not load tracks: {}", error));
     }

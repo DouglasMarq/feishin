@@ -74,18 +74,21 @@ pub fn load_song_cover(window: &AppWindow, deps: &DiscoverDeps, index: usize) {
 
 pub fn load_page_cover(window: &AppWindow, deps: &DiscoverDeps, generation: u64, url: String) {
     fetch_cover(window, deps, url, PAGE_COVER_SIZE, move |window, cover| {
-        let current = with_discover(window, |model| model.page.borrow().generation == generation);
-        let (Some(true), Some(cover)) = (current, cover) else {
+        let is_current =
+            with_discover(window, |model| model.page.borrow().generation == generation);
+        let (Some(true), Some(cover)) = (is_current, cover) else {
             return;
         };
         let state = window.global::<DiscoverState>();
         state.set_page_cover(cover);
-        state.set_page_has_cover(true);
+        state.set_has_page_cover(true);
     });
 }
 
-pub fn card_visibility_changed(window: &AppWindow, shelf: usize, card: usize, visible: bool) {
-    with_discover(window, |model| model.set_card_visible(shelf, card, visible));
+pub fn card_visibility_changed(window: &AppWindow, shelf: usize, card: usize, is_visible: bool) {
+    with_discover(window, |model| {
+        model.set_card_visible(shelf, card, is_visible)
+    });
 }
 
 pub fn song_rows_shown(window: &AppWindow, first_row: usize, row_count: usize) {

@@ -22,8 +22,8 @@ const SEARCH_DEBOUNCE: Duration = Duration::from_millis(300);
 
 type SearchText = Rc<RefCell<String>>;
 
-pub fn set_favorite(window: &AppWindow, artist_id: &str, favorite: bool) {
-    with_list(window, |list| list.set_favorite(artist_id, favorite));
+pub fn set_favorite(window: &AppWindow, artist_id: &str, is_favorite: bool) {
+    with_list(window, |list| list.set_favorite(artist_id, is_favorite));
 }
 
 fn install_models(window: &AppWindow, context: &Context) -> Rc<ArtistList> {

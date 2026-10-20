@@ -30,15 +30,15 @@ pub(super) fn show(window: &AppWindow, detail: AlbumDetail) {
     state.set_name(album.name.as_str().into());
     state.set_artists(ModelRc::new(VecModel::from(artists)));
     state.set_info(album_info(&detail).into());
-    state.set_favorite(album.is_favorite);
+    state.set_is_favorite(album.is_favorite);
     state.set_rating(i32::from(album.user_rating.unwrap_or(0)));
     show_tracks(window, detail.songs);
-    state.set_loading(false);
+    state.set_is_loading(false);
 }
 
 fn show_error(window: &AppWindow, error: &ApiError) {
     let state = window.global::<AlbumDetailState>();
-    state.set_loading(false);
+    state.set_is_loading(false);
     state.set_error(tr!("Album not found").into());
     show_status(window, &tr!("Could not load the album: {}", error));
 }
@@ -46,14 +46,14 @@ fn show_error(window: &AppWindow, error: &ApiError) {
 fn clear(window: &AppWindow, album_id: &SharedString) {
     let state = window.global::<AlbumDetailState>();
     state.set_album_id(album_id.clone());
-    state.set_loading(true);
+    state.set_is_loading(true);
     state.set_error(SharedString::default());
     state.set_name(SharedString::default());
     state.set_artists(ModelRc::default());
     state.set_info(SharedString::default());
     state.set_has_cover(false);
     state.set_cover(slint::Image::default());
-    state.set_favorite(false);
+    state.set_is_favorite(false);
     state.set_rating(0);
     show_tracks(window, Vec::new());
 }

@@ -7,24 +7,24 @@ export component TrackRowView inherits Rectangle {
     in property <TrackRow> track;
     callback play();
     callback clicked();
-    callback select(ctrl-held: bool, shift-held: bool);
+    callback select(is-control-held: bool, is-shift-held: bool);
     callback context-menu(window-x: length, window-y: length);
     callback toggle-favorite();
     callback rate(rating: int);
     height: 36px;
-    background: root.track.selected ? Theme.selected : (touch.has-hover ? Theme.hover : transparent);
+    background: root.track.is-selected ? Theme.selected : (touch.has-hover ? Theme.hover : transparent);
 
     touch := TouchArea {
         clicked => {
             root.clicked();
         }
         double-clicked => {
-            if (root.track.loaded) {
+            if (root.track.is-loaded) {
                 root.play();
             }
         }
         pointer-event(event) => {
-            if (event.kind == PointerEventKind.down && root.track.loaded) {
+            if (event.kind == PointerEventKind.down && root.track.is-loaded) {
                 if (event.button == PointerEventButton.left) {
                     root.select(event.modifiers.control, event.modifiers.shift);
                 } else if (event.button == PointerEventButton.right) {
@@ -34,15 +34,15 @@ export component TrackRowView inherits Rectangle {
         }
 
         TooltipAnchor {
-            text: root.track.loaded ? @tr("Double-click to play") : "";
-            hovered: touch.has-hover;
+            text: root.track.is-loaded ? @tr("Double-click to play") : "";
+            is-hovered: touch.has-hover;
         }
 
         HorizontalLayout {
             Rectangle {
                 width: TracksState.w-index;
 
-                if !touch.has-hover && !root.track.playing: Text {
+                if !touch.has-hover && !root.track.is-playing: Text {
                     x: 0;
                     width: parent.width - 16px;
                     text: root.track.index;
@@ -51,7 +51,7 @@ export component TrackRowView inherits Rectangle {
                     vertical-alignment: center;
                 }
 
-                if !touch.has-hover && root.track.playing: Icon {
+                if !touch.has-hover && root.track.is-playing: Icon {
                     x: parent.width - 16px - self.width;
                     path: Icons.note;
                     color: Theme.primary;
@@ -59,7 +59,7 @@ export component TrackRowView inherits Rectangle {
                     height: 16px;
                 }
 
-                if touch.has-hover && root.track.loaded: Rectangle {
+                if touch.has-hover && root.track.is-loaded: Rectangle {
                     x: parent.width - 16px - self.width;
                     width: 24px;
                     height: 24px;
@@ -74,7 +74,7 @@ export component TrackRowView inherits Rectangle {
 
                     TooltipAnchor {
                         text: @tr("Play");
-                        hovered: play-touch.has-hover;
+                        is-hovered: play-touch.has-hover;
                     }
 
                     play-touch := TouchArea {
@@ -86,17 +86,17 @@ export component TrackRowView inherits Rectangle {
                 }
             }
 
-            if root.track.loaded: HorizontalLayout {
+            if root.track.is-loaded: HorizontalLayout {
                 Cell {
                     width: TracksState.w-title;
                     text: root.track.title;
-                    text-color: root.track.playing ? Theme.primary : Theme.foreground;
+                    text-color: root.track.is-playing ? Theme.primary : Theme.foreground;
                 }
 
-                if TracksState.show-artist: LinkCell {
+                if TracksState.is-artist-shown: LinkCell {
                     width: TracksState.w-artist;
                     text: root.track.artists;
-                    enabled: root.track.artist-id != "";
+                    is-enabled: root.track.artist-id != "";
                     clicked => {
                         AppState.navigate(Route.artist-detail, root.track.artist-id);
                     }
@@ -105,10 +105,10 @@ export component TrackRowView inherits Rectangle {
                     }
                 }
 
-                if TracksState.show-album: LinkCell {
+                if TracksState.is-album-shown: LinkCell {
                     width: TracksState.w-album;
                     text: root.track.album;
-                    enabled: root.track.album-id != "";
+                    is-enabled: root.track.album-id != "";
                     clicked => {
                         AppState.navigate(Route.album-detail, root.track.album-id);
                     }
@@ -117,25 +117,25 @@ export component TrackRowView inherits Rectangle {
                     }
                 }
 
-                if TracksState.show-year: Cell {
+                if TracksState.is-year-shown: Cell {
                     width: TracksState.w-year;
                     text: root.track.year;
                 }
 
-                if TracksState.show-plays: Cell {
+                if TracksState.is-plays-shown: Cell {
                     width: TracksState.w-plays;
                     text: root.track.plays;
                 }
 
-                if TracksState.show-duration: Cell {
+                if TracksState.is-duration-shown: Cell {
                     width: TracksState.w-duration;
                     text: root.track.duration;
                 }
 
-                if TracksState.show-favorite: FavoriteCell {
+                if TracksState.is-favorite-shown: FavoriteCell {
                     width: TracksState.w-favorite;
-                    favorite: root.track.favorite;
-                    row-hover: touch.has-hover;
+                    is-favorite: root.track.is-favorite;
+                    is-row-hovered: touch.has-hover;
                     toggle => {
                         root.toggle-favorite();
                     }
@@ -144,7 +144,7 @@ export component TrackRowView inherits Rectangle {
                     }
                 }
 
-                if TracksState.show-rating: RatingCell {
+                if TracksState.is-rating-shown: RatingCell {
                     width: TracksState.w-rating;
                     rating: root.track.rating;
                     rate(value) => {
@@ -158,7 +158,7 @@ export component TrackRowView inherits Rectangle {
                 Rectangle { }
             }
 
-            if !root.track.loaded: HorizontalLayout {
+            if !root.track.is-loaded: HorizontalLayout {
                 spacing: 24px;
                 padding-right: 24px;
 

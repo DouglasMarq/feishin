@@ -13,7 +13,7 @@ use crate::ui::{AppWindow, on_ui};
 #[derive(Default)]
 pub struct MixState {
     set: Option<MixSet>,
-    building: bool,
+    is_building: bool,
     revision: u64,
 }
 
@@ -35,7 +35,7 @@ impl MixState {
             .set
             .as_ref()
             .is_some_and(|set| set.is_fresh_for(server_id, today));
-        if self.building || fresh {
+        if self.is_building || fresh {
             return None;
         }
         if self
@@ -45,7 +45,7 @@ impl MixState {
         {
             self.show(None);
         }
-        self.building = true;
+        self.is_building = true;
         Some(self.set.clone())
     }
 
@@ -57,7 +57,7 @@ impl MixState {
     }
 
     fn finish_build(&mut self, set: Option<MixSet>) {
-        self.building = false;
+        self.is_building = false;
         self.show(set);
     }
 }

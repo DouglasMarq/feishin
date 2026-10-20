@@ -20,7 +20,7 @@ enum RequestOutcome {
 
 fn start_request(window: &AppWindow, shared: &SharedPicker) -> Option<PendingRequest> {
     let pending = lock(shared).start_request()?;
-    window.global::<PlaylistPickerState>().set_busy(true);
+    window.global::<PlaylistPickerState>().set_is_busy(true);
     Some(pending)
 }
 
@@ -33,7 +33,7 @@ fn finish_request(
     if !lock(shared).finish_request(generation) {
         return;
     }
-    window.global::<PlaylistPickerState>().set_busy(false);
+    window.global::<PlaylistPickerState>().set_is_busy(false);
     match outcome {
         RequestOutcome::Succeeded(message) => {
             close(window, shared);
@@ -113,7 +113,7 @@ fn finish_pick(
     outcome: feishin_api::Result<usize>,
 ) {
     let name = &picked.name;
-    let changed = matches!(outcome, Ok(added) if added > 0);
+    let has_changed = matches!(outcome, Ok(added) if added > 0);
     let outcome = match outcome {
         Ok(0) => RequestOutcome::Succeeded(tr!("Already in \"{}\"", name)),
         Ok(added) => RequestOutcome::Succeeded(tr_plural!(
@@ -125,7 +125,7 @@ fn finish_pick(
         Err(error) => RequestOutcome::Failed(tr!("Could not add to \"{}\": {}", name, error)),
     };
     finish_request(window, shared, generation, outcome);
-    if changed {
+    if has_changed {
         playlists::refresh(window);
         playlist_detail::refresh_if_showing(window, &picked.id);
     }
@@ -179,7 +179,7 @@ fn finish_create(
     song_count: usize,
     result: feishin_api::Result<Playlist>,
 ) {
-    let created = result.is_ok();
+    let is_created = result.is_ok();
     let outcome = match result {
         Ok(playlist) => RequestOutcome::Succeeded(tr_plural!(
             "Created \"{}\" with {n} song",
@@ -190,7 +190,7 @@ fn finish_create(
         Err(error) => RequestOutcome::Failed(tr!("Could not create the playlist: {}", error)),
     };
     finish_request(window, shared, generation, outcome);
-    if created {
+    if is_created {
         playlists::refresh(window);
     }
 }

@@ -70,7 +70,7 @@ pub struct Controller {
     loaded: Option<Uid>,
     loading: Option<Uid>,
     preloaded: Option<Uid>,
-    playing: bool,
+    is_playing: bool,
     position_ms: u64,
     duration_ms: u64,
     play_request: u64,
@@ -110,7 +110,7 @@ impl Controller {
             loaded: None,
             loading: None,
             preloaded: None,
-            playing: false,
+            is_playing: false,
             position_ms,
             duration_ms,
             play_request: 0,
@@ -143,7 +143,7 @@ impl Controller {
 
     #[cfg(test)]
     pub fn is_playing(&self) -> bool {
-        self.playing
+        self.is_playing
     }
 
     #[cfg(test)]

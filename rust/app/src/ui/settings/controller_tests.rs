@@ -65,7 +65,7 @@ impl AudioOutput for RecordingAudio {
     fn set_volume(&self, _volume: u8) -> Result<()> {
         Ok(())
     }
-    fn set_muted(&self, _muted: bool) -> Result<()> {
+    fn set_muted(&self, _is_muted: bool) -> Result<()> {
         Ok(())
     }
     fn set_replay_gain(&self, mode: ReplayGainSetting) -> Result<()> {
@@ -267,8 +267,8 @@ async fn connecting_to_another_server_clears_the_queue() {
 async fn interface_and_integrations_are_saved_and_survive_shutdown() {
     let mut harness = harness(Settings::default());
     harness.controller.handle(Command::SaveInterface {
-        queue_panel_open: true,
-        follow_current_song: true,
+        is_queue_panel_open: true,
+        is_following_current_song: true,
     });
     harness
         .controller

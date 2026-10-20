@@ -25,7 +25,7 @@ pub fn open_page(window: &AppWindow, deps: &DiscoverDeps, detail_id: &str) {
     })
     .flatten();
     if let Some(generation) = generation {
-        window.global::<DiscoverState>().set_page_has_cover(false);
+        window.global::<DiscoverState>().set_has_page_cover(false);
         match target {
             PageTarget::Mix(mix) => show_mix_page(window, deps, mix, generation),
             other => fetch_page(window, deps, other, generation),
@@ -74,8 +74,8 @@ fn fetch_page(window: &AppWindow, deps: &DiscoverDeps, target: PageTarget, gener
     });
 }
 
-fn page_loaded(window: &AppWindow, deps: &DiscoverDeps, generation: u64, applied: bool) {
-    if !applied {
+fn page_loaded(window: &AppWindow, deps: &DiscoverDeps, generation: u64, is_applied: bool) {
+    if !is_applied {
         return;
     }
     let loaded = with_discover(window, |model| {

@@ -15,9 +15,9 @@ pub fn artist_songs_query(artist_id: &str) -> SongListQuery {
     }
 }
 
-pub fn play_artist(window: &AppWindow, context: &Context, artist_id: &str, shuffle: bool) {
+pub fn play_artist(window: &AppWindow, context: &Context, artist_id: &str, is_shuffled: bool) {
     let source = SongSource::Library(artist_songs_query(artist_id));
-    if !shuffle {
+    if !is_shuffled {
         context.send(Command::PlayFromList {
             source,
             song_id: None,
@@ -25,7 +25,7 @@ pub fn play_artist(window: &AppWindow, context: &Context, artist_id: &str, shuff
         });
         return;
     }
-    if !window.global::<PlayerState>().get_shuffle() {
+    if !window.global::<PlayerState>().get_is_shuffled() {
         context.send(Command::ToggleShuffle);
     }
     context.send(Command::EnqueueFromList {
@@ -37,19 +37,21 @@ pub fn play_artist(window: &AppWindow, context: &Context, artist_id: &str, shuff
 
 fn flip_loaded_favorite() -> Option<(u64, String, bool)> {
     update_current(|current| {
-        if !current.loaded {
+        if !current.is_loaded {
             return None;
         }
-        current.favorite = !current.favorite;
-        Some((current.generation, current.id.clone(), current.favorite))
+        current.is_favorite = !current.is_favorite;
+        Some((current.generation, current.id.clone(), current.is_favorite))
     })
 }
 
-fn revert_favorite(window: &AppWindow, generation: u64, artist_id: &str, favorite: bool) {
-    artists::set_favorite(window, artist_id, !favorite);
+fn revert_favorite(window: &AppWindow, generation: u64, artist_id: &str, is_favorite: bool) {
+    artists::set_favorite(window, artist_id, !is_favorite);
     if is_current(generation) {
-        update_current(|current| current.favorite = !favorite);
-        window.global::<ArtistDetailState>().set_favorite(!favorite);
+        update_current(|current| current.is_favorite = !is_favorite);
+        window
+            .global::<ArtistDetailState>()
+            .set_is_favorite(!is_favorite);
     }
 }
 
@@ -60,7 +62,9 @@ pub fn toggle_favorite(window: &AppWindow, context: &Context) {
     let Some(server) = context.session.get() else {
         return;
     };
-    window.global::<ArtistDetailState>().set_favorite(favorite);
+    window
+        .global::<ArtistDetailState>()
+        .set_is_favorite(favorite);
     artists::set_favorite(window, &artist_id, favorite);
     let weak_window = window.as_weak();
     context.runtime.spawn(async move {

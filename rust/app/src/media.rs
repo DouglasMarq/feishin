@@ -7,7 +7,7 @@ pub trait MediaSession: Send {
     fn set_metadata(&mut self, now_playing: &NowPlaying) -> Result<()>;
     fn set_status(&mut self, status: PlaybackStatus) -> Result<()>;
     fn set_volume(&mut self, volume: f64) -> Result<()>;
-    fn set_live_stream(&mut self, _live: bool) -> Result<()> {
+    fn set_live_stream(&mut self, _is_live: bool) -> Result<()> {
         Ok(())
     }
 }
@@ -33,8 +33,8 @@ impl MediaSession for Mpris {
     fn set_volume(&mut self, volume: f64) -> Result<()> {
         Ok(self.0.set_volume(volume)?)
     }
-    fn set_live_stream(&mut self, live: bool) -> Result<()> {
-        Ok(self.0.set_live_stream(live)?)
+    fn set_live_stream(&mut self, is_live: bool) -> Result<()> {
+        Ok(self.0.set_live_stream(is_live)?)
     }
 }
 
@@ -51,8 +51,8 @@ impl MediaSession for SleepInhibition {
         Ok(())
     }
     fn set_status(&mut self, status: PlaybackStatus) -> Result<()> {
-        let playing = matches!(status, PlaybackStatus::Playing { .. });
-        Ok(self.0.set_inhibited(playing)?)
+        let is_playing = matches!(status, PlaybackStatus::Playing { .. });
+        Ok(self.0.set_inhibited(is_playing)?)
     }
     fn set_volume(&mut self, _volume: f64) -> Result<()> {
         Ok(())
@@ -100,7 +100,7 @@ impl MediaSession for MediaSessions {
     fn set_volume(&mut self, volume: f64) -> Result<()> {
         self.update_each(|session| session.set_volume(volume))
     }
-    fn set_live_stream(&mut self, live: bool) -> Result<()> {
-        self.update_each(|session| session.set_live_stream(live))
+    fn set_live_stream(&mut self, is_live: bool) -> Result<()> {
+        self.update_each(|session| session.set_live_stream(is_live))
     }
 }

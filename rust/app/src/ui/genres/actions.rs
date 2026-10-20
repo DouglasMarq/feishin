@@ -8,9 +8,9 @@ use crate::ui::{AppWindow, CardRow, Context, TrackItem, on_ui, show_status};
 
 pub fn toggle_card(window: &AppWindow, context: &Context, binding: Binding<CardRow>, id: &str) {
     let flipped = with_grid(window, binding, |grid| {
-        let favorite = grid.favorite(id)?;
-        grid.set_favorite(id, !favorite);
-        Some((grid.kind()?, favorite))
+        let is_favorite = grid.is_favorite(id)?;
+        grid.set_favorite(id, !is_favorite);
+        Some((grid.kind()?, is_favorite))
     })
     .flatten();
     let Some((kind, favorite)) = flipped else {

@@ -39,7 +39,7 @@ pub fn install(window: &AppWindow, context: &Context) {
 
 pub fn show_availability(window: &AppWindow, server: &dyn MusicServer) {
     let state = window.global::<ShareState>();
-    state.set_available(server.can_share());
+    state.set_is_available(server.can_share());
     state.set_unavailable_reason(unavailable_reason().into());
 }
 
@@ -69,7 +69,7 @@ fn share_selected_tracks(window: &AppWindow, context: &Context) {
 
 fn start_share(window: &AppWindow, context: &Context, request: ShareRequest) {
     let state = window.global::<ShareState>();
-    if state.get_busy() {
+    if state.get_is_busy() {
         return;
     }
     let Some(server) = context.session.get() else {
@@ -80,7 +80,7 @@ fn start_share(window: &AppWindow, context: &Context, request: ShareRequest) {
         show_status(window, &tr!("Cannot share: {}", unavailable_reason()));
         return;
     }
-    state.set_busy(true);
+    state.set_is_busy(true);
     let weak = window.as_weak();
     context.runtime.spawn(async move {
         let description = request.description.as_deref();
@@ -90,7 +90,7 @@ fn start_share(window: &AppWindow, context: &Context, request: ShareRequest) {
 }
 
 fn finish_share(window: &AppWindow, result: Result<Share, ApiError>) {
-    window.global::<ShareState>().set_busy(false);
+    window.global::<ShareState>().set_is_busy(false);
     match result {
         Ok(share) => {
             copy_link(window, &share.url);

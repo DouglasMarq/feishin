@@ -11,16 +11,16 @@ pub fn create_playlist(window: &AppWindow, context: &Context, name: &SharedStrin
     if name.is_empty() {
         return;
     }
-    window.global::<PlaylistsState>().set_busy(true);
+    window.global::<PlaylistsState>().set_is_busy(true);
     let weak = window.as_weak();
     context.runtime.spawn(async move {
         let result = server.create_playlist(&name, &[]).await;
         on_ui(&weak, move |window| {
             let state = window.global::<PlaylistsState>();
-            state.set_busy(false);
+            state.set_is_busy(false);
             match result {
                 Ok(playlist) => {
-                    state.set_creating(false);
+                    state.set_is_creating(false);
                     show_status(window, &tr!("Created playlist \"{}\"", playlist.name));
                     refresh(window);
                 }
@@ -38,13 +38,13 @@ pub fn delete_playlist(window: &AppWindow, context: &Context, id: SharedString) 
     };
     let state = window.global::<PlaylistsState>();
     let name = state.get_delete_name().to_string();
-    state.set_busy(true);
+    state.set_is_busy(true);
     let weak = window.as_weak();
     context.runtime.spawn(async move {
         let result = server.delete_playlist(&id).await;
         on_ui(&weak, move |window| {
             let state = window.global::<PlaylistsState>();
-            state.set_busy(false);
+            state.set_is_busy(false);
             state.set_delete_id("".into());
             match result {
                 Ok(()) => {

@@ -59,11 +59,11 @@ impl SleepTimer {
         self.status == Some(SleepStatus::EndOfTrack)
     }
 
-    pub fn tick(&mut self, elapsed_ms: u64, playing: bool) -> bool {
+    pub fn tick(&mut self, elapsed_ms: u64, is_playing: bool) -> bool {
         let Some(SleepStatus::Remaining { remaining_ms }) = self.status else {
             return false;
         };
-        if !playing {
+        if !is_playing {
             return false;
         }
         if elapsed_ms >= remaining_ms {

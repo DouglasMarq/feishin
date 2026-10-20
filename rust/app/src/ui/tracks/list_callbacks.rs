@@ -26,12 +26,12 @@ pub(super) fn install_model(window: &AppWindow, context: &Context) {
 
 fn sort_by(window: &AppWindow, column: TrackColumn) {
     let state = window.global::<TracksState>();
-    let descending = state.get_sort_column() == column && !state.get_sort_desc();
+    let is_descending = state.get_sort_column() == column && !state.get_is_sort_descending();
     state.set_sort_column(column);
-    state.set_sort_desc(descending);
+    state.set_is_sort_descending(is_descending);
     if let Some(mut query) = with_model(window, TracksModel::query) {
         query.sort = column.sort();
-        query.order = sort_order(descending);
+        query.order = sort_order(is_descending);
         reload(window, query);
     }
 }
@@ -82,14 +82,14 @@ pub(super) fn install_filters(window: &AppWindow) {
     let debounce = Rc::new(Timer::default());
     window
         .global::<TracksState>()
-        .on_filters_changed(move |debounced| {
+        .on_filters_changed(move |is_debounced| {
             let weak = weak.clone();
             let apply = move || {
                 if let Some(window) = weak.upgrade() {
                     apply_filters(&window);
                 }
             };
-            match debounced {
+            match is_debounced {
                 true => debounce.start(TimerMode::SingleShot, SEARCH_DEBOUNCE, apply),
                 false => {
                     debounce.stop();

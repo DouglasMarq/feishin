@@ -323,7 +323,7 @@ pub fn run(mode: Mode) -> Result<()> {
         &context,
         RemoteStart {
             mode,
-            hosting: settings.integrations.is_remote_control_enabled,
+            is_hosting: settings.integrations.is_remote_control_enabled,
             window: window.as_weak(),
             host_state: host_state_receiver,
             mirror: Arc::new(ui::player::SlintSink::new(

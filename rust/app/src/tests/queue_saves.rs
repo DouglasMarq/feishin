@@ -59,8 +59,8 @@ async fn queue_is_saved_ten_seconds_after_the_last_structural_change() {
     assert!(!wait_for_saved(&mut harness, |_| true).await);
 
     advance_and_handle(&mut harness, QUEUE_SAVE_DELAY).await;
-    let saved = wait_for_saved(&mut harness, |stored| saved_ids(stored).len() == 5).await;
-    assert!(saved, "the queue is saved once the edits settle");
+    let is_saved = wait_for_saved(&mut harness, |stored| saved_ids(stored).len() == 5).await;
+    assert!(is_saved, "the queue is saved once the edits settle");
 }
 
 #[tokio::test(start_paused = true)]
@@ -76,8 +76,11 @@ async fn position_changes_rewrite_only_the_small_playback_file() {
     harness.controller.handle(Command::Next);
     harness.controller.handle(Command::Seek(42_000));
     advance_and_handle(&mut harness, PLAYBACK_SAVE_DELAY).await;
-    let moved = wait_for_saved(&mut harness, |stored| stored.position_ms == 42_000).await;
-    assert!(moved, "the position is saved without the queue changing");
+    let has_moved = wait_for_saved(&mut harness, |stored| stored.position_ms == 42_000).await;
+    assert!(
+        has_moved,
+        "the position is saved without the queue changing"
+    );
     assert_eq!(std::fs::read(&queue_file).unwrap_or_default(), saved_queue);
 
     let saved_settings = harness.store.load_settings().unwrap_or_default();

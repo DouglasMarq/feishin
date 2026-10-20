@@ -28,9 +28,9 @@ struct ListState {
     generation: u64,
     query: ArtistListQuery,
     items: Vec<ArtistItem>,
-    fetching: bool,
-    complete: bool,
-    failed: bool,
+    is_fetching: bool,
+    is_complete: bool,
+    has_failed: bool,
     covers: CoverLru<usize, Image>,
 }
 
@@ -40,9 +40,9 @@ impl Default for ListState {
             generation: 0,
             query: ArtistListQuery::default(),
             items: Vec::new(),
-            fetching: false,
-            complete: false,
-            failed: false,
+            is_fetching: false,
+            is_complete: false,
+            has_failed: false,
             covers: CoverLru::new(COVER_CAPACITY),
         }
     }
@@ -50,9 +50,9 @@ impl Default for ListState {
 
 impl ListState {
     fn needs_next_page_near(&self, index: usize) -> bool {
-        !self.complete
-            && !self.fetching
-            && !self.failed
+        !self.is_complete
+            && !self.is_fetching
+            && !self.has_failed
             && index + PREFETCH_ROWS >= self.items.len()
     }
 
@@ -60,7 +60,7 @@ impl ListState {
         if !self.needs_next_page_near(index) {
             return;
         }
-        self.fetching = true;
+        self.is_fetching = true;
         requests.push(Request::Page {
             generation: self.generation,
             query: self.query.clone(),
@@ -124,7 +124,7 @@ impl ArtistList {
     }
 
     pub fn is_complete(&self) -> bool {
-        self.state.borrow().complete
+        self.state.borrow().is_complete
     }
 
     pub fn columns(&self) -> usize {
@@ -145,7 +145,7 @@ impl ArtistList {
             *state = ListState {
                 generation: state.generation + 1,
                 query: query.clone(),
-                fetching: true,
+                is_fetching: true,
                 ..ListState::default()
             };
             state.generation
@@ -187,8 +187,8 @@ impl ArtistList {
             if state.generation != generation || start != state.items.len() {
                 return false;
             }
-            state.fetching = false;
-            state.complete = items.len() < PAGE_SIZE;
+            state.is_fetching = false;
+            state.is_complete = items.len() < PAGE_SIZE;
             let old_len = state.items.len();
             state.items.extend(items);
             (old_len, state.items.len())
@@ -204,8 +204,8 @@ impl ArtistList {
         if state.generation != generation {
             return false;
         }
-        state.fetching = false;
-        state.failed = true;
+        state.is_fetching = false;
+        state.has_failed = true;
         true
     }
 
@@ -230,7 +230,7 @@ impl ArtistList {
         self.notify_index_changed(index);
     }
 
-    pub fn set_favorite(&self, artist_id: &str, favorite: bool) {
+    pub fn set_favorite(&self, artist_id: &str, is_favorite: bool) {
         let index = {
             let mut state = self.state.borrow_mut();
             let Some((index, item)) = state
@@ -241,7 +241,7 @@ impl ArtistList {
             else {
                 return;
             };
-            item.favorite = favorite;
+            item.is_favorite = is_favorite;
             index
         };
         self.notify_index_changed(index);
@@ -290,7 +290,7 @@ pub mod tests {
                 name: format!("Artist {index}"),
                 album_count: Some(2),
                 song_count: Some(1),
-                favorite: false,
+                is_favorite: false,
                 cover_art_id: (index % 2 == 0).then(|| format!("ar-{index}")),
             })
             .collect()
@@ -374,6 +374,6 @@ pub mod tests {
         list.reset(ArtistListQuery::default());
         assert!(list.apply_page(1, 0, items(0, 3)));
         list.set_favorite("artist-1", true);
-        assert!(list.card(1).is_some_and(|card| card.favorite));
+        assert!(list.card(1).is_some_and(|card| card.is_favorite));
     }
 }

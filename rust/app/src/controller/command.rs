@@ -72,8 +72,8 @@ pub enum Command {
     ApplyPlayback(PlaybackSettings),
     SaveIntegrations(IntegrationSettings),
     SaveInterface {
-        queue_panel_open: bool,
-        follow_current_song: bool,
+        is_queue_panel_open: bool,
+        is_following_current_song: bool,
     },
     SaveLanguage(Option<String>),
     SaveAppearance(AppearanceSettings),

@@ -42,7 +42,7 @@ impl DeviceBook {
 pub struct FileTrust {
     store: Arc<dyn Store>,
     book: Mutex<DeviceBook>,
-    persists: bool,
+    is_persistent: bool,
 }
 
 impl FileTrust {
@@ -51,7 +51,7 @@ impl FileTrust {
         let trust = Self {
             book: Mutex::new(saved.clone().unwrap_or_else(DeviceBook::new)),
             store,
-            persists: true,
+            is_persistent: true,
         };
         if saved.is_none() {
             trust.save();
@@ -63,7 +63,7 @@ impl FileTrust {
         Self {
             store,
             book: Mutex::new(DeviceBook::new()),
-            persists: false,
+            is_persistent: false,
         }
     }
 
@@ -85,7 +85,7 @@ impl FileTrust {
     }
 
     fn save(&self) {
-        if !self.persists {
+        if !self.is_persistent {
             return;
         }
         let bytes = match self.read(serde_json::to_vec) {

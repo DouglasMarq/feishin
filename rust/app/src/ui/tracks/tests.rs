@@ -53,7 +53,7 @@ fn pages_are_requested_once_and_stale_generations_ignored() {
     assert!(model.apply_count(1, 250));
     assert_eq!(model.row_count(), 250);
 
-    assert!(model.row_data(150).is_some_and(|row| !row.loaded));
+    assert!(model.row_data(150).is_some_and(|row| !row.is_loaded));
     model.row_data(160);
     assert_eq!(drain(&log), [(1, Some(1)), (1, Some(2))]);
 
@@ -62,7 +62,7 @@ fn pages_are_requested_once_and_stale_generations_ignored() {
     assert!(
         model
             .row_data(100)
-            .is_some_and(|row| row.loaded && row.playing)
+            .is_some_and(|row| row.is_loaded && row.is_playing)
     );
     assert_eq!(model.song_id_at(100).as_deref(), Some("x"));
 
@@ -129,13 +129,13 @@ fn selection_marks_rows_and_resets_with_the_query() {
 
     assert_eq!(model.select(2, false, false), 1);
     assert_eq!(model.select(150, false, true), 149);
-    assert!(model.row_data(2).is_some_and(|row| row.selected));
+    assert!(model.row_data(2).is_some_and(|row| row.is_selected));
     assert!(
         model
             .row_data(120)
-            .is_some_and(|row| row.selected && !row.loaded)
+            .is_some_and(|row| row.is_selected && !row.is_loaded)
     );
-    assert!(model.row_data(1).is_some_and(|row| !row.selected));
+    assert!(model.row_data(1).is_some_and(|row| !row.is_selected));
     assert_eq!(model.select(400, false, false), 149);
 
     let SelectedSongs::Listed(listed) = model.selected_songs() else {
@@ -156,9 +156,9 @@ fn selection_marks_rows_and_resets_with_the_query() {
     assert_eq!(ids, ["s2", "s3", "s4", "s5"]);
 
     assert_eq!(model.select_all(), 250);
-    assert!(model.row_data(249).is_some_and(|row| row.selected));
+    assert!(model.row_data(249).is_some_and(|row| row.is_selected));
     assert_eq!(model.clear_selection(), 0);
-    assert!(model.row_data(2).is_some_and(|row| !row.selected));
+    assert!(model.row_data(2).is_some_and(|row| !row.is_selected));
 
     model.select(1, false, false);
     model.reset(SongListQuery::default());
@@ -177,9 +177,9 @@ fn updates_reach_loaded_rows() {
         song.user_rating = Some(4);
     });
     let row = model.row_data(4).unwrap_or_default();
-    assert!(row.favorite);
+    assert!(row.is_favorite);
     assert_eq!(row.rating, 4);
-    assert!(model.row_data(3).is_some_and(|row| !row.favorite));
+    assert!(model.row_data(3).is_some_and(|row| !row.is_favorite));
 }
 
 async fn songs_in(server: &FakeServer, query: &SongListQuery, paging: Paging) -> Vec<Song> {
@@ -207,7 +207,7 @@ fn filters_feed_the_query() {
         ..SongListQuery::default()
     };
     let query = Filters {
-        favorite_only: true,
+        is_favorite_only: true,
         genre_id: Some("genre-2".into()),
         year_from: Some(2000),
         year_to: Some(1990),
@@ -242,7 +242,7 @@ fn rows_carry_links_favorite_and_rating() {
     assert_eq!(row.index, 14);
     assert_eq!(row.album_id, "album-1");
     assert!(row.artist_id.starts_with("artist-"));
-    assert!(row.favorite);
+    assert!(row.is_favorite);
     assert_eq!(row.rating, 3);
     assert_eq!(TrackColumn::Favorite.sort(), SongSort::Favorited);
     assert_eq!(TrackColumn::Rating.sort(), SongSort::Rating);

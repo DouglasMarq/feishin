@@ -14,7 +14,7 @@ struct FakeState {
     current: Option<Track>,
     next: Option<Track>,
     position_ms: u64,
-    playing: bool,
+    is_playing: bool,
     crossfade_ms: u64,
 }
 
@@ -62,7 +62,7 @@ impl FakeAudio {
     }
 
     fn tick(state: &mut FakeState, elapsed_ms: u64) -> Vec<PlayerEvent> {
-        let Some(current) = state.current.as_ref().filter(|_| state.playing) else {
+        let Some(current) = state.current.as_ref().filter(|_| state.is_playing) else {
             return Vec::new();
         };
         if current.is_live_stream() {
@@ -102,7 +102,7 @@ impl FakeAudio {
         match &state.current {
             Some(next) => events.push(PlayerEvent::Started { uid: next.uid }),
             None => {
-                state.playing = false;
+                state.is_playing = false;
                 events.push(PlayerEvent::Idle);
             }
         }
@@ -130,7 +130,7 @@ impl AudioOutput for FakeAudio {
             state.current = Some(track.clone());
             state.next = None;
             state.position_ms = start_ms;
-            state.playing = true;
+            state.is_playing = true;
             Some(PlayerEvent::Started { uid: track.uid })
         })?;
         if track.is_live_stream() {
@@ -155,17 +155,17 @@ impl AudioOutput for FakeAudio {
 
     fn play(&self) -> Result<()> {
         self.update(|state| {
-            let resumed = state.current.is_some() && !state.playing;
-            state.playing |= state.current.is_some();
-            resumed.then_some(PlayerEvent::Resumed)
+            let has_resumed = state.current.is_some() && !state.is_playing;
+            state.is_playing |= state.current.is_some();
+            has_resumed.then_some(PlayerEvent::Resumed)
         })
     }
 
     fn pause(&self) -> Result<()> {
         self.update(|state| {
-            let paused = state.playing;
-            state.playing = false;
-            paused.then_some(PlayerEvent::Paused)
+            let was_playing = state.is_playing;
+            state.is_playing = false;
+            was_playing.then_some(PlayerEvent::Paused)
         })
     }
 
@@ -194,7 +194,7 @@ impl AudioOutput for FakeAudio {
         Ok(())
     }
 
-    fn set_muted(&self, _muted: bool) -> Result<()> {
+    fn set_muted(&self, _is_muted: bool) -> Result<()> {
         Ok(())
     }
 
@@ -237,7 +237,7 @@ mod tests {
         let mut state = FakeState {
             current: Some(track(1, 500)),
             next: Some(track(2, 500)),
-            playing: true,
+            is_playing: true,
             ..FakeState::default()
         };
         assert_eq!(FakeAudio::tick(&mut state, 250).len(), 1);
@@ -253,7 +253,7 @@ mod tests {
         let mut state = FakeState {
             current: Some(track(1, 10_000)),
             next: Some(track(2, 10_000)),
-            playing: true,
+            is_playing: true,
             crossfade_ms: 3_000,
             ..FakeState::default()
         };
@@ -272,7 +272,7 @@ mod tests {
     fn fake_live_streams_never_end() {
         let mut state = FakeState {
             current: Some(track(1, 0)),
-            playing: true,
+            is_playing: true,
             ..FakeState::default()
         };
         for _ in 0..10 {

@@ -22,7 +22,7 @@ fn shown_uids(model: &QueueModel) -> Vec<Uid> {
 
 fn current_rows(model: &QueueModel) -> Vec<usize> {
     (0..model.row_count())
-        .filter(|&row| model.row_data(row).is_some_and(|data| data.current))
+        .filter(|&row| model.row_data(row).is_some_and(|data| data.is_current))
         .collect()
 }
 
@@ -46,7 +46,7 @@ fn rows_are_built_on_demand_from_the_view() {
     assert_eq!(row.uid, "2");
     assert_eq!(row.title, "s1");
     assert_eq!(row.duration, "1:01");
-    assert!(!row.current);
+    assert!(!row.is_current);
     assert!(model.row_data(3).is_none());
 }
 

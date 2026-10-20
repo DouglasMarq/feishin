@@ -65,7 +65,7 @@ pub fn show_login(window: &AppWindow, error: &str) {
 fn finish(window: &slint::Weak<AppWindow>, result: Result<Arc<dyn MusicServer>>) {
     on_ui(window, move |window| {
         let login = window.global::<LoginState>();
-        login.set_busy(false);
+        login.set_is_busy(false);
         match result {
             Ok(server) => {
                 login.set_password("".into());
@@ -140,7 +140,7 @@ fn install_login(window: &AppWindow, context: &Context) {
         };
         let config = config_from_form(&state, url);
         let password = state.get_password().to_string();
-        state.set_busy(true);
+        state.set_is_busy(true);
         state.set_error("".into());
         let context = login_context.clone();
         let weak = weak.clone();
@@ -159,7 +159,7 @@ fn install_import(window: &AppWindow, context: &Context) {
             return;
         };
         let state = window.global::<LoginState>();
-        state.set_busy(true);
+        state.set_is_busy(true);
         state.set_error("".into());
         let context = import_context.clone();
         let weak = weak.clone();

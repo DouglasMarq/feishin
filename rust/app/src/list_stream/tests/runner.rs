@@ -153,9 +153,9 @@ async fn a_random_start_stays_inside_the_listed_rows() {
             panic!("expected a start page, got {recorded:?}");
         };
         let started = &songs[*start_index];
-        let in_first = ids(600, 610).contains(started);
-        let in_second = ids(1990, 1995).contains(started);
-        assert!(in_first || in_second, "{started}");
+        let is_in_first = ids(600, 610).contains(started);
+        let is_in_second = ids(1990, 1995).contains(started);
+        assert!(is_in_first || is_in_second, "{started}");
     }
 }
 

@@ -64,7 +64,7 @@ pub fn search_detail_id(query: &str) -> Option<String> {
 pub struct Page {
     pub target: Option<PageTarget>,
     pub generation: u64,
-    pub loading: bool,
+    pub is_loading: bool,
     pub error: Option<String>,
     pub title: String,
     pub subtitle: String,
@@ -74,12 +74,12 @@ pub struct Page {
 
 impl Page {
     pub fn open(&mut self, target: PageTarget) -> Option<u64> {
-        let already_shown = self.target.as_ref() == Some(&target) && self.error.is_none();
-        if already_shown {
+        let is_already_shown = self.target.as_ref() == Some(&target) && self.error.is_none();
+        if is_already_shown {
             return None;
         }
         self.generation += 1;
-        self.loading = true;
+        self.is_loading = true;
         self.error = None;
         self.title = match &target {
             PageTarget::Search(query) => tr!("\"{}\"", query),
@@ -131,11 +131,11 @@ impl Page {
     }
 
     fn finish(&mut self, generation: u64) -> bool {
-        let current = generation == self.generation;
-        if current {
-            self.loading = false;
+        let is_current = generation == self.generation;
+        if is_current {
+            self.is_loading = false;
         }
-        current
+        is_current
     }
 }
 
@@ -182,7 +182,7 @@ mod tests {
         assert_eq!(page.open(album_target()), None, "already loading");
         let search = page.open(PageTarget::Search("x".into())).unwrap();
         assert!(!page.show_collection(first, Err("late".into())));
-        assert!(page.loading);
+        assert!(page.is_loading);
         assert!(page.show_search(search, Err("offline".into())));
         assert_eq!(page.error.as_deref(), Some("offline"));
         assert!(

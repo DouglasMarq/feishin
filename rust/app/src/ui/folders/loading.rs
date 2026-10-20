@@ -30,10 +30,10 @@ pub fn load(window: &AppWindow, context: &Context, trail: &SharedTrail, detail_i
     state.set_summary("".into());
     state.set_error("".into());
     let Some(server) = context.session.get() else {
-        state.set_loading(false);
+        state.set_is_loading(false);
         return;
     };
-    state.set_loading(true);
+    state.set_is_loading(true);
     let weak = window.as_weak();
     context.runtime.spawn(async move {
         let loaded = fetch_folder(server, folder, generation).await;
@@ -75,7 +75,7 @@ fn apply_loaded(window: &AppWindow, loaded: Loaded) {
         return;
     }
     let state = window.global::<FoldersState>();
-    state.set_loading(false);
+    state.set_is_loading(false);
     let (folders, page) = match (loaded.folders, loaded.songs) {
         (Ok(folders), Ok(page)) => (folders, page),
         (Err(error), _) | (_, Err(error)) => {

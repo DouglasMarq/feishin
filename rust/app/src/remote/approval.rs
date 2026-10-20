@@ -31,14 +31,14 @@ impl Approvals {
         approved
     }
 
-    pub fn answer(&self, approved: bool) {
+    pub fn answer(&self, is_approved: bool) {
         let pending = self
             .pending
             .lock()
             .unwrap_or_else(PoisonError::into_inner)
             .take();
         if let Some(pending) = pending
-            && pending.send(approved).is_err()
+            && pending.send(is_approved).is_err()
         {
             tracing::debug!("nobody waited for the device approval");
         }

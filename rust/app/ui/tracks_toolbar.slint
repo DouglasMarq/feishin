@@ -6,15 +6,15 @@ import { Icon, TooltipAnchor, TooltipComboBox } from "widgets.slint";
 component FilterChip inherits Rectangle {
     in property <string> text;
     in property <string> icon;
-    in property <bool> active;
+    in property <bool> is-active;
     in property <string> tooltip;
     callback clicked();
     height: 30px;
     horizontal-stretch: 0;
     border-radius: 15px;
     border-width: 1px;
-    border-color: root.active ? Theme.primary : Theme.border;
-    background: root.active ? Theme.selected : (touch.has-hover ? Theme.hover : transparent);
+    border-color: root.is-active ? Theme.primary : Theme.border;
+    background: root.is-active ? Theme.selected : (touch.has-hover ? Theme.hover : transparent);
 
     HorizontalLayout {
         padding-left: 12px;
@@ -24,21 +24,21 @@ component FilterChip inherits Rectangle {
         if root.icon != "": Icon {
             y: (parent.height - self.height) / 2;
             path: root.icon;
-            color: root.active ? Theme.danger : Theme.muted;
+            color: root.is-active ? Theme.danger : Theme.muted;
             width: 14px;
             height: 14px;
         }
 
         Text {
             text: root.text;
-            color: root.active ? Theme.foreground : Theme.muted;
+            color: root.is-active ? Theme.foreground : Theme.muted;
             vertical-alignment: center;
         }
     }
 
     TooltipAnchor {
         text: root.tooltip;
-        hovered: touch.has-hover;
+        is-hovered: touch.has-hover;
     }
 
     touch := TouchArea {
@@ -50,18 +50,18 @@ component FilterChip inherits Rectangle {
 }
 
 component TracksFilters inherits HorizontalLayout {
-    in property <bool> filtered;
-    in property <bool> compact;
+    in property <bool> is-filtered;
+    in property <bool> is-compact;
     spacing: 12px;
 
     FilterChip {
         y: (parent.height - self.height) / 2;
         text: @tr("Favorites");
         icon: Icons.heart;
-        active: TracksState.filter-favorite;
-        tooltip: TracksState.filter-favorite ? @tr("Favorites only: on") : @tr("Favorites only: off");
+        is-active: TracksState.is-favorite-filter-on;
+        tooltip: TracksState.is-favorite-filter-on ? @tr("Favorites only: on") : @tr("Favorites only: off");
         clicked => {
-            TracksState.filter-favorite = !TracksState.filter-favorite;
+            TracksState.is-favorite-filter-on = !TracksState.is-favorite-filter-on;
             TracksState.filters-changed(false);
         }
     }
@@ -80,12 +80,12 @@ component TracksFilters inherits HorizontalLayout {
         }
     }
 
-    if root.filtered: FilterChip {
+    if root.is-filtered: FilterChip {
         y: (parent.height - self.height) / 2;
-        text: root.compact ? @tr("Clear") : @tr("Clear filters");
+        text: root.is-compact ? @tr("Clear") : @tr("Clear filters");
         tooltip: @tr("Clear the favorites and genre filters");
         clicked => {
-            TracksState.filter-favorite = false;
+            TracksState.is-favorite-filter-on = false;
             TracksState.genre-index = 0;
             TracksState.filters-changed(false);
         }
@@ -98,8 +98,8 @@ component TracksFilters inherits HorizontalLayout {
 
 export component TracksToolbar inherits VerticalLayout {
     in property <length> available-width;
-    property <bool> filtered: TracksState.filter-favorite || TracksState.genre-index > 0;
-    property <bool> compact: root.available-width < (root.filtered ? 760px : 640px);
+    property <bool> is-filtered: TracksState.is-favorite-filter-on || TracksState.genre-index > 0;
+    property <bool> is-compact: root.available-width < (root.is-filtered ? 760px : 640px);
     padding: 20px;
     padding-bottom: 12px;
     spacing: 8px;
@@ -117,17 +117,17 @@ export component TracksToolbar inherits VerticalLayout {
         }
 
         Text {
-            text: TracksState.loading ? "" : TracksState.total;
+            text: TracksState.is-loading ? "" : TracksState.total;
             color: Theme.muted;
             vertical-alignment: center;
         }
 
-        if !root.compact: Rectangle {
+        if !root.is-compact: Rectangle {
             width: 8px;
         }
 
-        if !root.compact: TracksFilters {
-            filtered: root.filtered;
+        if !root.is-compact: TracksFilters {
+            is-filtered: root.is-filtered;
         }
 
         Rectangle {
@@ -148,12 +148,12 @@ export component TracksToolbar inherits VerticalLayout {
         }
     }
 
-    if root.compact: HorizontalLayout {
+    if root.is-compact: HorizontalLayout {
         height: 36px;
 
         TracksFilters {
-            filtered: root.filtered;
-            compact: true;
+            is-filtered: root.is-filtered;
+            is-compact: true;
         }
     }
 }

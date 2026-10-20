@@ -83,7 +83,7 @@ fn clicking_the_follow_system_switch_turns_it_on_and_saves() {
     let mut page = open_settings(&AppearanceSettings::default());
     let switches = elements(&page, "ToggleSwitch::toggle");
     click(&page, &switches[0]);
-    assert!(page.state().get_follow_system());
+    assert!(page.state().get_is_following_system());
     let saved = page.saved();
     assert_eq!(saved.len(), 1);
     assert!(saved[0].is_following_system);

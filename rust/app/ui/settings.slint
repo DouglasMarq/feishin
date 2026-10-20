@@ -10,21 +10,21 @@ export struct ServerRow {
     name: string,
     kind: string,
     detail: string,
-    current: bool,
+    is-current: bool,
 }
 
 export struct LyricsSourceRow {
     id: string,
     name: string,
-    enabled: bool,
+    is-enabled: bool,
 }
 
 export enum ReplayGain { off, track, album }
 
 export global SettingsState {
-    in property <bool> loaded;
+    in property <bool> is-loaded;
     in-out property <ReplayGain> replay-gain;
-    in-out property <bool> gapless: true;
+    in-out property <bool> is-gapless: true;
     in-out property <int> crossfade-seconds;
     in property <int> max-crossfade-seconds: 12;
     in property <[string]> devices;
@@ -33,14 +33,14 @@ export global SettingsState {
     in-out property <int> bitrate-index;
     in property <[string]> formats;
     in-out property <int> format-index;
-    in-out property <bool> scrobble: true;
-    in-out property <bool> mpris: true;
-    in-out property <bool> discord;
-    in-out property <bool> remote-control;
+    in-out property <bool> is-scrobbling-enabled: true;
+    in-out property <bool> is-mpris-enabled: true;
+    in-out property <bool> is-discord-enabled;
+    in-out property <bool> is-remote-control-enabled;
     in property <[LyricsSourceRow]> lyrics-sources;
     in property <[ServerRow]> servers;
     in property <string> switching;
-    in-out property <bool> follow-current-song;
+    in-out property <bool> is-following-current-song;
     in property <[string]> languages;
     in-out property <int> language-index;
     callback language-changed();
@@ -150,14 +150,14 @@ component ReplayGainPicker inherits Picker {
 component ActionChip inherits Rectangle {
     in property <string> text;
     in property <string> tooltip;
-    in property <bool> enabled: true;
+    in property <bool> is-enabled: true;
     callback clicked();
     accessible-role: button;
     accessible-label: root.text;
     accessible-description: root.tooltip;
-    accessible-enabled: root.enabled;
+    accessible-enabled: root.is-enabled;
     accessible-action-default => {
-        if (root.enabled) {
+        if (root.is-enabled) {
             root.clicked();
         }
     }
@@ -166,8 +166,8 @@ component ActionChip inherits Rectangle {
     border-radius: 16px;
     border-width: 1px;
     border-color: Theme.border;
-    background: touch.has-hover && root.enabled ? Theme.hover : transparent;
-    opacity: root.enabled ? 1 : 0.4;
+    background: touch.has-hover && root.is-enabled ? Theme.hover : transparent;
+    opacity: root.is-enabled ? 1 : 0.4;
 
     label := Text {
         text: root.text;
@@ -177,12 +177,12 @@ component ActionChip inherits Rectangle {
 
     TooltipAnchor {
         text: root.tooltip;
-        hovered: touch.has-hover;
+        is-hovered: touch.has-hover;
     }
 
     touch := TouchArea {
-        enabled: root.enabled;
-        mouse-cursor: root.enabled ? pointer : default;
+        enabled: root.is-enabled;
+        mouse-cursor: root.is-enabled ? pointer : default;
         clicked => {
             root.clicked();
         }
@@ -255,7 +255,7 @@ component YouTubeSection inherits Section {
 
         ActionChip {
             text: @tr("Play");
-            enabled: root.has-link;
+            is-enabled: root.has-link;
             tooltip: root.has-link ? @tr("Play this link now") : @tr("Paste a link first");
             clicked => {
                 SettingsState.play-youtube-link();
@@ -264,7 +264,7 @@ component YouTubeSection inherits Section {
 
         ActionChip {
             text: @tr("Play next");
-            enabled: root.has-link;
+            is-enabled: root.has-link;
             tooltip: root.has-link ? @tr("Play this link after the current song") : @tr("Paste a link first");
             clicked => {
                 SettingsState.play-youtube-link-next();
@@ -273,7 +273,7 @@ component YouTubeSection inherits Section {
 
         ActionChip {
             text: @tr("Add to queue");
-            enabled: root.has-link;
+            is-enabled: root.has-link;
             tooltip: root.has-link ? @tr("Add this link to the end of the queue") : @tr("Paste a link first");
             clicked => {
                 SettingsState.add-youtube-link();
@@ -311,7 +311,7 @@ component LyricsSourceItem inherits Rectangle {
 
         Text {
             text: root.source.name;
-            color: root.source.enabled ? Theme.foreground : Theme.muted;
+            color: root.source.is-enabled ? Theme.foreground : Theme.muted;
             vertical-alignment: center;
             horizontal-stretch: 1;
         }
@@ -320,7 +320,7 @@ component LyricsSourceItem inherits Rectangle {
             y: (parent.height - self.height) / 2;
             icon: Icons.arrow-up;
             tooltip: @tr("Move up");
-            enabled: root.index > 0;
+            is-enabled: root.index > 0;
             clicked => {
                 SettingsState.move-lyrics-source(root.index, -1);
             }
@@ -330,7 +330,7 @@ component LyricsSourceItem inherits Rectangle {
             y: (parent.height - self.height) / 2;
             icon: Icons.arrow-down;
             tooltip: @tr("Move down");
-            enabled: root.index < root.count - 1;
+            is-enabled: root.index < root.count - 1;
             clicked => {
                 SettingsState.move-lyrics-source(root.index, 1);
             }
@@ -338,7 +338,7 @@ component LyricsSourceItem inherits Rectangle {
 
         TooltipSwitch {
             label: root.source.name;
-            checked: root.source.enabled;
+            is-checked: root.source.is-enabled;
             toggled => {
                 SettingsState.toggle-lyrics-source(root.index);
             }
@@ -349,11 +349,11 @@ component LyricsSourceItem inherits Rectangle {
 component ServerItem inherits Rectangle {
     in property <ServerRow> server;
     in-out property <string> confirming;
-    property <bool> confirm: root.confirming == root.server.id;
-    property <bool> busy: SettingsState.switching != "";
+    property <bool> is-confirming: root.confirming == root.server.id;
+    property <bool> is-busy: SettingsState.switching != "";
     min-height: 56px;
     border-radius: Theme.radius;
-    background: root.server.current ? Theme.selected : (touch.has-hover ? Theme.hover : transparent);
+    background: root.server.is-current ? Theme.selected : (touch.has-hover ? Theme.hover : transparent);
 
     touch := TouchArea { }
 
@@ -391,7 +391,7 @@ component ServerItem inherits Rectangle {
                     }
                 }
 
-                if root.server.current: Rectangle {
+                if root.server.is-current: Rectangle {
                     width: current-text.preferred-width + 12px;
                     height: 18px;
                     border-radius: 9px;
@@ -414,31 +414,31 @@ component ServerItem inherits Rectangle {
             }
         }
 
-        if !root.server.current && !root.confirm: TooltipButton {
+        if !root.server.is-current && !root.is-confirming: TooltipButton {
             text: SettingsState.switching == root.server.id ? @tr("Connecting...") : @tr("Switch");
             tooltip: @tr("Connect to {}", root.server.name);
-            enabled: !root.busy;
+            is-enabled: !root.is-busy;
             clicked => {
                 SettingsState.switch-server(root.server.id);
             }
         }
 
-        if !root.confirm: TooltipButton {
+        if !root.is-confirming: TooltipButton {
             text: @tr("Remove");
             tooltip: @tr("Forget {}", root.server.name);
-            enabled: !root.busy;
+            is-enabled: !root.is-busy;
             clicked => {
                 root.confirming = root.server.id;
             }
         }
 
-        if root.confirm: Text {
-            text: root.server.current ? @tr("Sign out and forget this server?") : @tr("Forget this server?");
+        if root.is-confirming: Text {
+            text: root.server.is-current ? @tr("Sign out and forget this server?") : @tr("Forget this server?");
             color: Theme.danger;
             vertical-alignment: center;
         }
 
-        if root.confirm: TooltipButton {
+        if root.is-confirming: TooltipButton {
             text: @tr("Cancel");
             tooltip: @tr("Keep {}", root.server.name);
             clicked => {
@@ -446,10 +446,10 @@ component ServerItem inherits Rectangle {
             }
         }
 
-        if root.confirm: TooltipButton {
+        if root.is-confirming: TooltipButton {
             text: @tr("Remove");
             tooltip: @tr("Forget {}", root.server.name);
-            primary: true;
+            is-primary: true;
             clicked => {
                 root.confirming = "";
                 SettingsState.remove-server(root.server.id);
@@ -460,7 +460,7 @@ component ServerItem inherits Rectangle {
 
 export component SettingsView inherits Rectangle {
     property <string> confirming;
-    property <bool> confirm-logout;
+    property <bool> is-confirming-logout;
     background: Theme.background;
 
     init => {
@@ -496,7 +496,7 @@ export component SettingsView inherits Rectangle {
                             width: 160px;
                             value: PlayerState.volume / 100;
                             scroll-step: Behaviour.volume-step / Behaviour.max-volume;
-                            tooltip: @tr("Volume {}%", self.adjusting ? Math.round(self.drag-preview * 100) : PlayerState.volume);
+                            tooltip: @tr("Volume {}%", self.is-adjusting ? Math.round(self.drag-preview * 100) : PlayerState.volume);
                             changed(value) => {
                                 PlayerState.set-volume(Math.round(value * 100));
                             }
@@ -504,7 +504,7 @@ export component SettingsView inherits Rectangle {
                     }
 
                     Text {
-                        text: (volume-bar.adjusting ? Math.round(volume-bar.drag-preview * 100) : PlayerState.volume) + "%";
+                        text: (volume-bar.is-adjusting ? Math.round(volume-bar.drag-preview * 100) : PlayerState.volume) + "%";
                         width: 40px;
                         color: Theme.muted;
                         vertical-alignment: center;
@@ -528,7 +528,7 @@ export component SettingsView inherits Rectangle {
 
                     TooltipSwitch {
                         label: @tr("Gapless playback");
-                        checked <=> SettingsState.gapless;
+                        is-checked <=> SettingsState.is-gapless;
                         toggled => {
                             SettingsState.playback-changed();
                         }
@@ -538,7 +538,7 @@ export component SettingsView inherits Rectangle {
                 crossfade-option := Option {
                     title: @tr("Crossfade");
                     description: @tr("Fade the end of each song into the next one. Off keeps gapless playback.");
-                    property <int> shown-seconds: crossfade-bar.adjusting ? Math.round(crossfade-bar.drag-preview * SettingsState.max-crossfade-seconds) : SettingsState.crossfade-seconds;
+                    property <int> shown-seconds: crossfade-bar.is-adjusting ? Math.round(crossfade-bar.drag-preview * SettingsState.max-crossfade-seconds) : SettingsState.crossfade-seconds;
                     property <string> shown-label: self.shown-seconds == 0 ? @tr("Off") : @tr("{} s", self.shown-seconds);
 
                     VerticalLayout {
@@ -613,7 +613,7 @@ export component SettingsView inherits Rectangle {
 
                     TooltipSwitch {
                         label: @tr("Scrobble");
-                        checked <=> SettingsState.scrobble;
+                        is-checked <=> SettingsState.is-scrobbling-enabled;
                         toggled => {
                             SettingsState.playback-changed();
                         }
@@ -630,7 +630,7 @@ export component SettingsView inherits Rectangle {
 
                     TooltipSwitch {
                         label: @tr("MPRIS");
-                        checked <=> SettingsState.mpris;
+                        is-checked <=> SettingsState.is-mpris-enabled;
                         toggled => {
                             SettingsState.integrations-changed();
                         }
@@ -643,7 +643,7 @@ export component SettingsView inherits Rectangle {
 
                     TooltipSwitch {
                         label: @tr("Discord Rich Presence");
-                        checked <=> SettingsState.discord;
+                        is-checked <=> SettingsState.is-discord-enabled;
                         toggled => {
                             SettingsState.integrations-changed();
                         }
@@ -656,7 +656,7 @@ export component SettingsView inherits Rectangle {
 
                     TooltipSwitch {
                         label: @tr("Remote control");
-                        checked <=> SettingsState.remote-control;
+                        is-checked <=> SettingsState.is-remote-control-enabled;
                         toggled => {
                             SettingsState.integrations-changed();
                         }
@@ -718,7 +718,7 @@ export component SettingsView inherits Rectangle {
                         confirming <=> root.confirming;
                     }
 
-                    if SettingsState.loaded && SettingsState.servers.length == 0: Text {
+                    if SettingsState.is-loaded && SettingsState.servers.length == 0: Text {
                         text: @tr("No saved servers.");
                         color: Theme.muted;
                     }
@@ -731,41 +731,41 @@ export component SettingsView inherits Rectangle {
                     TooltipButton {
                         text: @tr("Add server");
                         tooltip: @tr("Sign in to another server");
-                        enabled: SettingsState.switching == "";
+                        is-enabled: SettingsState.switching == "";
                         clicked => {
                             SettingsState.add-server();
                         }
                     }
 
-                    if !root.confirm-logout: TooltipButton {
+                    if !root.is-confirming-logout: TooltipButton {
                         text: @tr("Log out");
                         tooltip: @tr("Sign out of {}", AppState.server-name);
-                        enabled: SettingsState.switching == "" && AppState.server-name != "";
+                        is-enabled: SettingsState.switching == "" && AppState.server-name != "";
                         clicked => {
-                            root.confirm-logout = true;
+                            root.is-confirming-logout = true;
                         }
                     }
 
-                    if root.confirm-logout: Text {
+                    if root.is-confirming-logout: Text {
                         text: @tr("Sign out and forget this server's saved login?");
                         color: Theme.danger;
                         vertical-alignment: center;
                     }
 
-                    if root.confirm-logout: TooltipButton {
+                    if root.is-confirming-logout: TooltipButton {
                         text: @tr("Cancel");
                         tooltip: @tr("Stay signed in");
                         clicked => {
-                            root.confirm-logout = false;
+                            root.is-confirming-logout = false;
                         }
                     }
 
-                    if root.confirm-logout: TooltipButton {
+                    if root.is-confirming-logout: TooltipButton {
                         text: @tr("Log out");
                         tooltip: @tr("Sign out of {}", AppState.server-name);
-                        primary: true;
+                        is-primary: true;
                         clicked => {
-                            root.confirm-logout = false;
+                            root.is-confirming-logout = false;
                             SettingsState.log-out();
                         }
                     }
@@ -801,7 +801,7 @@ export component SettingsView inherits Rectangle {
 
                     TooltipSwitch {
                         label: @tr("Open the queue panel");
-                        checked <=> AppState.queue-open;
+                        is-checked <=> AppState.is-queue-open;
                         toggled => {
                             SettingsState.interface-changed();
                         }
@@ -814,7 +814,7 @@ export component SettingsView inherits Rectangle {
 
                     TooltipSwitch {
                         label: @tr("Follow current song");
-                        checked <=> SettingsState.follow-current-song;
+                        is-checked <=> SettingsState.is-following-current-song;
                         toggled => {
                             SettingsState.interface-changed();
                         }

@@ -11,8 +11,8 @@ const ALBUM_COVER_CAPACITY: usize = 48;
 pub struct CurrentArtist {
     pub generation: u64,
     pub id: String,
-    pub loaded: bool,
-    pub favorite: bool,
+    pub is_loaded: bool,
+    pub is_favorite: bool,
     pub top_songs: Vec<Song>,
     pub album_covers: Vec<Option<String>>,
     pub covers: CoverLru<usize, Image>,
@@ -23,8 +23,8 @@ impl Default for CurrentArtist {
         Self {
             generation: 0,
             id: String::new(),
-            loaded: false,
-            favorite: false,
+            is_loaded: false,
+            is_favorite: false,
             top_songs: Vec::new(),
             album_covers: Vec::new(),
             covers: CoverLru::new(ALBUM_COVER_CAPACITY),

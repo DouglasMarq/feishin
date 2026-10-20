@@ -14,7 +14,7 @@ component Message inherits Text {
 }
 
 component StationsPanel inherits VerticalLayout {
-    if !RadioState.server-has-radio: Text {
+    if !RadioState.has-server-radio: Text {
         x: 20px;
         width: parent.width - 40px;
         text: @tr("This server has no internet radio. Stations you add are saved on this device.");
@@ -30,7 +30,7 @@ component StationsPanel inherits VerticalLayout {
         }
 
         if RadioState.stations.length == 0: Message {
-            text: RadioState.stations-loading ? @tr("Loading stations...") : @tr("No stations yet. Add one or find one in the directory.");
+            text: RadioState.is-stations-loading ? @tr("Loading stations...") : @tr("No stations yet. Add one or find one in the directory.");
         }
     }
 }
@@ -85,10 +85,10 @@ component DirectoryPanel inherits VerticalLayout {
         }
 
         TextButton {
-            text: RadioState.searching ? @tr("Searching...") : @tr("Search");
-            primary: true;
-            enabled: !RadioState.searching;
-            tooltip: RadioState.searching ? @tr("Searching the radio-browser.info directory") : @tr("Search the radio-browser.info directory");
+            text: RadioState.is-searching ? @tr("Searching...") : @tr("Search");
+            is-primary: true;
+            is-enabled: !RadioState.is-searching;
+            tooltip: RadioState.is-searching ? @tr("Searching the radio-browser.info directory") : @tr("Search the radio-browser.info directory");
             clicked => {
                 RadioState.search();
             }
@@ -105,7 +105,7 @@ component DirectoryPanel inherits VerticalLayout {
         }
 
         if RadioState.results.length == 0: Message {
-            text: RadioState.searching ? @tr("Searching...") : RadioState.results-message;
+            text: RadioState.is-searching ? @tr("Searching...") : RadioState.results-message;
         }
     }
 
@@ -124,9 +124,9 @@ component DirectoryPanel inherits VerticalLayout {
         }
 
         if RadioState.has-more: TextButton {
-            text: RadioState.searching ? @tr("Loading...") : @tr("Load more");
-            enabled: !RadioState.searching;
-            tooltip: RadioState.searching ? @tr("Loading the next page of stations") : @tr("Show the next page of stations");
+            text: RadioState.is-searching ? @tr("Loading...") : @tr("Load more");
+            is-enabled: !RadioState.is-searching;
+            tooltip: RadioState.is-searching ? @tr("Loading the next page of stations") : @tr("Show the next page of stations");
             clicked => {
                 RadioState.load-more();
             }
@@ -138,7 +138,7 @@ component StationEditor inherits Modal {
     property <bool> is-new: RadioState.edit-id == "";
     title: root.is-new ? @tr("Add station") : @tr("Edit station");
     cancel => {
-        RadioState.editing = false;
+        RadioState.is-editing = false;
     }
 
     LabeledField {
@@ -173,14 +173,14 @@ component StationEditor inherits Modal {
             text: @tr("Cancel");
             tooltip: @tr("Close without saving");
             clicked => {
-                RadioState.editing = false;
+                RadioState.is-editing = false;
             }
         }
 
         if root.is-new: TextButton {
             text: @tr("Save on this device");
-            primary: !RadioState.can-manage;
-            enabled: !RadioState.busy;
+            is-primary: !RadioState.can-manage;
+            is-enabled: !RadioState.is-busy;
             tooltip: @tr("Keep this station in the favorites on this device");
             clicked => {
                 RadioState.save-edit(RadioSource.favorite);
@@ -189,18 +189,18 @@ component StationEditor inherits Modal {
 
         if root.is-new && RadioState.can-manage: TextButton {
             text: @tr("Save to server");
-            primary: true;
-            enabled: !RadioState.busy;
-            tooltip: RadioState.busy ? @tr("Saving the station to the server...") : @tr("Add this station to the server for every client");
+            is-primary: true;
+            is-enabled: !RadioState.is-busy;
+            tooltip: RadioState.is-busy ? @tr("Saving the station to the server...") : @tr("Add this station to the server for every client");
             clicked => {
                 RadioState.save-edit(RadioSource.server);
             }
         }
 
         if !root.is-new: TextButton {
-            text: RadioState.busy ? @tr("Saving...") : @tr("Save");
-            primary: true;
-            enabled: !RadioState.busy;
+            text: RadioState.is-busy ? @tr("Saving...") : @tr("Save");
+            is-primary: true;
+            is-enabled: !RadioState.is-busy;
             tooltip: RadioState.edit-source == RadioSource.server ? @tr("Save the changes on the server") : @tr("Save the changes on this device");
             clicked => {
                 RadioState.save-edit(RadioState.edit-source);
@@ -225,10 +225,10 @@ component DeleteConfirmation inherits Modal {
     }
 
     DialogButtons {
-        confirm-text: RadioState.busy ? @tr("Deleting...") : @tr("Delete");
+        confirm-text: RadioState.is-busy ? @tr("Deleting...") : @tr("Delete");
         confirm-tooltip: @tr("Delete \"{}\"", RadioState.delete-name);
-        confirm-enabled: !RadioState.busy;
-        danger: true;
+        is-confirm-enabled: !RadioState.is-busy;
+        is-danger: true;
         cancel => {
             RadioState.delete-id = "";
         }
@@ -267,8 +267,8 @@ export component RadioView inherits Rectangle {
             TabButton {
                 y: (parent.height - self.height) / 2;
                 text: @tr("Stations");
-                active: RadioState.tab == RadioTab.stations;
-                tooltip: self.active ? @tr("Showing the server and saved stations") : @tr("Show the server and saved stations");
+                is-active: RadioState.tab == RadioTab.stations;
+                tooltip: self.is-active ? @tr("Showing the server and saved stations") : @tr("Show the server and saved stations");
                 clicked => {
                     RadioState.tab = RadioTab.stations;
                 }
@@ -277,8 +277,8 @@ export component RadioView inherits Rectangle {
             TabButton {
                 y: (parent.height - self.height) / 2;
                 text: @tr("Directory");
-                active: RadioState.tab == RadioTab.directory;
-                tooltip: self.active ? @tr("Showing the radio-browser.info directory") : @tr("Find stations in the radio-browser.info directory");
+                is-active: RadioState.tab == RadioTab.directory;
+                tooltip: self.is-active ? @tr("Showing the radio-browser.info directory") : @tr("Find stations in the radio-browser.info directory");
                 clicked => {
                     RadioState.tab = RadioTab.directory;
                 }
@@ -295,7 +295,7 @@ export component RadioView inherits Rectangle {
                     RadioState.edit-url = "";
                     RadioState.edit-homepage = "";
                     RadioState.edit-error = "";
-                    RadioState.editing = true;
+                    RadioState.is-editing = true;
                 }
             }
         }
@@ -309,7 +309,7 @@ export component RadioView inherits Rectangle {
         }
     }
 
-    if RadioState.editing: StationEditor { }
+    if RadioState.is-editing: StationEditor { }
 
     if RadioState.delete-id != "": DeleteConfirmation { }
 }

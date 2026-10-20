@@ -95,7 +95,7 @@ impl ActiveStream {
         }
     }
 
-    pub(super) fn publish_due(&mut self) -> bool {
+    pub(super) fn is_publish_due(&mut self) -> bool {
         match self.published_at {
             Some(published_at) if published_at.elapsed() < QUEUE_PUBLISH_INTERVAL => false,
             _ => {

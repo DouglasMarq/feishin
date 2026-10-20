@@ -24,7 +24,7 @@ fn sharing_an_album_copies_its_public_link() {
         return;
     };
     let state = view.app.global::<ShareState>();
-    assert!(state.get_available());
+    assert!(state.get_is_available());
     assert_eq!(state.get_menu_title(), "Share");
     while view.next_command().is_some() {}
 
@@ -36,7 +36,7 @@ fn sharing_an_album_copies_its_public_link() {
         view.status(),
         format!("Share link copied to the clipboard: {FIRST_DEMO_LINK}")
     );
-    assert!(!state.get_busy());
+    assert!(!state.get_is_busy());
     assert_eq!(server.shared_items(), [vec!["album-3".to_owned()]]);
     assert!(view.next_command().is_none());
 }
@@ -93,7 +93,7 @@ fn jellyfin_disables_sharing_and_explains_why() {
         return;
     };
     let state = view.app.global::<ShareState>();
-    assert!(!state.get_available());
+    assert!(!state.get_is_available());
     assert_eq!(
         state.get_menu_title(),
         "Share (this server has no public share links)"

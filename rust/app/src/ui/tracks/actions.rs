@@ -68,18 +68,18 @@ pub(super) fn set_favorite(
     window: &AppWindow,
     context: &Context,
     ids: Vec<String>,
-    favorite: bool,
+    is_favorite: bool,
 ) {
     let Some(server) = context.session.get() else {
         return;
     };
     let weak = window.as_weak();
     context.runtime.spawn(async move {
-        let result = server.set_favorite(ItemKind::Song, &ids, favorite).await;
+        let result = server.set_favorite(ItemKind::Song, &ids, is_favorite).await;
         on_ui(&weak, move |window| match result {
             Ok(()) => {
                 with_model(window, |model| {
-                    model.update_songs(&ids, |song| song.is_favorite = favorite);
+                    model.update_songs(&ids, |song| song.is_favorite = is_favorite);
                 });
             }
             Err(error) => show_status(window, &tr!("Could not update favorites: {}", error)),

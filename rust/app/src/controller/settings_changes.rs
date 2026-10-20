@@ -79,9 +79,13 @@ impl Controller {
         self.save_settings();
     }
 
-    pub(super) fn save_interface(&mut self, queue_panel_open: bool, follow_current_song: bool) {
-        self.settings.ui.is_queue_panel_open = queue_panel_open;
-        self.settings.ui.is_following_current_song = follow_current_song;
+    pub(super) fn save_interface(
+        &mut self,
+        is_queue_panel_open: bool,
+        is_following_current_song: bool,
+    ) {
+        self.settings.ui.is_queue_panel_open = is_queue_panel_open;
+        self.settings.ui.is_following_current_song = is_following_current_song;
         self.save_settings();
     }
 

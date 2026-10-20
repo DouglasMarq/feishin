@@ -39,7 +39,7 @@ impl Controller {
         self.loaded = None;
         self.loading = None;
         self.preloaded = None;
-        self.playing = false;
+        self.is_playing = false;
         self.scrobble_tracker.stop();
         self.position_ms = start_ms;
         self.duration_ms = self.current_duration_ms();

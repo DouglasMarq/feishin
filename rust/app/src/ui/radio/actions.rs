@@ -119,9 +119,9 @@ impl RadioView {
         server
     }
 
-    pub(super) fn set_busy(&self, busy: bool) {
+    pub(super) fn set_busy(&self, is_busy: bool) {
         if let Some(window) = self.window.upgrade() {
-            window.global::<RadioState>().set_busy(busy);
+            window.global::<RadioState>().set_is_busy(is_busy);
         }
     }
 
@@ -131,7 +131,7 @@ impl RadioView {
         outcome: feishin_api::Result<()>,
         failure: &str,
     ) {
-        window.global::<RadioState>().set_busy(false);
+        window.global::<RadioState>().set_is_busy(false);
         if let Err(error) = outcome {
             show_status(window, &tr!("{}: {}", failure, error));
         }

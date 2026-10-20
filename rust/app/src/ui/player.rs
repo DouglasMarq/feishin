@@ -137,20 +137,23 @@ fn apply(window: &AppWindow, update: UiUpdate) {
         UiUpdate::NowPlaying(Some(track)) => show_song(window, &track),
         UiUpdate::NowPlaying(None) => clear_song(window),
         UiUpdate::Playback {
-            playing,
+            is_playing,
             position_ms,
             duration_ms,
         } => {
-            state.set_playing(playing);
+            state.set_is_playing(is_playing);
             state.set_position_ms(clamp_i32(position_ms));
             state.set_duration_ms(clamp_i32(duration_ms));
         }
-        UiUpdate::Volume { volume, muted } => {
+        UiUpdate::Volume { volume, is_muted } => {
             state.set_volume(i32::from(volume));
-            state.set_muted(muted);
+            state.set_is_muted(is_muted);
         }
-        UiUpdate::Modes { shuffle, repeat } => {
-            state.set_shuffle(shuffle);
+        UiUpdate::Modes {
+            is_shuffled,
+            repeat,
+        } => {
+            state.set_is_shuffled(is_shuffled);
             state.set_repeat(repeat_state(repeat));
         }
         UiUpdate::Queue(view) => queue::set_view(window, view),

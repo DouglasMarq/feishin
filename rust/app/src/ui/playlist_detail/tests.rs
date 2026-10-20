@@ -42,11 +42,11 @@ fn rows_load_on_demand_page_by_page() {
     assert_eq!(model.row_count(), 0);
     assert!(model.apply_first_page(1, 250, page_of_songs(0, PAGE_SIZE)));
     assert_eq!(model.row_count(), 250);
-    assert!(model.row_data(5).is_some_and(|row| row.track.loaded));
+    assert!(model.row_data(5).is_some_and(|row| row.track.is_loaded));
     assert!(requested_pages(&log).is_empty());
 
     let placeholder = model.row_data(130);
-    assert!(placeholder.is_some_and(|row| !row.track.loaded && row.track.index == 131));
+    assert!(placeholder.is_some_and(|row| !row.track.is_loaded && row.track.index == 131));
     model.row_data(140);
     assert_eq!(requested_pages(&log), [(1, 1)]);
     assert!(model.row_data(250).is_none());
@@ -171,12 +171,12 @@ fn selection_marks_rows_and_counts() {
     model.apply_first_page(1, 120, page_of_songs(0, PAGE_SIZE));
     assert_eq!(model.click(2, ClickMode::Select), 1);
     assert_eq!(model.click(5, ClickMode::SelectRange), 4);
-    assert!(model.row_data(3).is_some_and(|row| row.selected));
+    assert!(model.row_data(3).is_some_and(|row| row.is_selected));
     assert_eq!(model.click(500, ClickMode::Toggle), 4);
     assert_eq!(model.targets(4), [2, 3, 4, 5]);
     assert_eq!(model.targets(9), [9]);
     assert_eq!(model.select_all(), 120);
-    assert!(model.row_data(110).is_some_and(|row| row.selected));
+    assert!(model.row_data(110).is_some_and(|row| row.is_selected));
     assert_eq!(model.clear_selection(), 0);
     assert!(model.selected_indexes().is_empty());
 }

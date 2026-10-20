@@ -124,7 +124,7 @@ impl Controller {
         }
         self.loaded = None;
         self.loading = None;
-        self.playing = false;
+        self.is_playing = false;
     }
 
     pub(super) fn stop_radio(&mut self) {

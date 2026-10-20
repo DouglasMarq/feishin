@@ -22,7 +22,7 @@ pub struct Section<Item> {
     pub items: Vec<Item>,
     offset: Option<usize>,
     pub has_more: bool,
-    pub busy: bool,
+    pub is_busy: bool,
 }
 
 impl<Item> Default for Section<Item> {
@@ -31,7 +31,7 @@ impl<Item> Default for Section<Item> {
             items: Vec::new(),
             offset: None,
             has_more: false,
-            busy: false,
+            is_busy: false,
         }
     }
 }
@@ -46,10 +46,10 @@ impl<Item> Section<Item> {
     }
 
     pub fn next_page(&mut self) -> Option<Paging> {
-        if self.busy || !self.has_more {
+        if self.is_busy || !self.has_more {
             return None;
         }
-        self.busy = true;
+        self.is_busy = true;
         Some(match self.offset {
             None => Paging {
                 start_index: 0,
@@ -63,7 +63,7 @@ impl<Item> Section<Item> {
     }
 
     pub fn apply(&mut self, paging: Paging, items: Vec<Item>) -> Applied {
-        self.busy = false;
+        self.is_busy = false;
         self.has_more = items.len() >= paging.limit;
         self.offset = Some(paging.start_index + items.len());
         match paging.start_index {

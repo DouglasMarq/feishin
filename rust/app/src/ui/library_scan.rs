@@ -29,7 +29,7 @@ pub fn install(window: &AppWindow, context: &Context) {
 
 fn start_scan(window: &AppWindow, context: &Context) {
     let state = window.global::<AppState>();
-    if state.get_library_scanning() {
+    if state.get_is_library_scanning() {
         return;
     }
     let Some(server) = context.session.get() else {
@@ -81,7 +81,7 @@ async fn follow_scan(
 
 fn show_progress(window: &AppWindow, scanned_items: Option<u64>) {
     let state = window.global::<AppState>();
-    state.set_library_scanning(true);
+    state.set_is_library_scanning(true);
     let progress = scanned_items.map_or_else(String::new, |count| {
         tr_plural!("{n} item so far", "{n} items so far", count)
     });
@@ -90,7 +90,7 @@ fn show_progress(window: &AppWindow, scanned_items: Option<u64>) {
 
 fn hide_progress(window: &AppWindow) {
     let state = window.global::<AppState>();
-    state.set_library_scanning(false);
+    state.set_is_library_scanning(false);
     state.set_library_scan_progress("".into());
 }
 

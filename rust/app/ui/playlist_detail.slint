@@ -9,7 +9,7 @@ export struct PlaylistSongRow {
     track: TrackRow,
     album-id: string,
     artist-id: string,
-    selected: bool,
+    is-selected: bool,
 }
 
 export enum PlaylistSongAction { play, play-next, add-to-queue, add-to-playlist, remove }
@@ -21,8 +21,8 @@ export global PlaylistDetailState {
     in property <image> cover;
     in property <bool> has-cover;
     in property <[PlaylistSongRow]> rows;
-    in property <bool> loading;
-    in property <bool> busy;
+    in property <bool> is-loading;
+    in property <bool> is-busy;
     in property <int> selected-count;
     in-out property <length> index-width: 56px;
     in-out property <length> title-width: 320px;
@@ -44,9 +44,9 @@ component SongRow inherits Rectangle {
     in property <PlaylistSongRow> item;
     in property <int> index;
     callback pressed();
-    property <bool> playing: root.item.track.loaded && root.item.track.id == PlayerState.song-id;
+    property <bool> is-playing: root.item.track.is-loaded && root.item.track.id == PlayerState.song-id;
     height: 36px;
-    background: root.item.selected ? Theme.selected : (touch.has-hover ? Theme.hover : transparent);
+    background: root.item.is-selected ? Theme.selected : (touch.has-hover ? Theme.hover : transparent);
 
     touch := TouchArea {
         pointer-event(event) => {
@@ -61,7 +61,7 @@ component SongRow inherits Rectangle {
 
         TooltipAnchor {
             text: @tr("Double-click to play");
-            hovered: touch.has-hover;
+            is-hovered: touch.has-hover;
         }
 
         ContextMenuArea {
@@ -96,7 +96,7 @@ component SongRow inherits Rectangle {
 
                 MenuItem {
                     title: ShareState.menu-title;
-                    enabled: ShareState.available && !ShareState.busy && root.item.track.loaded;
+                    enabled: ShareState.is-available && !ShareState.is-busy && root.item.track.is-loaded;
                     activated => {
                         ShareState.share(ShareKind.song, root.item.track.id, root.item.track.title);
                     }
@@ -134,7 +134,7 @@ component SongRow inherits Rectangle {
                 Rectangle {
                     width: PlaylistDetailState.index-width;
 
-                    if !root.playing: Text {
+                    if !root.is-playing: Text {
                         x: 0;
                         width: parent.width - 16px;
                         text: root.item.track.index;
@@ -143,7 +143,7 @@ component SongRow inherits Rectangle {
                         vertical-alignment: center;
                     }
 
-                    if root.playing: Icon {
+                    if root.is-playing: Icon {
                         x: parent.width - 16px - self.width;
                         path: Icons.note;
                         color: Theme.primary;
@@ -152,13 +152,13 @@ component SongRow inherits Rectangle {
                     }
                 }
 
-                if root.item.track.loaded: Cell {
+                if root.item.track.is-loaded: Cell {
                     width: PlaylistDetailState.title-width;
                     text: root.item.track.title;
-                    text-color: root.playing ? Theme.primary : Theme.foreground;
+                    text-color: root.is-playing ? Theme.primary : Theme.foreground;
                 }
 
-                if !root.item.track.loaded: Rectangle {
+                if !root.item.track.is-loaded: Rectangle {
                     width: PlaylistDetailState.title-width;
 
                     Skeleton {
@@ -204,7 +204,7 @@ component PlayButton inherits Rectangle {
 
     TooltipAnchor {
         text: @tr("Play");
-        hovered: touch.has-hover;
+        is-hovered: touch.has-hover;
     }
 
     touch := TouchArea {
@@ -285,7 +285,7 @@ export component PlaylistDetailView inherits Rectangle {
                         font-weight: 700;
                     }
 
-                    if PlaylistDetailState.loading && PlaylistDetailState.name == "": Skeleton {
+                    if PlaylistDetailState.is-loading && PlaylistDetailState.name == "": Skeleton {
                         width: 260px;
                         height: 28px;
                         border-radius: 6px;
@@ -334,7 +334,7 @@ export component PlaylistDetailView inherits Rectangle {
                     icon: Icons.shuffle;
                     icon-size: 24px;
                     tooltip: @tr("Shuffle play");
-                    enabled: PlaylistDetailState.rows.length > 0;
+                    is-enabled: PlaylistDetailState.rows.length > 0;
                     clicked => {
                         PlaylistDetailState.play(true);
                     }
@@ -369,9 +369,9 @@ export component PlaylistDetailView inherits Rectangle {
 
                     TooltipButton {
                         y: (parent.height - self.height) / 2;
-                        text: PlaylistDetailState.busy ? @tr("Removing...") : @tr("Remove");
+                        text: PlaylistDetailState.is-busy ? @tr("Removing...") : @tr("Remove");
                         tooltip: @tr("Remove the selected songs from this playlist");
-                        enabled: !PlaylistDetailState.busy;
+                        is-enabled: !PlaylistDetailState.is-busy;
                         clicked => {
                             PlaylistDetailState.remove-selected();
                         }
@@ -389,32 +389,32 @@ export component PlaylistDetailView inherits Rectangle {
 
                     HeaderCell {
                         text: "#";
-                        sortable: false;
+                        is-sortable: false;
                         align: right;
                         column-width <=> PlaylistDetailState.index-width;
                     }
 
                     HeaderCell {
                         text: @tr("Title");
-                        sortable: false;
+                        is-sortable: false;
                         column-width <=> PlaylistDetailState.title-width;
                     }
 
                     HeaderCell {
                         text: @tr("Artist");
-                        sortable: false;
+                        is-sortable: false;
                         column-width <=> PlaylistDetailState.artist-width;
                     }
 
                     HeaderCell {
                         text: @tr("Album");
-                        sortable: false;
+                        is-sortable: false;
                         column-width <=> PlaylistDetailState.album-width;
                     }
 
                     HeaderCell {
                         text: @tr("Time");
-                        sortable: false;
+                        is-sortable: false;
                         column-width <=> PlaylistDetailState.duration-width;
                     }
 
@@ -443,7 +443,7 @@ export component PlaylistDetailView inherits Rectangle {
                 }
 
                 if PlaylistDetailState.rows.length == 0: Text {
-                    text: PlaylistDetailState.loading ? @tr("Loading...") : @tr("This playlist is empty");
+                    text: PlaylistDetailState.is-loading ? @tr("Loading...") : @tr("This playlist is empty");
                     color: Theme.muted;
                     horizontal-alignment: center;
                     vertical-alignment: center;

@@ -123,7 +123,7 @@ fn every_electron_theme_has_a_palette() {
 fn the_default_theme_keeps_the_original_look() {
     let page = open_with(&AppearanceSettings::default());
     let theme = page.theme();
-    assert!(theme.get_dark());
+    assert!(theme.get_is_dark());
     assert_eq!(theme.get_background(), Color::from_rgb_u8(0x0c, 0x0c, 0x0c));
     assert_eq!(theme.get_background_alt(), Color::from_rgb_u8(8, 8, 8));
     assert_eq!(theme.get_surface(), Color::from_rgb_u8(0x14, 0x14, 0x14));
@@ -151,7 +151,7 @@ fn the_default_theme_keeps_the_original_look() {
 fn a_saved_light_theme_is_applied_on_start() {
     let page = open_with(&themed("githubLight"));
     let theme = page.theme();
-    assert!(!theme.get_dark());
+    assert!(!theme.get_is_dark());
     assert_eq!(theme.get_background(), Color::from_rgb_u8(255, 255, 255));
     assert_eq!(theme.get_hover(), Color::from_argb_u8(0x0f, 0, 0, 0));
 }
@@ -201,7 +201,7 @@ fn following_the_system_tracks_the_desktop_scheme() {
         page.theme().get_background(),
         Color::from_rgb_u8(253, 246, 227)
     );
-    assert!(!page.theme().get_dark());
+    assert!(!page.theme().get_is_dark());
     system_scheme_changed(&page.window, SystemColorScheme::Dark);
     assert_eq!(
         page.theme().get_background(),
@@ -212,7 +212,7 @@ fn following_the_system_tracks_the_desktop_scheme() {
 #[test]
 fn a_custom_accent_replaces_the_theme_primary() {
     let mut page = open_with(&AppearanceSettings::default());
-    page.state().set_use_theme_accent(false);
+    page.state().set_is_using_theme_accent(false);
     page.state().invoke_accent_entered("#1db954".into());
     let theme = page.theme();
     assert_eq!(theme.get_primary(), Color::from_rgb_u8(0x1d, 0xb9, 0x54));
@@ -230,7 +230,7 @@ fn a_custom_accent_replaces_the_theme_primary() {
 #[test]
 fn a_malformed_accent_is_reported_and_reverted() {
     let mut page = open_with(&AppearanceSettings::default());
-    page.state().set_use_theme_accent(false);
+    page.state().set_is_using_theme_accent(false);
     page.state().invoke_accent_entered("#nothex".into());
     assert_eq!(page.state().get_accent_text(), "#3574fc");
     assert!(

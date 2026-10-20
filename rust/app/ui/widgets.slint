@@ -7,7 +7,7 @@ export global Tooltip {
     out property <length> anchor-y;
     out property <length> anchor-width;
     out property <length> anchor-height;
-    out property <bool> visible;
+    out property <bool> is-visible;
     property <int> serial;
 
     public function show(text: string, left: length, top: length, width: length, height: length) -> int {
@@ -17,12 +17,12 @@ export global Tooltip {
         self.anchor-y = top;
         self.anchor-width = width;
         self.anchor-height = height;
-        self.visible = text != "";
+        self.is-visible = text != "";
         self.serial
     }
 
     public function update(token: int, text: string, left: length, width: length) {
-        if (token == self.serial && self.visible) {
+        if (token == self.serial && self.is-visible) {
             self.text = text;
             self.anchor-x = left;
             self.anchor-width = width;
@@ -31,7 +31,7 @@ export global Tooltip {
 
     public function hide(token: int) {
         if (token == self.serial) {
-            self.visible = false;
+            self.is-visible = false;
         }
     }
 }
@@ -41,7 +41,7 @@ export component TooltipOverlay inherits Rectangle {
     property <length> above-y: Tooltip.anchor-y - bubble.height - root.gap;
 
     bubble := Rectangle {
-        visible: Tooltip.visible;
+        visible: Tooltip.is-visible;
         width: label.preferred-width + 16px;
         height: label.preferred-height + 10px;
         x: max(4px, min(root.width - self.width - 4px, Tooltip.anchor-x + Tooltip.anchor-width / 2 - self.width / 2));
@@ -61,12 +61,12 @@ export component TooltipOverlay inherits Rectangle {
 
 export component TooltipAnchor {
     in property <string> text;
-    in property <bool> hovered;
-    in property <bool> active;
+    in property <bool> is-hovered;
+    in property <bool> is-active;
     in property <length> follow-x: -1px;
     property <int> token: -1;
-    property <bool> shown;
-    property <bool> wanted: (root.hovered || root.active) && root.text != "";
+    property <bool> is-shown;
+    property <bool> is-wanted: (root.is-hovered || root.is-active) && root.text != "";
     property <length> tip-x: root.follow-x >= 0 ? root.absolute-position.x + root.follow-x : root.absolute-position.x;
     property <length> tip-width: root.follow-x >= 0 ? 0px : root.width;
     width: 100%;
@@ -74,38 +74,38 @@ export component TooltipAnchor {
 
     function open() {
         root.token = Tooltip.show(root.text, root.tip-x, root.absolute-position.y, root.tip-width, root.height);
-        root.shown = true;
+        root.is-shown = true;
     }
 
     Timer {
         interval: Behaviour.tooltip-delay;
-        running: root.wanted && !root.shown && !root.active;
+        running: root.is-wanted && !root.is-shown && !root.is-active;
         triggered => {
             root.open();
         }
     }
 
-    changed active => {
-        if (root.active && root.text != "" && !root.shown) {
+    changed is-active => {
+        if (root.is-active && root.text != "" && !root.is-shown) {
             root.open();
         }
     }
 
-    changed wanted => {
-        if (!root.wanted && root.shown) {
+    changed is-wanted => {
+        if (!root.is-wanted && root.is-shown) {
             Tooltip.hide(root.token);
-            root.shown = false;
+            root.is-shown = false;
         }
     }
 
     changed text => {
-        if (root.shown) {
+        if (root.is-shown) {
             Tooltip.update(root.token, root.text, root.tip-x, root.tip-width);
         }
     }
 
     changed tip-x => {
-        if (root.shown) {
+        if (root.is-shown) {
             Tooltip.update(root.token, root.text, root.tip-x, root.tip-width);
         }
     }
@@ -114,8 +114,8 @@ export component TooltipAnchor {
 export component TooltipButton inherits Rectangle {
     in property <string> text;
     in property <string> tooltip;
-    in property <bool> primary;
-    in property <bool> enabled: true;
+    in property <bool> is-primary;
+    in property <bool> is-enabled: true;
     callback clicked();
     min-width: button.min-width;
     min-height: button.min-height;
@@ -129,8 +129,8 @@ export component TooltipButton inherits Rectangle {
             width: parent.width;
             height: parent.height;
             text: root.text;
-            primary: root.primary;
-            enabled: root.enabled;
+            primary: root.is-primary;
+            enabled: root.is-enabled;
             accessible-description: root.tooltip;
             clicked => {
                 root.clicked();
@@ -140,14 +140,14 @@ export component TooltipButton inherits Rectangle {
 
     TooltipAnchor {
         text: root.tooltip;
-        hovered: hover.has-hover;
+        is-hovered: hover.has-hover;
     }
 }
 
 export component TooltipComboBox inherits Rectangle {
     in property <string> tooltip;
     in property <[string]> model <=> combo.model;
-    in property <bool> enabled <=> combo.enabled;
+    in property <bool> is-enabled <=> combo.enabled;
     in-out property <int> current-index <=> combo.current-index;
     out property <string> current-value: combo.current-value;
     callback selected <=> combo.selected;
@@ -168,20 +168,20 @@ export component TooltipComboBox inherits Rectangle {
 
     TooltipAnchor {
         text: root.tooltip;
-        hovered: hover.has-hover;
+        is-hovered: hover.has-hover;
     }
 }
 
 export component TooltipSwitch inherits Rectangle {
     in property <string> label;
-    in-out property <bool> checked;
+    in-out property <bool> is-checked;
     callback toggled();
     width: toggle.preferred-width;
     height: toggle.preferred-height;
 
     hover := TouchArea {
         toggle := Switch {
-            checked <=> root.checked;
+            checked <=> root.is-checked;
             accessible-label: root.label;
             toggled => {
                 root.toggled();
@@ -190,8 +190,8 @@ export component TooltipSwitch inherits Rectangle {
     }
 
     TooltipAnchor {
-        text: root.checked ? @tr("{}: on", root.label) : @tr("{}: off", root.label);
-        hovered: hover.has-hover;
+        text: root.is-checked ? @tr("{}: on", root.label) : @tr("{}: off", root.label);
+        is-hovered: hover.has-hover;
     }
 }
 
@@ -209,24 +209,24 @@ export component Icon inherits Path {
 export component IconButton inherits Rectangle {
     in property <string> icon;
     in property <string> tooltip;
-    in property <bool> active;
-    in property <bool> enabled: true;
+    in property <bool> is-active;
+    in property <bool> is-enabled: true;
     in property <length> icon-size: 20px;
-    in property <color> icon-color: root.active ? Theme.primary : (touch.has-hover && root.enabled ? Theme.foreground : Theme.muted);
+    in property <color> icon-color: root.is-active ? Theme.primary : (touch.has-hover && root.is-enabled ? Theme.foreground : Theme.muted);
     callback clicked();
     accessible-role: button;
     accessible-label: root.tooltip;
-    accessible-enabled: root.enabled;
+    accessible-enabled: root.is-enabled;
     accessible-action-default => {
-        if (root.enabled) {
+        if (root.is-enabled) {
             root.clicked();
         }
     }
     width: 32px;
     height: 32px;
     border-radius: self.height / 2;
-    background: touch.has-hover && root.enabled ? Theme.hover : transparent;
-    opacity: root.enabled ? 1 : 0.4;
+    background: touch.has-hover && root.is-enabled ? Theme.hover : transparent;
+    opacity: root.is-enabled ? 1 : 0.4;
 
     Icon {
         path: root.icon;
@@ -237,13 +237,13 @@ export component IconButton inherits Rectangle {
 
     TooltipAnchor {
         text: root.tooltip;
-        hovered: touch.has-hover;
+        is-hovered: touch.has-hover;
     }
 
     touch := TouchArea {
-        mouse-cursor: root.enabled ? pointer : default;
+        mouse-cursor: root.is-enabled ? pointer : default;
         clicked => {
-            if (root.enabled) {
+            if (root.is-enabled) {
                 root.clicked();
             }
         }
@@ -254,22 +254,22 @@ export component Bar inherits Rectangle {
     in property <float> value;
     in property <float> scroll-step;
     in property <string> tooltip;
-    in property <bool> tooltip-follows-pointer;
-    in property <bool> enabled: true;
-    out property <bool> dragging: touch.pressed && root.enabled;
+    in property <bool> is-tooltip-following-pointer;
+    in property <bool> is-enabled: true;
+    out property <bool> is-dragging: touch.pressed && root.is-enabled;
     out property <float> hover-value: max(0, min(1, touch.mouse-x / root.width));
     out property <float> drag-preview: root.drag-value;
-    out property <bool> adjusting: root.dragging || root.scrolling;
-    out property <bool> holding: root.dragging || root.settling;
-    property <bool> scrolling;
+    out property <bool> is-adjusting: root.is-dragging || root.is-scrolling;
+    out property <bool> is-holding: root.is-dragging || root.is-settling;
+    property <bool> is-scrolling;
     property <float> drag-value;
-    property <bool> settling;
-    property <float> shown: root.dragging || root.settling ? root.drag-value : root.value;
+    property <bool> is-settling;
+    property <float> shown: root.is-dragging || root.is-settling ? root.drag-value : root.value;
     callback changed(value: float);
     callback committed(value: float);
     accessible-role: slider;
     accessible-label: root.tooltip;
-    accessible-enabled: root.enabled;
+    accessible-enabled: root.is-enabled;
     accessible-value: Math.round(root.value * 100) + "%";
     accessible-value-minimum: 0;
     accessible-value-maximum: 1;
@@ -284,7 +284,7 @@ export component Bar inherits Rectangle {
 
 
     function step-by(delta: float) {
-        if (root.enabled) {
+        if (root.is-enabled) {
             root.changed(max(0, min(1, root.value + delta)));
             root.committed(max(0, min(1, root.value + delta)));
         }
@@ -300,11 +300,11 @@ export component Bar inherits Rectangle {
             x: 0;
             width: parent.width * max(0, min(1, root.shown));
             border-radius: 2px;
-            background: (touch.has-hover && root.enabled) || root.dragging ? Theme.primary : Theme.foreground;
+            background: (touch.has-hover && root.is-enabled) || root.is-dragging ? Theme.primary : Theme.foreground;
         }
     }
 
-    if (touch.has-hover && root.enabled) || root.dragging: Rectangle {
+    if (touch.has-hover && root.is-enabled) || root.is-dragging: Rectangle {
         x: root.width * max(0, min(1, root.shown)) - self.width / 2;
         y: (parent.height - self.height) / 2;
         width: 12px;
@@ -315,63 +315,63 @@ export component Bar inherits Rectangle {
 
     TooltipAnchor {
         text: root.tooltip;
-        hovered: touch.has-hover;
-        active: root.dragging || root.scrolling;
-        follow-x: root.tooltip-follows-pointer ? (root.dragging ? root.width * root.drag-value : touch.mouse-x) : -1px;
+        is-hovered: touch.has-hover;
+        is-active: root.is-dragging || root.is-scrolling;
+        follow-x: root.is-tooltip-following-pointer ? (root.is-dragging ? root.width * root.drag-value : touch.mouse-x) : -1px;
     }
 
     settle-timer := Timer {
         interval: Behaviour.bar-settle-timeout;
-        running: root.settling;
+        running: root.is-settling;
         triggered => {
-            root.settling = false;
+            root.is-settling = false;
         }
     }
 
     changed value => {
-        if (root.settling && abs(root.value - root.drag-value) < 0.01) {
-            root.settling = false;
+        if (root.is-settling && abs(root.value - root.drag-value) < 0.01) {
+            root.is-settling = false;
         }
     }
 
     scroll-timer := Timer {
         interval: Behaviour.bar-scroll-timeout;
-        running: root.scrolling;
+        running: root.is-scrolling;
         triggered => {
-            root.scrolling = false;
+            root.is-scrolling = false;
         }
     }
 
     touch := TouchArea {
-        mouse-cursor: root.enabled ? pointer : default;
+        mouse-cursor: root.is-enabled ? pointer : default;
         scroll-event(event) => {
-            if (!root.enabled || root.scroll-step <= 0 || event.delta-y == 0) {
+            if (!root.is-enabled || root.scroll-step <= 0 || event.delta-y == 0) {
                 return reject;
             }
             root.drag-value = max(0, min(1, root.value + (event.delta-y > 0 ? root.scroll-step : -root.scroll-step)));
             root.changed(root.drag-value);
-            root.settling = true;
+            root.is-settling = true;
             settle-timer.restart();
             root.committed(root.drag-value);
-            root.scrolling = true;
+            root.is-scrolling = true;
             scroll-timer.restart();
             accept
         }
         pointer-event(event) => {
-            if (!root.enabled) {
+            if (!root.is-enabled) {
                 return;
             }
             if (event.kind == PointerEventKind.down && event.button == PointerEventButton.left) {
                 root.drag-value = max(0, min(1, self.mouse-x / root.width));
                 root.changed(root.drag-value);
             } else if (event.kind == PointerEventKind.up && event.button == PointerEventButton.left) {
-                root.settling = true;
+                root.is-settling = true;
                 settle-timer.restart();
                 root.committed(root.drag-value);
             }
         }
         moved => {
-            if (self.pressed && root.enabled) {
+            if (self.pressed && root.is-enabled) {
                 root.drag-value = max(0, min(1, self.mouse-x / root.width));
                 root.changed(root.drag-value);
             }

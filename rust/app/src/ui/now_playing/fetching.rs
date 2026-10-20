@@ -77,7 +77,7 @@ pub(super) async fn fetch_similar(
             .collect();
         let state = window.global::<NowPlayingState>();
         state.set_similar(ModelRc::new(VecModel::from(rows)));
-        state.set_similar_loading(false);
+        state.set_is_similar_loading(false);
         with_view(|view| *view.similar.borrow_mut() = songs);
     });
 }

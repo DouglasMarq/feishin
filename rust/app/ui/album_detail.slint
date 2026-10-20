@@ -25,14 +25,14 @@ export struct AlbumDetailTrack {
 
 export global AlbumDetailState {
     in property <string> album-id;
-    in property <bool> loading;
+    in property <bool> is-loading;
     in property <string> error;
     in property <string> name;
     in property <[AlbumDetailArtist]> artists;
     in property <string> info;
     in property <image> cover;
     in property <bool> has-cover;
-    in-out property <bool> favorite;
+    in-out property <bool> is-favorite;
     in-out property <int> rating;
     in property <[AlbumDetailTrack]> tracks;
     in property <length> tracks-height;
@@ -49,9 +49,9 @@ export global AlbumDetailState {
 }
 
 component Star inherits Path {
-    in property <bool> filled;
+    in property <bool> is-filled;
     commands: "M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z";
-    fill: root.filled ? #f5c518 : Theme.foreground.mix(Theme.background, 0.216);
+    fill: root.is-filled ? #f5c518 : Theme.foreground.mix(Theme.background, 0.216);
     viewbox-width: 24;
     viewbox-height: 24;
     width: 18px;
@@ -69,12 +69,12 @@ component Rating inherits HorizontalLayout {
         height: 20px;
 
         Star {
-            filled: root.hovered >= 0 ? star-index <= root.hovered : star-index < root.value;
+            is-filled: root.hovered >= 0 ? star-index <= root.hovered : star-index < root.value;
         }
 
         TooltipAnchor {
             text: star-index + 1 == root.value ? @tr("Clear rating") : @tr("Rate {n} star" | "Rate {n} stars" % (star-index + 1));
-            hovered: touch.has-hover;
+            is-hovered: touch.has-hover;
         }
 
         touch := TouchArea {
@@ -150,7 +150,7 @@ component TrackHeader inherits Rectangle {
 
 component AlbumTrackRowView inherits Rectangle {
     in property <AlbumDetailTrack> track;
-    property <bool> playing: PlayerState.song-id == root.track.id;
+    property <bool> is-playing: PlayerState.song-id == root.track.id;
 
     if root.track.disc-header != "": Text {
         x: 32px;
@@ -195,7 +195,7 @@ component AlbumTrackRowView inherits Rectangle {
 
             MenuItem {
                 title: ShareState.menu-title;
-                enabled: ShareState.available && !ShareState.busy;
+                enabled: ShareState.is-available && !ShareState.is-busy;
                 activated => {
                     ShareState.share(ShareKind.song, root.track.id, root.track.title);
                 }
@@ -223,7 +223,7 @@ component AlbumTrackRowView inherits Rectangle {
 
                 TooltipAnchor {
                     text: @tr("Double-click to play");
-                    hovered: touch.has-hover;
+                    is-hovered: touch.has-hover;
                 }
 
                 HorizontalLayout {
@@ -233,14 +233,14 @@ component AlbumTrackRowView inherits Rectangle {
                     Rectangle {
                         width: 48px;
 
-                        if !touch.has-hover && !root.playing: Text {
+                        if !touch.has-hover && !root.is-playing: Text {
                             x: 8px;
                             text: root.track.number;
                             color: Theme.muted;
                             vertical-alignment: center;
                         }
 
-                        if !touch.has-hover && root.playing: Icon {
+                        if !touch.has-hover && root.is-playing: Icon {
                             x: 6px;
                             path: Icons.note;
                             color: Theme.primary;
@@ -263,7 +263,7 @@ component AlbumTrackRowView inherits Rectangle {
 
                             TooltipAnchor {
                                 text: @tr("Play");
-                                hovered: play-touch.has-hover;
+                                is-hovered: play-touch.has-hover;
                             }
 
                             play-touch := TouchArea {
@@ -278,7 +278,7 @@ component AlbumTrackRowView inherits Rectangle {
                     Cell {
                         horizontal-stretch: 2;
                         text: root.track.title;
-                        text-color: root.playing ? Theme.primary : Theme.foreground;
+                        text-color: root.is-playing ? Theme.primary : Theme.foreground;
                     }
 
                     Cell {
@@ -398,13 +398,13 @@ export component AlbumDetailView inherits Rectangle {
                         font-weight: 600;
                     }
 
-                    if AlbumDetailState.loading: Skeleton {
+                    if AlbumDetailState.is-loading: Skeleton {
                         width: 280px;
                         height: 28px;
                         border-radius: 8px;
                     }
 
-                    if !AlbumDetailState.loading: Text {
+                    if !AlbumDetailState.is-loading: Text {
                         text: AlbumDetailState.error != "" ? AlbumDetailState.error : AlbumDetailState.name;
                         color: Theme.foreground;
                         font-size: 32px;
@@ -463,7 +463,7 @@ export component AlbumDetailView inherits Rectangle {
 
                     TooltipAnchor {
                         text: @tr("Play");
-                        hovered: play-touch.has-hover;
+                        is-hovered: play-touch.has-hover;
                     }
 
                     play-touch := TouchArea {
@@ -492,8 +492,8 @@ export component AlbumDetailView inherits Rectangle {
                     height: 40px;
                     icon: Icons.heart;
                     icon-size: 24px;
-                    icon-color: AlbumDetailState.favorite ? Theme.danger : Theme.muted;
-                    tooltip: AlbumDetailState.favorite ? @tr("Remove from favorites") : @tr("Add to favorites");
+                    icon-color: AlbumDetailState.is-favorite ? Theme.danger : Theme.muted;
+                    tooltip: AlbumDetailState.is-favorite ? @tr("Remove from favorites") : @tr("Add to favorites");
                     clicked => {
                         AlbumDetailState.toggle-favorite();
                     }

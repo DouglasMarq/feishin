@@ -141,16 +141,16 @@ fn start_tracks_view(window: Rc<MinimalSoftwareWindow>, jobs: Jobs, context: &Co
 }
 
 fn assert_songs_and_genres_load(harness: &Harness) {
-    assert!(harness.pump(|| harness.tracks().get_total() == 600 && harness.row(0).loaded));
+    assert!(harness.pump(|| harness.tracks().get_total() == 600 && harness.row(0).is_loaded));
     assert!(harness.pump(|| harness.tracks().get_genres().row_count() == 9));
 }
 
 fn assert_pointer_selection(harness: &Harness) {
     harness.click(PointerEventButton::Left, vertical_center_of_row(0));
-    assert!(harness.row(0).selected);
+    assert!(harness.row(0).is_selected);
     harness.click(PointerEventButton::Right, vertical_center_of_row(4));
     assert_eq!(harness.tracks().get_selected_count(), 1);
-    assert!(harness.row(4).selected && !harness.row(0).selected);
+    assert!(harness.row(4).is_selected && !harness.row(0).is_selected);
     assert!(harness.pump(|| true));
 }
 
@@ -179,7 +179,7 @@ fn assert_select_all_streams_actions(harness: &Harness, received: &mut Unbounded
     assert!(harness.pump(|| true));
     harness.press_keys(&[Key::Control.into(), "a".into()]);
     assert_eq!(state.get_selected_count(), 600);
-    assert!(harness.row(599).selected);
+    assert!(harness.row(599).is_selected);
     state.invoke_play_selected();
     assert_enqueued(received, &SelectionRanges::spanning(0..600), Placement::Now);
     state.invoke_queue_selected(true);
@@ -190,7 +190,7 @@ fn assert_select_all_streams_actions(harness: &Harness, received: &mut Unbounded
     );
     harness.press_keys(&[Key::Escape.into()]);
     assert_eq!(state.get_selected_count(), 0);
-    assert!(!harness.row(0).selected);
+    assert!(!harness.row(0).is_selected);
 }
 
 fn assert_app_shortcuts_still_reach_the_player(harness: &Harness) {
@@ -209,7 +209,7 @@ fn assert_selection_is_queued(harness: &Harness, received: &mut UnboundedReceive
     state.invoke_select_row(0, false, false);
     state.invoke_select_row(2, false, true);
     assert_eq!(state.get_selected_count(), 3);
-    assert!(harness.row(1).selected);
+    assert!(harness.row(1).is_selected);
     state.invoke_queue_selected(false);
     assert!(matches!(received.try_recv(), Ok(Command::AddLast(songs)) if songs.len() == 3));
 }
@@ -230,17 +230,17 @@ fn assert_go_to_album_navigates(harness: &Harness) {
 }
 
 fn assert_favorite_toggles(harness: &Harness) {
-    let favorite = harness.row(1).favorite;
+    let is_favorite = harness.row(1).is_favorite;
     harness.tracks().invoke_toggle_favorite(1);
-    assert!(harness.pump(|| harness.row(1).favorite != favorite));
+    assert!(harness.pump(|| harness.row(1).is_favorite != is_favorite));
 }
 
 fn assert_filters_reload(harness: &Harness) {
     let state = harness.tracks();
-    state.set_filter_favorite(true);
+    state.set_is_favorite_filter_on(true);
     state.set_genre_index(1);
     state.invoke_filters_changed(false);
-    assert!(harness.pump(|| !harness.tracks().get_loading() && harness.row(0).loaded));
+    assert!(harness.pump(|| !harness.tracks().get_is_loading() && harness.row(0).is_loaded));
     assert_eq!(state.get_selected_count(), 0);
     assert!(state.get_total() > 0 && state.get_total() < 600);
 }
@@ -272,10 +272,10 @@ fn assert_sorting_by_a_column_twice_sorts_it_descending(
     let state = harness.tracks();
     state.invoke_sort_by(TrackColumn::Year);
     assert_eq!(state.get_sort_column(), TrackColumn::Year);
-    assert!(!state.get_sort_desc());
+    assert!(!state.get_is_sort_descending());
     state.invoke_sort_by(TrackColumn::Year);
-    assert!(state.get_sort_desc());
-    assert!(harness.pump(|| !harness.tracks().get_loading() && harness.row(0).loaded));
+    assert!(state.get_is_sort_descending());
+    assert!(harness.pump(|| !harness.tracks().get_is_loading() && harness.row(0).is_loaded));
     harness.tracks().invoke_play_row(0);
     match received.try_recv() {
         Ok(Command::PlayFromList {

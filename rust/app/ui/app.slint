@@ -138,15 +138,15 @@ export component AppWindow inherits Window {
                     if AppState.route == Route.discover: DiscoverView { }
                 }
 
-                if AppState.queue-open: QueuePanel { }
+                if AppState.is-queue-open: QueuePanel { }
             }
 
             PlayerBar { }
         }
 
-        if PlaylistPickerState.open: PlaylistPicker { }
+        if PlaylistPickerState.is-open: PlaylistPicker { }
 
-        if DevicesState.approval-open: DeviceApprovalDialog { }
+        if DevicesState.is-approval-open: DeviceApprovalDialog { }
 
         ShareClipboard { }
 
@@ -176,7 +176,7 @@ export component AppWindow inherits Window {
 
             TooltipAnchor {
                 text: @tr("Click to dismiss");
-                hovered: dismiss-touch.has-hover;
+                is-hovered: dismiss-touch.has-hover;
             }
 
             Timer {

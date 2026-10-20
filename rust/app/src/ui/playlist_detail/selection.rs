@@ -9,8 +9,8 @@ pub enum ClickMode {
 }
 
 impl ClickMode {
-    pub fn from_modifiers(toggle_held: bool, range_held: bool) -> Self {
-        match (toggle_held, range_held) {
+    pub fn from_modifiers(is_toggle_held: bool, is_range_held: bool) -> Self {
+        match (is_toggle_held, is_range_held) {
             (false, false) => Self::Select,
             (true, false) => Self::Toggle,
             (false, true) => Self::SelectRange,

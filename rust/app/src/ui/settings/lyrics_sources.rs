@@ -3,7 +3,7 @@ use feishin_storage::settings::LyricsSourceSetting;
 #[derive(Debug, Clone, PartialEq)]
 pub(super) struct LyricsSource {
     pub(super) source: LyricsSourceSetting,
-    pub(super) enabled: bool,
+    pub(super) is_enabled: bool,
 }
 
 pub(super) fn lyrics_sources(enabled: &[LyricsSourceSetting]) -> Vec<LyricsSource> {
@@ -17,17 +17,17 @@ pub(super) fn lyrics_sources(enabled: &[LyricsSourceSetting]) -> Vec<LyricsSourc
     sources
 }
 
-fn push_if_missing(sources: &mut Vec<LyricsSource>, source: LyricsSourceSetting, enabled: bool) {
+fn push_if_missing(sources: &mut Vec<LyricsSource>, source: LyricsSourceSetting, is_enabled: bool) {
     if sources.iter().any(|listed| listed.source == source) {
         return;
     }
-    sources.push(LyricsSource { source, enabled });
+    sources.push(LyricsSource { source, is_enabled });
 }
 
 pub(super) fn enabled_lyrics_sources(sources: &[LyricsSource]) -> Vec<LyricsSourceSetting> {
     sources
         .iter()
-        .filter(|source| source.enabled)
+        .filter(|source| source.is_enabled)
         .map(|source| source.source)
         .collect()
 }
@@ -57,7 +57,7 @@ mod tests {
         ]);
         let listed: Vec<_> = sources
             .iter()
-            .map(|source| (source.source, source.enabled))
+            .map(|source| (source.source, source.is_enabled))
             .collect();
         assert_eq!(
             listed,
@@ -71,7 +71,7 @@ mod tests {
         assert!(move_lyrics_source(&mut sources, 1, -1));
         assert!(!move_lyrics_source(&mut sources, 0, -1));
         assert!(!move_lyrics_source(&mut sources, 3, 1));
-        sources[3].enabled = true;
+        sources[3].is_enabled = true;
         assert_eq!(
             enabled_lyrics_sources(&sources),
             [

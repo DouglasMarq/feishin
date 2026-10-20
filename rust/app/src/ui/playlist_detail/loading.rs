@@ -36,7 +36,7 @@ fn reset_view(window: &AppWindow, generation: u64, playlist_id: &str) {
     state.set_has_cover(false);
     state.set_cover(slint::Image::default());
     state.set_selected_count(0);
-    state.set_busy(false);
+    state.set_is_busy(false);
     with_model(window, |model| model.reset(generation, playlist_id));
 }
 
@@ -45,10 +45,10 @@ pub fn load(window: &AppWindow, context: &Context, shared: &SharedDetail, playli
     reset_view(window, generation, playlist_id);
     let state = window.global::<PlaylistDetailState>();
     let Some(server) = context.session.get().filter(|_| !playlist_id.is_empty()) else {
-        state.set_loading(false);
+        state.set_is_loading(false);
         return;
     };
-    state.set_loading(true);
+    state.set_is_loading(true);
     let request = LoadRequest {
         window: window.as_weak(),
         shared: Arc::clone(shared),
@@ -120,7 +120,7 @@ fn apply_loaded(window: &AppWindow, shared: &SharedDetail, loaded: Loaded) {
     if detail.generation != loaded.generation {
         return;
     }
-    window.global::<PlaylistDetailState>().set_loading(false);
+    window.global::<PlaylistDetailState>().set_is_loading(false);
     let page = match loaded.first_page {
         Ok(page) => page,
         Err(error) => {

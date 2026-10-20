@@ -30,7 +30,7 @@ pub struct Picker {
     pub generation: u64,
     songs: PickedSongs,
     pub playlists: Vec<Playlist>,
-    busy: bool,
+    is_busy: bool,
 }
 
 pub type SharedPicker = Arc<Mutex<Picker>>;
@@ -75,10 +75,10 @@ impl Picker {
     }
 
     pub fn start_request(&mut self) -> Option<PendingRequest> {
-        if self.busy || self.songs.song_count() == 0 {
+        if self.is_busy || self.songs.song_count() == 0 {
             return None;
         }
-        self.busy = true;
+        self.is_busy = true;
         Some(PendingRequest {
             generation: self.generation,
             songs: self.songs.clone(),
@@ -89,7 +89,7 @@ impl Picker {
         if self.generation != generation {
             return false;
         }
-        self.busy = false;
+        self.is_busy = false;
         true
     }
 }

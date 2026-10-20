@@ -157,7 +157,7 @@ fn for_you_is_shown(fixture: &Fixture, screen: &Screen) {
         .unwrap_or(false)
     });
     assert!(fixture.state().get_notice().starts_with("Demo mode"));
-    assert!(!fixture.state().get_loading());
+    assert!(!fixture.state().get_is_loading());
 }
 
 fn playing_a_card_plays_the_shelf_from_it(fixture: &mut Fixture) {
@@ -202,7 +202,7 @@ fn mixes_open_as_pages_and_play(fixture: &mut Fixture, screen: &Screen) {
         fixture.state().get_songs().row_count() >= 12
     });
     assert_eq!(fixture.state().get_page_kind(), DiscoverPageKind::Mix);
-    assert!(!fixture.state().get_page_has_link());
+    assert!(!fixture.state().get_has_page_link());
     fixture.state().invoke_play_page();
     let Command::Tracks(TrackCommand::PlayNow { tracks, .. }) = fixture.next_command() else {
         panic!("expected PlayNow");
@@ -261,9 +261,9 @@ fn playlists_open_as_pages(fixture: &Fixture, screen: &Screen) {
         fixture.state().get_songs().row_count() == 15
     });
     assert_eq!(fixture.state().get_page_kind(), DiscoverPageKind::Playlist);
-    assert!(fixture.state().get_page_has_link());
+    assert!(fixture.state().get_has_page_link());
     screen.wait_until("the page cover loads", || {
-        fixture.state().get_page_has_cover()
+        fixture.state().get_has_page_cover()
     });
 }
 
@@ -300,14 +300,14 @@ fn search_lists_songs_and_back_returns(fixture: &Fixture, screen: &Screen) {
     screen.wait_until("search results load", || {
         let state = fixture.state();
         state.get_page_title() == "\"river\""
-            && !state.get_page_loading()
+            && !state.get_is_page_loading()
             && state.get_songs().row_count() > 0
     });
     assert_eq!(
         fixture.state().get_page_kind(),
         DiscoverPageKind::SearchResults
     );
-    assert!(!fixture.state().get_page_has_link());
+    assert!(!fixture.state().get_has_page_link());
     fixture.window.global::<AppState>().invoke_back();
     screen.pump();
     assert_ne!(

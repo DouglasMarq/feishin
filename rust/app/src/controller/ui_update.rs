@@ -8,16 +8,16 @@ use crate::sleep_timer::SleepStatus;
 pub enum UiUpdate {
     NowPlaying(Option<Box<QueueTrack>>),
     Playback {
-        playing: bool,
+        is_playing: bool,
         position_ms: u64,
         duration_ms: u64,
     },
     Volume {
         volume: u8,
-        muted: bool,
+        is_muted: bool,
     },
     Modes {
-        shuffle: bool,
+        is_shuffled: bool,
         repeat: RepeatMode,
     },
     Queue(QueueView),

@@ -36,7 +36,7 @@ fn apply_startup_scheme(window: &AppWindow, context: &Context) {
 }
 
 pub fn watch_system_scheme(window: &AppWindow, context: &Context) {
-    if window.global::<AppearanceState>().get_follow_system() {
+    if window.global::<AppearanceState>().get_is_following_system() {
         apply_startup_scheme(window, context);
     }
     let weak_window = window.as_weak();

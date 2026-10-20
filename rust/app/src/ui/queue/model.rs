@@ -15,19 +15,20 @@ pub enum ViewChange {
     LayoutReplaced,
 }
 
-fn queue_row(item: &QueueItem, current: bool) -> QueueRow {
+fn queue_row(item: &QueueItem, is_current: bool) -> QueueRow {
     QueueRow {
         uid: item.uid.to_string().into(),
         title: item.track.title.as_ref().into(),
         artists: item.track.artist_names().into(),
         duration: format_duration(item.track.duration_ms).into(),
-        current,
+        is_current,
     }
 }
 
 pub fn row_at(view: &QueueView, position: usize) -> Option<QueueRow> {
-    let current = view.current_position() == Some(position);
-    view.item_at(position).map(|item| queue_row(item, current))
+    let is_current = view.current_position() == Some(position);
+    view.item_at(position)
+        .map(|item| queue_row(item, is_current))
 }
 
 #[derive(Default)]

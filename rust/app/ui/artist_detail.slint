@@ -14,17 +14,17 @@ export struct ArtistAlbumCard {
 }
 
 export global ArtistDetailState {
-    in property <bool> loading;
+    in property <bool> is-loading;
     in property <string> error;
     in property <string> name;
     in property <string> info;
     in property <image> image;
     in property <bool> has-image;
-    in property <bool> favorite;
+    in property <bool> is-favorite;
     in property <string> biography;
-    in-out property <bool> bio-expanded;
+    in-out property <bool> is-bio-expanded;
     in property <[TrackRow]> top-songs;
-    in-out property <bool> top-expanded;
+    in-out property <bool> is-top-expanded;
     in property <[ArtistAlbumCard]> albums;
     callback load(string);
     callback play(bool);
@@ -56,7 +56,7 @@ component LinkText inherits Text {
 
     TooltipAnchor {
         text: root.tooltip;
-        hovered: touch.has-hover;
+        is-hovered: touch.has-hover;
     }
 }
 
@@ -74,7 +74,7 @@ component AlbumTile inherits Rectangle {
 
     TooltipAnchor {
         text: @tr("Open {}", root.album.name);
-        hovered: touch.has-hover;
+        is-hovered: touch.has-hover;
     }
 
     art := Rectangle {
@@ -140,7 +140,7 @@ export component ArtistDetailView inherits Rectangle {
     property <length> tile-width: (root.grid-width - root.gap * (root.columns - 1)) / root.columns;
     property <length> tile-height: root.tile-width + 34px;
     property <length> bio-collapsed: 66px;
-    property <int> top-shown: ArtistDetailState.top-expanded ? ArtistDetailState.top-songs.length : min(Behaviour.collapsed-top-songs, ArtistDetailState.top-songs.length);
+    property <int> top-shown: ArtistDetailState.is-top-expanded ? ArtistDetailState.top-songs.length : min(Behaviour.collapsed-top-songs, ArtistDetailState.top-songs.length);
     background: Theme.background;
     min-width: 320px;
 
@@ -185,7 +185,7 @@ export component ArtistDetailView inherits Rectangle {
                         font-weight: 700;
                     }
 
-                    if ArtistDetailState.loading && ArtistDetailState.name == "": Skeleton {
+                    if ArtistDetailState.is-loading && ArtistDetailState.name == "": Skeleton {
                         width: 260px;
                         height: 36px;
                         border-radius: Theme.radius;
@@ -234,11 +234,11 @@ export component ArtistDetailView inherits Rectangle {
                             y: (parent.height - self.height) / 2;
                             width: 40px;
                             height: 40px;
-                            icon: ArtistDetailState.favorite ? Icons.heart : ArtistIcons.heart-outline;
-                            icon-color: ArtistDetailState.favorite ? Theme.danger : Theme.muted;
+                            icon: ArtistDetailState.is-favorite ? Icons.heart : ArtistIcons.heart-outline;
+                            icon-color: ArtistDetailState.is-favorite ? Theme.danger : Theme.muted;
                             icon-size: 22px;
-                            enabled: ArtistDetailState.name != "";
-                            tooltip: ArtistDetailState.favorite ? @tr("Remove from favorites") : @tr("Add to favorites");
+                            is-enabled: ArtistDetailState.name != "";
+                            tooltip: ArtistDetailState.is-favorite ? @tr("Remove from favorites") : @tr("Add to favorites");
                             clicked => {
                                 ArtistDetailState.toggle-favorite();
                             }
@@ -257,7 +257,7 @@ export component ArtistDetailView inherits Rectangle {
                 }
 
                 Rectangle {
-                    height: ArtistDetailState.bio-expanded ? bio.preferred-height : min(bio.preferred-height, root.bio-collapsed);
+                    height: ArtistDetailState.is-bio-expanded ? bio.preferred-height : min(bio.preferred-height, root.bio-collapsed);
                     clip: true;
 
                     bio := Text {
@@ -270,10 +270,10 @@ export component ArtistDetailView inherits Rectangle {
                 }
 
                 if bio.preferred-height > root.bio-collapsed: LinkText {
-                    text: ArtistDetailState.bio-expanded ? @tr("SHOW LESS") : @tr("SHOW MORE");
-                    tooltip: ArtistDetailState.bio-expanded ? @tr("Show less of the biography") : @tr("Show the whole biography");
+                    text: ArtistDetailState.is-bio-expanded ? @tr("SHOW LESS") : @tr("SHOW MORE");
+                    tooltip: ArtistDetailState.is-bio-expanded ? @tr("Show less of the biography") : @tr("Show the whole biography");
                     clicked => {
-                        ArtistDetailState.bio-expanded = !ArtistDetailState.bio-expanded;
+                        ArtistDetailState.is-bio-expanded = !ArtistDetailState.is-bio-expanded;
                     }
                 }
             }
@@ -295,11 +295,11 @@ export component ArtistDetailView inherits Rectangle {
                     }
 
                     if ArtistDetailState.top-songs.length > Behaviour.collapsed-top-songs: LinkText {
-                        text: ArtistDetailState.top-expanded ? @tr("SHOW LESS") : @tr("SHOW MORE");
-                        tooltip: ArtistDetailState.top-expanded ? @tr("Show fewer top songs") : @tr("Show all top songs");
+                        text: ArtistDetailState.is-top-expanded ? @tr("SHOW LESS") : @tr("SHOW MORE");
+                        tooltip: ArtistDetailState.is-top-expanded ? @tr("Show fewer top songs") : @tr("Show all top songs");
                         vertical-alignment: center;
                         clicked => {
-                            ArtistDetailState.top-expanded = !ArtistDetailState.top-expanded;
+                            ArtistDetailState.is-top-expanded = !ArtistDetailState.is-top-expanded;
                         }
                     }
                 }
@@ -342,19 +342,19 @@ export component ArtistDetailView inherits Rectangle {
 
                 for album[album-index] in ArtistDetailState.albums: AlbumTile {
                     property <length> top: page.content-y + grid.y + self.y;
-                    property <bool> shown: self.top + self.height > 0 && self.top < page.visible-height;
+                    property <bool> is-shown: self.top + self.height > 0 && self.top < page.visible-height;
                     x: 24px + Math.mod(album-index, root.columns) * (root.tile-width + root.gap);
                     y: Math.floor(album-index / root.columns) * (root.tile-height + root.gap);
                     width: root.tile-width;
                     height: root.tile-height;
                     album: album;
                     init => {
-                        if (self.shown) {
+                        if (self.is-shown) {
                             ArtistDetailState.album-shown(album-index);
                         }
                     }
-                    changed shown => {
-                        if (self.shown) {
+                    changed is-shown => {
+                        if (self.is-shown) {
                             ArtistDetailState.album-shown(album-index);
                         }
                     }

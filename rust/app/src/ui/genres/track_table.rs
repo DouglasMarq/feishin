@@ -11,16 +11,16 @@ use crate::ui::tracks::{PAGE_SIZE, Request, TracksModel};
 pub struct TrackTable {
     inner: TracksModel,
     notify: ModelNotify,
-    favorite: bool,
+    is_favorite: bool,
     overrides: RefCell<HashMap<String, bool>>,
 }
 
 impl TrackTable {
-    pub fn new(favorite: bool, fetch: impl Fn(Request) + 'static) -> Self {
+    pub fn new(is_favorite: bool, fetch: impl Fn(Request) + 'static) -> Self {
         Self {
             inner: TracksModel::new(fetch),
             notify: ModelNotify::default(),
-            favorite,
+            is_favorite,
             overrides: RefCell::default(),
         }
     }
@@ -75,24 +75,24 @@ impl TrackTable {
         self.inner.song_id_at(index)
     }
 
-    fn favorite_of(&self, song_id: &str) -> bool {
+    fn is_favorite_song(&self, song_id: &str) -> bool {
         self.overrides
             .borrow()
             .get(song_id)
             .copied()
-            .unwrap_or(self.favorite)
+            .unwrap_or(self.is_favorite)
     }
 
     pub fn favorite_at(&self, index: usize) -> Option<(String, bool)> {
         let song_id = self.song_id_at(index)?;
-        let favorite = self.favorite_of(&song_id);
-        Some((song_id, favorite))
+        let is_favorite = self.is_favorite_song(&song_id);
+        Some((song_id, is_favorite))
     }
 
-    pub fn set_favorite(&self, index: usize, song_id: &str, favorite: bool) {
+    pub fn set_favorite(&self, index: usize, song_id: &str, is_favorite: bool) {
         self.overrides
             .borrow_mut()
-            .insert(song_id.to_owned(), favorite);
+            .insert(song_id.to_owned(), is_favorite);
         if self.song_id_at(index).as_deref() == Some(song_id) {
             self.notify.row_changed(index);
         }
@@ -108,8 +108,8 @@ impl Model for TrackTable {
 
     fn row_data(&self, row: usize) -> Option<TrackItem> {
         let track = self.inner.row_data(row)?;
-        let favorite = self.favorite_of(track.id.as_str());
-        Some(TrackItem { track, favorite })
+        let is_favorite = self.is_favorite_song(track.id.as_str());
+        Some(TrackItem { track, is_favorite })
     }
 
     fn model_tracker(&self) -> &dyn ModelTracker {
@@ -138,8 +138,8 @@ mod tests {
         table.apply_page(1, 0, songs.to_vec());
         assert_eq!(table.favorite_at(1), Some(("b".to_owned(), true)));
         table.set_favorite(1, "b", false);
-        assert!(table.row_data(1).is_some_and(|item| !item.favorite));
-        assert!(table.row_data(0).is_some_and(|item| item.favorite));
+        assert!(table.row_data(1).is_some_and(|item| !item.is_favorite));
+        assert!(table.row_data(0).is_some_and(|item| item.is_favorite));
         table.reset(SongListQuery::default());
         assert!(table.apply_count(2, 2));
         table.apply_page(2, 0, songs.to_vec());
@@ -184,10 +184,10 @@ mod tests {
             show_row(&table, &log, row);
         }
         assert_eq!(table.favorite_at(5), None);
-        assert!(table.row_data(5).is_some_and(|item| !item.track.loaded));
+        assert!(table.row_data(5).is_some_and(|item| !item.track.is_loaded));
         assert_eq!(log.borrow_mut().drain(..).collect::<Vec<_>>(), [0]);
         table.apply_page(1, 0, songs_of_page(0));
         assert_eq!(table.favorite_at(5), Some(("s5".to_owned(), false)));
-        assert!(table.row_data(6).is_some_and(|item| item.favorite));
+        assert!(table.row_data(6).is_some_and(|item| item.is_favorite));
     }
 }

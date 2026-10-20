@@ -222,11 +222,11 @@ impl Model for PlaylistSongsModel {
                 return None;
             }
             state.pages.focus_on(row);
-            let selected = state.selection.contains(row);
+            let is_selected = state.selection.contains(row);
             if let Some(song) = state.pages.song(row) {
-                return Some(song_row(song, row, selected));
+                return Some(song_row(song, row, is_selected));
             }
-            (placeholder_row(row, selected), state.page_request(row))
+            (placeholder_row(row, is_selected), state.page_request(row))
         };
         if let Some(request) = request {
             (self.fetch)(request);

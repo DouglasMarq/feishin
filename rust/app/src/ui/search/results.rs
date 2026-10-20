@@ -53,11 +53,11 @@ impl Results {
         &self,
         window: &AppWindow,
         query: Option<String>,
-        force: bool,
+        is_forced: bool,
     ) -> Option<u64> {
-        let cleared = query.is_none();
-        let generation = self.searches.borrow_mut().begin(query, force)?;
-        if cleared {
+        let is_cleared = query.is_none();
+        let generation = self.searches.borrow_mut().begin(query, is_forced)?;
+        if is_cleared {
             self.show_sections();
         }
         self.show_flags(window);
@@ -113,13 +113,13 @@ impl Results {
     pub fn show_flags(&self, window: &AppWindow) {
         let searches = self.searches.borrow();
         let state = window.global::<SearchState>();
-        state.set_loading(searches.pending);
-        state.set_songs_more(searches.songs.has_more);
-        state.set_albums_more(searches.albums.has_more);
-        state.set_artists_more(searches.artists.has_more);
-        state.set_songs_busy(searches.songs.busy);
-        state.set_albums_busy(searches.albums.busy);
-        state.set_artists_busy(searches.artists.busy);
+        state.set_is_loading(searches.is_pending);
+        state.set_has_more_songs(searches.songs.has_more);
+        state.set_has_more_albums(searches.albums.has_more);
+        state.set_has_more_artists(searches.artists.has_more);
+        state.set_is_songs_busy(searches.songs.is_busy);
+        state.set_is_albums_busy(searches.albums.is_busy);
+        state.set_is_artists_busy(searches.artists.is_busy);
     }
 
     pub fn claim_cover(&self, kind: CardKind, index: usize) -> Option<(String, String)> {

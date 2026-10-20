@@ -122,7 +122,7 @@ fn song_passes_filters(library: DemoLibrary, index: usize, query: &SongListQuery
     let filters = [
         query
             .is_favorite
-            .is_none_or(|favorite| favorite == song_is_favorite(index)),
+            .is_none_or(|is_favorite| is_favorite == song_is_favorite(index)),
         query.album_ids.is_empty() || query.album_ids.contains(&album_id(album)),
         query.artist_ids.is_empty() || query.artist_ids.contains(&artist_id(artist)),
         query.genre_ids.is_empty() || query.genre_ids.contains(&genre_id(song_genre(index))),

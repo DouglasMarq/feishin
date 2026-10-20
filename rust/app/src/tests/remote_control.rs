@@ -39,7 +39,7 @@ async fn a_transferred_queue_plays_from_its_position() {
     let adopted = AdoptedQueue {
         snapshot: elsewhere.snapshot(),
         position_ms: 61_000,
-        playing: false,
+        is_playing: false,
     };
     harness
         .controller
