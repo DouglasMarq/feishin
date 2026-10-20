@@ -80,6 +80,7 @@ async fn media_sessions_show_the_youtube_thumbnail() {
         session: Session::default(),
         ui: Arc::new(RecordingUi::default()),
         commands,
+        covers: Arc::new(crate::covers::DemoCovers),
     };
     let mut controller = Controller::new(deps, fake.settings(false, false), None, Some(1));
     controller.handle(Command::Tracks(crate::controller::TrackCommand::PlayNow {

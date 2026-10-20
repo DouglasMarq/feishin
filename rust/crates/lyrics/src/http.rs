@@ -14,7 +14,7 @@ async fn send(request: reqwest::RequestBuilder) -> Result<Option<reqwest::Respon
         return Ok(None);
     }
     if !status.is_success() {
-        return Err(LyricsError::Network(format!("HTTP {status}")));
+        return Err(LyricsError::Network(format!("HTTP {status}").into()));
     }
     Ok(Some(response))
 }
@@ -28,7 +28,7 @@ pub(crate) async fn send_json<T: DeserializeOwned>(
     let body = capped_body(response).await?;
     serde_json::from_slice(&body)
         .map(Some)
-        .map_err(|error| LyricsError::Decode(error.to_string()))
+        .map_err(|error| LyricsError::Decode(Box::new(error)))
 }
 
 pub(crate) async fn send_text(request: reqwest::RequestBuilder) -> Result<Option<String>> {
@@ -43,9 +43,9 @@ async fn capped_body(mut response: reqwest::Response) -> Result<Vec<u8>> {
     let mut body = Vec::new();
     while let Some(chunk) = response.chunk().await.map_err(network_error)? {
         if body.len().saturating_add(chunk.len()) > MAX_RESPONSE_BYTES {
-            return Err(LyricsError::Decode(format!(
-                "the response is larger than {MAX_RESPONSE_BYTES} bytes"
-            )));
+            return Err(LyricsError::Decode(
+                format!("the response is larger than {MAX_RESPONSE_BYTES} bytes").into(),
+            ));
         }
         body.extend_from_slice(&chunk);
     }
@@ -53,5 +53,5 @@ async fn capped_body(mut response: reqwest::Response) -> Result<Vec<u8>> {
 }
 
 fn network_error(error: reqwest::Error) -> LyricsError {
-    LyricsError::Network(error.to_string())
+    LyricsError::Network(Box::new(error))
 }

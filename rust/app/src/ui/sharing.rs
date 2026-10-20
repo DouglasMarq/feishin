@@ -1,10 +1,8 @@
 use feishin_api::{ApiError, MusicServer};
-use feishin_core::model::{ServerType, Share};
+use feishin_core::model::Share;
 use slint::ComponentHandle;
 
 use super::{AppWindow, Context, ShareKind, ShareState, on_ui, show_status, tracks};
-
-const NOT_AUTHORIZED_CODE: i32 = 50;
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 struct ShareRequest {
@@ -42,16 +40,11 @@ pub fn install(window: &AppWindow, ctx: &Context) {
 pub fn show_availability(window: &AppWindow, server: &dyn MusicServer) {
     let state = window.global::<ShareState>();
     state.set_available(server.can_share());
-    state.set_unavailable_reason(unavailable_reason(server.config().server_type).into());
+    state.set_unavailable_reason(unavailable_reason().into());
 }
 
-fn unavailable_reason(server_type: ServerType) -> String {
-    match server_type {
-        ServerType::Jellyfin => tr!("Jellyfin has no public share links"),
-        ServerType::Navidrome | ServerType::Subsonic => {
-            tr!("this server has no public share links")
-        }
-    }
+fn unavailable_reason() -> String {
+    tr!("this server has no public share links")
 }
 
 fn share_selected_tracks(window: &AppWindow, ctx: &Context) {
@@ -84,8 +77,7 @@ fn start_share(window: &AppWindow, ctx: &Context, request: ShareRequest) {
         return;
     };
     if !server.can_share() {
-        let reason = unavailable_reason(server.config().server_type);
-        show_status(window, &tr!("Cannot share: {}", reason));
+        show_status(window, &tr!("Cannot share: {}", unavailable_reason()));
         return;
     }
     state.set_busy(true);
@@ -119,10 +111,7 @@ fn copy_link(window: &AppWindow, url: &str) {
 
 fn failure_message(error: &ApiError) -> String {
     match error {
-        ApiError::Server {
-            code: NOT_AUTHORIZED_CODE,
-            ..
-        } => tr!("Your user is not allowed to share on this server"),
+        ApiError::NotAuthorized(_) => tr!("Your user is not allowed to share on this server"),
         ApiError::Unsupported(reason) => tr!("Could not create a share link: {}", reason),
         other => tr!("Could not create a share link: {}", other),
     }
@@ -147,10 +136,7 @@ mod tests {
             failure_message(&disabled),
             "Could not create a share link: sharing is turned off on this server"
         );
-        let refused = ApiError::Server {
-            code: NOT_AUTHORIZED_CODE,
-            message: "no share role".into(),
-        };
+        let refused = ApiError::NotAuthorized("no share role".into());
         assert_eq!(
             failure_message(&refused),
             "Your user is not allowed to share on this server"
@@ -159,14 +145,6 @@ mod tests {
         assert_eq!(
             failure_message(&offline),
             "Could not create a share link: network error: timed out"
-        );
-    }
-
-    #[test]
-    fn jellyfin_explains_why_sharing_is_off() {
-        assert_eq!(
-            unavailable_reason(ServerType::Jellyfin),
-            "Jellyfin has no public share links"
         );
     }
 }

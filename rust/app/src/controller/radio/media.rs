@@ -18,6 +18,7 @@ fn radio_now_playing(radio: &RadioPlayback) -> NowPlaying {
         album: Some(radio.station.name.clone()),
         duration_ms: None,
         cover_url: None,
+        cover_file: None,
     }
 }
 

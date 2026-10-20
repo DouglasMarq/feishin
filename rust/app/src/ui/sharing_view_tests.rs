@@ -96,7 +96,7 @@ fn jellyfin_disables_sharing_and_explains_why() {
     assert!(!state.get_available());
     assert_eq!(
         state.get_menu_title(),
-        "Share (Jellyfin has no public share links)"
+        "Share (this server has no public share links)"
     );
 
     state.invoke_share(ShareKind::Song, "song-1".into(), "One".into());
@@ -104,7 +104,7 @@ fn jellyfin_disables_sharing_and_explains_why() {
     assert!(view.pump(|| true));
     assert_eq!(
         view.status(),
-        "Cannot share: Jellyfin has no public share links"
+        "Cannot share: this server has no public share links"
     );
     assert_eq!(view.copied_text(), None);
     assert!(server.shared_items().is_empty());

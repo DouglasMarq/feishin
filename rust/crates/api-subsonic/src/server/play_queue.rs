@@ -8,6 +8,8 @@ use crate::types::{GetPlayQueue, GetPlayQueueByIndex, PlayQueue};
 
 const MAX_QUERY_STRING_BYTES: usize = 8_000;
 const ID_PARAMETER_BYTES: usize = "&id=".len();
+const QUEUE_TOO_LONG_FOR_A_QUERY_STRING: &str =
+    "saving a play queue too long for a GET request without formPost";
 
 fn too_long_for_a_query_string(extensions: &Extensions, song_ids: &[String]) -> bool {
     let id_bytes: usize = song_ids
@@ -40,11 +42,7 @@ impl SubsonicServer {
     ) -> Result<()> {
         let extensions = self.extensions().await?;
         if too_long_for_a_query_string(extensions, song_ids) {
-            tracing::debug!(
-                songs = song_ids.len(),
-                "play queue not saved: too long for a GET request and the server lacks formPost"
-            );
-            return Ok(());
+            return Err(ApiError::Unsupported(QUEUE_TOO_LONG_FOR_A_QUERY_STRING));
         }
         let current_index =
             current_song_id.and_then(|id| song_ids.iter().position(|song_id| song_id == id));

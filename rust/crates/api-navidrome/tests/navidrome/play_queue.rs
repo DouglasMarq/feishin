@@ -1,4 +1,4 @@
-use feishin_api::MusicServer;
+use feishin_api::{ApiError, MusicServer};
 use serde_json::json;
 use wiremock::matchers::{body_json, method, path, query_param};
 use wiremock::{Mock, MockServer, ResponseTemplate};
@@ -82,10 +82,10 @@ async fn huge_index_queue_is_skipped_without_form_post() {
         .mount(&mock)
         .await;
     let song_ids: Vec<String> = (0..2_000).map(|index| format!("song-{index}")).collect();
-    server(&mock, Some("jwt-1"))
+    let saved = server(&mock, Some("jwt-1"))
         .save_play_queue(&song_ids, Some("song-1"), 5)
-        .await
-        .expect("skipped");
+        .await;
+    assert!(matches!(saved, Err(ApiError::Unsupported(_))));
 }
 
 async fn mount_legacy_queue(mock: &MockServer) {

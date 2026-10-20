@@ -35,7 +35,7 @@ pub(super) fn spawn_connection_thread(
         .spawn(move || {
             let connected = client
                 .connect()
-                .map_err(|error| PlatformError::Discord(error.to_string()));
+                .map_err(|error| PlatformError::Discord(Box::new(error)));
             let is_connected = connected.is_ok();
             report_connection_result(&ready_sender, connected);
             if is_connected {
@@ -43,7 +43,7 @@ pub(super) fn spawn_connection_thread(
             }
         })
         .map(drop)
-        .map_err(|error| PlatformError::Discord(error.to_string()))
+        .map_err(|error| PlatformError::Discord(Box::new(error)))
 }
 
 fn report_connection_result(ready_sender: &mpsc::SyncSender<Result<()>>, connected: Result<()>) {

@@ -2,6 +2,7 @@ use std::ffi::OsString;
 use std::io;
 use std::path::{Path, PathBuf};
 use std::process::{Output, Stdio};
+use std::sync::Arc;
 use std::time::Duration;
 
 use tokio::process::Command;
@@ -57,7 +58,7 @@ fn search_path_with(current: Option<OsString>, extra_directories: &[&str]) -> Op
 fn launch_error(error: io::Error) -> YouTubeError {
     match error.kind() {
         io::ErrorKind::NotFound => YouTubeError::NotInstalled,
-        _ => YouTubeError::Launch(error.to_string()),
+        _ => YouTubeError::Launch(Arc::new(error)),
     }
 }
 

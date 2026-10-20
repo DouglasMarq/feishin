@@ -267,10 +267,16 @@ fn corrupt_playback_file_is_ignored() {
 fn corrupt_files_are_invalid() {
     let (_directory, data_dir) = data_dir();
     std::fs::write(data_dir.join(LEGACY_QUEUE_FILE), b"{not json").unwrap();
-    assert!(matches!(load(&data_dir), Err(StorageError::Invalid(_))));
+    assert!(matches!(
+        load(&data_dir),
+        Err(StorageError::Malformed { .. })
+    ));
     for garbage in [&b"{not json"[..], b"FSQ1\x05\x01", b"FSQ2\x05\x01", b"FSQ9"] {
         std::fs::write(data_dir.join(QUEUE_FILE), garbage).unwrap();
-        assert!(matches!(load(&data_dir), Err(StorageError::Invalid(_))));
+        assert!(matches!(
+            load(&data_dir),
+            Err(StorageError::Invalid(_) | StorageError::Malformed { .. })
+        ));
     }
 }
 
@@ -310,7 +316,10 @@ fn dangling_shared_value_is_invalid() {
     };
     let bytes = QUEUE_FORMAT.encode(&dangling).unwrap();
     std::fs::write(data_dir.join(QUEUE_FILE), bytes).unwrap();
-    assert!(matches!(load(&data_dir), Err(StorageError::Invalid(_))));
+    assert!(matches!(
+        load(&data_dir),
+        Err(StorageError::Invalid(_) | StorageError::Malformed { .. })
+    ));
 }
 
 const FIRST_FORMAT_SAMPLE: &[u8] = &[

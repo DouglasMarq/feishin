@@ -4,7 +4,7 @@ use std::path::PathBuf;
 use super::cookie_export::PrivateFile;
 use super::*;
 use crate::tests::SPAWNING;
-use crate::{CookieBrowser, YtDlp};
+use crate::{CookieBrowser, YouTubeError, YtDlp};
 
 const COOKIE_SCRIPT: &str = r#"while [ "$#" -gt 0 ]; do
   if [ "$1" = "--cookies" ]; then target="$2"; fi
@@ -122,11 +122,35 @@ async fn yt_dlp_failures_without_cookies_explain_why() {
     let error = sign_in_with_browser(&fake.yt_dlp(), &fake.private_dir())
         .await
         .unwrap_err();
-    assert_eq!(
-        error,
-        MusicError::SignIn("yt-dlp failed: could not find firefox cookies database".into())
-    );
+    assert!(matches!(
+        &error,
+        MusicError::CookieExport(YouTubeError::Failed(message))
+            if message == "could not find firefox cookies database"
+    ));
     assert_eq!(std::fs::read_dir(fake.private_dir()).unwrap().count(), 0);
+}
+
+#[tokio::test]
+async fn given_an_unreadable_cookie_file_after_a_successful_export_the_read_error_is_reported() {
+    let _spawning = SPAWNING.lock().await;
+    let fake = FakeExporter::with_body(
+        r#"while [ "$#" -gt 0 ]; do
+  if [ "$1" = "--cookies" ]; then target="$2"; fi
+  shift
+done
+rm -f "$target"
+mkdir "$target""#,
+    );
+    let error = sign_in_with_browser(&fake.yt_dlp(), &fake.private_dir())
+        .await
+        .unwrap_err();
+    assert!(matches!(
+        error,
+        MusicError::CookieFile {
+            context: "could not read the exported cookies",
+            ..
+        }
+    ));
 }
 
 #[tokio::test]
@@ -136,9 +160,8 @@ async fn a_browser_without_a_youtube_session_is_reported() {
     let error = sign_in_with_browser(&fake.yt_dlp(), &fake.private_dir())
         .await
         .unwrap_err();
-    assert_eq!(
-        error,
-        MusicError::SignIn("Firefox has no YouTube session".into())
+    assert!(
+        matches!(&error, MusicError::SignIn(reason) if reason == "Firefox has no YouTube session")
     );
 }
 
@@ -149,7 +172,7 @@ async fn signing_in_needs_a_browser() {
     let error = sign_in_with_browser(&without_browser, &fake.private_dir())
         .await
         .unwrap_err();
-    assert_eq!(error, MusicError::SignIn("no browser is selected".into()));
+    assert!(matches!(&error, MusicError::SignIn(reason) if reason == "no browser is selected"));
 }
 
 #[tokio::test]

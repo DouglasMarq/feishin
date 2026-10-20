@@ -93,3 +93,19 @@ async fn unauthorized_maps_to_auth_error() {
         Err(ApiError::Auth(_))
     ));
 }
+
+#[tokio::test]
+async fn given_an_unreachable_server_the_error_keeps_the_transport_error() {
+    let unreachable = std::net::TcpListener::bind("127.0.0.1:0")
+        .and_then(|listener| listener.local_addr())
+        .unwrap();
+
+    let error = JellyfinServer::login(config(&format!("http://{unreachable}")), "secret")
+        .await
+        .err()
+        .unwrap();
+
+    assert!(matches!(error, ApiError::Network(_)));
+    let source = std::error::Error::source(&error).unwrap();
+    assert!(source.downcast_ref::<reqwest::Error>().is_some());
+}

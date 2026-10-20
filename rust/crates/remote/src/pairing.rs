@@ -9,9 +9,9 @@ const SECRET_BYTES: usize = 32;
 const PROOF_CONTEXT: &[u8] = b"feishin-remote-v1";
 const DEVICE_ID_BYTES: usize = 12;
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, thiserror::Error)]
+#[derive(Debug, Clone, Copy, PartialEq, thiserror::Error)]
 #[error("not a {SECRET_BYTES}-byte hex value")]
-pub struct InvalidSecret;
+pub struct InvalidSecret(#[source] hex::FromHexError);
 
 macro_rules! secret_type {
     ($name:ident) => {
@@ -36,7 +36,7 @@ macro_rules! secret_type {
 
             fn try_from(text: String) -> Result<Self, Self::Error> {
                 let mut bytes = [0_u8; SECRET_BYTES];
-                hex::decode_to_slice(text, &mut bytes).map_err(|_| InvalidSecret)?;
+                hex::decode_to_slice(text, &mut bytes).map_err(InvalidSecret)?;
                 Ok(Self(bytes))
             }
         }
@@ -55,8 +55,7 @@ secret_type!(Proof);
 
 fn random_bytes() -> Result<[u8; SECRET_BYTES], RemoteError> {
     let mut bytes = [0_u8; SECRET_BYTES];
-    getrandom::fill(&mut bytes)
-        .map_err(|error| RemoteError::Io(format!("the system random source failed: {error}")))?;
+    getrandom::fill(&mut bytes).map_err(RemoteError::Randomness)?;
     Ok(bytes)
 }
 

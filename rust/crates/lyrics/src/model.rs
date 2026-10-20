@@ -1,9 +1,11 @@
+pub type ErrorCause = Box<dyn std::error::Error + Send + Sync>;
+
 #[derive(Debug, thiserror::Error)]
 pub enum LyricsError {
     #[error("network error: {0}")]
-    Network(String),
+    Network(#[source] ErrorCause),
     #[error("unexpected response: {0}")]
-    Decode(String),
+    Decode(#[source] ErrorCause),
 }
 
 pub type Result<T> = std::result::Result<T, LyricsError>;

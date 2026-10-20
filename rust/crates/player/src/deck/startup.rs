@@ -108,7 +108,9 @@ fn initialize_mpv(options: &[MpvOption<'_>]) -> Result<Mpv> {
             initializer.set_property(name, *value)?;
         }
         for name in BEST_EFFORT_DISABLED_OPTIONS {
-            initializer.set_property(name, "no").ok();
+            if let Err(error) = initializer.set_property(name, "no") {
+                tracing::debug!("mpv option {name} could not be disabled: {error}");
+            }
         }
         Ok(())
     })
@@ -126,5 +128,8 @@ fn spawn_event_thread(shared: Arc<Shared>, on_event: EventCallback) -> Result<Jo
     thread::Builder::new()
         .name(EVENT_THREAD_NAME.into())
         .spawn(move || event_loop::run(shared, on_event))
-        .map_err(|error| PlayerError::Mpv(format!("failed to spawn event thread: {error}")))
+        .map_err(|source| PlayerError::Thread {
+            name: EVENT_THREAD_NAME,
+            source,
+        })
 }

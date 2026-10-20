@@ -62,7 +62,7 @@ impl CoverCache {
             .await
             .clone();
         self.forget_inflight_load(&image_key, &load_cell);
-        shared_result.map_err(|error| error.duplicate())
+        shared_result.map_err(Arc::unwrap_or_clone)
     }
 
     pub fn get_cached(&self, key: &str, size: u32) -> Option<Arc<DecodedImage>> {
@@ -70,6 +70,13 @@ impl CoverCache {
             .as_mut()?
             .get(&ImageKey::new(key, size))
             .cloned()
+    }
+
+    pub fn cached_file(&self, key: &str, size: u32) -> Option<PathBuf> {
+        let file_name = ImageKey::new(key, size).file_name();
+        lock(&self.inner.disk)
+            .contains(&file_name)
+            .then(|| self.inner.config.dir.join(file_name))
     }
 
     pub fn disk_usage(&self) -> u64 {

@@ -12,7 +12,10 @@ pub(crate) fn spawn_fader(mixer: Arc<Mixer>) -> Result<JoinHandle<()>> {
     thread::Builder::new()
         .name(FADER_THREAD_NAME.into())
         .spawn(move || run_fader(&mixer))
-        .map_err(|error| PlayerError::Mpv(format!("failed to spawn crossfade thread: {error}")))
+        .map_err(|source| PlayerError::Thread {
+            name: FADER_THREAD_NAME,
+            source,
+        })
 }
 
 fn run_fader(mixer: &Mixer) {

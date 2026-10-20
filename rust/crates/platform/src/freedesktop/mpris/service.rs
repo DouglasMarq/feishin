@@ -23,7 +23,7 @@ pub(super) fn run(
         Err(error) => {
             report_registration(
                 &ready_sender,
-                Err(PlatformError::MediaControls(error.to_string())),
+                Err(PlatformError::MediaControls(Box::new(error))),
             );
         }
     }
@@ -79,7 +79,7 @@ async fn register(player: MprisPlayer) -> Result<Server<MprisPlayer>> {
             tracing::debug!(%first_error, %fallback, "MPRIS bus name unavailable, using fallback");
             Server::new(&fallback, player)
                 .await
-                .map_err(|error| PlatformError::MediaControls(error.to_string()))
+                .map_err(|error| PlatformError::MediaControls(Box::new(error)))
         }
     }
 }

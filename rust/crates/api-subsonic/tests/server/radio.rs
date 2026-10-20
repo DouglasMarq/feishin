@@ -154,5 +154,5 @@ async fn refused_changes_are_errors() {
 
     let refused = server(&mock).create_radio_station(&draft()).await;
 
-    assert!(matches!(refused, Err(ApiError::Server { code: 50, .. })));
+    assert!(matches!(refused, Err(ApiError::NotAuthorized(_))));
 }

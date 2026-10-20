@@ -192,6 +192,7 @@ pub(super) fn start_harness_with(
         session: session.clone(),
         ui: ui.clone(),
         commands: sender,
+        covers: Arc::new(crate::covers::DemoCovers),
     };
     Harness {
         controller: Controller::new(deps, settings, stored, Some(42)),

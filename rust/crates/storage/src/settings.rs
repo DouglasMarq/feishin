@@ -1,7 +1,6 @@
 mod lyrics_source;
 mod youtube;
 
-use std::fmt::Display;
 use std::time::Duration;
 
 use feishin_api::TranscodeFormat;
@@ -163,8 +162,8 @@ impl Settings {
     }
 }
 
-fn invalid_settings_file(error: impl Display) -> StorageError {
-    StorageError::Invalid(format!("{SETTINGS_FILE}: {error}"))
+fn invalid_settings_file(error: impl std::error::Error + Send + Sync + 'static) -> StorageError {
+    StorageError::malformed(SETTINGS_FILE, error)
 }
 
 #[cfg(test)]
@@ -435,7 +434,7 @@ lyrics_sources = ["musixmatch", "lrclib"]
         std::fs::write(paths.config_dir.join(SETTINGS_FILE), "volume = [").unwrap();
         assert!(matches!(
             Settings::load(&paths),
-            Err(StorageError::Invalid(_))
+            Err(StorageError::Malformed { .. })
         ));
     }
 }

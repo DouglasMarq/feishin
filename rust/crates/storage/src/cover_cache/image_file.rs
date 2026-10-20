@@ -8,9 +8,11 @@ use sha2::{Digest, Sha256};
 use super::DecodedImage;
 use crate::{Result, StorageError};
 
+const COVER_IMAGE: &str = "cover image";
+
 pub(super) fn decode(bytes: &[u8], size: u32) -> Result<DecodedImage> {
     let image = image::load_from_memory(bytes)
-        .map_err(|error| StorageError::Invalid(format!("cover image: {error}")))?;
+        .map_err(|error| StorageError::malformed(COVER_IMAGE, error))?;
     let rgba = shrink_to_fit(image, size).into_rgba8();
     Ok(DecodedImage {
         width: rgba.width(),

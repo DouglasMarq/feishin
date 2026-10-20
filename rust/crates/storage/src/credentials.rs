@@ -5,6 +5,7 @@ use keyring_core::{Entry, Error};
 use crate::{Result, StorageError};
 
 pub const SERVICE: &str = "feishin-rs";
+const KEYRING_THREAD_PANICKED: &str = "keyring thread panicked";
 
 pub fn set(server_id: &str, credential: &str) -> Result<()> {
     run_outside_async_runtime(|| {
@@ -33,10 +34,11 @@ fn run_outside_async_runtime<T: Send>(
     keyring_call: impl FnOnce() -> Result<T> + Send,
 ) -> Result<T> {
     std::thread::scope(|scope| {
-        scope
-            .spawn(keyring_call)
-            .join()
-            .unwrap_or_else(|_| Err(StorageError::Keyring("keyring thread panicked".into())))
+        scope.spawn(keyring_call).join().unwrap_or_else(|_| {
+            Err(keyring_error(Error::PlatformFailure(
+                KEYRING_THREAD_PANICKED.into(),
+            )))
+        })
     })
 }
 
@@ -55,15 +57,16 @@ fn ensure_store() -> Result<()> {
     if keyring_core::get_default_store().is_some() {
         return Ok(());
     }
-    static PLATFORM_STORE_INSTALLATION: OnceLock<std::result::Result<(), String>> = OnceLock::new();
+    static PLATFORM_STORE_INSTALLATION: OnceLock<std::result::Result<(), Arc<Error>>> =
+        OnceLock::new();
     PLATFORM_STORE_INSTALLATION
         .get_or_init(install_platform_store)
         .clone()
         .map_err(StorageError::Keyring)
 }
 
-fn install_platform_store() -> std::result::Result<(), String> {
-    let store = platform_store().map_err(|error| error.to_string())?;
+fn install_platform_store() -> std::result::Result<(), Arc<Error>> {
+    let store = platform_store().map_err(Arc::new)?;
     if keyring_core::get_default_store().is_none() {
         keyring_core::set_default_store(store);
     }
@@ -95,7 +98,7 @@ fn platform_store() -> keyring_core::Result<Arc<keyring_core::CredentialStore>> 
 }
 
 fn keyring_error(error: Error) -> StorageError {
-    StorageError::Keyring(error.to_string())
+    StorageError::Keyring(Arc::new(error))
 }
 
 #[cfg(test)]
@@ -159,7 +162,7 @@ mod tests {
             subsonic: "u=me&s=salt&t=token".into(),
             nd_token: Some("jwt".into()),
         };
-        set("server-nd", &credential.to_json()).unwrap();
+        set("server-nd", &credential.to_json().unwrap()).unwrap();
         let stored = get("server-nd").unwrap().unwrap();
         assert_eq!(
             feishin_api::Credential::from_json(&stored).unwrap(),

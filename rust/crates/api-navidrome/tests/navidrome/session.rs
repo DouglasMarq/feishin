@@ -221,4 +221,6 @@ async fn given_a_network_failure_the_error_has_no_credentials() {
         !message.contains("salt1") && !message.contains("tok1"),
         "{message}"
     );
+    let source = std::error::Error::source(&error).expect("the transport error");
+    assert!(source.downcast_ref::<reqwest::Error>().is_some());
 }

@@ -16,7 +16,11 @@ pub fn error_text(error: &RemoteError) -> String {
         RemoteError::Denied => tr!("the connection was not allowed"),
         RemoteError::TimedOut => tr!("it did not answer in time"),
         RemoteError::Failed(failure) => failure_text(*failure),
-        RemoteError::Io(_) | RemoteError::Protocol(_) | RemoteError::Discovery(_) => {
+        RemoteError::Io(_)
+        | RemoteError::Protocol(_)
+        | RemoteError::Malformed(_)
+        | RemoteError::Discovery(_)
+        | RemoteError::Randomness(_) => {
             tr!("the network connection failed")
         }
     }

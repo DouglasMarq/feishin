@@ -42,7 +42,7 @@ async fn users_without_the_share_role_get_the_server_error() {
 
     let refused = server(&mock).create_share(&["al-1".to_owned()], None).await;
 
-    assert!(matches!(refused, Err(ApiError::Server { code: 50, .. })));
+    assert!(matches!(refused, Err(ApiError::NotAuthorized(_))));
 }
 
 #[tokio::test]

@@ -1,4 +1,4 @@
-use std::sync::Mutex;
+use std::sync::{Mutex, PoisonError};
 
 use keepawake::KeepAwake;
 
@@ -24,7 +24,7 @@ impl SleepInhibitor {
         let mut assertion = self
             .assertion
             .lock()
-            .map_err(|_| inhibitor_error("the sleep assertion lock is poisoned"))?;
+            .unwrap_or_else(PoisonError::into_inner);
         match (inhibited, assertion.is_some()) {
             (true, false) => *assertion = Some(self.create_assertion()?),
             (false, true) => *assertion = None,
@@ -45,8 +45,8 @@ impl SleepInhibitor {
     }
 }
 
-fn inhibitor_error(error: impl ToString) -> PlatformError {
-    PlatformError::SleepInhibitor(error.to_string())
+fn inhibitor_error(error: keepawake::Error) -> PlatformError {
+    PlatformError::SleepInhibitor(Box::new(error))
 }
 
 #[cfg(test)]

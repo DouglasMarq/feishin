@@ -109,6 +109,7 @@ fn harness(settings: Settings) -> Harness {
         session: session.clone(),
         ui: Arc::new(NoUi),
         commands: mpsc::unbounded_channel().0,
+        covers: Arc::new(crate::covers::DemoCovers),
     };
     Harness {
         controller: Controller::new(deps, settings, None, Some(7)),

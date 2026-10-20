@@ -123,5 +123,5 @@ async fn refused_changes_are_errors() {
 
     let refused = server(&mock, Some("jwt")).delete_radio_station("abc").await;
 
-    assert!(matches!(refused, Err(ApiError::Server { .. })));
+    assert!(matches!(refused, Err(ApiError::NotAuthorized(_))));
 }

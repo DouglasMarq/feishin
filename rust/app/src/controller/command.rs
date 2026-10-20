@@ -82,6 +82,9 @@ pub enum Command {
     Tracks(TrackCommand),
     YouTube(YouTubeCommand),
     Remote(RemoteCommand),
+    MediaCoverCached {
+        song_id: String,
+    },
 }
 
 pub enum TrackCommand {

@@ -15,7 +15,9 @@ fn is_web_link(url: &str) -> bool {
 
 pub fn open_url(url: &str) -> Result<()> {
     if !is_web_link(url) {
-        return Err(PlatformError::OpenUrl(format!("{url} is not a web link")));
+        return Err(PlatformError::OpenUrl(
+            format!("{url} is not a web link").into(),
+        ));
     }
     let status = Command::new(OPENER)
         .arg(url)
@@ -23,12 +25,12 @@ pub fn open_url(url: &str) -> Result<()> {
         .stdout(Stdio::null())
         .stderr(Stdio::null())
         .status()
-        .map_err(|error| PlatformError::OpenUrl(format!("{OPENER}: {error}")))?;
+        .map_err(|error| PlatformError::OpenUrl(Box::new(error)))?;
     match status.success() {
         true => Ok(()),
-        false => Err(PlatformError::OpenUrl(format!(
-            "{OPENER} exited with {status}"
-        ))),
+        false => Err(PlatformError::OpenUrl(
+            format!("{OPENER} exited with {status}").into(),
+        )),
     }
 }
 

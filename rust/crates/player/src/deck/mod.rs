@@ -8,7 +8,7 @@ use std::thread::{self, JoinHandle};
 
 use crate::AudioDevice;
 use crate::audio_device::audio_devices_from_mpv_list;
-use crate::error::{Result, error_from_mpv, error_from_mpv_code};
+use crate::error::{Result, error_from_mpv};
 use crate::ffi::{self, Node};
 use crate::observed_property::ObservedProperty;
 use crate::shared::Shared;
@@ -46,13 +46,13 @@ impl Deck {
             setting.property_name(),
             &setting.mpv_value(),
         )
-        .map_err(error_from_mpv_code)
     }
 
     pub(crate) fn is_paused(&self) -> bool {
         self.shared
             .mpv
             .get_property::<bool>(ObservedProperty::Pause.mpv_name())
+            .inspect_err(|error| tracing::debug!("reading the mpv pause state failed: {error}"))
             .unwrap_or(false)
     }
 
@@ -64,7 +64,6 @@ impl Deck {
     pub(crate) fn audio_devices(&self) -> Result<Vec<AudioDevice>> {
         ffi::get_property_node(self.shared.mpv.ctx, "audio-device-list")
             .map(|list| audio_devices_from_mpv_list(&list))
-            .map_err(error_from_mpv_code)
     }
 
     pub(crate) fn position_seconds(&self) -> Option<f64> {
@@ -90,7 +89,7 @@ impl Deck {
     }
 
     fn command(&self, arguments: &[&str]) -> Result<Node> {
-        ffi::command_with_reply(self.shared.mpv.ctx, arguments).map_err(error_from_mpv_code)
+        ffi::command_with_reply(self.shared.mpv.ctx, arguments)
     }
 }
 

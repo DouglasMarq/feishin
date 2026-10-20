@@ -1,4 +1,4 @@
-use feishin_api::MusicServer;
+use feishin_api::{ApiError, MusicServer};
 use serde_json::json;
 use wiremock::matchers::{method, path, query_param};
 use wiremock::{Mock, MockServer, ResponseTemplate};
@@ -38,4 +38,18 @@ async fn scan_status_follows_the_refresh_library_task() {
     let scan = server(&mock).library_scan().await.unwrap();
 
     assert!(scan.scanning);
+}
+
+#[tokio::test]
+async fn given_http_403_returns_not_authorized() {
+    let mock = MockServer::start().await;
+    Mock::given(method("POST"))
+        .and(path("/library/refresh"))
+        .respond_with(ResponseTemplate::new(403))
+        .mount(&mock)
+        .await;
+
+    let refused = server(&mock).start_library_scan().await;
+
+    assert!(matches!(refused, Err(ApiError::NotAuthorized(_))));
 }

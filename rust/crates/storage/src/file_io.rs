@@ -17,7 +17,7 @@ pub(crate) fn write_atomic(path: &Path, bytes: &[u8]) -> Result<()> {
     temporary_file.as_file().sync_all()?;
     temporary_file
         .persist(path)
-        .map_err(|persist_error| StorageError::Io(persist_error.error))?;
+        .map_err(|persist_error| StorageError::from(persist_error.error))?;
     Ok(())
 }
 

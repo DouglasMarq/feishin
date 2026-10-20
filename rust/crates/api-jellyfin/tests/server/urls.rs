@@ -94,7 +94,10 @@ fn given_an_invalid_server_address_the_client_is_not_created() {
     };
     for address in ["not a url", "mailto:feishin@jf.example"] {
         let created = JellyfinServer::with_credential(config(address), &credential);
-        assert!(matches!(created, Err(ApiError::Network(_))), "{address}");
+        assert!(
+            matches!(created, Err(ApiError::InvalidAddress(_))),
+            "{address}"
+        );
     }
 }
 

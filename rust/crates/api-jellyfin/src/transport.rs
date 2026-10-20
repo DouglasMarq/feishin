@@ -13,17 +13,19 @@ pub fn http_client() -> Result<reqwest::Client> {
         .connect_timeout(CONNECT_TIMEOUT)
         .timeout(REQUEST_TIMEOUT)
         .build()
-        .map_err(|error| ApiError::Network(error.to_string()))
+        .map_err(network_error)
+}
+
+fn network_error(error: reqwest::Error) -> ApiError {
+    ApiError::Network(Box::new(error.without_url()))
 }
 
 pub fn base_url(config: &ServerConfig) -> Result<Url> {
-    let url = Url::parse(&config.url)
-        .map_err(|error| ApiError::Network(format!("invalid server address: {error}")))?;
+    let url = Url::parse(&config.url).map_err(|error| ApiError::InvalidAddress(Box::new(error)))?;
     match url.cannot_be_a_base() {
-        true => Err(ApiError::Network(format!(
-            "invalid server address: {} cannot hold a path",
-            url.scheme()
-        ))),
+        true => Err(ApiError::InvalidAddress(
+            format!("{} cannot hold a path", url.scheme()).into(),
+        )),
         false => Ok(url),
     }
 }
@@ -37,23 +39,23 @@ pub fn endpoint(base_url: &Url, path: &[&str]) -> Url {
 }
 
 pub async fn send(request: RequestBuilder) -> Result<Response> {
-    let response = request
-        .send()
-        .await
-        .map_err(|error| ApiError::Network(error.to_string()))?;
+    let response = request.send().await.map_err(network_error)?;
     let status = response.status();
     if status.is_success() {
         return Ok(response);
     }
-    let message = response.text().await.unwrap_or_default();
+    let message = response
+        .text()
+        .await
+        .inspect_err(|error| tracing::debug!("reading the error body failed: {error}"))
+        .unwrap_or_default();
     Err(error_for_status(status, message))
 }
 
 fn error_for_status(status: StatusCode, message: String) -> ApiError {
     match status {
-        StatusCode::UNAUTHORIZED | StatusCode::FORBIDDEN => {
-            ApiError::Auth(message_or_status(status, message))
-        }
+        StatusCode::UNAUTHORIZED => ApiError::Auth(message_or_status(status, message)),
+        StatusCode::FORBIDDEN => ApiError::NotAuthorized(message_or_status(status, message)),
         StatusCode::NOT_FOUND => ApiError::NotFound,
         _ => ApiError::Server {
             code: i32::from(status.as_u16()),
@@ -69,9 +71,6 @@ fn message_or_status(status: StatusCode, message: String) -> String {
 }
 
 pub async fn decode<Body: DeserializeOwned>(response: Response) -> Result<Body> {
-    let bytes = response
-        .bytes()
-        .await
-        .map_err(|error| ApiError::Network(error.to_string()))?;
-    serde_json::from_slice(&bytes).map_err(|error| ApiError::Decode(error.to_string()))
+    let bytes = response.bytes().await.map_err(network_error)?;
+    serde_json::from_slice(&bytes).map_err(|error| ApiError::Decode(Box::new(error)))
 }

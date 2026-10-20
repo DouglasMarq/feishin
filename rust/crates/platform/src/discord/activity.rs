@@ -134,6 +134,7 @@ mod tests {
             album: Some("Album".to_owned()),
             duration_ms: Some(200_000),
             cover_url: Some("https://example.com/cover.jpg".to_owned()),
+            cover_file: None,
         }
     }
 

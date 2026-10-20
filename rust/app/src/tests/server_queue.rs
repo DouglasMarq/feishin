@@ -92,5 +92,7 @@ async fn server_queue_does_not_replace_a_local_queue_or_a_newer_play() {
 
     harness.connect();
     settle().await;
-    assert!(harness.commands.try_recv().is_err());
+    while let Ok(command) = harness.commands.try_recv() {
+        assert!(!matches!(command, Command::RestoreQueue { .. }));
+    }
 }

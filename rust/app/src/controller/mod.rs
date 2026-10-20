@@ -40,6 +40,7 @@ pub use ui_update::{UiSink, UiUpdate, artist_names};
 pub use youtube::YouTubeResolution;
 
 use crate::audio::AudioOutput;
+use crate::covers::CoverProvider;
 use crate::media::MediaSession;
 use crate::play_queue_sync::PlayQueueSync;
 use crate::scrobble::ScrobbleTracker;
@@ -57,6 +58,7 @@ pub struct Deps {
     pub session: Session,
     pub ui: Arc<dyn UiSink>,
     pub commands: mpsc::UnboundedSender<Command>,
+    pub covers: Arc<dyn CoverProvider>,
 }
 
 pub struct Controller {

@@ -173,7 +173,7 @@ impl MusicServer for JellyfinServer {
     }
 
     async fn radio_stations(&self) -> Result<Vec<RadioStation>> {
-        Ok(Vec::new())
+        Err(ApiError::Unsupported("internet radio stations"))
     }
 
     async fn can_manage_radio_stations(&self) -> Result<bool> {

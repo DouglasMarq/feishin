@@ -32,12 +32,12 @@ impl fmt::Debug for Credential {
 }
 
 impl Credential {
-    pub fn to_json(&self) -> String {
-        serde_json::to_string(self).unwrap_or_default()
+    pub fn to_json(&self) -> serde_json::Result<String> {
+        serde_json::to_string(self)
     }
 
     pub fn from_json(json: &str) -> Result<Self> {
-        serde_json::from_str(json).map_err(|error| ApiError::Decode(error.to_string()))
+        serde_json::from_str(json).map_err(|error| ApiError::Decode(Box::new(error)))
     }
 }
 

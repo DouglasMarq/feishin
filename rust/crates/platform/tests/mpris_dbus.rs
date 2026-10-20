@@ -99,6 +99,7 @@ fn publish_test_track(controls: &mut MediaControls) {
             album: Some("Test Album".to_owned()),
             duration_ms: Some(180_000),
             cover_url: Some("https://example.com/cover.jpg".to_owned()),
+            cover_file: None,
         })
         .unwrap();
     controls

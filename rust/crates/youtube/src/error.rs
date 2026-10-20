@@ -1,9 +1,11 @@
-#[derive(Debug, Clone, PartialEq, Eq, thiserror::Error)]
+use std::sync::Arc;
+
+#[derive(Debug, Clone, thiserror::Error)]
 pub enum YouTubeError {
     #[error("yt-dlp is not installed")]
     NotInstalled,
     #[error("yt-dlp could not be started: {0}")]
-    Launch(String),
+    Launch(#[source] Arc<std::io::Error>),
     #[error("yt-dlp did not answer within {0} seconds")]
     TimedOut(u64),
     #[error("yt-dlp failed: {0}")]

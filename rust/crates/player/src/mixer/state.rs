@@ -136,8 +136,12 @@ impl MixerState {
     }
 
     fn start_promoted_lead(&self) {
-        let Ok(lead) = self.lead_deck() else {
-            return;
+        let lead = match self.lead_deck() {
+            Ok(lead) => lead,
+            Err(error) => {
+                tracing::warn!("starting the next track failed: {error}");
+                return;
+            }
         };
         log_failure(
             lead.apply(&DeckSetting::Gain(Gain::UNITY)),

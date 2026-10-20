@@ -49,14 +49,12 @@ impl SleepInhibitor {
     }
 
     pub fn set_inhibited(&self, inhibited: bool) -> Result<()> {
-        self.requests
-            .send(inhibited)
-            .map_err(|_| PlatformError::SleepInhibitor("sleep inhibitor thread is gone".to_owned()))
+        self.requests.send(inhibited).map_err(inhibitor_error)
     }
 }
 
-fn inhibitor_error(error: impl ToString) -> PlatformError {
-    PlatformError::SleepInhibitor(error.to_string())
+fn inhibitor_error(error: impl std::error::Error + Send + Sync + 'static) -> PlatformError {
+    PlatformError::SleepInhibitor(Box::new(error))
 }
 
 fn run(connection: &Connection, app_name: &str, requests: &Receiver<bool>) {

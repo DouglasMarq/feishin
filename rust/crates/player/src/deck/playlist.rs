@@ -68,7 +68,11 @@ impl Deck {
             Ok(Node::Array(items)) => items
                 .iter()
                 .any(|item| item.get("id").and_then(Node::as_i64) == Some(entry)),
-            _ => false,
+            Ok(_) => false,
+            Err(error) => {
+                tracing::warn!("reading the mpv playlist failed: {error}");
+                false
+            }
         }
     }
 
@@ -83,11 +87,18 @@ impl Deck {
             None => self.command(&["loadfile", url, mode])?,
             Some(options) => self
                 .command(&["loadfile", url, mode, "-1", options])
-                .or_else(|_| self.command(&["loadfile", url, mode, options]))?,
+                .or_else(|indexed_error| {
+                    tracing::debug!(
+                        "loadfile with an index failed, retrying without: {indexed_error}"
+                    );
+                    self.command(&["loadfile", url, mode, options])
+                })?,
         };
         reply
             .get("playlist_entry_id")
             .and_then(Node::as_i64)
-            .ok_or_else(|| PlayerError::Mpv("loadfile returned no playlist entry id".into()))
+            .ok_or(PlayerError::UnexpectedReply(
+                "loadfile returned no playlist entry id",
+            ))
     }
 }

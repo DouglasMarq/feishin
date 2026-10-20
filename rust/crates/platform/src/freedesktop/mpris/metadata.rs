@@ -1,4 +1,5 @@
 use mpris_server::{Metadata, TrackId};
+use url::Url;
 
 use super::conversions::time_from_ms;
 use crate::NowPlaying;
@@ -19,13 +20,20 @@ pub(super) fn metadata_for(now_playing: &NowPlaying) -> Metadata {
             .filter(|duration_ms| *duration_ms > 0)
             .map(time_from_ms),
     );
-    metadata.set_art_url(
-        non_empty(now_playing.cover_url.as_ref()).filter(|url| is_free_of_credentials(url)),
-    );
+    metadata.set_art_url(art_url(now_playing));
     metadata.set_album(non_empty(now_playing.album.as_ref()));
     metadata.set_artist((!now_playing.artists.is_empty()).then(|| now_playing.artists.clone()));
     metadata.set_title(non_empty(Some(&now_playing.title)));
     metadata
+}
+
+fn art_url(now_playing: &NowPlaying) -> Option<String> {
+    non_empty(now_playing.cover_url.as_ref())
+        .filter(|url| is_free_of_credentials(url))
+        .or_else(|| {
+            let cover_file = now_playing.cover_file.as_deref()?;
+            Url::from_file_path(cover_file).ok().map(String::from)
+        })
 }
 
 fn track_id_for(id: &str) -> Option<TrackId> {
@@ -61,6 +69,7 @@ mod tests {
             album: Some("Album".to_owned()),
             duration_ms: Some(215_500),
             cover_url: Some("https://example.com/cover.jpg".to_owned()),
+            cover_file: None,
         }
     }
 
@@ -111,6 +120,35 @@ mod tests {
         });
         assert_eq!(metadata.art_url(), None);
         assert_eq!(metadata.title(), Some("Song"));
+    }
+
+    #[test]
+    fn given_a_credential_cover_url_and_a_cached_cover_file_the_art_is_the_local_file() {
+        let metadata = metadata_for(&NowPlaying {
+            cover_url: Some(
+                "http://navidrome.example/rest/getCoverArt.view?id=1&u=feishin&t=token&s=salt"
+                    .to_owned(),
+            ),
+            cover_file: Some("/home/feishin/.cache/feishin-rs/covers/abc".into()),
+            ..song()
+        });
+        assert_eq!(
+            metadata.art_url().as_deref(),
+            Some("file:///home/feishin/.cache/feishin-rs/covers/abc")
+        );
+    }
+
+    #[test]
+    fn given_a_cover_url_without_credentials_it_is_preferred_over_the_local_file() {
+        let metadata = metadata_for(&NowPlaying {
+            cover_url: Some("https://jellyfin.example/Items/1/Images/Primary".to_owned()),
+            cover_file: Some("/home/feishin/.cache/feishin-rs/covers/abc".into()),
+            ..song()
+        });
+        assert_eq!(
+            metadata.art_url().as_deref(),
+            Some("https://jellyfin.example/Items/1/Images/Primary")
+        );
     }
 
     #[test]

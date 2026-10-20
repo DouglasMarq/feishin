@@ -6,7 +6,7 @@ mod stream_options;
 mod ttl_cache;
 
 pub use credential::Credential;
-pub use error::{ApiError, Result};
+pub use error::{ApiError, ErrorCause, Result};
 pub use latest_cache::LatestCache;
 pub use music_server::MusicServer;
 pub use stream_options::{StreamOptions, TranscodeFormat};

@@ -1,3 +1,4 @@
+use std::sync::Arc;
 use std::time::Duration;
 
 use reqwest::header::{AUTHORIZATION, COOKIE, ORIGIN, USER_AGENT};
@@ -42,7 +43,7 @@ impl MusicClient {
             .connect_timeout(CONNECT_TIMEOUT)
             .timeout(REQUEST_TIMEOUT)
             .build()
-            .map_err(|error| MusicError::Network(error.to_string()))?;
+            .map_err(network_error)?;
         Ok(Self {
             http,
             base_url: MUSIC_API_BASE.to_owned(),
@@ -147,20 +148,13 @@ impl MusicClient {
             .header(ORIGIN, MUSIC_ORIGIN)
             .header(USER_AGENT, BROWSER_AGENT)
             .json(body);
-        let response = self
-            .signed(request)
-            .send()
-            .await
-            .map_err(|error| MusicError::Network(error.without_url().to_string()))?;
+        let response = self.signed(request).send().await.map_err(network_error)?;
         let status = response.status();
         if !status.is_success() {
             return Err(MusicError::Status(status.as_u16()));
         }
-        let bytes = response
-            .bytes()
-            .await
-            .map_err(|error| MusicError::Network(error.without_url().to_string()))?;
-        serde_json::from_slice(&bytes).map_err(|error| MusicError::Decode(error.to_string()))
+        let bytes = response.bytes().await.map_err(network_error)?;
+        serde_json::from_slice(&bytes).map_err(|error| MusicError::Malformed(Arc::new(error)))
     }
 
     fn signed(&self, request: reqwest::RequestBuilder) -> reqwest::RequestBuilder {
@@ -173,4 +167,8 @@ impl MusicClient {
             .header(X_ORIGIN, MUSIC_ORIGIN)
             .header(X_AUTH_USER, "0")
     }
+}
+
+fn network_error(error: reqwest::Error) -> MusicError {
+    MusicError::Network(Arc::new(error.without_url()))
 }

@@ -121,7 +121,7 @@ impl Host {
             proof,
         }) = hello
         else {
-            return Err(RemoteError::Protocol("expected a hello".to_owned()));
+            return Err(RemoteError::Protocol("expected a hello"));
         };
         if version != PROTOCOL_VERSION {
             let failure = RemoteFailure::VersionMismatch;
@@ -154,7 +154,10 @@ impl Host {
         let approved =
             tokio::time::timeout(APPROVAL_TIMEOUT, self.delegate.approve(device.clone()))
                 .await
-                .unwrap_or(false);
+                .unwrap_or_else(|_| {
+                    tracing::info!("nobody approved {} in time", device.name);
+                    false
+                });
         if !approved {
             write_message(writer, &HostMessage::Denied).await?;
             return Err(RemoteError::Denied);

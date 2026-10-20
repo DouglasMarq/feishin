@@ -9,7 +9,7 @@ pub(super) fn load(data_dir: &Path) -> Result<Option<StoredQueue>> {
     };
     serde_json::from_slice(&bytes)
         .map(Some)
-        .map_err(|error| StorageError::Invalid(format!("{LEGACY_QUEUE_FILE}: {error}")))
+        .map_err(|error| StorageError::malformed(LEGACY_QUEUE_FILE, error))
 }
 
 pub(super) fn remove(data_dir: &Path) {

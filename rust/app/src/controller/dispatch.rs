@@ -67,6 +67,7 @@ impl Controller {
             Command::Tracks(command) => self.on_track_command(command),
             Command::YouTube(command) => self.on_youtube_command(command),
             Command::Remote(command) => self.on_remote_command(command),
+            Command::MediaCoverCached { song_id } => self.on_media_cover_cached(&song_id),
             _ => tracing::debug!("a command reached the wrong handler"),
         }
     }

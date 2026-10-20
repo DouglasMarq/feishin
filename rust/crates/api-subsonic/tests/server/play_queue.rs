@@ -1,4 +1,4 @@
-use feishin_api::MusicServer;
+use feishin_api::{ApiError, MusicServer};
 use serde_json::json;
 use wiremock::matchers::{body_string_contains, method, path, query_param};
 use wiremock::{Mock, MockServer};
@@ -129,7 +129,7 @@ async fn huge_play_queue_is_skipped_without_form_post() {
     let saved = server(&mock)
         .save_play_queue(&many_song_ids(), Some("song-3"), 10)
         .await;
-    assert!(saved.is_ok());
+    assert!(matches!(saved, Err(ApiError::Unsupported(_))));
 }
 
 #[tokio::test]
