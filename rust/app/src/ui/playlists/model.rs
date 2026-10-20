@@ -1,9 +1,9 @@
 use std::cell::{Cell, RefCell};
-use std::collections::{HashMap, HashSet, VecDeque};
 
 use feishin_core::model::Playlist;
 use slint::{Image, Model, ModelNotify, ModelTracker};
 
+use crate::ui::cover_lru::CoverLru;
 use crate::ui::{PlaylistRow, format_duration};
 
 const COVER_CAPACITY: usize = 48;
@@ -20,27 +20,6 @@ fn playlist_row(playlist: &Playlist) -> PlaylistRow {
     }
 }
 
-#[derive(Default)]
-struct CoverLru {
-    images: HashMap<String, Image>,
-    order: VecDeque<String>,
-    requested: HashSet<String>,
-}
-
-impl CoverLru {
-    fn insert(&mut self, cover_id: String, image: Image) {
-        self.requested.remove(&cover_id);
-        if self.images.insert(cover_id.clone(), image).is_none() {
-            self.order.push_back(cover_id);
-        }
-        while self.order.len() > COVER_CAPACITY {
-            if let Some(evicted) = self.order.pop_front() {
-                self.images.remove(&evicted);
-            }
-        }
-    }
-}
-
 #[derive(Clone)]
 struct PlaylistEntry {
     row: PlaylistRow,
@@ -49,7 +28,7 @@ struct PlaylistEntry {
 
 pub struct PlaylistsModel {
     entries: RefCell<Vec<PlaylistEntry>>,
-    covers: RefCell<CoverLru>,
+    covers: RefCell<CoverLru<String, Image>>,
     generation: Cell<u64>,
     notify: ModelNotify,
     fetch_cover: Box<dyn Fn(String)>,
@@ -59,7 +38,7 @@ impl PlaylistsModel {
     pub fn new(fetch_cover: impl Fn(String) + 'static) -> Self {
         Self {
             entries: RefCell::default(),
-            covers: RefCell::default(),
+            covers: RefCell::new(CoverLru::new(COVER_CAPACITY)),
             generation: Cell::new(0),
             notify: ModelNotify::default(),
             fetch_cover: Box::new(fetch_cover),
@@ -105,7 +84,7 @@ impl PlaylistsModel {
     }
 
     fn with_cover(&self, mut row: PlaylistRow, cover_id: String) -> PlaylistRow {
-        let cached = self.covers.borrow().images.get(&cover_id).cloned();
+        let cached = self.covers.borrow().peek(cover_id.as_str());
         match cached {
             Some(image) => {
                 row.cover = image;
@@ -117,7 +96,7 @@ impl PlaylistsModel {
     }
 
     fn request_cover(&self, cover_id: String) {
-        let first_request = self.covers.borrow_mut().requested.insert(cover_id.clone());
+        let first_request = self.covers.borrow_mut().begin(cover_id.as_str());
         if first_request {
             (self.fetch_cover)(cover_id);
         }

@@ -4,10 +4,10 @@ use std::collections::BTreeSet;
 use feishin_core::model::AlbumListQuery;
 use slint::{Image, Model, ModelNotify, ModelRc, ModelTracker, VecModel};
 
+use super::super::cover_lru::CoverLru;
 use super::super::page_cache::{PageApplied, PageCache, PageShape, changed_total};
 use super::super::{AlbumGridCard, AlbumGridRow};
 use super::card::CardData;
-use super::cover_cache::CoverLru;
 
 pub const PAGE_SIZE: usize = 60;
 const COVER_CAPACITY: usize = 96;
@@ -39,7 +39,7 @@ struct GridState {
     total: usize,
     columns: usize,
     pages: PageCache<CardData>,
-    covers: CoverLru<Image>,
+    covers: CoverLru<String, Image>,
 }
 
 impl GridState {
@@ -252,11 +252,11 @@ impl AlbumGridModel {
     pub fn apply_cover(&self, cover_art_id: &str, image: Option<Image>) {
         let rows = {
             let mut state = self.state.borrow_mut();
-            let loaded = image.is_some();
-            state.covers.finish(cover_art_id, image);
-            if !loaded {
+            let Some(image) = image else {
+                state.covers.fail(cover_art_id);
                 return;
-            }
+            };
+            state.covers.insert(cover_art_id.to_owned(), image);
             let indexes = state.indexes_with_cover(cover_art_id);
             state.rows_for(indexes)
         };

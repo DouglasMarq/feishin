@@ -81,7 +81,7 @@ impl DetailsRequest {
         };
         show_song(&weak_window, &song);
         tokio::join!(
-            fetch_cover(&weak_window, &ctx, server.as_ref(), &song),
+            fetch_cover(&weak_window, &ctx, &server, &song),
             fetch_similar(&weak_window, server.as_ref(), &song_id),
             async {
                 if want_lyrics {

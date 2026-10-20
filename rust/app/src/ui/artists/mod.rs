@@ -1,4 +1,3 @@
-mod cover_lru;
 mod item;
 mod list;
 mod models;
@@ -13,7 +12,6 @@ use slint::{ComponentHandle, ModelRc, SharedString, Timer, TimerMode, VecModel};
 
 use super::artist_detail::play_artist;
 use super::{AppWindow, ArtistsState, Context};
-pub use cover_lru::CoverLru;
 pub use item::song_count_label;
 use list::ArtistList;
 use models::{GridModel, ListModel};

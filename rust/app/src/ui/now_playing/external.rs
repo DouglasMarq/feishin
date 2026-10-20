@@ -2,16 +2,13 @@ use feishin_core::queue::{QueueTrack, YouTubeVideo};
 use feishin_lyrics::{LyricsQuery, LyricsSource};
 use slint::{ComponentHandle, ModelRc, VecModel};
 
-use super::fetching::{apply_lyrics_result, configured_lyrics_sources};
-use super::loading::is_current;
+use super::fetching::{apply_lyrics_result, configured_lyrics_sources, show_cover};
 use super::lyrics_plan::remote_sources;
 use super::song_lyrics::remote_lyrics_for;
 use super::view::{View, with_view};
 use crate::session::Session;
-use crate::ui::player::{thumbnail_cache_key, to_image};
+use crate::ui::images::CoverSource;
 use crate::ui::{AppWindow, ArtistLink, Context, LyricsStatus, NowPlayingState, on_ui};
-
-const COVER_SIZE: u32 = 600;
 
 fn lyrics_query(track: &QueueTrack) -> LyricsQuery {
     LyricsQuery {
@@ -66,28 +63,12 @@ pub(super) fn load_external(window: &AppWindow, ctx: &Context, view: &View, trac
 }
 
 fn fetch_thumbnail(window: &AppWindow, ctx: &Context, song_id: &str, video: &YouTubeVideo) {
-    let Some(url) = video.thumbnail_url.as_deref().map(str::to_owned) else {
+    let Some(source) = CoverSource::thumbnail(video) else {
         return;
     };
-    let cache_key = thumbnail_cache_key(video);
-    let (covers, weak_window, song_id) = (ctx.covers.clone(), window.as_weak(), song_id.to_owned());
+    let (show_ctx, weak_window, song_id) = (ctx.clone(), window.as_weak(), song_id.to_owned());
     ctx.rt.spawn(async move {
-        let cover = match covers.cover_from_url(&cache_key, &url, COVER_SIZE).await {
-            Ok(cover) => cover,
-            Err(error) => {
-                tracing::debug!("thumbnail {url}: {error:#}");
-                return;
-            }
-        };
-        on_ui(&weak_window, move |window| {
-            if is_current(window, &song_id)
-                && let Some(image) = to_image(&cover)
-            {
-                let state = window.global::<NowPlayingState>();
-                state.set_cover(image);
-                state.set_has_cover(true);
-            }
-        });
+        show_cover(&weak_window, &show_ctx, &source, song_id).await;
     });
 }
 

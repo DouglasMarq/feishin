@@ -1598,6 +1598,8 @@ dependencies = [
  "feishin-storage",
  "feishin-youtube",
  "i-slint-backend-testing",
+ "lru",
+ "rand 0.10.3",
  "reqwest",
  "rspolib",
  "serde",

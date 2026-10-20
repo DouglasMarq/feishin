@@ -2,7 +2,9 @@ use std::cell::RefCell;
 
 use feishin_core::model::Song;
 
-use super::super::artists::CoverLru;
+use slint::Image;
+
+use super::super::cover_lru::CoverLru;
 
 const ALBUM_COVER_CAPACITY: usize = 48;
 
@@ -13,7 +15,7 @@ pub struct CurrentArtist {
     pub favorite: bool,
     pub top_songs: Vec<Song>,
     pub album_covers: Vec<Option<String>>,
-    pub covers: CoverLru,
+    pub covers: CoverLru<usize, Image>,
 }
 
 impl Default for CurrentArtist {

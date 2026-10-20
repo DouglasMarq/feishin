@@ -4,7 +4,7 @@ use feishin_core::model::ArtistListQuery;
 use slint::{Image, ModelNotify};
 
 use super::super::ArtistCard;
-use super::cover_lru::CoverLru;
+use super::super::cover_lru::CoverLru;
 use super::item::ArtistItem;
 
 pub const PAGE_SIZE: usize = 100;
@@ -31,7 +31,7 @@ struct ListState {
     fetching: bool,
     complete: bool,
     failed: bool,
-    covers: CoverLru,
+    covers: CoverLru<usize, Image>,
 }
 
 impl Default for ListState {
@@ -74,10 +74,10 @@ impl ListState {
         cover_art_id: Option<String>,
         requests: &mut Vec<Request>,
     ) -> Option<Image> {
-        let image = self.covers.get(index);
+        let image = self.covers.get(&index);
         if image.is_none()
             && let Some(cover_art_id) = cover_art_id
-            && self.covers.begin(index)
+            && self.covers.begin(&index)
         {
             requests.push(Request::Cover {
                 generation: self.generation,
@@ -224,7 +224,7 @@ impl ArtistList {
                 Some(image) => {
                     state.covers.insert(index, image);
                 }
-                None => state.covers.failed(index),
+                None => state.covers.retry_later(&index),
             }
         }
         self.notify_index_changed(index);

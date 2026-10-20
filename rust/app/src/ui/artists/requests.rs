@@ -5,7 +5,7 @@ use feishin_api::{ApiError, MusicServer};
 use feishin_core::model::{ArtistListQuery, Paging};
 use slint::{ComponentHandle, Model, Weak};
 
-use super::super::player::to_image;
+use super::super::images::to_image;
 use super::super::{AppWindow, ArtistsState, Context, on_ui, show_status};
 use super::item::ArtistItem;
 use super::list::{ArtistList, PAGE_SIZE, Request};

@@ -4,7 +4,7 @@ use std::sync::atomic::{AtomicU64, Ordering};
 use feishin_core::model::Paging;
 use slint::ComponentHandle;
 
-use super::super::player::to_image;
+use super::super::images::to_image;
 use super::super::{AppWindow, Context, on_ui, show_status};
 use super::model::with_home_model;
 use super::shelf::SHELF_SIZE;

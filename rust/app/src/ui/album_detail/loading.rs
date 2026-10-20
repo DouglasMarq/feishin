@@ -5,7 +5,7 @@ use feishin_core::model::AlbumDetail;
 use slint::{ComponentHandle, ModelRc, SharedString, VecModel, Weak};
 
 use super::super::album_grid::credited_artists;
-use super::super::player::to_image;
+use super::super::images::to_image;
 use super::super::{AlbumDetailArtist, AlbumDetailState, AppWindow, Context, on_ui, show_status};
 use super::info::album_info;
 use super::tracks::show_tracks;

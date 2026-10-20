@@ -8,7 +8,7 @@ use super::binding::{Binding, with_grid};
 use super::card::CardPage;
 use super::card_grid::CardGrid;
 use super::grid_state::{GRID_PAGE, GridRequest};
-use crate::ui::player::to_image;
+use crate::ui::images::to_image;
 use crate::ui::{AppWindow, CardRow, Context, on_ui, show_status};
 
 const GRID_COVER_SIZE: u32 = 200;

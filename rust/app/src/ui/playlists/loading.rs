@@ -3,7 +3,7 @@ use slint::{ComponentHandle, Model};
 
 use super::catalog::fetch_all;
 use super::model::PlaylistsModel;
-use crate::ui::player::to_image;
+use crate::ui::images::to_image;
 use crate::ui::{AppState, AppWindow, Context, PlaylistsState, Route, on_ui, show_status};
 
 const PLAYLIST_COVER_SIZE: u32 = 96;
