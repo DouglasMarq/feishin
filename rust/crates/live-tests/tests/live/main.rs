@@ -10,6 +10,7 @@ macro_rules! live_checks {
             #[tokio::test]
             #[ignore = "needs live servers: rust/scripts/live-servers.sh up"]
             async fn $name() {
+                let _server_in_use = $backend.exclusive().await;
                 $check($backend).await;
             }
         )*

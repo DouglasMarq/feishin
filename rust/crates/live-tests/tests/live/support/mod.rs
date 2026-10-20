@@ -1,6 +1,7 @@
 mod backend;
 mod connection;
 mod download;
+mod exclusive;
 mod library;
 
 pub use backend::Backend;
