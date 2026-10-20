@@ -17,8 +17,12 @@ pub(super) fn load(window: &AppWindow, ctx: &Context, shared: &Arc<Shared>) {
     let weak_window = window.as_weak();
     let shared = Arc::clone(shared);
     ctx.rt.spawn(async move {
-        let Ok(snapshot) = response.await else {
-            return;
+        let snapshot = match response.await {
+            Ok(snapshot) => snapshot,
+            Err(error) => {
+                tracing::warn!("the controller did not answer the settings request: {error}");
+                return;
+            }
         };
         on_ui(&weak_window, move |window| {
             if shared.generation.load(Ordering::Relaxed) == request {

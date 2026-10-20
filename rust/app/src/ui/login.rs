@@ -73,12 +73,10 @@ async fn login(
     password: String,
 ) -> Result<Arc<dyn MusicServer>> {
     let (server, credential) = ctx.connector.login(config.clone(), &password).await?;
-    if let Err(error) = ctx.store.set_credential(&config.id, &credential) {
-        tracing::warn!("saving credential failed: {error:#}");
-    }
     ctx.session.set(Some(Arc::clone(&server)));
     ctx.send(Command::Connected {
         config,
+        credential: Some(credential),
         others: Vec::new(),
     });
     Ok(server)
@@ -88,24 +86,14 @@ fn first_restored_session(
     ctx: &Context,
     imported: &[ImportedServer],
 ) -> Option<(ServerConfig, Arc<dyn MusicServer>)> {
-    let mut connected = None;
-    for server in imported {
-        let Some(credential) = &server.credential else {
-            continue;
-        };
-        if let Err(error) = ctx.store.set_credential(&server.config.id, credential) {
-            tracing::warn!("saving credential failed: {error:#}");
-            continue;
-        }
-        if connected.is_some() {
-            continue;
-        }
-        match ctx.connector.restore(&server.config, credential) {
-            Ok(session) => connected = Some((server.config.clone(), session)),
-            Err(error) => tracing::warn!("{}: {error:#}", server.config.name),
-        }
-    }
-    connected
+    imported.iter().find_map(|server| {
+        let credential = server.credential.as_ref()?;
+        ctx.connector
+            .restore(&server.config, credential)
+            .inspect_err(|error| tracing::warn!("{}: {error:#}", server.config.name))
+            .ok()
+            .map(|session| (server.config.clone(), session))
+    })
 }
 
 async fn import(ctx: &Context) -> Result<Arc<dyn MusicServer>> {
@@ -121,10 +109,8 @@ async fn import(ctx: &Context) -> Result<Arc<dyn MusicServer>> {
     ctx.session.set(Some(Arc::clone(&server)));
     ctx.send(Command::Connected {
         config,
-        others: imported
-            .into_iter()
-            .map(|imported_server| imported_server.config)
-            .collect(),
+        credential: None,
+        others: imported,
     });
     Ok(server)
 }
@@ -190,7 +176,40 @@ pub fn install(window: &AppWindow, ctx: &Context) {
 
 #[cfg(test)]
 mod tests {
+    use tokio::sync::mpsc;
+
     use super::*;
+    use crate::connect::DemoConnector;
+    use crate::covers::DemoCovers;
+    use crate::demo::{FakeServer, demo_credential};
+    use crate::session::Session;
+    use crate::store::{JsonStore, Store};
+
+    #[tokio::test]
+    async fn given_a_login_the_credential_travels_to_the_controller() {
+        let directory = tempfile::tempdir().unwrap();
+        let store = Arc::new(JsonStore::new(directory.path()));
+        let (commands, mut received) = mpsc::unbounded_channel();
+        let ctx = Context {
+            rt: tokio::runtime::Handle::current(),
+            commands,
+            session: Session::default(),
+            store: store.clone(),
+            connector: Arc::new(DemoConnector::default()),
+            covers: Arc::new(DemoCovers),
+            remote: crate::remote::Remote::default(),
+        };
+        let config = FakeServer::config_for_demo();
+
+        login(&ctx, config.clone(), "secret".into()).await.unwrap();
+
+        assert_eq!(store.credential(&config.id).unwrap(), None);
+        let Some(Command::Connected { credential, .. }) = received.recv().await else {
+            panic!("expected Connected");
+        };
+        assert_eq!(credential, Some(demo_credential()));
+        assert!(ctx.session.get().is_some());
+    }
 
     #[test]
     fn urls_are_normalized() {

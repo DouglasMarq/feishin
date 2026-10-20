@@ -1,16 +1,40 @@
+use feishin_api::Credential;
 use feishin_core::model::ServerConfig;
+use feishin_storage::feishin_import::ImportedServer;
 
 use super::{Controller, UiUpdate};
 
 impl Controller {
-    pub(super) fn connected(&mut self, config: ServerConfig, others: Vec<ServerConfig>) {
+    pub(super) fn connected(
+        &mut self,
+        config: ServerConfig,
+        credential: Option<Credential>,
+        others: Vec<ImportedServer>,
+    ) {
         if self.is_switching_server(&config.id) {
             self.clear_queue();
         }
+        self.save_given_credentials(&config, credential.as_ref(), &others);
+        let others = others.into_iter().map(|imported| imported.config).collect();
         self.remember_servers(config, others);
         self.save_settings();
         self.persist_credential();
         self.resume_queue_after_connect();
+    }
+
+    fn save_given_credentials(
+        &self,
+        config: &ServerConfig,
+        credential: Option<&Credential>,
+        others: &[ImportedServer],
+    ) {
+        let given = others
+            .iter()
+            .filter_map(|imported| Some((&imported.config, imported.credential.as_ref()?)))
+            .chain(credential.map(|credential| (config, credential)));
+        for (server, credential) in given {
+            self.save_credential(server, credential);
+        }
     }
 
     fn is_switching_server(&self, server_id: &str) -> bool {
@@ -49,6 +73,10 @@ impl Controller {
     pub(super) fn remove_server(&mut self, server_id: &str) {
         if let Err(error) = self.deps.store.delete_credential(server_id) {
             tracing::warn!("deleting the saved login failed: {error:#}");
+            self.deps.ui.send(UiUpdate::Error(tr!(
+                "Could not delete the saved login: {}",
+                format!("{error:#}")
+            )));
         }
         self.settings
             .servers

@@ -11,7 +11,9 @@ impl Controller {
         match command {
             Command::Player(event) => self.on_player_event(event),
             Command::Media(event) => self.on_media_event(event),
-            Command::Connected { config, others } => self.connected(config, others),
+            command @ (Command::Connected { .. } | Command::RemoveServer(_)) => {
+                self.dispatch_server_command(command);
+            }
             command @ (Command::PlayFromList { .. }
             | Command::EnqueueFromList { .. }
             | Command::ListStream(_)) => self.dispatch_list_command(command),
@@ -43,8 +45,19 @@ impl Controller {
             } => self.save_interface(queue_panel_open, follow_current_song),
             Command::SaveLanguage(language) => self.save_language(language),
             Command::SaveAppearance(appearance) => self.save_appearance(appearance),
-            Command::RemoveServer(server_id) => self.remove_server(&server_id),
             command => self.dispatch_source_command(command),
+        }
+    }
+
+    fn dispatch_server_command(&mut self, command: Command) {
+        match command {
+            Command::Connected {
+                config,
+                credential,
+                others,
+            } => self.connected(config, credential, others),
+            Command::RemoveServer(server_id) => self.remove_server(&server_id),
+            _ => tracing::debug!("a command reached the wrong handler"),
         }
     }
 

@@ -1,4 +1,4 @@
-use std::sync::{Arc, Mutex};
+use std::sync::{Arc, Mutex, PoisonError};
 use std::time::Duration;
 
 use feishin_remote::DeviceInfo;
@@ -16,9 +16,7 @@ pub struct Approvals {
 impl Approvals {
     pub async fn ask(&self, window: &slint::Weak<AppWindow>, device: &DeviceInfo) -> bool {
         let (answer, answered) = oneshot::channel();
-        if let Ok(mut pending) = self.pending.lock() {
-            *pending = Some(answer);
-        }
+        *self.pending.lock().unwrap_or_else(PoisonError::into_inner) = Some(answer);
         let name = device.name.clone();
         on_ui(window, move |window| {
             devices::show_approval(window, Some(&name))
@@ -37,8 +35,8 @@ impl Approvals {
         let pending = self
             .pending
             .lock()
-            .ok()
-            .and_then(|mut pending| pending.take());
+            .unwrap_or_else(PoisonError::into_inner)
+            .take();
         if let Some(pending) = pending
             && pending.send(approved).is_err()
         {

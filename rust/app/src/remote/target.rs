@@ -1,4 +1,4 @@
-use std::sync::{Arc, RwLock};
+use std::sync::{Arc, PoisonError, RwLock};
 
 use feishin_core::queue::QueueTrack;
 use feishin_remote::{ClientMessage, RemoteControl, ServerKey, TrackPlacement};
@@ -17,7 +17,10 @@ pub struct PlayerTarget(Arc<RwLock<Option<RemoteTarget>>>);
 
 impl PlayerTarget {
     pub fn remote(&self) -> Option<RemoteTarget> {
-        self.0.read().ok().and_then(|target| target.clone())
+        self.0
+            .read()
+            .unwrap_or_else(PoisonError::into_inner)
+            .clone()
     }
 
     pub fn is_remote(&self) -> bool {
@@ -25,9 +28,7 @@ impl PlayerTarget {
     }
 
     pub fn set(&self, target: Option<RemoteTarget>) {
-        if let Ok(mut current) = self.0.write() {
-            *current = target;
-        }
+        *self.0.write().unwrap_or_else(PoisonError::into_inner) = target;
     }
 
     pub fn route(&self, command: Command, local_server: Option<&ServerKey>) -> Option<Command> {

@@ -6,6 +6,7 @@ use feishin_api::{Credential, MusicServer};
 use feishin_core::model::{ServerConfig, ServerType};
 
 use crate::demo::{DemoLibrary, FakeServer, demo_credential};
+use crate::lyrics_provider::{LyricsProvider, NoRemoteLyrics, RemoteLyrics};
 use crate::radio_directory::{DemoDirectory, StationDirectory, public_directory};
 
 #[async_trait]
@@ -25,9 +26,21 @@ pub trait Connector: Send + Sync {
     fn station_directory(&self) -> Arc<dyn StationDirectory> {
         public_directory()
     }
+
+    fn lyrics(&self) -> Arc<dyn LyricsProvider>;
 }
 
-pub struct ServerConnector;
+pub struct ServerConnector {
+    lyrics: Arc<dyn LyricsProvider>,
+}
+
+impl ServerConnector {
+    pub fn new() -> Result<Self> {
+        Ok(Self {
+            lyrics: Arc::new(RemoteLyrics::new()?),
+        })
+    }
+}
 
 #[async_trait]
 impl Connector for ServerConnector {
@@ -73,6 +86,10 @@ impl Connector for ServerConnector {
             ),
         })
     }
+
+    fn lyrics(&self) -> Arc<dyn LyricsProvider> {
+        Arc::clone(&self.lyrics)
+    }
 }
 
 #[derive(Debug, Clone, Copy, Default)]
@@ -110,5 +127,9 @@ impl Connector for DemoConnector {
 
     fn station_directory(&self) -> Arc<dyn StationDirectory> {
         Arc::new(DemoDirectory)
+    }
+
+    fn lyrics(&self) -> Arc<dyn LyricsProvider> {
+        Arc::new(NoRemoteLyrics)
     }
 }

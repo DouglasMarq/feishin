@@ -358,20 +358,9 @@ impl RemoteService {
             ));
             return;
         };
-        let listener = match TcpListener::bind(("0.0.0.0", 0)).await {
-            Ok(listener) => listener,
-            Err(error) => {
-                tracing::warn!("listening for remote control failed: {error}");
-                self.status(tr!(
-                    "Remote control is unavailable: the network port could not be opened"
-                ));
-                return;
-            }
+        let Some((listener, port)) = self.open_listener().await else {
+            return;
         };
-        let port = listener
-            .local_addr()
-            .map(|address| address.port())
-            .unwrap_or_default();
         if let Err(error) = discovery.advertise(&self.deps.me, port) {
             tracing::warn!("announcing this player failed: {error}");
         }
@@ -398,6 +387,25 @@ impl RemoteService {
         on_ui(&self.deps.window, move |window| {
             devices::show_connecting(window, connecting)
         });
+    }
+
+    async fn open_listener(&self) -> Option<(TcpListener, u16)> {
+        let opened = TcpListener::bind(("0.0.0.0", 0))
+            .await
+            .and_then(|listener| {
+                let port = listener.local_addr()?.port();
+                Ok((listener, port))
+            });
+        match opened {
+            Ok(opened) => Some(opened),
+            Err(error) => {
+                tracing::warn!("listening for remote control failed: {error}");
+                self.status(tr!(
+                    "Remote control is unavailable: the network port could not be opened"
+                ));
+                None
+            }
+        }
     }
 
     fn status(&self, message: String) {

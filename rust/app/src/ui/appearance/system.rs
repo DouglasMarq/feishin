@@ -18,18 +18,21 @@ pub(super) fn system_scheme_changed(window: &AppWindow, scheme: SystemColorSchem
 }
 
 fn apply_startup_scheme(window: &AppWindow, ctx: &Context) {
-    let read = ctx.rt.block_on(async {
-        tokio::time::timeout(
+    let weak_window = window.as_weak();
+    ctx.rt.spawn(async move {
+        let read = tokio::time::timeout(
             STARTUP_SCHEME_TIMEOUT,
             feishin_platform::current_color_scheme(),
         )
-        .await
+        .await;
+        match read {
+            Ok(Ok(scheme)) => on_ui(&weak_window, move |window| {
+                system_scheme_changed(window, scheme);
+            }),
+            Ok(Err(error)) => tracing::debug!("could not read the desktop color scheme: {error}"),
+            Err(_) => tracing::debug!("the desktop color scheme took too long to read"),
+        }
     });
-    match read {
-        Ok(Ok(scheme)) => system_scheme_changed(window, scheme),
-        Ok(Err(error)) => tracing::debug!("could not read the desktop color scheme: {error}"),
-        Err(_) => tracing::debug!("the desktop color scheme took too long to read"),
-    }
 }
 
 pub fn watch_system_scheme(window: &AppWindow, ctx: &Context) {

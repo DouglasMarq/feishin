@@ -1,6 +1,6 @@
 use std::rc::Rc;
 
-use feishin_core::queue::QueueView;
+use feishin_core::queue::{QueueView, Uid};
 use slint::{ComponentHandle, Model, ModelRc};
 
 use super::{AppWindow, Context, QueueState, clamp_i32};
@@ -33,16 +33,22 @@ pub fn shared_view(window: &AppWindow) -> SharedQueueView {
     })
 }
 
+fn parsed_uid(uid: &str) -> Option<Uid> {
+    uid.parse()
+        .inspect_err(|error| tracing::warn!("ignoring the queue row {uid:?}: {error}"))
+        .ok()
+}
+
 fn install_row_actions(state: &QueueState, ctx: &Context) {
     let play_ctx = ctx.clone();
     state.on_play(move |uid| {
-        if let Ok(uid) = uid.parse() {
+        if let Some(uid) = parsed_uid(&uid) {
             play_ctx.send(Command::PlayUid(uid));
         }
     });
     let remove_ctx = ctx.clone();
     state.on_remove(move |uid| {
-        if let Ok(uid) = uid.parse() {
+        if let Some(uid) = parsed_uid(&uid) {
             remove_ctx.send(Command::Remove(vec![uid]));
         }
     });

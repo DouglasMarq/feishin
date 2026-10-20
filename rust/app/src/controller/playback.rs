@@ -116,6 +116,10 @@ impl Controller {
     pub(super) fn stop(&mut self) {
         if let Err(error) = self.deps.audio.stop() {
             tracing::warn!("stop failed: {error:#}");
+            self.deps.ui.send(UiUpdate::Error(tr!(
+                "Could not stop playback: {}",
+                format!("{error:#}")
+            )));
         }
         self.youtube.cancel_load();
         self.loaded = None;
@@ -143,7 +147,13 @@ impl Controller {
         };
         match result {
             Ok(()) => self.set_playing(!self.playing),
-            Err(error) => tracing::warn!("toggling playback failed: {error:#}"),
+            Err(error) => {
+                tracing::warn!("toggling playback failed: {error:#}");
+                self.deps.ui.send(UiUpdate::Error(tr!(
+                    "Could not pause or resume playback: {}",
+                    format!("{error:#}")
+                )));
+            }
         }
     }
 
@@ -199,6 +209,10 @@ impl Controller {
             && let Err(error) = self.deps.audio.seek(position_ms)
         {
             tracing::warn!("seek failed: {error:#}");
+            self.deps.ui.send(UiUpdate::Error(tr!(
+                "Could not seek: {}",
+                format!("{error:#}")
+            )));
             return;
         }
         self.position_ms = position_ms;

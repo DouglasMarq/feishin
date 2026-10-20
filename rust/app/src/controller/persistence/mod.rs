@@ -8,13 +8,15 @@ mod writer;
 use std::sync::Arc;
 use std::time::Duration;
 
+use feishin_api::Credential;
+use feishin_core::model::ServerConfig;
 use tokio::sync::mpsc;
 
 pub(super) use draining::ShutdownState;
 pub use restore::{RestoredQueue, load_saved_queue};
 pub use schedule::SaveTimer;
 
-use super::{Command, Controller, forward_command};
+use super::{Command, Controller, UiUpdate, forward_command};
 use crate::store::Store;
 use schedule::SaveSchedule;
 use writer::QueueFileWriter;
@@ -92,8 +94,13 @@ impl Controller {
     }
 
     pub(super) fn save_settings(&self) {
+        self.deps.session.publish_settings(&self.settings);
         if let Err(error) = self.deps.store.save_settings(&self.settings) {
             tracing::warn!("saving settings failed: {error:#}");
+            self.deps.ui.send(UiUpdate::Error(tr!(
+                "Could not save the settings: {}",
+                format!("{error:#}")
+            )));
         }
     }
 
@@ -104,17 +111,24 @@ impl Controller {
         let Some(credential) = server.credential() else {
             return;
         };
-        if self.saved_credential.as_ref() == Some(&credential) {
-            return;
-        }
-        match self
-            .deps
-            .store
-            .set_credential(&server.config().id, &credential)
+        if self.saved_credential.as_ref() != Some(&credential)
+            && self.save_credential(server.config(), &credential)
         {
-            Ok(()) => self.saved_credential = Some(credential),
-            Err(error) => tracing::warn!("saving credential failed: {error:#}"),
+            self.saved_credential = Some(credential);
         }
+    }
+
+    pub(super) fn save_credential(&self, server: &ServerConfig, credential: &Credential) -> bool {
+        let Err(error) = self.deps.store.set_credential(&server.id, credential) else {
+            return true;
+        };
+        tracing::warn!("saving the login of {} failed: {error:#}", server.name);
+        self.deps.ui.send(UiUpdate::Error(tr!(
+            "Could not save the login for {}: {}",
+            server.name,
+            format!("{error:#}")
+        )));
+        false
     }
 
     fn queue_is_untouched(&self) -> bool {

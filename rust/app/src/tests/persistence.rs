@@ -40,6 +40,7 @@ fn assert_connect_republishes_the_restored_song(restored: &mut Harness) {
     restored.ui.clear();
     restored.controller.handle(Command::Connected {
         config,
+        credential: None,
         others: Vec::new(),
     });
     let republished = restored

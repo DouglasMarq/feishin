@@ -3,6 +3,8 @@ use std::sync::Arc;
 use feishin_api::MusicServer;
 use feishin_storage::settings::YouTubeSettings;
 
+use super::builder::{MixInputs, build_mixes};
+use super::persist::{load_mixes, save_mixes};
 use super::*;
 use crate::demo::{DemoLibrary, FakeServer};
 use crate::discover::{DemoDiscover, DiscoverSource, LibraryMatcher};

@@ -2,13 +2,13 @@ use std::rc::Rc;
 
 use feishin_api::MusicServer;
 use feishin_core::model::Song;
-use feishin_storage::settings::IntegrationSettings;
 use slint::{ComponentHandle, ModelRc, VecModel};
 
 use super::loading::is_current;
 use super::lyrics_plan::lyrics_plan;
 use super::song_lyrics::{LyricsLookupError, SongLyrics, resolve_lyrics};
 use super::view::{View, with_view};
+use crate::session::Session;
 use crate::ui::{
     AppWindow, Context, LyricsStatus, NowPlayingState, TrackRow, on_ui, player, tracks,
 };
@@ -73,14 +73,8 @@ pub(super) async fn fetch_similar(
     });
 }
 
-pub(super) fn configured_lyrics_sources(ctx: &Context) -> Vec<String> {
-    match ctx.store.load_settings() {
-        Ok(settings) => settings.integrations.lyrics_sources,
-        Err(error) => {
-            tracing::debug!("settings: {error:#}");
-            IntegrationSettings::default().lyrics_sources
-        }
-    }
+pub(super) fn configured_lyrics_sources(session: &Session) -> Vec<String> {
+    session.settings().integrations.lyrics_sources.clone()
 }
 
 pub(super) async fn fetch_lyrics(
@@ -89,8 +83,10 @@ pub(super) async fn fetch_lyrics(
     server: &dyn MusicServer,
     song: &Song,
 ) {
-    let source_names = configured_lyrics_sources(ctx);
-    let result = resolve_lyrics(server, song, &lyrics_plan(&source_names)).await;
+    let source_names = configured_lyrics_sources(&ctx.session);
+    let provider = ctx.connector.lyrics();
+    let plan = lyrics_plan(&source_names);
+    let result = resolve_lyrics(server, provider.as_ref(), song, &plan).await;
     let song_id = song.id.clone();
     on_ui(weak_window, move |window| {
         with_view(|view| apply_lyrics_result(window, view, &song_id, result));

@@ -112,7 +112,7 @@ pub fn install(window: &AppWindow, ctx: &Context, settings: &Settings) {
     artist_detail::install(window, ctx);
     genres::install(window, ctx);
     playlists::install(window, ctx);
-    playlist_detail::install(window, ctx);
+    playlist_detail::install(window, ctx, &picker);
     favorites::install(window, ctx);
     folders::install(window, ctx);
     search::install(window, ctx);

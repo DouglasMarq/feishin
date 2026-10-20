@@ -1,16 +1,13 @@
 use std::sync::Arc;
 
-use feishin_api::MusicServer;
 use feishin_youtube::music::{CollectionPage, MusicShelf};
 use slint::ComponentHandle;
 
 use super::deps::DiscoverDeps;
 use super::model::with_discover;
 use super::render::render_sections;
-use crate::discover::mixes::{
-    MixDay, MixId, MixInputs, MixSet, build_mixes, load_mixes, save_mixes,
-};
-use crate::store::Store;
+use crate::discover::mixes::{MixDay, MixDelivery, MixId, MixJob, MixSet};
+use crate::session::Session;
 use crate::ui::{AppWindow, on_ui};
 
 #[derive(Default)]
@@ -83,94 +80,29 @@ pub fn ensure_mixes(window: &AppWindow, deps: &DiscoverDeps) {
         return;
     };
     let job = MixJob {
-        weak_window: window.as_weak(),
-        deps: deps.clone(),
         server,
-        server_id,
+        source: Arc::clone(&deps.source),
+        store: Arc::clone(&deps.ctx.store),
+        session: deps.ctx.session.clone(),
+        matcher: deps.matcher.clone(),
         today,
     };
-    deps.ctx.rt.spawn(job.run(shown));
+    let (weak_window, session) = (window.as_weak(), deps.ctx.session.clone());
+    deps.ctx.rt.spawn(job.run(shown, move |delivery| {
+        deliver(&weak_window, &session, delivery);
+    }));
 }
 
-struct MixJob {
-    weak_window: slint::Weak<AppWindow>,
-    deps: DiscoverDeps,
-    server: Arc<dyn MusicServer>,
-    server_id: String,
-    today: MixDay,
-}
-
-impl MixJob {
-    async fn run(self, shown: Option<MixSet>) {
-        let saved = match shown {
-            Some(shown) => Some(shown),
-            None => read_saved_mixes(Arc::clone(&self.deps.ctx.store)).await,
-        };
-        let previous = saved.filter(|set| set.is_for_server(&self.server_id));
-        let fresh = previous
-            .clone()
-            .filter(|set| set.is_fresh_for(&self.server_id, self.today));
-        if let Some(fresh) = fresh {
-            deliver(&self.weak_window, &self.deps, Some(fresh), true);
-            return;
-        }
-        deliver(&self.weak_window, &self.deps, previous.clone(), false);
-        let built = self.build(previous.clone()).await;
-        deliver(&self.weak_window, &self.deps, built.or(previous), true);
-    }
-
-    async fn build(&self, previous: Option<MixSet>) -> Option<MixSet> {
-        let inputs = MixInputs {
-            server: Arc::clone(&self.server),
-            source: Arc::clone(&self.deps.source),
-            settings: self.deps.settings(),
-            matcher: self.deps.matcher.clone(),
-            today: self.today,
-            previous,
-        };
-        let work = self.deps.ctx.session.background_work();
-        match work.run(build_mixes(inputs)).await? {
-            Ok(mixes) => {
-                write_mixes(Arc::clone(&self.deps.ctx.store), mixes.clone()).await;
-                Some(mixes)
-            }
-            Err(error) => {
-                tracing::warn!("building the Discover mixes failed: {error}");
-                None
-            }
-        }
-    }
-}
-
-async fn read_saved_mixes(store: Arc<dyn Store>) -> Option<MixSet> {
-    tokio::task::spawn_blocking(move || load_mixes(store.as_ref()))
-        .await
-        .ok()
-        .flatten()
-}
-
-async fn write_mixes(store: Arc<dyn Store>, mixes: MixSet) {
-    let written = tokio::task::spawn_blocking(move || save_mixes(store.as_ref(), &mixes)).await;
-    if let Err(error) = written {
-        tracing::debug!("the mix saving task stopped: {error}");
-    }
-}
-
-fn deliver(
-    weak_window: &slint::Weak<AppWindow>,
-    deps: &DiscoverDeps,
-    mixes: Option<MixSet>,
-    finished: bool,
-) {
-    let session = deps.ctx.session.clone();
+fn deliver(weak_window: &slint::Weak<AppWindow>, session: &Session, delivery: MixDelivery) {
+    let session = session.clone();
     on_ui(weak_window, move |window| {
         let current_server = session.get().map(|server| server.config().id.clone());
-        let mixes = mixes.filter(|set| Some(&set.server_id) == current_server.as_ref());
+        let is_current = |set: &MixSet| Some(&set.server_id) == current_server.as_ref();
         with_discover(window, |model| {
             let mut state = model.mixes.borrow_mut();
-            match finished {
-                true => state.finish_build(mixes),
-                false => state.show(mixes),
+            match delivery {
+                MixDelivery::Saved(mixes) => state.show(mixes.filter(is_current)),
+                MixDelivery::Finished(mixes) => state.finish_build(mixes.filter(is_current)),
             }
         });
         render_sections(window);

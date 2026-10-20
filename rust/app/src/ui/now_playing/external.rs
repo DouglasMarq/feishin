@@ -7,6 +7,7 @@ use super::loading::is_current;
 use super::lyrics_plan::remote_sources;
 use super::song_lyrics::remote_lyrics_for;
 use super::view::{View, with_view};
+use crate::session::Session;
 use crate::ui::player::{thumbnail_cache_key, to_image};
 use crate::ui::{AppWindow, ArtistLink, Context, LyricsStatus, NowPlayingState, on_ui};
 
@@ -32,6 +33,10 @@ fn artist_links(track: &QueueTrack) -> Vec<ArtistLink> {
         .collect()
 }
 
+fn external_lyrics_sources(session: &Session) -> Vec<LyricsSource> {
+    remote_sources(&configured_lyrics_sources(session))
+}
+
 pub(super) fn load_external(window: &AppWindow, ctx: &Context, view: &View, track: &QueueTrack) {
     let state = window.global::<NowPlayingState>();
     state.set_external(true);
@@ -41,7 +46,7 @@ pub(super) fn load_external(window: &AppWindow, ctx: &Context, view: &View, trac
     if let Some(video) = track.youtube_video() {
         fetch_thumbnail(window, ctx, &song_id, video);
     }
-    let sources = remote_sources(&configured_lyrics_sources(ctx));
+    let sources = external_lyrics_sources(&ctx.session);
     match view.cached_lyrics(&song_id) {
         Some(lyrics) => view.show_lyrics(window, lyrics.as_deref()),
         None if sources.is_empty() => view.show_lyrics(window, None),
@@ -94,13 +99,14 @@ struct LyricsRequest {
 
 fn fetch_lyrics(window: &AppWindow, ctx: &Context, request: LyricsRequest) {
     let weak_window = window.as_weak();
+    let provider = ctx.connector.lyrics();
     ctx.rt.spawn(async move {
         let LyricsRequest {
             song_id,
             query,
             sources,
         } = request;
-        let result = remote_lyrics_for(&query, &sources).await;
+        let result = remote_lyrics_for(provider.as_ref(), &query, &sources).await;
         on_ui(&weak_window, move |window| {
             with_view(|view| apply_lyrics_result(window, view, &song_id, result));
         });
@@ -110,6 +116,7 @@ fn fetch_lyrics(window: &AppWindow, ctx: &Context, request: LyricsRequest) {
 #[cfg(test)]
 mod tests {
     use feishin_core::queue::YouTubeTrack;
+    use feishin_storage::settings::Settings;
 
     use super::*;
 
@@ -128,5 +135,17 @@ mod tests {
         assert_eq!(query.artist, "Singer, Guest");
         assert_eq!(query.duration_ms, None);
         assert!(artist_links(&track).iter().all(|link| link.id.is_empty()));
+    }
+
+    #[test]
+    fn given_an_external_track_lyrics_sources_come_from_the_settings_snapshot() {
+        let session = Session::default();
+        let mut settings = Settings::default();
+        settings.integrations.lyrics_sources = vec!["server".into(), "genius".into()];
+        session.publish_settings(&settings);
+        assert_eq!(
+            external_lyrics_sources(&session),
+            vec![LyricsSource::Genius]
+        );
     }
 }

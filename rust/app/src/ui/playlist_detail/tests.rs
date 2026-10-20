@@ -11,6 +11,7 @@ use super::pages::{MAX_CACHED_PAGES, PAGE_SIZE, paging_for_page};
 use super::selection::ClickMode;
 use crate::demo::{FakeServer, test_song};
 use crate::ui::page_cache::PageApplied;
+use crate::ui::tracks::LISTED_CHUNK_SIZE;
 
 type RequestLog = Rc<RefCell<Vec<PageRequest>>>;
 
@@ -181,9 +182,9 @@ fn selection_marks_rows_and_counts() {
 }
 
 #[tokio::test]
-async fn snapshots_resolve_rows_that_are_not_cached() {
+async fn given_select_all_add_to_playlist_streams_in_chunks() {
     let server = FakeServer::new(2000);
-    let song_ids: Vec<String> = (0..450).map(|index| format!("song-{index}")).collect();
+    let song_ids: Vec<String> = (0..1200).map(|index| format!("song-{index}")).collect();
     let created = server.create_playlist("Big", &song_ids).await.unwrap();
     let (model, _log) = logging_model();
     model.reset(1, &created.id);
@@ -192,18 +193,24 @@ async fn snapshots_resolve_rows_that_are_not_cached() {
         .await
         .unwrap();
     model.apply_first_page(1, first.total_count.unwrap_or_default(), first.items);
+    assert!(model.snapshot(&[1, 2]).is_loaded());
 
-    let loaded = model.snapshot(&[1, 2]);
-    assert!(loaded.is_loaded());
-    let mixed = model.snapshot(&[3, 320, 449, 9999]);
-    assert!(!mixed.is_loaded());
-    assert_eq!(
-        mixed.missing_pages().into_iter().collect::<Vec<_>>(),
-        [3, 4]
-    );
-    let songs = mixed.resolve(&server).await.unwrap();
-    let ids: Vec<&str> = songs.iter().map(|song| song.id.as_str()).collect();
-    assert_eq!(ids, ["song-3", "song-320", "song-449"]);
+    model.select_all();
+    let everything = model.snapshot(&model.selected_indexes());
+    assert!(!everything.is_loaded());
+    let listed = everything.into_listed();
+    assert_eq!(listed.song_count(), 1200);
+
+    let mut chunks = listed.into_chunks(LISTED_CHUNK_SIZE);
+    let mut streamed = Vec::new();
+    let mut chunk_count = 0;
+    while let Some(chunk) = chunks.next_ids(&server).await.unwrap() {
+        assert!(chunk.len() <= LISTED_CHUNK_SIZE);
+        streamed.extend(chunk);
+        chunk_count += 1;
+    }
+    assert_eq!(chunk_count, 1200_usize.div_ceil(LISTED_CHUNK_SIZE));
+    assert_eq!(streamed, song_ids);
 }
 
 #[tokio::test]

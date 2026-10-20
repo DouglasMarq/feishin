@@ -22,7 +22,7 @@ use crate::session::Session;
 use crate::sleep_timer::{self, SleepTimerUi};
 use crate::store::{JsonStore, Store, SystemStore};
 use crate::termination;
-use crate::ui::{self, AppWindow, Context, login};
+use crate::ui::{self, AppWindow, Context, login, on_ui};
 use feishin_remote as remote_state;
 
 const SHUTDOWN_SAVE_TIMEOUT: Duration = Duration::from_secs(6);
@@ -42,6 +42,7 @@ struct Backends {
 }
 
 type SavedLogin = (ServerConfig, Result<Option<Credential>>);
+type RestoredLogin = Option<(ServerConfig, Arc<dyn MusicServer>)>;
 
 fn backends(mode: Mode) -> Result<Backends> {
     match mode {
@@ -64,7 +65,7 @@ fn real_backends() -> Result<Backends> {
     let covers = CachedCovers::new(store.paths())?;
     Ok(Backends {
         store: Arc::new(store),
-        connector: Arc::new(ServerConnector),
+        connector: Arc::new(ServerConnector::new()?),
         covers: Arc::new(covers),
         discover: Arc::new(YouTubeMusicSource::default()),
     })
@@ -170,36 +171,51 @@ fn saved_login(context: &Context, settings: &Settings, mode: Mode) -> Option<Sav
     }
 }
 
-fn enter_restored_session(
-    window: &AppWindow,
-    context: &Context,
-    config: ServerConfig,
-    server: Arc<dyn MusicServer>,
-) {
-    context.session.set(Some(Arc::clone(&server)));
+fn restored_login(context: &Context, settings: &Settings, mode: Mode) -> Result<RestoredLogin> {
+    let Some((config, credential)) = saved_login(context, settings, mode) else {
+        return Ok(None);
+    };
+    let Some(credential) = credential? else {
+        return Ok(None);
+    };
+    let server = context.connector.restore(&config, &credential)?;
+    Ok(Some((config, server)))
+}
+
+fn enter_restored_session(context: &Context, config: ServerConfig, server: &Arc<dyn MusicServer>) {
+    context.session.set(Some(Arc::clone(server)));
     context.send(Command::Connected {
         config,
+        credential: None,
         others: Vec::new(),
     });
-    login::enter_main(window, &server);
+}
+
+fn show_restored_session(window: &AppWindow, restored: Result<RestoredLogin>) {
+    match restored {
+        Ok(Some((_, server))) => login::enter_main(window, &server),
+        Ok(None) => login::show_login(window, ""),
+        Err(error) => login::show_login(window, &format!("{error:#}")),
+    }
 }
 
 fn restore_session(window: &AppWindow, context: &Context, settings: &Settings, mode: Mode) {
-    let restored = match saved_login(context, settings, mode) {
-        Some((config, Ok(Some(credential)))) => context
-            .connector
-            .restore(&config, &credential)
-            .map(|server| (config, server)),
-        Some((_, Ok(None))) | None => {
-            login::show_login(window, "");
-            return;
+    let (weak_window, context, settings) = (window.as_weak(), context.clone(), settings.clone());
+    let runtime = context.rt.clone();
+    runtime.spawn(async move {
+        let reading = context.clone();
+        let restored =
+            tokio::task::spawn_blocking(move || restored_login(&reading, &settings, mode))
+                .await
+                .map_err(anyhow::Error::from)
+                .and_then(|restored| restored);
+        if let Ok(Some((config, server))) = &restored {
+            enter_restored_session(&context, config.clone(), server);
         }
-        Some((_, Err(error))) => Err(error),
-    };
-    match restored {
-        Ok((config, server)) => enter_restored_session(window, context, config, server),
-        Err(error) => login::show_login(window, &format!("{error:#}")),
-    }
+        on_ui(&weak_window, move |window| {
+            show_restored_session(window, restored);
+        });
+    });
 }
 
 fn build_runtime() -> Result<Runtime> {
@@ -333,4 +349,57 @@ pub fn run(mode: Mode) -> Result<()> {
     save_state_on_exit(&runtime, &window, &context, &settings);
     runtime.shutdown_timeout(RUNTIME_SHUTDOWN_TIMEOUT);
     Ok(())
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    fn context_with(store: Arc<JsonStore>) -> Context {
+        let (commands, _ignored) = mpsc::unbounded_channel();
+        Context {
+            rt: tokio::runtime::Handle::current(),
+            commands,
+            session: Session::default(),
+            store,
+            connector: Arc::new(DemoConnector::default()),
+            covers: Arc::new(DemoCovers),
+            remote: Remote::default(),
+        }
+    }
+
+    fn last_used_demo_server() -> Settings {
+        let config = FakeServer::config_for_demo();
+        Settings {
+            current_server_id: Some(config.id.clone()),
+            servers: vec![config],
+            ..Settings::default()
+        }
+    }
+
+    #[tokio::test]
+    async fn given_a_saved_login_of_the_last_server_the_session_is_restored() {
+        let directory = tempfile::tempdir().unwrap();
+        let store = Arc::new(JsonStore::new(directory.path()));
+        store.set_credential("demo", &demo_credential()).unwrap();
+        let context = context_with(store);
+
+        let restored = restored_login(&context, &last_used_demo_server(), Mode::Real).unwrap();
+
+        let (config, server) = restored.unwrap();
+        assert_eq!(config, FakeServer::config_for_demo());
+        assert_eq!(server.config().id, "demo");
+    }
+
+    #[tokio::test]
+    async fn given_no_saved_login_nothing_is_restored() {
+        let directory = tempfile::tempdir().unwrap();
+        let context = context_with(Arc::new(JsonStore::new(directory.path())));
+
+        let restored = restored_login(&context, &last_used_demo_server(), Mode::Real).unwrap();
+
+        assert!(restored.is_none());
+        let without_server = restored_login(&context, &Settings::default(), Mode::Real).unwrap();
+        assert!(without_server.is_none());
+    }
 }

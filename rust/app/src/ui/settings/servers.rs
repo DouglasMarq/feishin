@@ -43,6 +43,7 @@ pub(super) fn switch_server(window: &AppWindow, ctx: &Context, shared: &Shared, 
             ctx.session.set(Some(Arc::clone(server)));
             ctx.send(Command::Connected {
                 config,
+                credential: None,
                 others: Vec::new(),
             });
         }

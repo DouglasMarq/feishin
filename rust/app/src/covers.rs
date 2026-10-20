@@ -1,4 +1,5 @@
 use std::sync::Arc;
+use std::time::Duration;
 
 use anyhow::Result;
 use async_trait::async_trait;
@@ -10,6 +11,7 @@ use crate::demo::render_cover;
 
 const COVER_DISK_CACHE_BYTES: u64 = 512 * 1024 * 1024;
 const COVER_MEMORY_CACHE_ITEMS: usize = 64;
+const COVER_REQUEST_TIMEOUT: Duration = Duration::from_secs(30);
 
 #[async_trait]
 pub trait CoverProvider: Send + Sync {
@@ -37,7 +39,10 @@ impl CachedCovers {
             max_disk_bytes: COVER_DISK_CACHE_BYTES,
             max_memory_items: COVER_MEMORY_CACHE_ITEMS,
         };
-        Ok(Self(CoverCache::new(config, reqwest::Client::new())?))
+        let client = reqwest::Client::builder()
+            .timeout(COVER_REQUEST_TIMEOUT)
+            .build()?;
+        Ok(Self(CoverCache::new(config, client)?))
     }
 }
 

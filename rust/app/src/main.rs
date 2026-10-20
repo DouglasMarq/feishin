@@ -13,6 +13,7 @@ mod discover;
 mod identity;
 mod library;
 mod list_stream;
+mod lyrics_provider;
 mod media;
 mod play_queue_sync;
 mod radio_directory;
