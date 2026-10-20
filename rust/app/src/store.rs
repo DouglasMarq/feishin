@@ -15,12 +15,14 @@ use serde::de::DeserializeOwned;
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum StateFile {
     DiscoverMixes,
+    RemoteDevices,
 }
 
 impl StateFile {
     fn file_name(self) -> &'static str {
         match self {
             Self::DiscoverMixes => "discover-mixes.json",
+            Self::RemoteDevices => "remote-devices.json",
         }
     }
 }
@@ -96,6 +98,7 @@ impl SystemStore {
     fn state_path(&self, file: StateFile) -> PathBuf {
         let directory = match file {
             StateFile::DiscoverMixes => &self.paths.cache_dir,
+            StateFile::RemoteDevices => &self.paths.data_dir,
         };
         directory.join(file.file_name())
     }

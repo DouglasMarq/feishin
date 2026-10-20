@@ -8,6 +8,9 @@ msgstr ""
 msgid "\"{}\" plays next"
 msgstr "\"{}\" hurrengoa da"
 
+msgid "\"{}\" wants to control this player. Allow it? You will not be asked again for this device."
+msgstr "\"{}\" gailuak erreproduzitzaile hau kontrolatu nahi du. Baimendu? Ez zaizu berriro galdetuko gailu honengatik."
+
 msgid "\"{}\" will play next"
 msgstr "\"{}\" hurrengo erreproduzituko da"
 
@@ -134,6 +137,12 @@ msgstr "Albumak"
 msgid "All genres"
 msgstr "Genero guztiak"
 
+msgid "Allow"
+msgstr "Baimendu"
+
+msgid "Allow remote control?"
+msgstr "Urruneko kontrola baimendu?"
+
 msgid "Already at the end"
 msgstr "Dagoeneko amaieran zaude"
 
@@ -152,6 +161,12 @@ msgstr "Anbarra"
 msgid "Appearance"
 msgstr "Itxura"
 
+msgid "Approved devices"
+msgstr "Baimendutako gailuak"
+
+msgid "Approved devices were forgotten"
+msgstr "Baimendutako gailuak ahaztu dira"
+
 msgid "ARTIST"
 msgstr "ARTISTA"
 
@@ -160,6 +175,9 @@ msgstr "Artista"
 
 msgid "Artists"
 msgstr "Artistak"
+
+msgid "Ask again before any device can control this player"
+msgstr "Galdetu berriro edozein gailuk erreproduzitzaile hau kontrolatu aurretik"
 
 msgid "Ask the server to transcode down to this bitrate. Applies from the next song."
 msgstr "Eskatu zerbitzariari bit-tasa honetara arte transkodetzeko. Hurrengo abestitik aurrera aplikatzen da."
@@ -227,11 +245,20 @@ msgstr "Konektatu zure musika-zerbitzarira"
 msgid "Connecting..."
 msgstr "Konektatzen..."
 
+msgid "Control the music playing on this computer"
+msgstr "Kontrolatu ordenagailu honetan jotzen ari den musika"
+
+msgid "Control the music playing on {}"
+msgstr "Kontrolatu {} gailuan jotzen ari den musika"
+
 msgid "Could not add to \"{}\": {}"
 msgstr "Ezin izan da \"{}\" zerrendara gehitu: {}"
 
 msgid "Could not add {} to the server"
 msgstr "Ezin izan da {} zerbitzarira gehitu"
+
+msgid "Could not connect to {}: {}"
+msgstr "Ezin izan da {} gailura konektatu: {}"
 
 msgid "Could not create a share link: {}"
 msgstr "Ezin izan da partekatzeko esteka sortu: {}"
@@ -307,6 +334,12 @@ msgstr "Ezin izan dira pistak kargatu: {}"
 
 msgid "Could not load your home: {}"
 msgstr "Ezin izan da zure hasiera kargatu: {}"
+
+msgid "Could not move the music from {}: {}"
+msgstr "Ezin izan da musika {} gailutik eraman: {}"
+
+msgid "Could not move the music: {}"
+msgstr "Ezin izan da musika eraman: {}"
 
 msgid "Could not open the folder: {}"
 msgstr "Ezin izan da karpeta ireki: {}"
@@ -441,6 +474,15 @@ msgstr "Ezabatzen..."
 msgid "Demo mode: these picks are made up and play from your demo library"
 msgstr "Demo modua: hautaketa hauek asmatuak dira eta zure demo-liburutegitik erreproduzitzen dira"
 
+msgid "Devices you allowed can control this player without asking again."
+msgstr "Baimendutako gailuek erreproduzitzaile hau kontrola dezakete berriro galdetu gabe."
+
+msgid "Devices: controlling {}"
+msgstr "Gailuak: {} kontrolatzen"
+
+msgid "Devices: this computer"
+msgstr "Gailuak: ordenagailu hau"
+
 msgid "Directory"
 msgstr "Direktorioa"
 
@@ -534,6 +576,9 @@ msgstr "Jarraitu sistemaren kolore-eskemari"
 msgid "For you"
 msgstr "Zuretzat"
 
+msgid "Forget all"
+msgstr "Ahaztu denak"
+
 msgid "Forget this server?"
 msgstr "Zerbitzari hau ahaztu?"
 
@@ -602,6 +647,24 @@ msgstr "Interfazea"
 msgid "Internet radio"
 msgstr "Interneteko irratia"
 
+msgid "it did not answer in time"
+msgstr "ez du garaiz erantzun"
+
+msgid "it is busy with another request"
+msgstr "beste eskaera batekin lanpetuta dago"
+
+msgid "it is connected to a different server"
+msgstr "beste zerbitzari batera konektatuta dago"
+
+msgid "it is not connected to a server"
+msgstr "ez dago zerbitzari batera konektatuta"
+
+msgid "it runs a different version of Feishin"
+msgstr "Feishinen beste bertsio bat darabil"
+
+msgid "it stopped"
+msgstr "gelditu egin da"
+
 msgid "item"
 msgstr "elementua"
 
@@ -613,6 +676,9 @@ msgstr "Gorde irrati hau gailu honetako gogokoetan"
 
 msgid "Language"
 msgstr "Hizkuntza"
+
+msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
+msgstr "Utzi sare honetako beste Feishin erreproduzitzaileei hau kontrolatzen. Gailu bakoitzak zure baimena eskatzen du lehen aldian."
 
 msgid "LIBRARY"
 msgstr "LIBURUTEGIA"
@@ -664,6 +730,9 @@ msgstr "Amaitu saioa"
 msgid "Looking up the YouTube link..."
 msgstr "YouTube-ko esteka bilatzen..."
 
+msgid "Lost the connection to {}"
+msgstr "{} gailuarekiko konexioa galdu da"
+
 msgid "Lyrics"
 msgstr "Letrak"
 
@@ -691,8 +760,23 @@ msgstr "Gehien entzundakoa"
 msgid "Move down"
 msgstr "Mugitu beherantz"
 
+msgid "Move here"
+msgstr "Ekarri hona"
+
+msgid "Move there"
+msgstr "Eraman hara"
+
 msgid "Move up"
 msgstr "Mugitu gorantz"
+
+msgid "Move what is playing here to {}"
+msgstr "Eraman hemen jotzen ari dena {} gailura"
+
+msgid "Move what is playing on {} to this computer"
+msgstr "Ekarri {} gailuan jotzen ari dena ordenagailu honetara"
+
+msgid "Moved the music from {} to this computer"
+msgstr "Musika {} gailutik ordenagailu honetara ekarri da"
 
 msgid "MPRIS"
 msgstr "MPRIS"
@@ -745,6 +829,9 @@ msgstr "Ez da generorik aurkitu"
 msgid "No lyrics found"
 msgstr "Ez da letrarik aurkitu"
 
+msgid "No other Feishin found on this network"
+msgstr "Ez da beste Feishinik aurkitu sare honetan"
+
 msgid "No playlists found"
 msgstr "Ez da erreprodukzio-zerrendarik aurkitu"
 
@@ -787,8 +874,14 @@ msgstr "Normalizatu ozentasuna pistaren edo albumaren irabazi-etiketak erabiliz.
 msgid "Not connected to a server"
 msgstr "Ez dago zerbitzari batera konektatuta"
 
+msgid "Not connected to another player"
+msgstr "Ez dago beste erreproduzitzaile batera konektatuta"
+
 msgid "Nothing is playing"
 msgstr "Ez da ezer erreproduzitzen ari"
+
+msgid "nothing is playing"
+msgstr "ez da ezer jotzen ari"
 
 msgid "Nothing to add yet"
 msgstr "Oraindik ez dago gehitzeko ezer"
@@ -804,6 +897,9 @@ msgstr "Oraindik ez dago erreproduzitzeko ezer"
 
 msgid "Nothing to show here right now"
 msgstr "Une honetan ez dago hemen erakusteko ezer"
+
+msgid "Now playing on {}"
+msgstr "Orain {} gailuan jotzen"
 
 msgid "Off"
 msgstr "Desaktibatuta"
@@ -921,6 +1017,9 @@ msgstr "Erreproduzitu {} abestitik aurrera"
 msgid "Play next"
 msgstr "Erreproduzitu hurrengo"
 
+msgid "Play on"
+msgstr "Erreproduzitu hemen"
+
 msgid "Play the album"
 msgstr "Erreproduzitu albuma"
 
@@ -1024,6 +1123,15 @@ msgstr "Freskatu atal hau"
 
 msgid "Release year"
 msgstr "Argitalpen urtea"
+
+msgid "Remote control"
+msgstr "Urruneko kontrola"
+
+msgid "Remote control is unavailable: other players cannot find this one"
+msgstr "Urruneko kontrola ez dago erabilgarri: beste erreproduzitzaileek ezin dute hau aurkitu"
+
+msgid "Remote control is unavailable: the network port could not be opened"
+msgstr "Urruneko kontrola ez dago erabilgarri: ezin izan da sareko ataka ireki"
 
 msgid "Remove"
 msgstr "Kendu"
@@ -1330,6 +1438,12 @@ msgstr "Sistemaren lehenetsiak mahaigainaren hizkuntzari jarraitzen dio."
 msgid "Tag, for example jazz"
 msgstr "Etiketa, adibidez jazz"
 
+msgid "That device is no longer on the network"
+msgstr "Gailu hori ez dago sarean jada"
+
+msgid "the connection was not allowed"
+msgstr "konexioa ez da baimendu"
+
 msgid "The desktop currently prefers dark."
 msgstr "Mahaigainak gai iluna nahiago du une honetan."
 
@@ -1341,6 +1455,9 @@ msgstr "Mahaigainak ez du hobespenik; beraz, gai iluna erabiltzen da."
 
 msgid "The library scan is still running on the server"
 msgstr "Liburutegiaren eskaneatzea oraindik martxan dago zerbitzarian"
+
+msgid "the network connection failed"
+msgstr "sareko konexioak huts egin du"
 
 msgid "The queue is empty"
 msgstr "Ilara hutsik dago"
@@ -1362,6 +1479,9 @@ msgstr "Gaia"
 
 msgid "There is nothing to play in this list"
 msgstr "Ez dago erreproduzitzeko ezer zerrenda honetan"
+
+msgid "This computer"
+msgstr "Ordenagailu hau"
 
 msgid "This Discover page does not exist"
 msgstr "Aurkitu orri hau ez dago"
@@ -1516,6 +1636,9 @@ msgstr[1] "{n} abesti hurrengo erreproduzituko dira"
 msgid "{} (current theme)"
 msgstr "{} (uneko gaia)"
 
+msgid "{} (demo)"
+msgstr "{} (demoa)"
+
 msgid "{} (unavailable)"
 msgstr "{} (ez dago erabilgarri)"
 
@@ -1524,6 +1647,15 @@ msgstr "{0}, {1} zerbitzarian"
 
 msgid "{} cannot be played: its stream address is not an internet stream"
 msgstr "Ezin da {} erreproduzitu: bere jario-helbidea ez da Interneteko jario bat"
+
+msgid "{} could not do that: {}"
+msgstr "{} gailuak ezin izan du hori egin: {}"
+
+msgid "{} could not take the music: {}"
+msgstr "{} gailuak ezin izan du musika hartu: {}"
+
+msgid "{} did not answer in time"
+msgstr "{} gailuak ez du garaiz erantzun"
 
 msgid "{} is shown"
 msgstr "{} ikusgai dago"

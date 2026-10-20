@@ -8,6 +8,9 @@ msgstr ""
 msgid "\"{}\" plays next"
 msgstr "\"{}\" அடுத்து இயங்கும்"
 
+msgid "\"{}\" wants to control this player. Allow it? You will not be asked again for this device."
+msgstr "\"{}\" இந்த பிளேயரைக் கட்டுப்படுத்த விரும்புகிறது. அனுமதிக்கவா? இந்தச் சாதனத்திற்கு மீண்டும் கேட்கப்படாது."
+
 msgid "\"{}\" will play next"
 msgstr "\"{}\" அடுத்ததாக இயக்கப்படும்"
 
@@ -134,6 +137,12 @@ msgstr "ஆல்பங்கள்"
 msgid "All genres"
 msgstr "அனைத்து வகைகளும்"
 
+msgid "Allow"
+msgstr "அனுமதி"
+
+msgid "Allow remote control?"
+msgstr "தொலைக் கட்டுப்பாட்டை அனுமதிக்கவா?"
+
 msgid "Already at the end"
 msgstr "ஏற்கனவே இறுதியில் உள்ளது"
 
@@ -152,6 +161,12 @@ msgstr "அம்பர்"
 msgid "Appearance"
 msgstr "தோற்றம்"
 
+msgid "Approved devices"
+msgstr "அனுமதிக்கப்பட்ட சாதனங்கள்"
+
+msgid "Approved devices were forgotten"
+msgstr "அனுமதிக்கப்பட்ட சாதனங்கள் மறக்கப்பட்டன"
+
 msgid "ARTIST"
 msgstr "கலைஞர்"
 
@@ -160,6 +175,9 @@ msgstr "கலைஞர்"
 
 msgid "Artists"
 msgstr "கலைஞர்கள்"
+
+msgid "Ask again before any device can control this player"
+msgstr "எந்தச் சாதனமும் இந்த பிளேயரைக் கட்டுப்படுத்தும் முன் மீண்டும் கேள்"
 
 msgid "Ask the server to transcode down to this bitrate. Applies from the next song."
 msgstr "இந்த பிட்ரேட்டுக்குக் குறைத்து டிரான்ஸ்கோட் செய்யுமாறு சேவையகத்தைக் கேட்கும். அடுத்த பாடலிலிருந்து பொருந்தும்."
@@ -227,11 +245,20 @@ msgstr "உங்கள் இசைச் சேவையகத்துடன�
 msgid "Connecting..."
 msgstr "இணைக்கிறது..."
 
+msgid "Control the music playing on this computer"
+msgstr "இந்தக் கணினியில் இயங்கும் இசையைக் கட்டுப்படுத்து"
+
+msgid "Control the music playing on {}"
+msgstr "{} இல் இயங்கும் இசையைக் கட்டுப்படுத்து"
+
 msgid "Could not add to \"{}\": {}"
 msgstr "\"{}\" இல் சேர்க்க முடியவில்லை: {}"
 
 msgid "Could not add {} to the server"
 msgstr "{}-ஐ சேவையகத்தில் சேர்க்க முடியவில்லை"
+
+msgid "Could not connect to {}: {}"
+msgstr "{} உடன் இணைக்க முடியவில்லை: {}"
 
 msgid "Could not create a share link: {}"
 msgstr "பகிர்வு இணைப்பை உருவாக்க முடியவில்லை: {}"
@@ -307,6 +334,12 @@ msgstr "தடங்களை ஏற்ற முடியவில்லை: {}
 
 msgid "Could not load your home: {}"
 msgstr "உங்கள் முகப்பை ஏற்ற முடியவில்லை: {}"
+
+msgid "Could not move the music from {}: {}"
+msgstr "{} இலிருந்து இசையை நகர்த்த முடியவில்லை: {}"
+
+msgid "Could not move the music: {}"
+msgstr "இசையை நகர்த்த முடியவில்லை: {}"
 
 msgid "Could not open the folder: {}"
 msgstr "கோப்புறையைத் திறக்க முடியவில்லை: {}"
@@ -441,6 +474,15 @@ msgstr "நீக்குகிறது..."
 msgid "Demo mode: these picks are made up and play from your demo library"
 msgstr "டெமோ பயன்முறை: இந்தத் தேர்வுகள் கற்பனையானவை, உங்கள் டெமோ நூலகத்திலிருந்து இயங்கும்"
 
+msgid "Devices you allowed can control this player without asking again."
+msgstr "நீங்கள் அனுமதித்த சாதனங்கள் மீண்டும் கேட்காமல் இந்த பிளேயரைக் கட்டுப்படுத்தலாம்."
+
+msgid "Devices: controlling {}"
+msgstr "சாதனங்கள்: {} கட்டுப்படுத்தப்படுகிறது"
+
+msgid "Devices: this computer"
+msgstr "சாதனங்கள்: இந்தக் கணினி"
+
 msgid "Directory"
 msgstr "அடைவு"
 
@@ -534,6 +576,9 @@ msgstr "கணினியின் வண்ணத் திட்டத்த�
 msgid "For you"
 msgstr "உங்களுக்காக"
 
+msgid "Forget all"
+msgstr "அனைத்தையும் மற"
+
 msgid "Forget this server?"
 msgstr "இந்தச் சேவையகத்தை மறக்கவா?"
 
@@ -602,6 +647,24 @@ msgstr "இடைமுகம்"
 msgid "Internet radio"
 msgstr "இணைய வானொலி"
 
+msgid "it did not answer in time"
+msgstr "அது சரியான நேரத்தில் பதிலளிக்கவில்லை"
+
+msgid "it is busy with another request"
+msgstr "அது மற்றொரு கோரிக்கையில் உள்ளது"
+
+msgid "it is connected to a different server"
+msgstr "அது வேறு சேவையகத்துடன் இணைக்கப்பட்டுள்ளது"
+
+msgid "it is not connected to a server"
+msgstr "அது எந்தச் சேவையகத்துடனும் இணைக்கப்படவில்லை"
+
+msgid "it runs a different version of Feishin"
+msgstr "அது Feishin இன் வேறு பதிப்பை இயக்குகிறது"
+
+msgid "it stopped"
+msgstr "அது நின்றுவிட்டது"
+
 msgid "item"
 msgstr "உருப்படி"
 
@@ -613,6 +676,9 @@ msgstr "இந்தச் சாதனத்தில் இந்த நில
 
 msgid "Language"
 msgstr "மொழி"
+
+msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
+msgstr "இந்த வலையமைப்பில் உள்ள மற்ற Feishin பிளேயர்கள் இதைக் கட்டுப்படுத்த அனுமதி. ஒவ்வொரு சாதனமும் முதல் முறை உங்கள் ஒப்புதலைக் கேட்கும்."
 
 msgid "LIBRARY"
 msgstr "நூலகம்"
@@ -664,6 +730,9 @@ msgstr "வெளியேறு"
 msgid "Looking up the YouTube link..."
 msgstr "YouTube இணைப்பு தேடப்படுகிறது..."
 
+msgid "Lost the connection to {}"
+msgstr "{} உடனான இணைப்பு துண்டிக்கப்பட்டது"
+
 msgid "Lyrics"
 msgstr "பாடல் வரிகள்"
 
@@ -691,8 +760,23 @@ msgstr "அதிகம் இயக்கப்பட்டவை"
 msgid "Move down"
 msgstr "கீழே நகர்த்து"
 
+msgid "Move here"
+msgstr "இங்கே நகர்த்து"
+
+msgid "Move there"
+msgstr "அங்கே நகர்த்து"
+
 msgid "Move up"
 msgstr "மேலே நகர்த்து"
+
+msgid "Move what is playing here to {}"
+msgstr "இங்கே இயங்குவதை {} க்கு நகர்த்து"
+
+msgid "Move what is playing on {} to this computer"
+msgstr "{} இல் இயங்குவதை இந்தக் கணினிக்கு நகர்த்து"
+
+msgid "Moved the music from {} to this computer"
+msgstr "இசை {} இலிருந்து இந்தக் கணினிக்கு நகர்த்தப்பட்டது"
 
 msgid "MPRIS"
 msgstr "MPRIS"
@@ -745,6 +829,9 @@ msgstr "வகைகள் எதுவும் கிடைக்கவில�
 msgid "No lyrics found"
 msgstr "பாடல் வரிகள் இல்லை"
 
+msgid "No other Feishin found on this network"
+msgstr "இந்த வலையமைப்பில் வேறு Feishin இல்லை"
+
 msgid "No playlists found"
 msgstr "பிளேலிஸ்ட்கள் எதுவும் கிடைக்கவில்லை"
 
@@ -787,7 +874,13 @@ msgstr "தடம் அல்லது ஆல்பம் ஈட்டக் �
 msgid "Not connected to a server"
 msgstr "சேவையகத்துடன் இணைக்கப்படவில்லை"
 
+msgid "Not connected to another player"
+msgstr "வேறு பிளேயருடன் இணைக்கப்படவில்லை"
+
 msgid "Nothing is playing"
+msgstr "எதுவும் இயங்கவில்லை"
+
+msgid "nothing is playing"
 msgstr "எதுவும் இயங்கவில்லை"
 
 msgid "Nothing to add yet"
@@ -804,6 +897,9 @@ msgstr "இன்னும் இயக்க எதுவும் இல்ல
 
 msgid "Nothing to show here right now"
 msgstr "இப்போது இங்கே காட்ட எதுவும் இல்லை"
+
+msgid "Now playing on {}"
+msgstr "இப்போது {} இல் இயங்குகிறது"
 
 msgid "Off"
 msgstr "ஆஃப்"
@@ -921,6 +1017,9 @@ msgstr "{} இலிருந்து இயக்கு"
 msgid "Play next"
 msgstr "அடுத்ததாக இயக்கு"
 
+msgid "Play on"
+msgstr "இதில் இயக்கு"
+
 msgid "Play the album"
 msgstr "ஆல்பத்தை இயக்கு"
 
@@ -1024,6 +1123,15 @@ msgstr "இந்தப் பகுதியைப் புதுப்பி"
 
 msgid "Release year"
 msgstr "வெளியீட்டு ஆண்டு"
+
+msgid "Remote control"
+msgstr "தொலைக் கட்டுப்பாடு"
+
+msgid "Remote control is unavailable: other players cannot find this one"
+msgstr "தொலைக் கட்டுப்பாடு கிடைக்கவில்லை: மற்ற பிளேயர்கள் இதைக் கண்டுபிடிக்க முடியவில்லை"
+
+msgid "Remote control is unavailable: the network port could not be opened"
+msgstr "தொலைக் கட்டுப்பாடு கிடைக்கவில்லை: வலையமைப்பு போர்ட்டைத் திறக்க முடியவில்லை"
 
 msgid "Remove"
 msgstr "அகற்று"
@@ -1330,6 +1438,12 @@ msgstr "கணினி இயல்பு டெஸ்க்டாப்பி�
 msgid "Tag, for example jazz"
 msgstr "குறிச்சொல், எடுத்துக்காட்டாக jazz"
 
+msgid "That device is no longer on the network"
+msgstr "அந்தச் சாதனம் இனி வலையமைப்பில் இல்லை"
+
+msgid "the connection was not allowed"
+msgstr "இணைப்பு அனுமதிக்கப்படவில்லை"
+
 msgid "The desktop currently prefers dark."
 msgstr "டெஸ்க்டாப் தற்போது இருண்டதை விரும்புகிறது."
 
@@ -1341,6 +1455,9 @@ msgstr "டெஸ்க்டாப்புக்கு விருப்ப�
 
 msgid "The library scan is still running on the server"
 msgstr "நூலக ஸ்கேன் இன்னும் சேவையகத்தில் நடைபெறுகிறது"
+
+msgid "the network connection failed"
+msgstr "வலையமைப்பு இணைப்பு தோல்வியடைந்தது"
 
 msgid "The queue is empty"
 msgstr "வரிசை காலியாக உள்ளது"
@@ -1362,6 +1479,9 @@ msgstr "கருப்பொருள்"
 
 msgid "There is nothing to play in this list"
 msgstr "இந்தப் பட்டியலில் இயக்க எதுவும் இல்லை"
+
+msgid "This computer"
+msgstr "இந்தக் கணினி"
 
 msgid "This Discover page does not exist"
 msgstr "இந்தக் கண்டறி பக்கம் இல்லை"
@@ -1516,6 +1636,9 @@ msgstr[1] "{n} பாடல்கள் அடுத்ததாக இயங்
 msgid "{} (current theme)"
 msgstr "{} (தற்போதைய கருப்பொருள்)"
 
+msgid "{} (demo)"
+msgstr "{} (டெமோ)"
+
 msgid "{} (unavailable)"
 msgstr "{} (கிடைக்கவில்லை)"
 
@@ -1524,6 +1647,15 @@ msgstr "{1} இல் {0}"
 
 msgid "{} cannot be played: its stream address is not an internet stream"
 msgstr "{}-ஐ இயக்க முடியாது: அதன் ஸ்ட்ரீம் முகவரி இணைய ஸ்ட்ரீம் அல்ல"
+
+msgid "{} could not do that: {}"
+msgstr "{} அதைச் செய்ய முடியவில்லை: {}"
+
+msgid "{} could not take the music: {}"
+msgstr "{} இசையை ஏற்க முடியவில்லை: {}"
+
+msgid "{} did not answer in time"
+msgstr "{} சரியான நேரத்தில் பதிலளிக்கவில்லை"
 
 msgid "{} is shown"
 msgstr "{} காட்டப்படுகிறது"

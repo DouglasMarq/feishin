@@ -56,6 +56,7 @@ fn open_radio_page() -> RadioPage {
         store: Arc::new(JsonStore::new(dir.path())),
         connector: Arc::new(DemoConnector::default()),
         covers: Arc::new(DemoCovers),
+        remote: crate::remote::Remote::default(),
     };
     let view = install_with(&window, &ctx, Arc::new(DemoDirectory));
     let app = window.global::<AppState>();

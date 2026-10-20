@@ -8,6 +8,9 @@ msgstr ""
 msgid "\"{}\" plays next"
 msgstr "« {} » sera lu ensuite"
 
+msgid "\"{}\" wants to control this player. Allow it? You will not be asked again for this device."
+msgstr "« {} » souhaite contrôler ce lecteur. L'autoriser ? Cette question ne sera plus posée pour cet appareil."
+
 msgid "\"{}\" will play next"
 msgstr "« {} » sera lu ensuite"
 
@@ -134,6 +137,12 @@ msgstr "Albums"
 msgid "All genres"
 msgstr "Tous les genres"
 
+msgid "Allow"
+msgstr "Autoriser"
+
+msgid "Allow remote control?"
+msgstr "Autoriser le contrôle à distance ?"
+
 msgid "Already at the end"
 msgstr "Déjà à la fin"
 
@@ -152,6 +161,12 @@ msgstr "Ambre"
 msgid "Appearance"
 msgstr "Apparence"
 
+msgid "Approved devices"
+msgstr "Appareils autorisés"
+
+msgid "Approved devices were forgotten"
+msgstr "Les appareils autorisés ont été oubliés"
+
 msgid "ARTIST"
 msgstr "ARTISTE"
 
@@ -160,6 +175,9 @@ msgstr "Artiste"
 
 msgid "Artists"
 msgstr "Artistes"
+
+msgid "Ask again before any device can control this player"
+msgstr "Redemander avant qu'un appareil puisse contrôler ce lecteur"
 
 msgid "Ask the server to transcode down to this bitrate. Applies from the next song."
 msgstr "Demander au serveur de transcoder jusqu'à ce débit. S'applique à partir du titre suivant."
@@ -227,11 +245,20 @@ msgstr "Connectez-vous à votre serveur de musique"
 msgid "Connecting..."
 msgstr "Connexion..."
 
+msgid "Control the music playing on this computer"
+msgstr "Contrôler la musique jouée sur cet ordinateur"
+
+msgid "Control the music playing on {}"
+msgstr "Contrôler la musique jouée sur {}"
+
 msgid "Could not add to \"{}\": {}"
 msgstr "Impossible d'ajouter à « {} » : {}"
 
 msgid "Could not add {} to the server"
 msgstr "Impossible d'ajouter {} au serveur"
+
+msgid "Could not connect to {}: {}"
+msgstr "Impossible de se connecter à {} : {}"
 
 msgid "Could not create a share link: {}"
 msgstr "Impossible de créer un lien de partage : {}"
@@ -307,6 +334,12 @@ msgstr "Impossible de charger les pistes : {}"
 
 msgid "Could not load your home: {}"
 msgstr "Impossible de charger votre accueil : {}"
+
+msgid "Could not move the music from {}: {}"
+msgstr "Impossible de déplacer la musique depuis {} : {}"
+
+msgid "Could not move the music: {}"
+msgstr "Impossible de déplacer la musique : {}"
 
 msgid "Could not open the folder: {}"
 msgstr "Impossible d'ouvrir le dossier : {}"
@@ -441,6 +474,15 @@ msgstr "Suppression..."
 msgid "Demo mode: these picks are made up and play from your demo library"
 msgstr "Mode démo : ces suggestions sont fictives et sont lues depuis votre bibliothèque de démo"
 
+msgid "Devices you allowed can control this player without asking again."
+msgstr "Les appareils autorisés peuvent contrôler ce lecteur sans redemander."
+
+msgid "Devices: controlling {}"
+msgstr "Appareils : contrôle de {}"
+
+msgid "Devices: this computer"
+msgstr "Appareils : cet ordinateur"
+
 msgid "Directory"
 msgstr "Annuaire"
 
@@ -534,6 +576,9 @@ msgstr "Suivre le jeu de couleurs du système"
 msgid "For you"
 msgstr "Pour vous"
 
+msgid "Forget all"
+msgstr "Tout oublier"
+
 msgid "Forget this server?"
 msgstr "Oublier ce serveur ?"
 
@@ -602,6 +647,24 @@ msgstr "Interface"
 msgid "Internet radio"
 msgstr "Radio Internet"
 
+msgid "it did not answer in time"
+msgstr "il n'a pas répondu à temps"
+
+msgid "it is busy with another request"
+msgstr "il est occupé par une autre demande"
+
+msgid "it is connected to a different server"
+msgstr "il est connecté à un autre serveur"
+
+msgid "it is not connected to a server"
+msgstr "il n'est connecté à aucun serveur"
+
+msgid "it runs a different version of Feishin"
+msgstr "il utilise une autre version de Feishin"
+
+msgid "it stopped"
+msgstr "il s'est arrêté"
+
 msgid "item"
 msgstr "l'élément"
 
@@ -613,6 +676,9 @@ msgstr "Garder cette station dans les favoris sur cet appareil"
 
 msgid "Language"
 msgstr "Langue"
+
+msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
+msgstr "Permet aux autres lecteurs Feishin de ce réseau de contrôler celui-ci. Chaque appareil demande votre autorisation la première fois."
 
 msgid "LIBRARY"
 msgstr "BIBLIOTHÈQUE"
@@ -664,6 +730,9 @@ msgstr "Se déconnecter"
 msgid "Looking up the YouTube link..."
 msgstr "Recherche du lien YouTube..."
 
+msgid "Lost the connection to {}"
+msgstr "Connexion à {} perdue"
+
 msgid "Lyrics"
 msgstr "Paroles"
 
@@ -691,8 +760,23 @@ msgstr "Les plus joués"
 msgid "Move down"
 msgstr "Descendre"
 
+msgid "Move here"
+msgstr "Déplacer ici"
+
+msgid "Move there"
+msgstr "Déplacer là-bas"
+
 msgid "Move up"
 msgstr "Monter"
+
+msgid "Move what is playing here to {}"
+msgstr "Déplacer ce qui joue ici vers {}"
+
+msgid "Move what is playing on {} to this computer"
+msgstr "Déplacer ce qui joue sur {} vers cet ordinateur"
+
+msgid "Moved the music from {} to this computer"
+msgstr "Musique déplacée de {} vers cet ordinateur"
 
 msgid "MPRIS"
 msgstr "MPRIS"
@@ -745,6 +829,9 @@ msgstr "Aucun genre trouvé"
 msgid "No lyrics found"
 msgstr "Aucune parole trouvée"
 
+msgid "No other Feishin found on this network"
+msgstr "Aucun autre Feishin trouvé sur ce réseau"
+
 msgid "No playlists found"
 msgstr "Aucune liste de lecture trouvée"
 
@@ -787,8 +874,14 @@ msgstr "Normaliser le volume sonore à l'aide des balises de gain de piste ou d'
 msgid "Not connected to a server"
 msgstr "Non connecté à un serveur"
 
+msgid "Not connected to another player"
+msgstr "Pas connecté à un autre lecteur"
+
 msgid "Nothing is playing"
 msgstr "Aucune lecture en cours"
+
+msgid "nothing is playing"
+msgstr "rien n'est en lecture"
 
 msgid "Nothing to add yet"
 msgstr "Rien à ajouter pour le moment"
@@ -804,6 +897,9 @@ msgstr "Rien à lire pour le moment"
 
 msgid "Nothing to show here right now"
 msgstr "Rien à afficher ici pour le moment"
+
+msgid "Now playing on {}"
+msgstr "En lecture sur {}"
 
 msgid "Off"
 msgstr "Désactivé"
@@ -921,6 +1017,9 @@ msgstr "Lire à partir de {}"
 msgid "Play next"
 msgstr "Lire ensuite"
 
+msgid "Play on"
+msgstr "Lire sur"
+
 msgid "Play the album"
 msgstr "Lire l'album"
 
@@ -1024,6 +1123,15 @@ msgstr "Actualiser cette section"
 
 msgid "Release year"
 msgstr "Année de sortie"
+
+msgid "Remote control"
+msgstr "Contrôle à distance"
+
+msgid "Remote control is unavailable: other players cannot find this one"
+msgstr "Contrôle à distance indisponible : les autres lecteurs ne peuvent pas trouver celui-ci"
+
+msgid "Remote control is unavailable: the network port could not be opened"
+msgstr "Contrôle à distance indisponible : le port réseau n'a pas pu être ouvert"
 
 msgid "Remove"
 msgstr "Supprimer"
@@ -1330,6 +1438,12 @@ msgstr "Par défaut du système suit la langue du bureau."
 msgid "Tag, for example jazz"
 msgstr "Étiquette, par exemple jazz"
 
+msgid "That device is no longer on the network"
+msgstr "Cet appareil n'est plus sur le réseau"
+
+msgid "the connection was not allowed"
+msgstr "la connexion n'a pas été autorisée"
+
 msgid "The desktop currently prefers dark."
 msgstr "Le bureau préfère actuellement le mode sombre."
 
@@ -1341,6 +1455,9 @@ msgstr "Le bureau n'a pas de préférence, le thème sombre est donc utilisé."
 
 msgid "The library scan is still running on the server"
 msgstr "L'analyse de la bibliothèque est toujours en cours sur le serveur"
+
+msgid "the network connection failed"
+msgstr "la connexion réseau a échoué"
 
 msgid "The queue is empty"
 msgstr "La file d'attente est vide"
@@ -1362,6 +1479,9 @@ msgstr "Thème"
 
 msgid "There is nothing to play in this list"
 msgstr "Il n'y a rien à lire dans cette liste"
+
+msgid "This computer"
+msgstr "Cet ordinateur"
 
 msgid "This Discover page does not exist"
 msgstr "Cette page de Découvrir n'existe pas"
@@ -1516,6 +1636,9 @@ msgstr[1] "{n} titres seront lus ensuite"
 msgid "{} (current theme)"
 msgstr "{} (thème actuel)"
 
+msgid "{} (demo)"
+msgstr "{} (démo)"
+
 msgid "{} (unavailable)"
 msgstr "{} (indisponible)"
 
@@ -1524,6 +1647,15 @@ msgstr "{} sur {}"
 
 msgid "{} cannot be played: its stream address is not an internet stream"
 msgstr "Impossible de lire {} : son adresse de flux n'est pas un flux Internet"
+
+msgid "{} could not do that: {}"
+msgstr "{} n'a pas pu le faire : {}"
+
+msgid "{} could not take the music: {}"
+msgstr "{} n'a pas pu prendre la musique : {}"
+
+msgid "{} did not answer in time"
+msgstr "{} n'a pas répondu à temps"
 
 msgid "{} is shown"
 msgstr "{} est affiché"

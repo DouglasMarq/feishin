@@ -8,6 +8,9 @@ msgstr ""
 msgid "\"{}\" plays next"
 msgstr "\"{}\" يُشغَّل تاليًا"
 
+msgid "\"{}\" wants to control this player. Allow it? You will not be asked again for this device."
+msgstr "يريد \"{}\" التحكم في هذا المشغل. هل تسمح بذلك؟ لن يُطلب منك ذلك مرة أخرى لهذا الجهاز."
+
 msgid "\"{}\" will play next"
 msgstr "سيُشغَّل \"{}\" تاليًا"
 
@@ -158,6 +161,12 @@ msgstr "الألبومات"
 msgid "All genres"
 msgstr "كل الأنواع"
 
+msgid "Allow"
+msgstr "السماح"
+
+msgid "Allow remote control?"
+msgstr "السماح بالتحكم عن بُعد؟"
+
 msgid "Already at the end"
 msgstr "في النهاية بالفعل"
 
@@ -176,6 +185,12 @@ msgstr "كهرماني"
 msgid "Appearance"
 msgstr "المظهر"
 
+msgid "Approved devices"
+msgstr "الأجهزة الموافق عليها"
+
+msgid "Approved devices were forgotten"
+msgstr "تم نسيان الأجهزة الموافق عليها"
+
 msgid "ARTIST"
 msgstr "فنان"
 
@@ -184,6 +199,9 @@ msgstr "فنان"
 
 msgid "Artists"
 msgstr "الفنانون"
+
+msgid "Ask again before any device can control this player"
+msgstr "السؤال مجددًا قبل أن يتمكن أي جهاز من التحكم في هذا المشغل"
 
 msgid "Ask the server to transcode down to this bitrate. Applies from the next song."
 msgstr "يطلب من الخادم تحويل الترميز إلى معدل البت هذا كحد أقصى. يُطبَّق بدءًا من الأغنية التالية."
@@ -251,11 +269,20 @@ msgstr "اتصل بخادم الموسيقى الخاص بك"
 msgid "Connecting..."
 msgstr "جارٍ الاتصال..."
 
+msgid "Control the music playing on this computer"
+msgstr "التحكم في الموسيقى التي تعمل على هذا الكمبيوتر"
+
+msgid "Control the music playing on {}"
+msgstr "التحكم في الموسيقى التي تعمل على {}"
+
 msgid "Could not add to \"{}\": {}"
 msgstr "تعذرت الإضافة إلى \"{}\": {}"
 
 msgid "Could not add {} to the server"
 msgstr "تعذرت إضافة {} إلى الخادم"
+
+msgid "Could not connect to {}: {}"
+msgstr "تعذر الاتصال بـ {}: {}"
 
 msgid "Could not create a share link: {}"
 msgstr "تعذر إنشاء رابط مشاركة: {}"
@@ -331,6 +358,12 @@ msgstr "تعذر تحميل المقاطع: {}"
 
 msgid "Could not load your home: {}"
 msgstr "تعذر تحميل صفحتك الرئيسية: {}"
+
+msgid "Could not move the music from {}: {}"
+msgstr "تعذر نقل الموسيقى من {}: {}"
+
+msgid "Could not move the music: {}"
+msgstr "تعذر نقل الموسيقى: {}"
 
 msgid "Could not open the folder: {}"
 msgstr "تعذر فتح المجلد: {}"
@@ -473,6 +506,15 @@ msgstr "جارٍ الحذف..."
 msgid "Demo mode: these picks are made up and play from your demo library"
 msgstr "الوضع التجريبي: هذه الاختيارات وهمية وتُشغَّل من مكتبتك التجريبية"
 
+msgid "Devices you allowed can control this player without asking again."
+msgstr "يمكن للأجهزة التي سمحت بها التحكم في هذا المشغل دون السؤال مجددًا."
+
+msgid "Devices: controlling {}"
+msgstr "الأجهزة: التحكم في {}"
+
+msgid "Devices: this computer"
+msgstr "الأجهزة: هذا الكمبيوتر"
+
 msgid "Directory"
 msgstr "الدليل"
 
@@ -566,6 +608,9 @@ msgstr "اتباع نظام ألوان النظام"
 msgid "For you"
 msgstr "لك"
 
+msgid "Forget all"
+msgstr "نسيان الكل"
+
 msgid "Forget this server?"
 msgstr "هل تريد نسيان هذا الخادم؟"
 
@@ -638,6 +683,24 @@ msgstr "الواجهة"
 msgid "Internet radio"
 msgstr "راديو الإنترنت"
 
+msgid "it did not answer in time"
+msgstr "لم يستجب في الوقت المناسب"
+
+msgid "it is busy with another request"
+msgstr "إنه مشغول بطلب آخر"
+
+msgid "it is connected to a different server"
+msgstr "إنه متصل بخادم مختلف"
+
+msgid "it is not connected to a server"
+msgstr "إنه غير متصل بأي خادم"
+
+msgid "it runs a different version of Feishin"
+msgstr "يعمل بإصدار مختلف من Feishin"
+
+msgid "it stopped"
+msgstr "توقف"
+
 msgid "item"
 msgstr "العنصر"
 
@@ -649,6 +712,9 @@ msgstr "الاحتفاظ بهذه المحطة في المفضلة على هذا
 
 msgid "Language"
 msgstr "اللغة"
+
+msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
+msgstr "السماح لمشغلات Feishin الأخرى على هذه الشبكة بالتحكم في هذا المشغل. يطلب كل جهاز موافقتك في المرة الأولى."
 
 msgid "LIBRARY"
 msgstr "المكتبة"
@@ -704,6 +770,9 @@ msgstr "تسجيل الخروج"
 msgid "Looking up the YouTube link..."
 msgstr "جارٍ البحث عن رابط YouTube..."
 
+msgid "Lost the connection to {}"
+msgstr "انقطع الاتصال بـ {}"
+
 msgid "Lyrics"
 msgstr "كلمات الأغنية"
 
@@ -731,8 +800,23 @@ msgstr "الأكثر تشغيلًا"
 msgid "Move down"
 msgstr "نقل لأسفل"
 
+msgid "Move here"
+msgstr "النقل إلى هنا"
+
+msgid "Move there"
+msgstr "النقل إلى هناك"
+
 msgid "Move up"
 msgstr "نقل لأعلى"
+
+msgid "Move what is playing here to {}"
+msgstr "نقل ما يعمل هنا إلى {}"
+
+msgid "Move what is playing on {} to this computer"
+msgstr "نقل ما يعمل على {} إلى هذا الكمبيوتر"
+
+msgid "Moved the music from {} to this computer"
+msgstr "تم نقل الموسيقى من {} إلى هذا الكمبيوتر"
 
 msgid "MPRIS"
 msgstr "MPRIS"
@@ -785,6 +869,9 @@ msgstr "لم يُعثر على أنواع"
 msgid "No lyrics found"
 msgstr "لم يُعثر على كلمات"
 
+msgid "No other Feishin found on this network"
+msgstr "لم يُعثر على Feishin آخر على هذه الشبكة"
+
 msgid "No playlists found"
 msgstr "لم يُعثر على قوائم تشغيل"
 
@@ -827,8 +914,14 @@ msgstr "توحيد مستوى الصوت باستخدام وسوم الكسب ل
 msgid "Not connected to a server"
 msgstr "غير متصل بخادم"
 
+msgid "Not connected to another player"
+msgstr "غير متصل بمشغل آخر"
+
 msgid "Nothing is playing"
 msgstr "لا يتم تشغيل شيء"
+
+msgid "nothing is playing"
+msgstr "لا شيء قيد التشغيل"
 
 msgid "Nothing to add yet"
 msgstr "لا شيء لإضافته بعد"
@@ -844,6 +937,9 @@ msgstr "لا يوجد ما يمكن تشغيله بعد"
 
 msgid "Nothing to show here right now"
 msgstr "لا يوجد ما يُعرض هنا حاليًا"
+
+msgid "Now playing on {}"
+msgstr "يعمل الآن على {}"
 
 msgid "Off"
 msgstr "معطّل"
@@ -965,6 +1061,9 @@ msgstr "التشغيل من {}"
 msgid "Play next"
 msgstr "تشغيل تاليًا"
 
+msgid "Play on"
+msgstr "التشغيل على"
+
 msgid "Play the album"
 msgstr "تشغيل الألبوم"
 
@@ -1072,6 +1171,15 @@ msgstr "تحديث هذا القسم"
 
 msgid "Release year"
 msgstr "سنة الإصدار"
+
+msgid "Remote control"
+msgstr "التحكم عن بُعد"
+
+msgid "Remote control is unavailable: other players cannot find this one"
+msgstr "التحكم عن بُعد غير متاح: لا تستطيع المشغلات الأخرى العثور على هذا المشغل"
+
+msgid "Remote control is unavailable: the network port could not be opened"
+msgstr "التحكم عن بُعد غير متاح: تعذر فتح منفذ الشبكة"
 
 msgid "Remove"
 msgstr "إزالة"
@@ -1382,6 +1490,12 @@ msgstr "افتراضي النظام يتبع لغة سطح المكتب."
 msgid "Tag, for example jazz"
 msgstr "وسم، مثلًا jazz"
 
+msgid "That device is no longer on the network"
+msgstr "لم يعد هذا الجهاز على الشبكة"
+
+msgid "the connection was not allowed"
+msgstr "لم يُسمح بالاتصال"
+
 msgid "The desktop currently prefers dark."
 msgstr "يفضّل سطح المكتب حاليًا الوضع الداكن."
 
@@ -1393,6 +1507,9 @@ msgstr "لا يوجد تفضيل لسطح المكتب، لذا تُستخدم �
 
 msgid "The library scan is still running on the server"
 msgstr "لا يزال فحص المكتبة جاريًا على الخادم"
+
+msgid "the network connection failed"
+msgstr "فشل الاتصال بالشبكة"
 
 msgid "The queue is empty"
 msgstr "قائمة الانتظار فارغة"
@@ -1414,6 +1531,9 @@ msgstr "السمة"
 
 msgid "There is nothing to play in this list"
 msgstr "لا يوجد ما يمكن تشغيله في هذه القائمة"
+
+msgid "This computer"
+msgstr "هذا الكمبيوتر"
 
 msgid "This Discover page does not exist"
 msgstr "صفحة الاستكشاف هذه غير موجودة"
@@ -1604,6 +1724,9 @@ msgstr[5] "سيتم تشغيل {n} أغنية تاليًا"
 msgid "{} (current theme)"
 msgstr "{} (السمة الحالية)"
 
+msgid "{} (demo)"
+msgstr "{} (تجريبي)"
+
 msgid "{} (unavailable)"
 msgstr "{} (غير متاح)"
 
@@ -1612,6 +1735,15 @@ msgstr "{} على {}"
 
 msgid "{} cannot be played: its stream address is not an internet stream"
 msgstr "لا يمكن تشغيل {}: عنوان البث الخاص بها ليس بثًا عبر الإنترنت"
+
+msgid "{} could not do that: {}"
+msgstr "تعذر على {} فعل ذلك: {}"
+
+msgid "{} could not take the music: {}"
+msgstr "تعذر على {} استلام الموسيقى: {}"
+
+msgid "{} did not answer in time"
+msgstr "لم يستجب {} في الوقت المناسب"
 
 msgid "{} is shown"
 msgstr "{} معروض"

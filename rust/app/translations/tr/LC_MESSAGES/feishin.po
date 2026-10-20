@@ -8,6 +8,9 @@ msgstr ""
 msgid "\"{}\" plays next"
 msgstr "Sıradaki: \"{}\""
 
+msgid "\"{}\" wants to control this player. Allow it? You will not be asked again for this device."
+msgstr "\"{}\" bu çaları kontrol etmek istiyor. İzin verilsin mi? Bu cihaz için bir daha sorulmayacak."
+
 msgid "\"{}\" will play next"
 msgstr "\"{}\" sıradaki olarak çalınacak"
 
@@ -134,6 +137,12 @@ msgstr "Albümler"
 msgid "All genres"
 msgstr "Tüm türler"
 
+msgid "Allow"
+msgstr "İzin ver"
+
+msgid "Allow remote control?"
+msgstr "Uzaktan kontrole izin verilsin mi?"
+
 msgid "Already at the end"
 msgstr "Zaten sonda"
 
@@ -152,6 +161,12 @@ msgstr "Kehribar"
 msgid "Appearance"
 msgstr "Görünüm"
 
+msgid "Approved devices"
+msgstr "Onaylı cihazlar"
+
+msgid "Approved devices were forgotten"
+msgstr "Onaylı cihazlar unutuldu"
+
 msgid "ARTIST"
 msgstr "SANATÇI"
 
@@ -160,6 +175,9 @@ msgstr "Sanatçı"
 
 msgid "Artists"
 msgstr "Sanatçılar"
+
+msgid "Ask again before any device can control this player"
+msgstr "Herhangi bir cihaz bu çaları kontrol etmeden önce tekrar sor"
 
 msgid "Ask the server to transcode down to this bitrate. Applies from the next song."
 msgstr "Sunucudan bu bit hızına dönüştürmesini iste. Sonraki şarkıdan itibaren geçerlidir."
@@ -227,11 +245,20 @@ msgstr "Müzik sunucunuza bağlanın"
 msgid "Connecting..."
 msgstr "Bağlanıyor..."
 
+msgid "Control the music playing on this computer"
+msgstr "Bu bilgisayarda çalan müziği kontrol et"
+
+msgid "Control the music playing on {}"
+msgstr "{} cihazında çalan müziği kontrol et"
+
 msgid "Could not add to \"{}\": {}"
 msgstr "\"{}\" listesine eklenemedi: {}"
 
 msgid "Could not add {} to the server"
 msgstr "{} sunucuya eklenemedi"
+
+msgid "Could not connect to {}: {}"
+msgstr "{} cihazına bağlanılamadı: {}"
 
 msgid "Could not create a share link: {}"
 msgstr "Paylaşım bağlantısı oluşturulamadı: {}"
@@ -307,6 +334,12 @@ msgstr "Parçalar yüklenemedi: {}"
 
 msgid "Could not load your home: {}"
 msgstr "Ana sayfanız yüklenemedi: {}"
+
+msgid "Could not move the music from {}: {}"
+msgstr "Müzik {} cihazından taşınamadı: {}"
+
+msgid "Could not move the music: {}"
+msgstr "Müzik taşınamadı: {}"
 
 msgid "Could not open the folder: {}"
 msgstr "Klasör açılamadı: {}"
@@ -441,6 +474,15 @@ msgstr "Siliniyor..."
 msgid "Demo mode: these picks are made up and play from your demo library"
 msgstr "Demo modu: bu öneriler uydurmadır ve demo kitaplığınızdan çalınır"
 
+msgid "Devices you allowed can control this player without asking again."
+msgstr "İzin verdiğin cihazlar bu çaları tekrar sormadan kontrol edebilir."
+
+msgid "Devices: controlling {}"
+msgstr "Cihazlar: {} kontrol ediliyor"
+
+msgid "Devices: this computer"
+msgstr "Cihazlar: bu bilgisayar"
+
 msgid "Directory"
 msgstr "Dizin"
 
@@ -534,6 +576,9 @@ msgstr "Sistem renk düzenini izle"
 msgid "For you"
 msgstr "Sizin için"
 
+msgid "Forget all"
+msgstr "Tümünü unut"
+
 msgid "Forget this server?"
 msgstr "Bu sunucu unutulsun mu?"
 
@@ -602,6 +647,24 @@ msgstr "Arayüz"
 msgid "Internet radio"
 msgstr "İnternet radyosu"
 
+msgid "it did not answer in time"
+msgstr "zamanında yanıt vermedi"
+
+msgid "it is busy with another request"
+msgstr "başka bir istekle meşgul"
+
+msgid "it is connected to a different server"
+msgstr "başka bir sunucuya bağlı"
+
+msgid "it is not connected to a server"
+msgstr "hiçbir sunucuya bağlı değil"
+
+msgid "it runs a different version of Feishin"
+msgstr "farklı bir Feishin sürümü çalıştırıyor"
+
+msgid "it stopped"
+msgstr "durdu"
+
 msgid "item"
 msgstr "öğe"
 
@@ -613,6 +676,9 @@ msgstr "Bu istasyonu bu cihazda favorilerde tut"
 
 msgid "Language"
 msgstr "Dil"
+
+msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
+msgstr "Bu ağdaki diğer Feishin çalarların bunu kontrol etmesine izin ver. Her cihaz ilk seferde onayını ister."
 
 msgid "LIBRARY"
 msgstr "KİTAPLIK"
@@ -664,6 +730,9 @@ msgstr "Oturumu kapat"
 msgid "Looking up the YouTube link..."
 msgstr "YouTube bağlantısı aranıyor..."
 
+msgid "Lost the connection to {}"
+msgstr "{} ile bağlantı kesildi"
+
 msgid "Lyrics"
 msgstr "Şarkı sözleri"
 
@@ -691,8 +760,23 @@ msgstr "En çok çalınanlar"
 msgid "Move down"
 msgstr "Aşağı taşı"
 
+msgid "Move here"
+msgstr "Buraya taşı"
+
+msgid "Move there"
+msgstr "Oraya taşı"
+
 msgid "Move up"
 msgstr "Yukarı taşı"
+
+msgid "Move what is playing here to {}"
+msgstr "Burada çalanı {} cihazına taşı"
+
+msgid "Move what is playing on {} to this computer"
+msgstr "{} cihazında çalanı bu bilgisayara taşı"
+
+msgid "Moved the music from {} to this computer"
+msgstr "Müzik {} cihazından bu bilgisayara taşındı"
 
 msgid "MPRIS"
 msgstr "MPRIS"
@@ -745,6 +829,9 @@ msgstr "Tür bulunamadı"
 msgid "No lyrics found"
 msgstr "Şarkı sözü bulunamadı"
 
+msgid "No other Feishin found on this network"
+msgstr "Bu ağda başka Feishin bulunamadı"
+
 msgid "No playlists found"
 msgstr "Çalma listesi bulunamadı"
 
@@ -787,8 +874,14 @@ msgstr "Ses yüksekliğini parça veya albüm kazanç etiketleriyle normalleşti
 msgid "Not connected to a server"
 msgstr "Bir sunucuya bağlı değil"
 
+msgid "Not connected to another player"
+msgstr "Başka bir çalara bağlı değil"
+
 msgid "Nothing is playing"
 msgstr "Hiçbir şey çalmıyor"
+
+msgid "nothing is playing"
+msgstr "hiçbir şey çalmıyor"
 
 msgid "Nothing to add yet"
 msgstr "Henüz eklenecek bir şey yok"
@@ -804,6 +897,9 @@ msgstr "Henüz çalınacak bir şey yok"
 
 msgid "Nothing to show here right now"
 msgstr "Şu anda burada gösterilecek bir şey yok"
+
+msgid "Now playing on {}"
+msgstr "Şimdi {} cihazında çalıyor"
 
 msgid "Off"
 msgstr "Kapalı"
@@ -921,6 +1017,9 @@ msgstr "Şuradan çal: {}"
 msgid "Play next"
 msgstr "Sıradaki olarak çal"
 
+msgid "Play on"
+msgstr "Şurada çal"
+
 msgid "Play the album"
 msgstr "Albümü çal"
 
@@ -1024,6 +1123,15 @@ msgstr "Bu bölümü yenile"
 
 msgid "Release year"
 msgstr "Çıkış yılı"
+
+msgid "Remote control"
+msgstr "Uzaktan kontrol"
+
+msgid "Remote control is unavailable: other players cannot find this one"
+msgstr "Uzaktan kontrol kullanılamıyor: diğer çalarlar bunu bulamıyor"
+
+msgid "Remote control is unavailable: the network port could not be opened"
+msgstr "Uzaktan kontrol kullanılamıyor: ağ bağlantı noktası açılamadı"
 
 msgid "Remove"
 msgstr "Kaldır"
@@ -1330,6 +1438,12 @@ msgstr "Sistem varsayılanı, masaüstünün dilini izler."
 msgid "Tag, for example jazz"
 msgstr "Etiket, örneğin jazz"
 
+msgid "That device is no longer on the network"
+msgstr "O cihaz artık ağda değil"
+
+msgid "the connection was not allowed"
+msgstr "bağlantıya izin verilmedi"
+
 msgid "The desktop currently prefers dark."
 msgstr "Masaüstü şu anda koyu temayı tercih ediyor."
 
@@ -1341,6 +1455,9 @@ msgstr "Masaüstünün bir tercihi yok, bu nedenle koyu tema kullanılıyor."
 
 msgid "The library scan is still running on the server"
 msgstr "Kitaplık taraması sunucuda hâlâ sürüyor"
+
+msgid "the network connection failed"
+msgstr "ağ bağlantısı başarısız oldu"
 
 msgid "The queue is empty"
 msgstr "Sıra boş"
@@ -1362,6 +1479,9 @@ msgstr "Tema"
 
 msgid "There is nothing to play in this list"
 msgstr "Bu listede çalınacak bir şey yok"
+
+msgid "This computer"
+msgstr "Bu bilgisayar"
 
 msgid "This Discover page does not exist"
 msgstr "Bu Keşfet sayfası mevcut değil"
@@ -1516,6 +1636,9 @@ msgstr[1] "{n} şarkı sıradaki olarak çalınacak"
 msgid "{} (current theme)"
 msgstr "{} (geçerli tema)"
 
+msgid "{} (demo)"
+msgstr "{} (demo)"
+
 msgid "{} (unavailable)"
 msgstr "{} (kullanılamıyor)"
 
@@ -1524,6 +1647,15 @@ msgstr "{1} üzerinde {0}"
 
 msgid "{} cannot be played: its stream address is not an internet stream"
 msgstr "{} çalınamıyor: akış adresi bir internet akışı değil"
+
+msgid "{} could not do that: {}"
+msgstr "{} bunu yapamadı: {}"
+
+msgid "{} could not take the music: {}"
+msgstr "{} müziği devralamadı: {}"
+
+msgid "{} did not answer in time"
+msgstr "{} zamanında yanıt vermedi"
 
 msgid "{} is shown"
 msgstr "Gösteriliyor: {}"

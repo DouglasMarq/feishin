@@ -8,6 +8,9 @@ msgstr ""
 msgid "\"{}\" plays next"
 msgstr "Susunod na tutugtog ang \"{}\""
 
+msgid "\"{}\" wants to control this player. Allow it? You will not be asked again for this device."
+msgstr "Gustong kontrolin ng \"{}\" ang player na ito. Payagan? Hindi ka na tatanungin ulit para sa device na ito."
+
 msgid "\"{}\" will play next"
 msgstr "Susunod na tutugtugin ang \"{}\""
 
@@ -134,6 +137,12 @@ msgstr "Mga album"
 msgid "All genres"
 msgstr "Lahat ng genre"
 
+msgid "Allow"
+msgstr "Payagan"
+
+msgid "Allow remote control?"
+msgstr "Payagan ang remote control?"
+
 msgid "Already at the end"
 msgstr "Nasa dulo na"
 
@@ -152,6 +161,12 @@ msgstr "Amber"
 msgid "Appearance"
 msgstr "Itsura"
 
+msgid "Approved devices"
+msgstr "Mga inaprubahang device"
+
+msgid "Approved devices were forgotten"
+msgstr "Kinalimutan na ang mga inaprubahang device"
+
 msgid "ARTIST"
 msgstr "ARTIST"
 
@@ -160,6 +175,9 @@ msgstr "Artist"
 
 msgid "Artists"
 msgstr "Mga artist"
+
+msgid "Ask again before any device can control this player"
+msgstr "Magtanong ulit bago makontrol ng anumang device ang player na ito"
 
 msgid "Ask the server to transcode down to this bitrate. Applies from the next song."
 msgstr "Hilingin sa server na i-transcode pababa sa bitrate na ito. Ilalapat simula sa susunod na kanta."
@@ -227,11 +245,20 @@ msgstr "Kumonekta sa iyong music server"
 msgid "Connecting..."
 msgstr "Kumokonekta..."
 
+msgid "Control the music playing on this computer"
+msgstr "Kontrolin ang musikang tumutugtog sa computer na ito"
+
+msgid "Control the music playing on {}"
+msgstr "Kontrolin ang musikang tumutugtog sa {}"
+
 msgid "Could not add to \"{}\": {}"
 msgstr "Hindi maidagdag sa \"{}\": {}"
 
 msgid "Could not add {} to the server"
 msgstr "Hindi maidagdag ang {} sa server"
+
+msgid "Could not connect to {}: {}"
+msgstr "Hindi makakonekta sa {}: {}"
 
 msgid "Could not create a share link: {}"
 msgstr "Hindi makagawa ng share link: {}"
@@ -307,6 +334,12 @@ msgstr "Hindi ma-load ang mga track: {}"
 
 msgid "Could not load your home: {}"
 msgstr "Hindi ma-load ang iyong home: {}"
+
+msgid "Could not move the music from {}: {}"
+msgstr "Hindi mailipat ang musika mula sa {}: {}"
+
+msgid "Could not move the music: {}"
+msgstr "Hindi mailipat ang musika: {}"
 
 msgid "Could not open the folder: {}"
 msgstr "Hindi mabuksan ang folder: {}"
@@ -441,6 +474,15 @@ msgstr "Binubura..."
 msgid "Demo mode: these picks are made up and play from your demo library"
 msgstr "Demo mode: gawa-gawa lang ang mga mungkahing ito at tumutugtog mula sa iyong demo library"
 
+msgid "Devices you allowed can control this player without asking again."
+msgstr "Makokontrol ng mga pinayagang device ang player na ito nang hindi na nagtatanong."
+
+msgid "Devices: controlling {}"
+msgstr "Mga device: kinokontrol ang {}"
+
+msgid "Devices: this computer"
+msgstr "Mga device: ang computer na ito"
+
 msgid "Directory"
 msgstr "Direktoryo"
 
@@ -534,6 +576,9 @@ msgstr "Sundin ang color scheme ng system"
 msgid "For you"
 msgstr "Para sa iyo"
 
+msgid "Forget all"
+msgstr "Kalimutan lahat"
+
 msgid "Forget this server?"
 msgstr "Kalimutan ang server na ito?"
 
@@ -602,6 +647,24 @@ msgstr "Interface"
 msgid "Internet radio"
 msgstr "Internet radio"
 
+msgid "it did not answer in time"
+msgstr "hindi ito sumagot sa tamang oras"
+
+msgid "it is busy with another request"
+msgstr "abala ito sa ibang kahilingan"
+
+msgid "it is connected to a different server"
+msgstr "nakakonekta ito sa ibang server"
+
+msgid "it is not connected to a server"
+msgstr "hindi ito nakakonekta sa server"
+
+msgid "it runs a different version of Feishin"
+msgstr "iba ang bersyon ng Feishin nito"
+
+msgid "it stopped"
+msgstr "huminto ito"
+
 msgid "item"
 msgstr "item"
 
@@ -613,6 +676,9 @@ msgstr "Itago ang istasyong ito sa mga paborito sa device na ito"
 
 msgid "Language"
 msgstr "Wika"
+
+msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
+msgstr "Payagan ang ibang Feishin player sa network na ito na kontrolin ang isang ito. Bawat device ay hihingi ng pahintulot mo sa unang beses."
 
 msgid "LIBRARY"
 msgstr "LIBRARY"
@@ -664,6 +730,9 @@ msgstr "Mag-log out"
 msgid "Looking up the YouTube link..."
 msgstr "Hinahanap ang YouTube link..."
 
+msgid "Lost the connection to {}"
+msgstr "Nawala ang koneksyon sa {}"
+
 msgid "Lyrics"
 msgstr "Liriko"
 
@@ -691,8 +760,23 @@ msgstr "Pinakamadalas i-play"
 msgid "Move down"
 msgstr "Ibaba"
 
+msgid "Move here"
+msgstr "Ilipat dito"
+
+msgid "Move there"
+msgstr "Ilipat doon"
+
 msgid "Move up"
 msgstr "Itaas"
+
+msgid "Move what is playing here to {}"
+msgstr "Ilipat ang tumutugtog dito sa {}"
+
+msgid "Move what is playing on {} to this computer"
+msgstr "Ilipat ang tumutugtog sa {} sa computer na ito"
+
+msgid "Moved the music from {} to this computer"
+msgstr "Nailipat ang musika mula sa {} sa computer na ito"
 
 msgid "MPRIS"
 msgstr "MPRIS"
@@ -745,6 +829,9 @@ msgstr "Walang nahanap na genre"
 msgid "No lyrics found"
 msgstr "Walang nahanap na liriko"
 
+msgid "No other Feishin found on this network"
+msgstr "Walang ibang Feishin sa network na ito"
+
 msgid "No playlists found"
 msgstr "Walang nahanap na playlist"
 
@@ -787,8 +874,14 @@ msgstr "I-normalize ang lakas ng tunog gamit ang mga gain tag ng track o album."
 msgid "Not connected to a server"
 msgstr "Hindi nakakonekta sa server"
 
+msgid "Not connected to another player"
+msgstr "Hindi nakakonekta sa ibang player"
+
 msgid "Nothing is playing"
 msgstr "Walang tumutugtog"
+
+msgid "nothing is playing"
+msgstr "walang tumutugtog"
 
 msgid "Nothing to add yet"
 msgstr "Wala pang maidadagdag"
@@ -804,6 +897,9 @@ msgstr "Wala pang mapapatugtog"
 
 msgid "Nothing to show here right now"
 msgstr "Walang maipapakita rito sa ngayon"
+
+msgid "Now playing on {}"
+msgstr "Tumutugtog ngayon sa {}"
 
 msgid "Off"
 msgstr "Naka-off"
@@ -921,6 +1017,9 @@ msgstr "I-play mula sa {}"
 msgid "Play next"
 msgstr "I-play nang susunod"
 
+msgid "Play on"
+msgstr "I-play sa"
+
 msgid "Play the album"
 msgstr "I-play ang album"
 
@@ -1024,6 +1123,15 @@ msgstr "I-refresh ang seksyong ito"
 
 msgid "Release year"
 msgstr "Taon ng paglabas"
+
+msgid "Remote control"
+msgstr "Remote control"
+
+msgid "Remote control is unavailable: other players cannot find this one"
+msgstr "Hindi available ang remote control: hindi mahanap ng ibang player ang isang ito"
+
+msgid "Remote control is unavailable: the network port could not be opened"
+msgstr "Hindi available ang remote control: hindi mabuksan ang network port"
 
 msgid "Remove"
 msgstr "Alisin"
@@ -1330,6 +1438,12 @@ msgstr "Sinusunod ng default ng system ang wika ng desktop."
 msgid "Tag, for example jazz"
 msgstr "Tag, halimbawa jazz"
 
+msgid "That device is no longer on the network"
+msgstr "Wala na sa network ang device na iyon"
+
+msgid "the connection was not allowed"
+msgstr "hindi pinayagan ang koneksyon"
+
 msgid "The desktop currently prefers dark."
 msgstr "Madilim ang kasalukuyang gusto ng desktop."
 
@@ -1341,6 +1455,9 @@ msgstr "Walang kagustuhan ang desktop, kaya madilim na tema ang ginagamit."
 
 msgid "The library scan is still running on the server"
 msgstr "Tumatakbo pa ang pag-scan ng library sa server"
+
+msgid "the network connection failed"
+msgstr "pumalya ang koneksyon sa network"
 
 msgid "The queue is empty"
 msgstr "Walang laman ang pila"
@@ -1362,6 +1479,9 @@ msgstr "Tema"
 
 msgid "There is nothing to play in this list"
 msgstr "Walang mapapatugtog sa listahang ito"
+
+msgid "This computer"
+msgstr "Ang computer na ito"
 
 msgid "This Discover page does not exist"
 msgstr "Hindi umiiral ang pahinang ito ng Tuklasin"
@@ -1516,6 +1636,9 @@ msgstr[1] "Susunod na tutugtugin ang {n} na kanta"
 msgid "{} (current theme)"
 msgstr "{} (kasalukuyang tema)"
 
+msgid "{} (demo)"
+msgstr "{} (demo)"
+
 msgid "{} (unavailable)"
 msgstr "{} (hindi magagamit)"
 
@@ -1524,6 +1647,15 @@ msgstr "{} sa {}"
 
 msgid "{} cannot be played: its stream address is not an internet stream"
 msgstr "Hindi ma-play ang {}: hindi internet stream ang stream address nito"
+
+msgid "{} could not do that: {}"
+msgstr "Hindi iyon magawa ng {}: {}"
+
+msgid "{} could not take the music: {}"
+msgstr "Hindi matanggap ng {} ang musika: {}"
+
+msgid "{} did not answer in time"
+msgstr "Hindi sumagot sa tamang oras ang {}"
 
 msgid "{} is shown"
 msgstr "Ipinapakita ang {}"

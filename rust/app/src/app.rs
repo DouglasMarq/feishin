@@ -7,7 +7,7 @@ use feishin_core::model::ServerConfig;
 use feishin_storage::settings::Settings;
 use slint::ComponentHandle;
 use tokio::runtime::Runtime;
-use tokio::sync::{mpsc, oneshot};
+use tokio::sync::{mpsc, oneshot, watch};
 
 use crate::audio::{AudioOutput, FakeAudio, MpvOutput};
 use crate::connect::{Connector, DemoConnector, ServerConnector};
@@ -17,11 +17,13 @@ use crate::demo::{DemoLibrary, FakeServer, demo_credential};
 use crate::discord::DiscordSession;
 use crate::discover::{DemoDiscover, DiscoverSource, YouTubeMusicSource};
 use crate::media::{MediaSession, MediaSessions, Mpris, NoMediaSession, SleepInhibition};
+use crate::remote::{self, HostFeed, LocalGate, Remote, RemoteStart};
 use crate::session::Session;
 use crate::sleep_timer::{self, SleepTimerUi};
 use crate::store::{JsonStore, Store, SystemStore};
 use crate::termination;
 use crate::ui::{self, AppWindow, Context, login};
+use feishin_remote as remote_state;
 
 const SHUTDOWN_SAVE_TIMEOUT: Duration = Duration::from_secs(6);
 const RUNTIME_SHUTDOWN_TIMEOUT: Duration = Duration::from_secs(1);
@@ -228,6 +230,7 @@ fn app_context(
     runtime: &Runtime,
     backends: Backends,
     commands: &mpsc::UnboundedSender<Command>,
+    remote: Remote,
 ) -> Context {
     Context {
         rt: runtime.handle().clone(),
@@ -236,6 +239,7 @@ fn app_context(
         store: backends.store,
         connector: backends.connector,
         covers: backends.covers,
+        remote,
     }
 }
 
@@ -244,14 +248,19 @@ fn controller_deps(
     settings: &Settings,
     window: &AppWindow,
     context: &Context,
+    host_state: watch::Sender<remote_state::HostState>,
 ) -> Result<Deps> {
+    let shown = LocalGate::new(
+        ui::player::SlintSink::new(window.as_weak(), context.clone()),
+        context.remote.target.clone(),
+    );
     Ok(Deps {
         audio: audio_output(mode, settings, &context.commands)?,
         media: media_session(mode, settings, &context.commands),
         store: Arc::clone(&context.store),
         session: context.session.clone(),
         ui: Arc::new(SleepTimerUi::new(
-            ui::player::SlintSink::new(window.as_weak(), context.clone()),
+            HostFeed::new(shown, host_state),
             window.as_weak(),
         )),
         commands: context.commands.clone(),
@@ -288,17 +297,33 @@ pub fn run(mode: Mode) -> Result<()> {
     crate::i18n::select_language(settings.ui.language.as_deref());
     crate::identity::announce_xdg_app_id();
     let (commands, receiver) = mpsc::unbounded_channel();
+    let (remote_requests, remote_receiver) = mpsc::unbounded_channel();
+    let (host_state, host_state_receiver) = watch::channel(remote_state::HostState::default());
     let discover = Arc::clone(&backends.discover);
-    let context = app_context(&runtime, backends, &commands);
+    let context = app_context(&runtime, backends, &commands, Remote::new(remote_requests));
     ui::install(&window, &context, &settings);
     ui::appearance::watch_system_scheme(&window, &context);
     ui::discover::install(&window, &context, discover);
     sleep_timer::install(&window, &context);
 
-    let deps = controller_deps(mode, &settings, &window, &context)?;
+    let deps = controller_deps(mode, &settings, &window, &context, host_state)?;
     let mut controller = Controller::new(deps, settings.clone(), None, None);
     controller.expect_saved_queue();
     runtime.spawn(controller.run(receiver));
+    remote::start(
+        &context,
+        RemoteStart {
+            mode,
+            hosting: settings.integrations.remote_control,
+            window: window.as_weak(),
+            host_state: host_state_receiver,
+            mirror: Arc::new(ui::player::SlintSink::new(
+                window.as_weak(),
+                context.clone(),
+            )),
+            requests: remote_receiver,
+        },
+    );
 
     restore_session(&window, &context, &settings, mode);
     restore_saved_queue_once_shown(&context);

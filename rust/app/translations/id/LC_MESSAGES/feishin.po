@@ -8,6 +8,9 @@ msgstr ""
 msgid "\"{}\" plays next"
 msgstr "Berikutnya: \"{}\""
 
+msgid "\"{}\" wants to control this player. Allow it? You will not be asked again for this device."
+msgstr "\"{}\" ingin mengendalikan pemutar ini. Izinkan? Kamu tidak akan ditanya lagi untuk perangkat ini."
+
 msgid "\"{}\" will play next"
 msgstr "\"{}\" akan diputar berikutnya"
 
@@ -128,6 +131,12 @@ msgstr "Album"
 msgid "All genres"
 msgstr "Semua genre"
 
+msgid "Allow"
+msgstr "Izinkan"
+
+msgid "Allow remote control?"
+msgstr "Izinkan kendali jarak jauh?"
+
 msgid "Already at the end"
 msgstr "Sudah di akhir"
 
@@ -146,6 +155,12 @@ msgstr "Kuning amber"
 msgid "Appearance"
 msgstr "Tampilan"
 
+msgid "Approved devices"
+msgstr "Perangkat yang disetujui"
+
+msgid "Approved devices were forgotten"
+msgstr "Perangkat yang disetujui telah dilupakan"
+
 msgid "ARTIST"
 msgstr "ARTIS"
 
@@ -154,6 +169,9 @@ msgstr "Artis"
 
 msgid "Artists"
 msgstr "Artis"
+
+msgid "Ask again before any device can control this player"
+msgstr "Tanyakan lagi sebelum perangkat apa pun dapat mengendalikan pemutar ini"
 
 msgid "Ask the server to transcode down to this bitrate. Applies from the next song."
 msgstr "Minta server mentranskode turun ke bitrate ini. Berlaku mulai lagu berikutnya."
@@ -221,11 +239,20 @@ msgstr "Hubungkan ke server musik Anda"
 msgid "Connecting..."
 msgstr "Menghubungkan..."
 
+msgid "Control the music playing on this computer"
+msgstr "Kendalikan musik yang diputar di komputer ini"
+
+msgid "Control the music playing on {}"
+msgstr "Kendalikan musik yang diputar di {}"
+
 msgid "Could not add to \"{}\": {}"
 msgstr "Tidak dapat menambahkan ke \"{}\": {}"
 
 msgid "Could not add {} to the server"
 msgstr "Tidak dapat menambahkan {} ke server"
+
+msgid "Could not connect to {}: {}"
+msgstr "Tidak dapat terhubung ke {}: {}"
 
 msgid "Could not create a share link: {}"
 msgstr "Tidak dapat membuat tautan berbagi: {}"
@@ -301,6 +328,12 @@ msgstr "Tidak dapat memuat trek: {}"
 
 msgid "Could not load your home: {}"
 msgstr "Tidak dapat memuat beranda Anda: {}"
+
+msgid "Could not move the music from {}: {}"
+msgstr "Tidak dapat memindahkan musik dari {}: {}"
+
+msgid "Could not move the music: {}"
+msgstr "Tidak dapat memindahkan musik: {}"
 
 msgid "Could not open the folder: {}"
 msgstr "Tidak dapat membuka folder: {}"
@@ -433,6 +466,15 @@ msgstr "Menghapus..."
 msgid "Demo mode: these picks are made up and play from your demo library"
 msgstr "Mode demo: pilihan ini dibuat-buat dan diputar dari pustaka demo Anda"
 
+msgid "Devices you allowed can control this player without asking again."
+msgstr "Perangkat yang kamu izinkan dapat mengendalikan pemutar ini tanpa bertanya lagi."
+
+msgid "Devices: controlling {}"
+msgstr "Perangkat: mengendalikan {}"
+
+msgid "Devices: this computer"
+msgstr "Perangkat: komputer ini"
+
 msgid "Directory"
 msgstr "Direktori"
 
@@ -526,6 +568,9 @@ msgstr "Ikuti skema warna sistem"
 msgid "For you"
 msgstr "Untuk Anda"
 
+msgid "Forget all"
+msgstr "Lupakan semua"
+
 msgid "Forget this server?"
 msgstr "Lupakan server ini?"
 
@@ -593,6 +638,24 @@ msgstr "Antarmuka"
 msgid "Internet radio"
 msgstr "Radio internet"
 
+msgid "it did not answer in time"
+msgstr "tidak menjawab tepat waktu"
+
+msgid "it is busy with another request"
+msgstr "sedang sibuk dengan permintaan lain"
+
+msgid "it is connected to a different server"
+msgstr "terhubung ke server lain"
+
+msgid "it is not connected to a server"
+msgstr "tidak terhubung ke server"
+
+msgid "it runs a different version of Feishin"
+msgstr "menjalankan versi Feishin yang berbeda"
+
+msgid "it stopped"
+msgstr "berhenti"
+
 msgid "item"
 msgstr "item"
 
@@ -604,6 +667,9 @@ msgstr "Simpan stasiun ini di favorit pada perangkat ini"
 
 msgid "Language"
 msgstr "Bahasa"
+
+msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
+msgstr "Izinkan pemutar Feishin lain di jaringan ini mengendalikan pemutar ini. Setiap perangkat meminta persetujuanmu pada kali pertama."
 
 msgid "LIBRARY"
 msgstr "PUSTAKA"
@@ -654,6 +720,9 @@ msgstr "Keluar"
 msgid "Looking up the YouTube link..."
 msgstr "Mencari tautan YouTube..."
 
+msgid "Lost the connection to {}"
+msgstr "Koneksi ke {} terputus"
+
 msgid "Lyrics"
 msgstr "Lirik"
 
@@ -681,8 +750,23 @@ msgstr "Paling sering diputar"
 msgid "Move down"
 msgstr "Pindahkan ke bawah"
 
+msgid "Move here"
+msgstr "Pindahkan ke sini"
+
+msgid "Move there"
+msgstr "Pindahkan ke sana"
+
 msgid "Move up"
 msgstr "Pindahkan ke atas"
+
+msgid "Move what is playing here to {}"
+msgstr "Pindahkan yang diputar di sini ke {}"
+
+msgid "Move what is playing on {} to this computer"
+msgstr "Pindahkan yang diputar di {} ke komputer ini"
+
+msgid "Moved the music from {} to this computer"
+msgstr "Musik dipindahkan dari {} ke komputer ini"
 
 msgid "MPRIS"
 msgstr "MPRIS"
@@ -735,6 +819,9 @@ msgstr "Genre tidak ditemukan"
 msgid "No lyrics found"
 msgstr "Lirik tidak ditemukan"
 
+msgid "No other Feishin found on this network"
+msgstr "Tidak ada Feishin lain di jaringan ini"
+
 msgid "No playlists found"
 msgstr "Daftar putar tidak ditemukan"
 
@@ -777,8 +864,14 @@ msgstr "Normalkan kenyaringan menggunakan tag gain trek atau album."
 msgid "Not connected to a server"
 msgstr "Tidak terhubung ke server"
 
+msgid "Not connected to another player"
+msgstr "Tidak terhubung ke pemutar lain"
+
 msgid "Nothing is playing"
 msgstr "Tidak ada yang diputar"
+
+msgid "nothing is playing"
+msgstr "tidak ada yang diputar"
 
 msgid "Nothing to add yet"
 msgstr "Belum ada yang bisa ditambahkan"
@@ -794,6 +887,9 @@ msgstr "Belum ada yang bisa diputar"
 
 msgid "Nothing to show here right now"
 msgstr "Tidak ada yang bisa ditampilkan di sini saat ini"
+
+msgid "Now playing on {}"
+msgstr "Sedang diputar di {}"
 
 msgid "Off"
 msgstr "Mati"
@@ -910,6 +1006,9 @@ msgstr "Putar dari {}"
 msgid "Play next"
 msgstr "Putar berikutnya"
 
+msgid "Play on"
+msgstr "Putar di"
+
 msgid "Play the album"
 msgstr "Putar album ini"
 
@@ -1012,6 +1111,15 @@ msgstr "Segarkan bagian ini"
 
 msgid "Release year"
 msgstr "Tahun rilis"
+
+msgid "Remote control"
+msgstr "Kendali jarak jauh"
+
+msgid "Remote control is unavailable: other players cannot find this one"
+msgstr "Kendali jarak jauh tidak tersedia: pemutar lain tidak dapat menemukan pemutar ini"
+
+msgid "Remote control is unavailable: the network port could not be opened"
+msgstr "Kendali jarak jauh tidak tersedia: port jaringan tidak dapat dibuka"
 
 msgid "Remove"
 msgstr "Hapus"
@@ -1317,6 +1425,12 @@ msgstr "Default sistem mengikuti bahasa desktop."
 msgid "Tag, for example jazz"
 msgstr "Tag, misalnya jazz"
 
+msgid "That device is no longer on the network"
+msgstr "Perangkat itu sudah tidak ada di jaringan"
+
+msgid "the connection was not allowed"
+msgstr "koneksi tidak diizinkan"
+
 msgid "The desktop currently prefers dark."
 msgstr "Desktop saat ini memilih gelap."
 
@@ -1328,6 +1442,9 @@ msgstr "Desktop tidak memiliki preferensi, jadi tema gelap digunakan."
 
 msgid "The library scan is still running on the server"
 msgstr "Pemindaian pustaka masih berjalan di server"
+
+msgid "the network connection failed"
+msgstr "koneksi jaringan gagal"
 
 msgid "The queue is empty"
 msgstr "Antrean kosong"
@@ -1349,6 +1466,9 @@ msgstr "Tema"
 
 msgid "There is nothing to play in this list"
 msgstr "Tidak ada yang bisa diputar dalam daftar ini"
+
+msgid "This computer"
+msgstr "Komputer ini"
 
 msgid "This Discover page does not exist"
 msgstr "Halaman Jelajahi ini tidak ada"
@@ -1494,6 +1614,9 @@ msgstr[0] "{n} lagu akan diputar berikutnya"
 msgid "{} (current theme)"
 msgstr "{} (tema saat ini)"
 
+msgid "{} (demo)"
+msgstr "{} (demo)"
+
 msgid "{} (unavailable)"
 msgstr "{} (tidak tersedia)"
 
@@ -1502,6 +1625,15 @@ msgstr "{} di {}"
 
 msgid "{} cannot be played: its stream address is not an internet stream"
 msgstr "{} tidak dapat diputar: alamat stream-nya bukan stream internet"
+
+msgid "{} could not do that: {}"
+msgstr "{} tidak dapat melakukannya: {}"
+
+msgid "{} could not take the music: {}"
+msgstr "{} tidak dapat mengambil alih musik: {}"
+
+msgid "{} did not answer in time"
+msgstr "{} tidak menjawab tepat waktu"
 
 msgid "{} is shown"
 msgstr "{} ditampilkan"

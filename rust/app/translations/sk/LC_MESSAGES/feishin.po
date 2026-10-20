@@ -8,6 +8,9 @@ msgstr ""
 msgid "\"{}\" plays next"
 msgstr "Ako ďalšie: „{}“"
 
+msgid "\"{}\" wants to control this player. Allow it? You will not be asked again for this device."
+msgstr "„{}“ chce ovládať tento prehrávač. Povoliť? Na toto zariadenie sa už nebudeme pýtať."
+
 msgid "\"{}\" will play next"
 msgstr "„{}“ sa prehrá ako ďalšie"
 
@@ -140,6 +143,12 @@ msgstr "Albumy"
 msgid "All genres"
 msgstr "Všetky žánre"
 
+msgid "Allow"
+msgstr "Povoliť"
+
+msgid "Allow remote control?"
+msgstr "Povoliť diaľkové ovládanie?"
+
 msgid "Already at the end"
 msgstr "Už ste na konci"
 
@@ -158,6 +167,12 @@ msgstr "Jantárová"
 msgid "Appearance"
 msgstr "Vzhľad"
 
+msgid "Approved devices"
+msgstr "Schválené zariadenia"
+
+msgid "Approved devices were forgotten"
+msgstr "Schválené zariadenia boli zabudnuté"
+
 msgid "ARTIST"
 msgstr "INTERPRET"
 
@@ -166,6 +181,9 @@ msgstr "Interpret"
 
 msgid "Artists"
 msgstr "Interpreti"
+
+msgid "Ask again before any device can control this player"
+msgstr "Znova sa opýtať, kým akékoľvek zariadenie bude môcť ovládať tento prehrávač"
 
 msgid "Ask the server to transcode down to this bitrate. Applies from the next song."
 msgstr "Požiadať server o prekódovanie na tento dátový tok. Platí od nasledujúcej skladby."
@@ -233,11 +251,20 @@ msgstr "Pripojte sa k svojmu hudobnému serveru"
 msgid "Connecting..."
 msgstr "Pripája sa..."
 
+msgid "Control the music playing on this computer"
+msgstr "Ovládať hudbu hrajúcu na tomto počítači"
+
+msgid "Control the music playing on {}"
+msgstr "Ovládať hudbu hrajúcu na {}"
+
 msgid "Could not add to \"{}\": {}"
 msgstr "Nedá sa pridať do „{}“: {}"
 
 msgid "Could not add {} to the server"
 msgstr "Stanicu {} sa nepodarilo pridať na server"
+
+msgid "Could not connect to {}: {}"
+msgstr "Nepodarilo sa pripojiť k {}: {}"
 
 msgid "Could not create a share link: {}"
 msgstr "Nepodarilo sa vytvoriť odkaz na zdieľanie: {}"
@@ -313,6 +340,12 @@ msgstr "Nepodarilo sa načítať skladby: {}"
 
 msgid "Could not load your home: {}"
 msgstr "Nepodarilo sa načítať vašu domovskú stránku: {}"
+
+msgid "Could not move the music from {}: {}"
+msgstr "Nepodarilo sa presunúť hudbu z {}: {}"
+
+msgid "Could not move the music: {}"
+msgstr "Nepodarilo sa presunúť hudbu: {}"
 
 msgid "Could not open the folder: {}"
 msgstr "Nepodarilo sa otvoriť priečinok: {}"
@@ -449,6 +482,15 @@ msgstr "Odstraňuje sa..."
 msgid "Demo mode: these picks are made up and play from your demo library"
 msgstr "Ukážkový režim: tieto tipy sú vymyslené a prehrávajú sa z ukážkovej knižnice"
 
+msgid "Devices you allowed can control this player without asking again."
+msgstr "Povolené zariadenia môžu ovládať tento prehrávač bez ďalšieho pýtania."
+
+msgid "Devices: controlling {}"
+msgstr "Zariadenia: ovládate {}"
+
+msgid "Devices: this computer"
+msgstr "Zariadenia: tento počítač"
+
 msgid "Directory"
 msgstr "Katalóg"
 
@@ -542,6 +584,9 @@ msgstr "Riadiť sa farebnou schémou systému"
 msgid "For you"
 msgstr "Pre vás"
 
+msgid "Forget all"
+msgstr "Zabudnúť všetky"
+
 msgid "Forget this server?"
 msgstr "Zabudnúť tento server?"
 
@@ -611,6 +656,24 @@ msgstr "Rozhranie"
 msgid "Internet radio"
 msgstr "Internetové rádio"
 
+msgid "it did not answer in time"
+msgstr "neodpovedalo včas"
+
+msgid "it is busy with another request"
+msgstr "je zaneprázdnené inou požiadavkou"
+
+msgid "it is connected to a different server"
+msgstr "je pripojené k inému serveru"
+
+msgid "it is not connected to a server"
+msgstr "nie je pripojené k žiadnemu serveru"
+
+msgid "it runs a different version of Feishin"
+msgstr "používa inú verziu Feishinu"
+
+msgid "it stopped"
+msgstr "zastavilo sa"
+
 msgid "item"
 msgstr "položka"
 
@@ -622,6 +685,9 @@ msgstr "Ponechať túto stanicu v obľúbených na tomto zariadení"
 
 msgid "Language"
 msgstr "Jazyk"
+
+msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
+msgstr "Povolí ostatným prehrávačom Feishin v tejto sieti ovládať tento. Každé zariadenie prvýkrát požiada o vaše schválenie."
 
 msgid "LIBRARY"
 msgstr "KNIŽNICA"
@@ -674,6 +740,9 @@ msgstr "Odhlásiť sa"
 msgid "Looking up the YouTube link..."
 msgstr "Hľadá sa odkaz na YouTube..."
 
+msgid "Lost the connection to {}"
+msgstr "Spojenie s {} sa stratilo"
+
 msgid "Lyrics"
 msgstr "Texty skladieb"
 
@@ -701,8 +770,23 @@ msgstr "Najprehrávanejšie"
 msgid "Move down"
 msgstr "Posunúť nadol"
 
+msgid "Move here"
+msgstr "Presunúť sem"
+
+msgid "Move there"
+msgstr "Presunúť tam"
+
 msgid "Move up"
 msgstr "Posunúť nahor"
+
+msgid "Move what is playing here to {}"
+msgstr "Presunúť to, čo hrá tu, na {}"
+
+msgid "Move what is playing on {} to this computer"
+msgstr "Presunúť to, čo hrá na {}, na tento počítač"
+
+msgid "Moved the music from {} to this computer"
+msgstr "Hudba bola presunutá z {} na tento počítač"
 
 msgid "MPRIS"
 msgstr "MPRIS"
@@ -755,6 +839,9 @@ msgstr "Nenašli sa žiadne žánre"
 msgid "No lyrics found"
 msgstr "Nenašli sa žiadne texty"
 
+msgid "No other Feishin found on this network"
+msgstr "V tejto sieti sa nenašiel žiadny ďalší Feishin"
+
 msgid "No playlists found"
 msgstr "Nenašli sa žiadne playlisty"
 
@@ -797,8 +884,14 @@ msgstr "Normalizovať hlasitosť pomocou značiek zosilnenia skladby alebo album
 msgid "Not connected to a server"
 msgstr "Nepripojené k serveru"
 
+msgid "Not connected to another player"
+msgstr "Nepripojené k inému prehrávaču"
+
 msgid "Nothing is playing"
 msgstr "Nič sa neprehráva"
+
+msgid "nothing is playing"
+msgstr "nič nehrá"
 
 msgid "Nothing to add yet"
 msgstr "Zatiaľ nie je čo pridať"
@@ -814,6 +907,9 @@ msgstr "Zatiaľ nie je čo prehrať"
 
 msgid "Nothing to show here right now"
 msgstr "Teraz tu nie je čo zobraziť"
+
+msgid "Now playing on {}"
+msgstr "Teraz hrá na {}"
 
 msgid "Off"
 msgstr "Vypnuté"
@@ -932,6 +1028,9 @@ msgstr "Prehrať od: {}"
 msgid "Play next"
 msgstr "Prehrať ako ďalšie"
 
+msgid "Play on"
+msgstr "Prehrať na"
+
 msgid "Play the album"
 msgstr "Prehrať tento album"
 
@@ -1036,6 +1135,15 @@ msgstr "Obnoviť túto sekciu"
 
 msgid "Release year"
 msgstr "Rok vydania"
+
+msgid "Remote control"
+msgstr "Diaľkové ovládanie"
+
+msgid "Remote control is unavailable: other players cannot find this one"
+msgstr "Diaľkové ovládanie nie je k dispozícii: ostatné prehrávače tento nenájdu"
+
+msgid "Remote control is unavailable: the network port could not be opened"
+msgstr "Diaľkové ovládanie nie je k dispozícii: sieťový port sa nepodarilo otvoriť"
 
 msgid "Remove"
 msgstr "Odstrániť"
@@ -1343,6 +1451,12 @@ msgstr "Podľa systému znamená jazyk prostredia."
 msgid "Tag, for example jazz"
 msgstr "Štítok, napríklad jazz"
 
+msgid "That device is no longer on the network"
+msgstr "Toto zariadenie už nie je v sieti"
+
+msgid "the connection was not allowed"
+msgstr "pripojenie nebolo povolené"
+
 msgid "The desktop currently prefers dark."
 msgstr "Prostredie momentálne uprednostňuje tmavú tému."
 
@@ -1354,6 +1468,9 @@ msgstr "Prostredie nemá žiadnu preferenciu, preto sa použije tmavá téma."
 
 msgid "The library scan is still running on the server"
 msgstr "Prehľadávanie knižnice na serveri stále prebieha"
+
+msgid "the network connection failed"
+msgstr "sieťové pripojenie zlyhalo"
 
 msgid "The queue is empty"
 msgstr "Fronta je prázdna"
@@ -1375,6 +1492,9 @@ msgstr "Téma"
 
 msgid "There is nothing to play in this list"
 msgstr "V tomto zozname nie je čo prehrať"
+
+msgid "This computer"
+msgstr "Tento počítač"
 
 msgid "This Discover page does not exist"
 msgstr "Táto stránka sekcie Objavovať neexistuje"
@@ -1538,6 +1658,9 @@ msgstr[2] "{n} skladieb sa prehrá ako ďalšie"
 msgid "{} (current theme)"
 msgstr "{} (aktuálna téma)"
 
+msgid "{} (demo)"
+msgstr "{} (demo)"
+
 msgid "{} (unavailable)"
 msgstr "{} (nedostupné)"
 
@@ -1546,6 +1669,15 @@ msgstr "{} na {}"
 
 msgid "{} cannot be played: its stream address is not an internet stream"
 msgstr "{} sa nedá prehrať: adresa streamu nie je internetový stream"
+
+msgid "{} could not do that: {}"
+msgstr "{} to nemohlo urobiť: {}"
+
+msgid "{} could not take the music: {}"
+msgstr "{} nemohlo prevziať hudbu: {}"
+
+msgid "{} did not answer in time"
+msgstr "{} neodpovedalo včas"
 
 msgid "{} is shown"
 msgstr "Zobrazené: {}"

@@ -96,6 +96,7 @@ fn open_discover() -> Fixture {
         store: Arc::new(JsonStore::new(store_dir.path())),
         connector: Arc::new(DemoConnector::default()),
         covers: Arc::new(DemoCovers),
+        remote: crate::remote::Remote::default(),
     };
     let window = AppWindow::new().unwrap();
     crate::ui::nav::install(&window);

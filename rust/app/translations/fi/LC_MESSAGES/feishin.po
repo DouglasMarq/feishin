@@ -8,6 +8,9 @@ msgstr ""
 msgid "\"{}\" plays next"
 msgstr "\"{}\" toistetaan seuraavaksi"
 
+msgid "\"{}\" wants to control this player. Allow it? You will not be asked again for this device."
+msgstr "\"{}\" haluaa ohjata tätä soitinta. Sallitaanko? Tästä laitteesta ei kysytä uudelleen."
+
 msgid "\"{}\" will play next"
 msgstr "\"{}\" toistetaan seuraavaksi"
 
@@ -134,6 +137,12 @@ msgstr "Albumit"
 msgid "All genres"
 msgstr "Kaikki genret"
 
+msgid "Allow"
+msgstr "Salli"
+
+msgid "Allow remote control?"
+msgstr "Sallitaanko etäohjaus?"
+
 msgid "Already at the end"
 msgstr "Ollaan jo lopussa"
 
@@ -152,6 +161,12 @@ msgstr "Meripihka"
 msgid "Appearance"
 msgstr "Ulkoasu"
 
+msgid "Approved devices"
+msgstr "Sallitut laitteet"
+
+msgid "Approved devices were forgotten"
+msgstr "Sallitut laitteet unohdettiin"
+
 msgid "ARTIST"
 msgstr "ARTISTI"
 
@@ -160,6 +175,9 @@ msgstr "Artisti"
 
 msgid "Artists"
 msgstr "Artistit"
+
+msgid "Ask again before any device can control this player"
+msgstr "Kysy uudelleen ennen kuin mikään laite voi ohjata tätä soitinta"
 
 msgid "Ask the server to transcode down to this bitrate. Applies from the next song."
 msgstr "Pyydä palvelinta muuntamaan tähän bittinopeuteen. Koskee seuraavasta kappaleesta alkaen."
@@ -227,11 +245,20 @@ msgstr "Yhdistä musiikkipalvelimeesi"
 msgid "Connecting..."
 msgstr "Yhdistetään..."
 
+msgid "Control the music playing on this computer"
+msgstr "Ohjaa tällä tietokoneella soivaa musiikkia"
+
+msgid "Control the music playing on {}"
+msgstr "Ohjaa laitteessa {} soivaa musiikkia"
+
 msgid "Could not add to \"{}\": {}"
 msgstr "Soittolistaan \"{}\" lisääminen epäonnistui: {}"
 
 msgid "Could not add {} to the server"
 msgstr "Kohteen {} lisääminen palvelimelle epäonnistui"
+
+msgid "Could not connect to {}: {}"
+msgstr "Yhteyttä laitteeseen {} ei voitu muodostaa: {}"
 
 msgid "Could not create a share link: {}"
 msgstr "Jakolinkin luominen epäonnistui: {}"
@@ -307,6 +334,12 @@ msgstr "Raitojen lataaminen epäonnistui: {}"
 
 msgid "Could not load your home: {}"
 msgstr "Etusivun lataaminen epäonnistui: {}"
+
+msgid "Could not move the music from {}: {}"
+msgstr "Musiikkia ei voitu siirtää laitteesta {}: {}"
+
+msgid "Could not move the music: {}"
+msgstr "Musiikkia ei voitu siirtää: {}"
 
 msgid "Could not open the folder: {}"
 msgstr "Kansion avaaminen epäonnistui: {}"
@@ -441,6 +474,15 @@ msgstr "Poistetaan..."
 msgid "Demo mode: these picks are made up and play from your demo library"
 msgstr "Esittelytila: nämä valinnat ovat keksittyjä ja ne toistetaan esittelykirjastostasi"
 
+msgid "Devices you allowed can control this player without asking again."
+msgstr "Sallimasi laitteet voivat ohjata tätä soitinta kysymättä uudelleen."
+
+msgid "Devices: controlling {}"
+msgstr "Laitteet: ohjataan {}"
+
+msgid "Devices: this computer"
+msgstr "Laitteet: tämä tietokone"
+
 msgid "Directory"
 msgstr "Hakemisto"
 
@@ -534,6 +576,9 @@ msgstr "Seuraa järjestelmän väriteemaa"
 msgid "For you"
 msgstr "Sinulle"
 
+msgid "Forget all"
+msgstr "Unohda kaikki"
+
 msgid "Forget this server?"
 msgstr "Unohdetaanko tämä palvelin?"
 
@@ -602,6 +647,24 @@ msgstr "Käyttöliittymä"
 msgid "Internet radio"
 msgstr "Internetradio"
 
+msgid "it did not answer in time"
+msgstr "se ei vastannut ajoissa"
+
+msgid "it is busy with another request"
+msgstr "se käsittelee toista pyyntöä"
+
+msgid "it is connected to a different server"
+msgstr "se on yhteydessä toiseen palvelimeen"
+
+msgid "it is not connected to a server"
+msgstr "se ei ole yhteydessä palvelimeen"
+
+msgid "it runs a different version of Feishin"
+msgstr "siinä on eri Feishin-versio"
+
+msgid "it stopped"
+msgstr "se pysähtyi"
+
 msgid "item"
 msgstr "kohde"
 
@@ -613,6 +676,9 @@ msgstr "Säilytä tämä asema suosikeissa tällä laitteella"
 
 msgid "Language"
 msgstr "Kieli"
+
+msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
+msgstr "Anna muiden tämän verkon Feishin-soittimien ohjata tätä. Jokainen laite pyytää lupaasi ensimmäisellä kerralla."
 
 msgid "LIBRARY"
 msgstr "KIRJASTO"
@@ -664,6 +730,9 @@ msgstr "Kirjaudu ulos"
 msgid "Looking up the YouTube link..."
 msgstr "Haetaan YouTube-linkkiä..."
 
+msgid "Lost the connection to {}"
+msgstr "Yhteys laitteeseen {} katkesi"
+
 msgid "Lyrics"
 msgstr "Sanat"
 
@@ -691,8 +760,23 @@ msgstr "Eniten toistettu"
 msgid "Move down"
 msgstr "Siirrä alaspäin"
 
+msgid "Move here"
+msgstr "Siirrä tänne"
+
+msgid "Move there"
+msgstr "Siirrä sinne"
+
 msgid "Move up"
 msgstr "Siirrä ylöspäin"
+
+msgid "Move what is playing here to {}"
+msgstr "Siirrä täällä soiva laitteeseen {}"
+
+msgid "Move what is playing on {} to this computer"
+msgstr "Siirrä laitteessa {} soiva tälle tietokoneelle"
+
+msgid "Moved the music from {} to this computer"
+msgstr "Musiikki siirrettiin laitteesta {} tälle tietokoneelle"
 
 msgid "MPRIS"
 msgstr "MPRIS"
@@ -745,6 +829,9 @@ msgstr "Genrejä ei löytynyt"
 msgid "No lyrics found"
 msgstr "Sanoja ei löytynyt"
 
+msgid "No other Feishin found on this network"
+msgstr "Tästä verkosta ei löytynyt muita Feishin-soittimia"
+
 msgid "No playlists found"
 msgstr "Soittolistoja ei löytynyt"
 
@@ -787,8 +874,14 @@ msgstr "Tasoita äänenvoimakkuus raidan tai albumin vahvistustunnisteiden avull
 msgid "Not connected to a server"
 msgstr "Ei yhteyttä palvelimeen"
 
+msgid "Not connected to another player"
+msgstr "Ei yhteyttä toiseen soittimeen"
+
 msgid "Nothing is playing"
 msgstr "Mitään ei soi"
+
+msgid "nothing is playing"
+msgstr "mitään ei soi"
 
 msgid "Nothing to add yet"
 msgstr "Ei vielä mitään lisättävää"
@@ -804,6 +897,9 @@ msgstr "Ei vielä mitään toistettavaa"
 
 msgid "Nothing to show here right now"
 msgstr "Täällä ei ole juuri nyt mitään näytettävää"
+
+msgid "Now playing on {}"
+msgstr "Soi nyt laitteessa {}"
 
 msgid "Off"
 msgstr "Pois"
@@ -921,6 +1017,9 @@ msgstr "Toista kappaleesta {} alkaen"
 msgid "Play next"
 msgstr "Toista seuraavaksi"
 
+msgid "Play on"
+msgstr "Toista laitteessa"
+
 msgid "Play the album"
 msgstr "Toista albumi"
 
@@ -1024,6 +1123,15 @@ msgstr "Päivitä tämä osio"
 
 msgid "Release year"
 msgstr "Julkaisuvuosi"
+
+msgid "Remote control"
+msgstr "Etäohjaus"
+
+msgid "Remote control is unavailable: other players cannot find this one"
+msgstr "Etäohjaus ei ole käytettävissä: muut soittimet eivät löydä tätä"
+
+msgid "Remote control is unavailable: the network port could not be opened"
+msgstr "Etäohjaus ei ole käytettävissä: verkkoporttia ei voitu avata"
 
 msgid "Remove"
 msgstr "Poista"
@@ -1330,6 +1438,12 @@ msgstr "Järjestelmän oletus seuraa työpöydän kieltä."
 msgid "Tag, for example jazz"
 msgstr "Tunniste, esimerkiksi jazz"
 
+msgid "That device is no longer on the network"
+msgstr "Laite ei ole enää verkossa"
+
+msgid "the connection was not allowed"
+msgstr "yhteyttä ei sallittu"
+
 msgid "The desktop currently prefers dark."
 msgstr "Työpöytä suosii tällä hetkellä tummaa."
 
@@ -1341,6 +1455,9 @@ msgstr "Työpöydällä ei ole asetusta, joten käytetään tummaa teemaa."
 
 msgid "The library scan is still running on the server"
 msgstr "Kirjaston skannaus on vielä käynnissä palvelimella"
+
+msgid "the network connection failed"
+msgstr "verkkoyhteys epäonnistui"
 
 msgid "The queue is empty"
 msgstr "Jono on tyhjä"
@@ -1362,6 +1479,9 @@ msgstr "Teema"
 
 msgid "There is nothing to play in this list"
 msgstr "Tässä luettelossa ei ole mitään toistettavaa"
+
+msgid "This computer"
+msgstr "Tämä tietokone"
 
 msgid "This Discover page does not exist"
 msgstr "Tätä Löydä-sivua ei ole olemassa"
@@ -1516,6 +1636,9 @@ msgstr[1] "{n} kappaletta toistetaan seuraavaksi"
 msgid "{} (current theme)"
 msgstr "{} (nykyinen teema)"
 
+msgid "{} (demo)"
+msgstr "{} (demo)"
+
 msgid "{} (unavailable)"
 msgstr "{} (ei käytettävissä)"
 
@@ -1524,6 +1647,15 @@ msgstr "{0} osoitteessa {1}"
 
 msgid "{} cannot be played: its stream address is not an internet stream"
 msgstr "Kohdetta {} ei voi toistaa: sen lähetysosoite ei ole internetlähetys"
+
+msgid "{} could not do that: {}"
+msgstr "{} ei voinut tehdä sitä: {}"
+
+msgid "{} could not take the music: {}"
+msgstr "{} ei voinut ottaa musiikkia vastaan: {}"
+
+msgid "{} did not answer in time"
+msgstr "{} ei vastannut ajoissa"
 
 msgid "{} is shown"
 msgstr "{} näytetään"

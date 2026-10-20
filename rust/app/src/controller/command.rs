@@ -10,7 +10,7 @@ use feishin_storage::settings::{
 };
 use tokio::sync::{mpsc, oneshot};
 
-use super::{PersistenceEvent, RadioCommand, YouTubeResolution};
+use super::{PersistenceEvent, RadioCommand, RemoteCommand, YouTubeResolution};
 use crate::list_stream::{ListRow, Placement, SongSource, StreamMessage};
 use crate::sleep_timer::SleepMode;
 
@@ -78,6 +78,7 @@ pub enum Command {
     Radio(RadioCommand),
     Tracks(TrackCommand),
     YouTube(YouTubeCommand),
+    Remote(RemoteCommand),
 }
 
 pub enum TrackCommand {

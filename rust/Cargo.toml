@@ -12,6 +12,7 @@ members = [
     "crates/platform",
     "crates/player",
     "crates/radio-browser",
+    "crates/remote",
     "crates/storage",
     "crates/youtube",
     "spikes/ui-slint",
@@ -34,6 +35,7 @@ feishin-lyrics = { path = "crates/lyrics" }
 feishin-platform = { path = "crates/platform" }
 feishin-player = { path = "crates/player" }
 feishin-radio-browser = { path = "crates/radio-browser" }
+feishin-remote = { path = "crates/remote" }
 feishin-storage = { path = "crates/storage" }
 feishin-youtube = { path = "crates/youtube" }
 reqwest = { version = "0.13", default-features = false, features = ["json", "rustls", "query"] }

@@ -8,6 +8,9 @@ msgstr ""
 msgid "\"{}\" plays next"
 msgstr "「{}」將在下一首播放"
 
+msgid "\"{}\" wants to control this player. Allow it? You will not be asked again for this device."
+msgstr "「{}」想要控制此播放器。是否允許？此裝置以後不會再詢問。"
+
 msgid "\"{}\" will play next"
 msgstr "「{}」將接著播放"
 
@@ -128,6 +131,12 @@ msgstr "專輯"
 msgid "All genres"
 msgstr "所有曲風"
 
+msgid "Allow"
+msgstr "允許"
+
+msgid "Allow remote control?"
+msgstr "允許遠端控制？"
+
 msgid "Already at the end"
 msgstr "已經是最後一項"
 
@@ -146,6 +155,12 @@ msgstr "琥珀色"
 msgid "Appearance"
 msgstr "外觀"
 
+msgid "Approved devices"
+msgstr "已允許的裝置"
+
+msgid "Approved devices were forgotten"
+msgstr "已忘記所有已允許的裝置"
+
 msgid "ARTIST"
 msgstr "藝人"
 
@@ -154,6 +169,9 @@ msgstr "藝人"
 
 msgid "Artists"
 msgstr "藝人"
+
+msgid "Ask again before any device can control this player"
+msgstr "任何裝置控制此播放器前都要再次詢問"
 
 msgid "Ask the server to transcode down to this bitrate. Applies from the next song."
 msgstr "要求伺服器轉碼至不超過此位元率。從下一首歌曲開始生效。"
@@ -221,11 +239,20 @@ msgstr "連線至你的音樂伺服器"
 msgid "Connecting..."
 msgstr "連線中..."
 
+msgid "Control the music playing on this computer"
+msgstr "控制此電腦上正在播放的音樂"
+
+msgid "Control the music playing on {}"
+msgstr "控制 {} 上正在播放的音樂"
+
 msgid "Could not add to \"{}\": {}"
 msgstr "無法加入「{}」：{}"
 
 msgid "Could not add {} to the server"
 msgstr "無法將 {} 新增至伺服器"
+
+msgid "Could not connect to {}: {}"
+msgstr "無法連線到 {}：{}"
 
 msgid "Could not create a share link: {}"
 msgstr "無法建立分享連結：{}"
@@ -301,6 +328,12 @@ msgstr "無法載入曲目：{}"
 
 msgid "Could not load your home: {}"
 msgstr "無法載入首頁：{}"
+
+msgid "Could not move the music from {}: {}"
+msgstr "無法從 {} 轉移音樂：{}"
+
+msgid "Could not move the music: {}"
+msgstr "無法轉移音樂：{}"
 
 msgid "Could not open the folder: {}"
 msgstr "無法開啟資料夾：{}"
@@ -433,6 +466,15 @@ msgstr "刪除中..."
 msgid "Demo mode: these picks are made up and play from your demo library"
 msgstr "示範模式：這些推薦是虛構的，將從示範媒體庫播放"
 
+msgid "Devices you allowed can control this player without asking again."
+msgstr "已允許的裝置不需再次詢問即可控制此播放器。"
+
+msgid "Devices: controlling {}"
+msgstr "裝置：正在控制 {}"
+
+msgid "Devices: this computer"
+msgstr "裝置：此電腦"
+
 msgid "Directory"
 msgstr "目錄"
 
@@ -526,6 +568,9 @@ msgstr "跟隨系統色彩配置"
 msgid "For you"
 msgstr "為你推薦"
 
+msgid "Forget all"
+msgstr "全部忘記"
+
 msgid "Forget this server?"
 msgstr "要移除此伺服器嗎？"
 
@@ -593,6 +638,24 @@ msgstr "介面"
 msgid "Internet radio"
 msgstr "網路電台"
 
+msgid "it did not answer in time"
+msgstr "未及時回應"
+
+msgid "it is busy with another request"
+msgstr "正在處理其他要求"
+
+msgid "it is connected to a different server"
+msgstr "連線到了其他伺服器"
+
+msgid "it is not connected to a server"
+msgstr "未連線到伺服器"
+
+msgid "it runs a different version of Feishin"
+msgstr "執行的 Feishin 版本不同"
+
+msgid "it stopped"
+msgstr "已停止"
+
 msgid "item"
 msgstr "項目"
 
@@ -604,6 +667,9 @@ msgstr "在此裝置的收藏中保留此電台"
 
 msgid "Language"
 msgstr "語言"
+
+msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
+msgstr "允許此網路中的其他 Feishin 播放器控制此播放器。每台裝置第一次連線時都會請求你的允許。"
 
 msgid "LIBRARY"
 msgstr "媒體庫"
@@ -654,6 +720,9 @@ msgstr "登出"
 msgid "Looking up the YouTube link..."
 msgstr "正在查詢 YouTube 連結..."
 
+msgid "Lost the connection to {}"
+msgstr "與 {} 的連線已中斷"
+
 msgid "Lyrics"
 msgstr "歌詞"
 
@@ -681,8 +750,23 @@ msgstr "播放最多"
 msgid "Move down"
 msgstr "向下移動"
 
+msgid "Move here"
+msgstr "轉移到這裡"
+
+msgid "Move there"
+msgstr "轉移過去"
+
 msgid "Move up"
 msgstr "向上移動"
+
+msgid "Move what is playing here to {}"
+msgstr "將此處正在播放的內容轉移到 {}"
+
+msgid "Move what is playing on {} to this computer"
+msgstr "將 {} 上正在播放的內容轉移到此電腦"
+
+msgid "Moved the music from {} to this computer"
+msgstr "已將音樂從 {} 轉移到此電腦"
 
 msgid "MPRIS"
 msgstr "MPRIS"
@@ -735,6 +819,9 @@ msgstr "找不到曲風"
 msgid "No lyrics found"
 msgstr "未找到歌詞"
 
+msgid "No other Feishin found on this network"
+msgstr "此網路中找不到其他 Feishin"
+
 msgid "No playlists found"
 msgstr "找不到播放清單"
 
@@ -777,8 +864,14 @@ msgstr "使用曲目或專輯的增益標籤將響度標準化。"
 msgid "Not connected to a server"
 msgstr "未連線至伺服器"
 
+msgid "Not connected to another player"
+msgstr "未連線到其他播放器"
+
 msgid "Nothing is playing"
 msgstr "目前沒有播放任何內容"
+
+msgid "nothing is playing"
+msgstr "沒有正在播放的內容"
 
 msgid "Nothing to add yet"
 msgstr "目前沒有可加入的內容"
@@ -794,6 +887,9 @@ msgstr "目前沒有可播放的內容"
 
 msgid "Nothing to show here right now"
 msgstr "目前沒有可顯示的內容"
+
+msgid "Now playing on {}"
+msgstr "正在 {} 上播放"
 
 msgid "Off"
 msgstr "關閉"
@@ -910,6 +1006,9 @@ msgstr "從 {} 開始播放"
 msgid "Play next"
 msgstr "下一首播放"
 
+msgid "Play on"
+msgstr "播放於"
+
 msgid "Play the album"
 msgstr "播放專輯"
 
@@ -1012,6 +1111,15 @@ msgstr "重新整理此區塊"
 
 msgid "Release year"
 msgstr "發行年份"
+
+msgid "Remote control"
+msgstr "遠端控制"
+
+msgid "Remote control is unavailable: other players cannot find this one"
+msgstr "遠端控制無法使用：其他播放器找不到此播放器"
+
+msgid "Remote control is unavailable: the network port could not be opened"
+msgstr "遠端控制無法使用：無法開啟網路連接埠"
 
 msgid "Remove"
 msgstr "移除"
@@ -1317,6 +1425,12 @@ msgstr "「系統預設」會跟隨桌面語言。"
 msgid "Tag, for example jazz"
 msgstr "標籤，例如 jazz"
 
+msgid "That device is no longer on the network"
+msgstr "該裝置已不在網路中"
+
+msgid "the connection was not allowed"
+msgstr "連線未被允許"
+
 msgid "The desktop currently prefers dark."
 msgstr "桌面目前偏好深色。"
 
@@ -1328,6 +1442,9 @@ msgstr "桌面沒有偏好設定，因此使用深色主題。"
 
 msgid "The library scan is still running on the server"
 msgstr "伺服器上的媒體庫掃描仍在進行中"
+
+msgid "the network connection failed"
+msgstr "網路連線失敗"
 
 msgid "The queue is empty"
 msgstr "佇列是空的"
@@ -1349,6 +1466,9 @@ msgstr "主題"
 
 msgid "There is nothing to play in this list"
 msgstr "此清單中沒有可播放的內容"
+
+msgid "This computer"
+msgstr "此電腦"
 
 msgid "This Discover page does not exist"
 msgstr "此「探索」頁面不存在"
@@ -1494,6 +1614,9 @@ msgstr[0] "{n} 首歌曲將在下一首播放"
 msgid "{} (current theme)"
 msgstr "{}（目前主題）"
 
+msgid "{} (demo)"
+msgstr "{}（展示）"
+
 msgid "{} (unavailable)"
 msgstr "{}（無法使用）"
 
@@ -1502,6 +1625,15 @@ msgstr "{1} 上的 {0}"
 
 msgid "{} cannot be played: its stream address is not an internet stream"
 msgstr "無法播放 {}：其串流位址不是網路串流"
+
+msgid "{} could not do that: {}"
+msgstr "{} 無法執行此操作：{}"
+
+msgid "{} could not take the music: {}"
+msgstr "{} 無法接收音樂：{}"
+
+msgid "{} did not answer in time"
+msgstr "{} 未及時回應"
 
 msgid "{} is shown"
 msgstr "已顯示 {}"

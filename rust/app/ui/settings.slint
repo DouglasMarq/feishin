@@ -3,6 +3,7 @@ import { Theme, Icons } from "theme.slint";
 import { AppState, PlayerState } from "globals.slint";
 import { Bar, IconButton, TooltipAnchor } from "widgets.slint";
 import { AppearanceOptions } from "appearance_settings.slint";
+import { TextAction } from "devices.slint";
 
 export struct ServerRow {
     id: string,
@@ -33,6 +34,7 @@ export global SettingsState {
     in-out property <bool> scrobble: true;
     in-out property <bool> mpris: true;
     in-out property <bool> discord;
+    in-out property <bool> remote-control;
     in property <[LyricsSourceRow]> lyrics-sources;
     in property <[ServerRow]> servers;
     in property <string> switching;
@@ -43,6 +45,7 @@ export global SettingsState {
     callback load(string);
     callback playback-changed();
     callback integrations-changed();
+    callback forget-devices();
     callback interface-changed();
     callback toggle-lyrics-source(int);
     callback move-lyrics-source(int, int);
@@ -611,6 +614,31 @@ export component SettingsView inherits Rectangle {
                         checked <=> SettingsState.discord;
                         toggled => {
                             SettingsState.integrations-changed();
+                        }
+                    }
+                }
+
+                Option {
+                    title: @tr("Remote control");
+                    description: @tr("Let other Feishin players on this network control this one. Each device asks for your approval the first time.");
+
+                    Switch {
+                        checked <=> SettingsState.remote-control;
+                        toggled => {
+                            SettingsState.integrations-changed();
+                        }
+                    }
+                }
+
+                Option {
+                    title: @tr("Approved devices");
+                    description: @tr("Devices you allowed can control this player without asking again.");
+
+                    TextAction {
+                        text: @tr("Forget all");
+                        tooltip: @tr("Ask again before any device can control this player");
+                        clicked => {
+                            SettingsState.forget-devices();
                         }
                     }
                 }

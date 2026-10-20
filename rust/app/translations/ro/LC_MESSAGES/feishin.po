@@ -8,6 +8,9 @@ msgstr ""
 msgid "\"{}\" plays next"
 msgstr "„{}” urmează"
 
+msgid "\"{}\" wants to control this player. Allow it? You will not be asked again for this device."
+msgstr "„{}” vrea să controleze acest player. Permiți? Nu vei mai fi întrebat pentru acest dispozitiv."
+
 msgid "\"{}\" will play next"
 msgstr "„{}” va fi redată în continuare"
 
@@ -140,6 +143,12 @@ msgstr "Albume"
 msgid "All genres"
 msgstr "Toate genurile"
 
+msgid "Allow"
+msgstr "Permite"
+
+msgid "Allow remote control?"
+msgstr "Permiți controlul de la distanță?"
+
 msgid "Already at the end"
 msgstr "Ești deja la final"
 
@@ -158,6 +167,12 @@ msgstr "Chihlimbar"
 msgid "Appearance"
 msgstr "Aspect"
 
+msgid "Approved devices"
+msgstr "Dispozitive aprobate"
+
+msgid "Approved devices were forgotten"
+msgstr "Dispozitivele aprobate au fost uitate"
+
 msgid "ARTIST"
 msgstr "ARTIST"
 
@@ -166,6 +181,9 @@ msgstr "Artist"
 
 msgid "Artists"
 msgstr "Artiști"
+
+msgid "Ask again before any device can control this player"
+msgstr "Întreabă din nou înainte ca orice dispozitiv să controleze acest player"
 
 msgid "Ask the server to transcode down to this bitrate. Applies from the next song."
 msgstr "Cere serverului să transcodeze la acest bitrate. Se aplică de la următoarea melodie."
@@ -233,11 +251,20 @@ msgstr "Conectează-te la serverul tău de muzică"
 msgid "Connecting..."
 msgstr "Se conectează..."
 
+msgid "Control the music playing on this computer"
+msgstr "Controlează muzica redată pe acest computer"
+
+msgid "Control the music playing on {}"
+msgstr "Controlează muzica redată pe {}"
+
 msgid "Could not add to \"{}\": {}"
 msgstr "Nu s-a putut adăuga în „{}”: {}"
 
 msgid "Could not add {} to the server"
 msgstr "Nu s-a putut adăuga {} pe server"
+
+msgid "Could not connect to {}: {}"
+msgstr "Nu s-a putut conecta la {}: {}"
 
 msgid "Could not create a share link: {}"
 msgstr "Nu s-a putut crea un link de partajare: {}"
@@ -313,6 +340,12 @@ msgstr "Nu s-au putut încărca piesele: {}"
 
 msgid "Could not load your home: {}"
 msgstr "Nu s-a putut încărca pagina ta principală: {}"
+
+msgid "Could not move the music from {}: {}"
+msgstr "Nu s-a putut muta muzica de pe {}: {}"
+
+msgid "Could not move the music: {}"
+msgstr "Nu s-a putut muta muzica: {}"
 
 msgid "Could not open the folder: {}"
 msgstr "Nu s-a putut deschide dosarul: {}"
@@ -449,6 +482,15 @@ msgstr "Se șterge..."
 msgid "Demo mode: these picks are made up and play from your demo library"
 msgstr "Mod demo: aceste recomandări sunt inventate și se redau din biblioteca demo"
 
+msgid "Devices you allowed can control this player without asking again."
+msgstr "Dispozitivele permise pot controla acest player fără să întrebe din nou."
+
+msgid "Devices: controlling {}"
+msgstr "Dispozitive: controlezi {}"
+
+msgid "Devices: this computer"
+msgstr "Dispozitive: acest computer"
+
 msgid "Directory"
 msgstr "Catalog"
 
@@ -542,6 +584,9 @@ msgstr "Urmează schema de culori a sistemului"
 msgid "For you"
 msgstr "Pentru tine"
 
+msgid "Forget all"
+msgstr "Uită-le pe toate"
+
 msgid "Forget this server?"
 msgstr "Uiți acest server?"
 
@@ -611,6 +656,24 @@ msgstr "Interfață"
 msgid "Internet radio"
 msgstr "Radio pe internet"
 
+msgid "it did not answer in time"
+msgstr "nu a răspuns la timp"
+
+msgid "it is busy with another request"
+msgstr "este ocupat cu altă cerere"
+
+msgid "it is connected to a different server"
+msgstr "este conectat la alt server"
+
+msgid "it is not connected to a server"
+msgstr "nu este conectat la niciun server"
+
+msgid "it runs a different version of Feishin"
+msgstr "folosește altă versiune de Feishin"
+
+msgid "it stopped"
+msgstr "s-a oprit"
+
 msgid "item"
 msgstr "elementul"
 
@@ -622,6 +685,9 @@ msgstr "Păstrează acest post la favorite pe acest dispozitiv"
 
 msgid "Language"
 msgstr "Limbă"
+
+msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
+msgstr "Permite altor playere Feishin din această rețea să controleze acest player. Fiecare dispozitiv cere aprobarea ta prima dată."
 
 msgid "LIBRARY"
 msgstr "BIBLIOTECĂ"
@@ -674,6 +740,9 @@ msgstr "Deconectare"
 msgid "Looking up the YouTube link..."
 msgstr "Se caută linkul YouTube..."
 
+msgid "Lost the connection to {}"
+msgstr "S-a pierdut conexiunea cu {}"
+
 msgid "Lyrics"
 msgstr "Versuri"
 
@@ -701,8 +770,23 @@ msgstr "Cele mai redate"
 msgid "Move down"
 msgstr "Mută în jos"
 
+msgid "Move here"
+msgstr "Mută aici"
+
+msgid "Move there"
+msgstr "Mută acolo"
+
 msgid "Move up"
 msgstr "Mută în sus"
+
+msgid "Move what is playing here to {}"
+msgstr "Mută ce se redă aici pe {}"
+
+msgid "Move what is playing on {} to this computer"
+msgstr "Mută ce se redă pe {} pe acest computer"
+
+msgid "Moved the music from {} to this computer"
+msgstr "Muzica a fost mutată de pe {} pe acest computer"
 
 msgid "MPRIS"
 msgstr "MPRIS"
@@ -755,6 +839,9 @@ msgstr "Nu s-au găsit genuri"
 msgid "No lyrics found"
 msgstr "Nu s-au găsit versuri"
 
+msgid "No other Feishin found on this network"
+msgstr "Nu a fost găsit alt Feishin în această rețea"
+
 msgid "No playlists found"
 msgstr "Nu s-au găsit playlisturi"
 
@@ -797,8 +884,14 @@ msgstr "Normalizează volumul folosind etichetele de câștig ale piesei sau alb
 msgid "Not connected to a server"
 msgstr "Nu ești conectat la un server"
 
+msgid "Not connected to another player"
+msgstr "Nu ești conectat la alt player"
+
 msgid "Nothing is playing"
 msgstr "Nu se redă nimic"
+
+msgid "nothing is playing"
+msgstr "nu se redă nimic"
 
 msgid "Nothing to add yet"
 msgstr "Încă nu este nimic de adăugat"
@@ -814,6 +907,9 @@ msgstr "Încă nu este nimic de redat"
 
 msgid "Nothing to show here right now"
 msgstr "Nimic de afișat aici deocamdată"
+
+msgid "Now playing on {}"
+msgstr "Se redă acum pe {}"
 
 msgid "Off"
 msgstr "Dezactivat"
@@ -932,6 +1028,9 @@ msgstr "Redă de la {}"
 msgid "Play next"
 msgstr "Redă în continuare"
 
+msgid "Play on"
+msgstr "Redă pe"
+
 msgid "Play the album"
 msgstr "Redă albumul"
 
@@ -1036,6 +1135,15 @@ msgstr "Reîmprospătează această secțiune"
 
 msgid "Release year"
 msgstr "Anul lansării"
+
+msgid "Remote control"
+msgstr "Control de la distanță"
+
+msgid "Remote control is unavailable: other players cannot find this one"
+msgstr "Control de la distanță indisponibil: alte playere nu pot găsi acest player"
+
+msgid "Remote control is unavailable: the network port could not be opened"
+msgstr "Control de la distanță indisponibil: portul de rețea nu a putut fi deschis"
 
 msgid "Remove"
 msgstr "Elimină"
@@ -1343,6 +1451,12 @@ msgstr "Implicit sistem urmează limba desktopului."
 msgid "Tag, for example jazz"
 msgstr "Etichetă, de exemplu jazz"
 
+msgid "That device is no longer on the network"
+msgstr "Acel dispozitiv nu mai este în rețea"
+
+msgid "the connection was not allowed"
+msgstr "conexiunea nu a fost permisă"
+
 msgid "The desktop currently prefers dark."
 msgstr "Desktopul preferă în prezent tema întunecată."
 
@@ -1354,6 +1468,9 @@ msgstr "Desktopul nu are nicio preferință, așa că se folosește tema întune
 
 msgid "The library scan is still running on the server"
 msgstr "Scanarea bibliotecii încă rulează pe server"
+
+msgid "the network connection failed"
+msgstr "conexiunea la rețea a eșuat"
 
 msgid "The queue is empty"
 msgstr "Coada este goală"
@@ -1375,6 +1492,9 @@ msgstr "Temă"
 
 msgid "There is nothing to play in this list"
 msgstr "Nu este nimic de redat în această listă"
+
+msgid "This computer"
+msgstr "Acest computer"
 
 msgid "This Discover page does not exist"
 msgstr "Această pagină Descoperă nu există"
@@ -1538,6 +1658,9 @@ msgstr[2] "{n} de melodii vor fi redate în continuare"
 msgid "{} (current theme)"
 msgstr "{} (tema curentă)"
 
+msgid "{} (demo)"
+msgstr "{} (demo)"
+
 msgid "{} (unavailable)"
 msgstr "{} (indisponibil)"
 
@@ -1546,6 +1669,15 @@ msgstr "{} la {}"
 
 msgid "{} cannot be played: its stream address is not an internet stream"
 msgstr "{} nu poate fi redat: adresa fluxului nu este un flux de internet"
+
+msgid "{} could not do that: {}"
+msgstr "{} nu a putut face asta: {}"
+
+msgid "{} could not take the music: {}"
+msgstr "{} nu a putut prelua muzica: {}"
+
+msgid "{} did not answer in time"
+msgstr "{} nu a răspuns la timp"
 
 msgid "{} is shown"
 msgstr "{} este afișat"

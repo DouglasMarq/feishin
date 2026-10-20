@@ -1,0 +1,134 @@
+use std::net::SocketAddr;
+use std::sync::Arc;
+use std::time::Duration;
+
+use tokio::io::BufReader;
+use tokio::net::TcpStream;
+use tokio::net::tcp::{OwnedReadHalf, OwnedWriteHalf};
+use tokio::sync::mpsc;
+
+use crate::error::RemoteError;
+use crate::frame::{read_message, write_message};
+use crate::pairing::proof_of;
+use crate::protocol::{ClientMessage, DeviceInfo, HostMessage, PROTOCOL_VERSION, ServerKey};
+use crate::trust::TrustStore;
+
+const CONNECT_TIMEOUT: Duration = Duration::from_secs(5);
+const CHALLENGE_TIMEOUT: Duration = Duration::from_secs(10);
+const APPROVAL_WAIT: Duration = Duration::from_secs(75);
+
+pub struct ClientLink {
+    pub host: DeviceInfo,
+    pub server: Option<ServerKey>,
+    pub outgoing: mpsc::UnboundedSender<ClientMessage>,
+    pub incoming: mpsc::UnboundedReceiver<HostMessage>,
+}
+
+pub async fn connect(
+    address: SocketAddr,
+    me: DeviceInfo,
+    trust: Arc<dyn TrustStore>,
+) -> Result<ClientLink, RemoteError> {
+    let stream = tokio::time::timeout(CONNECT_TIMEOUT, TcpStream::connect(address))
+        .await
+        .map_err(|_| RemoteError::TimedOut)?
+        .map_err(|error| RemoteError::Io(error.to_string()))?;
+    let (read_half, mut writer) = stream.into_split();
+    let mut reader = BufReader::new(read_half);
+    let host = greet(&mut reader, &mut writer, me, trust.as_ref()).await?;
+    let server = await_welcome(&mut reader, &host, trust.as_ref()).await?;
+    Ok(ClientLink {
+        host,
+        server,
+        outgoing: spawn_writer(writer),
+        incoming: spawn_reader(reader),
+    })
+}
+
+async fn greet(
+    reader: &mut BufReader<OwnedReadHalf>,
+    writer: &mut OwnedWriteHalf,
+    me: DeviceInfo,
+    trust: &dyn TrustStore,
+) -> Result<DeviceInfo, RemoteError> {
+    let challenge = tokio::time::timeout(CHALLENGE_TIMEOUT, read_message::<HostMessage>(reader))
+        .await
+        .map_err(|_| RemoteError::TimedOut)??;
+    let Some(HostMessage::Challenge {
+        version,
+        device: host,
+        nonce,
+    }) = challenge
+    else {
+        return Err(RemoteError::Protocol("expected a challenge".to_owned()));
+    };
+    if version != PROTOCOL_VERSION {
+        return Err(RemoteError::Failed(
+            crate::protocol::RemoteFailure::VersionMismatch,
+        ));
+    }
+    let proof = trust
+        .host_token(&host.id)
+        .map(|token| proof_of(&token, &nonce));
+    let hello = ClientMessage::Hello {
+        version: PROTOCOL_VERSION,
+        device: me,
+        proof,
+    };
+    write_message(writer, &hello).await?;
+    Ok(host)
+}
+
+async fn await_welcome(
+    reader: &mut BufReader<OwnedReadHalf>,
+    host: &DeviceInfo,
+    trust: &dyn TrustStore,
+) -> Result<Option<ServerKey>, RemoteError> {
+    loop {
+        let answer = tokio::time::timeout(APPROVAL_WAIT, read_message::<HostMessage>(reader))
+            .await
+            .map_err(|_| RemoteError::TimedOut)??;
+        match answer {
+            Some(HostMessage::Paired { token }) => trust.remember_host(&host.id, token),
+            Some(HostMessage::Welcome { server }) => return Ok(server),
+            Some(HostMessage::Denied) => return Err(RemoteError::Denied),
+            Some(HostMessage::Failed { failure }) => return Err(RemoteError::Failed(failure)),
+            Some(_) => return Err(RemoteError::Protocol("expected a welcome".to_owned())),
+            None => return Err(RemoteError::Io("the connection closed".to_owned())),
+        }
+    }
+}
+
+fn spawn_writer(mut writer: OwnedWriteHalf) -> mpsc::UnboundedSender<ClientMessage> {
+    let (sender, mut receiver) = mpsc::unbounded_channel::<ClientMessage>();
+    tokio::spawn(async move {
+        while let Some(message) = receiver.recv().await {
+            if let Err(error) = write_message(&mut writer, &message).await {
+                tracing::debug!("sending to a remote player failed: {error}");
+                return;
+            }
+        }
+    });
+    sender
+}
+
+fn spawn_reader(mut reader: BufReader<OwnedReadHalf>) -> mpsc::UnboundedReceiver<HostMessage> {
+    let (sender, receiver) = mpsc::unbounded_channel();
+    tokio::spawn(async move {
+        loop {
+            match read_message::<HostMessage>(&mut reader).await {
+                Ok(Some(message)) => {
+                    if sender.send(message).is_err() {
+                        return;
+                    }
+                }
+                Ok(None) => return,
+                Err(error) => {
+                    tracing::debug!("reading from a remote player failed: {error}");
+                    return;
+                }
+            }
+        }
+    });
+    receiver
+}

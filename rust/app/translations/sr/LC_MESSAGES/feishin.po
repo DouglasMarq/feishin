@@ -8,6 +8,9 @@ msgstr ""
 msgid "\"{}\" plays next"
 msgstr "\"{}\" sledeća na redu"
 
+msgid "\"{}\" wants to control this player. Allow it? You will not be asked again for this device."
+msgstr "\"{}\" želi da upravlja ovim plejerom. Dozvoliti? Za ovaj uređaj više nećete biti pitani."
+
 msgid "\"{}\" will play next"
 msgstr "\"{}\" će biti puštena sledeća"
 
@@ -140,6 +143,12 @@ msgstr "Albumi"
 msgid "All genres"
 msgstr "Svi žanrovi"
 
+msgid "Allow"
+msgstr "Dozvoli"
+
+msgid "Allow remote control?"
+msgstr "Dozvoliti daljinsko upravljanje?"
+
 msgid "Already at the end"
 msgstr "Već je na kraju"
 
@@ -158,6 +167,12 @@ msgstr "Ćilibar"
 msgid "Appearance"
 msgstr "Izgled"
 
+msgid "Approved devices"
+msgstr "Odobreni uređaji"
+
+msgid "Approved devices were forgotten"
+msgstr "Odobreni uređaji su zaboravljeni"
+
 msgid "ARTIST"
 msgstr "UMETNIK"
 
@@ -166,6 +181,9 @@ msgstr "Umetnik"
 
 msgid "Artists"
 msgstr "Umetnici"
+
+msgid "Ask again before any device can control this player"
+msgstr "Pitaj ponovo pre nego što bilo koji uređaj može da upravlja ovim plejerom"
 
 msgid "Ask the server to transcode down to this bitrate. Applies from the next song."
 msgstr "Traži od servera da transkodira na ovaj bitrejt. Primenjuje se od sledeće pesme."
@@ -233,11 +251,20 @@ msgstr "Povežite se sa svojim muzičkim serverom"
 msgid "Connecting..."
 msgstr "Povezivanje..."
 
+msgid "Control the music playing on this computer"
+msgstr "Upravljaj muzikom koja svira na ovom računaru"
+
+msgid "Control the music playing on {}"
+msgstr "Upravljaj muzikom koja svira na {}"
+
 msgid "Could not add to \"{}\": {}"
 msgstr "Dodavanje u \"{}\" nije uspelo: {}"
 
 msgid "Could not add {} to the server"
 msgstr "Dodavanje stanice {} na server nije uspelo"
+
+msgid "Could not connect to {}: {}"
+msgstr "Povezivanje sa {} nije uspelo: {}"
 
 msgid "Could not create a share link: {}"
 msgstr "Pravljenje linka za deljenje nije uspelo: {}"
@@ -313,6 +340,12 @@ msgstr "Učitavanje pesama nije uspelo: {}"
 
 msgid "Could not load your home: {}"
 msgstr "Učitavanje početne strane nije uspelo: {}"
+
+msgid "Could not move the music from {}: {}"
+msgstr "Muzika nije mogla da se premesti sa {}: {}"
+
+msgid "Could not move the music: {}"
+msgstr "Muzika nije mogla da se premesti: {}"
 
 msgid "Could not open the folder: {}"
 msgstr "Otvaranje foldera nije uspelo: {}"
@@ -449,6 +482,15 @@ msgstr "Brisanje..."
 msgid "Demo mode: these picks are made up and play from your demo library"
 msgstr "Demo režim: ovi predlozi su izmišljeni i puštaju se iz demo biblioteke"
 
+msgid "Devices you allowed can control this player without asking again."
+msgstr "Uređaji koje ste dozvolili mogu da upravljaju ovim plejerom bez ponovnog pitanja."
+
+msgid "Devices: controlling {}"
+msgstr "Uređaji: upravljate {}"
+
+msgid "Devices: this computer"
+msgstr "Uređaji: ovaj računar"
+
 msgid "Directory"
 msgstr "Imenik"
 
@@ -542,6 +584,9 @@ msgstr "Prati šemu boja sistema"
 msgid "For you"
 msgstr "Za vas"
 
+msgid "Forget all"
+msgstr "Zaboravi sve"
+
 msgid "Forget this server?"
 msgstr "Zaboraviti ovaj server?"
 
@@ -611,6 +656,24 @@ msgstr "Interfejs"
 msgid "Internet radio"
 msgstr "Internet radio"
 
+msgid "it did not answer in time"
+msgstr "nije odgovorio na vreme"
+
+msgid "it is busy with another request"
+msgstr "zauzet je drugim zahtevom"
+
+msgid "it is connected to a different server"
+msgstr "povezan je sa drugim serverom"
+
+msgid "it is not connected to a server"
+msgstr "nije povezan ni sa jednim serverom"
+
+msgid "it runs a different version of Feishin"
+msgstr "koristi drugu verziju Feishina"
+
+msgid "it stopped"
+msgstr "zaustavio se"
+
 msgid "item"
 msgstr "stavka"
 
@@ -622,6 +685,9 @@ msgstr "Čuvaj ovu stanicu u favoritima na ovom uređaju"
 
 msgid "Language"
 msgstr "Jezik"
+
+msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
+msgstr "Dozvoli drugim Feishin plejerima na ovoj mreži da upravljaju ovim. Svaki uređaj prvi put traži vaše odobrenje."
 
 msgid "LIBRARY"
 msgstr "BIBLIOTEKA"
@@ -674,6 +740,9 @@ msgstr "Odjavi se"
 msgid "Looking up the YouTube link..."
 msgstr "Traženje YouTube linka..."
 
+msgid "Lost the connection to {}"
+msgstr "Veza sa {} je izgubljena"
+
 msgid "Lyrics"
 msgstr "Tekst pesme"
 
@@ -701,8 +770,23 @@ msgstr "Najviše puštano"
 msgid "Move down"
 msgstr "Pomeri nadole"
 
+msgid "Move here"
+msgstr "Premesti ovde"
+
+msgid "Move there"
+msgstr "Premesti tamo"
+
 msgid "Move up"
 msgstr "Pomeri nagore"
+
+msgid "Move what is playing here to {}"
+msgstr "Premesti ono što svira ovde na {}"
+
+msgid "Move what is playing on {} to this computer"
+msgstr "Premesti ono što svira na {} na ovaj računar"
+
+msgid "Moved the music from {} to this computer"
+msgstr "Muzika je premeštena sa {} na ovaj računar"
 
 msgid "MPRIS"
 msgstr "MPRIS"
@@ -755,6 +839,9 @@ msgstr "Nije pronađen nijedan žanr"
 msgid "No lyrics found"
 msgstr "Tekst pesme nije pronađen"
 
+msgid "No other Feishin found on this network"
+msgstr "Na ovoj mreži nije pronađen drugi Feishin"
+
 msgid "No playlists found"
 msgstr "Nije pronađena nijedna plejlista"
 
@@ -797,8 +884,14 @@ msgstr "Ujednačava jačinu zvuka pomoću oznaka pojačanja pesme ili albuma."
 msgid "Not connected to a server"
 msgstr "Niste povezani sa serverom"
 
+msgid "Not connected to another player"
+msgstr "Nije povezano sa drugim plejerom"
+
 msgid "Nothing is playing"
 msgstr "Ništa se ne pušta"
+
+msgid "nothing is playing"
+msgstr "ništa ne svira"
 
 msgid "Nothing to add yet"
 msgstr "Još nema ničeg za dodavanje"
@@ -814,6 +907,9 @@ msgstr "Još nema ničeg za puštanje"
 
 msgid "Nothing to show here right now"
 msgstr "Trenutno nema ničeg za prikaz"
+
+msgid "Now playing on {}"
+msgstr "Sada svira na {}"
 
 msgid "Off"
 msgstr "Isključeno"
@@ -932,6 +1028,9 @@ msgstr "Pusti od {}"
 msgid "Play next"
 msgstr "Pusti sledeće"
 
+msgid "Play on"
+msgstr "Pusti na"
+
 msgid "Play the album"
 msgstr "Pusti album"
 
@@ -1036,6 +1135,15 @@ msgstr "Osveži ovaj odeljak"
 
 msgid "Release year"
 msgstr "Godina izdavanja"
+
+msgid "Remote control"
+msgstr "Daljinsko upravljanje"
+
+msgid "Remote control is unavailable: other players cannot find this one"
+msgstr "Daljinsko upravljanje nije dostupno: drugi plejeri ne mogu da pronađu ovaj"
+
+msgid "Remote control is unavailable: the network port could not be opened"
+msgstr "Daljinsko upravljanje nije dostupno: mrežni port nije mogao da se otvori"
 
 msgid "Remove"
 msgstr "Ukloni"
@@ -1343,6 +1451,12 @@ msgstr "Podrazumevano u sistemu prati jezik radne površine."
 msgid "Tag, for example jazz"
 msgstr "Oznaka, na primer jazz"
 
+msgid "That device is no longer on the network"
+msgstr "Taj uređaj više nije na mreži"
+
+msgid "the connection was not allowed"
+msgstr "veza nije dozvoljena"
+
 msgid "The desktop currently prefers dark."
 msgstr "Radna površina trenutno daje prednost tamnoj temi."
 
@@ -1354,6 +1468,9 @@ msgstr "Radna površina nema podešenu prednost, pa se koristi tamna tema."
 
 msgid "The library scan is still running on the server"
 msgstr "Skeniranje biblioteke je još u toku na serveru"
+
+msgid "the network connection failed"
+msgstr "mrežna veza nije uspela"
 
 msgid "The queue is empty"
 msgstr "Red je prazan"
@@ -1375,6 +1492,9 @@ msgstr "Tema"
 
 msgid "There is nothing to play in this list"
 msgstr "U ovoj listi nema ničeg za puštanje"
+
+msgid "This computer"
+msgstr "Ovaj računar"
 
 msgid "This Discover page does not exist"
 msgstr "Ova stranica odeljka Otkrij ne postoji"
@@ -1538,6 +1658,9 @@ msgstr[2] "{n} pesama biće pušteno sledeće"
 msgid "{} (current theme)"
 msgstr "{} (trenutna tema)"
 
+msgid "{} (demo)"
+msgstr "{} (demo)"
+
 msgid "{} (unavailable)"
 msgstr "{} (nedostupno)"
 
@@ -1546,6 +1669,15 @@ msgstr "{} na {}"
 
 msgid "{} cannot be played: its stream address is not an internet stream"
 msgstr "{} se ne može pustiti: adresa strima nije internet strim"
+
+msgid "{} could not do that: {}"
+msgstr "{} to nije moglo da uradi: {}"
+
+msgid "{} could not take the music: {}"
+msgstr "{} nije moglo da preuzme muziku: {}"
+
+msgid "{} did not answer in time"
+msgstr "{} nije odgovorilo na vreme"
 
 msgid "{} is shown"
 msgstr "Prikazano: {}"

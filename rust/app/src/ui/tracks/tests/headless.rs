@@ -122,6 +122,7 @@ fn demo_context(runtime: &Runtime) -> (Context, UnboundedReceiver<Command>) {
         )),
         connector: Arc::new(DemoConnector::default()),
         covers: Arc::new(DemoCovers),
+        remote: crate::remote::Remote::default(),
     };
     ctx.session.set(Some(Arc::new(FakeServer::new(600))));
     (ctx, received)

@@ -8,6 +8,9 @@ msgstr ""
 msgid "\"{}\" plays next"
 msgstr "\"{}\" จะเล่นเป็นเพลงถัดไป"
 
+msgid "\"{}\" wants to control this player. Allow it? You will not be asked again for this device."
+msgstr "\"{}\" ต้องการควบคุมเครื่องเล่นนี้ อนุญาตหรือไม่ จะไม่ถามอีกสำหรับอุปกรณ์นี้"
+
 msgid "\"{}\" will play next"
 msgstr "\"{}\" จะเล่นต่อจากนี้"
 
@@ -128,6 +131,12 @@ msgstr "อัลบั้ม"
 msgid "All genres"
 msgstr "ทุกแนวเพลง"
 
+msgid "Allow"
+msgstr "อนุญาต"
+
+msgid "Allow remote control?"
+msgstr "อนุญาตการควบคุมระยะไกลหรือไม่"
+
 msgid "Already at the end"
 msgstr "อยู่ที่ท้ายสุดแล้ว"
 
@@ -146,6 +155,12 @@ msgstr "สีอำพัน"
 msgid "Appearance"
 msgstr "รูปลักษณ์"
 
+msgid "Approved devices"
+msgstr "อุปกรณ์ที่อนุญาต"
+
+msgid "Approved devices were forgotten"
+msgstr "ลืมอุปกรณ์ที่อนุญาตแล้ว"
+
 msgid "ARTIST"
 msgstr "ศิลปิน"
 
@@ -154,6 +169,9 @@ msgstr "ศิลปิน"
 
 msgid "Artists"
 msgstr "ศิลปิน"
+
+msgid "Ask again before any device can control this player"
+msgstr "ถามอีกครั้งก่อนที่อุปกรณ์ใดจะควบคุมเครื่องเล่นนี้ได้"
 
 msgid "Ask the server to transcode down to this bitrate. Applies from the next song."
 msgstr "ขอให้เซิร์ฟเวอร์แปลงไฟล์ลงมาที่บิตเรตนี้ มีผลตั้งแต่เพลงถัดไป"
@@ -221,11 +239,20 @@ msgstr "เชื่อมต่อกับเซิร์ฟเวอร์เ
 msgid "Connecting..."
 msgstr "กำลังเชื่อมต่อ..."
 
+msgid "Control the music playing on this computer"
+msgstr "ควบคุมเพลงที่เล่นอยู่บนคอมพิวเตอร์นี้"
+
+msgid "Control the music playing on {}"
+msgstr "ควบคุมเพลงที่เล่นอยู่บน {}"
+
 msgid "Could not add to \"{}\": {}"
 msgstr "เพิ่มลงใน \"{}\" ไม่ได้: {}"
 
 msgid "Could not add {} to the server"
 msgstr "เพิ่ม {} ลงในเซิร์ฟเวอร์ไม่ได้"
+
+msgid "Could not connect to {}: {}"
+msgstr "เชื่อมต่อกับ {} ไม่ได้: {}"
 
 msgid "Could not create a share link: {}"
 msgstr "สร้างลิงก์แบ่งปันไม่ได้: {}"
@@ -301,6 +328,12 @@ msgstr "โหลดแทร็กไม่ได้: {}"
 
 msgid "Could not load your home: {}"
 msgstr "โหลดหน้าแรกไม่ได้: {}"
+
+msgid "Could not move the music from {}: {}"
+msgstr "ย้ายเพลงจาก {} ไม่ได้: {}"
+
+msgid "Could not move the music: {}"
+msgstr "ย้ายเพลงไม่ได้: {}"
 
 msgid "Could not open the folder: {}"
 msgstr "เปิดโฟลเดอร์ไม่ได้: {}"
@@ -433,6 +466,15 @@ msgstr "กำลังลบ..."
 msgid "Demo mode: these picks are made up and play from your demo library"
 msgstr "โหมดสาธิต: รายการแนะนำเหล่านี้เป็นข้อมูลสมมติและจะเล่นจากคลังเพลงสาธิต"
 
+msgid "Devices you allowed can control this player without asking again."
+msgstr "อุปกรณ์ที่คุณอนุญาตสามารถควบคุมเครื่องเล่นนี้ได้โดยไม่ต้องถามอีก"
+
+msgid "Devices: controlling {}"
+msgstr "อุปกรณ์: กำลังควบคุม {}"
+
+msgid "Devices: this computer"
+msgstr "อุปกรณ์: คอมพิวเตอร์นี้"
+
 msgid "Directory"
 msgstr "ไดเรกทอรี"
 
@@ -526,6 +568,9 @@ msgstr "ใช้ชุดสีตามระบบ"
 msgid "For you"
 msgstr "สำหรับคุณ"
 
+msgid "Forget all"
+msgstr "ลืมทั้งหมด"
+
 msgid "Forget this server?"
 msgstr "ลบเซิร์ฟเวอร์นี้ใช่ไหม"
 
@@ -593,6 +638,24 @@ msgstr "อินเทอร์เฟซ"
 msgid "Internet radio"
 msgstr "วิทยุอินเทอร์เน็ต"
 
+msgid "it did not answer in time"
+msgstr "ไม่ตอบกลับทันเวลา"
+
+msgid "it is busy with another request"
+msgstr "กำลังทำคำขออื่นอยู่"
+
+msgid "it is connected to a different server"
+msgstr "เชื่อมต่อกับเซิร์ฟเวอร์อื่น"
+
+msgid "it is not connected to a server"
+msgstr "ไม่ได้เชื่อมต่อกับเซิร์ฟเวอร์"
+
+msgid "it runs a different version of Feishin"
+msgstr "ใช้ Feishin คนละเวอร์ชัน"
+
+msgid "it stopped"
+msgstr "หยุดทำงานแล้ว"
+
 msgid "item"
 msgstr "รายการ"
 
@@ -604,6 +667,9 @@ msgstr "เก็บสถานีนี้ไว้ในรายการโ
 
 msgid "Language"
 msgstr "ภาษา"
+
+msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
+msgstr "ให้เครื่องเล่น Feishin อื่นในเครือข่ายนี้ควบคุมเครื่องนี้ได้ แต่ละอุปกรณ์จะขอการอนุญาตจากคุณในครั้งแรก"
 
 msgid "LIBRARY"
 msgstr "คลังเพลง"
@@ -654,6 +720,9 @@ msgstr "ออกจากระบบ"
 msgid "Looking up the YouTube link..."
 msgstr "กำลังค้นหาลิงก์ YouTube..."
 
+msgid "Lost the connection to {}"
+msgstr "การเชื่อมต่อกับ {} ขาดหาย"
+
 msgid "Lyrics"
 msgstr "เนื้อเพลง"
 
@@ -681,8 +750,23 @@ msgstr "เล่นบ่อยที่สุด"
 msgid "Move down"
 msgstr "เลื่อนลง"
 
+msgid "Move here"
+msgstr "ย้ายมาที่นี่"
+
+msgid "Move there"
+msgstr "ย้ายไปที่นั่น"
+
 msgid "Move up"
 msgstr "เลื่อนขึ้น"
+
+msgid "Move what is playing here to {}"
+msgstr "ย้ายสิ่งที่เล่นอยู่ที่นี่ไปยัง {}"
+
+msgid "Move what is playing on {} to this computer"
+msgstr "ย้ายสิ่งที่เล่นอยู่บน {} มายังคอมพิวเตอร์นี้"
+
+msgid "Moved the music from {} to this computer"
+msgstr "ย้ายเพลงจาก {} มายังคอมพิวเตอร์นี้แล้ว"
 
 msgid "MPRIS"
 msgstr "MPRIS"
@@ -735,6 +819,9 @@ msgstr "ไม่พบแนวเพลง"
 msgid "No lyrics found"
 msgstr "ไม่พบเนื้อเพลง"
 
+msgid "No other Feishin found on this network"
+msgstr "ไม่พบ Feishin อื่นในเครือข่ายนี้"
+
 msgid "No playlists found"
 msgstr "ไม่พบเพลย์ลิสต์"
 
@@ -777,8 +864,14 @@ msgstr "ปรับระดับความดังโดยใช้แท
 msgid "Not connected to a server"
 msgstr "ไม่ได้เชื่อมต่อกับเซิร์ฟเวอร์"
 
+msgid "Not connected to another player"
+msgstr "ไม่ได้เชื่อมต่อกับเครื่องเล่นอื่น"
+
 msgid "Nothing is playing"
 msgstr "ไม่มีเพลงที่กำลังเล่น"
+
+msgid "nothing is playing"
+msgstr "ไม่มีอะไรเล่นอยู่"
 
 msgid "Nothing to add yet"
 msgstr "ยังไม่มีอะไรให้เพิ่ม"
@@ -794,6 +887,9 @@ msgstr "ยังไม่มีอะไรให้เล่น"
 
 msgid "Nothing to show here right now"
 msgstr "ขณะนี้ไม่มีอะไรให้แสดง"
+
+msgid "Now playing on {}"
+msgstr "กำลังเล่นบน {}"
 
 msgid "Off"
 msgstr "ปิด"
@@ -910,6 +1006,9 @@ msgstr "เล่นจาก {}"
 msgid "Play next"
 msgstr "เล่นถัดไป"
 
+msgid "Play on"
+msgstr "เล่นบน"
+
 msgid "Play the album"
 msgstr "เล่นอัลบั้ม"
 
@@ -1012,6 +1111,15 @@ msgstr "รีเฟรชส่วนนี้"
 
 msgid "Release year"
 msgstr "ปีที่วางจำหน่าย"
+
+msgid "Remote control"
+msgstr "การควบคุมระยะไกล"
+
+msgid "Remote control is unavailable: other players cannot find this one"
+msgstr "ใช้การควบคุมระยะไกลไม่ได้: เครื่องเล่นอื่นหาเครื่องนี้ไม่พบ"
+
+msgid "Remote control is unavailable: the network port could not be opened"
+msgstr "ใช้การควบคุมระยะไกลไม่ได้: เปิดพอร์ตเครือข่ายไม่ได้"
 
 msgid "Remove"
 msgstr "นำออก"
@@ -1317,6 +1425,12 @@ msgstr "ค่าเริ่มต้นของระบบจะใช้ภ
 msgid "Tag, for example jazz"
 msgstr "แท็ก เช่น jazz"
 
+msgid "That device is no longer on the network"
+msgstr "อุปกรณ์นั้นไม่อยู่ในเครือข่ายแล้ว"
+
+msgid "the connection was not allowed"
+msgstr "ไม่ได้รับอนุญาตให้เชื่อมต่อ"
+
 msgid "The desktop currently prefers dark."
 msgstr "ขณะนี้เดสก์ท็อปใช้โหมดมืด"
 
@@ -1328,6 +1442,9 @@ msgstr "เดสก์ท็อปไม่ได้กำหนดค่าไ
 
 msgid "The library scan is still running on the server"
 msgstr "เซิร์ฟเวอร์ยังสแกนคลังเพลงอยู่"
+
+msgid "the network connection failed"
+msgstr "การเชื่อมต่อเครือข่ายล้มเหลว"
 
 msgid "The queue is empty"
 msgstr "คิวว่างเปล่า"
@@ -1349,6 +1466,9 @@ msgstr "ธีม"
 
 msgid "There is nothing to play in this list"
 msgstr "ไม่มีอะไรให้เล่นในรายการนี้"
+
+msgid "This computer"
+msgstr "คอมพิวเตอร์นี้"
 
 msgid "This Discover page does not exist"
 msgstr "ไม่มีหน้าสำรวจนี้"
@@ -1494,6 +1614,9 @@ msgstr[0] "{n} เพลงจะเล่นถัดไป"
 msgid "{} (current theme)"
 msgstr "{} (ธีมปัจจุบัน)"
 
+msgid "{} (demo)"
+msgstr "{} (สาธิต)"
+
 msgid "{} (unavailable)"
 msgstr "{} (ไม่พร้อมใช้งาน)"
 
@@ -1502,6 +1625,15 @@ msgstr "{} ที่ {}"
 
 msgid "{} cannot be played: its stream address is not an internet stream"
 msgstr "เล่น {} ไม่ได้: ที่อยู่สตรีมไม่ใช่สตรีมอินเทอร์เน็ต"
+
+msgid "{} could not do that: {}"
+msgstr "{} ทำสิ่งนั้นไม่ได้: {}"
+
+msgid "{} could not take the music: {}"
+msgstr "{} รับเพลงไม่ได้: {}"
+
+msgid "{} did not answer in time"
+msgstr "{} ไม่ตอบกลับทันเวลา"
 
 msgid "{} is shown"
 msgstr "กำลังแสดง {}"

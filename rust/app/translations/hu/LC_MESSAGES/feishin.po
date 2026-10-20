@@ -8,6 +8,9 @@ msgstr ""
 msgid "\"{}\" plays next"
 msgstr "„{}” következik"
 
+msgid "\"{}\" wants to control this player. Allow it? You will not be asked again for this device."
+msgstr "A(z) „{}” vezérelni szeretné ezt a lejátszót. Engedélyezed? Erről az eszközről többé nem kérdezünk."
+
 msgid "\"{}\" will play next"
 msgstr "„{}” következik a lejátszásban"
 
@@ -134,6 +137,12 @@ msgstr "Albumok"
 msgid "All genres"
 msgstr "Minden műfaj"
 
+msgid "Allow"
+msgstr "Engedélyezés"
+
+msgid "Allow remote control?"
+msgstr "Engedélyezed a távvezérlést?"
+
 msgid "Already at the end"
 msgstr "Már a végén van"
 
@@ -152,6 +161,12 @@ msgstr "Borostyán"
 msgid "Appearance"
 msgstr "Megjelenés"
 
+msgid "Approved devices"
+msgstr "Engedélyezett eszközök"
+
+msgid "Approved devices were forgotten"
+msgstr "Az engedélyezett eszközök törölve"
+
 msgid "ARTIST"
 msgstr "ELŐADÓ"
 
@@ -160,6 +175,9 @@ msgstr "Előadó"
 
 msgid "Artists"
 msgstr "Előadók"
+
+msgid "Ask again before any device can control this player"
+msgstr "Újra kérdezzen, mielőtt bármely eszköz vezérelheti ezt a lejátszót"
 
 msgid "Ask the server to transcode down to this bitrate. Applies from the next song."
 msgstr "A szerver erre a bitrátára kódolja át a zenét. A következő daltól érvényes."
@@ -227,11 +245,20 @@ msgstr "Csatlakozás a zeneszerveredhez"
 msgid "Connecting..."
 msgstr "Csatlakozás..."
 
+msgid "Control the music playing on this computer"
+msgstr "A számítógépen szóló zene vezérlése"
+
+msgid "Control the music playing on {}"
+msgstr "A(z) {} eszközön szóló zene vezérlése"
+
 msgid "Could not add to \"{}\": {}"
 msgstr "Nem sikerült hozzáadni ehhez: „{}”: {}"
 
 msgid "Could not add {} to the server"
 msgstr "Nem sikerült hozzáadni a szerverhez: {}"
+
+msgid "Could not connect to {}: {}"
+msgstr "Nem sikerült csatlakozni ehhez: {}: {}"
 
 msgid "Could not create a share link: {}"
 msgstr "Nem sikerült megosztási hivatkozást létrehozni: {}"
@@ -307,6 +334,12 @@ msgstr "Nem sikerült betölteni a számokat: {}"
 
 msgid "Could not load your home: {}"
 msgstr "Nem sikerült betölteni a kezdőoldaladat: {}"
+
+msgid "Could not move the music from {}: {}"
+msgstr "Nem sikerült áthozni a zenét innen: {}: {}"
+
+msgid "Could not move the music: {}"
+msgstr "Nem sikerült áthelyezni a zenét: {}"
 
 msgid "Could not open the folder: {}"
 msgstr "Nem sikerült megnyitni a mappát: {}"
@@ -441,6 +474,15 @@ msgstr "Törlés..."
 msgid "Demo mode: these picks are made up and play from your demo library"
 msgstr "Bemutató mód: ezek az ajánlások kitaláltak, és a bemutató könyvtáradból szólnak"
 
+msgid "Devices you allowed can control this player without asking again."
+msgstr "Az engedélyezett eszközök újabb kérdés nélkül vezérelhetik ezt a lejátszót."
+
+msgid "Devices: controlling {}"
+msgstr "Eszközök: {} vezérlése"
+
+msgid "Devices: this computer"
+msgstr "Eszközök: ez a számítógép"
+
 msgid "Directory"
 msgstr "Katalógus"
 
@@ -534,6 +576,9 @@ msgstr "A rendszer színsémájának követése"
 msgid "For you"
 msgstr "Neked"
 
+msgid "Forget all"
+msgstr "Összes elfelejtése"
+
 msgid "Forget this server?"
 msgstr "Elfelejted ezt a szervert?"
 
@@ -602,6 +647,24 @@ msgstr "Felület"
 msgid "Internet radio"
 msgstr "Internetes rádió"
 
+msgid "it did not answer in time"
+msgstr "nem válaszolt időben"
+
+msgid "it is busy with another request"
+msgstr "egy másik kéréssel foglalkozik"
+
+msgid "it is connected to a different server"
+msgstr "másik szerverhez csatlakozik"
+
+msgid "it is not connected to a server"
+msgstr "nem csatlakozik szerverhez"
+
+msgid "it runs a different version of Feishin"
+msgstr "a Feishin másik verzióját futtatja"
+
+msgid "it stopped"
+msgstr "leállt"
+
 msgid "item"
 msgstr "elem"
 
@@ -613,6 +676,9 @@ msgstr "Az állomás megtartása a kedvencek között ezen az eszközön"
 
 msgid "Language"
 msgstr "Nyelv"
+
+msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
+msgstr "Engedi, hogy a hálózat más Feishin lejátszói vezéreljék ezt. Minden eszköz első alkalommal engedélyt kér."
 
 msgid "LIBRARY"
 msgstr "KÖNYVTÁR"
@@ -664,6 +730,9 @@ msgstr "Kijelentkezés"
 msgid "Looking up the YouTube link..."
 msgstr "A YouTube-hivatkozás keresése..."
 
+msgid "Lost the connection to {}"
+msgstr "Megszakadt a kapcsolat ezzel: {}"
+
 msgid "Lyrics"
 msgstr "Dalszöveg"
 
@@ -691,8 +760,23 @@ msgstr "Legtöbbször lejátszott"
 msgid "Move down"
 msgstr "Mozgatás le"
 
+msgid "Move here"
+msgstr "Áthozás ide"
+
+msgid "Move there"
+msgstr "Átküldés oda"
+
 msgid "Move up"
 msgstr "Mozgatás fel"
+
+msgid "Move what is playing here to {}"
+msgstr "Ami itt szól, átküldése ide: {}"
+
+msgid "Move what is playing on {} to this computer"
+msgstr "Ami itt szól: {}, áthozása erre a számítógépre"
+
+msgid "Moved the music from {} to this computer"
+msgstr "A zene átkerült innen: {}, erre a számítógépre"
 
 msgid "MPRIS"
 msgstr "MPRIS"
@@ -745,6 +829,9 @@ msgstr "Nem található műfaj"
 msgid "No lyrics found"
 msgstr "Nem található dalszöveg"
 
+msgid "No other Feishin found on this network"
+msgstr "Nem található más Feishin ezen a hálózaton"
+
 msgid "No playlists found"
 msgstr "Nem található lejátszási lista"
 
@@ -787,8 +874,14 @@ msgstr "Hangerő-kiegyenlítés a szám vagy az album erősítéscímkéi alapj�
 msgid "Not connected to a server"
 msgstr "Nincs kapcsolat szerverrel"
 
+msgid "Not connected to another player"
+msgstr "Nincs kapcsolat másik lejátszóval"
+
 msgid "Nothing is playing"
 msgstr "Semmi sem szól"
+
+msgid "nothing is playing"
+msgstr "semmi sem szól"
 
 msgid "Nothing to add yet"
 msgstr "Még nincs mit hozzáadni"
@@ -804,6 +897,9 @@ msgstr "Még nincs mit lejátszani"
 
 msgid "Nothing to show here right now"
 msgstr "Itt most nincs mit megjeleníteni"
+
+msgid "Now playing on {}"
+msgstr "Most itt szól: {}"
 
 msgid "Off"
 msgstr "Ki"
@@ -921,6 +1017,9 @@ msgstr "Lejátszás innen: {}"
 msgid "Play next"
 msgstr "Lejátszás következőként"
 
+msgid "Play on"
+msgstr "Lejátszás itt"
+
 msgid "Play the album"
 msgstr "Az album lejátszása"
 
@@ -1024,6 +1123,15 @@ msgstr "A szakasz frissítése"
 
 msgid "Release year"
 msgstr "Megjelenés éve"
+
+msgid "Remote control"
+msgstr "Távvezérlés"
+
+msgid "Remote control is unavailable: other players cannot find this one"
+msgstr "A távvezérlés nem érhető el: más lejátszók nem találják ezt"
+
+msgid "Remote control is unavailable: the network port could not be opened"
+msgstr "A távvezérlés nem érhető el: nem sikerült megnyitni a hálózati portot"
 
 msgid "Remove"
 msgstr "Eltávolítás"
@@ -1330,6 +1438,12 @@ msgstr "A rendszer alapértelmezése az asztal nyelvét követi."
 msgid "Tag, for example jazz"
 msgstr "Címke, például jazz"
 
+msgid "That device is no longer on the network"
+msgstr "Ez az eszköz már nincs a hálózaton"
+
+msgid "the connection was not allowed"
+msgstr "a kapcsolat nem lett engedélyezve"
+
 msgid "The desktop currently prefers dark."
 msgstr "Az asztal jelenleg a sötétet részesíti előnyben."
 
@@ -1341,6 +1455,9 @@ msgstr "Az asztalnak nincs preferenciája, ezért a sötét téma van használat
 
 msgid "The library scan is still running on the server"
 msgstr "A könyvtár beolvasása még fut a szerveren"
+
+msgid "the network connection failed"
+msgstr "a hálózati kapcsolat meghiúsult"
 
 msgid "The queue is empty"
 msgstr "A lejátszási sor üres"
@@ -1362,6 +1479,9 @@ msgstr "Téma"
 
 msgid "There is nothing to play in this list"
 msgstr "Ebben a listában nincs mit lejátszani"
+
+msgid "This computer"
+msgstr "Ez a számítógép"
 
 msgid "This Discover page does not exist"
 msgstr "Ez a Felfedezés oldal nem létezik"
@@ -1516,6 +1636,9 @@ msgstr[1] "{n} dal következik"
 msgid "{} (current theme)"
 msgstr "{} (jelenlegi téma)"
 
+msgid "{} (demo)"
+msgstr "{} (demó)"
+
 msgid "{} (unavailable)"
 msgstr "{} (nem érhető el)"
 
@@ -1524,6 +1647,15 @@ msgstr "{0} @ {1}"
 
 msgid "{} cannot be played: its stream address is not an internet stream"
 msgstr "{} nem játszható le: a stream címe nem internetes stream"
+
+msgid "{} could not do that: {}"
+msgstr "{} ezt nem tudta megtenni: {}"
+
+msgid "{} could not take the music: {}"
+msgstr "{} nem tudta átvenni a zenét: {}"
+
+msgid "{} did not answer in time"
+msgstr "{} nem válaszolt időben"
 
 msgid "{} is shown"
 msgstr "{} látható"

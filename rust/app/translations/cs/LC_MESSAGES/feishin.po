@@ -8,6 +8,9 @@ msgstr ""
 msgid "\"{}\" plays next"
 msgstr "Jako další: „{}“"
 
+msgid "\"{}\" wants to control this player. Allow it? You will not be asked again for this device."
+msgstr "„{}“ chce ovládat tento přehrávač. Povolit? Na toto zařízení se už nebudeme ptát."
+
 msgid "\"{}\" will play next"
 msgstr "„{}“ se přehraje jako další"
 
@@ -140,6 +143,12 @@ msgstr "Alba"
 msgid "All genres"
 msgstr "Všechny žánry"
 
+msgid "Allow"
+msgstr "Povolit"
+
+msgid "Allow remote control?"
+msgstr "Povolit dálkové ovládání?"
+
 msgid "Already at the end"
 msgstr "Už jste na konci"
 
@@ -158,6 +167,12 @@ msgstr "Jantarová"
 msgid "Appearance"
 msgstr "Vzhled"
 
+msgid "Approved devices"
+msgstr "Schválená zařízení"
+
+msgid "Approved devices were forgotten"
+msgstr "Schválená zařízení byla zapomenuta"
+
 msgid "ARTIST"
 msgstr "UMĚLEC"
 
@@ -166,6 +181,9 @@ msgstr "Umělec"
 
 msgid "Artists"
 msgstr "Umělci"
+
+msgid "Ask again before any device can control this player"
+msgstr "Znovu se zeptat, než jakékoli zařízení bude moci ovládat tento přehrávač"
 
 msgid "Ask the server to transcode down to this bitrate. Applies from the next song."
 msgstr "Požádat server o překódování na tento datový tok. Platí od další skladby."
@@ -233,11 +251,20 @@ msgstr "Připojte se ke svému hudebnímu serveru"
 msgid "Connecting..."
 msgstr "Připojování..."
 
+msgid "Control the music playing on this computer"
+msgstr "Ovládat hudbu hrající na tomto počítači"
+
+msgid "Control the music playing on {}"
+msgstr "Ovládat hudbu hrající na {}"
+
 msgid "Could not add to \"{}\": {}"
 msgstr "Nelze přidat do „{}“: {}"
 
 msgid "Could not add {} to the server"
 msgstr "Stanici {} nelze přidat na server"
+
+msgid "Could not connect to {}: {}"
+msgstr "Nepodařilo se připojit k {}: {}"
 
 msgid "Could not create a share link: {}"
 msgstr "Nelze vytvořit odkaz ke sdílení: {}"
@@ -313,6 +340,12 @@ msgstr "Nelze načíst skladby: {}"
 
 msgid "Could not load your home: {}"
 msgstr "Nelze načíst vaši domovskou stránku: {}"
+
+msgid "Could not move the music from {}: {}"
+msgstr "Nepodařilo se přesunout hudbu z {}: {}"
+
+msgid "Could not move the music: {}"
+msgstr "Nepodařilo se přesunout hudbu: {}"
 
 msgid "Could not open the folder: {}"
 msgstr "Nelze otevřít složku: {}"
@@ -449,6 +482,15 @@ msgstr "Odstraňování..."
 msgid "Demo mode: these picks are made up and play from your demo library"
 msgstr "Ukázkový režim: tyto tipy jsou smyšlené a přehrávají se z ukázkové knihovny"
 
+msgid "Devices you allowed can control this player without asking again."
+msgstr "Povolená zařízení mohou tento přehrávač ovládat bez dalšího ptaní."
+
+msgid "Devices: controlling {}"
+msgstr "Zařízení: ovládáte {}"
+
+msgid "Devices: this computer"
+msgstr "Zařízení: tento počítač"
+
 msgid "Directory"
 msgstr "Katalog"
 
@@ -542,6 +584,9 @@ msgstr "Řídit se barevným schématem systému"
 msgid "For you"
 msgstr "Pro vás"
 
+msgid "Forget all"
+msgstr "Zapomenout vše"
+
 msgid "Forget this server?"
 msgstr "Zapomenout tento server?"
 
@@ -611,6 +656,24 @@ msgstr "Rozhraní"
 msgid "Internet radio"
 msgstr "Internetové rádio"
 
+msgid "it did not answer in time"
+msgstr "neodpovědělo včas"
+
+msgid "it is busy with another request"
+msgstr "je zaneprázdněno jiným požadavkem"
+
+msgid "it is connected to a different server"
+msgstr "je připojeno k jinému serveru"
+
+msgid "it is not connected to a server"
+msgstr "není připojeno k žádnému serveru"
+
+msgid "it runs a different version of Feishin"
+msgstr "používá jinou verzi Feishinu"
+
+msgid "it stopped"
+msgstr "zastavilo se"
+
 msgid "item"
 msgstr "položka"
 
@@ -622,6 +685,9 @@ msgstr "Ponechat tuto stanici v oblíbených na tomto zařízení"
 
 msgid "Language"
 msgstr "Jazyk"
+
+msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
+msgstr "Povolí ostatním přehrávačům Feishin v této síti ovládat tento. Každé zařízení poprvé požádá o vaše schválení."
 
 msgid "LIBRARY"
 msgstr "KNIHOVNA"
@@ -674,6 +740,9 @@ msgstr "Odhlásit se"
 msgid "Looking up the YouTube link..."
 msgstr "Hledání odkazu na YouTube..."
 
+msgid "Lost the connection to {}"
+msgstr "Spojení s {} bylo ztraceno"
+
 msgid "Lyrics"
 msgstr "Texty"
 
@@ -701,8 +770,23 @@ msgstr "Nejvíce přehráváno"
 msgid "Move down"
 msgstr "Posunout dolů"
 
+msgid "Move here"
+msgstr "Přesunout sem"
+
+msgid "Move there"
+msgstr "Přesunout tam"
+
 msgid "Move up"
 msgstr "Posunout nahoru"
+
+msgid "Move what is playing here to {}"
+msgstr "Přesunout to, co hraje tady, na {}"
+
+msgid "Move what is playing on {} to this computer"
+msgstr "Přesunout to, co hraje na {}, na tento počítač"
+
+msgid "Moved the music from {} to this computer"
+msgstr "Hudba byla přesunuta z {} na tento počítač"
 
 msgid "MPRIS"
 msgstr "MPRIS"
@@ -755,6 +839,9 @@ msgstr "Nenalezeny žádné žánry"
 msgid "No lyrics found"
 msgstr "Nenalezeny žádné texty"
 
+msgid "No other Feishin found on this network"
+msgstr "V této síti nebyl nalezen žádný další Feishin"
+
 msgid "No playlists found"
 msgstr "Nenalezeny žádné playlisty"
 
@@ -797,8 +884,14 @@ msgstr "Normalizovat hlasitost pomocí značek zisku skladby nebo alba."
 msgid "Not connected to a server"
 msgstr "Nepřipojeno k serveru"
 
+msgid "Not connected to another player"
+msgstr "Nepřipojeno k jinému přehrávači"
+
 msgid "Nothing is playing"
 msgstr "Nic se nepřehrává"
+
+msgid "nothing is playing"
+msgstr "nic nehraje"
 
 msgid "Nothing to add yet"
 msgstr "Zatím není co přidat"
@@ -814,6 +907,9 @@ msgstr "Zatím není co přehrát"
 
 msgid "Nothing to show here right now"
 msgstr "Teď tu není co zobrazit"
+
+msgid "Now playing on {}"
+msgstr "Nyní hraje na {}"
 
 msgid "Off"
 msgstr "Vypnuto"
@@ -932,6 +1028,9 @@ msgstr "Přehrát od: {}"
 msgid "Play next"
 msgstr "Přehrát jako další"
 
+msgid "Play on"
+msgstr "Přehrát na"
+
 msgid "Play the album"
 msgstr "Přehrát toto album"
 
@@ -1036,6 +1135,15 @@ msgstr "Obnovit tuto sekci"
 
 msgid "Release year"
 msgstr "Rok vydání"
+
+msgid "Remote control"
+msgstr "Dálkové ovládání"
+
+msgid "Remote control is unavailable: other players cannot find this one"
+msgstr "Dálkové ovládání není k dispozici: ostatní přehrávače tento nenajdou"
+
+msgid "Remote control is unavailable: the network port could not be opened"
+msgstr "Dálkové ovládání není k dispozici: síťový port se nepodařilo otevřít"
 
 msgid "Remove"
 msgstr "Odstranit"
@@ -1343,6 +1451,12 @@ msgstr "Podle systému znamená jazyk prostředí."
 msgid "Tag, for example jazz"
 msgstr "Štítek, například jazz"
 
+msgid "That device is no longer on the network"
+msgstr "Toto zařízení už není v síti"
+
+msgid "the connection was not allowed"
+msgstr "připojení nebylo povoleno"
+
 msgid "The desktop currently prefers dark."
 msgstr "Prostředí aktuálně upřednostňuje tmavý motiv."
 
@@ -1354,6 +1468,9 @@ msgstr "Prostředí nemá žádnou preferenci, proto se použije tmavý motiv."
 
 msgid "The library scan is still running on the server"
 msgstr "Prohledávání knihovny na serveru stále probíhá"
+
+msgid "the network connection failed"
+msgstr "síťové připojení selhalo"
 
 msgid "The queue is empty"
 msgstr "Fronta je prázdná"
@@ -1375,6 +1492,9 @@ msgstr "Motiv"
 
 msgid "There is nothing to play in this list"
 msgstr "V tomto seznamu není co přehrát"
+
+msgid "This computer"
+msgstr "Tento počítač"
 
 msgid "This Discover page does not exist"
 msgstr "Tato stránka sekce Objevovat neexistuje"
@@ -1538,6 +1658,9 @@ msgstr[2] "{n} skladeb se přehraje jako další"
 msgid "{} (current theme)"
 msgstr "{} (aktuální motiv)"
 
+msgid "{} (demo)"
+msgstr "{} (demo)"
+
 msgid "{} (unavailable)"
 msgstr "{} (nedostupné)"
 
@@ -1546,6 +1669,15 @@ msgstr "{} na {}"
 
 msgid "{} cannot be played: its stream address is not an internet stream"
 msgstr "{} nelze přehrát: adresa streamu není internetový stream"
+
+msgid "{} could not do that: {}"
+msgstr "{} to nemohlo provést: {}"
+
+msgid "{} could not take the music: {}"
+msgstr "{} nemohlo převzít hudbu: {}"
+
+msgid "{} did not answer in time"
+msgstr "{} neodpovědělo včas"
 
 msgid "{} is shown"
 msgstr "Zobrazeno: {}"

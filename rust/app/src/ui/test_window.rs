@@ -169,6 +169,7 @@ impl TestWindow {
             store: Arc::new(JsonStore::new(dir.path())),
             connector: Arc::new(DemoConnector::default()),
             covers: Arc::new(DemoCovers),
+            remote: crate::remote::Remote::default(),
         };
         ctx.session.set(Some(Arc::clone(&server)));
         let app = AppWindow::new().unwrap();

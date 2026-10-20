@@ -83,6 +83,7 @@ fn open_now_playing_page(screen: Screen) -> NowPlayingPage {
         store: Arc::new(store),
         connector: Arc::new(DemoConnector::default()),
         covers: Arc::new(DemoCovers),
+        remote: crate::remote::Remote::default(),
     };
     let window = AppWindow::new().unwrap();
     crate::ui::install(&window, &ctx, &Default::default());

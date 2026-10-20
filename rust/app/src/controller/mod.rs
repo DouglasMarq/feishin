@@ -10,6 +10,7 @@ mod preload;
 mod publish;
 mod queue_ops;
 mod radio;
+mod remote;
 mod scrobbling;
 mod server_queue;
 mod settings_changes;
@@ -34,6 +35,7 @@ pub use persistence::{PersistenceEvent, load_saved_queue};
 #[cfg(test)]
 pub use radio::RADIO_STREAM_UID;
 pub use radio::{RadioCommand, RadioNowPlaying};
+pub use remote::{AdoptedQueue, RemoteCommand};
 pub use ui_update::{UiSink, UiUpdate, artist_names};
 pub use youtube::YouTubeResolution;
 

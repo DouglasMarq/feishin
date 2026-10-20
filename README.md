@@ -24,6 +24,10 @@ Runs on Linux and macOS.
   library play from your server, others through `yt-dlp`. Personal mixes built from what you
   play and favorite: up to four Daily Mixes that blend your songs with similar ones, and a
   Discover Weekly of songs you do not have, renewed every Monday.
+- Control another Feishin on your network, Spotify Connect style: the Devices button in the player
+  bar lists the other players, controls one of them and moves the music (queue and position)
+  between them. Being controlled is off by default (Settings > Integrations > Remote control) and
+  each device has to be approved the first time.
 - 32 themes with light/dark following the system and an accent color, 39 languages.
 - The screen does not lock and the system does not sleep while music is playing.
 

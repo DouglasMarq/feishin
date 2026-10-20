@@ -91,6 +91,7 @@ fn open_with(settings: &AppearanceSettings) -> AppearancePage {
         store: Arc::new(JsonStore::new(dir.path())),
         connector: Arc::new(DemoConnector::default()),
         covers: Arc::new(DemoCovers),
+        remote: crate::remote::Remote::default(),
     };
     install(&window, &ctx, settings);
     AppearancePage {

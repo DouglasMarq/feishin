@@ -8,6 +8,9 @@ msgstr ""
 msgid "\"{}\" plays next"
 msgstr "「{}」を次に再生します"
 
+msgid "\"{}\" wants to control this player. Allow it? You will not be asked again for this device."
+msgstr "「{}」がこのプレーヤーの操作を求めています。許可しますか？このデバイスについては今後確認しません。"
+
 msgid "\"{}\" will play next"
 msgstr "「{}」が次に再生されます"
 
@@ -128,6 +131,12 @@ msgstr "アルバム"
 msgid "All genres"
 msgstr "すべてのジャンル"
 
+msgid "Allow"
+msgstr "許可"
+
+msgid "Allow remote control?"
+msgstr "リモート操作を許可しますか？"
+
 msgid "Already at the end"
 msgstr "すでに最後です"
 
@@ -146,6 +155,12 @@ msgstr "アンバー"
 msgid "Appearance"
 msgstr "外観"
 
+msgid "Approved devices"
+msgstr "許可済みのデバイス"
+
+msgid "Approved devices were forgotten"
+msgstr "許可済みのデバイスを削除しました"
+
 msgid "ARTIST"
 msgstr "アーティスト"
 
@@ -154,6 +169,9 @@ msgstr "アーティスト"
 
 msgid "Artists"
 msgstr "アーティスト"
+
+msgid "Ask again before any device can control this player"
+msgstr "デバイスがこのプレーヤーを操作する前に再度確認する"
 
 msgid "Ask the server to transcode down to this bitrate. Applies from the next song."
 msgstr "このビットレート以下にトランスコードするようサーバーに要求します。次の曲から適用されます。"
@@ -221,11 +239,20 @@ msgstr "音楽サーバーに接続"
 msgid "Connecting..."
 msgstr "接続中..."
 
+msgid "Control the music playing on this computer"
+msgstr "このコンピューターで再生中の音楽を操作"
+
+msgid "Control the music playing on {}"
+msgstr "{} で再生中の音楽を操作"
+
 msgid "Could not add to \"{}\": {}"
 msgstr "「{}」に追加できませんでした: {}"
 
 msgid "Could not add {} to the server"
 msgstr "{} をサーバーに追加できませんでした"
+
+msgid "Could not connect to {}: {}"
+msgstr "{} に接続できませんでした: {}"
 
 msgid "Could not create a share link: {}"
 msgstr "共有リンクを作成できませんでした: {}"
@@ -301,6 +328,12 @@ msgstr "トラックを読み込めませんでした: {}"
 
 msgid "Could not load your home: {}"
 msgstr "ホームを読み込めませんでした: {}"
+
+msgid "Could not move the music from {}: {}"
+msgstr "{} から音楽を移動できませんでした: {}"
+
+msgid "Could not move the music: {}"
+msgstr "音楽を移動できませんでした: {}"
 
 msgid "Could not open the folder: {}"
 msgstr "フォルダーを開けませんでした: {}"
@@ -433,6 +466,15 @@ msgstr "削除中..."
 msgid "Demo mode: these picks are made up and play from your demo library"
 msgstr "デモ モード: これらのおすすめは架空のもので、デモ ライブラリから再生されます"
 
+msgid "Devices you allowed can control this player without asking again."
+msgstr "許可したデバイスは確認なしでこのプレーヤーを操作できます。"
+
+msgid "Devices: controlling {}"
+msgstr "デバイス: {} を操作中"
+
+msgid "Devices: this computer"
+msgstr "デバイス: このコンピューター"
+
 msgid "Directory"
 msgstr "ディレクトリ"
 
@@ -526,6 +568,9 @@ msgstr "システムのカラー スキームに従う"
 msgid "For you"
 msgstr "あなたへのおすすめ"
 
+msgid "Forget all"
+msgstr "すべて削除"
+
 msgid "Forget this server?"
 msgstr "このサーバーを削除しますか？"
 
@@ -593,6 +638,24 @@ msgstr "インターフェース"
 msgid "Internet radio"
 msgstr "インターネット ラジオ"
 
+msgid "it did not answer in time"
+msgstr "時間内に応答がありませんでした"
+
+msgid "it is busy with another request"
+msgstr "別のリクエストを処理中です"
+
+msgid "it is connected to a different server"
+msgstr "別のサーバーに接続しています"
+
+msgid "it is not connected to a server"
+msgstr "サーバーに接続していません"
+
+msgid "it runs a different version of Feishin"
+msgstr "異なるバージョンの Feishin を使用しています"
+
+msgid "it stopped"
+msgstr "停止しました"
+
 msgid "item"
 msgstr "アイテム"
 
@@ -604,6 +667,9 @@ msgstr "このステーションをこのデバイスのお気に入りに保存
 
 msgid "Language"
 msgstr "言語"
+
+msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
+msgstr "このネットワーク上の他の Feishin プレーヤーからの操作を許可します。各デバイスは初回に許可を求めます。"
 
 msgid "LIBRARY"
 msgstr "ライブラリ"
@@ -654,6 +720,9 @@ msgstr "ログアウト"
 msgid "Looking up the YouTube link..."
 msgstr "YouTube のリンクを検索中..."
 
+msgid "Lost the connection to {}"
+msgstr "{} との接続が切れました"
+
 msgid "Lyrics"
 msgstr "歌詞"
 
@@ -681,8 +750,23 @@ msgstr "最も多く再生"
 msgid "Move down"
 msgstr "下に移動"
 
+msgid "Move here"
+msgstr "ここに移動"
+
+msgid "Move there"
+msgstr "そちらに移動"
+
 msgid "Move up"
 msgstr "上に移動"
+
+msgid "Move what is playing here to {}"
+msgstr "ここで再生中の音楽を {} に移動"
+
+msgid "Move what is playing on {} to this computer"
+msgstr "{} で再生中の音楽をこのコンピューターに移動"
+
+msgid "Moved the music from {} to this computer"
+msgstr "{} からこのコンピューターに音楽を移動しました"
 
 msgid "MPRIS"
 msgstr "MPRIS"
@@ -735,6 +819,9 @@ msgstr "ジャンルが見つかりません"
 msgid "No lyrics found"
 msgstr "歌詞が見つかりません"
 
+msgid "No other Feishin found on this network"
+msgstr "このネットワークに他の Feishin が見つかりません"
+
 msgid "No playlists found"
 msgstr "プレイリストが見つかりません"
 
@@ -777,8 +864,14 @@ msgstr "トラックまたはアルバムのゲイン タグで音量を正規�
 msgid "Not connected to a server"
 msgstr "サーバーに接続されていません"
 
+msgid "Not connected to another player"
+msgstr "他のプレーヤーに接続していません"
+
 msgid "Nothing is playing"
 msgstr "再生中の曲はありません"
+
+msgid "nothing is playing"
+msgstr "何も再生していません"
 
 msgid "Nothing to add yet"
 msgstr "まだ追加できるものがありません"
@@ -794,6 +887,9 @@ msgstr "まだ再生できるものがありません"
 
 msgid "Nothing to show here right now"
 msgstr "現在表示するものはありません"
+
+msgid "Now playing on {}"
+msgstr "{} で再生中"
 
 msgid "Off"
 msgstr "オフ"
@@ -910,6 +1006,9 @@ msgstr "{} から再生"
 msgid "Play next"
 msgstr "次に再生"
 
+msgid "Play on"
+msgstr "再生先"
+
 msgid "Play the album"
 msgstr "アルバムを再生"
 
@@ -1012,6 +1111,15 @@ msgstr "このセクションを更新"
 
 msgid "Release year"
 msgstr "発売年"
+
+msgid "Remote control"
+msgstr "リモート操作"
+
+msgid "Remote control is unavailable: other players cannot find this one"
+msgstr "リモート操作を利用できません: 他のプレーヤーがこのプレーヤーを見つけられません"
+
+msgid "Remote control is unavailable: the network port could not be opened"
+msgstr "リモート操作を利用できません: ネットワークポートを開けませんでした"
 
 msgid "Remove"
 msgstr "取り除く"
@@ -1317,6 +1425,12 @@ msgstr "システムのデフォルトではデスクトップの言語に従い
 msgid "Tag, for example jazz"
 msgstr "タグ (例: jazz)"
 
+msgid "That device is no longer on the network"
+msgstr "そのデバイスはネットワーク上にありません"
+
+msgid "the connection was not allowed"
+msgstr "接続が許可されませんでした"
+
 msgid "The desktop currently prefers dark."
 msgstr "現在、デスクトップはダークを優先しています。"
 
@@ -1328,6 +1442,9 @@ msgstr "デスクトップに優先設定がないため、ダーク テーマ�
 
 msgid "The library scan is still running on the server"
 msgstr "サーバーでライブラリのスキャンがまだ実行中です"
+
+msgid "the network connection failed"
+msgstr "ネットワーク接続に失敗しました"
 
 msgid "The queue is empty"
 msgstr "キューは空です"
@@ -1349,6 +1466,9 @@ msgstr "テーマ"
 
 msgid "There is nothing to play in this list"
 msgstr "このリストには再生できるものがありません"
+
+msgid "This computer"
+msgstr "このコンピューター"
 
 msgid "This Discover page does not exist"
 msgstr "このディスカバー ページは存在しません"
@@ -1494,6 +1614,9 @@ msgstr[0] "{n} 曲が次に再生されます"
 msgid "{} (current theme)"
 msgstr "{} (現在のテーマ)"
 
+msgid "{} (demo)"
+msgstr "{} (デモ)"
+
 msgid "{} (unavailable)"
 msgstr "{} (利用不可)"
 
@@ -1502,6 +1625,15 @@ msgstr "{1} の {0}"
 
 msgid "{} cannot be played: its stream address is not an internet stream"
 msgstr "{} は再生できません: ストリーム アドレスがインターネット ストリームではありません"
+
+msgid "{} could not do that: {}"
+msgstr "{} はそれを実行できませんでした: {}"
+
+msgid "{} could not take the music: {}"
+msgstr "{} は音楽を引き継げませんでした: {}"
+
+msgid "{} did not answer in time"
+msgstr "{} から時間内に応答がありませんでした"
 
 msgid "{} is shown"
 msgstr "{} を表示中"

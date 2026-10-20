@@ -8,6 +8,9 @@ msgstr ""
 msgid "\"{}\" plays next"
 msgstr "\"{}\" tiks atskaņota nākamā"
 
+msgid "\"{}\" wants to control this player. Allow it? You will not be asked again for this device."
+msgstr "\"{}\" vēlas vadīt šo atskaņotāju. Atļaut? Par šo ierīci vairs netiks jautāts."
+
 msgid "\"{}\" will play next"
 msgstr "\"{}\" tiks atskaņota nākamā"
 
@@ -140,6 +143,12 @@ msgstr "Albumi"
 msgid "All genres"
 msgstr "Visi žanri"
 
+msgid "Allow"
+msgstr "Atļaut"
+
+msgid "Allow remote control?"
+msgstr "Atļaut tālvadību?"
+
 msgid "Already at the end"
 msgstr "Jau beigās"
 
@@ -158,6 +167,12 @@ msgstr "Dzintara"
 msgid "Appearance"
 msgstr "Izskats"
 
+msgid "Approved devices"
+msgstr "Apstiprinātās ierīces"
+
+msgid "Approved devices were forgotten"
+msgstr "Apstiprinātās ierīces tika aizmirstas"
+
 msgid "ARTIST"
 msgstr "IZPILDĪTĀJS"
 
@@ -166,6 +181,9 @@ msgstr "Izpildītājs"
 
 msgid "Artists"
 msgstr "Izpildītāji"
+
+msgid "Ask again before any device can control this player"
+msgstr "Jautāt vēlreiz, pirms kāda ierīce var vadīt šo atskaņotāju"
 
 msgid "Ask the server to transcode down to this bitrate. Applies from the next song."
 msgstr "Lūgt serverim pārkodēt līdz šim bitu pārraides ātrumam. Stājas spēkā no nākamās dziesmas."
@@ -233,11 +251,20 @@ msgstr "Savienoties ar savu mūzikas serveri"
 msgid "Connecting..."
 msgstr "Savieno..."
 
+msgid "Control the music playing on this computer"
+msgstr "Vadīt mūziku, kas skan šajā datorā"
+
+msgid "Control the music playing on {}"
+msgstr "Vadīt mūziku, kas skan ierīcē {}"
+
 msgid "Could not add to \"{}\": {}"
 msgstr "Neizdevās pievienot sarakstam \"{}\": {}"
 
 msgid "Could not add {} to the server"
 msgstr "Neizdevās pievienot {} serverim"
+
+msgid "Could not connect to {}: {}"
+msgstr "Neizdevās savienoties ar {}: {}"
 
 msgid "Could not create a share link: {}"
 msgstr "Neizdevās izveidot kopīgošanas saiti: {}"
@@ -313,6 +340,12 @@ msgstr "Neizdevās ielādēt dziesmas: {}"
 
 msgid "Could not load your home: {}"
 msgstr "Neizdevās ielādēt jūsu sākumu: {}"
+
+msgid "Could not move the music from {}: {}"
+msgstr "Neizdevās pārvietot mūziku no {}: {}"
+
+msgid "Could not move the music: {}"
+msgstr "Neizdevās pārvietot mūziku: {}"
 
 msgid "Could not open the folder: {}"
 msgstr "Neizdevās atvērt mapi: {}"
@@ -449,6 +482,15 @@ msgstr "Dzēš..."
 msgid "Demo mode: these picks are made up and play from your demo library"
 msgstr "Demonstrācijas režīms: šie ieteikumi ir izdomāti un tiek atskaņoti no jūsu demonstrācijas bibliotēkas"
 
+msgid "Devices you allowed can control this player without asking again."
+msgstr "Atļautās ierīces var vadīt šo atskaņotāju, vairs nejautājot."
+
+msgid "Devices: controlling {}"
+msgstr "Ierīces: tiek vadīta {}"
+
+msgid "Devices: this computer"
+msgstr "Ierīces: šis dators"
+
 msgid "Directory"
 msgstr "Katalogs"
 
@@ -542,6 +584,9 @@ msgstr "Sekot sistēmas krāsu shēmai"
 msgid "For you"
 msgstr "Jums"
 
+msgid "Forget all"
+msgstr "Aizmirst visas"
+
 msgid "Forget this server?"
 msgstr "Aizmirst šo serveri?"
 
@@ -611,6 +656,24 @@ msgstr "Saskarne"
 msgid "Internet radio"
 msgstr "Interneta radio"
 
+msgid "it did not answer in time"
+msgstr "tā neatbildēja laikā"
+
+msgid "it is busy with another request"
+msgstr "tā ir aizņemta ar citu pieprasījumu"
+
+msgid "it is connected to a different server"
+msgstr "tā ir savienota ar citu serveri"
+
+msgid "it is not connected to a server"
+msgstr "tā nav savienota ar serveri"
+
+msgid "it runs a different version of Feishin"
+msgstr "tajā ir cita Feishin versija"
+
+msgid "it stopped"
+msgstr "tā apstājās"
+
 msgid "item"
 msgstr "vienums"
 
@@ -622,6 +685,9 @@ msgstr "Saglabāt šo staciju izlasē šajā ierīcē"
 
 msgid "Language"
 msgstr "Valoda"
+
+msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
+msgstr "Ļauj citiem Feishin atskaņotājiem šajā tīklā vadīt šo. Katra ierīce pirmajā reizē lūdz jūsu apstiprinājumu."
 
 msgid "LIBRARY"
 msgstr "BIBLIOTĒKA"
@@ -674,6 +740,9 @@ msgstr "Atteikties"
 msgid "Looking up the YouTube link..."
 msgstr "Meklē YouTube saiti..."
 
+msgid "Lost the connection to {}"
+msgstr "Savienojums ar {} tika zaudēts"
+
 msgid "Lyrics"
 msgstr "Teksti"
 
@@ -701,8 +770,23 @@ msgstr "Visbiežāk atskaņotie"
 msgid "Move down"
 msgstr "Pārvietot lejup"
 
+msgid "Move here"
+msgstr "Pārvietot šeit"
+
+msgid "Move there"
+msgstr "Pārvietot tur"
+
 msgid "Move up"
 msgstr "Pārvietot augšup"
+
+msgid "Move what is playing here to {}"
+msgstr "Pārvietot to, kas skan šeit, uz {}"
+
+msgid "Move what is playing on {} to this computer"
+msgstr "Pārvietot to, kas skan ierīcē {}, uz šo datoru"
+
+msgid "Moved the music from {} to this computer"
+msgstr "Mūzika tika pārvietota no {} uz šo datoru"
 
 msgid "MPRIS"
 msgstr "MPRIS"
@@ -755,6 +839,9 @@ msgstr "Nav atrasts neviens žanrs"
 msgid "No lyrics found"
 msgstr "Nav atrasts teksts"
 
+msgid "No other Feishin found on this network"
+msgstr "Šajā tīklā netika atrasts cits Feishin"
+
 msgid "No playlists found"
 msgstr "Nav atrasts neviens atskaņošanas saraksts"
 
@@ -797,8 +884,14 @@ msgstr "Normalizēt skaļumu, izmantojot dziesmas vai albuma pastiprinājuma bir
 msgid "Not connected to a server"
 msgstr "Nav savienojuma ar serveri"
 
+msgid "Not connected to another player"
+msgstr "Nav savienojuma ar citu atskaņotāju"
+
 msgid "Nothing is playing"
 msgstr "Nekas netiek atskaņots"
+
+msgid "nothing is playing"
+msgstr "nekas neskan"
 
 msgid "Nothing to add yet"
 msgstr "Pagaidām nav ko pievienot"
@@ -814,6 +907,9 @@ msgstr "Pagaidām nav ko atskaņot"
 
 msgid "Nothing to show here right now"
 msgstr "Pašlaik šeit nav ko rādīt"
+
+msgid "Now playing on {}"
+msgstr "Tagad skan ierīcē {}"
 
 msgid "Off"
 msgstr "Izslēgts"
@@ -932,6 +1028,9 @@ msgstr "Atskaņot no {}"
 msgid "Play next"
 msgstr "Atskaņot nākamo"
 
+msgid "Play on"
+msgstr "Atskaņot ierīcē"
+
 msgid "Play the album"
 msgstr "Atskaņot albumu"
 
@@ -1036,6 +1135,15 @@ msgstr "Atsvaidzināt šo sadaļu"
 
 msgid "Release year"
 msgstr "Izdevuma gads"
+
+msgid "Remote control"
+msgstr "Tālvadība"
+
+msgid "Remote control is unavailable: other players cannot find this one"
+msgstr "Tālvadība nav pieejama: citi atskaņotāji nevar atrast šo"
+
+msgid "Remote control is unavailable: the network port could not be opened"
+msgstr "Tālvadība nav pieejama: neizdevās atvērt tīkla portu"
 
 msgid "Remove"
 msgstr "Noņemt"
@@ -1343,6 +1451,12 @@ msgstr "Sistēmas noklusējums seko darbvirsmas valodai."
 msgid "Tag, for example jazz"
 msgstr "Birka, piemēram, jazz"
 
+msgid "That device is no longer on the network"
+msgstr "Šī ierīce vairs nav tīklā"
+
+msgid "the connection was not allowed"
+msgstr "savienojums netika atļauts"
+
 msgid "The desktop currently prefers dark."
 msgstr "Darbvirsma pašlaik dod priekšroku tumšajam."
 
@@ -1354,6 +1468,9 @@ msgstr "Darbvirsmai nav preferenču, tāpēc tiek izmantots tumšais motīvs."
 
 msgid "The library scan is still running on the server"
 msgstr "Bibliotēkas skenēšana serverī joprojām notiek"
+
+msgid "the network connection failed"
+msgstr "tīkla savienojums neizdevās"
 
 msgid "The queue is empty"
 msgstr "Rinda ir tukša"
@@ -1375,6 +1492,9 @@ msgstr "Tēma"
 
 msgid "There is nothing to play in this list"
 msgstr "Šajā sarakstā nav ko atskaņot"
+
+msgid "This computer"
+msgstr "Šis dators"
 
 msgid "This Discover page does not exist"
 msgstr "Šī sadaļas Atklāt lapa nepastāv"
@@ -1538,6 +1658,9 @@ msgstr[2] "{n} dziesmas tiks atskaņotas nākamās"
 msgid "{} (current theme)"
 msgstr "{} (pašreizējais motīvs)"
 
+msgid "{} (demo)"
+msgstr "{} (demo)"
+
 msgid "{} (unavailable)"
 msgstr "{} (nav pieejams)"
 
@@ -1546,6 +1669,15 @@ msgstr "{0} serverī {1}"
 
 msgid "{} cannot be played: its stream address is not an internet stream"
 msgstr "{} nevar atskaņot: tās straumes adrese nav interneta straume"
+
+msgid "{} could not do that: {}"
+msgstr "{} to nevarēja izdarīt: {}"
+
+msgid "{} could not take the music: {}"
+msgstr "{} nevarēja pārņemt mūziku: {}"
+
+msgid "{} did not answer in time"
+msgstr "{} neatbildēja laikā"
 
 msgid "{} is shown"
 msgstr "{} tiek rādīts"

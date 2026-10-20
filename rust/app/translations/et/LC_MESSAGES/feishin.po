@@ -8,6 +8,9 @@ msgstr ""
 msgid "\"{}\" plays next"
 msgstr "\"{}\" esitatakse järgmisena"
 
+msgid "\"{}\" wants to control this player. Allow it? You will not be asked again for this device."
+msgstr "\"{}\" soovib seda mängijat juhtida. Kas lubada? Selle seadme kohta enam ei küsita."
+
 msgid "\"{}\" will play next"
 msgstr "\"{}\" esitatakse järgmisena"
 
@@ -134,6 +137,12 @@ msgstr "Albumid"
 msgid "All genres"
 msgstr "Kõik žanrid"
 
+msgid "Allow"
+msgstr "Luba"
+
+msgid "Allow remote control?"
+msgstr "Kas lubada kaugjuhtimine?"
+
 msgid "Already at the end"
 msgstr "Juba lõpus"
 
@@ -152,6 +161,12 @@ msgstr "Merevaik"
 msgid "Appearance"
 msgstr "Välimus"
 
+msgid "Approved devices"
+msgstr "Lubatud seadmed"
+
+msgid "Approved devices were forgotten"
+msgstr "Lubatud seadmed unustati"
+
 msgid "ARTIST"
 msgstr "ESITAJA"
 
@@ -160,6 +175,9 @@ msgstr "Esitaja"
 
 msgid "Artists"
 msgstr "Esitajad"
+
+msgid "Ask again before any device can control this player"
+msgstr "Küsi uuesti enne, kui mõni seade saab seda mängijat juhtida"
 
 msgid "Ask the server to transcode down to this bitrate. Applies from the next song."
 msgstr "Palu serveril transkodeerida kuni selle bitikiiruseni. Kehtib alates järgmisest laulust."
@@ -227,11 +245,20 @@ msgstr "Ühenda oma muusikaserveriga"
 msgid "Connecting..."
 msgstr "Ühendamine..."
 
+msgid "Control the music playing on this computer"
+msgstr "Juhi selles arvutis mängivat muusikat"
+
+msgid "Control the music playing on {}"
+msgstr "Juhi seadmes {} mängivat muusikat"
+
 msgid "Could not add to \"{}\": {}"
 msgstr "Loendisse \"{}\" lisamine ebaõnnestus: {}"
 
 msgid "Could not add {} to the server"
 msgstr "Jaama {} lisamine serverisse ebaõnnestus"
+
+msgid "Could not connect to {}: {}"
+msgstr "Seadmega {} ei saanud ühendust: {}"
 
 msgid "Could not create a share link: {}"
 msgstr "Jagamislingi loomine ebaõnnestus: {}"
@@ -307,6 +334,12 @@ msgstr "Lugude laadimine ebaõnnestus: {}"
 
 msgid "Could not load your home: {}"
 msgstr "Avalehe laadimine ebaõnnestus: {}"
+
+msgid "Could not move the music from {}: {}"
+msgstr "Muusikat ei saanud seadmest {} teisaldada: {}"
+
+msgid "Could not move the music: {}"
+msgstr "Muusikat ei saanud teisaldada: {}"
 
 msgid "Could not open the folder: {}"
 msgstr "Kausta avamine ebaõnnestus: {}"
@@ -441,6 +474,15 @@ msgstr "Kustutamine..."
 msgid "Demo mode: these picks are made up and play from your demo library"
 msgstr "Demorežiim: need valikud on välja mõeldud ja esitatakse sinu demokogust"
 
+msgid "Devices you allowed can control this player without asking again."
+msgstr "Lubatud seadmed saavad seda mängijat juhtida uuesti küsimata."
+
+msgid "Devices: controlling {}"
+msgstr "Seadmed: juhitakse seadet {}"
+
+msgid "Devices: this computer"
+msgstr "Seadmed: see arvuti"
+
 msgid "Directory"
 msgstr "Kataloog"
 
@@ -534,6 +576,9 @@ msgstr "Järgi süsteemi värviskeemi"
 msgid "For you"
 msgstr "Sinu jaoks"
 
+msgid "Forget all"
+msgstr "Unusta kõik"
+
 msgid "Forget this server?"
 msgstr "Kas unustada see server?"
 
@@ -602,6 +647,24 @@ msgstr "Liides"
 msgid "Internet radio"
 msgstr "Internetiraadio"
 
+msgid "it did not answer in time"
+msgstr "see ei vastanud õigel ajal"
+
+msgid "it is busy with another request"
+msgstr "see on hõivatud teise päringuga"
+
+msgid "it is connected to a different server"
+msgstr "see on ühendatud teise serveriga"
+
+msgid "it is not connected to a server"
+msgstr "see pole ühendatud ühegi serveriga"
+
+msgid "it runs a different version of Feishin"
+msgstr "selles on teine Feishini versioon"
+
+msgid "it stopped"
+msgstr "see peatus"
+
 msgid "item"
 msgstr "üksus"
 
@@ -613,6 +676,9 @@ msgstr "Hoia see jaam selles seadmes lemmikutes"
 
 msgid "Language"
 msgstr "Keel"
+
+msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
+msgstr "Luba teistel selle võrgu Feishini mängijatel seda juhtida. Iga seade küsib esimesel korral sinu luba."
 
 msgid "LIBRARY"
 msgstr "KOGU"
@@ -664,6 +730,9 @@ msgstr "Logi välja"
 msgid "Looking up the YouTube link..."
 msgstr "YouTube'i lingi otsimine..."
 
+msgid "Lost the connection to {}"
+msgstr "Ühendus seadmega {} katkes"
+
 msgid "Lyrics"
 msgstr "Laulusõnad"
 
@@ -691,8 +760,23 @@ msgstr "Enim esitatud"
 msgid "Move down"
 msgstr "Liigu alla"
 
+msgid "Move here"
+msgstr "Teisalda siia"
+
+msgid "Move there"
+msgstr "Teisalda sinna"
+
 msgid "Move up"
 msgstr "Liigu üles"
+
+msgid "Move what is playing here to {}"
+msgstr "Teisalda siin mängiv seadmesse {}"
+
+msgid "Move what is playing on {} to this computer"
+msgstr "Teisalda seadmes {} mängiv sellesse arvutisse"
+
+msgid "Moved the music from {} to this computer"
+msgstr "Muusika teisaldati seadmest {} sellesse arvutisse"
 
 msgid "MPRIS"
 msgstr "MPRIS"
@@ -745,6 +829,9 @@ msgstr "Žanre ei leitud"
 msgid "No lyrics found"
 msgstr "Laulusõnu ei leitud"
 
+msgid "No other Feishin found on this network"
+msgstr "Selles võrgus ei leitud teist Feishini"
+
 msgid "No playlists found"
 msgstr "Esitusloendeid ei leitud"
 
@@ -787,8 +874,14 @@ msgstr "Ühtlusta valjust loo või albumi võimendussiltide abil."
 msgid "Not connected to a server"
 msgstr "Serveriga pole ühendatud"
 
+msgid "Not connected to another player"
+msgstr "Pole ühendatud teise mängijaga"
+
 msgid "Nothing is playing"
 msgstr "Midagi ei mängi"
+
+msgid "nothing is playing"
+msgstr "midagi ei mängi"
 
 msgid "Nothing to add yet"
 msgstr "Veel pole midagi lisada"
@@ -804,6 +897,9 @@ msgstr "Veel pole midagi esitada"
 
 msgid "Nothing to show here right now"
 msgstr "Praegu pole siin midagi näidata"
+
+msgid "Now playing on {}"
+msgstr "Mängib praegu seadmes {}"
 
 msgid "Off"
 msgstr "Väljas"
@@ -921,6 +1017,9 @@ msgstr "Esita alates: {}"
 msgid "Play next"
 msgstr "Esita järgmisena"
 
+msgid "Play on"
+msgstr "Mängi seadmes"
+
 msgid "Play the album"
 msgstr "Esita album"
 
@@ -1024,6 +1123,15 @@ msgstr "Värskenda seda jaotist"
 
 msgid "Release year"
 msgstr "Ilmumisaasta"
+
+msgid "Remote control"
+msgstr "Kaugjuhtimine"
+
+msgid "Remote control is unavailable: other players cannot find this one"
+msgstr "Kaugjuhtimine pole saadaval: teised mängijad ei leia seda"
+
+msgid "Remote control is unavailable: the network port could not be opened"
+msgstr "Kaugjuhtimine pole saadaval: võrguporti ei saanud avada"
 
 msgid "Remove"
 msgstr "Eemalda"
@@ -1330,6 +1438,12 @@ msgstr "Süsteemi vaikeväärtus järgib töölaua keelt."
 msgid "Tag, for example jazz"
 msgstr "Silt, näiteks jazz"
 
+msgid "That device is no longer on the network"
+msgstr "See seade pole enam võrgus"
+
+msgid "the connection was not allowed"
+msgstr "ühendust ei lubatud"
+
 msgid "The desktop currently prefers dark."
 msgstr "Töölaud eelistab praegu tumedat."
 
@@ -1341,6 +1455,9 @@ msgstr "Töölaual pole eelistust, seega kasutatakse tumedat teemat."
 
 msgid "The library scan is still running on the server"
 msgstr "Kogu skannimine serveris veel käib"
+
+msgid "the network connection failed"
+msgstr "võrguühendus ebaõnnestus"
 
 msgid "The queue is empty"
 msgstr "Järjekord on tühi"
@@ -1362,6 +1479,9 @@ msgstr "Teema"
 
 msgid "There is nothing to play in this list"
 msgstr "Selles loendis pole midagi esitada"
+
+msgid "This computer"
+msgstr "See arvuti"
 
 msgid "This Discover page does not exist"
 msgstr "Seda Avasta lehte pole olemas"
@@ -1516,6 +1636,9 @@ msgstr[1] "Järgmisena esitatakse {n} laulu"
 msgid "{} (current theme)"
 msgstr "{} (praegune teema)"
 
+msgid "{} (demo)"
+msgstr "{} (demo)"
+
 msgid "{} (unavailable)"
 msgstr "{} (pole saadaval)"
 
@@ -1524,6 +1647,15 @@ msgstr "{0} aadressil {1}"
 
 msgid "{} cannot be played: its stream address is not an internet stream"
 msgstr "{} ei saa esitada: selle vooaadress ei ole internetivoog"
+
+msgid "{} could not do that: {}"
+msgstr "{} ei saanud seda teha: {}"
+
+msgid "{} could not take the music: {}"
+msgstr "{} ei saanud muusikat üle võtta: {}"
+
+msgid "{} did not answer in time"
+msgstr "{} ei vastanud õigel ajal"
 
 msgid "{} is shown"
 msgstr "{} on kuvatud"

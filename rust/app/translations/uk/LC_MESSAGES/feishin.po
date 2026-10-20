@@ -8,6 +8,9 @@ msgstr ""
 msgid "\"{}\" plays next"
 msgstr "«{}» гратиме наступним"
 
+msgid "\"{}\" wants to control this player. Allow it? You will not be asked again for this device."
+msgstr "«{}» хоче керувати цим плеєром. Дозволити? Для цього пристрою питання більше не з’явиться."
+
 msgid "\"{}\" will play next"
 msgstr "«{}» буде відтворено наступним"
 
@@ -140,6 +143,12 @@ msgstr "Альбоми"
 msgid "All genres"
 msgstr "Усі жанри"
 
+msgid "Allow"
+msgstr "Дозволити"
+
+msgid "Allow remote control?"
+msgstr "Дозволити віддалене керування?"
+
 msgid "Already at the end"
 msgstr "Уже в кінці"
 
@@ -158,6 +167,12 @@ msgstr "Бурштиновий"
 msgid "Appearance"
 msgstr "Вигляд"
 
+msgid "Approved devices"
+msgstr "Дозволені пристрої"
+
+msgid "Approved devices were forgotten"
+msgstr "Дозволені пристрої забуто"
+
 msgid "ARTIST"
 msgstr "ВИКОНАВЕЦЬ"
 
@@ -166,6 +181,9 @@ msgstr "Виконавець"
 
 msgid "Artists"
 msgstr "Виконавці"
+
+msgid "Ask again before any device can control this player"
+msgstr "Знову питати, перш ніж пристрій зможе керувати цим плеєром"
 
 msgid "Ask the server to transcode down to this bitrate. Applies from the next song."
 msgstr "Просити сервер перекодовувати до цього бітрейту. Діє з наступної пісні."
@@ -233,11 +251,20 @@ msgstr "Підключіться до свого музичного сервер
 msgid "Connecting..."
 msgstr "Підключення..."
 
+msgid "Control the music playing on this computer"
+msgstr "Керувати музикою на цьому комп’ютері"
+
+msgid "Control the music playing on {}"
+msgstr "Керувати музикою на {}"
+
 msgid "Could not add to \"{}\": {}"
 msgstr "Не вдалося додати до «{}»: {}"
 
 msgid "Could not add {} to the server"
 msgstr "Не вдалося додати {} на сервер"
+
+msgid "Could not connect to {}: {}"
+msgstr "Не вдалося під’єднатися до {}: {}"
 
 msgid "Could not create a share link: {}"
 msgstr "Не вдалося створити посилання для поширення: {}"
@@ -313,6 +340,12 @@ msgstr "Не вдалося завантажити треки: {}"
 
 msgid "Could not load your home: {}"
 msgstr "Не вдалося завантажити вашу головну: {}"
+
+msgid "Could not move the music from {}: {}"
+msgstr "Не вдалося перенести музику з {}: {}"
+
+msgid "Could not move the music: {}"
+msgstr "Не вдалося перенести музику: {}"
 
 msgid "Could not open the folder: {}"
 msgstr "Не вдалося відкрити папку: {}"
@@ -449,6 +482,15 @@ msgstr "Видалення..."
 msgid "Demo mode: these picks are made up and play from your demo library"
 msgstr "Демо-режим: ці добірки вигадані й відтворюються з вашої демо-бібліотеки"
 
+msgid "Devices you allowed can control this player without asking again."
+msgstr "Дозволені пристрої можуть керувати цим плеєром без повторного питання."
+
+msgid "Devices: controlling {}"
+msgstr "Пристрої: керування {}"
+
+msgid "Devices: this computer"
+msgstr "Пристрої: цей комп’ютер"
+
 msgid "Directory"
 msgstr "Каталог"
 
@@ -542,6 +584,9 @@ msgstr "Дотримуватися колірної схеми системи"
 msgid "For you"
 msgstr "Для вас"
 
+msgid "Forget all"
+msgstr "Забути всі"
+
 msgid "Forget this server?"
 msgstr "Забути цей сервер?"
 
@@ -611,6 +656,24 @@ msgstr "Інтерфейс"
 msgid "Internet radio"
 msgstr "Інтернет-радіо"
 
+msgid "it did not answer in time"
+msgstr "він не відповів вчасно"
+
+msgid "it is busy with another request"
+msgstr "він зайнятий іншим запитом"
+
+msgid "it is connected to a different server"
+msgstr "він під’єднаний до іншого сервера"
+
+msgid "it is not connected to a server"
+msgstr "він не під’єднаний до сервера"
+
+msgid "it runs a different version of Feishin"
+msgstr "на ньому інша версія Feishin"
+
+msgid "it stopped"
+msgstr "він зупинився"
+
 msgid "item"
 msgstr "елемент"
 
@@ -622,6 +685,9 @@ msgstr "Зберігати цю станцію в улюбленому на ць
 
 msgid "Language"
 msgstr "Мова"
+
+msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
+msgstr "Дозволити іншим плеєрам Feishin у цій мережі керувати цим. Кожен пристрій уперше просить вашого дозволу."
 
 msgid "LIBRARY"
 msgstr "БІБЛІОТЕКА"
@@ -674,6 +740,9 @@ msgstr "Вийти"
 msgid "Looking up the YouTube link..."
 msgstr "Пошук посилання YouTube..."
 
+msgid "Lost the connection to {}"
+msgstr "Втрачено з’єднання з {}"
+
 msgid "Lyrics"
 msgstr "Текст пісні"
 
@@ -701,8 +770,23 @@ msgstr "Найчастіше відтворювані"
 msgid "Move down"
 msgstr "Перемістити нижче"
 
+msgid "Move here"
+msgstr "Перенести сюди"
+
+msgid "Move there"
+msgstr "Перенести туди"
+
 msgid "Move up"
 msgstr "Перемістити вище"
+
+msgid "Move what is playing here to {}"
+msgstr "Перенести те, що грає тут, на {}"
+
+msgid "Move what is playing on {} to this computer"
+msgstr "Перенести те, що грає на {}, на цей комп’ютер"
+
+msgid "Moved the music from {} to this computer"
+msgstr "Музику перенесено з {} на цей комп’ютер"
 
 msgid "MPRIS"
 msgstr "MPRIS"
@@ -755,6 +839,9 @@ msgstr "Жанрів не знайдено"
 msgid "No lyrics found"
 msgstr "Текст пісні не знайдено"
 
+msgid "No other Feishin found on this network"
+msgstr "Інших Feishin у цій мережі не знайдено"
+
 msgid "No playlists found"
 msgstr "Плейлистів не знайдено"
 
@@ -797,8 +884,14 @@ msgstr "Вирівнювати гучність за тегами підсиле
 msgid "Not connected to a server"
 msgstr "Немає підключення до сервера"
 
+msgid "Not connected to another player"
+msgstr "Немає з’єднання з іншим плеєром"
+
 msgid "Nothing is playing"
 msgstr "Нічого не відтворюється"
+
+msgid "nothing is playing"
+msgstr "нічого не грає"
 
 msgid "Nothing to add yet"
 msgstr "Поки нічого додавати"
@@ -814,6 +907,9 @@ msgstr "Поки нічого відтворювати"
 
 msgid "Nothing to show here right now"
 msgstr "Зараз тут нічого показати"
+
+msgid "Now playing on {}"
+msgstr "Зараз грає на {}"
 
 msgid "Off"
 msgstr "Вимкнено"
@@ -932,6 +1028,9 @@ msgstr "Відтворити з {}"
 msgid "Play next"
 msgstr "Відтворити наступним"
 
+msgid "Play on"
+msgstr "Відтворювати на"
+
 msgid "Play the album"
 msgstr "Відтворити альбом"
 
@@ -1036,6 +1135,15 @@ msgstr "Оновити цей розділ"
 
 msgid "Release year"
 msgstr "Рік релізу"
+
+msgid "Remote control"
+msgstr "Віддалене керування"
+
+msgid "Remote control is unavailable: other players cannot find this one"
+msgstr "Віддалене керування недоступне: інші плеєри не можуть знайти цей"
+
+msgid "Remote control is unavailable: the network port could not be opened"
+msgstr "Віддалене керування недоступне: не вдалося відкрити мережевий порт"
 
 msgid "Remove"
 msgstr "Видалити"
@@ -1343,6 +1451,12 @@ msgstr "«Як у системі» відповідає мові робочог�
 msgid "Tag, for example jazz"
 msgstr "Тег, наприклад jazz"
 
+msgid "That device is no longer on the network"
+msgstr "Цього пристрою більше немає в мережі"
+
+msgid "the connection was not allowed"
+msgstr "з’єднання не дозволено"
+
 msgid "The desktop currently prefers dark."
 msgstr "Зараз робочий стіл надає перевагу темній темі."
 
@@ -1354,6 +1468,9 @@ msgstr "Робочий стіл не має переваги, тому вико�
 
 msgid "The library scan is still running on the server"
 msgstr "Сканування бібліотеки на сервері ще триває"
+
+msgid "the network connection failed"
+msgstr "помилка мережевого з’єднання"
 
 msgid "The queue is empty"
 msgstr "Черга порожня"
@@ -1375,6 +1492,9 @@ msgstr "Тема"
 
 msgid "There is nothing to play in this list"
 msgstr "У цьому списку нічого відтворювати"
+
+msgid "This computer"
+msgstr "Цей комп’ютер"
 
 msgid "This Discover page does not exist"
 msgstr "Цієї сторінки «Огляду» не існує"
@@ -1538,6 +1658,9 @@ msgstr[2] "{n} пісень буде відтворено наступними"
 msgid "{} (current theme)"
 msgstr "{} (поточна тема)"
 
+msgid "{} (demo)"
+msgstr "{} (демо)"
+
 msgid "{} (unavailable)"
 msgstr "{} (недоступно)"
 
@@ -1546,6 +1669,15 @@ msgstr "{} на {}"
 
 msgid "{} cannot be played: its stream address is not an internet stream"
 msgstr "Неможливо відтворити {}: адреса потоку не є інтернет-трансляцією"
+
+msgid "{} could not do that: {}"
+msgstr "{} не змогло це зробити: {}"
+
+msgid "{} could not take the music: {}"
+msgstr "{} не змогло прийняти музику: {}"
+
+msgid "{} did not answer in time"
+msgstr "{} не відповіло вчасно"
 
 msgid "{} is shown"
 msgstr "Показано: {}"

@@ -8,6 +8,9 @@ msgstr ""
 msgid "\"{}\" plays next"
 msgstr "\"{}\" بعدی پخش می‌شود"
 
+msgid "\"{}\" wants to control this player. Allow it? You will not be asked again for this device."
+msgstr "\"{}\" می‌خواهد این پخش‌کننده را کنترل کند. اجازه می‌دهید؟ برای این دستگاه دوباره پرسیده نمی‌شود."
+
 msgid "\"{}\" will play next"
 msgstr "\"{}\" در نوبت بعد پخش خواهد شد"
 
@@ -134,6 +137,12 @@ msgstr "آلبوم‌ها"
 msgid "All genres"
 msgstr "همه‌ی ژانرها"
 
+msgid "Allow"
+msgstr "اجازه دادن"
+
+msgid "Allow remote control?"
+msgstr "کنترل از راه دور مجاز شود؟"
+
 msgid "Already at the end"
 msgstr "از قبل در انتها است"
 
@@ -152,6 +161,12 @@ msgstr "کهربایی"
 msgid "Appearance"
 msgstr "ظاهر"
 
+msgid "Approved devices"
+msgstr "دستگاه‌های تأییدشده"
+
+msgid "Approved devices were forgotten"
+msgstr "دستگاه‌های تأییدشده فراموش شدند"
+
 msgid "ARTIST"
 msgstr "هنرمند"
 
@@ -160,6 +175,9 @@ msgstr "هنرمند"
 
 msgid "Artists"
 msgstr "هنرمندان"
+
+msgid "Ask again before any device can control this player"
+msgstr "پیش از اینکه هر دستگاهی بتواند این پخش‌کننده را کنترل کند دوباره پرسیده شود"
 
 msgid "Ask the server to transcode down to this bitrate. Applies from the next song."
 msgstr "از سرور می‌خواهد که حداکثر با این نرخ بیت تبدیل کند. از آهنگ بعدی اعمال می‌شود."
@@ -227,11 +245,20 @@ msgstr "به سرور موسیقی خود متصل شوید"
 msgid "Connecting..."
 msgstr "در حال اتصال..."
 
+msgid "Control the music playing on this computer"
+msgstr "کنترل موسیقی در حال پخش روی این رایانه"
+
+msgid "Control the music playing on {}"
+msgstr "کنترل موسیقی در حال پخش روی {}"
+
 msgid "Could not add to \"{}\": {}"
 msgstr "افزودن به \"{}\" ممکن نشد: {}"
 
 msgid "Could not add {} to the server"
 msgstr "افزودن {} به سرور ممکن نشد"
+
+msgid "Could not connect to {}: {}"
+msgstr "اتصال به {} ممکن نشد: {}"
 
 msgid "Could not create a share link: {}"
 msgstr "ساخت پیوند اشتراک‌گذاری ممکن نشد: {}"
@@ -307,6 +334,12 @@ msgstr "بارگذاری قطعه‌ها ممکن نشد: {}"
 
 msgid "Could not load your home: {}"
 msgstr "بارگذاری صفحه‌ی خانه‌ی شما ممکن نشد: {}"
+
+msgid "Could not move the music from {}: {}"
+msgstr "انتقال موسیقی از {} ممکن نشد: {}"
+
+msgid "Could not move the music: {}"
+msgstr "انتقال موسیقی ممکن نشد: {}"
 
 msgid "Could not open the folder: {}"
 msgstr "باز کردن پوشه ممکن نشد: {}"
@@ -441,6 +474,15 @@ msgstr "در حال حذف..."
 msgid "Demo mode: these picks are made up and play from your demo library"
 msgstr "حالت نمایشی: این پیشنهادها ساختگی‌اند و از کتابخانه‌ی نمایشی شما پخش می‌شوند"
 
+msgid "Devices you allowed can control this player without asking again."
+msgstr "دستگاه‌هایی که اجازه داده‌اید می‌توانند بدون پرسش دوباره این پخش‌کننده را کنترل کنند."
+
+msgid "Devices: controlling {}"
+msgstr "دستگاه‌ها: در حال کنترل {}"
+
+msgid "Devices: this computer"
+msgstr "دستگاه‌ها: این رایانه"
+
 msgid "Directory"
 msgstr "دایرکتوری"
 
@@ -534,6 +576,9 @@ msgstr "پیروی از طرح رنگ سیستم"
 msgid "For you"
 msgstr "برای شما"
 
+msgid "Forget all"
+msgstr "فراموش کردن همه"
+
 msgid "Forget this server?"
 msgstr "این سرور فراموش شود؟"
 
@@ -602,6 +647,24 @@ msgstr "رابط کاربری"
 msgid "Internet radio"
 msgstr "رادیوی اینترنتی"
 
+msgid "it did not answer in time"
+msgstr "به‌موقع پاسخ نداد"
+
+msgid "it is busy with another request"
+msgstr "مشغول درخواست دیگری است"
+
+msgid "it is connected to a different server"
+msgstr "به سرور دیگری متصل است"
+
+msgid "it is not connected to a server"
+msgstr "به هیچ سروری متصل نیست"
+
+msgid "it runs a different version of Feishin"
+msgstr "نسخهٔ دیگری از Feishin را اجرا می‌کند"
+
+msgid "it stopped"
+msgstr "متوقف شد"
+
 msgid "item"
 msgstr "مورد"
 
@@ -613,6 +676,9 @@ msgstr "نگه‌داشتن این ایستگاه در علاقه‌مندی‌�
 
 msgid "Language"
 msgstr "زبان"
+
+msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
+msgstr "به دیگر پخش‌کننده‌های Feishin در این شبکه اجازه می‌دهد این یکی را کنترل کنند. هر دستگاه بار اول از شما اجازه می‌گیرد."
 
 msgid "LIBRARY"
 msgstr "کتابخانه"
@@ -664,6 +730,9 @@ msgstr "خروج از حساب"
 msgid "Looking up the YouTube link..."
 msgstr "در حال یافتن پیوند YouTube..."
 
+msgid "Lost the connection to {}"
+msgstr "اتصال به {} قطع شد"
+
 msgid "Lyrics"
 msgstr "متن شعر"
 
@@ -691,8 +760,23 @@ msgstr "بیشتر پخش شده"
 msgid "Move down"
 msgstr "انتقال به پایین"
 
+msgid "Move here"
+msgstr "انتقال به اینجا"
+
+msgid "Move there"
+msgstr "انتقال به آنجا"
+
 msgid "Move up"
 msgstr "انتقال به بالا"
+
+msgid "Move what is playing here to {}"
+msgstr "انتقال آنچه اینجا پخش می‌شود به {}"
+
+msgid "Move what is playing on {} to this computer"
+msgstr "انتقال آنچه روی {} پخش می‌شود به این رایانه"
+
+msgid "Moved the music from {} to this computer"
+msgstr "موسیقی از {} به این رایانه منتقل شد"
 
 msgid "MPRIS"
 msgstr "MPRIS"
@@ -745,6 +829,9 @@ msgstr "ژانری پیدا نشد"
 msgid "No lyrics found"
 msgstr "هیچ متن شعری پیدا نشد"
 
+msgid "No other Feishin found on this network"
+msgstr "Feishin دیگری در این شبکه پیدا نشد"
+
 msgid "No playlists found"
 msgstr "فهرست پخشی پیدا نشد"
 
@@ -787,8 +874,14 @@ msgstr "یکسان‌سازی بلندی صدا با برچسب‌های بهر�
 msgid "Not connected to a server"
 msgstr "به سروری متصل نیست"
 
+msgid "Not connected to another player"
+msgstr "به پخش‌کنندهٔ دیگری متصل نیست"
+
 msgid "Nothing is playing"
 msgstr "چیزی در حال پخش نیست"
+
+msgid "nothing is playing"
+msgstr "چیزی پخش نمی‌شود"
 
 msgid "Nothing to add yet"
 msgstr "هنوز چیزی برای افزودن نیست"
@@ -804,6 +897,9 @@ msgstr "هنوز چیزی برای پخش نیست"
 
 msgid "Nothing to show here right now"
 msgstr "فعلاً چیزی برای نمایش اینجا نیست"
+
+msgid "Now playing on {}"
+msgstr "اکنون در حال پخش روی {}"
 
 msgid "Off"
 msgstr "خاموش"
@@ -921,6 +1017,9 @@ msgstr "پخش از {}"
 msgid "Play next"
 msgstr "پخش در نوبت بعد"
 
+msgid "Play on"
+msgstr "پخش روی"
+
 msgid "Play the album"
 msgstr "پخش آلبوم"
 
@@ -1024,6 +1123,15 @@ msgstr "تازه‌سازی این بخش"
 
 msgid "Release year"
 msgstr "سال انتشار"
+
+msgid "Remote control"
+msgstr "کنترل از راه دور"
+
+msgid "Remote control is unavailable: other players cannot find this one"
+msgstr "کنترل از راه دور در دسترس نیست: دیگر پخش‌کننده‌ها این یکی را پیدا نمی‌کنند"
+
+msgid "Remote control is unavailable: the network port could not be opened"
+msgstr "کنترل از راه دور در دسترس نیست: درگاه شبکه باز نشد"
 
 msgid "Remove"
 msgstr "حذف"
@@ -1330,6 +1438,12 @@ msgstr "پیش‌فرض سیستم از زبان میزکار پیروی می‌
 msgid "Tag, for example jazz"
 msgstr "برچسب، برای مثال jazz"
 
+msgid "That device is no longer on the network"
+msgstr "آن دستگاه دیگر در شبکه نیست"
+
+msgid "the connection was not allowed"
+msgstr "اتصال مجاز نشد"
+
 msgid "The desktop currently prefers dark."
 msgstr "میزکار در حال حاضر حالت تیره را ترجیح می‌دهد."
 
@@ -1341,6 +1455,9 @@ msgstr "میزکار ترجیحی ندارد، بنابراین تم تیره ا
 
 msgid "The library scan is still running on the server"
 msgstr "اسکن کتابخانه هنوز روی سرور در حال اجراست"
+
+msgid "the network connection failed"
+msgstr "اتصال شبکه ناموفق بود"
 
 msgid "The queue is empty"
 msgstr "صف خالی است"
@@ -1362,6 +1479,9 @@ msgstr "تم"
 
 msgid "There is nothing to play in this list"
 msgstr "چیزی برای پخش در این فهرست نیست"
+
+msgid "This computer"
+msgstr "این رایانه"
 
 msgid "This Discover page does not exist"
 msgstr "این صفحه‌ی کاوش وجود ندارد"
@@ -1516,6 +1636,9 @@ msgstr[1] "{n} آهنگ در نوبت بعد پخش خواهد شد"
 msgid "{} (current theme)"
 msgstr "{} (تم کنونی)"
 
+msgid "{} (demo)"
+msgstr "{} (نمایشی)"
+
 msgid "{} (unavailable)"
 msgstr "{} (در دسترس نیست)"
 
@@ -1524,6 +1647,15 @@ msgstr "{} در {}"
 
 msgid "{} cannot be played: its stream address is not an internet stream"
 msgstr "{} قابل پخش نیست: نشانی جریان آن یک جریان اینترنتی نیست"
+
+msgid "{} could not do that: {}"
+msgstr "{} نتوانست این کار را انجام دهد: {}"
+
+msgid "{} could not take the music: {}"
+msgstr "{} نتوانست موسیقی را دریافت کند: {}"
+
+msgid "{} did not answer in time"
+msgstr "{} به‌موقع پاسخ نداد"
 
 msgid "{} is shown"
 msgstr "{} نمایش داده می‌شود"

@@ -1,0 +1,26 @@
+[package]
+name = "feishin-remote"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+
+[dependencies]
+async-trait.workspace = true
+feishin-core.workspace = true
+getrandom = "0.3.4"
+hex = "0.4.3"
+mdns-sd = { version = "0.21", default-features = false, features = ["async"] }
+gethostname = "1.1.0"
+serde.workspace = true
+serde_json.workspace = true
+sha2 = "0.11.1"
+thiserror.workspace = true
+tokio = { workspace = true, features = ["net", "io-util", "sync", "time", "rt"] }
+tracing.workspace = true
+
+[dev-dependencies]
+tokio = { workspace = true, features = ["net", "io-util", "sync", "time", "rt", "macros", "test-util"] }
+
+[lints]
+workspace = true

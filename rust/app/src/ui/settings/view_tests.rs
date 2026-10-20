@@ -37,6 +37,7 @@ fn open_settings_page() -> SettingsPage {
         store: Arc::new(JsonStore::new(dir.path())),
         connector: Arc::new(DemoConnector::default()),
         covers: Arc::new(DemoCovers),
+        remote: crate::remote::Remote::default(),
     };
     let shared = Arc::new(Shared::default());
     install_with(&window, &ctx, &shared);

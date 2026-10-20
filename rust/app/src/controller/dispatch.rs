@@ -44,9 +44,17 @@ impl Controller {
             Command::SaveLanguage(language) => self.save_language(language),
             Command::SaveAppearance(appearance) => self.save_appearance(appearance),
             Command::RemoveServer(server_id) => self.remove_server(&server_id),
+            command => self.dispatch_source_command(command),
+        }
+    }
+
+    fn dispatch_source_command(&mut self, command: Command) {
+        match command {
             Command::Radio(command) => self.on_radio_command(command),
             Command::Tracks(command) => self.on_track_command(command),
             Command::YouTube(command) => self.on_youtube_command(command),
+            Command::Remote(command) => self.on_remote_command(command),
+            _ => tracing::debug!("a command reached the wrong handler"),
         }
     }
 }

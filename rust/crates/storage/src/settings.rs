@@ -92,6 +92,7 @@ pub struct IntegrationSettings {
     pub discord_rich_presence: bool,
     pub discord_client_id: Option<String>,
     pub lyrics_sources: Vec<String>,
+    pub remote_control: bool,
 }
 
 impl Default for IntegrationSettings {
@@ -101,6 +102,7 @@ impl Default for IntegrationSettings {
             discord_rich_presence: false,
             discord_client_id: None,
             lyrics_sources: vec!["server".into(), "lrclib".into(), "netease".into()],
+            remote_control: false,
         }
     }
 }

@@ -11,6 +11,7 @@ use super::view::{PlaybackForm, Shared};
 use super::youtube::apply_youtube;
 use super::youtube_link::{add_link, play_link, play_link_next};
 use crate::controller::Command;
+use crate::remote::RemoteRequest;
 use crate::ui::{AppState, AppWindow, Context, SettingsState, login};
 
 type WindowAction = fn(&AppWindow, &Context, &Arc<Shared>);
@@ -65,6 +66,9 @@ fn apply_integrations(window: &AppWindow, ctx: &Context, shared: &Arc<Shared>) {
     let mut view = shared.view();
     view.settings.integrations.mpris = state.get_mpris();
     view.settings.integrations.discord_rich_presence = state.get_discord();
+    view.settings.integrations.remote_control = state.get_remote_control();
+    ctx.remote
+        .request(RemoteRequest::SetHosting(state.get_remote_control()));
     save_integrations(ctx, &mut view);
 }
 
@@ -143,6 +147,8 @@ pub(super) fn install_with(window: &AppWindow, ctx: &Context, shared: &Arc<Share
     state.on_load(move |_| reload());
     state.on_playback_changed(binding.action(apply_playback));
     state.on_integrations_changed(binding.action(apply_integrations));
+    let forget_ctx = ctx.clone();
+    state.on_forget_devices(move || forget_ctx.remote.request(RemoteRequest::ForgetDevices));
     install_lyrics_source_callbacks(&state, &binding);
     state.on_interface_changed(binding.action(apply_interface));
     state.on_language_changed(binding.action(apply_language));

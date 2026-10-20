@@ -8,6 +8,9 @@ msgstr ""
 msgid "\"{}\" plays next"
 msgstr "\"{}\" vert spelt neste"
 
+msgid "\"{}\" wants to control this player. Allow it? You will not be asked again for this device."
+msgstr "\"{}\" vil styre denne spelaren. Tillate? Du vert ikkje spurd igjen for denne eininga."
+
 msgid "\"{}\" will play next"
 msgstr "\"{}\" vert spelt av som neste"
 
@@ -134,6 +137,12 @@ msgstr "Album"
 msgid "All genres"
 msgstr "Alle sjangrar"
 
+msgid "Allow"
+msgstr "Tillat"
+
+msgid "Allow remote control?"
+msgstr "Tillate fjernstyring?"
+
 msgid "Already at the end"
 msgstr "Allereie på slutten"
 
@@ -152,6 +161,12 @@ msgstr "Rav"
 msgid "Appearance"
 msgstr "Utsjånad"
 
+msgid "Approved devices"
+msgstr "Godkjende einingar"
+
+msgid "Approved devices were forgotten"
+msgstr "Dei godkjende einingane er gløymde"
+
 msgid "ARTIST"
 msgstr "ARTIST"
 
@@ -160,6 +175,9 @@ msgstr "Artist"
 
 msgid "Artists"
 msgstr "Artistar"
+
+msgid "Ask again before any device can control this player"
+msgstr "Spør igjen før ei eining kan styre denne spelaren"
 
 msgid "Ask the server to transcode down to this bitrate. Applies from the next song."
 msgstr "Be tenaren omkode ned til denne bitraten. Gjeld frå neste song."
@@ -227,11 +245,20 @@ msgstr "Kopla til musikktenaren din"
 msgid "Connecting..."
 msgstr "Koplar til..."
 
+msgid "Control the music playing on this computer"
+msgstr "Styr musikken som vert spelt på denne datamaskina"
+
+msgid "Control the music playing on {}"
+msgstr "Styr musikken som vert spelt på {}"
+
 msgid "Could not add to \"{}\": {}"
 msgstr "Kunne ikkje leggje til i \"{}\": {}"
 
 msgid "Could not add {} to the server"
 msgstr "Kunne ikkje leggje {} til på tenaren"
+
+msgid "Could not connect to {}: {}"
+msgstr "Klarte ikkje å kople til {}: {}"
 
 msgid "Could not create a share link: {}"
 msgstr "Kunne ikkje lage delingslenkje: {}"
@@ -307,6 +334,12 @@ msgstr "Kunne ikkje laste spor: {}"
 
 msgid "Could not load your home: {}"
 msgstr "Kunne ikkje laste startsida di: {}"
+
+msgid "Could not move the music from {}: {}"
+msgstr "Klarte ikkje å flytte musikken frå {}: {}"
+
+msgid "Could not move the music: {}"
+msgstr "Klarte ikkje å flytte musikken: {}"
 
 msgid "Could not open the folder: {}"
 msgstr "Kunne ikkje opne mappa: {}"
@@ -441,6 +474,15 @@ msgstr "Slettar..."
 msgid "Demo mode: these picks are made up and play from your demo library"
 msgstr "Demomodus: desse forslaga er oppdikta og vert spelte frå demobiblioteket ditt"
 
+msgid "Devices you allowed can control this player without asking again."
+msgstr "Einingar du har tillate, kan styre denne spelaren utan å spørje igjen."
+
+msgid "Devices: controlling {}"
+msgstr "Einingar: styrer {}"
+
+msgid "Devices: this computer"
+msgstr "Einingar: denne datamaskina"
+
 msgid "Directory"
 msgstr "Katalog"
 
@@ -534,6 +576,9 @@ msgstr "Følg fargeoppsettet til systemet"
 msgid "For you"
 msgstr "For deg"
 
+msgid "Forget all"
+msgstr "Gløym alle"
+
 msgid "Forget this server?"
 msgstr "Gløyme denne tenaren?"
 
@@ -602,6 +647,24 @@ msgstr "Grensesnitt"
 msgid "Internet radio"
 msgstr "Nettradio"
 
+msgid "it did not answer in time"
+msgstr "ho svara ikkje i tide"
+
+msgid "it is busy with another request"
+msgstr "ho er oppteken med ein annan førespurnad"
+
+msgid "it is connected to a different server"
+msgstr "ho er kopla til ein annan tenar"
+
+msgid "it is not connected to a server"
+msgstr "ho er ikkje kopla til nokon tenar"
+
+msgid "it runs a different version of Feishin"
+msgstr "ho køyrer ein annan versjon av Feishin"
+
+msgid "it stopped"
+msgstr "ho stoppa"
+
 msgid "item"
 msgstr "elementet"
 
@@ -613,6 +676,9 @@ msgstr "Ta vare på denne stasjonen i favorittane på denne eininga"
 
 msgid "Language"
 msgstr "Språk"
+
+msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
+msgstr "Lat andre Feishin-spelarar på dette nettverket styre denne. Kvar eining ber om godkjenninga di første gongen."
 
 msgid "LIBRARY"
 msgstr "BIBLIOTEK"
@@ -664,6 +730,9 @@ msgstr "Logg ut"
 msgid "Looking up the YouTube link..."
 msgstr "Slår opp YouTube-lenkja..."
 
+msgid "Lost the connection to {}"
+msgstr "Mista sambandet med {}"
+
 msgid "Lyrics"
 msgstr "Songtekst"
 
@@ -691,8 +760,23 @@ msgstr "Mest spelt"
 msgid "Move down"
 msgstr "Flytt ned"
 
+msgid "Move here"
+msgstr "Flytt hit"
+
+msgid "Move there"
+msgstr "Flytt dit"
+
 msgid "Move up"
 msgstr "Flytt opp"
+
+msgid "Move what is playing here to {}"
+msgstr "Flytt det som vert spelt her, til {}"
+
+msgid "Move what is playing on {} to this computer"
+msgstr "Flytt det som vert spelt på {}, til denne datamaskina"
+
+msgid "Moved the music from {} to this computer"
+msgstr "Musikken vart flytta frå {} til denne datamaskina"
 
 msgid "MPRIS"
 msgstr "MPRIS"
@@ -745,6 +829,9 @@ msgstr "Fann ingen sjangrar"
 msgid "No lyrics found"
 msgstr "Fann ingen songtekst"
 
+msgid "No other Feishin found on this network"
+msgstr "Fann ingen annan Feishin på dette nettverket"
+
 msgid "No playlists found"
 msgstr "Fann ingen spelelister"
 
@@ -787,8 +874,14 @@ msgstr "Normaliser lydstyrken med forsterkingstaggane for spor eller album."
 msgid "Not connected to a server"
 msgstr "Ikkje kopla til ein tenar"
 
+msgid "Not connected to another player"
+msgstr "Ikkje kopla til ein annan spelar"
+
 msgid "Nothing is playing"
 msgstr "Ingenting spelar"
+
+msgid "nothing is playing"
+msgstr "ingenting vert spelt"
 
 msgid "Nothing to add yet"
 msgstr "Ingenting å leggje til enno"
@@ -804,6 +897,9 @@ msgstr "Ingenting å spele av enno"
 
 msgid "Nothing to show here right now"
 msgstr "Ingenting å vise her no"
+
+msgid "Now playing on {}"
+msgstr "Vert spelt no på {}"
 
 msgid "Off"
 msgstr "Av"
@@ -921,6 +1017,9 @@ msgstr "Spel av frå {}"
 msgid "Play next"
 msgstr "Spel av som neste"
 
+msgid "Play on"
+msgstr "Spel på"
+
 msgid "Play the album"
 msgstr "Spel av albumet"
 
@@ -1024,6 +1123,15 @@ msgstr "Oppdater denne delen"
 
 msgid "Release year"
 msgstr "Utgjevingsår"
+
+msgid "Remote control"
+msgstr "Fjernstyring"
+
+msgid "Remote control is unavailable: other players cannot find this one"
+msgstr "Fjernstyring er ikkje tilgjengeleg: andre spelarar finn ikkje denne"
+
+msgid "Remote control is unavailable: the network port could not be opened"
+msgstr "Fjernstyring er ikkje tilgjengeleg: nettverksporten kunne ikkje opnast"
 
 msgid "Remove"
 msgstr "Fjern"
@@ -1330,6 +1438,12 @@ msgstr "Systemstandard følgjer språket på skrivebordet."
 msgid "Tag, for example jazz"
 msgstr "Tagg, til dømes jazz"
 
+msgid "That device is no longer on the network"
+msgstr "Den eininga er ikkje lenger på nettverket"
+
+msgid "the connection was not allowed"
+msgstr "sambandet vart ikkje tillate"
+
 msgid "The desktop currently prefers dark."
 msgstr "Skrivebordet føretrekkjer no mørkt."
 
@@ -1341,6 +1455,9 @@ msgstr "Skrivebordet har ingen preferanse, så det mørke temaet vert brukt."
 
 msgid "The library scan is still running on the server"
 msgstr "Skanninga av biblioteket køyrer framleis på tenaren"
+
+msgid "the network connection failed"
+msgstr "nettverkssambandet mislukkast"
 
 msgid "The queue is empty"
 msgstr "Køen er tom"
@@ -1362,6 +1479,9 @@ msgstr "Tema"
 
 msgid "There is nothing to play in this list"
 msgstr "Det er ingenting å spele av i denne lista"
+
+msgid "This computer"
+msgstr "Denne datamaskina"
 
 msgid "This Discover page does not exist"
 msgstr "Denne Utforsk-sida finst ikkje"
@@ -1516,6 +1636,9 @@ msgstr[1] "{n} songar vert spelte av som neste"
 msgid "{} (current theme)"
 msgstr "{} (gjeldande tema)"
 
+msgid "{} (demo)"
+msgstr "{} (demo)"
+
 msgid "{} (unavailable)"
 msgstr "{} (ikkje tilgjengeleg)"
 
@@ -1524,6 +1647,15 @@ msgstr "{} på {}"
 
 msgid "{} cannot be played: its stream address is not an internet stream"
 msgstr "{} kan ikkje spelast av: straumadressa er ikkje ein internettstraum"
+
+msgid "{} could not do that: {}"
+msgstr "{} klarte ikkje det: {}"
+
+msgid "{} could not take the music: {}"
+msgstr "{} klarte ikkje å ta over musikken: {}"
+
+msgid "{} did not answer in time"
+msgstr "{} svara ikkje i tide"
 
 msgid "{} is shown"
 msgstr "{} vert vist"

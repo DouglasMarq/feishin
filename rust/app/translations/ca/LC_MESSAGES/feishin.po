@@ -8,6 +8,9 @@ msgstr ""
 msgid "\"{}\" plays next"
 msgstr "«{}» sona a continuació"
 
+msgid "\"{}\" wants to control this player. Allow it? You will not be asked again for this device."
+msgstr "\"{}\" vol controlar aquest reproductor. Ho permets? No se't tornarà a preguntar per aquest dispositiu."
+
 msgid "\"{}\" will play next"
 msgstr "«{}» sonarà a continuació"
 
@@ -134,6 +137,12 @@ msgstr "Àlbums"
 msgid "All genres"
 msgstr "Tots els gèneres"
 
+msgid "Allow"
+msgstr "Permet"
+
+msgid "Allow remote control?"
+msgstr "Permetre el control remot?"
+
 msgid "Already at the end"
 msgstr "Ja és al final"
 
@@ -152,6 +161,12 @@ msgstr "Ambre"
 msgid "Appearance"
 msgstr "Aparença"
 
+msgid "Approved devices"
+msgstr "Dispositius aprovats"
+
+msgid "Approved devices were forgotten"
+msgstr "S'han oblidat els dispositius aprovats"
+
 msgid "ARTIST"
 msgstr "ARTISTA"
 
@@ -160,6 +175,9 @@ msgstr "Artista"
 
 msgid "Artists"
 msgstr "Artistes"
+
+msgid "Ask again before any device can control this player"
+msgstr "Torna a preguntar abans que cap dispositiu controli aquest reproductor"
 
 msgid "Ask the server to transcode down to this bitrate. Applies from the next song."
 msgstr "Demana al servidor que transcodifiqui fins a aquesta taxa de bits. S'aplica a partir de la cançó següent."
@@ -227,11 +245,20 @@ msgstr "Connecteu-vos al vostre servidor de música"
 msgid "Connecting..."
 msgstr "S'està connectant..."
 
+msgid "Control the music playing on this computer"
+msgstr "Controla la música que sona en aquest ordinador"
+
+msgid "Control the music playing on {}"
+msgstr "Controla la música que sona a {}"
+
 msgid "Could not add to \"{}\": {}"
 msgstr "No s'ha pogut afegir a «{}»: {}"
 
 msgid "Could not add {} to the server"
 msgstr "No s'ha pogut afegir {} al servidor"
+
+msgid "Could not connect to {}: {}"
+msgstr "No s'ha pogut connectar amb {}: {}"
 
 msgid "Could not create a share link: {}"
 msgstr "No s'ha pogut crear un enllaç per a compartir: {}"
@@ -307,6 +334,12 @@ msgstr "No s'han pogut carregar les pistes: {}"
 
 msgid "Could not load your home: {}"
 msgstr "No s'ha pogut carregar el vostre inici: {}"
+
+msgid "Could not move the music from {}: {}"
+msgstr "No s'ha pogut moure la música des de {}: {}"
+
+msgid "Could not move the music: {}"
+msgstr "No s'ha pogut moure la música: {}"
 
 msgid "Could not open the folder: {}"
 msgstr "No s'ha pogut obrir la carpeta: {}"
@@ -441,6 +474,15 @@ msgstr "S'està eliminant..."
 msgid "Demo mode: these picks are made up and play from your demo library"
 msgstr "Mode de demostració: aquests suggeriments són inventats i sonen des de la vostra biblioteca de demostració"
 
+msgid "Devices you allowed can control this player without asking again."
+msgstr "Els dispositius que has permès poden controlar aquest reproductor sense tornar a preguntar."
+
+msgid "Devices: controlling {}"
+msgstr "Dispositius: controlant {}"
+
+msgid "Devices: this computer"
+msgstr "Dispositius: aquest ordinador"
+
 msgid "Directory"
 msgstr "Directori"
 
@@ -534,6 +576,9 @@ msgstr "Segueix l'esquema de colors del sistema"
 msgid "For you"
 msgstr "Per a vós"
 
+msgid "Forget all"
+msgstr "Oblida'ls tots"
+
 msgid "Forget this server?"
 msgstr "Voleu oblidar aquest servidor?"
 
@@ -602,6 +647,24 @@ msgstr "Interfície"
 msgid "Internet radio"
 msgstr "Ràdio per internet"
 
+msgid "it did not answer in time"
+msgstr "no ha respost a temps"
+
+msgid "it is busy with another request"
+msgstr "està ocupat amb una altra sol·licitud"
+
+msgid "it is connected to a different server"
+msgstr "està connectat a un altre servidor"
+
+msgid "it is not connected to a server"
+msgstr "no està connectat a cap servidor"
+
+msgid "it runs a different version of Feishin"
+msgstr "fa servir una altra versió de Feishin"
+
+msgid "it stopped"
+msgstr "s'ha aturat"
+
 msgid "item"
 msgstr "element"
 
@@ -613,6 +676,9 @@ msgstr "Desa aquesta emissora als preferits d'aquest dispositiu"
 
 msgid "Language"
 msgstr "Llengua"
+
+msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
+msgstr "Permet que altres reproductors Feishin d'aquesta xarxa controlin aquest. Cada dispositiu demana la teva aprovació la primera vegada."
 
 msgid "LIBRARY"
 msgstr "BIBLIOTECA"
@@ -664,6 +730,9 @@ msgstr "Tanca la sessió"
 msgid "Looking up the YouTube link..."
 msgstr "S'està cercant l'enllaç de YouTube..."
 
+msgid "Lost the connection to {}"
+msgstr "S'ha perdut la connexió amb {}"
+
 msgid "Lyrics"
 msgstr "Lletres"
 
@@ -691,8 +760,23 @@ msgstr "Més reproduïts"
 msgid "Move down"
 msgstr "Mou avall"
 
+msgid "Move here"
+msgstr "Mou aquí"
+
+msgid "Move there"
+msgstr "Mou allà"
+
 msgid "Move up"
 msgstr "Mou amunt"
+
+msgid "Move what is playing here to {}"
+msgstr "Mou el que sona aquí a {}"
+
+msgid "Move what is playing on {} to this computer"
+msgstr "Mou el que sona a {} a aquest ordinador"
+
+msgid "Moved the music from {} to this computer"
+msgstr "S'ha mogut la música de {} a aquest ordinador"
 
 msgid "MPRIS"
 msgstr "MPRIS"
@@ -745,6 +829,9 @@ msgstr "No s'ha trobat cap gènere"
 msgid "No lyrics found"
 msgstr "No s'ha trobat cap lletra"
 
+msgid "No other Feishin found on this network"
+msgstr "No s'ha trobat cap altre Feishin en aquesta xarxa"
+
 msgid "No playlists found"
 msgstr "No s'ha trobat cap llista de reproducció"
 
@@ -787,8 +874,14 @@ msgstr "Normalitza el volum amb les etiquetes de guany de la pista o de l'àlbum
 msgid "Not connected to a server"
 msgstr "No esteu connectat a cap servidor"
 
+msgid "Not connected to another player"
+msgstr "No hi ha connexió amb cap altre reproductor"
+
 msgid "Nothing is playing"
 msgstr "No s'està reproduint res"
+
+msgid "nothing is playing"
+msgstr "no sona res"
 
 msgid "Nothing to add yet"
 msgstr "Encara no hi ha res per afegir"
@@ -804,6 +897,9 @@ msgstr "Encara no hi ha res per reproduir"
 
 msgid "Nothing to show here right now"
 msgstr "Ara mateix no hi ha res per mostrar aquí"
+
+msgid "Now playing on {}"
+msgstr "Ara sona a {}"
 
 msgid "Off"
 msgstr "Desactivat"
@@ -921,6 +1017,9 @@ msgstr "Reprodueix des de {}"
 msgid "Play next"
 msgstr "Reprodueix a continuació"
 
+msgid "Play on"
+msgstr "Reprodueix a"
+
 msgid "Play the album"
 msgstr "Reprodueix l'àlbum"
 
@@ -1024,6 +1123,15 @@ msgstr "Actualitza aquesta secció"
 
 msgid "Release year"
 msgstr "Any de llançament"
+
+msgid "Remote control"
+msgstr "Control remot"
+
+msgid "Remote control is unavailable: other players cannot find this one"
+msgstr "Control remot no disponible: els altres reproductors no poden trobar aquest"
+
+msgid "Remote control is unavailable: the network port could not be opened"
+msgstr "Control remot no disponible: no s'ha pogut obrir el port de xarxa"
 
 msgid "Remove"
 msgstr "Treu"
@@ -1330,6 +1438,12 @@ msgstr "El predeterminat del sistema segueix la llengua de l'escriptori."
 msgid "Tag, for example jazz"
 msgstr "Etiqueta, per exemple jazz"
 
+msgid "That device is no longer on the network"
+msgstr "Aquest dispositiu ja no és a la xarxa"
+
+msgid "the connection was not allowed"
+msgstr "no s'ha permès la connexió"
+
 msgid "The desktop currently prefers dark."
 msgstr "Ara l'escriptori prefereix el fosc."
 
@@ -1341,6 +1455,9 @@ msgstr "L'escriptori no té cap preferència, així que s'usa el tema fosc."
 
 msgid "The library scan is still running on the server"
 msgstr "L'escaneig de la biblioteca encara està en curs al servidor"
+
+msgid "the network connection failed"
+msgstr "ha fallat la connexió de xarxa"
 
 msgid "The queue is empty"
 msgstr "La cua és buida"
@@ -1362,6 +1479,9 @@ msgstr "Tema"
 
 msgid "There is nothing to play in this list"
 msgstr "No hi ha res per reproduir en aquesta llista"
+
+msgid "This computer"
+msgstr "Aquest ordinador"
 
 msgid "This Discover page does not exist"
 msgstr "Aquesta pàgina de Descobreix no existeix"
@@ -1516,6 +1636,9 @@ msgstr[1] "{n} cançons sonaran a continuació"
 msgid "{} (current theme)"
 msgstr "{} (tema actual)"
 
+msgid "{} (demo)"
+msgstr "{} (demo)"
+
 msgid "{} (unavailable)"
 msgstr "{} (no disponible)"
 
@@ -1524,6 +1647,15 @@ msgstr "{} a {}"
 
 msgid "{} cannot be played: its stream address is not an internet stream"
 msgstr "No es pot reproduir {}: l'adreça de transmissió no és una transmissió d'internet"
+
+msgid "{} could not do that: {}"
+msgstr "{} no ho ha pogut fer: {}"
+
+msgid "{} could not take the music: {}"
+msgstr "{} no ha pogut rebre la música: {}"
+
+msgid "{} did not answer in time"
+msgstr "{} no ha respost a temps"
 
 msgid "{} is shown"
 msgstr "Es mostra {}"

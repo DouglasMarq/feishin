@@ -23,6 +23,7 @@ import { PlaylistPicker, PlaylistPickerState } from "playlist_picker.slint";
 import { FoldersView } from "folders.slint";
 import { ShareClipboard } from "share.slint";
 import { RadioView } from "radio.slint";
+import { DeviceApprovalDialog, DevicesState } from "devices.slint";
 
 export { Actions, AppState, LoginState, Page, PlayerState, QueueRow, QueueState, Route, TrackRow, TracksState } from "globals.slint";
 export { HomeState } from "home.slint";
@@ -44,6 +45,7 @@ export { AppearanceState, SystemScheme } from "appearance_settings.slint";
 export { FoldersState } from "folders.slint";
 export { ShareState } from "share.slint";
 export { RadioRow, RadioSource, RadioState, RadioTab } from "radio.slint";
+export { DevicesState, RemoteDevice } from "devices.slint";
 
 
 export component AppWindow inherits Window {
@@ -142,6 +144,8 @@ export component AppWindow inherits Window {
         }
 
         if PlaylistPickerState.open: PlaylistPicker { }
+
+        if DevicesState.approval-open: DeviceApprovalDialog { }
 
         ShareClipboard { }
 

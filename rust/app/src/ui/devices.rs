@@ -1,0 +1,63 @@
+use feishin_remote::{DeviceId, DeviceInfo};
+use slint::{ComponentHandle, ModelRc, VecModel};
+
+use super::{AppWindow, Context, DevicesState, RemoteDevice};
+use crate::remote::RemoteRequest;
+
+pub fn install(window: &AppWindow, ctx: &Context) {
+    let state = window.global::<DevicesState>();
+    let with_device = |request: fn(DeviceId) -> RemoteRequest| {
+        let ctx = ctx.clone();
+        move |id: slint::SharedString| ctx.remote.request(request(DeviceId(id.to_string())))
+    };
+    state.on_control_device(with_device(RemoteRequest::Control));
+    state.on_move_playback_to(with_device(RemoteRequest::MovePlaybackTo));
+    let local_ctx = ctx.clone();
+    state.on_control_local(move || local_ctx.remote.request(RemoteRequest::ControlLocal));
+    let here_ctx = ctx.clone();
+    state.on_move_playback_here(move || here_ctx.remote.request(RemoteRequest::MovePlaybackHere));
+    let allow_ctx = ctx.clone();
+    state.on_allow_device(move || allow_ctx.remote.approvals.answer(true));
+    let deny_ctx = ctx.clone();
+    state.on_deny_device(move || deny_ctx.remote.approvals.answer(false));
+}
+
+pub fn show_devices(window: &AppWindow, devices: &[DeviceInfo]) {
+    let rows: Vec<RemoteDevice> = devices
+        .iter()
+        .map(|device| RemoteDevice {
+            id: device.id.0.as_str().into(),
+            name: device.name.as_str().into(),
+        })
+        .collect();
+    window
+        .global::<DevicesState>()
+        .set_devices(ModelRc::new(VecModel::from(rows)));
+}
+
+pub fn show_target(window: &AppWindow, device: Option<&DeviceInfo>) {
+    let state = window.global::<DevicesState>();
+    state.set_controlling(device.is_some());
+    state.set_active_id(
+        device
+            .map(|device| device.id.0.as_str())
+            .unwrap_or_default()
+            .into(),
+    );
+    state.set_active_name(
+        device
+            .map(|device| device.name.as_str())
+            .unwrap_or_default()
+            .into(),
+    );
+}
+
+pub fn show_connecting(window: &AppWindow, connecting: bool) {
+    window.global::<DevicesState>().set_connecting(connecting);
+}
+
+pub fn show_approval(window: &AppWindow, device_name: Option<&str>) {
+    let state = window.global::<DevicesState>();
+    state.set_approval_open(device_name.is_some());
+    state.set_approval_name(device_name.unwrap_or_default().into());
+}

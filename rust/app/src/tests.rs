@@ -11,6 +11,7 @@ mod queue_saves;
 mod queue_scale;
 mod radio;
 mod radio_media;
+mod remote_control;
 mod scrobbling;
 mod server_queue;
 mod shutdown_streams;

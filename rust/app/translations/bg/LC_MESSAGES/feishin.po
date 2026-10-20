@@ -8,6 +8,9 @@ msgstr ""
 msgid "\"{}\" plays next"
 msgstr "„{}“ звучи следващ"
 
+msgid "\"{}\" wants to control this player. Allow it? You will not be asked again for this device."
+msgstr "„{}“ иска да управлява този плейър. Разрешаване? Няма да бъдете питани отново за това устройство."
+
 msgid "\"{}\" will play next"
 msgstr "„{}“ ще се възпроизведе следващ"
 
@@ -134,6 +137,12 @@ msgstr "Албуми"
 msgid "All genres"
 msgstr "Всички жанрове"
 
+msgid "Allow"
+msgstr "Разрешаване"
+
+msgid "Allow remote control?"
+msgstr "Разрешаване на дистанционно управление?"
+
 msgid "Already at the end"
 msgstr "Вече е в края"
 
@@ -152,6 +161,12 @@ msgstr "Кехлибарено"
 msgid "Appearance"
 msgstr "Външен вид"
 
+msgid "Approved devices"
+msgstr "Одобрени устройства"
+
+msgid "Approved devices were forgotten"
+msgstr "Одобрените устройства бяха забравени"
+
 msgid "ARTIST"
 msgstr "ИЗПЪЛНИТЕЛ"
 
@@ -160,6 +175,9 @@ msgstr "Изпълнител"
 
 msgid "Artists"
 msgstr "Изпълнители"
+
+msgid "Ask again before any device can control this player"
+msgstr "Питане отново, преди устройство да може да управлява този плейър"
 
 msgid "Ask the server to transcode down to this bitrate. Applies from the next song."
 msgstr "Сървърът ще прекодира до този битрейт. Важи от следващата песен."
@@ -227,11 +245,20 @@ msgstr "Свържете се с вашия музикален сървър"
 msgid "Connecting..."
 msgstr "Свързване..."
 
+msgid "Control the music playing on this computer"
+msgstr "Управление на музиката на този компютър"
+
+msgid "Control the music playing on {}"
+msgstr "Управление на музиката на {}"
+
 msgid "Could not add to \"{}\": {}"
 msgstr "Неуспешно добавяне в „{}“: {}"
 
 msgid "Could not add {} to the server"
 msgstr "Неуспешно добавяне на {} в сървъра"
+
+msgid "Could not connect to {}: {}"
+msgstr "Неуспешно свързване с {}: {}"
 
 msgid "Could not create a share link: {}"
 msgstr "Неуспешно създаване на връзка за споделяне: {}"
@@ -307,6 +334,12 @@ msgstr "Неуспешно зареждане на песните: {}"
 
 msgid "Could not load your home: {}"
 msgstr "Неуспешно зареждане на началната страница: {}"
+
+msgid "Could not move the music from {}: {}"
+msgstr "Музиката не можа да бъде преместена от {}: {}"
+
+msgid "Could not move the music: {}"
+msgstr "Музиката не можа да бъде преместена: {}"
 
 msgid "Could not open the folder: {}"
 msgstr "Неуспешно отваряне на папката: {}"
@@ -441,6 +474,15 @@ msgstr "Изтриване..."
 msgid "Demo mode: these picks are made up and play from your demo library"
 msgstr "Демо режим: тези предложения са измислени и се възпроизвеждат от демо библиотеката"
 
+msgid "Devices you allowed can control this player without asking again."
+msgstr "Одобрените устройства могат да управляват този плейър без повторно питане."
+
+msgid "Devices: controlling {}"
+msgstr "Устройства: управлявате {}"
+
+msgid "Devices: this computer"
+msgstr "Устройства: този компютър"
+
 msgid "Directory"
 msgstr "Каталог"
 
@@ -534,6 +576,9 @@ msgstr "Следване на цветовата схема на система�
 msgid "For you"
 msgstr "За вас"
 
+msgid "Forget all"
+msgstr "Забравяне на всички"
+
 msgid "Forget this server?"
 msgstr "Да се забрави ли този сървър?"
 
@@ -602,6 +647,24 @@ msgstr "Интерфейс"
 msgid "Internet radio"
 msgstr "Интернет радио"
 
+msgid "it did not answer in time"
+msgstr "не отговори навреме"
+
+msgid "it is busy with another request"
+msgstr "зает е с друга заявка"
+
+msgid "it is connected to a different server"
+msgstr "свързан е с друг сървър"
+
+msgid "it is not connected to a server"
+msgstr "не е свързан със сървър"
+
+msgid "it runs a different version of Feishin"
+msgstr "използва друга версия на Feishin"
+
+msgid "it stopped"
+msgstr "спря"
+
 msgid "item"
 msgstr "елемент"
 
@@ -613,6 +676,9 @@ msgstr "Запазване на тази станция в любимите на
 
 msgid "Language"
 msgstr "Език"
+
+msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
+msgstr "Позволява на други плейъри Feishin в тази мрежа да управляват този. Всяко устройство иска одобрението ви първия път."
 
 msgid "LIBRARY"
 msgstr "БИБЛИОТЕКА"
@@ -664,6 +730,9 @@ msgstr "Изход"
 msgid "Looking up the YouTube link..."
 msgstr "Търсене на връзката в YouTube..."
 
+msgid "Lost the connection to {}"
+msgstr "Връзката с {} беше загубена"
+
 msgid "Lyrics"
 msgstr "Текст"
 
@@ -691,8 +760,23 @@ msgstr "Най-слушани"
 msgid "Move down"
 msgstr "Преместване надолу"
 
+msgid "Move here"
+msgstr "Преместване тук"
+
+msgid "Move there"
+msgstr "Преместване там"
+
 msgid "Move up"
 msgstr "Преместване нагоре"
+
+msgid "Move what is playing here to {}"
+msgstr "Преместване на това, което свири тук, на {}"
+
+msgid "Move what is playing on {} to this computer"
+msgstr "Преместване на това, което свири на {}, на този компютър"
+
+msgid "Moved the music from {} to this computer"
+msgstr "Музиката беше преместена от {} на този компютър"
 
 msgid "MPRIS"
 msgstr "MPRIS"
@@ -745,6 +829,9 @@ msgstr "Не са намерени жанрове"
 msgid "No lyrics found"
 msgstr "Не е намерен текст"
 
+msgid "No other Feishin found on this network"
+msgstr "Не е намерен друг Feishin в тази мрежа"
+
 msgid "No playlists found"
 msgstr "Не са намерени плейлисти"
 
@@ -787,8 +874,14 @@ msgstr "Нормализиране на силата на звука чрез т
 msgid "Not connected to a server"
 msgstr "Няма връзка със сървър"
 
+msgid "Not connected to another player"
+msgstr "Няма връзка с друг плейър"
+
 msgid "Nothing is playing"
 msgstr "Нищо не се възпроизвежда"
+
+msgid "nothing is playing"
+msgstr "нищо не свири"
 
 msgid "Nothing to add yet"
 msgstr "Все още няма какво да се добави"
@@ -804,6 +897,9 @@ msgstr "Все още няма нищо за възпроизвеждане"
 
 msgid "Nothing to show here right now"
 msgstr "В момента тук няма нищо за показване"
+
+msgid "Now playing on {}"
+msgstr "Сега свири на {}"
 
 msgid "Off"
 msgstr "Изкл."
@@ -921,6 +1017,9 @@ msgstr "Възпроизвеждане от {}"
 msgid "Play next"
 msgstr "Възпроизвеждане следващ"
 
+msgid "Play on"
+msgstr "Възпроизвеждане на"
+
 msgid "Play the album"
 msgstr "Възпроизвеждане на албума"
 
@@ -1024,6 +1123,15 @@ msgstr "Опресняване на този раздел"
 
 msgid "Release year"
 msgstr "Година на издаване"
+
+msgid "Remote control"
+msgstr "Дистанционно управление"
+
+msgid "Remote control is unavailable: other players cannot find this one"
+msgstr "Дистанционното управление не е налично: другите плейъри не могат да намерят този"
+
+msgid "Remote control is unavailable: the network port could not be opened"
+msgstr "Дистанционното управление не е налично: мрежовият порт не можа да бъде отворен"
 
 msgid "Remove"
 msgstr "Премахване"
@@ -1330,6 +1438,12 @@ msgstr "„По подразбиране за системата“ следва
 msgid "Tag, for example jazz"
 msgstr "Етикет, например jazz"
 
+msgid "That device is no longer on the network"
+msgstr "Това устройство вече не е в мрежата"
+
+msgid "the connection was not allowed"
+msgstr "връзката не беше разрешена"
+
 msgid "The desktop currently prefers dark."
 msgstr "В момента работният плот предпочита тъмна тема."
 
@@ -1341,6 +1455,9 @@ msgstr "Работният плот няма предпочитание, зат�
 
 msgid "The library scan is still running on the server"
 msgstr "Сканирането на библиотеката все още се изпълнява на сървъра"
+
+msgid "the network connection failed"
+msgstr "мрежовата връзка се провали"
 
 msgid "The queue is empty"
 msgstr "Опашката е празна"
@@ -1362,6 +1479,9 @@ msgstr "Тема"
 
 msgid "There is nothing to play in this list"
 msgstr "В този списък няма нищо за възпроизвеждане"
+
+msgid "This computer"
+msgstr "Този компютър"
 
 msgid "This Discover page does not exist"
 msgstr "Тази страница от „Откриване“ не съществува"
@@ -1516,6 +1636,9 @@ msgstr[1] "{n} песни ще се възпроизведат след теку
 msgid "{} (current theme)"
 msgstr "{} (текуща тема)"
 
+msgid "{} (demo)"
+msgstr "{} (демо)"
+
 msgid "{} (unavailable)"
 msgstr "{} (недостъпно)"
 
@@ -1524,6 +1647,15 @@ msgstr "{} на {}"
 
 msgid "{} cannot be played: its stream address is not an internet stream"
 msgstr "{} не може да се възпроизведе: адресът на потока не е интернет поток"
+
+msgid "{} could not do that: {}"
+msgstr "{} не можа да направи това: {}"
+
+msgid "{} could not take the music: {}"
+msgstr "{} не можа да поеме музиката: {}"
+
+msgid "{} did not answer in time"
+msgstr "{} не отговори навреме"
 
 msgid "{} is shown"
 msgstr "Показва се {}"

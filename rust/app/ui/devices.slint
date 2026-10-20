@@ -1,0 +1,236 @@
+import { Theme } from "theme.slint";
+import { IconButton, TooltipAnchor } from "widgets.slint";
+import { DialogButtons, Modal } from "playlist_picker.slint";
+
+export struct RemoteDevice {
+    id: string,
+    name: string,
+}
+
+export global DevicesState {
+    in property <[RemoteDevice]> devices;
+    in property <string> active-id;
+    in property <string> active-name;
+    in property <bool> controlling;
+    in property <bool> connecting;
+    in property <bool> approval-open;
+    in property <string> approval-name;
+    out property <string> icon: "M4 6h18V4H4c-1.1 0-2 .9-2 2v11H0v3h14v-3H4V6zm19 2h-6c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h6c.55 0 1-.45 1-1V9c0-.55-.45-1-1-1zm-1 9h-4v-7h4v7z";
+    callback control-device(string);
+    callback move-playback-to(string);
+    callback control-local();
+    callback move-playback-here();
+    callback allow-device();
+    callback deny-device();
+}
+
+export component TextAction inherits Rectangle {
+    in property <string> text;
+    in property <string> tooltip;
+    in property <bool> enabled: true;
+    callback clicked();
+    accessible-role: button;
+    accessible-label: root.text;
+    accessible-action-default => {
+        if (root.enabled) {
+            root.clicked();
+        }
+    }
+    height: 26px;
+    width: label.preferred-width + 16px;
+    border-radius: 4px;
+    border-width: 1px;
+    border-color: Theme.border;
+    background: touch.has-hover && root.enabled ? Theme.hover : transparent;
+    opacity: root.enabled ? 1 : 0.5;
+
+    label := Text {
+        text: root.text;
+        color: Theme.foreground;
+        font-size: 12px;
+        vertical-alignment: center;
+        horizontal-alignment: center;
+    }
+
+    touch := TouchArea {
+        enabled: root.enabled;
+        mouse-cursor: pointer;
+        clicked => {
+            root.clicked();
+        }
+    }
+
+    TooltipAnchor {
+        text: root.tooltip;
+        hovered: touch.has-hover;
+    }
+}
+
+component DeviceRow inherits Rectangle {
+    in property <string> name;
+    in property <bool> active;
+    in property <string> tooltip;
+    in property <bool> show-action;
+    in property <string> action-text;
+    in property <string> action-tooltip;
+    callback clicked();
+    callback action();
+    height: 36px;
+    border-radius: 4px;
+    background: touch.has-hover ? Theme.hover : transparent;
+
+    touch := TouchArea {
+        mouse-cursor: pointer;
+        clicked => {
+            root.clicked();
+        }
+    }
+
+    TooltipAnchor {
+        text: root.tooltip;
+        hovered: touch.has-hover;
+    }
+
+    HorizontalLayout {
+        padding-left: 10px;
+        padding-right: 6px;
+        spacing: 8px;
+
+        Text {
+            text: root.name;
+            color: root.active ? Theme.primary : Theme.foreground;
+            font-weight: root.active ? 600 : 400;
+            vertical-alignment: center;
+            overflow: elide;
+            horizontal-stretch: 1;
+        }
+
+        if root.show-action: TextAction {
+            y: (parent.height - self.height) / 2;
+            text: root.action-text;
+            tooltip: root.action-tooltip;
+            clicked => {
+                root.action();
+            }
+        }
+    }
+}
+
+export component DevicesButton inherits Rectangle {
+    property <length> menu-width: 300px;
+    height: 32px;
+    width: row.preferred-width;
+
+    row := HorizontalLayout {
+        spacing: 4px;
+
+        IconButton {
+            icon: DevicesState.icon;
+            active: DevicesState.controlling;
+            tooltip: DevicesState.controlling ? @tr("Devices: controlling {}", DevicesState.active-name) : @tr("Devices: this computer");
+            clicked => {
+                menu.show();
+            }
+        }
+
+        if DevicesState.controlling: Text {
+            text: DevicesState.active-name;
+            color: Theme.primary;
+            font-size: 11px;
+            vertical-alignment: center;
+            overflow: elide;
+        }
+    }
+
+    menu := PopupWindow {
+        x: root.width - root.menu-width;
+        y: -self.height - 8px;
+        width: root.menu-width;
+        height: list.preferred-height;
+
+        Rectangle {
+            background: Theme.surface-raised;
+            border-radius: Theme.radius;
+            border-width: 1px;
+            border-color: Theme.border;
+        }
+
+        list := VerticalLayout {
+            padding: 8px;
+            spacing: 2px;
+
+            Text {
+                text: @tr("Play on");
+                color: Theme.muted;
+                font-size: 11px;
+                font-weight: 600;
+            }
+
+            DeviceRow {
+                name: @tr("This computer");
+                active: !DevicesState.controlling;
+                tooltip: @tr("Control the music playing on this computer");
+                show-action: DevicesState.controlling;
+                action-text: @tr("Move here");
+                action-tooltip: @tr("Move what is playing on {} to this computer", DevicesState.active-name);
+                clicked => {
+                    DevicesState.control-local();
+                }
+                action => {
+                    DevicesState.move-playback-here();
+                }
+            }
+
+            for device in DevicesState.devices: DeviceRow {
+                name: device.name;
+                active: DevicesState.controlling && DevicesState.active-id == device.id;
+                tooltip: @tr("Control the music playing on {}", device.name);
+                show-action: !(DevicesState.controlling && DevicesState.active-id == device.id);
+                action-text: @tr("Move there");
+                action-tooltip: @tr("Move what is playing here to {}", device.name);
+                clicked => {
+                    DevicesState.control-device(device.id);
+                }
+                action => {
+                    DevicesState.move-playback-to(device.id);
+                }
+            }
+
+            if DevicesState.devices.length == 0: Text {
+                text: @tr("No other Feishin found on this network");
+                color: Theme.muted;
+                font-size: 12px;
+                wrap: word-wrap;
+            }
+
+            if DevicesState.connecting: Text {
+                text: @tr("Connecting...");
+                color: Theme.muted;
+                font-size: 12px;
+            }
+        }
+    }
+}
+
+export component DeviceApprovalDialog inherits Modal {
+    title: @tr("Allow remote control?");
+    cancel => {
+        DevicesState.deny-device();
+    }
+
+    Text {
+        text: @tr("\"{}\" wants to control this player. Allow it? You will not be asked again for this device.", DevicesState.approval-name);
+        color: Theme.foreground;
+        wrap: word-wrap;
+    }
+
+    DialogButtons {
+        confirm-text: @tr("Allow");
+        cancel => {
+            DevicesState.deny-device();
+        }
+        confirm => {
+            DevicesState.allow-device();
+        }
+    }
+}

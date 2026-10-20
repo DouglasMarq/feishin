@@ -82,6 +82,7 @@ fn demo_context(
         store: Arc::new(JsonStore::new(store_dir.path())),
         connector: Arc::new(DemoConnector::default()),
         covers: Arc::new(DemoCovers),
+        remote: crate::remote::Remote::default(),
     };
     (ctx, received)
 }

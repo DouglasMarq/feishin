@@ -1,5 +1,6 @@
 use std::sync::Arc;
 
+use feishin_remote::ServerKey;
 use feishin_storage::settings::{Settings, UiSettings};
 use slint::ComponentHandle;
 use tokio::sync::mpsc::UnboundedSender;
@@ -7,6 +8,7 @@ use tokio::sync::mpsc::UnboundedSender;
 use crate::connect::Connector;
 use crate::controller::Command;
 use crate::covers::CoverProvider;
+use crate::remote::Remote;
 use crate::session::Session;
 use crate::store::Store;
 
@@ -23,6 +25,7 @@ pub mod albums;
 pub mod appearance;
 pub mod artist_detail;
 pub mod artists;
+pub mod devices;
 pub mod discover;
 pub mod favorites;
 pub mod folders;
@@ -58,10 +61,24 @@ pub struct Context {
     pub store: Arc<dyn Store>,
     pub connector: Arc<dyn Connector>,
     pub covers: Arc<dyn CoverProvider>,
+    pub remote: Remote,
 }
 
 impl Context {
     pub fn send(&self, command: Command) {
+        let routed = match self.remote.target.is_remote() {
+            true => {
+                let local_server = self
+                    .session
+                    .get()
+                    .map(|server| ServerKey::of(server.config()));
+                self.remote.target.route(command, local_server.as_ref())
+            }
+            false => Some(command),
+        };
+        let Some(command) = routed else {
+            return;
+        };
         if self.commands.send(command).is_err() {
             tracing::warn!("controller is gone; command dropped");
         }
@@ -104,6 +121,7 @@ pub fn install(window: &AppWindow, ctx: &Context, settings: &Settings) {
     now_playing::install(window, ctx);
     appearance::install(window, ctx, &settings.appearance);
     radio::install(window, ctx);
+    devices::install(window, ctx);
     window
         .global::<AppState>()
         .set_queue_open(settings.ui.queue_panel_open);
