@@ -1,5 +1,6 @@
 use std::collections::HashMap;
 use std::sync::{Arc, Mutex};
+use std::time::Duration;
 
 use lru::LruCache;
 use tokio::sync::OnceCell;
@@ -9,6 +10,9 @@ use super::image_file::{cache_file_name, decode, mark_recently_used};
 use super::locking::{lock, run_blocking};
 use super::{CoverCacheConfig, DecodedImage};
 use crate::{Result, StorageError, write_atomic};
+
+const DOWNLOAD_TIMEOUT: Duration = Duration::from_secs(30);
+pub(super) const MAX_COVER_BYTES: usize = 32 * 1024 * 1024;
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub(super) struct ImageKey {
@@ -78,11 +82,12 @@ impl CacheState {
         let response = self
             .client
             .get(url)
+            .timeout(DOWNLOAD_TIMEOUT)
             .send()
             .await
             .and_then(reqwest::Response::error_for_status)
             .map_err(network_error)?;
-        let bytes = response.bytes().await.map_err(network_error)?;
+        let bytes = capped_body(response).await?;
         let state = Arc::clone(self);
         run_blocking(move || state.decode_and_store(&file_name, &bytes, size)).await
     }
@@ -127,6 +132,19 @@ impl CacheState {
     }
 }
 
+async fn capped_body(mut response: reqwest::Response) -> Result<Vec<u8>> {
+    let mut body = Vec::new();
+    while let Some(chunk) = response.chunk().await.map_err(network_error)? {
+        if body.len().saturating_add(chunk.len()) > MAX_COVER_BYTES {
+            return Err(StorageError::Invalid(format!(
+                "the cover is larger than {MAX_COVER_BYTES} bytes"
+            )));
+        }
+        body.extend_from_slice(&chunk);
+    }
+    Ok(body)
+}
+
 fn network_error(error: reqwest::Error) -> StorageError {
-    StorageError::Network(error.to_string())
+    StorageError::Network(error.without_url().to_string())
 }

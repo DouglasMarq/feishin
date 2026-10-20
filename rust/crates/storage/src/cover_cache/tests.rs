@@ -6,6 +6,7 @@ use image::{ImageFormat, Rgba, RgbaImage};
 use wiremock::matchers::{method, path};
 use wiremock::{Mock, MockServer, ResponseTemplate};
 
+use super::cache_state::MAX_COVER_BYTES;
 use super::image_file::cache_file_name;
 use super::*;
 use crate::StorageError;
@@ -285,4 +286,36 @@ async fn corrupt_disk_file_is_replaced_by_a_download() {
         std::fs::read(directory.path().join(cache_file_name("c", 16))).unwrap(),
         png(16, 16)
     );
+}
+
+#[tokio::test]
+async fn given_a_cover_larger_than_the_cap_it_is_rejected_and_not_stored() {
+    let server = MockServer::start().await;
+    let mut oversized = png(8, 8);
+    oversized.resize(MAX_COVER_BYTES + 1, 0);
+    serve(&server, "/huge", oversized, 1).await;
+    let directory = tempfile::tempdir().unwrap();
+    let cache = cache(directory.path(), u64::MAX, 4);
+
+    let loaded = cache
+        .get("huge", &format!("{}/huge", server.uri()), 8)
+        .await;
+
+    assert!(matches!(loaded, Err(StorageError::Invalid(_))));
+    assert!(files_in(directory.path()).is_empty());
+}
+
+#[tokio::test]
+async fn given_a_network_failure_the_error_has_no_credentials() {
+    let unreachable = std::net::TcpListener::bind("127.0.0.1:0")
+        .and_then(|listener| listener.local_addr())
+        .unwrap();
+    let directory = tempfile::tempdir().unwrap();
+    let cache = cache(directory.path(), 10 << 20, 4);
+    let url = format!("http://{unreachable}/rest/getCoverArt.view?u=feishin&t=secret-token");
+
+    let error = cache.get("c", &url, 8).await.unwrap_err();
+
+    assert!(matches!(error, StorageError::Network(_)));
+    assert!(!error.to_string().contains("secret-token"), "{error}");
 }
