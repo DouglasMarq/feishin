@@ -1,5 +1,9 @@
+use std::ops::RangeInclusive;
+
 const DEFAULT_LANGUAGE: &str = "en";
 const LOCALE_VARIABLES: [&str; 3] = ["LC_ALL", "LC_MESSAGES", "LANG"];
+const LANGUAGE_CODE_LENGTHS: RangeInclusive<usize> = 2..=3;
+const REGION_CODE_LENGTHS: RangeInclusive<usize> = 2..=2;
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct MusicLocale {
@@ -31,11 +35,11 @@ impl SystemLocale {
         let mut parts = name.split(['_', '-']);
         let language = parts
             .next()
-            .filter(|language| is_letters(language, 2..=3))
+            .filter(|language| is_letters(language, LANGUAGE_CODE_LENGTHS))
             .map(str::to_ascii_lowercase);
         let region = parts
             .next()
-            .filter(|region| is_letters(region, 2..=2))
+            .filter(|region| is_letters(region, REGION_CODE_LENGTHS))
             .map(str::to_ascii_uppercase);
         Self { language, region }
     }
@@ -47,7 +51,7 @@ impl SystemLocale {
     }
 }
 
-fn is_letters(text: &str, lengths: std::ops::RangeInclusive<usize>) -> bool {
+fn is_letters(text: &str, lengths: RangeInclusive<usize>) -> bool {
     lengths.contains(&text.len())
         && text
             .chars()

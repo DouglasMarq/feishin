@@ -4,6 +4,7 @@ mod youtube;
 use std::time::Duration;
 
 use feishin_api::TranscodeFormat;
+use feishin_core::DEFAULT_VOLUME;
 use feishin_core::model::{RadioStation, ServerConfig};
 use serde::{Deserialize, Deserializer, Serialize};
 
@@ -15,6 +16,7 @@ pub use youtube::YouTubeSettings;
 
 pub const SETTINGS_FILE: &str = "settings.toml";
 pub const MAX_CROSSFADE_SECONDS: u8 = 12;
+const DEFAULT_COLUMN_WIDTH: f32 = 100.0;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default, Serialize, Deserialize)]
 pub enum ReplayGainSetting {
@@ -27,7 +29,8 @@ pub enum ReplayGainSetting {
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(default)]
 pub struct PlaybackSettings {
-    pub volume: u8,
+    #[serde(rename = "volume")]
+    pub volume_percent: u8,
     pub muted: bool,
     pub replay_gain: ReplayGainSetting,
     pub gapless: bool,
@@ -61,7 +64,7 @@ fn known_transcode_format<'de, FormatDeserializer: Deserializer<'de>>(
 impl Default for PlaybackSettings {
     fn default() -> Self {
         Self {
-            volume: 70,
+            volume_percent: DEFAULT_VOLUME,
             muted: false,
             replay_gain: ReplayGainSetting::Off,
             gapless: true,
@@ -77,14 +80,14 @@ impl Default for PlaybackSettings {
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct ColumnSetting {
     pub id: String,
-    #[serde(default = "default_column_width")]
-    pub width: f32,
+    #[serde(rename = "width", default = "default_column_width")]
+    pub width_pixels: f32,
     #[serde(default = "visible_by_default")]
     pub visible: bool,
 }
 
 fn default_column_width() -> f32 {
-    100.0
+    DEFAULT_COLUMN_WIDTH
 }
 
 fn visible_by_default() -> bool {
@@ -95,7 +98,8 @@ fn visible_by_default() -> bool {
 #[serde(default)]
 pub struct UiSettings {
     pub track_columns: Vec<ColumnSetting>,
-    pub sidebar_width: Option<f32>,
+    #[serde(rename = "sidebar_width")]
+    pub sidebar_width_pixels: Option<f32>,
     pub queue_panel_open: bool,
     pub follow_current_song: bool,
     pub language: Option<String>,
@@ -189,7 +193,7 @@ mod tests {
             }],
             current_server_id: Some("abc".into()),
             playback: PlaybackSettings {
-                volume: 42,
+                volume_percent: 42,
                 replay_gain: ReplayGainSetting::Album,
                 audio_device: Some("pulse/sink".into()),
                 max_bitrate_kbps: Some(320),
@@ -200,10 +204,10 @@ mod tests {
             ui: UiSettings {
                 track_columns: vec![ColumnSetting {
                     id: "title".into(),
-                    width: 250.5,
+                    width_pixels: 250.5,
                     visible: true,
                 }],
-                sidebar_width: Some(220.0),
+                sidebar_width_pixels: Some(220.0),
                 queue_panel_open: true,
                 follow_current_song: true,
                 language: Some("pt-BR".into()),
@@ -289,7 +293,7 @@ a = 1
         .unwrap();
         let settings = Settings::load(&paths).unwrap();
         assert_eq!(settings.current_server_id.as_deref(), Some("x"));
-        assert_eq!(settings.playback.volume, 10);
+        assert_eq!(settings.playback.volume_percent, 10);
         assert!(settings.playback.gapless);
         assert!(settings.playback.scrobble);
         assert_eq!(settings.playback.crossfade(), Duration::ZERO);
@@ -297,7 +301,7 @@ a = 1
             settings.ui.track_columns,
             vec![ColumnSetting {
                 id: "artist".into(),
-                width: 100.0,
+                width_pixels: 100.0,
                 visible: true,
             }]
         );
@@ -325,6 +329,9 @@ max_bitrate_kbps = 320
 transcode_format = "opus"
 scrobble = true
 crossfade_seconds = 5
+
+[ui]
+sidebar_width = 220.0
 
 [[ui.track_columns]]
 id = "title"
@@ -365,7 +372,7 @@ remote_control = false
             settings.ui.track_columns[1],
             ColumnSetting {
                 id: "plays".into(),
-                width: 64.0,
+                width_pixels: 64.0,
                 visible: false,
             }
         );
@@ -391,6 +398,33 @@ remote_control = false
         assert!(saved.contains(r#""genius","#), "{saved}");
         assert!(saved.contains(r#""netease","#), "{saved}");
         assert!(saved.contains(r#"id = "plays""#), "{saved}");
+    }
+
+    #[test]
+    fn given_a_previous_release_file_its_volume_and_widths_load_into_the_renamed_fields() {
+        let (_directory, paths) = temp_paths();
+        write_settings(&paths, PREVIOUS_RELEASE_SETTINGS);
+
+        let settings = Settings::load(&paths).unwrap();
+
+        assert_eq!(settings.playback.volume_percent, 42);
+        assert_eq!(settings.ui.sidebar_width_pixels, Some(220.0));
+        assert_eq!(settings.ui.track_columns[0].width_pixels, 250.5);
+    }
+
+    #[test]
+    fn given_renamed_volume_and_widths_they_are_saved_with_the_previous_release_names() {
+        let (_directory, paths) = temp_paths();
+        write_settings(&paths, PREVIOUS_RELEASE_SETTINGS);
+        Settings::load(&paths).unwrap().save(&paths).unwrap();
+
+        let saved = std::fs::read_to_string(paths.config_dir.join(SETTINGS_FILE)).unwrap();
+
+        assert!(saved.contains("volume = 42\n"), "{saved}");
+        assert!(saved.contains("sidebar_width = 220.0\n"), "{saved}");
+        assert!(saved.contains("width = 250.5\n"), "{saved}");
+        assert!(!saved.contains("_pixels"), "{saved}");
+        assert!(!saved.contains("_percent"), "{saved}");
     }
 
     #[test]

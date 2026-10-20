@@ -1,16 +1,21 @@
 use feishin_api::{ApiError, Result};
+use reqwest::StatusCode;
 use serde_json::Value;
 
 const MAX_ERROR_BODY_CHARS: usize = 200;
 const MISSING_ENVELOPE_MESSAGE: &str = "missing subsonic-response";
+const GENERIC_ERROR_CODE: i32 = 0;
+const FIRST_AUTH_CODE: i32 = 40;
+const LAST_AUTH_CODE: i32 = 44;
 const NOT_AUTHORIZED_CODE: i32 = 50;
+const NOT_FOUND_CODE: i32 = 70;
 
 pub struct SubsonicEnvelope {
     pub body: Value,
     pub tolerated_failure_message: Option<String>,
 }
 
-pub fn unwrap_subsonic_response(http_status: u16, text: &str) -> Result<SubsonicEnvelope> {
+pub fn unwrap_subsonic_response(http_status: StatusCode, text: &str) -> Result<SubsonicEnvelope> {
     let body = match extract_subsonic_response(text) {
         Ok(Some(body)) => body,
         Ok(None) => return Err(missing_envelope_error(http_status, text, None)),
@@ -36,18 +41,20 @@ fn extract_subsonic_response(text: &str) -> serde_json::Result<Option<Value>> {
 }
 
 fn missing_envelope_error(
-    http_status: u16,
+    http_status: StatusCode,
     text: &str,
     parse_error: Option<serde_json::Error>,
 ) -> ApiError {
     match http_status {
-        401 | 403 => ApiError::Auth(format!("HTTP {http_status}")),
-        404 => ApiError::NotFound,
-        200..=299 => ApiError::Decode(
+        StatusCode::UNAUTHORIZED | StatusCode::FORBIDDEN => {
+            ApiError::Auth(format!("HTTP {}", http_status.as_u16()))
+        }
+        StatusCode::NOT_FOUND => ApiError::NotFound,
+        _ if http_status.is_success() => ApiError::Decode(
             parse_error.map_or_else(|| MISSING_ENVELOPE_MESSAGE.into(), Into::into),
         ),
         _ => ApiError::Server {
-            code: i32::from(http_status),
+            code: i32::from(http_status.as_u16()),
             message: text.chars().take(MAX_ERROR_BODY_CHARS).collect(),
         },
     }
@@ -64,15 +71,18 @@ fn failed_envelope(body: Value) -> Result<SubsonicEnvelope> {
         .and_then(|error| error.get("code"))
         .and_then(error_code);
     match code {
-        Some(0) => Ok(SubsonicEnvelope {
+        Some(GENERIC_ERROR_CODE) => Ok(SubsonicEnvelope {
             body,
             tolerated_failure_message: Some(message),
         }),
-        Some(40..=44) => Err(ApiError::Auth(message)),
+        Some(FIRST_AUTH_CODE..=LAST_AUTH_CODE) => Err(ApiError::Auth(message)),
         Some(NOT_AUTHORIZED_CODE) => Err(ApiError::NotAuthorized(message)),
-        Some(70) => Err(ApiError::NotFound),
+        Some(NOT_FOUND_CODE) => Err(ApiError::NotFound),
         Some(code) => Err(ApiError::Server { code, message }),
-        None => Err(ApiError::Server { code: 0, message }),
+        None => Err(ApiError::Server {
+            code: GENERIC_ERROR_CODE,
+            message,
+        }),
     }
 }
 
@@ -97,23 +107,23 @@ mod tests {
     #[test]
     fn failed_envelope_codes_map_to_api_errors() {
         assert!(matches!(
-            unwrap_subsonic_response(200, &failed_with_code("40")),
+            unwrap_subsonic_response(StatusCode::OK, &failed_with_code("40")),
             Err(ApiError::Auth(message)) if message == "boom"
         ));
         assert!(matches!(
-            unwrap_subsonic_response(200, &failed_with_code("\"41\"")),
+            unwrap_subsonic_response(StatusCode::OK, &failed_with_code("\"41\"")),
             Err(ApiError::Auth(_))
         ));
         assert!(matches!(
-            unwrap_subsonic_response(200, &failed_with_code("70")),
+            unwrap_subsonic_response(StatusCode::OK, &failed_with_code("70")),
             Err(ApiError::NotFound)
         ));
         assert!(matches!(
-            unwrap_subsonic_response(200, &failed_with_code("10")),
+            unwrap_subsonic_response(StatusCode::OK, &failed_with_code("10")),
             Err(ApiError::Server { code: 10, .. })
         ));
         assert!(matches!(
-            unwrap_subsonic_response(200, &failed_with_code("0")),
+            unwrap_subsonic_response(StatusCode::OK, &failed_with_code("0")),
             Ok(SubsonicEnvelope {
                 tolerated_failure_message: Some(_),
                 ..
@@ -124,22 +134,22 @@ mod tests {
     #[test]
     fn missing_envelope_maps_http_status() {
         assert!(matches!(
-            unwrap_subsonic_response(401, "Unauthorized"),
+            unwrap_subsonic_response(StatusCode::UNAUTHORIZED, "Unauthorized"),
             Err(ApiError::Auth(_))
         ));
         assert!(matches!(
-            unwrap_subsonic_response(500, "oops"),
+            unwrap_subsonic_response(StatusCode::INTERNAL_SERVER_ERROR, "oops"),
             Err(ApiError::Server { code: 500, .. })
         ));
         assert!(matches!(
-            unwrap_subsonic_response(200, "<html>"),
+            unwrap_subsonic_response(StatusCode::OK, "<html>"),
             Err(ApiError::Decode(_))
         ));
     }
 
     #[test]
     fn given_a_body_that_is_not_json_the_decode_error_keeps_the_parse_error() {
-        let Err(error) = unwrap_subsonic_response(200, "<html>") else {
+        let Err(error) = unwrap_subsonic_response(StatusCode::OK, "<html>") else {
             panic!("an html page is not a subsonic response");
         };
         let source = std::error::Error::source(&error).unwrap();
@@ -148,7 +158,7 @@ mod tests {
 
     #[test]
     fn given_json_without_an_envelope_the_decode_error_names_it() {
-        let Err(error) = unwrap_subsonic_response(200, "{}") else {
+        let Err(error) = unwrap_subsonic_response(StatusCode::OK, "{}") else {
             panic!("an empty object is not a subsonic response");
         };
         assert_eq!(

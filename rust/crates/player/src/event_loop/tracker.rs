@@ -15,8 +15,8 @@ pub(super) struct PlaybackTracker {
     loaded: bool,
     paused: bool,
     idle: bool,
-    time_position: Option<f64>,
-    duration: Option<f64>,
+    time_position_seconds: Option<f64>,
+    duration_seconds: Option<f64>,
     last_position_emitted_at: Option<Instant>,
     position_update_forced: bool,
     stream_title: Option<String>,
@@ -29,8 +29,8 @@ impl PlaybackTracker {
             loaded: false,
             paused: false,
             idle: true,
-            time_position: None,
-            duration: None,
+            time_position_seconds: None,
+            duration_seconds: None,
             last_position_emitted_at: None,
             position_update_forced: false,
             stream_title: None,
@@ -75,8 +75,8 @@ impl PlaybackTracker {
         let is_due = self
             .last_position_emitted_at
             .is_none_or(|last_emitted_at| last_emitted_at.elapsed() >= POSITION_INTERVAL);
-        if let Some(position) = self.time_position.filter(|_| is_due) {
-            self.emit_position(position, pending_events);
+        if let Some(position_seconds) = self.time_position_seconds.filter(|_| is_due) {
+            self.emit_position(position_seconds, pending_events);
         }
     }
 
@@ -116,8 +116,8 @@ impl PlaybackTracker {
 
     fn forget_current_file(&mut self) {
         self.loaded = false;
-        self.time_position = None;
-        self.duration = None;
+        self.time_position_seconds = None;
+        self.duration_seconds = None;
     }
 
     fn property_changed(
@@ -137,14 +137,14 @@ impl PlaybackTracker {
                 self.enter_idle(pending_events);
             }
             (ObservedProperty::IdleActive, PropertyValue::Flag(false)) => self.idle = false,
-            (ObservedProperty::TimePosition, PropertyValue::Double(position)) => {
-                self.time_position_changed(position, pending_events);
+            (ObservedProperty::TimePosition, PropertyValue::Double(position_seconds)) => {
+                self.time_position_changed(position_seconds, pending_events);
             }
-            (ObservedProperty::TimePosition, _) => self.time_position = None,
-            (ObservedProperty::Duration, PropertyValue::Double(duration)) => {
-                self.duration = Some(duration);
+            (ObservedProperty::TimePosition, _) => self.time_position_seconds = None,
+            (ObservedProperty::Duration, PropertyValue::Double(duration_seconds)) => {
+                self.duration_seconds = Some(duration_seconds);
             }
-            (ObservedProperty::Duration, _) => self.duration = None,
+            (ObservedProperty::Duration, _) => self.duration_seconds = None,
             (ObservedProperty::StreamTitle, PropertyValue::Text(title)) => {
                 self.stream_title_changed(
                     Some(title).filter(|title| !title.trim().is_empty()),
@@ -175,10 +175,14 @@ impl PlaybackTracker {
         self.paused = paused;
     }
 
-    fn time_position_changed(&mut self, position: f64, pending_events: &mut Vec<PlayerEvent>) {
-        self.time_position = Some(position);
+    fn time_position_changed(
+        &mut self,
+        position_seconds: f64,
+        pending_events: &mut Vec<PlayerEvent>,
+    ) {
+        self.time_position_seconds = Some(position_seconds);
         if self.position_update_forced && self.loaded {
-            self.emit_position(position, pending_events);
+            self.emit_position(position_seconds, pending_events);
         }
     }
 
@@ -190,15 +194,15 @@ impl PlaybackTracker {
     }
 
     fn is_position_ticking(&self) -> bool {
-        self.loaded && !self.paused && self.time_position.is_some()
+        self.loaded && !self.paused && self.time_position_seconds.is_some()
     }
 
-    fn emit_position(&mut self, position: f64, pending_events: &mut Vec<PlayerEvent>) {
+    fn emit_position(&mut self, position_seconds: f64, pending_events: &mut Vec<PlayerEvent>) {
         self.position_update_forced = false;
         self.last_position_emitted_at = Some(Instant::now());
         pending_events.push(PlayerEvent::Position {
-            position_ms: seconds_to_milliseconds(position),
-            duration_ms: self.duration.map(seconds_to_milliseconds),
+            position_ms: seconds_to_milliseconds(position_seconds),
+            duration_ms: self.duration_seconds.map(seconds_to_milliseconds),
         });
     }
 }

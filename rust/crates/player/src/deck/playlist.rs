@@ -6,6 +6,8 @@ use crate::ffi::{self, Node};
 use crate::shared::{PlaylistEntries, PlaylistEntryId};
 use crate::time::mpv_seconds_from_milliseconds;
 
+const LOADFILE_UNSPECIFIED_INDEX: &str = "-1";
+
 #[derive(Clone, Copy)]
 enum LoadMode {
     Replace,
@@ -86,7 +88,7 @@ impl Deck {
         let reply = match options {
             None => self.command(&["loadfile", url, mode])?,
             Some(options) => self
-                .command(&["loadfile", url, mode, "-1", options])
+                .command(&["loadfile", url, mode, LOADFILE_UNSPECIFIED_INDEX, options])
                 .or_else(|indexed_error| {
                     tracing::debug!(
                         "loadfile with an index failed, retrying without: {indexed_error}"

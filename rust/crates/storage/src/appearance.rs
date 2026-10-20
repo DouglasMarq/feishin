@@ -5,6 +5,13 @@ use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 pub const DEFAULT_DARK_THEME: &str = "defaultDark";
 pub const DEFAULT_LIGHT_THEME: &str = "defaultLight";
+const DEFAULT_ACCENT: AccentColor = AccentColor::new(53, 116, 252);
+const HEX_RADIX: u32 = 16;
+const HEX_COLOR_DIGITS: usize = 6;
+const HEX_DIGITS_PER_CHANNEL: usize = 2;
+const RED_DIGITS_OFFSET: usize = 0;
+const GREEN_DIGITS_OFFSET: usize = 2;
+const BLUE_DIGITS_OFFSET: usize = 4;
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Serialize, Deserialize)]
 #[serde(transparent)]
@@ -49,7 +56,7 @@ impl AccentColor {
 
 impl Default for AccentColor {
     fn default() -> Self {
-        Self::new(53, 116, 252)
+        DEFAULT_ACCENT
     }
 }
 
@@ -69,9 +76,12 @@ pub struct InvalidAccentColor;
 
 fn hex_channel(digits: &str, position: usize) -> Result<u8, InvalidAccentColor> {
     let channel = digits
-        .get(position..position + 2)
+        .get(position..position + HEX_DIGITS_PER_CHANNEL)
         .ok_or(InvalidAccentColor)?;
-    u8::from_str_radix(channel, 16).map_err(|_| InvalidAccentColor)
+    u8::from_str_radix(channel, HEX_RADIX).map_err(|error| {
+        tracing::debug!("the accent color channel {channel:?} is not hex: {error}");
+        InvalidAccentColor
+    })
 }
 
 impl FromStr for AccentColor {
@@ -80,13 +90,15 @@ impl FromStr for AccentColor {
     fn from_str(text: &str) -> Result<Self, Self::Err> {
         let trimmed = text.trim();
         let digits = trimmed.strip_prefix('#').unwrap_or(trimmed);
-        if digits.len() != 6 || !digits.chars().all(|digit| digit.is_ascii_hexdigit()) {
+        if digits.len() != HEX_COLOR_DIGITS
+            || !digits.chars().all(|digit| digit.is_ascii_hexdigit())
+        {
             return Err(InvalidAccentColor);
         }
         Ok(Self::new(
-            hex_channel(digits, 0)?,
-            hex_channel(digits, 2)?,
-            hex_channel(digits, 4)?,
+            hex_channel(digits, RED_DIGITS_OFFSET)?,
+            hex_channel(digits, GREEN_DIGITS_OFFSET)?,
+            hex_channel(digits, BLUE_DIGITS_OFFSET)?,
         ))
     }
 }

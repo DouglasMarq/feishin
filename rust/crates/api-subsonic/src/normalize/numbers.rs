@@ -1,4 +1,5 @@
 const MAX_RATING: u32 = 5;
+const MILLISECONDS_PER_SECOND: f64 = 1000.0;
 
 pub fn non_negative_u32(value: Option<f64>) -> Option<u32> {
     value
@@ -13,7 +14,9 @@ pub fn positive_u32(value: Option<f64>) -> Option<u32> {
 pub fn seconds_to_milliseconds(seconds: Option<f64>) -> u64 {
     seconds
         .filter(|number| number.is_finite() && *number > 0.0)
-        .map_or(0, |number| (number * 1000.0).round() as u64)
+        .map_or(0, |number| {
+            (number * MILLISECONDS_PER_SECOND).round() as u64
+        })
 }
 
 pub fn nonzero_year(value: Option<f64>) -> Option<i32> {

@@ -74,7 +74,7 @@ async fn media_session_follows_volume_and_mute() {
     let media = RecordingMedia::default();
     let (commands, _receiver) = mpsc::unbounded_channel();
     let mut settings = test_settings(false, false);
-    settings.playback.volume = 50;
+    settings.playback.volume_percent = 50;
     let deps = Deps {
         audio: Box::new(RecordingAudio::default()),
         media: Box::new(media.clone()),

@@ -18,6 +18,7 @@ const STREAM_LAVF_OPTIONS_WITHOUT_RECONNECT_AT_EOF: &str =
 const BEST_EFFORT_DISABLED_OPTIONS: [&str; 3] =
     ["osc", "input-default-bindings", "input-vo-keyboard"];
 const EVENT_THREAD_NAME: &str = "mpv-events";
+const NETWORK_TIMEOUT_SECONDS: &str = "10";
 
 type MpvOption<'value> = (&'static str, &'value str);
 
@@ -66,7 +67,7 @@ fn initial_options<'value>(
         ("ytdl", "no"),
         ("gapless-audio", gapless_audio_value(config.gapless)),
         ("prefetch-playlist", mpv_flag(config.gapless)),
-        ("network-timeout", "10"),
+        ("network-timeout", NETWORK_TIMEOUT_SECONDS),
         (
             "stream-lavf-o",
             STREAM_LAVF_OPTIONS_WITHOUT_RECONNECT_AT_EOF,

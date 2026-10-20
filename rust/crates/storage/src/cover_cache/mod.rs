@@ -51,11 +51,11 @@ impl CoverCache {
         })
     }
 
-    pub async fn get(&self, key: &str, url: &str, size: u32) -> Result<Arc<DecodedImage>> {
-        if let Some(image) = self.get_cached(key, size) {
+    pub async fn get(&self, key: &str, url: &str, edge_pixels: u32) -> Result<Arc<DecodedImage>> {
+        if let Some(image) = self.get_cached(key, edge_pixels) {
             return Ok(image);
         }
-        let image_key = ImageKey::new(key, size);
+        let image_key = ImageKey::new(key, edge_pixels);
         let load_cell = self.inflight_load(&image_key);
         let shared_result = load_cell
             .get_or_init(|| Arc::clone(&self.inner).load(image_key.clone(), url.to_string()))
@@ -65,15 +65,15 @@ impl CoverCache {
         shared_result.map_err(Arc::unwrap_or_clone)
     }
 
-    pub fn get_cached(&self, key: &str, size: u32) -> Option<Arc<DecodedImage>> {
+    pub fn get_cached(&self, key: &str, edge_pixels: u32) -> Option<Arc<DecodedImage>> {
         lock(&self.inner.memory)
             .as_mut()?
-            .get(&ImageKey::new(key, size))
+            .get(&ImageKey::new(key, edge_pixels))
             .cloned()
     }
 
-    pub fn cached_file(&self, key: &str, size: u32) -> Option<PathBuf> {
-        let file_name = ImageKey::new(key, size).file_name();
+    pub fn cached_file(&self, key: &str, edge_pixels: u32) -> Option<PathBuf> {
+        let file_name = ImageKey::new(key, edge_pixels).file_name();
         lock(&self.inner.disk)
             .contains(&file_name)
             .then(|| self.inner.config.dir.join(file_name))

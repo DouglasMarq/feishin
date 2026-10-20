@@ -1,6 +1,6 @@
 use serde::Deserialize;
 
-use crate::is_video_id;
+use crate::{MILLISECONDS_PER_SECOND, is_video_id};
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct YouTubeHit {
@@ -55,7 +55,8 @@ impl SearchEntry {
 }
 
 fn seconds_to_ms(seconds: f64) -> Option<u64> {
-    (seconds.is_finite() && seconds > 0.0).then(|| (seconds * 1000.0).round() as u64)
+    (seconds.is_finite() && seconds > 0.0)
+        .then(|| (seconds * MILLISECONDS_PER_SECOND as f64).round() as u64)
 }
 
 pub(crate) fn parse_video_output(stdout: &str) -> Option<YouTubeHit> {

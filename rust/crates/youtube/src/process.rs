@@ -33,7 +33,7 @@ pub(crate) async fn run(
     }
     let output = tokio::time::timeout(timeout, command.output())
         .await
-        .map_err(|_elapsed| YouTubeError::TimedOut(timeout.as_secs()))?
+        .map_err(|_elapsed| YouTubeError::TimedOut(timeout))?
         .map_err(launch_error)?;
     successful_stdout(output)
 }

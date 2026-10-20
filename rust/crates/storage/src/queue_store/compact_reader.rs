@@ -22,7 +22,14 @@ const QUEUE_FIELDS: &[&str] = &[
     "position_ms",
 ];
 const MAX_PREALLOCATED_TRACKS: usize = 1 << 20;
+const STRINGS_FIELD_INDEX: usize = 0;
+const ARTIST_LISTS_FIELD_INDEX: usize = 1;
 const TRACKS_FIELD_INDEX: usize = 2;
+const SHUFFLED_FIELD_INDEX: usize = 3;
+const CURRENT_UID_FIELD_INDEX: usize = 4;
+const REPEAT_FIELD_INDEX: usize = 5;
+const NEXT_UID_FIELD_INDEX: usize = 6;
+const POSITION_FIELD_INDEX: usize = 7;
 
 trait CompactRow: DeserializeOwned + Into<CompactTrack<String>> {}
 
@@ -81,7 +88,10 @@ impl<'de, Row: CompactRow> Visitor<'de> for QueueVisitor<Row> {
         self,
         mut fields: Fields,
     ) -> std::result::Result<DecodedQueue<Row>, Fields::Error> {
-        let tables = DecodedTables::new(next_field(&mut fields, 0)?, next_field(&mut fields, 1)?);
+        let tables = DecodedTables::new(
+            next_field(&mut fields, STRINGS_FIELD_INDEX)?,
+            next_field(&mut fields, ARTIST_LISTS_FIELD_INDEX)?,
+        );
         let items = fields
             .next_element_seed(TrackRowsSeed::<Row> {
                 tables: &tables,
@@ -90,12 +100,12 @@ impl<'de, Row: CompactRow> Visitor<'de> for QueueVisitor<Row> {
             .ok_or_else(|| de::Error::invalid_length(TRACKS_FIELD_INDEX, &self))?;
         let snapshot = QueueSnapshot {
             items,
-            shuffled: next_field(&mut fields, 3)?,
-            current_uid: next_field(&mut fields, 4)?,
-            repeat: next_field(&mut fields, 5)?,
-            next_uid: next_field(&mut fields, 6)?,
+            shuffled: next_field(&mut fields, SHUFFLED_FIELD_INDEX)?,
+            current_uid: next_field(&mut fields, CURRENT_UID_FIELD_INDEX)?,
+            repeat: next_field(&mut fields, REPEAT_FIELD_INDEX)?,
+            next_uid: next_field(&mut fields, NEXT_UID_FIELD_INDEX)?,
         };
-        let position_ms = next_field(&mut fields, 7)?;
+        let position_ms = next_field(&mut fields, POSITION_FIELD_INDEX)?;
         Ok(DecodedQueue {
             stored: StoredQueue {
                 snapshot,

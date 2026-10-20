@@ -42,7 +42,7 @@ impl Controller {
 
     pub(super) fn publish_volume(&self) {
         self.deps.ui.send(UiUpdate::Volume {
-            volume: self.settings.playback.volume,
+            volume: self.settings.playback.volume_percent,
             muted: self.settings.playback.muted,
         });
     }

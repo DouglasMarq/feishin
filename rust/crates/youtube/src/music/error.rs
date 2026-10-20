@@ -1,5 +1,7 @@
 use std::sync::Arc;
 
+use reqwest::StatusCode;
+
 use crate::YouTubeError;
 
 pub type ErrorCause = Arc<dyn std::error::Error + Send + Sync>;
@@ -30,7 +32,13 @@ pub enum MusicError {
 
 impl MusicError {
     pub fn is_rejected_sign_in(&self) -> bool {
-        matches!(self, Self::Status(401 | 403))
+        let Self::Status(status) = self else {
+            return false;
+        };
+        matches!(
+            StatusCode::from_u16(*status),
+            Ok(StatusCode::UNAUTHORIZED | StatusCode::FORBIDDEN)
+        )
     }
 }
 

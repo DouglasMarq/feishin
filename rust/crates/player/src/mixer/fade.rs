@@ -70,7 +70,11 @@ impl MixerState {
         let Some(lead) = self.lead_clock() else {
             return FaderTick::idle();
         };
-        match plan_before_fade(self.config.crossfade, lead, self.incoming_duration()) {
+        match plan_before_fade(
+            self.config.crossfade,
+            lead,
+            self.incoming_duration_seconds(),
+        ) {
             FaderPlan::Begin(window) => self.begin_fade(window),
             FaderPlan::Recheck(delay) => FaderTick::after(delay),
             FaderPlan::Ramp(_) | FaderPlan::Finish => FaderTick::idle(),
@@ -94,8 +98,8 @@ impl MixerState {
     }
 
     fn ramp_fade(&mut self, window: FadeWindow) -> FaderTick {
-        let incoming_position = self.lead_deck().ok().and_then(Deck::position_seconds);
-        match plan_during_fade(window, incoming_position) {
+        let incoming_position_seconds = self.lead_deck().ok().and_then(Deck::position_seconds);
+        match plan_during_fade(window, incoming_position_seconds) {
             FaderPlan::Ramp(gains) => {
                 self.apply_gains(gains.outgoing, gains.incoming);
                 FaderTick::after(FADE_STEP)

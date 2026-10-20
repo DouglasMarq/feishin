@@ -8,6 +8,8 @@ pub(crate) const MATCH_THRESHOLD: f64 = 0.55;
 const SINGLE_KEY_WEIGHT: f64 = 0.5;
 const COMBINED_KEY_WEIGHT: f64 = 1.0;
 const SPACE: u16 = 32;
+const NORM_EXPONENT: f64 = 0.5;
+const NORM_PRECISION: f64 = 1000.0;
 
 pub struct SearchItem<'text> {
     pub name: &'text str,
@@ -103,7 +105,7 @@ fn field_norm(text: &str) -> f64 {
                 let starts_new_token = is_space && !previous_was_space;
                 (tokens + u32::from(starts_new_token), is_space)
             });
-    (1000.0 / f64::from(tokens).powf(0.5)).round() / 1000.0
+    (NORM_PRECISION / f64::from(tokens).powf(NORM_EXPONENT)).round() / NORM_PRECISION
 }
 
 #[cfg(test)]

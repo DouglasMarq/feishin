@@ -1,10 +1,10 @@
 use feishin_api::{StreamOptions, TranscodeFormat};
 
 use super::JellyfinServer;
+use crate::BITS_PER_KILOBIT;
 use crate::transport::endpoint;
 
 const DEFAULT_TRANSCODE_FORMAT: &str = "mp3";
-const BITS_PER_KILOBIT: u64 = 1000;
 const IMAGE_QUALITY: &str = "96";
 const TRANSCODING_PROTOCOL: &str = "http";
 

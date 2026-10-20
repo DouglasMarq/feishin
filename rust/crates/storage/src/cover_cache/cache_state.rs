@@ -17,19 +17,19 @@ pub(super) const MAX_COVER_BYTES: usize = 32 * 1024 * 1024;
 #[derive(Debug, Clone, PartialEq, Eq, Hash)]
 pub(super) struct ImageKey {
     cover_key: String,
-    size: u32,
+    edge_pixels: u32,
 }
 
 impl ImageKey {
-    pub(super) fn new(cover_key: &str, size: u32) -> Self {
+    pub(super) fn new(cover_key: &str, edge_pixels: u32) -> Self {
         Self {
             cover_key: cover_key.to_string(),
-            size,
+            edge_pixels,
         }
     }
 
     pub(super) fn file_name(&self) -> String {
-        cache_file_name(&self.cover_key, self.size)
+        cache_file_name(&self.cover_key, self.edge_pixels)
     }
 }
 
@@ -61,15 +61,15 @@ impl CacheState {
         url: &str,
     ) -> Result<Arc<DecodedImage>> {
         let file_name = image_key.file_name();
-        let size = image_key.size;
+        let edge_pixels = image_key.edge_pixels;
         let state = Arc::clone(self);
         let disk_file_name = file_name.clone();
         let from_disk =
-            run_blocking(move || Ok(state.read_from_disk(&disk_file_name, size))).await?;
+            run_blocking(move || Ok(state.read_from_disk(&disk_file_name, edge_pixels))).await?;
         if let Some(image) = from_disk {
             return Ok(Arc::new(image));
         }
-        let image = self.download_and_store(url, file_name, size).await?;
+        let image = self.download_and_store(url, file_name, edge_pixels).await?;
         Ok(Arc::new(image))
     }
 
@@ -77,7 +77,7 @@ impl CacheState {
         self: &Arc<Self>,
         url: &str,
         file_name: String,
-        size: u32,
+        edge_pixels: u32,
     ) -> Result<DecodedImage> {
         let response = self
             .client
@@ -89,25 +89,30 @@ impl CacheState {
             .map_err(network_error)?;
         let bytes = capped_body(response).await?;
         let state = Arc::clone(self);
-        run_blocking(move || state.decode_and_store(&file_name, &bytes, size)).await
+        run_blocking(move || state.decode_and_store(&file_name, &bytes, edge_pixels)).await
     }
 
-    fn decode_and_store(&self, file_name: &str, bytes: &[u8], size: u32) -> Result<DecodedImage> {
-        let image = decode(bytes, size)?;
+    fn decode_and_store(
+        &self,
+        file_name: &str,
+        bytes: &[u8],
+        edge_pixels: u32,
+    ) -> Result<DecodedImage> {
+        let image = decode(bytes, edge_pixels)?;
         if let Err(error) = self.write_to_disk(file_name, bytes) {
             tracing::warn!("cover cache write failed: {error}");
         }
         Ok(image)
     }
 
-    fn read_from_disk(&self, file_name: &str, size: u32) -> Option<DecodedImage> {
+    fn read_from_disk(&self, file_name: &str, edge_pixels: u32) -> Option<DecodedImage> {
         if !lock(&self.disk).contains(file_name) {
             return None;
         }
         let path = self.config.dir.join(file_name);
         let decoded = std::fs::read(&path)
             .map_err(StorageError::from)
-            .and_then(|bytes| decode(&bytes, size));
+            .and_then(|bytes| decode(&bytes, edge_pixels));
         let mut disk = lock(&self.disk);
         match decoded {
             Ok(image) => {

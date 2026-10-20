@@ -101,7 +101,7 @@ mod tests {
     #[test]
     fn playback_form_maps_to_settings_and_keeps_volume() {
         let mut settings = Settings::default();
-        settings.playback.volume = 12;
+        settings.playback.volume_percent = 12;
         settings.playback.audio_device = Some("pipewire/hdmi".into());
         let view = View::new(SettingsSnapshot {
             settings,
@@ -126,7 +126,7 @@ mod tests {
         assert_eq!(playback.audio_device, None);
         assert_eq!(playback.max_bitrate_kbps, Some(192));
         assert_eq!(playback.transcode_format, TranscodeFormat::parse("opus"));
-        assert_eq!(playback.volume, 12);
+        assert_eq!(playback.volume_percent, 12);
 
         let out_of_range = view.playback(PlaybackForm { device: 99, ..form });
         assert_eq!(out_of_range.audio_device.as_deref(), Some("pipewire/hdmi"));

@@ -1,7 +1,7 @@
 use feishin_core::model::{ReplayGain, Song};
 
 use super::{artist_refs, credited_artists, names, primary_image, release_year, ticks_to_ms};
-use crate::dto;
+use crate::{BITS_PER_KILOBIT, dto};
 
 const AUDIO_STREAM_KIND: &str = "Audio";
 const REPLAY_GAIN_REFERENCE_LUFS: f32 = -18.0;
@@ -46,7 +46,9 @@ fn audio_bitrate_kbps(source: &dto::MediaSource) -> Option<u32> {
         .iter()
         .find(|stream| stream.kind == AUDIO_STREAM_KIND)
         .and_then(|stream| stream.bit_rate)
-        .map(|bits_per_second| u32::try_from(bits_per_second / 1000).unwrap_or(u32::MAX))
+        .map(|bits_per_second| {
+            u32::try_from(bits_per_second / BITS_PER_KILOBIT).unwrap_or(u32::MAX)
+        })
 }
 
 fn song_cover_art_id(item: &dto::Song) -> Option<String> {

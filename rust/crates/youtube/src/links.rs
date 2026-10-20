@@ -3,10 +3,11 @@ use percent_encoding::{NON_ALPHANUMERIC, utf8_percent_encode};
 const WATCH_PREFIX: &str = "https://music.youtube.com/watch?v=";
 const SEARCH_PREFIX: &str = "https://music.youtube.com/search?q=";
 const SONGS_SECTION: &str = "#songs";
+const MAX_VIDEO_ID_LENGTH: usize = 64;
 
 pub fn is_video_id(candidate: &str) -> bool {
     !candidate.is_empty()
-        && candidate.len() <= 64
+        && candidate.len() <= MAX_VIDEO_ID_LENGTH
         && candidate
             .chars()
             .all(|character| character.is_ascii_alphanumeric() || matches!(character, '-' | '_'))

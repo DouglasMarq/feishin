@@ -9,6 +9,8 @@ mod source_chain;
 
 pub use model::{LyricLine, Lyrics, LyricsError, LyricsQuery, LyricsSource, Result};
 
+const MILLISECONDS_PER_SECOND: u64 = 1000;
+
 pub async fn fetch(
     client: &reqwest::Client,
     query: &LyricsQuery,

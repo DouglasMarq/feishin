@@ -133,7 +133,9 @@ fn is_station_id(station_uuid: &str) -> bool {
 fn is_worth_retrying(error: &DirectoryError) -> bool {
     match error {
         DirectoryError::Network(_) => true,
-        DirectoryError::Status(status) => *status >= 500,
+        DirectoryError::Status(status) => {
+            StatusCode::from_u16(*status).is_ok_and(|status| status.is_server_error())
+        }
         DirectoryError::Decode(_)
         | DirectoryError::TooLarge(_)
         | DirectoryError::InvalidStationId(_) => false,

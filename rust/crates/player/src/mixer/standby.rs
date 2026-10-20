@@ -7,14 +7,14 @@ impl MixerState {
     pub(super) fn lead_clock(&self) -> Option<DeckClock> {
         let lead = self.lead_deck().ok()?.clock();
         Some(DeckClock {
-            duration: self
+            duration_seconds: self
                 .durations
-                .expected_seconds(self.routing.lead(), lead.duration),
+                .expected_seconds(self.routing.lead(), lead.duration_seconds),
             ..lead
         })
     }
 
-    pub(super) fn incoming_duration(&self) -> Option<f64> {
+    pub(super) fn incoming_duration_seconds(&self) -> Option<f64> {
         let reported = self
             .standby_deck()
             .and_then(|standby| standby.duration_seconds());

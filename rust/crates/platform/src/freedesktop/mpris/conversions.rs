@@ -3,6 +3,8 @@ use mpris_server::{PlaybackStatus as MprisStatus, Time};
 
 use crate::PlaybackStatus;
 
+const VOLUME_STEPS: f64 = 100.0;
+
 pub(super) fn not_supported(feature: &str) -> fdo::Error {
     fdo::Error::NotSupported(format!("{feature} is not supported"))
 }
@@ -23,7 +25,7 @@ pub(super) fn volume_from_mpris(volume: f64) -> f64 {
     if volume.is_nan() {
         return 0.0;
     }
-    (volume * 100.0).round().clamp(0.0, 100.0) / 100.0
+    (volume * VOLUME_STEPS).round().clamp(0.0, VOLUME_STEPS) / VOLUME_STEPS
 }
 
 #[cfg(test)]

@@ -1,8 +1,13 @@
+use crate::MILLISECONDS_PER_SECOND;
+
 const METADATA_TAGS: &[&str] = &[
     "#", "al", "ar", "au", "by", "id", "la", "lang", "length", "lr", "offset", "re", "tool", "ti",
     "ve",
 ];
-const MILLIS_DIGITS: u32 = 3;
+const MILLIS_DIGITS: usize = 3;
+const MAX_SECONDS_DIGITS: usize = 2;
+const SECONDS_PER_MINUTE: u64 = 60;
+const DECIMAL_BASE: u64 = 10;
 
 pub(super) enum Tag<'line> {
     Time(u64),
@@ -57,16 +62,16 @@ pub(super) fn parse_timestamp(content: &str) -> Option<u64> {
         Some((seconds, fraction)) => (seconds, Some(fraction)),
         None => (rest, None),
     };
-    if !is_digits(minutes) || !is_digits(seconds) || seconds.len() > 2 {
+    if !is_digits(minutes) || !is_digits(seconds) || seconds.len() > MAX_SECONDS_DIGITS {
         return None;
     }
     let minutes: u64 = minutes.parse().ok()?;
     let seconds: u64 = seconds.parse().ok()?;
     let millis = fraction_to_millis(fraction)?;
     minutes
-        .checked_mul(60)?
+        .checked_mul(SECONDS_PER_MINUTE)?
         .checked_add(seconds)?
-        .checked_mul(1000)?
+        .checked_mul(MILLISECONDS_PER_SECOND)?
         .checked_add(millis)
 }
 
@@ -74,10 +79,10 @@ fn fraction_to_millis(fraction: Option<&str>) -> Option<u64> {
     let Some(fraction) = fraction else {
         return Some(0);
     };
-    if !is_digits(fraction) || fraction.len() > 3 {
+    if !is_digits(fraction) || fraction.len() > MILLIS_DIGITS {
         return None;
     }
     let value: u64 = fraction.parse().ok()?;
-    let missing_digits = MILLIS_DIGITS.checked_sub(u32::try_from(fraction.len()).ok()?)?;
-    value.checked_mul(10u64.pow(missing_digits))
+    let missing_digits = u32::try_from(MILLIS_DIGITS.checked_sub(fraction.len())?).ok()?;
+    value.checked_mul(DECIMAL_BASE.pow(missing_digits))
 }
