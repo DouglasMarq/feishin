@@ -1,9 +1,10 @@
 mod page;
 
+use reqwest::Url;
 use serde::Deserialize;
 
 use crate::fuzzy::{MATCH_THRESHOLD, SearchItem, order_search_results};
-use crate::http::{send_json, send_text};
+use crate::http::{REQUEST_TIMEOUT, send_json, send_text};
 use crate::lrc::lyrics_from_text;
 use crate::{Lyrics, LyricsQuery, LyricsSource, Result};
 use page::extract_lyrics;
@@ -76,6 +77,7 @@ async fn search_songs(
     let search_query = format!("{} {}", query.artist, query.title);
     let request = client
         .get(format!("{base}/api/search/song"))
+        .timeout(REQUEST_TIMEOUT)
         .query(&[("per_page", "5"), ("q", search_query.as_str())]);
     let songs = send_json::<SearchResponse>(request)
         .await?
@@ -86,18 +88,26 @@ async fn search_songs(
         .unwrap_or_default()
         .into_iter()
         .filter_map(|hit| hit.result)
+        .filter(|song| is_page_of(&song.url, base))
         .collect();
     Ok(songs)
 }
 
 async fn scrape_song_page(client: &reqwest::Client, url: &str) -> Result<Option<Lyrics>> {
-    let Some(html) = send_text(client.get(url)).await? else {
+    let Some(html) = send_text(client.get(url).timeout(REQUEST_TIMEOUT)).await? else {
         return Ok(None);
     };
     Ok(lyrics_from_text(
         LyricsSource::Genius,
         &extract_lyrics(&html),
     ))
+}
+
+fn is_page_of(page_url: &str, base: &str) -> bool {
+    match (Url::parse(page_url), Url::parse(base)) {
+        (Ok(page), Ok(site)) => page.origin() == site.origin(),
+        _ => false,
+    }
 }
 
 #[cfg(test)]
