@@ -9,11 +9,11 @@ use slint::ComponentHandle;
 use tokio::runtime::Runtime;
 use tokio::sync::{mpsc, oneshot, watch};
 
-use crate::audio::{AudioOutput, FakeAudio, MpvOutput};
+use crate::audio::{AudioOutput, MpvOutput};
 use crate::connect::{Connector, DemoConnector, ServerConnector};
 use crate::controller::{Command, Controller, Deps, forward_command, load_saved_queue};
 use crate::covers::{CachedCovers, CoverProvider, DemoCovers};
-use crate::demo::{DemoLibrary, FakeServer, demo_credential};
+use crate::demo::{DemoLibrary, FakeAudio, FakeServer, demo_credential};
 use crate::discord::DiscordSession;
 use crate::discover::{DemoDiscover, DiscoverSource, YouTubeMusicSource};
 use crate::media::{MediaSession, MediaSessions, Mpris, NoMediaSession, SleepInhibition};

@@ -3,6 +3,7 @@ mod album_order;
 mod albums;
 mod artist_albums;
 mod artists;
+mod audio;
 mod catalog;
 mod cover;
 mod folders;
@@ -38,6 +39,7 @@ mod test_support;
 mod tests;
 
 pub use account::demo_credential;
+pub use audio::FakeAudio;
 pub use cover::render_cover;
 pub use library::{DEMO_SONG_COUNT, DemoLibrary, MAX_DEMO_SONG_COUNT};
 #[cfg(test)]
