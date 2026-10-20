@@ -49,11 +49,19 @@ impl Controller {
             && let Err(error) = audio.set_replay_gain(next.replay_gain)
         {
             tracing::warn!("setting ReplayGain failed: {error:#}");
+            self.deps.ui.send(UiUpdate::Error(tr!(
+                "ReplayGain could not be changed: {}",
+                format!("{error:#}")
+            )));
         }
         if next.audio_device != current.audio_device
             && let Err(error) = audio.set_audio_device(next.audio_device.as_deref())
         {
             tracing::warn!("switching audio device failed: {error:#}");
+            self.deps.ui.send(UiUpdate::Error(tr!(
+                "The audio device could not be changed: {}",
+                format!("{error:#}")
+            )));
         }
         if next.crossfade() != current.crossfade()
             && let Err(error) = audio.set_crossfade(next.crossfade())

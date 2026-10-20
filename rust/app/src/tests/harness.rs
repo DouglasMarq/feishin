@@ -6,7 +6,7 @@ use anyhow::{Result, anyhow};
 use feishin_core::model::{Song, SongListQuery};
 use feishin_core::queue::{QueueView, Uid};
 use feishin_player::PlayerEvent;
-use feishin_storage::settings::{Settings, UiSettings};
+use feishin_storage::settings::{ReplayGainSetting, Settings, UiSettings};
 use tokio::sync::{mpsc, oneshot};
 
 use crate::audio::{AudioOutput, Track};
@@ -35,11 +35,23 @@ pub(super) enum AudioCall {
 pub(super) struct RecordingAudio {
     calls: Arc<Mutex<Vec<AudioCall>>>,
     crossfade_fails: Arc<AtomicBool>,
+    calls_fail: Arc<AtomicBool>,
 }
 
 impl RecordingAudio {
     pub(super) fn fail_crossfade_changes(&self) {
         self.crossfade_fails.store(true, Ordering::Relaxed);
+    }
+
+    pub(super) fn fail_every_call(&self) {
+        self.calls_fail.store(true, Ordering::Relaxed);
+    }
+
+    fn outcome(&self) -> Result<()> {
+        match self.calls_fail.load(Ordering::Relaxed) {
+            true => Err(anyhow!("the audio output is gone")),
+            false => Ok(()),
+        }
     }
 
     pub(super) fn take(&self) -> Vec<AudioCall> {
@@ -53,7 +65,7 @@ impl RecordingAudio {
         if let Ok(mut calls) = self.calls.lock() {
             calls.push(call);
         }
-        Ok(())
+        self.outcome()
     }
 }
 
@@ -84,6 +96,12 @@ impl AudioOutput for RecordingAudio {
     }
     fn set_muted(&self, muted: bool) -> Result<()> {
         self.record(AudioCall::Mute(muted))
+    }
+    fn set_replay_gain(&self, _mode: ReplayGainSetting) -> Result<()> {
+        self.outcome()
+    }
+    fn set_audio_device(&self, _device: Option<&str>) -> Result<()> {
+        self.outcome()
     }
     fn set_crossfade(&self, _crossfade: Duration) -> Result<()> {
         match self.crossfade_fails.load(Ordering::Relaxed) {
@@ -283,6 +301,7 @@ impl Harness {
     pub(super) fn connect(&mut self) {
         self.controller.handle(Command::Connected {
             config: FakeServer::config_for_demo(),
+            credential: None,
             others: Vec::new(),
         });
     }
@@ -297,4 +316,3 @@ impl Harness {
         self.shutdown_with_ui(UiSettings::default())
     }
 }
-            credential: None,

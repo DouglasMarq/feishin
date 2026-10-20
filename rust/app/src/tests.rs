@@ -17,6 +17,7 @@ mod scrobbling;
 mod server_queue;
 mod shutdown_streams;
 mod sleep_timer;
+mod surfaced_errors;
 mod youtube_playback;
 mod youtube_side_effects;
 mod youtube_support;
