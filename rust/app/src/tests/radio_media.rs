@@ -121,6 +121,7 @@ async fn reconnecting_keeps_the_station_in_the_media_session() {
 
     controller.handle(Command::Connected {
         config: crate::demo::FakeServer::config_for_demo(),
+        credential: None,
         others: Vec::new(),
     });
 

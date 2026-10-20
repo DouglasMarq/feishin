@@ -245,11 +245,13 @@ async fn connecting_to_another_server_clears_the_queue() {
     harness.start();
     harness.controller.handle(Command::Connected {
         config: FakeServer::config_for_demo(),
+        credential: None,
         others: Vec::new(),
     });
     assert!(!harness.controller.queue().is_empty());
     harness.controller.handle(Command::Connected {
         config: server("b"),
+        credential: None,
         others: Vec::new(),
     });
     assert!(harness.controller.queue().is_empty());

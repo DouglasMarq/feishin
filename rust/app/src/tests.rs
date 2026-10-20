@@ -1,3 +1,4 @@
+mod connection_saves;
 mod discover_sign_in;
 mod folder_streaming;
 mod harness;

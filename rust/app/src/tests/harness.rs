@@ -297,3 +297,4 @@ impl Harness {
         self.shutdown_with_ui(UiSettings::default())
     }
 }
+            credential: None,

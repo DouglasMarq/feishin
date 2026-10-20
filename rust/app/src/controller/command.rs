@@ -1,10 +1,12 @@
 use std::ops::Range;
 
+use feishin_api::Credential;
 use feishin_core::model::{ServerConfig, ServerPlayQueue, Song};
 use feishin_core::queue::{QueueTrack, Uid};
 use feishin_platform::MediaControlEvent;
 use feishin_player::{AudioDevice, PlayerEvent};
 use feishin_storage::appearance::AppearanceSettings;
+use feishin_storage::feishin_import::ImportedServer;
 use feishin_storage::settings::{
     IntegrationSettings, PlaybackSettings, Settings, UiSettings, YouTubeSettings,
 };
@@ -19,7 +21,8 @@ pub enum Command {
     Media(MediaControlEvent),
     Connected {
         config: ServerConfig,
-        others: Vec<ServerConfig>,
+        credential: Option<Credential>,
+        others: Vec<ImportedServer>,
     },
     PlayFromList {
         source: SongSource,
