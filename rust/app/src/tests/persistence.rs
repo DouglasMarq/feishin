@@ -15,16 +15,16 @@ fn resized_title_column() -> UiSettings {
         track_columns: vec![ColumnSetting {
             id: "title".into(),
             width_pixels: 411.0,
-            visible: true,
+            is_visible: true,
         }],
-        queue_panel_open: true,
+        is_queue_panel_open: true,
         ..UiSettings::default()
     }
 }
 
 fn assert_restored_without_playing(restored: &Harness, snapshot: &QueueSnapshot) {
     assert_eq!(&restored.controller.queue().snapshot(), snapshot);
-    assert!(restored.controller.queue().shuffle());
+    assert!(restored.controller.queue().is_shuffled());
     assert_eq!(restored.controller.queue().repeat(), RepeatMode::All);
     assert_eq!(restored.current_id().as_deref(), Some("s3"));
     assert!(restored.audio.take().is_empty());

@@ -36,7 +36,7 @@ impl JellyfinServer {
         let params = QueryParams::default()
             .fields(ARTIST_LIST_FIELDS)
             .set("ImageTypeLimit", 1)
-            .set_optional("IsFavorite", query.favorite)
+            .set_optional("IsFavorite", query.is_favorite)
             .set("Limit", paging.limit)
             .set_optional("ParentId", query.music_folder_id.as_deref())
             .set("Recursive", true)

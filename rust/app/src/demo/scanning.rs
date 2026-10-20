@@ -36,7 +36,7 @@ impl FakeServer {
     fn demo_scan_progress(&self, polls_done: u64) -> LibraryScan {
         let song_count = self.library.song_count() as u64;
         LibraryScan {
-            scanning: polls_done < DEMO_SCAN_POLLS,
+            is_scanning: polls_done < DEMO_SCAN_POLLS,
             scanned_items: Some(song_count * polls_done / DEMO_SCAN_POLLS),
         }
     }
@@ -50,7 +50,7 @@ mod tests {
     fn a_demo_server_is_idle_before_any_scan() {
         let server = FakeServer::new(900);
 
-        assert!(!server.poll_demo_scan().scanning);
+        assert!(!server.poll_demo_scan().is_scanning);
     }
 
     #[test]
@@ -59,9 +59,9 @@ mod tests {
         let started = server.begin_demo_scan();
         let polls: Vec<LibraryScan> = (0..4).map(|_| server.poll_demo_scan()).collect();
 
-        assert!(started.scanning);
+        assert!(started.is_scanning);
         assert_eq!(started.scanned_items, Some(0));
-        let scanning: Vec<bool> = polls.iter().map(|scan| scan.scanning).collect();
+        let scanning: Vec<bool> = polls.iter().map(|scan| scan.is_scanning).collect();
         assert_eq!(scanning, [true, true, false, false]);
         assert_eq!(
             polls.last().and_then(|scan| scan.scanned_items),

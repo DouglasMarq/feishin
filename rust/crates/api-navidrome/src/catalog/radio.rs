@@ -36,7 +36,7 @@ impl NavidromeServer {
     pub(crate) async fn is_admin(&self) -> Result<bool> {
         let params = [("username", self.config.username.clone())];
         let response = self.subsonic::<UserResponse>("getUser", &params).await?;
-        Ok(response.user.is_some_and(|user| user.admin_role))
+        Ok(response.user.is_some_and(|user| user.has_admin_role))
     }
 
     pub(crate) async fn add_radio_station(&self, station: &RadioStationDraft) -> Result<()> {

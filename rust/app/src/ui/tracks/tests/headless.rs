@@ -256,7 +256,7 @@ fn assert_play_row_uses_filtered_query(
             song_id,
             row_index,
         }) => {
-            assert_eq!(query.favorite, Some(true));
+            assert_eq!(query.is_favorite, Some(true));
             assert_eq!(query.genre_ids.len(), 1);
             assert_eq!(song_id.as_deref(), Some(harness.row(0).id.as_str()));
             assert_eq!(row_index, ListRow(0));

@@ -20,7 +20,7 @@ fn empty_queue_edge_cases() {
     queue.clear();
     assert!(queue.play_now(Vec::new(), Some("x")).is_none());
     queue.set_shuffle(true);
-    assert!(queue.shuffle());
+    assert!(queue.is_shuffled());
     assert!(queue.play_now(Vec::new(), None).is_none());
     assert!(queue.next(Advance::Manual).is_none());
     assert!(queue.previous().is_none());
@@ -29,9 +29,9 @@ fn empty_queue_edge_cases() {
 
 #[test]
 fn adding_to_empty_queue_leaves_nothing_current_until_next() {
-    for shuffle in [false, true] {
+    for is_shuffled in [false, true] {
         let mut queue = Queue::with_seed(2);
-        queue.set_shuffle(shuffle);
+        queue.set_shuffle(is_shuffled);
         queue.add_last(songs(&["a", "b", "c"]));
         assert!(queue.current().is_none());
         assert_eq!(
@@ -43,7 +43,7 @@ fn adding_to_empty_queue_leaves_nothing_current_until_next() {
         assert_invariants(&queue);
 
         let mut queue = Queue::with_seed(2);
-        queue.set_shuffle(shuffle);
+        queue.set_shuffle(is_shuffled);
         queue.add_next(songs(&["a", "b"]));
         assert!(queue.current().is_none());
         let first = play_uids(&queue)[0];

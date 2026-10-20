@@ -63,7 +63,7 @@ async fn playlists_crud() {
     let second = &page.items[0];
     assert_eq!(second.id, "p2");
     assert_eq!(second.owner.as_deref(), Some("alice"));
-    assert!(second.public);
+    assert!(second.is_public);
     assert_eq!(second.duration_ms, 360_000);
     assert_eq!(second.updated_at.as_deref(), Some("2024-02-01T00:00:00Z"));
     assert_eq!(second.cover_art_id.as_deref(), Some("pl-p2"));

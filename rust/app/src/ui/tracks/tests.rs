@@ -173,7 +173,7 @@ fn updates_reach_loaded_rows() {
     model.apply_count(1, 10);
     model.apply_page(1, 0, page_of(0, 10));
     model.update_songs(&["s4".into()], |song| {
-        song.favorite = true;
+        song.is_favorite = true;
         song.user_rating = Some(4);
     });
     let row = model.row_data(4).unwrap_or_default();
@@ -213,7 +213,7 @@ fn filters_feed_the_query() {
         year_to: Some(1990),
     }
     .apply(base.clone());
-    assert_eq!(query.favorite, Some(true));
+    assert_eq!(query.is_favorite, Some(true));
     assert_eq!(query.genre_ids, ["genre-2"]);
     assert_eq!((query.year_from, query.year_to), (Some(1990), Some(2000)));
     assert_eq!(
@@ -234,7 +234,7 @@ fn filters_feed_the_query() {
 fn rows_carry_links_favorite_and_rating() {
     let server = FakeServer::new(24);
     let song = Song {
-        favorite: true,
+        is_favorite: true,
         user_rating: Some(3),
         ..server.song_at(13)
     };

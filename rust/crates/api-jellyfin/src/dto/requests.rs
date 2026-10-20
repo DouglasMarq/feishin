@@ -27,8 +27,8 @@ pub enum PlaybackEvent {
 }
 
 impl PlaybackEvent {
-    pub fn for_paused_state(paused: bool) -> Self {
-        match paused {
+    pub fn for_paused_state(is_paused: bool) -> Self {
+        match is_paused {
             true => Self::Pause,
             false => Self::Unpause,
         }

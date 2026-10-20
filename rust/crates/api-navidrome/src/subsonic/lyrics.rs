@@ -21,8 +21,8 @@ pub(crate) struct LyricLine {
 pub(crate) struct StructuredLyric {
     #[serde(deserialize_with = "optional_string")]
     pub kind: Option<String>,
-    #[serde(deserialize_with = "truthy")]
-    pub synced: bool,
+    #[serde(rename = "synced", deserialize_with = "truthy")]
+    pub is_synced: bool,
     #[serde(deserialize_with = "optional_f64")]
     pub offset: Option<f64>,
     pub line: Vec<LyricLine>,
@@ -42,7 +42,7 @@ pub(crate) struct LyricsList {
 
 pub(crate) fn lyrics_text(lyrics: Vec<StructuredLyric>) -> Option<String> {
     let lyric = pick_displayed_lyric(lyrics)?;
-    if lyric.synced {
+    if lyric.is_synced {
         return Some(render_synced(lyric));
     }
     Some(render_plain(lyric))
@@ -51,7 +51,7 @@ pub(crate) fn lyrics_text(lyrics: Vec<StructuredLyric>) -> Option<String> {
 fn pick_displayed_lyric(lyrics: Vec<StructuredLyric>) -> Option<StructuredLyric> {
     let index = lyrics
         .iter()
-        .position(|lyric| is_main(lyric) && lyric.synced && has_lines(lyric))
+        .position(|lyric| is_main(lyric) && lyric.is_synced && has_lines(lyric))
         .or_else(|| {
             lyrics
                 .iter()
@@ -126,7 +126,7 @@ mod tests {
     fn unsynced_lyrics_join_lines() {
         let lyric = StructuredLyric {
             kind: None,
-            synced: false,
+            is_synced: false,
             offset: None,
             line: vec![
                 LyricLine {

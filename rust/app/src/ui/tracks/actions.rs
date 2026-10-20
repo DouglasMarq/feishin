@@ -79,7 +79,7 @@ pub(super) fn set_favorite(
         on_ui(&weak, move |window| match result {
             Ok(()) => {
                 with_model(window, |model| {
-                    model.update_songs(&ids, |song| song.favorite = favorite);
+                    model.update_songs(&ids, |song| song.is_favorite = favorite);
                 });
             }
             Err(error) => show_status(window, &tr!("Could not update favorites: {}", error)),

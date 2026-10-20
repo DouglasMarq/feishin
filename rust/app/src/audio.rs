@@ -67,9 +67,9 @@ impl MpvOutput {
         let config = PlayerConfig {
             audio_device: settings.audio_device.clone(),
             replay_gain: replay_gain_mode(settings.replay_gain),
-            gapless: settings.gapless,
+            is_gapless: settings.is_gapless,
             volume: settings.volume_percent,
-            muted: settings.muted,
+            is_muted: settings.is_muted,
             crossfade: settings.crossfade(),
         };
         Ok(Self(Player::new(config, on_event)?))

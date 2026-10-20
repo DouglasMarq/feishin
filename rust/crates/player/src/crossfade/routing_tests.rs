@@ -4,7 +4,7 @@ use crate::PlayerEvent;
 fn forwarded(events: Vec<PlayerEvent>) -> RouteOutcome {
     RouteOutcome {
         events,
-        promoted: false,
+        is_promoted: false,
     }
 }
 
@@ -100,7 +100,7 @@ fn lead_end_without_fade_promotes_a_loaded_preload_like_gapless() {
                 PlayerEvent::TrackEnded { uid: 1 },
                 PlayerEvent::Started { uid: 2 }
             ],
-            promoted: true,
+            is_promoted: true,
         }
     );
     assert_eq!(routing.lead(), DeckSlot::Second);
@@ -119,7 +119,7 @@ fn lead_end_promotes_a_preload_that_is_still_loading() {
         outcome,
         RouteOutcome {
             events: vec![error(1)],
-            promoted: true,
+            is_promoted: true,
         }
     );
     assert_eq!(

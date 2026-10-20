@@ -38,7 +38,7 @@ impl TrustStore for MemoryTrust {
 }
 
 struct FakeDelegate {
-    allow: bool,
+    is_allowed: bool,
     approvals: Mutex<usize>,
     controls: mpsc::UnboundedSender<RemoteControl>,
     adopted: Mutex<Vec<TransferPayload>>,
@@ -48,7 +48,7 @@ struct FakeDelegate {
 impl HostDelegate for FakeDelegate {
     async fn approve(&self, _device: DeviceInfo) -> bool {
         *self.approvals.lock().unwrap() += 1;
-        self.allow
+        self.is_allowed
     }
     fn control(&self, _device: &DeviceInfo, control: RemoteControl) -> Result<(), RemoteFailure> {
         match control {
@@ -87,12 +87,12 @@ fn device(id: &str) -> DeviceInfo {
     }
 }
 
-async fn start_host(allow: bool) -> Running {
+async fn start_host(is_allowed: bool) -> Running {
     let listener = TcpListener::bind("127.0.0.1:0").await.unwrap();
     let address = listener.local_addr().unwrap();
     let (controls_sender, controls) = mpsc::unbounded_channel();
     let delegate = Arc::new(FakeDelegate {
-        allow,
+        is_allowed,
         approvals: Mutex::new(0),
         controls: controls_sender,
         adopted: Mutex::new(Vec::new()),
@@ -271,7 +271,7 @@ async fn transfers_are_accepted_or_refused() {
     let payload = TransferPayload {
         snapshot: queue.snapshot(),
         position_ms: 42_000,
-        playing: true,
+        is_playing: true,
         server: None,
     };
     let message = ClientMessage::TransferHere {

@@ -30,7 +30,7 @@ pub(super) fn show(window: &AppWindow, detail: AlbumDetail) {
     state.set_name(album.name.as_str().into());
     state.set_artists(ModelRc::new(VecModel::from(artists)));
     state.set_info(album_info(&detail).into());
-    state.set_favorite(album.favorite);
+    state.set_favorite(album.is_favorite);
     state.set_rating(i32::from(album.user_rating.unwrap_or(0)));
     show_tracks(window, detail.songs);
     state.set_loading(false);

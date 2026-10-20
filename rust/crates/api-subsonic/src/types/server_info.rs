@@ -3,7 +3,8 @@ use serde::Deserialize;
 #[derive(Debug, Default, Deserialize)]
 #[serde(rename_all = "camelCase", default)]
 pub struct Ping {
-    pub open_subsonic: Option<bool>,
+    #[serde(rename = "openSubsonic")]
+    pub is_open_subsonic: Option<bool>,
     pub server_version: Option<String>,
 }
 

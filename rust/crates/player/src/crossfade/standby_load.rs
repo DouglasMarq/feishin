@@ -35,7 +35,7 @@ mod tests {
         DeckClock {
             position_seconds,
             duration_seconds,
-            paused: false,
+            is_paused: false,
         }
     }
 

@@ -12,14 +12,14 @@ impl NavidromeServer {
         &self,
         kind: ItemKind,
         ids: &[String],
-        favorite: bool,
+        is_favorite: bool,
     ) -> Result<()> {
         let key = favorite_id_key(kind)?;
         if ids.is_empty() {
             return Ok(());
         }
         let params: QueryParams = ids.iter().map(|id| (key, id.clone())).collect();
-        let endpoint = if favorite { "star" } else { "unstar" };
+        let endpoint = if is_favorite { "star" } else { "unstar" };
         self.changing_annotations(self.subsonic::<IgnoredAny>(endpoint, &params))
             .await
             .map(|_| ())
@@ -41,12 +41,12 @@ impl NavidromeServer {
     pub(crate) async fn report_scrobble(
         &self,
         song_id: &str,
-        submission: bool,
+        is_submission: bool,
         timestamp_ms: Option<i64>,
     ) -> Result<()> {
         let mut params: QueryParams = vec![
             ("id", song_id.to_owned()),
-            ("submission", submission.to_string()),
+            ("submission", is_submission.to_string()),
         ];
         params.extend(timestamp_ms.map(|time| ("time", time.to_string())));
         self.subsonic::<IgnoredAny>("scrobble", &params)

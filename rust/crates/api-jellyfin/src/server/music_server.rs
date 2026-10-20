@@ -107,8 +107,8 @@ impl MusicServer for JellyfinServer {
         self.search_library(query, limit).await
     }
 
-    async fn set_favorite(&self, _kind: ItemKind, ids: &[String], favorite: bool) -> Result<()> {
-        self.mark_favorites(ids, favorite).await
+    async fn set_favorite(&self, _kind: ItemKind, ids: &[String], is_favorite: bool) -> Result<()> {
+        self.mark_favorites(ids, is_favorite).await
     }
 
     async fn set_rating(&self, _kind: ItemKind, _id: &str, _rating: u8) -> Result<()> {
@@ -118,10 +118,10 @@ impl MusicServer for JellyfinServer {
     async fn scrobble(
         &self,
         song_id: &str,
-        submission: bool,
+        is_submission: bool,
         _timestamp_ms: Option<i64>,
     ) -> Result<()> {
-        match submission {
+        match is_submission {
             true => self.report_played_to_end(song_id).await,
             false => self.report_now_playing(song_id).await,
         }

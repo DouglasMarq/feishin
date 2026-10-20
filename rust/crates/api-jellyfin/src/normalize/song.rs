@@ -24,7 +24,7 @@ pub fn song(item: dto::Song, server_id: &str) -> Song {
         bitrate_kbps: source.and_then(audio_bitrate_kbps),
         play_count: user_data.map_or(0, |data| data.play_count),
         user_rating: None,
-        favorite: user_data.is_some_and(|data| data.is_favorite),
+        is_favorite: user_data.is_some_and(|data| data.is_favorite),
         cover_art_id: song_cover_art_id(&item),
         replay_gain: replay_gain(&item),
         path: source.and_then(|source| source.path.clone()),

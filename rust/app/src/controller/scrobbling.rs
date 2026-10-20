@@ -26,7 +26,7 @@ impl Controller {
         submission: bool,
         timestamp_ms: Option<i64>,
     ) {
-        if !self.settings.playback.scrobble {
+        if !self.settings.playback.is_scrobbling_enabled {
             return;
         }
         let Some(server) = self.deps.session.get() else {

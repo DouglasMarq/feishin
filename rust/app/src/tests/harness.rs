@@ -213,8 +213,8 @@ pub(super) fn start_harness(settings: Settings) -> Harness {
 
 pub(super) fn test_settings(gapless: bool, scrobble: bool) -> Settings {
     let mut settings = Settings::default();
-    settings.playback.gapless = gapless;
-    settings.playback.scrobble = scrobble;
+    settings.playback.is_gapless = gapless;
+    settings.playback.is_scrobbling_enabled = scrobble;
     settings
 }
 

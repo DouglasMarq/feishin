@@ -15,8 +15,8 @@ fn favorite_id_key(kind: ItemKind) -> Result<&'static str> {
     }
 }
 
-fn favorite_endpoint(favorite: bool) -> &'static str {
-    match favorite {
+fn favorite_endpoint(is_favorite: bool) -> &'static str {
+    match is_favorite {
         true => "star.view",
         false => "unstar.view",
     }
@@ -27,14 +27,14 @@ impl SubsonicServer {
         &self,
         kind: ItemKind,
         ids: &[String],
-        favorite: bool,
+        is_favorite: bool,
     ) -> Result<()> {
         let key = favorite_id_key(kind)?;
         if ids.is_empty() {
             return Ok(());
         }
         self.send_annotation(
-            favorite_endpoint(favorite),
+            favorite_endpoint(is_favorite),
             Params::new().add_each(key, ids),
         )
         .await
@@ -59,13 +59,13 @@ impl SubsonicServer {
     pub(super) async fn submit_scrobble(
         &self,
         song_id: &str,
-        submission: bool,
+        is_submission: bool,
         timestamp_ms: Option<i64>,
     ) -> Result<()> {
         let params = Params::new()
             .add("id", song_id)
-            .add("submission", submission)
-            .add_optional("time", timestamp_ms.filter(|_| submission));
+            .add("submission", is_submission)
+            .add_optional("time", timestamp_ms.filter(|_| is_submission));
         self.send("scrobble.view", params).await
     }
 }

@@ -84,7 +84,7 @@ impl FakeServer {
 
 fn artist_is_listed(artist: usize, query: &ArtistListQuery, search: Option<&str>) -> bool {
     query
-        .favorite
+        .is_favorite
         .is_none_or(|favorite| artist_is_favorite(artist) == favorite)
         && search.is_none_or(|search| artist_name(artist).to_lowercase().contains(search))
 }

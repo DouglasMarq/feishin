@@ -21,7 +21,7 @@ impl From<Artist> for ArtistItem {
             name: artist.name,
             album_count: artist.album_count,
             song_count: artist.song_count,
-            favorite: artist.favorite,
+            favorite: artist.is_favorite,
             cover_art_id: artist.cover_art_id,
         }
     }

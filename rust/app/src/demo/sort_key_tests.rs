@@ -14,7 +14,7 @@ fn song_field(song: &Song, sort: SongSort) -> i64 {
         SongSort::Year => i64::from(song.year.unwrap_or_default()),
         SongSort::PlayCount => i64::from(song.play_count),
         SongSort::Rating => i64::from(song.user_rating.unwrap_or_default()),
-        SongSort::Favorited => i64::from(song.favorite),
+        SongSort::Favorited => i64::from(song.is_favorite),
         _ => 0,
     }
 }
@@ -26,7 +26,7 @@ fn artist_field(artist: &Artist, sort: ArtistSort) -> (String, i64) {
         ArtistSort::AlbumCount => numeric(artist.album_count),
         ArtistSort::SongCount => numeric(artist.song_count),
         ArtistSort::Rating => numeric(artist.user_rating.map(u32::from)),
-        ArtistSort::Favorited => numeric(Some(u32::from(artist.favorite))),
+        ArtistSort::Favorited => numeric(Some(u32::from(artist.is_favorite))),
         ArtistSort::PlayCount | ArtistSort::Random => numeric(None),
     }
 }

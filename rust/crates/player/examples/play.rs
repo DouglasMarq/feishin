@@ -14,8 +14,8 @@ const LINGER_OPTION_PREFIX: &str = "--linger=";
 
 #[derive(Default)]
 struct PlayArguments {
-    null_output: bool,
-    muted: bool,
+    is_null_output: bool,
+    is_muted: bool,
     start_ms: u64,
     crossfade_ms: u64,
     linger_ms: u64,
@@ -42,8 +42,8 @@ fn parse_option_or_url(parsed: &mut PlayArguments, argument: String) {
 
 fn parse_argument(parsed: &mut PlayArguments, argument: String) {
     match argument.as_str() {
-        NULL_OUTPUT_FLAG => parsed.null_output = true,
-        MUTED_FLAG => parsed.muted = true,
+        NULL_OUTPUT_FLAG => parsed.is_null_output = true,
+        MUTED_FLAG => parsed.is_muted = true,
         _ => parse_option_or_url(parsed, argument),
     }
 }
@@ -58,8 +58,8 @@ fn parse_arguments(arguments: impl Iterator<Item = String>) -> PlayArguments {
 
 fn player_config(arguments: &PlayArguments) -> PlayerConfig {
     PlayerConfig {
-        muted: arguments.muted,
-        volume: match arguments.muted {
+        is_muted: arguments.is_muted,
+        volume: match arguments.is_muted {
             true => 0,
             false => PlayerConfig::default().volume,
         },
@@ -76,7 +76,7 @@ fn create_player(
         event_sender.send(event).ok();
     });
     let config = player_config(arguments);
-    let player = match arguments.null_output {
+    let player = match arguments.is_null_output {
         true => Player::with_null_output(config, on_event),
         false => Player::new(config, on_event),
     };

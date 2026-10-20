@@ -60,8 +60,8 @@ pub(crate) struct SubsonicSong {
     pub play_count: Option<u32>,
     #[serde(deserialize_with = "optional_u32")]
     pub user_rating: Option<u32>,
-    #[serde(deserialize_with = "truthy")]
-    pub starred: bool,
+    #[serde(rename = "starred", deserialize_with = "truthy")]
+    pub is_starred: bool,
     #[serde(deserialize_with = "optional_string")]
     pub cover_art: Option<String>,
     pub replay_gain: Option<SubsonicReplayGain>,
@@ -137,7 +137,7 @@ pub(crate) fn normalize_song(song: SubsonicSong, server_id: &str) -> Song {
         bitrate_kbps: song.bit_rate,
         play_count: song.play_count.unwrap_or(0),
         user_rating: rating(song.user_rating),
-        favorite: song.starred,
+        is_favorite: song.is_starred,
         cover_art_id: non_empty(song.cover_art),
         replay_gain,
         path: non_empty(song.path),
@@ -208,7 +208,7 @@ mod tests {
         assert_eq!(song.album_artists[0].name, "A");
         assert_eq!(song.container.as_deref(), Some("flac"));
         assert_eq!(song.track_number, Some(1));
-        assert!(song.favorite);
+        assert!(song.is_favorite);
         assert_eq!(song.user_rating, Some(4));
         assert_eq!(song.genres, vec!["Rock".to_owned()]);
         assert_eq!(

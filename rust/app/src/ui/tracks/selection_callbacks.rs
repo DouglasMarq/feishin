@@ -129,7 +129,7 @@ fn install_row_edits(window: &AppWindow, context: &Context) {
             return;
         };
         if let Some(song) = with_model(&window, |model| model.song_at(index)).flatten() {
-            set_favorite(&window, &favorite_context, vec![song.id], !song.favorite);
+            set_favorite(&window, &favorite_context, vec![song.id], !song.is_favorite);
         }
     });
 

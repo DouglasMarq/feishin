@@ -46,7 +46,7 @@ impl ListedEdit {
 
     fn update(self, song: &mut Song) {
         match self {
-            Self::Favorite(favorite) => song.favorite = favorite,
+            Self::Favorite(favorite) => song.is_favorite = favorite,
             Self::Rate(rating) => song.user_rating = (rating > 0).then_some(rating),
         }
     }

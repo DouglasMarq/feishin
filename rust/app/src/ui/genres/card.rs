@@ -44,7 +44,7 @@ pub fn album_card(album: &Album) -> CardData {
         title: album.name.clone(),
         subtitle: album_artist_names(album),
         cover_id: album.cover_art_id.clone(),
-        favorite: album.favorite,
+        favorite: album.is_favorite,
     }
 }
 
@@ -54,7 +54,7 @@ pub fn artist_card(artist: &Artist) -> CardData {
         title: artist.name.clone(),
         subtitle: album_count_label(artist.album_count),
         cover_id: artist.cover_art_id.clone(),
-        favorite: artist.favorite,
+        favorite: artist.is_favorite,
     }
 }
 
@@ -117,7 +117,7 @@ mod tests {
             cover_art_id: Some("c".into()),
             play_count: 0,
             user_rating: None,
-            favorite: true,
+            is_favorite: true,
             created_at: None,
             last_played_at: None,
         }
@@ -131,7 +131,7 @@ mod tests {
             album_count: Some(3),
             song_count: None,
             cover_art_id: None,
-            favorite: false,
+            is_favorite: false,
             user_rating: None,
             biography: None,
         }

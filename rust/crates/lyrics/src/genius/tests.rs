@@ -104,7 +104,7 @@ async fn fetches_and_scrapes_best_hit() {
         .unwrap()
         .unwrap();
     assert_eq!(lyrics.source, LyricsSource::Genius);
-    assert!(!lyrics.synced);
+    assert!(!lyrics.is_synced);
     assert_eq!(lyrics.lines.len(), 5);
     assert_eq!(lyrics.lines[0].text, "[Intro]");
     assert!(lyrics.lines.iter().all(|line| line.time_ms.is_none()));

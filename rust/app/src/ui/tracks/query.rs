@@ -22,7 +22,7 @@ impl Filters {
             years => years,
         };
         SongListQuery {
-            favorite: self.favorite_only.then_some(true),
+            is_favorite: self.favorite_only.then_some(true),
             genre_ids: self.genre_id.iter().cloned().collect(),
             year_from,
             year_to,

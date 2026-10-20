@@ -39,7 +39,7 @@ impl Controller {
         let payload = TransferPayload {
             snapshot: self.queue.snapshot(),
             position_ms: self.position_ms,
-            playing: self.playing,
+            is_playing: self.playing,
             server: self
                 .deps
                 .session

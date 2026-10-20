@@ -60,7 +60,7 @@ async fn assert_search_and_favorites_filter(server: &SubsonicServer) {
     assert_eq!(page.items[0].id, "ar-1");
 
     let favorites = ArtistListQuery {
-        favorite: Some(true),
+        is_favorite: Some(true),
         music_folder_id: Some("1".into()),
         ..Default::default()
     };
@@ -69,7 +69,7 @@ async fn assert_search_and_favorites_filter(server: &SubsonicServer) {
         .await
         .expect("favorites");
     assert_eq!(page.items.len(), 1);
-    assert!(page.items[0].favorite);
+    assert!(page.items[0].is_favorite);
 }
 
 #[tokio::test]

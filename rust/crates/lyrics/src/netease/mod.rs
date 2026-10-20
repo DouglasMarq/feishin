@@ -85,7 +85,7 @@ pub(crate) async fn fetch(
         let Some(lyrics) = lyrics_by_id(client, base, song.id).await? else {
             continue;
         };
-        if lyrics.synced {
+        if lyrics.is_synced {
             return Ok(Some(lyrics));
         }
         fallback.get_or_insert(lyrics);

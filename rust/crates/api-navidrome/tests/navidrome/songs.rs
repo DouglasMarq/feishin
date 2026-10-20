@@ -37,7 +37,7 @@ fn filtered_song_query() -> SongListQuery {
         sort: SongSort::Year,
         order: SortOrder::Desc,
         search: Some("love".into()),
-        favorite: Some(true),
+        is_favorite: Some(true),
         genre_ids: vec!["g1".into(), "g2".into()],
         artist_ids: vec!["ar1".into()],
         music_folder_id: Some("lib1".into()),
@@ -52,7 +52,7 @@ fn assert_first_native_song(song: &Song) {
     assert_eq!(song.artists[0].name, "Artist One");
     assert_eq!(song.album_id.as_deref(), Some("al1"));
     assert_eq!(song.user_rating, Some(4));
-    assert!(song.favorite);
+    assert!(song.is_favorite);
     assert_eq!(
         song.path.as_deref(),
         Some("/music/Artist One/Album One/01.flac")

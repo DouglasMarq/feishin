@@ -26,7 +26,7 @@ pub struct LyricLine {
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Lyrics {
     pub source: LyricsSource,
-    pub synced: bool,
+    pub is_synced: bool,
     pub lines: Vec<LyricLine>,
 }
 

@@ -5,16 +5,16 @@ use crate::queue::{Advance, Queue, QueueItem, QueueSnapshot, RepeatMode};
 
 #[test]
 fn snapshot_round_trip() {
-    for shuffle in [false, true] {
+    for is_shuffled in [false, true] {
         let mut queue = Queue::with_seed(26);
-        queue.set_shuffle(shuffle);
+        queue.set_shuffle(is_shuffled);
         queue.set_repeat(RepeatMode::One);
         queue.play_now(numbered_songs(7), Some("s5"));
         queue.next(Advance::Manual);
         queue.add_last(songs(&["x"]));
 
         let snapshot = queue.snapshot();
-        assert_eq!(snapshot.shuffled.is_some(), shuffle);
+        assert_eq!(snapshot.shuffled.is_some(), is_shuffled);
         let json = serde_json::to_string(&snapshot).unwrap_or_default();
         let decoded: QueueSnapshot =
             serde_json::from_str(&json).unwrap_or_else(|error| panic!("{error}"));
@@ -25,7 +25,7 @@ fn snapshot_round_trip() {
         assert_eq!(play_uids(&restored), play_uids(&queue));
         assert_eq!(restored.current(), queue.current());
         assert_eq!(restored.repeat(), RepeatMode::One);
-        assert_eq!(restored.shuffle(), shuffle);
+        assert_eq!(restored.is_shuffled(), is_shuffled);
 
         restored.add_last(songs(&["y"]));
         assert_invariants(&restored);
@@ -80,7 +80,7 @@ fn from_snapshot_repairs_inconsistent_state() {
         next_uid: 2,
     });
     assert_invariants(&queue);
-    assert!(queue.shuffle());
+    assert!(queue.is_shuffled());
     assert_eq!(current_id(&queue).as_deref(), Some("c"));
     assert_eq!(queue.current_position(), Some(0));
     assert!(queue.snapshot().next_uid > 9);

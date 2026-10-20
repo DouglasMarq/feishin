@@ -20,12 +20,12 @@ impl SleepInhibitor {
         })
     }
 
-    pub fn set_inhibited(&self, inhibited: bool) -> Result<()> {
+    pub fn set_inhibited(&self, is_inhibited: bool) -> Result<()> {
         let mut assertion = self
             .assertion
             .lock()
             .unwrap_or_else(PoisonError::into_inner);
-        match (inhibited, assertion.is_some()) {
+        match (is_inhibited, assertion.is_some()) {
             (true, false) => *assertion = Some(self.create_assertion()?),
             (false, true) => *assertion = None,
             _ => {}

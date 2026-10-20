@@ -12,7 +12,11 @@ struct RawCredential {
 
 pub(super) fn map_server(key: &str, raw: RawServer) -> Option<ImportedServer> {
     let server_type = parse_server_type(key, raw.server_type.as_deref()?)?;
-    let url = normalize_url(&chosen_url(raw.prefer_remote_url, raw.remote_url, raw.url)?);
+    let url = normalize_url(&chosen_url(
+        raw.is_remote_url_preferred,
+        raw.remote_url,
+        raw.url,
+    )?);
     let id = non_empty(raw.id).unwrap_or_else(|| key.to_string());
     let name = non_empty(raw.name).unwrap_or_else(|| url.clone());
     let credential = imported_credential(
@@ -48,12 +52,12 @@ fn parse_server_type(key: &str, raw_type: &str) -> Option<ServerType> {
 }
 
 fn chosen_url(
-    prefer_remote_url: Option<bool>,
+    is_remote_url_preferred: Option<bool>,
     remote_url: Option<String>,
     url: Option<String>,
 ) -> Option<String> {
     let remote_url = remote_url.filter(|candidate| !candidate.trim().is_empty());
-    match (prefer_remote_url.unwrap_or(false), remote_url) {
+    match (is_remote_url_preferred.unwrap_or(false), remote_url) {
         (true, Some(remote)) => Some(remote),
         _ => url.filter(|candidate| !candidate.trim().is_empty()),
     }

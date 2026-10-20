@@ -26,7 +26,9 @@ impl DeckSetting {
 
     pub(super) fn mpv_value(&self) -> String {
         match self {
-            DeckSetting::Paused(enabled) | DeckSetting::Muted(enabled) => mpv_flag(*enabled).into(),
+            DeckSetting::Paused(is_enabled) | DeckSetting::Muted(is_enabled) => {
+                mpv_flag(*is_enabled).into()
+            }
             DeckSetting::Volume(volume) => volume.min(&MAX_VOLUME).to_string(),
             DeckSetting::ReplayGain(mode) => mode.mpv_value().into(),
             DeckSetting::AudioDevice(device) => {
@@ -37,8 +39,8 @@ impl DeckSetting {
     }
 }
 
-pub(super) fn mpv_flag(enabled: bool) -> &'static str {
-    match enabled {
+pub(super) fn mpv_flag(is_enabled: bool) -> &'static str {
+    match is_enabled {
         true => "yes",
         false => "no",
     }

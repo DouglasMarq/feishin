@@ -28,7 +28,7 @@ fn filters_by_ids(query: &SongListQuery) -> bool {
 
 fn is_random_listing(query: &SongListQuery) -> bool {
     query.sort == SongSort::Random
-        && !wants_favorites_only(query.favorite)
+        && !wants_favorites_only(query.is_favorite)
         && !filters_by_ids(query)
 }
 
@@ -40,7 +40,7 @@ impl<'query> SongSource<'query> {
         if let Some(genre) = query.genre_ids.first() {
             return Self::Genre(genre);
         }
-        if wants_favorites_only(query.favorite) {
+        if wants_favorites_only(query.is_favorite) {
             return Self::Favorites;
         }
         match filters_by_ids(query) {

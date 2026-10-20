@@ -5,7 +5,8 @@ use super::lenient::lenient_number;
 #[derive(Debug, Default, Deserialize)]
 #[serde(default)]
 pub struct ScanStatus {
-    pub scanning: bool,
+    #[serde(rename = "scanning")]
+    pub is_scanning: bool,
     #[serde(deserialize_with = "lenient_number")]
     pub count: Option<f64>,
 }

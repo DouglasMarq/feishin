@@ -28,7 +28,8 @@ pub struct InternetRadioStations {
 #[derive(Debug, Default, Deserialize)]
 #[serde(rename_all = "camelCase", default)]
 pub struct SubsonicUser {
-    pub admin_role: bool,
+    #[serde(rename = "adminRole")]
+    pub has_admin_role: bool,
 }
 
 #[derive(Debug, Default, Deserialize)]

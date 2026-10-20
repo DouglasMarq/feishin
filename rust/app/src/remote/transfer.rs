@@ -118,7 +118,7 @@ pub fn adapt_payload(
             next_uid,
         },
         position_ms: if current_kept { payload.position_ms } else { 0 },
-        playing: payload.playing && current_kept,
+        playing: payload.is_playing && current_kept,
     })
 }
 
@@ -199,7 +199,7 @@ mod tests {
         TransferPayload {
             snapshot: queue.snapshot(),
             position_ms: 30_000,
-            playing: true,
+            is_playing: true,
             server: Some(key(server)),
         }
     }

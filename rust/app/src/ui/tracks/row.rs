@@ -28,7 +28,7 @@ pub fn track_row(song: &Song, index: usize) -> TrackRow {
         playing: false,
         album_id: song.album_id.as_deref().unwrap_or_default().into(),
         artist_id: primary_artist_id(song).unwrap_or_default().into(),
-        favorite: song.favorite,
+        favorite: song.is_favorite,
         rating: i32::from(song.user_rating.unwrap_or_default()),
         selected: false,
     }

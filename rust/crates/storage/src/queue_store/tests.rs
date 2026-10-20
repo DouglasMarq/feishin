@@ -27,7 +27,7 @@ fn song(id: &str) -> Song {
         bitrate_kbps: Some(320),
         play_count: 3,
         user_rating: None,
-        favorite: true,
+        is_favorite: true,
         cover_art_id: Some("cov".into()),
         replay_gain: None,
         path: None,

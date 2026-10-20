@@ -11,7 +11,7 @@ const ID_PARAMETER_BYTES: usize = "&id=".len();
 const QUEUE_TOO_LONG_FOR_A_QUERY_STRING: &str =
     "saving a play queue too long for a GET request without formPost";
 
-fn too_long_for_a_query_string(extensions: &Extensions, song_ids: &[String]) -> bool {
+fn is_too_long_for_a_query_string(extensions: &Extensions, song_ids: &[String]) -> bool {
     let id_bytes: usize = song_ids
         .iter()
         .map(|song_id| song_id.len() + ID_PARAMETER_BYTES)
@@ -41,7 +41,7 @@ impl SubsonicServer {
         position_ms: u64,
     ) -> Result<()> {
         let extensions = self.extensions().await?;
-        if too_long_for_a_query_string(extensions, song_ids) {
+        if is_too_long_for_a_query_string(extensions, song_ids) {
             return Err(ApiError::Unsupported(QUEUE_TOO_LONG_FOR_A_QUERY_STRING));
         }
         let current_index =

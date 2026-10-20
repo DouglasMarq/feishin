@@ -110,7 +110,7 @@ pub fn columns(window: &AppWindow) -> Vec<ColumnSetting> {
         .map(|column| ColumnSetting {
             id: column.id().to_owned(),
             width_pixels: width_of(&state, column),
-            visible: is_visible(&state, column),
+            is_visible: is_visible(&state, column),
         })
         .collect()
 }
@@ -123,6 +123,6 @@ pub(super) fn apply_columns(window: &AppWindow, columns: &[ColumnSetting]) {
         .filter_map(|setting| TrackColumn::from_id(&setting.id).map(|column| (column, setting)));
     for (column, setting) in known_columns {
         set_width(&state, column, setting.width_pixels);
-        set_visible(&state, column, setting.visible);
+        set_visible(&state, column, setting.is_visible);
     }
 }

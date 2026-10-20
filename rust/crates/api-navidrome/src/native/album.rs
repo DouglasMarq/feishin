@@ -40,8 +40,8 @@ pub(crate) struct NativeAlbum {
     pub play_count: Option<u32>,
     #[serde(deserialize_with = "optional_u32")]
     pub rating: Option<u32>,
-    #[serde(deserialize_with = "truthy")]
-    pub starred: bool,
+    #[serde(rename = "starred", deserialize_with = "truthy")]
+    pub is_starred: bool,
     #[serde(deserialize_with = "optional_string")]
     pub created_at: Option<String>,
     #[serde(deserialize_with = "optional_string")]
@@ -65,7 +65,7 @@ pub(crate) fn normalize_album(album: NativeAlbum, server_id: &str) -> Album {
         duration_ms: seconds_to_ms(album.duration),
         play_count: album.play_count.unwrap_or(0),
         user_rating: rating(album.rating),
-        favorite: album.starred,
+        is_favorite: album.is_starred,
         created_at: album.created_at,
         last_played_at: play_date(album.play_date),
     }

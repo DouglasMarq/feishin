@@ -86,8 +86,8 @@ impl MediaControls {
         self.send(Update::Volume(volume))
     }
 
-    pub fn set_live_stream(&mut self, live: bool) -> Result<()> {
-        self.send(Update::LiveStream(live))
+    pub fn set_live_stream(&mut self, is_live: bool) -> Result<()> {
+        self.send(Update::LiveStream(is_live))
     }
 
     fn send(&self, update: Update) -> Result<()> {

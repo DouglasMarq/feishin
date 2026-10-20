@@ -48,20 +48,20 @@ pub(crate) struct Features {
 }
 
 impl Features {
-    fn version_at_least(&self, minimum: ServerVersion) -> bool {
+    fn is_version_at_least(&self, minimum: ServerVersion) -> bool {
         self.version.is_some_and(|version| version >= minimum)
     }
 
     pub fn has_big_feature_release(&self) -> bool {
-        self.version_at_least(BIG_FEATURE_RELEASE)
+        self.is_version_at_least(BIG_FEATURE_RELEASE)
     }
 
     pub fn supports_track_artist_filter(&self) -> bool {
-        self.version_at_least(TRACK_ARTIST_FILTER_RELEASE)
+        self.is_version_at_least(TRACK_ARTIST_FILTER_RELEASE)
     }
 
     pub fn supports_native_play_queue(&self) -> bool {
-        self.version_at_least(NATIVE_PLAY_QUEUE_RELEASE)
+        self.is_version_at_least(NATIVE_PLAY_QUEUE_RELEASE)
     }
 
     pub fn has_extension(&self, extension: OpenSubsonicExtension) -> bool {

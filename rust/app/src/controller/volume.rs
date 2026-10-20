@@ -9,7 +9,7 @@ impl Controller {
         if let Err(error) = self.deps.audio.set_volume(volume) {
             tracing::warn!("setting volume failed: {error:#}");
         }
-        if volume > 0 && self.settings.playback.muted {
+        if volume > 0 && self.settings.playback.is_muted {
             self.set_muted(false);
             return;
         }
@@ -18,11 +18,11 @@ impl Controller {
     }
 
     pub(super) fn toggle_mute(&mut self) {
-        self.set_muted(!self.settings.playback.muted);
+        self.set_muted(!self.settings.playback.is_muted);
     }
 
     fn set_muted(&mut self, muted: bool) {
-        self.settings.playback.muted = muted;
+        self.settings.playback.is_muted = muted;
         if let Err(error) = self.deps.audio.set_muted(muted) {
             tracing::warn!("muting failed: {error:#}");
         }

@@ -20,7 +20,7 @@ impl DeckSlot {
 #[derive(Debug, Clone, PartialEq)]
 pub(crate) enum Standby {
     Empty,
-    Preloading { uid: Uid, loaded: bool },
+    Preloading { uid: Uid, is_loaded: bool },
     Failed { uid: Uid, message: String },
     FadingOut,
 }
@@ -28,14 +28,14 @@ pub(crate) enum Standby {
 #[derive(Debug, Clone, PartialEq, Default)]
 pub(crate) struct RouteOutcome {
     pub(crate) events: Vec<PlayerEvent>,
-    pub(crate) promoted: bool,
+    pub(crate) is_promoted: bool,
 }
 
 impl RouteOutcome {
     fn forward(event: PlayerEvent) -> Self {
         Self {
             events: vec![event],
-            promoted: false,
+            is_promoted: false,
         }
     }
 }
@@ -44,7 +44,7 @@ impl RouteOutcome {
 pub(crate) struct Routing {
     lead: DeckSlot,
     standby: Standby,
-    paused: bool,
+    is_paused: bool,
 }
 
 pub(crate) fn ends_track(event: &PlayerEvent) -> bool {
@@ -59,7 +59,7 @@ impl Routing {
         Self {
             lead: DeckSlot::First,
             standby: Standby::Empty,
-            paused: false,
+            is_paused: false,
         }
     }
 
@@ -80,11 +80,20 @@ impl Routing {
     }
 
     pub(crate) fn standby_is_ready(&self) -> bool {
-        matches!(self.standby, Standby::Preloading { loaded: true, .. })
+        matches!(
+            self.standby,
+            Standby::Preloading {
+                is_loaded: true,
+                ..
+            }
+        )
     }
 
     pub(crate) fn preload(&mut self, uid: Uid) {
-        self.standby = Standby::Preloading { uid, loaded: false };
+        self.standby = Standby::Preloading {
+            uid,
+            is_loaded: false,
+        };
     }
 
     pub(crate) fn preload_failed(&mut self, uid: Uid, message: String) {
@@ -96,7 +105,11 @@ impl Routing {
     }
 
     pub(crate) fn begin_fade(&mut self) -> Option<PlayerEvent> {
-        let Standby::Preloading { uid, loaded: true } = self.standby else {
+        let Standby::Preloading {
+            uid,
+            is_loaded: true,
+        } = self.standby
+        else {
             return None;
         };
         self.lead = self.lead.other();
@@ -124,12 +137,12 @@ impl Routing {
         }
     }
 
-    pub(crate) fn pause_changed(&mut self, paused: bool) -> RouteOutcome {
-        if self.paused == paused {
+    pub(crate) fn pause_changed(&mut self, is_paused: bool) -> RouteOutcome {
+        if self.is_paused == is_paused {
             return RouteOutcome::default();
         }
-        self.paused = paused;
-        RouteOutcome::forward(match paused {
+        self.is_paused = is_paused;
+        RouteOutcome::forward(match is_paused {
             true => PlayerEvent::Paused,
             false => PlayerEvent::Resumed,
         })
@@ -137,14 +150,17 @@ impl Routing {
 
     fn lead_track_ended(&mut self, event: PlayerEvent) -> RouteOutcome {
         match std::mem::replace(&mut self.standby, Standby::Empty) {
-            Standby::Preloading { uid, loaded } => {
+            Standby::Preloading { uid, is_loaded } => {
                 self.lead = self.lead.other();
                 RouteOutcome {
-                    events: [Some(event), loaded.then_some(PlayerEvent::Started { uid })]
-                        .into_iter()
-                        .flatten()
-                        .collect(),
-                    promoted: true,
+                    events: [
+                        Some(event),
+                        is_loaded.then_some(PlayerEvent::Started { uid }),
+                    ]
+                    .into_iter()
+                    .flatten()
+                    .collect(),
+                    is_promoted: true,
                 }
             }
             Standby::Failed { uid, message } => RouteOutcome {
@@ -155,7 +171,7 @@ impl Routing {
                         message,
                     },
                 ],
-                promoted: false,
+                is_promoted: false,
             },
             other => {
                 self.standby = other;
@@ -166,10 +182,10 @@ impl Routing {
 
     fn route_standby_event(&mut self, event: PlayerEvent) -> RouteOutcome {
         match (&mut self.standby, event) {
-            (Standby::Preloading { uid, loaded }, PlayerEvent::Started { uid: started_uid })
+            (Standby::Preloading { uid, is_loaded }, PlayerEvent::Started { uid: started_uid })
                 if *uid == started_uid =>
             {
-                *loaded = true;
+                *is_loaded = true;
                 RouteOutcome::default()
             }
             (

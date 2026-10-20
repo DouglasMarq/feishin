@@ -143,10 +143,10 @@ fn next_and_previous_follow_shuffled_order() {
 
 #[test]
 fn peek_next_always_matches_next_auto() {
-    for shuffle in [false, true] {
+    for is_shuffled in [false, true] {
         for repeat in [RepeatMode::None, RepeatMode::All, RepeatMode::One] {
             let mut queue = Queue::with_seed(15);
-            queue.set_shuffle(shuffle);
+            queue.set_shuffle(is_shuffled);
             queue.play_now(numbered_songs(6), Some("s2"));
             queue.set_repeat(repeat);
             for uid in play_uids(&queue) {

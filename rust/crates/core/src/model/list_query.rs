@@ -29,7 +29,8 @@ pub struct SongListQuery {
     pub sort: SongSort,
     pub order: SortOrder,
     pub search: Option<String>,
-    pub favorite: Option<bool>,
+    #[serde(rename = "favorite")]
+    pub is_favorite: Option<bool>,
     pub genre_ids: Vec<String>,
     pub artist_ids: Vec<String>,
     pub album_ids: Vec<String>,
@@ -59,7 +60,8 @@ pub struct AlbumListQuery {
     pub sort: AlbumSort,
     pub order: SortOrder,
     pub search: Option<String>,
-    pub favorite: Option<bool>,
+    #[serde(rename = "favorite")]
+    pub is_favorite: Option<bool>,
     pub genre_ids: Vec<String>,
     pub artist_ids: Vec<String>,
     pub year_from: Option<i32>,
@@ -84,6 +86,7 @@ pub struct ArtistListQuery {
     pub sort: ArtistSort,
     pub order: SortOrder,
     pub search: Option<String>,
-    pub favorite: Option<bool>,
+    #[serde(rename = "favorite")]
+    pub is_favorite: Option<bool>,
     pub music_folder_id: Option<String>,
 }

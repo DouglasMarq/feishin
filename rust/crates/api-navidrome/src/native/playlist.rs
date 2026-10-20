@@ -15,8 +15,8 @@ pub(crate) struct NativePlaylist {
     pub comment: Option<String>,
     #[serde(deserialize_with = "optional_string")]
     pub owner_name: Option<String>,
-    #[serde(deserialize_with = "truthy")]
-    pub public: bool,
+    #[serde(rename = "public", deserialize_with = "truthy")]
+    pub is_public: bool,
     #[serde(deserialize_with = "optional_u32")]
     pub song_count: Option<u32>,
     #[serde(deserialize_with = "optional_f64")]
@@ -46,7 +46,7 @@ pub(crate) fn normalize_playlist(playlist: NativePlaylist, server_id: &str) -> P
         name: playlist.name,
         comment: non_empty(playlist.comment),
         owner: non_empty(playlist.owner_name),
-        public: playlist.public,
+        is_public: playlist.is_public,
         song_count: playlist.song_count.unwrap_or(0),
         duration_ms: seconds_to_ms(playlist.duration),
         cover_art_id: Some(cover_art_id),

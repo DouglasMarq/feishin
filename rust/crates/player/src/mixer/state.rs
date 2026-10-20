@@ -23,8 +23,8 @@ pub(crate) struct MixerState {
     pub(super) pending_next: Option<PendingTrack>,
     pub(super) durations: TrackDurations,
     pub(super) unreported_events: Vec<PlayerEvent>,
-    pub(super) fader_woken: bool,
-    pub(super) shutting_down: bool,
+    pub(super) is_fader_woken: bool,
+    pub(super) is_shutting_down: bool,
 }
 
 impl MixerState {
@@ -38,8 +38,8 @@ impl MixerState {
             pending_next: None,
             durations: TrackDurations::default(),
             unreported_events: Vec::new(),
-            fader_woken: false,
-            shutting_down: false,
+            is_fader_woken: false,
+            is_shutting_down: false,
         }
     }
 
@@ -53,9 +53,9 @@ impl MixerState {
         self.decks.get(self.routing.standby_slot())
     }
 
-    pub(super) fn set_lead_paused(&mut self, paused: bool) -> Result<()> {
-        self.lead_deck()?.apply(&DeckSetting::Paused(paused))?;
-        let reported = self.routing.pause_changed(paused).events;
+    pub(super) fn set_lead_paused(&mut self, is_paused: bool) -> Result<()> {
+        self.lead_deck()?.apply(&DeckSetting::Paused(is_paused))?;
+        let reported = self.routing.pause_changed(is_paused).events;
         self.unreported_events.extend(reported);
         Ok(())
     }
@@ -74,9 +74,9 @@ impl MixerState {
         if let PlayerEvent::Started { uid } = event {
             self.durations.playing(slot, uid);
         }
-        let lead_ended = slot == self.routing.lead() && ends_track(&event);
+        let has_lead_ended = slot == self.routing.lead() && ends_track(&event);
         let outgoing_ended = self.routing.outgoing_deck_went_idle(slot, &event);
-        if lead_ended {
+        if has_lead_ended {
             self.finish_fade();
             self.preload_pending_in_background();
         }
@@ -84,7 +84,7 @@ impl MixerState {
         if outgoing_ended {
             self.finish_fade();
         }
-        if outcome.promoted {
+        if outcome.is_promoted {
             self.start_promoted_lead();
         }
         outcome.events
@@ -102,9 +102,9 @@ impl MixerState {
     }
 
     pub(super) fn change_crossfade(&mut self, crossfade: Duration) {
-        let toggled = self.config.crossfade.is_zero() != crossfade.is_zero();
+        let has_crossfade_toggled = self.config.crossfade.is_zero() != crossfade.is_zero();
         self.config.crossfade = crossfade;
-        if toggled {
+        if has_crossfade_toggled {
             self.pending_next = None;
             if !self.routing.is_fading() {
                 self.dismiss_standby();

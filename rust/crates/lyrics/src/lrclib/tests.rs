@@ -74,7 +74,7 @@ async fn get_endpoint_sends_track_signature() {
         .await
         .unwrap()
         .unwrap();
-    assert!(lyrics.synced);
+    assert!(lyrics.is_synced);
     assert_eq!(lyrics.source, LyricsSource::Lrclib);
     assert_eq!(lyrics.lines.len(), 2);
     assert_eq!(lyrics.lines[1].time_ms, Some(4100));
@@ -114,7 +114,7 @@ async fn plain_get_result_prefers_synced_search_hit() {
         .await
         .unwrap()
         .unwrap();
-    assert!(lyrics.synced);
+    assert!(lyrics.is_synced);
     assert_eq!(lyrics.lines[0].text, "Synced");
 }
 
@@ -138,7 +138,7 @@ async fn keeps_plain_get_result_when_search_has_nothing_synced() {
         .await
         .unwrap()
         .unwrap();
-    assert!(!lyrics.synced);
+    assert!(!lyrics.is_synced);
     assert_eq!(lyrics.lines.len(), 2);
     assert_eq!(lyrics.lines[0].time_ms, None);
 }

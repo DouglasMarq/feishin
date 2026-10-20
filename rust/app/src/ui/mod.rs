@@ -129,13 +129,13 @@ pub fn install(window: &AppWindow, context: &Context, settings: &Settings) {
     devices::install(window, context);
     window
         .global::<AppState>()
-        .set_queue_open(settings.ui.queue_panel_open);
+        .set_queue_open(settings.ui.is_queue_panel_open);
 }
 
 pub fn ui_settings(window: &AppWindow, previous: &UiSettings) -> UiSettings {
     UiSettings {
         track_columns: tracks::columns(window),
-        queue_panel_open: window.global::<AppState>().get_queue_open(),
+        is_queue_panel_open: window.global::<AppState>().get_queue_open(),
         ..previous.clone()
     }
 }

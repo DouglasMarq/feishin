@@ -57,12 +57,12 @@ pub(super) fn set_lyrics_rows(state: &SettingsState, sources: &[LyricsSource]) {
 fn set_playback_fields(state: &SettingsState, view: &View) {
     let playback = &view.settings.playback;
     state.set_replay_gain(replay_gain_choice(playback.replay_gain));
-    state.set_gapless(playback.gapless);
+    state.set_gapless(playback.is_gapless);
     state.set_max_crossfade_seconds(i32::from(MAX_CROSSFADE_SECONDS));
     state.set_crossfade_seconds(i32::from(
         playback.crossfade_seconds.min(MAX_CROSSFADE_SECONDS),
     ));
-    state.set_scrobble(playback.scrobble);
+    state.set_scrobble(playback.is_scrobbling_enabled);
     state.set_devices(string_model(&view.devices.labels));
     state.set_device_index(slint_index(view.devices.selected));
     state.set_bitrates(string_model(&view.bitrates.labels));
@@ -76,13 +76,13 @@ pub(super) fn show(window: &AppWindow, shared: &Shared, snapshot: SettingsSnapsh
     let view = View::new(snapshot);
     let settings = &view.settings;
     set_playback_fields(&state, &view);
-    state.set_mpris(settings.integrations.mpris);
-    state.set_discord(settings.integrations.discord_rich_presence);
-    state.set_remote_control(settings.integrations.remote_control);
+    state.set_mpris(settings.integrations.is_mpris_enabled);
+    state.set_discord(settings.integrations.is_discord_rich_presence_enabled);
+    state.set_remote_control(settings.integrations.is_remote_control_enabled);
     set_lyrics_rows(&state, &view.lyrics);
     show_youtube(&state, &view);
     state.set_servers(ModelRc::new(VecModel::from(server_rows(settings))));
-    state.set_follow_current_song(settings.ui.follow_current_song);
+    state.set_follow_current_song(settings.ui.is_following_current_song);
     show_languages(&state, settings.ui.language.as_deref());
     state.set_switching("".into());
     state.set_loaded(true);

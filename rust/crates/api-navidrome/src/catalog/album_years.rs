@@ -39,7 +39,7 @@ impl YearRange {
 fn combines_other_filters(query: &AlbumListQuery) -> bool {
     !query.artist_ids.is_empty()
         || !query.genre_ids.is_empty()
-        || query.favorite.is_some()
+        || query.is_favorite.is_some()
         || query
             .search
             .as_ref()

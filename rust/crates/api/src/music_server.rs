@@ -50,13 +50,13 @@ pub trait MusicServer: Send + Sync {
 
     async fn search(&self, query: &str, limit: usize) -> Result<SearchResults>;
 
-    async fn set_favorite(&self, kind: ItemKind, ids: &[String], favorite: bool) -> Result<()>;
+    async fn set_favorite(&self, kind: ItemKind, ids: &[String], is_favorite: bool) -> Result<()>;
     async fn set_rating(&self, kind: ItemKind, id: &str, rating_zero_clears: u8) -> Result<()>;
 
     async fn scrobble(
         &self,
         song_id: &str,
-        submission: bool,
+        is_submission: bool,
         timestamp_ms: Option<i64>,
     ) -> Result<()>;
 

@@ -65,9 +65,9 @@ fn apply_playback(window: &AppWindow, context: &Context, shared: &Arc<Shared>) {
 fn apply_integrations(window: &AppWindow, context: &Context, shared: &Arc<Shared>) {
     let state = window.global::<SettingsState>();
     let mut view = shared.view();
-    view.settings.integrations.mpris = state.get_mpris();
-    view.settings.integrations.discord_rich_presence = state.get_discord();
-    view.settings.integrations.remote_control = state.get_remote_control();
+    view.settings.integrations.is_mpris_enabled = state.get_mpris();
+    view.settings.integrations.is_discord_rich_presence_enabled = state.get_discord();
+    view.settings.integrations.is_remote_control_enabled = state.get_remote_control();
     context
         .remote
         .request(RemoteRequest::SetHosting(state.get_remote_control()));
@@ -108,8 +108,8 @@ fn apply_interface(window: &AppWindow, context: &Context, shared: &Arc<Shared>) 
     let follow_current_song = window.global::<SettingsState>().get_follow_current_song();
     let queue_panel_open = window.global::<AppState>().get_queue_open();
     let mut view = shared.view();
-    view.settings.ui.follow_current_song = follow_current_song;
-    view.settings.ui.queue_panel_open = queue_panel_open;
+    view.settings.ui.is_following_current_song = follow_current_song;
+    view.settings.ui.is_queue_panel_open = queue_panel_open;
     context.send(Command::SaveInterface {
         queue_panel_open,
         follow_current_song,

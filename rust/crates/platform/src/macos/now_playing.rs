@@ -60,7 +60,7 @@ impl MediaControls {
         Ok(())
     }
 
-    pub fn set_live_stream(&mut self, _live: bool) -> Result<()> {
+    pub fn set_live_stream(&mut self, _is_live: bool) -> Result<()> {
         Ok(())
     }
 

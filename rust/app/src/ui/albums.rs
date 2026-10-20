@@ -58,7 +58,7 @@ pub fn album_query(
         sort: sort_at(sort_index),
         order: sort_order(descending),
         search: (!search.is_empty()).then(|| search.to_owned()),
-        favorite: favorites_only.then_some(true),
+        is_favorite: favorites_only.then_some(true),
         ..AlbumListQuery::default()
     }
 }
@@ -193,7 +193,7 @@ mod tests {
         assert_eq!(query.sort, AlbumSort::Year);
         assert_eq!(query.order, SortOrder::Desc);
         assert_eq!(query.search.as_deref(), Some("river"));
-        assert_eq!(query.favorite, Some(true));
+        assert_eq!(query.is_favorite, Some(true));
 
         let query = album_query(99, false, " ", false);
         assert_eq!(query, AlbumListQuery::default());

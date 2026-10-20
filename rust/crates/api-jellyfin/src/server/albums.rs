@@ -80,7 +80,7 @@ fn album_params(query: &AlbumListQuery, start: usize, limit: Option<usize>) -> Q
         .fields(ALBUM_LIST_FIELDS)
         .set_optional("GenreIds", comma_separated_ids(&query.genre_ids))
         .set("IncludeItemTypes", ALBUM_ITEM_TYPE)
-        .set_optional("IsFavorite", query.favorite)
+        .set_optional("IsFavorite", query.is_favorite)
         .set_optional("Limit", limit)
         .set_optional("ParentId", query.music_folder_id.as_deref())
         .set("Recursive", true)

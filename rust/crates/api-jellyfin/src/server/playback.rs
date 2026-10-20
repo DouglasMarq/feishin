@@ -15,12 +15,12 @@ impl JellyfinServer {
         &self,
         song_id: &str,
         position_ms: u64,
-        paused: bool,
+        is_paused: bool,
     ) -> Result<()> {
         let report = dto::PlaybackReport {
             item_id: song_id,
-            event_name: Some(dto::PlaybackEvent::for_paused_state(paused)),
-            is_paused: Some(paused),
+            event_name: Some(dto::PlaybackEvent::for_paused_state(is_paused)),
+            is_paused: Some(is_paused),
             position_ticks: Some(position_ms * TICKS_PER_MS),
         };
         self.post_playback_report(PROGRESS_PATH, &report).await
@@ -56,8 +56,8 @@ impl JellyfinServer {
         self.post_playback_report(STOPPED_PATH, &report).await
     }
 
-    pub(super) async fn mark_favorites(&self, ids: &[String], favorite: bool) -> Result<()> {
-        let method = match favorite {
+    pub(super) async fn mark_favorites(&self, ids: &[String], is_favorite: bool) -> Result<()> {
+        let method = match is_favorite {
             true => Method::POST,
             false => Method::DELETE,
         };

@@ -17,7 +17,7 @@ pub fn album(item: dto::Album, server_id: &str) -> Album {
         cover_art_id: primary_image(&item.id, item.image_tags.as_ref()),
         play_count: user_data.map_or(0, |data| data.play_count),
         user_rating: None,
-        favorite: user_data.is_some_and(|data| data.is_favorite),
+        is_favorite: user_data.is_some_and(|data| data.is_favorite),
         created_at: item.date_created.clone(),
         last_played_at: user_data.and_then(|data| data.last_played_date.clone()),
         id: item.id,

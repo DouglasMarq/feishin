@@ -96,7 +96,7 @@ pub(crate) fn plan_before_fade(
     let window = FadeWindow::planned(lead.duration_seconds, crossfade)
         .map(|window| window.fitting_incoming(incoming_duration_seconds));
     match (lead.position_seconds, window) {
-        (Some(position_seconds), Some(window)) if !lead.paused => {
+        (Some(position_seconds), Some(window)) if !lead.is_paused => {
             match window.has_begun(position_seconds) {
                 true => FaderPlan::Begin(window.starting_at(position_seconds)),
                 false => FaderPlan::Recheck(
@@ -132,7 +132,7 @@ mod tests {
         DeckClock {
             position_seconds: Some(position_seconds),
             duration_seconds: Some(duration_seconds),
-            paused: false,
+            is_paused: false,
         }
     }
 
@@ -244,7 +244,7 @@ mod tests {
     #[test]
     fn never_begins_while_paused_or_without_timing() {
         let paused = DeckClock {
-            paused: true,
+            is_paused: true,
             ..clock(199.0, 200.0)
         };
         let unknown_position = DeckClock {

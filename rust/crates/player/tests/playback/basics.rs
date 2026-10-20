@@ -225,7 +225,7 @@ fn gapless_transition_to_preloaded_track() {
 #[test]
 fn sequential_transition_without_gapless() {
     let (player, recorder) = player_with(PlayerConfig {
-        gapless: false,
+        is_gapless: false,
         ..PlayerConfig::default()
     });
     player.load(1, &sine_wave_url(1), 0).unwrap();

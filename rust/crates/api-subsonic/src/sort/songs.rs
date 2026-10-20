@@ -64,7 +64,7 @@ fn song_sort_values(song: &Song, sort: SongSort) -> Vec<SortValue> {
             song,
         ),
         SongSort::Favorited => then_album_position(
-            vec![number(Some(i64::from(song.favorite))), title(song)],
+            vec![number(Some(i64::from(song.is_favorite))), title(song)],
             song,
         ),
         SongSort::RecentlyAdded => {
@@ -82,10 +82,10 @@ fn song_of<Entry: Borrow<Song>>(entry: &Entry) -> &Song {
 }
 
 pub fn sort_songs<Entry: Borrow<Song>>(items: &mut [Entry], sort: SongSort, order: SortOrder) {
-    let descending = order == SortOrder::Desc;
+    let is_descending = order == SortOrder::Desc;
     match sort {
         SongSort::Random => shuffle(items),
-        ordered => order_by(items, descending, |entry| {
+        ordered => order_by(items, is_descending, |entry| {
             song_sort_values(song_of(entry), ordered)
         }),
     }
@@ -116,7 +116,7 @@ mod tests {
             bitrate_kbps: None,
             play_count: 0,
             user_rating: rating,
-            favorite: false,
+            is_favorite: false,
             cover_art_id: None,
             replay_gain: None,
             path: None,

@@ -13,7 +13,7 @@ fn matching_artists<'index>(
     query: &ArtistListQuery,
 ) -> Vec<&'index SubsonicArtist> {
     let lowercase_term = non_empty_search(query.search.as_ref()).map(str::to_lowercase);
-    let favorites_only = wants_favorites_only(query.favorite);
+    let is_favorites_only = wants_favorites_only(query.is_favorite);
     index
         .iter()
         .filter(|artist| {
@@ -21,7 +21,7 @@ fn matching_artists<'index>(
                 .as_ref()
                 .is_none_or(|term| artist.name.to_lowercase().contains(term))
         })
-        .filter(|artist| !favorites_only || artist.starred.is_starred())
+        .filter(|artist| !is_favorites_only || artist.starred.is_starred())
         .collect()
 }
 
@@ -78,7 +78,7 @@ impl SubsonicServer {
             .extensions()
             .await
             .inspect_err(|error| tracing::warn!(%error, "server extensions unavailable"))
-            .is_ok_and(|extensions| extensions.top_songs_by_artist_id);
+            .is_ok_and(|extensions| extensions.has_top_songs_by_artist_id);
         match lookup_by_id {
             true => Params::new().add("id", id),
             false => Params::new().add("artist", name),

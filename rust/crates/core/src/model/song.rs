@@ -27,7 +27,8 @@ pub struct Song {
     pub bitrate_kbps: Option<u32>,
     pub play_count: u32,
     pub user_rating: Option<u8>,
-    pub favorite: bool,
+    #[serde(rename = "favorite")]
+    pub is_favorite: bool,
     pub cover_art_id: Option<String>,
     pub replay_gain: Option<ReplayGain>,
     pub path: Option<String>,

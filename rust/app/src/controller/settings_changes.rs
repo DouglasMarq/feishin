@@ -5,7 +5,7 @@ use tokio::sync::oneshot;
 use super::{Controller, SettingsSnapshot, UiUpdate};
 
 fn preload_depends_on_changes(current: &PlaybackSettings, next: &PlaybackSettings) -> bool {
-    next.gapless != current.gapless
+    next.is_gapless != current.is_gapless
         || next.crossfade().is_zero() != current.crossfade().is_zero()
         || next.max_bitrate_kbps != current.max_bitrate_kbps
         || next.transcode_format != current.transcode_format
@@ -29,7 +29,7 @@ impl Controller {
     pub(super) fn apply_playback(&mut self, playback: PlaybackSettings) {
         let next = PlaybackSettings {
             volume_percent: self.settings.playback.volume_percent,
-            muted: self.settings.playback.muted,
+            is_muted: self.settings.playback.is_muted,
             ..playback
         };
         self.apply_output_changes(&next);
@@ -80,8 +80,8 @@ impl Controller {
     }
 
     pub(super) fn save_interface(&mut self, queue_panel_open: bool, follow_current_song: bool) {
-        self.settings.ui.queue_panel_open = queue_panel_open;
-        self.settings.ui.follow_current_song = follow_current_song;
+        self.settings.ui.is_queue_panel_open = queue_panel_open;
+        self.settings.ui.is_following_current_song = follow_current_song;
         self.save_settings();
     }
 

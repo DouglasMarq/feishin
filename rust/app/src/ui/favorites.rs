@@ -9,21 +9,21 @@ use super::{AppWindow, CardRow, Context, FavoritesState, TrackItem};
 
 pub fn favorite_song_query() -> SongListQuery {
     SongListQuery {
-        favorite: Some(true),
+        is_favorite: Some(true),
         ..SongListQuery::default()
     }
 }
 
 pub fn favorite_album_query() -> AlbumListQuery {
     AlbumListQuery {
-        favorite: Some(true),
+        is_favorite: Some(true),
         ..AlbumListQuery::default()
     }
 }
 
 pub fn favorite_artist_query() -> ArtistListQuery {
     ArtistListQuery {
-        favorite: Some(true),
+        is_favorite: Some(true),
         ..ArtistListQuery::default()
     }
 }
@@ -161,9 +161,9 @@ mod tests {
 
     #[test]
     fn queries_ask_for_favorites_only() {
-        assert_eq!(favorite_song_query().favorite, Some(true));
-        assert_eq!(favorite_album_query().favorite, Some(true));
-        assert_eq!(favorite_artist_query().favorite, Some(true));
+        assert_eq!(favorite_song_query().is_favorite, Some(true));
+        assert_eq!(favorite_album_query().is_favorite, Some(true));
+        assert_eq!(favorite_artist_query().is_favorite, Some(true));
     }
 
     #[tokio::test]
@@ -174,19 +174,19 @@ mod tests {
             .await
             .map(|page| page.items)
             .unwrap_or_default();
-        assert!(!songs.is_empty() && songs.iter().all(|song| song.favorite));
+        assert!(!songs.is_empty() && songs.iter().all(|song| song.is_favorite));
         let albums = server
             .album_list(&favorite_album_query(), EVERYTHING)
             .await
             .map(|page| page.items)
             .unwrap_or_default();
         assert!(!albums.is_empty() && albums.len() < 100);
-        assert!(albums.iter().all(|album| album.favorite));
+        assert!(albums.iter().all(|album| album.is_favorite));
         let artists = server
             .artist_list(&favorite_artist_query(), EVERYTHING)
             .await
             .map(|page| page.items)
             .unwrap_or_default();
-        assert!(!artists.is_empty() && artists.iter().all(|artist| artist.favorite));
+        assert!(!artists.is_empty() && artists.iter().all(|artist| artist.is_favorite));
     }
 }

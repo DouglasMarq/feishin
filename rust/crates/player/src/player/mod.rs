@@ -60,8 +60,8 @@ impl Player {
         self.mixer.update(|state| state.set_volume(volume))
     }
 
-    pub fn set_muted(&self, muted: bool) -> Result<()> {
-        self.mixer.update(|state| state.set_muted(muted))
+    pub fn set_muted(&self, is_muted: bool) -> Result<()> {
+        self.mixer.update(|state| state.set_muted(is_muted))
     }
 
     pub fn set_replay_gain(&self, mode: ReplayGainMode) -> Result<()> {

@@ -28,7 +28,8 @@ pub(super) struct RawServer {
     pub(super) id: Option<String>,
     pub(super) name: Option<String>,
     pub(super) nd_credential: Option<String>,
-    pub(super) prefer_remote_url: Option<bool>,
+    #[serde(rename = "preferRemoteUrl")]
+    pub(super) is_remote_url_preferred: Option<bool>,
     pub(super) remote_url: Option<String>,
     #[serde(rename = "type")]
     pub(super) server_type: Option<String>,

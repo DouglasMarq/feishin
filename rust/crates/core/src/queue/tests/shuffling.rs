@@ -12,7 +12,7 @@ fn shuffle_on_puts_current_first() {
     queue.play_now(numbered_songs(15), Some("s9"));
     let uid = current_uid(&queue);
     queue.set_shuffle(true);
-    assert!(queue.shuffle());
+    assert!(queue.is_shuffled());
     assert_eq!(current_uid(&queue), uid);
     assert_eq!(queue.current_position(), Some(0));
     assert_eq!(item_ids(&queue), numbered_ids(15));
@@ -41,7 +41,7 @@ fn shuffle_off_restores_original_order_and_keeps_current() {
     assert_ne!(play_ids(&queue), numbered_ids(12));
 
     queue.set_shuffle(false);
-    assert!(!queue.shuffle());
+    assert!(!queue.is_shuffled());
     assert_eq!(play_ids(&queue), numbered_ids(12));
     assert_eq!(current_uid(&queue), uid_before);
     let expected_position = numbered_ids(12)

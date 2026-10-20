@@ -165,6 +165,6 @@ mod tests {
     fn genre_queries_filter_by_genre_id() {
         assert_eq!(genre_song_query("g1").genre_ids, ["g1"]);
         assert_eq!(genre_album_query("g1").genre_ids, ["g1"]);
-        assert_eq!(genre_song_query("g1").favorite, None);
+        assert_eq!(genre_song_query("g1").is_favorite, None);
     }
 }

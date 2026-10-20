@@ -70,7 +70,7 @@ pub mod tests {
             cover_art_id: Some(format!("al-{index}")),
             play_count: 0,
             user_rating: None,
-            favorite: false,
+            is_favorite: false,
             created_at: None,
             last_played_at: None,
         }

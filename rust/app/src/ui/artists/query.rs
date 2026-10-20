@@ -43,7 +43,7 @@ pub fn build_query(
         sort: sort_at(sort_index),
         order: sort_order(descending),
         search: (!search.is_empty()).then(|| search.to_owned()),
-        favorite: favorites_only.then_some(true),
+        is_favorite: favorites_only.then_some(true),
         music_folder_id: None,
     }
 }
@@ -60,7 +60,7 @@ mod tests {
         assert_eq!(query.sort, ArtistSort::SongCount);
         assert_eq!(query.order, SortOrder::Desc);
         assert_eq!(query.search.as_deref(), Some("vale"));
-        assert_eq!(query.favorite, Some(true));
+        assert_eq!(query.is_favorite, Some(true));
         let query = build_query(-1, false, false, " ");
         assert_eq!(query, ArtistListQuery::default());
         assert_eq!(build_query(99, false, false, "").sort, ArtistSort::Name);

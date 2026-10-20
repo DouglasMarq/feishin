@@ -55,7 +55,7 @@ impl View {
         let current = &self.settings.playback;
         PlaybackSettings {
             replay_gain: form.replay_gain,
-            gapless: form.gapless,
+            is_gapless: form.gapless,
             crossfade_seconds: crossfade_seconds_from_form(form.crossfade_seconds),
             audio_device: self
                 .devices
@@ -69,7 +69,7 @@ impl View {
                 .formats
                 .value(form.format)
                 .unwrap_or_else(|| current.transcode_format.clone()),
-            scrobble: form.scrobble,
+            is_scrobbling_enabled: form.scrobble,
             ..current.clone()
         }
     }
@@ -121,7 +121,7 @@ mod tests {
         };
         let playback = view.playback(form);
         assert_eq!(playback.replay_gain, ReplayGainSetting::Album);
-        assert!(!playback.gapless && !playback.scrobble);
+        assert!(!playback.is_gapless && !playback.is_scrobbling_enabled);
         assert_eq!(playback.crossfade_seconds, 7);
         assert_eq!(playback.audio_device, None);
         assert_eq!(playback.max_bitrate_kbps, Some(192));

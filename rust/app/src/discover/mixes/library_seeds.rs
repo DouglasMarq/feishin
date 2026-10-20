@@ -41,7 +41,7 @@ fn sorted(sort: SongSort) -> SongListQuery {
 
 fn favorites_query() -> SongListQuery {
     SongListQuery {
-        favorite: Some(true),
+        is_favorite: Some(true),
         ..sorted(SongSort::Favorited)
     }
 }

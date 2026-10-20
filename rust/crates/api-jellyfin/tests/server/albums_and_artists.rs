@@ -52,7 +52,7 @@ async fn album_list_and_count() {
     assert_eq!(album.cover_art_id.as_deref(), Some("al1"));
     assert_eq!(album.artists[0].id, "ar1");
     assert_eq!(album.play_count, 3);
-    assert!(!album.favorite);
+    assert!(!album.is_favorite);
 
     let count_query = AlbumListQuery::default();
     assert_eq!(jellyfin.album_count(&count_query).await.unwrap(), 321);
@@ -161,13 +161,13 @@ async fn artist_detail_and_list() {
     assert_eq!(detail.artist.song_count, Some(40));
     assert_eq!(detail.artist.biography.as_deref(), Some("Bio"));
     assert_eq!(detail.artist.cover_art_id.as_deref(), Some("ar1"));
-    assert!(detail.artist.favorite);
+    assert!(detail.artist.is_favorite);
     assert_eq!(detail.albums.len(), 2);
     assert_eq!(detail.top_songs.len(), 1);
 
     let query = ArtistListQuery {
         sort: ArtistSort::Random,
-        favorite: Some(true),
+        is_favorite: Some(true),
         ..ArtistListQuery::default()
     };
     let artists = jellyfin.artist_list(&query, page(5, 2)).await.unwrap();

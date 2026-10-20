@@ -3,15 +3,15 @@ use std::iter;
 use super::Queue;
 
 impl Queue {
-    pub fn shuffle(&self) -> bool {
+    pub fn is_shuffled(&self) -> bool {
         self.shuffled_play_order.is_some()
     }
 
-    pub fn set_shuffle(&mut self, enabled: bool) {
-        if enabled == self.shuffle() {
+    pub fn set_shuffle(&mut self, is_shuffled: bool) {
+        if is_shuffled == self.is_shuffled() {
             return;
         }
-        self.shuffled_play_order = enabled.then(|| self.shuffled_order(self.current_index()));
+        self.shuffled_play_order = is_shuffled.then(|| self.shuffled_order(self.current_index()));
         self.bump_revision();
     }
 

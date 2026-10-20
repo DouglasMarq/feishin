@@ -17,8 +17,8 @@ enum StateIcon {
 }
 
 impl StateIcon {
-    fn for_playback(paused: bool, options: &DiscordOptions) -> Option<Self> {
-        match (paused, options.show_state_icon) {
+    fn for_playback(is_paused: bool, options: &DiscordOptions) -> Option<Self> {
+        match (is_paused, options.has_state_icon) {
             (true, _) => Some(StateIcon::Paused),
             (false, true) => Some(StateIcon::Playing),
             (false, false) => None,
@@ -43,11 +43,11 @@ impl StateIcon {
 pub(super) fn activity_for(
     now_playing: &NowPlaying,
     position_ms: Option<u64>,
-    paused: bool,
+    is_paused: bool,
     options: &DiscordOptions,
     now_ms: i64,
 ) -> Option<Activity<'static>> {
-    if now_playing.track_id.is_empty() || (paused && !options.show_paused) {
+    if now_playing.track_id.is_empty() || (is_paused && !options.is_shown_when_paused) {
         return None;
     }
     let activity = Activity::new()
@@ -58,11 +58,11 @@ pub(super) fn activity_for(
         ))
         .assets(assets_for(
             now_playing,
-            StateIcon::for_playback(paused, options),
+            StateIcon::for_playback(is_paused, options),
         ))
         .activity_type(activity_type_for(options))
         .status_display_type(status_display_type_for(options.display_type));
-    let Some(position_ms) = position_ms.filter(|_| !paused) else {
+    let Some(position_ms) = position_ms.filter(|_| !is_paused) else {
         return Some(activity);
     };
     Some(activity.timestamps(timestamps_for(now_playing, position_ms, now_ms)))
@@ -91,7 +91,7 @@ fn large_image_for(now_playing: &NowPlaying) -> String {
 }
 
 fn activity_type_for(options: &DiscordOptions) -> ActivityType {
-    match options.show_as_listening {
+    match options.is_shown_as_listening {
         true => ActivityType::Listening,
         false => ActivityType::Playing,
     }
@@ -141,10 +141,10 @@ mod tests {
     fn render(
         now_playing: &NowPlaying,
         position_ms: Option<u64>,
-        paused: bool,
+        is_paused: bool,
         options: &DiscordOptions,
     ) -> Option<Value> {
-        activity_for(now_playing, position_ms, paused, options, NOW)
+        activity_for(now_playing, position_ms, is_paused, options, NOW)
             .map(|activity| serde_json::to_value(activity).unwrap())
     }
 
@@ -183,7 +183,7 @@ mod tests {
     #[test]
     fn paused_is_cleared_when_hidden() {
         let options = DiscordOptions {
-            show_paused: false,
+            is_shown_when_paused: false,
             ..DiscordOptions::default()
         };
         assert!(render(&song(), Some(0), true, &options).is_none());
@@ -212,8 +212,8 @@ mod tests {
             ..NowPlaying::default()
         };
         let options = DiscordOptions {
-            show_state_icon: false,
-            show_as_listening: false,
+            has_state_icon: false,
+            is_shown_as_listening: false,
             display_type: DiscordDisplayType::SongName,
             ..DiscordOptions::default()
         };

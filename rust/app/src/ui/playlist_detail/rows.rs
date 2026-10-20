@@ -101,7 +101,7 @@ mod tests {
             name: "Mix".into(),
             comment: None,
             owner: Some("demo".into()),
-            public: false,
+            is_public: false,
             song_count: 12,
             duration_ms: 600_000,
             cover_art_id: None,

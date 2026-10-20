@@ -180,13 +180,13 @@ fn picking_a_theme_applies_it_live_and_saves_it() {
     let saved = page.saved();
     assert_eq!(saved.len(), 1);
     assert_eq!(saved[0].theme, ThemeId::new("nord"));
-    assert!(!saved[0].follow_system);
+    assert!(!saved[0].is_following_system);
 }
 
 #[test]
 fn following_the_system_tracks_the_desktop_scheme() {
     let settings = AppearanceSettings {
-        follow_system: true,
+        is_following_system: true,
         dark_theme: ThemeId::new("dracula"),
         light_theme: ThemeId::new("solarizedLight"),
         ..AppearanceSettings::default()
@@ -223,7 +223,7 @@ fn a_custom_accent_replaces_the_theme_primary() {
     assert_eq!(page.state().get_accent_text(), "#1db954");
     let saved = page.saved();
     assert_eq!(saved.len(), 1);
-    assert!(!saved[0].use_theme_accent);
+    assert!(!saved[0].is_using_theme_accent);
     assert_eq!(saved[0].accent, AccentColor::new(0x1d, 0xb9, 0x54));
 }
 

@@ -166,7 +166,7 @@ impl Controller {
 
     pub(super) fn update_media_volume(&mut self) {
         let playback = &self.settings.playback;
-        let volume = match playback.muted {
+        let volume = match playback.is_muted {
             true => 0,
             false => playback.volume_percent,
         };

@@ -43,13 +43,13 @@ impl Controller {
     pub(super) fn publish_volume(&self) {
         self.deps.ui.send(UiUpdate::Volume {
             volume: self.settings.playback.volume_percent,
-            muted: self.settings.playback.muted,
+            muted: self.settings.playback.is_muted,
         });
     }
 
     pub(super) fn publish_modes(&self) {
         self.deps.ui.send(UiUpdate::Modes {
-            shuffle: self.queue.shuffle(),
+            shuffle: self.queue.is_shuffled(),
             repeat: self.queue.repeat(),
         });
     }

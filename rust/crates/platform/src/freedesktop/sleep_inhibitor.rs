@@ -48,8 +48,8 @@ impl SleepInhibitor {
         Ok(Self { requests })
     }
 
-    pub fn set_inhibited(&self, inhibited: bool) -> Result<()> {
-        self.requests.send(inhibited).map_err(inhibitor_error)
+    pub fn set_inhibited(&self, is_inhibited: bool) -> Result<()> {
+        self.requests.send(is_inhibited).map_err(inhibitor_error)
     }
 }
 
@@ -58,14 +58,14 @@ fn inhibitor_error(error: impl std::error::Error + Send + Sync + 'static) -> Pla
 }
 
 fn run(connection: &Connection, app_name: &str, requests: &Receiver<bool>) {
-    let mut inhibited = false;
+    let mut is_inhibited = false;
     let mut inhibitions = Vec::new();
-    for wanted in requests {
-        if wanted == inhibited {
+    for is_wanted in requests {
+        if is_wanted == is_inhibited {
             continue;
         }
-        inhibited = wanted;
-        match wanted {
+        is_inhibited = is_wanted;
+        match is_wanted {
             true => inhibitions = inhibit_all(connection, app_name),
             false => inhibitions.drain(..).for_each(release),
         }

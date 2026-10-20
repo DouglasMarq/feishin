@@ -140,7 +140,7 @@ mod tests {
             name: id.into(),
             comment: None,
             owner: Some("me".into()),
-            public: false,
+            is_public: false,
             song_count: 3,
             duration_ms: 185_000,
             cover_art_id: cover.map(Into::into),

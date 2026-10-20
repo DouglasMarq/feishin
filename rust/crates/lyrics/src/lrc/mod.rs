@@ -40,10 +40,10 @@ pub(crate) fn lyrics_from_text(source: LyricsSource, text: &str) -> Option<Lyric
     if lines.is_empty() {
         return None;
     }
-    let synced = lines.iter().any(|line| line.time_ms.is_some());
+    let is_synced = lines.iter().any(|line| line.time_ms.is_some());
     Some(Lyrics {
         source,
-        synced,
+        is_synced,
         lines,
     })
 }

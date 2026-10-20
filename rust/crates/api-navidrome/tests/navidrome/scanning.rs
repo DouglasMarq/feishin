@@ -26,7 +26,7 @@ async fn starting_a_scan_reports_it_running() {
     assert_eq!(
         scan,
         LibraryScan {
-            scanning: true,
+            is_scanning: true,
             scanned_items: Some(12)
         }
     );
@@ -52,7 +52,7 @@ async fn scan_status_reports_a_finished_scan() {
     assert_eq!(
         scan,
         LibraryScan {
-            scanning: false,
+            is_scanning: false,
             scanned_items: Some(4321)
         }
     );

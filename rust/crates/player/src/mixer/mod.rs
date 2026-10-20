@@ -32,7 +32,7 @@ impl Mixer {
         driver: AudioOutputDriver,
         on_event: EventCallback,
     ) -> Result<Arc<Self>> {
-        let crossfade_enabled = config.crossfade_enabled();
+        let is_crossfade_enabled = config.is_crossfade_enabled();
         let mixer = Arc::new_cyclic(|this| Mixer {
             state: Mutex::new(MixerState::new(config, driver)),
             fader_wake: Condvar::new(),
@@ -42,7 +42,7 @@ impl Mixer {
         {
             let mut state = mixer.lock_state();
             mixer.ensure_deck(&mut state, DeckSlot::First)?;
-            if crossfade_enabled {
+            if is_crossfade_enabled {
                 mixer.ensure_deck(&mut state, DeckSlot::Second)?;
             }
         }
@@ -79,7 +79,7 @@ impl Mixer {
 
     pub(crate) fn shut_down(&self) -> Decks {
         let mut state = self.lock_state();
-        state.shutting_down = true;
+        state.is_shutting_down = true;
         let decks = std::mem::take(&mut state.decks);
         self.wake_fader(&mut state);
         decks
@@ -123,7 +123,7 @@ impl Mixer {
     }
 
     fn wake_fader(&self, state: &mut MixerState) {
-        state.fader_woken = true;
+        state.is_fader_woken = true;
         self.fader_wake.notify_one();
     }
 

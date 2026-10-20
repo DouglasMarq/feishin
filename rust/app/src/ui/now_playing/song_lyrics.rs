@@ -89,7 +89,7 @@ pub(super) async fn remote_lyrics_for(
         .map_err(LyricsLookupError::Remote)?;
     Ok(found.map(|found| SongLyrics {
         source: lyrics_source_label(lyrics_source_setting(found.source)),
-        synced: found.synced,
+        synced: found.is_synced,
         lines: found.lines,
     }))
 }
@@ -154,7 +154,7 @@ mod tests {
         ) -> feishin_lyrics::Result<Option<Lyrics>> {
             Ok(sources.contains(&LyricsSource::Genius).then(|| Lyrics {
                 source: LyricsSource::Genius,
-                synced: false,
+                is_synced: false,
                 lines: feishin_lyrics::parse_lrc("First line\nSecond line"),
             }))
         }

@@ -5,7 +5,7 @@ pub(super) fn active_theme(
     settings: &AppearanceSettings,
     system: SystemColorScheme,
 ) -> (&ThemeId, ThemeId) {
-    match (settings.follow_system, system) {
+    match (settings.is_following_system, system) {
         (false, _) => (&settings.theme, ThemeId::default_dark()),
         (true, SystemColorScheme::Light) => (&settings.light_theme, ThemeId::default_light()),
         (true, SystemColorScheme::Dark | SystemColorScheme::NoPreference) => {
@@ -21,7 +21,7 @@ mod tests {
     fn following_system() -> AppearanceSettings {
         AppearanceSettings {
             theme: ThemeId::new("nord"),
-            follow_system: true,
+            is_following_system: true,
             dark_theme: ThemeId::new("dracula"),
             light_theme: ThemeId::new("githubLight"),
             ..AppearanceSettings::default()
@@ -31,7 +31,7 @@ mod tests {
     #[test]
     fn the_chosen_theme_wins_when_not_following_the_system() {
         let settings = AppearanceSettings {
-            follow_system: false,
+            is_following_system: false,
             ..following_system()
         };
         for system in [

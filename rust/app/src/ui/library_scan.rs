@@ -71,7 +71,7 @@ async fn follow_scan(
     for _ in 0..MAX_SCAN_POLLS {
         tokio::time::sleep(SCAN_POLL_INTERVAL).await;
         let scan = server.library_scan().await?;
-        if !scan.scanning {
+        if !scan.is_scanning {
             return Ok(ScanOutcome::Finished(scan));
         }
         report(scan.scanned_items);
@@ -152,7 +152,7 @@ mod tests {
 
     fn finished(scanned_items: Option<u64>) -> Result<ScanOutcome, ApiError> {
         Ok(ScanOutcome::Finished(LibraryScan {
-            scanning: false,
+            is_scanning: false,
             scanned_items,
         }))
     }

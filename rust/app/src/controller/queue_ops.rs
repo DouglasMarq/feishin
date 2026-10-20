@@ -13,7 +13,7 @@ fn next_repeat_mode(mode: RepeatMode) -> RepeatMode {
 
 impl Controller {
     pub(super) fn toggle_shuffle(&mut self) {
-        let shuffled = !self.queue.shuffle();
+        let shuffled = !self.queue.is_shuffled();
         self.queue.set_shuffle(shuffled);
         self.queue_changed();
     }

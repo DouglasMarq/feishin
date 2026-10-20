@@ -12,13 +12,13 @@ const IDLE_WAIT_SECONDS: f64 = 1.0;
 
 pub(super) struct PlaybackTracker {
     playing_entry: Option<PlaylistEntryId>,
-    loaded: bool,
-    paused: bool,
-    idle: bool,
+    is_loaded: bool,
+    is_paused: bool,
+    is_idle: bool,
     time_position_seconds: Option<f64>,
     duration_seconds: Option<f64>,
     last_position_emitted_at: Option<Instant>,
-    position_update_forced: bool,
+    is_position_update_forced: bool,
     stream_title: Option<String>,
 }
 
@@ -26,13 +26,13 @@ impl PlaybackTracker {
     pub(super) fn new() -> Self {
         Self {
             playing_entry: None,
-            loaded: false,
-            paused: false,
-            idle: true,
+            is_loaded: false,
+            is_paused: false,
+            is_idle: true,
             time_position_seconds: None,
             duration_seconds: None,
             last_position_emitted_at: None,
-            position_update_forced: false,
+            is_position_update_forced: false,
             stream_title: None,
         }
     }
@@ -49,7 +49,7 @@ impl PlaybackTracker {
             RawEvent::EndFile { entry_id, reason } => {
                 self.file_ended(shared, entry_id, reason, pending_events);
             }
-            RawEvent::Seek | RawEvent::PlaybackRestart => self.position_update_forced = true,
+            RawEvent::Seek | RawEvent::PlaybackRestart => self.is_position_update_forced = true,
             RawEvent::Idle => self.enter_idle(pending_events),
             RawEvent::Property { reply_id, value } => {
                 self.property_changed(reply_id, value, pending_events);
@@ -81,7 +81,7 @@ impl PlaybackTracker {
     }
 
     fn file_started(&mut self, shared: &Shared, entry_id: PlaylistEntryId) {
-        self.idle = false;
+        self.is_idle = false;
         self.playing_entry = Some(entry_id);
         self.forget_current_file();
         shared
@@ -91,8 +91,8 @@ impl PlaybackTracker {
     }
 
     fn file_loaded(&mut self, shared: &Shared, pending_events: &mut Vec<PlayerEvent>) {
-        self.loaded = true;
-        self.position_update_forced = true;
+        self.is_loaded = true;
+        self.is_position_update_forced = true;
         let uid = self
             .playing_entry
             .and_then(|entry_id| shared.lock_entries().uids.get(&entry_id).copied());
@@ -115,7 +115,7 @@ impl PlaybackTracker {
     }
 
     fn forget_current_file(&mut self) {
-        self.loaded = false;
+        self.is_loaded = false;
         self.time_position_seconds = None;
         self.duration_seconds = None;
     }
@@ -130,13 +130,13 @@ impl PlaybackTracker {
             return;
         };
         match (property, value) {
-            (ObservedProperty::Pause, PropertyValue::Flag(paused)) => {
-                self.pause_changed(paused, pending_events);
+            (ObservedProperty::Pause, PropertyValue::Flag(is_paused)) => {
+                self.pause_changed(is_paused, pending_events);
             }
             (ObservedProperty::IdleActive, PropertyValue::Flag(true)) => {
                 self.enter_idle(pending_events);
             }
-            (ObservedProperty::IdleActive, PropertyValue::Flag(false)) => self.idle = false,
+            (ObservedProperty::IdleActive, PropertyValue::Flag(false)) => self.is_idle = false,
             (ObservedProperty::TimePosition, PropertyValue::Double(position_seconds)) => {
                 self.time_position_changed(position_seconds, pending_events);
             }
@@ -168,11 +168,11 @@ impl PlaybackTracker {
         pending_events.push(PlayerEvent::StreamTitle(title));
     }
 
-    fn pause_changed(&mut self, paused: bool, pending_events: &mut Vec<PlayerEvent>) {
-        if self.paused != paused {
-            pending_events.push(pause_transition_event(paused));
+    fn pause_changed(&mut self, is_paused: bool, pending_events: &mut Vec<PlayerEvent>) {
+        if self.is_paused != is_paused {
+            pending_events.push(pause_transition_event(is_paused));
         }
-        self.paused = paused;
+        self.is_paused = is_paused;
     }
 
     fn time_position_changed(
@@ -181,24 +181,24 @@ impl PlaybackTracker {
         pending_events: &mut Vec<PlayerEvent>,
     ) {
         self.time_position_seconds = Some(position_seconds);
-        if self.position_update_forced && self.loaded {
+        if self.is_position_update_forced && self.is_loaded {
             self.emit_position(position_seconds, pending_events);
         }
     }
 
     fn enter_idle(&mut self, pending_events: &mut Vec<PlayerEvent>) {
-        if !self.idle {
-            self.idle = true;
+        if !self.is_idle {
+            self.is_idle = true;
             pending_events.push(PlayerEvent::Idle);
         }
     }
 
     fn is_position_ticking(&self) -> bool {
-        self.loaded && !self.paused && self.time_position_seconds.is_some()
+        self.is_loaded && !self.is_paused && self.time_position_seconds.is_some()
     }
 
     fn emit_position(&mut self, position_seconds: f64, pending_events: &mut Vec<PlayerEvent>) {
-        self.position_update_forced = false;
+        self.is_position_update_forced = false;
         self.last_position_emitted_at = Some(Instant::now());
         pending_events.push(PlayerEvent::Position {
             position_ms: seconds_to_milliseconds(position_seconds),
@@ -207,8 +207,8 @@ impl PlaybackTracker {
     }
 }
 
-fn pause_transition_event(paused: bool) -> PlayerEvent {
-    match paused {
+fn pause_transition_event(is_paused: bool) -> PlayerEvent {
+    match is_paused {
         true => PlayerEvent::Paused,
         false => PlayerEvent::Resumed,
     }

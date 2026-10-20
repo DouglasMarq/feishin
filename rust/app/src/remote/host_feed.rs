@@ -27,16 +27,16 @@ fn record(state: &mut HostState, update: &UiUpdate) {
             position_ms,
             duration_ms,
         } => {
-            state.playing = *playing;
+            state.is_playing = *playing;
             state.position_ms = *position_ms;
             state.duration_ms = *duration_ms;
         }
         UiUpdate::Volume { volume, muted } => {
             state.volume = *volume;
-            state.muted = *muted;
+            state.is_muted = *muted;
         }
         UiUpdate::Modes { shuffle, repeat } => {
-            state.shuffle = *shuffle;
+            state.is_shuffled = *shuffle;
             state.repeat = *repeat;
         }
         UiUpdate::Queue(view) => state.queue = view.clone(),
@@ -103,7 +103,7 @@ mod tests {
         assert_eq!(shown.0.lock().unwrap().len(), 2, "volume and the error");
         let host = watched.borrow();
         assert_eq!(
-            (host.volume, host.shuffle, host.repeat),
+            (host.volume, host.is_shuffled, host.repeat),
             (20, true, RepeatMode::One)
         );
     }

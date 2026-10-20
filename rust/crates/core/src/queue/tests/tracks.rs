@@ -87,8 +87,8 @@ fn optional_fields_are_left_out_of_the_saved_queue() {
 fn revision_changes_on_structural_edits_only() {
     let mut queue = Queue::with_seed(5);
     let mut last_revision = queue.revision();
-    let mut assert_bumped = |queue: &Queue, bumped: bool| {
-        assert_eq!(queue.revision() != last_revision, bumped);
+    let mut assert_bumped = |queue: &Queue, is_bumped: bool| {
+        assert_eq!(queue.revision() != last_revision, is_bumped);
         last_revision = queue.revision();
     };
     queue.play_now(songs(&["a", "b", "c"]), Some("a"));

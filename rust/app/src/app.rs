@@ -132,13 +132,13 @@ fn media_session(
     commands: &mpsc::UnboundedSender<Command>,
 ) -> Box<dyn MediaSession> {
     let mut sessions: Vec<Box<dyn MediaSession>> = Vec::new();
-    if mode == Mode::Real && settings.integrations.mpris {
+    if mode == Mode::Real && settings.integrations.is_mpris_enabled {
         sessions.extend(mpris_session(commands));
     }
     if mode == Mode::Real {
         sessions.extend(sleep_inhibition());
     }
-    if settings.integrations.discord_rich_presence {
+    if settings.integrations.is_discord_rich_presence_enabled {
         sessions.extend(discord_session(settings));
     }
     combine_media_sessions(sessions)
@@ -323,7 +323,7 @@ pub fn run(mode: Mode) -> Result<()> {
         &context,
         RemoteStart {
             mode,
-            hosting: settings.integrations.remote_control,
+            hosting: settings.integrations.is_remote_control_enabled,
             window: window.as_weak(),
             host_state: host_state_receiver,
             mirror: Arc::new(ui::player::SlintSink::new(

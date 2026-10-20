@@ -95,7 +95,7 @@ impl Queue {
     }
 
     fn start_position_after_replacing(&mut self, start_index: Option<usize>) -> usize {
-        if !self.shuffle() {
+        if !self.is_shuffled() {
             return start_index.unwrap_or(FIRST_POSITION);
         }
         self.shuffled_play_order = Some(self.shuffled_order(start_index));

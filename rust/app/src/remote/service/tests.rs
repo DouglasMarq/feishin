@@ -63,7 +63,7 @@ fn payload_of(count: usize, position_ms: u64) -> TransferPayload {
     TransferPayload {
         snapshot: queue.snapshot(),
         position_ms,
-        playing: true,
+        is_playing: true,
         server: None,
     }
 }

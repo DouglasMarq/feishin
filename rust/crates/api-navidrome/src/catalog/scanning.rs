@@ -16,7 +16,7 @@ impl NavidromeServer {
     async fn scan_status(&self, endpoint: &str) -> Result<LibraryScan> {
         let response = self.subsonic::<ScanStatusResponse>(endpoint, &[]).await?;
         let scan = LibraryScan::from(response.scan_status.unwrap_or_default());
-        if !scan.scanning {
+        if !scan.is_scanning {
             self.forget_fallback_lists();
             self.forget_folder_listing();
         }

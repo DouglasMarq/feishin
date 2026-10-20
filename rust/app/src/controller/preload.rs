@@ -39,7 +39,7 @@ impl Controller {
 
     fn preloads_next_track(&self) -> bool {
         let playback = &self.settings.playback;
-        playback.gapless || !playback.crossfade().is_zero()
+        playback.is_gapless || !playback.crossfade().is_zero()
     }
 
     pub(super) fn discard_preload(&mut self) {

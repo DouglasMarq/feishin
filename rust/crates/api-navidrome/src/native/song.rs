@@ -51,8 +51,8 @@ pub(crate) struct NativeSong {
     pub play_count: Option<u32>,
     #[serde(deserialize_with = "optional_u32")]
     pub rating: Option<u32>,
-    #[serde(deserialize_with = "truthy")]
-    pub starred: bool,
+    #[serde(rename = "starred", deserialize_with = "truthy")]
+    pub is_starred: bool,
     #[serde(rename = "rgAlbumGain", deserialize_with = "optional_f32")]
     pub album_replay_gain: Option<f32>,
     #[serde(rename = "rgAlbumPeak", deserialize_with = "optional_f32")]
@@ -104,7 +104,7 @@ pub(crate) fn normalize_song(song: NativeSong, server_id: &str) -> Song {
         bitrate_kbps: song.bit_rate,
         play_count: song.play_count.unwrap_or(0),
         user_rating: rating(song.rating),
-        favorite: song.starred,
+        is_favorite: song.is_starred,
         replay_gain,
         path,
         size_bytes: song.size,
@@ -177,7 +177,7 @@ mod tests {
         assert_eq!(song.duration_ms, 201_500);
         assert_eq!(song.year, Some(1999));
         assert_eq!(song.user_rating, None);
-        assert!(song.favorite);
+        assert!(song.is_favorite);
         assert_eq!(song.path.as_deref(), Some("/music/a/b.flac"));
         assert_eq!(song.last_played_at, None);
         assert!(song.genres.is_empty());

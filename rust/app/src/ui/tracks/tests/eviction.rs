@@ -103,7 +103,9 @@ fn edits_and_highlights_skip_evicted_rows() {
     for row in (0..TOTAL).step_by(PAGE_SIZE) {
         scroll_to(&model, &log, row);
     }
-    model.update_songs(&["s5".into(), "s3990".into()], |song| song.favorite = true);
+    model.update_songs(&["s5".into(), "s3990".into()], |song| {
+        song.is_favorite = true
+    });
     model.set_current(Some("s7"));
     assert!(model.row_data(3990).is_some_and(|row| row.favorite));
     scroll_to(&model, &log, 0);

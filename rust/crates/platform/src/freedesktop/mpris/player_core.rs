@@ -46,7 +46,7 @@ impl MprisPlayerCore {
             Update::Metadata(now_playing) => self.apply_metadata(&now_playing),
             Update::Status(status) => self.apply_status(status, now),
             Update::Volume(volume) => self.apply_volume(volume),
-            Update::LiveStream(live) => self.apply_live_stream(live),
+            Update::LiveStream(is_live) => self.apply_live_stream(is_live),
             Update::Emit(properties) => AppliedUpdate::properties(properties),
         }
     }
@@ -103,29 +103,29 @@ impl MprisPlayerCore {
         let mut snapshot = self.snapshot();
         let (status, position_ms) = split_status(status);
         let expected_position_ms = snapshot.position_ms(now);
-        let seeked = status != MprisStatus::Stopped
+        let has_seeked = status != MprisStatus::Stopped
             && expected_position_ms.abs_diff(position_ms) > SEEK_DETECT_THRESHOLD_MS;
-        let status_changed = snapshot.status != status;
+        let has_status_changed = snapshot.status != status;
         snapshot.set_status(status, position_ms, now);
         AppliedUpdate {
-            properties: status_changed
+            properties: has_status_changed
                 .then_some(Property::PlaybackStatus(status))
                 .into_iter()
                 .collect(),
-            seeked_to: seeked.then(|| time_from_ms(position_ms)),
+            seeked_to: has_seeked.then(|| time_from_ms(position_ms)),
         }
     }
 
-    fn apply_live_stream(&self, live: bool) -> AppliedUpdate {
+    fn apply_live_stream(&self, is_live: bool) -> AppliedUpdate {
         let mut snapshot = self.snapshot();
-        if snapshot.live_stream == live {
+        if snapshot.is_live_stream == is_live {
             return AppliedUpdate::default();
         }
-        snapshot.live_stream = live;
+        snapshot.is_live_stream = is_live;
         AppliedUpdate::properties(vec![
-            Property::CanGoNext(!live),
-            Property::CanGoPrevious(!live),
-            Property::CanSeek(!live),
+            Property::CanGoNext(!is_live),
+            Property::CanGoPrevious(!is_live),
+            Property::CanSeek(!is_live),
         ])
     }
 
@@ -239,7 +239,7 @@ mod tests {
                 Property::CanSeek(false)
             ]
         ));
-        assert!(core.snapshot().live_stream);
+        assert!(core.snapshot().is_live_stream);
         assert!(
             core.apply(Update::LiveStream(true), now)
                 .properties

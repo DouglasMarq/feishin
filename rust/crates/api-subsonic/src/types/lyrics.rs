@@ -18,7 +18,8 @@ pub struct StructuredLyric {
     pub line: Vec<LyricLine>,
     #[serde(deserialize_with = "lenient_number")]
     pub offset: Option<f64>,
-    pub synced: bool,
+    #[serde(rename = "synced")]
+    pub is_synced: bool,
 }
 
 #[derive(Debug, Default, Deserialize)]

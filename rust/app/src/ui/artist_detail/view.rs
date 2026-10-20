@@ -34,7 +34,7 @@ pub fn clear(window: &AppWindow) {
 fn remember_loaded(detail: ArtistDetail) {
     update_current(|current| {
         current.loaded = true;
-        current.favorite = detail.artist.favorite;
+        current.favorite = detail.artist.is_favorite;
         current.album_covers = detail
             .albums
             .iter()
@@ -49,7 +49,7 @@ pub fn show(window: &AppWindow, detail: ArtistDetail, image: Option<Image>) {
     state.set_loading(false);
     state.set_name(detail.artist.name.as_str().into());
     state.set_info(info_line(&detail).into());
-    state.set_favorite(detail.artist.favorite);
+    state.set_favorite(detail.artist.is_favorite);
     state.set_biography(plain_text(detail.artist.biography.as_deref().unwrap_or_default()).into());
     if let Some(image) = image {
         state.set_image(image);
