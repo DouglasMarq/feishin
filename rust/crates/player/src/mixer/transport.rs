@@ -16,7 +16,7 @@ impl MixerState {
             "restoring the gain",
         );
         lead.replace(source.uid, source.url, start_ms)?;
-        lead.apply(&DeckSetting::Paused(false))
+        self.set_lead_paused(false)
     }
 
     pub(crate) fn preload_next(&mut self, source: MediaSource<'_>) -> Result<()> {
@@ -53,15 +53,14 @@ impl MixerState {
         self.lead_deck()?.seek(position_ms)
     }
 
-    pub(crate) fn set_paused(&self, paused: bool) -> Result<()> {
-        let setting = DeckSetting::Paused(paused);
+    pub(crate) fn set_paused(&mut self, paused: bool) -> Result<()> {
         if self.routing.is_fading() {
-            self.apply_to_standby(&setting);
+            self.apply_to_standby(&DeckSetting::Paused(paused));
         }
-        self.lead_deck()?.apply(&setting)
+        self.set_lead_paused(paused)
     }
 
-    pub(crate) fn toggle_pause(&self) -> Result<()> {
+    pub(crate) fn toggle_pause(&mut self) -> Result<()> {
         let paused = self.lead_deck()?.is_paused();
         self.set_paused(!paused)
     }

@@ -22,6 +22,7 @@ pub(crate) struct MixerState {
     pub(super) driver: AudioOutputDriver,
     pub(super) pending_next: Option<PendingTrack>,
     pub(super) durations: TrackDurations,
+    pub(super) unreported_events: Vec<PlayerEvent>,
     pub(super) fader_woken: bool,
     pub(super) shutting_down: bool,
 }
@@ -36,6 +37,7 @@ impl MixerState {
             driver,
             pending_next: None,
             durations: TrackDurations::default(),
+            unreported_events: Vec::new(),
             fader_woken: false,
             shutting_down: false,
         }
@@ -49,6 +51,13 @@ impl MixerState {
 
     pub(super) fn standby_deck(&self) -> Option<&Deck> {
         self.decks.get(self.routing.standby_slot())
+    }
+
+    pub(super) fn set_lead_paused(&mut self, paused: bool) -> Result<()> {
+        self.lead_deck()?.apply(&DeckSetting::Paused(paused))?;
+        let reported = self.routing.pause_changed(paused).events;
+        self.unreported_events.extend(reported);
+        Ok(())
     }
 
     pub(super) fn apply_to_standby(&self, setting: &DeckSetting) {
