@@ -36,7 +36,7 @@ pub struct Client {
 }
 
 fn network_error(error: reqwest::Error) -> ApiError {
-    ApiError::Network(error.to_string())
+    ApiError::Network(error.without_url().to_string())
 }
 
 fn total_count_header(response: &Response) -> Option<usize> {

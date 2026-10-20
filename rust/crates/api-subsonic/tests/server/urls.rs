@@ -40,3 +40,20 @@ fn url_builders() {
         )
     );
 }
+
+#[test]
+fn given_a_transcode_format_with_query_characters_it_is_encoded() {
+    let credential = Credential::Subsonic {
+        subsonic: CREDENTIAL.into(),
+    };
+    let server = SubsonicServer::with_credential(config("https://music.example.com/"), &credential)
+        .expect("server");
+    let options = StreamOptions {
+        max_bitrate_kbps: None,
+        format: Some("mp3&t=stolen".into()),
+    };
+
+    let url = server.stream_url("s1", &options);
+
+    assert!(url.ends_with("&format=mp3%26t%3Dstolen"), "{url}");
+}
