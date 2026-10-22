@@ -8,11 +8,11 @@ msgstr ""
 msgid "\"{}\""
 msgstr "\"{}\""
 
+msgid "\"{}\" ({}) wants to control this player. Allow it? You will not be asked again for this device."
+msgstr "\"{}\" ({}) haluaa ohjata tätä soitinta. Sallitaanko? Tästä laitteesta ei kysytä uudelleen."
+
 msgid "\"{}\" plays next"
 msgstr "\"{}\" toistetaan seuraavaksi"
-
-msgid "\"{}\" wants to control this player. Allow it? You will not be asked again for this device."
-msgstr "\"{}\" haluaa ohjata tätä soitinta. Sallitaanko? Tästä laitteesta ei kysytä uudelleen."
 
 msgid "\"{}\" will play next"
 msgstr "\"{}\" toistetaan seuraavaksi"
@@ -233,6 +233,9 @@ msgstr "Poista suodattimet"
 msgid "Clear rating"
 msgstr "Poista arvio"
 
+msgid "Clear search"
+msgstr "Tyhjennä haku"
+
 msgid "Clear the favorites and genre filters"
 msgstr "Poista suosikki- ja genresuodattimet"
 
@@ -248,6 +251,9 @@ msgstr "Sulje"
 msgid "Close now playing"
 msgstr "Sulje Nyt soi -näkymä"
 
+msgid "Close to the tray"
+msgstr "Sulje ilmoitusalueelle"
+
 msgid "Close without adding the songs"
 msgstr "Sulje lisäämättä kappaleita"
 
@@ -256,6 +262,9 @@ msgstr "Sulje tekemättä muutoksia"
 
 msgid "Close without saving"
 msgstr "Sulje tallentamatta"
+
+msgid "Closing the window keeps the music playing; quit from the tray icon."
+msgstr "Ikkunan sulkeminen ei pysäytä musiikkia; lopeta ilmoitusalueen kuvakkeesta."
 
 msgid "Colors used across the whole app."
 msgstr "Koko sovelluksessa käytettävät värit."
@@ -722,6 +731,9 @@ msgstr "Käyttöliittymä"
 msgid "Internet radio"
 msgstr "Internetradio"
 
+msgid "it could not be reached; check that its firewall allows TCP port {}"
+msgstr "siihen ei saatu yhteyttä; tarkista, että sen palomuuri sallii TCP-portin {}"
+
 msgid "it did not answer in time"
 msgstr "se ei vastannut ajoissa"
 
@@ -745,6 +757,9 @@ msgstr "kohde"
 
 msgid "Jump to this line"
 msgstr "Siirry tälle riville"
+
+msgid "Keep a Cadence icon with playback controls in the menu bar or system tray."
+msgstr "Pidä Cadence-kuvake toistosäätimineen valikkorivillä tai ilmoitusalueella."
 
 msgid "Keep this station in the favorites on this device"
 msgstr "Säilytä tämä asema suosikeissa tällä laitteella"
@@ -1131,6 +1146,9 @@ msgstr "Toista {} seuraavaksi"
 msgid "Play {} with its subfolders"
 msgstr "Toista {} alikansioineen"
 
+msgid "Play/Pause"
+msgstr "Toista/Tauko"
+
 msgid "Playback"
 msgstr "Toisto"
 
@@ -1175,6 +1193,9 @@ msgstr "Violetti"
 
 msgid "Queue"
 msgstr "Jono"
+
+msgid "Quit"
+msgstr "Lopeta"
 
 msgid "Radio"
 msgstr "Radio"
@@ -1393,6 +1414,9 @@ msgstr "Näytä kaikki parhaat kappaleet"
 msgid "Show fewer top songs"
 msgstr "Näytä vähemmän parhaita kappaleita"
 
+msgid "Show in the tray"
+msgstr "Näytä ilmoitusalueella"
+
 msgid "SHOW LESS"
 msgstr "NÄYTÄ VÄHEMMÄN"
 
@@ -1524,6 +1548,9 @@ msgstr "Asemat"
 
 msgid "Stay signed in"
 msgstr "Pysy kirjautuneena"
+
+msgid "Stop"
+msgstr "Pysäytä"
 
 msgid "Stop {}"
 msgstr "Pysäytä {}"

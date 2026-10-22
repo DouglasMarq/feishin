@@ -8,11 +8,11 @@ msgstr ""
 msgid "\"{}\""
 msgstr "\"{}\""
 
+msgid "\"{}\" ({}) wants to control this player. Allow it? You will not be asked again for this device."
+msgstr "\"{}\" ({}) இந்த பிளேயரைக் கட்டுப்படுத்த விரும்புகிறது. அனுமதிக்கவா? இந்தச் சாதனத்திற்கு மீண்டும் கேட்கப்படாது."
+
 msgid "\"{}\" plays next"
 msgstr "\"{}\" அடுத்து இயங்கும்"
-
-msgid "\"{}\" wants to control this player. Allow it? You will not be asked again for this device."
-msgstr "\"{}\" இந்த பிளேயரைக் கட்டுப்படுத்த விரும்புகிறது. அனுமதிக்கவா? இந்தச் சாதனத்திற்கு மீண்டும் கேட்கப்படாது."
 
 msgid "\"{}\" will play next"
 msgstr "\"{}\" அடுத்ததாக இயக்கப்படும்"
@@ -233,6 +233,9 @@ msgstr "வடிகட்டிகளை அழி"
 msgid "Clear rating"
 msgstr "மதிப்பீட்டை அழி"
 
+msgid "Clear search"
+msgstr "தேடலை அழி"
+
 msgid "Clear the favorites and genre filters"
 msgstr "பிடித்தவை மற்றும் வகை வடிகட்டிகளை அழி"
 
@@ -248,6 +251,9 @@ msgstr "மூடு"
 msgid "Close now playing"
 msgstr "இப்போது இயங்குவதை மூடு"
 
+msgid "Close to the tray"
+msgstr "மூடும்போது தட்டில் வை"
+
 msgid "Close without adding the songs"
 msgstr "பாடல்களைச் சேர்க்காமல் மூடு"
 
@@ -256,6 +262,9 @@ msgstr "மாற்றங்கள் இல்லாமல் மூடு"
 
 msgid "Close without saving"
 msgstr "சேமிக்காமல் மூடு"
+
+msgid "Closing the window keeps the music playing; quit from the tray icon."
+msgstr "சாளரத்தை மூடினாலும் இசை தொடர்ந்து இயங்கும்; தட்டு ஐகானில் இருந்து வெளியேறவும்."
 
 msgid "Colors used across the whole app."
 msgstr "முழு பயன்பாட்டிலும் பயன்படுத்தப்படும் நிறங்கள்."
@@ -722,6 +731,9 @@ msgstr "இடைமுகம்"
 msgid "Internet radio"
 msgstr "இணைய வானொலி"
 
+msgid "it could not be reached; check that its firewall allows TCP port {}"
+msgstr "அதை அடைய முடியவில்லை; அதன் ஃபயர்வால் TCP போர்ட் {} ஐ அனுமதிக்கிறதா எனச் சரிபார்க்கவும்"
+
 msgid "it did not answer in time"
 msgstr "அது சரியான நேரத்தில் பதிலளிக்கவில்லை"
 
@@ -745,6 +757,9 @@ msgstr "உருப்படி"
 
 msgid "Jump to this line"
 msgstr "இந்த வரிக்குச் செல்"
+
+msgid "Keep a Cadence icon with playback controls in the menu bar or system tray."
+msgstr "மெனு பட்டியில் அல்லது கணினித் தட்டில் இயக்கக் கட்டுப்பாடுகளுடன் Cadence ஐகானை வைத்திருக்கவும்."
 
 msgid "Keep this station in the favorites on this device"
 msgstr "இந்தச் சாதனத்தில் இந்த நிலையத்தைப் பிடித்தவையில் வைத்திரு"
@@ -1131,6 +1146,9 @@ msgstr "{}-ஐ அடுத்ததாக இயக்கு"
 msgid "Play {} with its subfolders"
 msgstr "{}-ஐ அதன் துணைக்கோப்புறைகளுடன் இயக்கு"
 
+msgid "Play/Pause"
+msgstr "இயக்கு/இடைநிறுத்து"
+
 msgid "Playback"
 msgstr "இயக்கம்"
 
@@ -1175,6 +1193,9 @@ msgstr "ஊதா"
 
 msgid "Queue"
 msgstr "வரிசை"
+
+msgid "Quit"
+msgstr "வெளியேறு"
 
 msgid "Radio"
 msgstr "வானொலி"
@@ -1393,6 +1414,9 @@ msgstr "எல்லா சிறந்த பாடல்களையும் 
 msgid "Show fewer top songs"
 msgstr "குறைவான சிறந்த பாடல்களைக் காட்டு"
 
+msgid "Show in the tray"
+msgstr "தட்டில் காட்டு"
+
 msgid "SHOW LESS"
 msgstr "குறைவாகக் காட்டு"
 
@@ -1524,6 +1548,9 @@ msgstr "நிலையங்கள்"
 
 msgid "Stay signed in"
 msgstr "உள்நுழைந்தே இரு"
+
+msgid "Stop"
+msgstr "நிறுத்து"
 
 msgid "Stop {}"
 msgstr "{}-ஐ நிறுத்து"

@@ -8,11 +8,11 @@ msgstr ""
 msgid "\"{}\""
 msgstr "\"{}\""
 
+msgid "\"{}\" ({}) wants to control this player. Allow it? You will not be asked again for this device."
+msgstr "\"{}\" ({}) ต้องการควบคุมเครื่องเล่นนี้ อนุญาตหรือไม่ จะไม่ถามอีกสำหรับอุปกรณ์นี้"
+
 msgid "\"{}\" plays next"
 msgstr "\"{}\" จะเล่นเป็นเพลงถัดไป"
-
-msgid "\"{}\" wants to control this player. Allow it? You will not be asked again for this device."
-msgstr "\"{}\" ต้องการควบคุมเครื่องเล่นนี้ อนุญาตหรือไม่ จะไม่ถามอีกสำหรับอุปกรณ์นี้"
 
 msgid "\"{}\" will play next"
 msgstr "\"{}\" จะเล่นต่อจากนี้"
@@ -227,6 +227,9 @@ msgstr "ล้างตัวกรอง"
 msgid "Clear rating"
 msgstr "ล้างคะแนน"
 
+msgid "Clear search"
+msgstr "ล้างการค้นหา"
+
 msgid "Clear the favorites and genre filters"
 msgstr "ล้างตัวกรองรายการโปรดและแนวเพลง"
 
@@ -242,6 +245,9 @@ msgstr "ปิด"
 msgid "Close now playing"
 msgstr "ปิดหน้ากำลังเล่น"
 
+msgid "Close to the tray"
+msgstr "ปิดลงถาดระบบ"
+
 msgid "Close without adding the songs"
 msgstr "ปิดโดยไม่เพิ่มเพลง"
 
@@ -250,6 +256,9 @@ msgstr "ปิดโดยไม่เปลี่ยนแปลง"
 
 msgid "Close without saving"
 msgstr "ปิดโดยไม่บันทึก"
+
+msgid "Closing the window keeps the music playing; quit from the tray icon."
+msgstr "การปิดหน้าต่างจะยังเล่นเพลงต่อ ออกจากโปรแกรมได้จากไอคอนในถาดระบบ"
 
 msgid "Colors used across the whole app."
 msgstr "สีที่ใช้ทั่วทั้งแอป"
@@ -713,6 +722,9 @@ msgstr "อินเทอร์เฟซ"
 msgid "Internet radio"
 msgstr "วิทยุอินเทอร์เน็ต"
 
+msgid "it could not be reached; check that its firewall allows TCP port {}"
+msgstr "เข้าถึงไม่ได้ ตรวจสอบว่าไฟร์วอลล์ของเครื่องนั้นอนุญาตพอร์ต TCP {}"
+
 msgid "it did not answer in time"
 msgstr "ไม่ตอบกลับทันเวลา"
 
@@ -736,6 +748,9 @@ msgstr "รายการ"
 
 msgid "Jump to this line"
 msgstr "ข้ามไปที่บรรทัดนี้"
+
+msgid "Keep a Cadence icon with playback controls in the menu bar or system tray."
+msgstr "แสดงไอคอน Cadence พร้อมปุ่มควบคุมการเล่นในแถบเมนูหรือถาดระบบ"
 
 msgid "Keep this station in the favorites on this device"
 msgstr "เก็บสถานีนี้ไว้ในรายการโปรดบนอุปกรณ์นี้"
@@ -1120,6 +1135,9 @@ msgstr "เล่น {} ถัดไป"
 msgid "Play {} with its subfolders"
 msgstr "เล่น {} พร้อมโฟลเดอร์ย่อย"
 
+msgid "Play/Pause"
+msgstr "เล่น/หยุดชั่วคราว"
+
 msgid "Playback"
 msgstr "การเล่น"
 
@@ -1164,6 +1182,9 @@ msgstr "สีม่วง"
 
 msgid "Queue"
 msgstr "คิว"
+
+msgid "Quit"
+msgstr "ออก"
 
 msgid "Radio"
 msgstr "วิทยุ"
@@ -1380,6 +1401,9 @@ msgstr "แสดงเพลงยอดนิยมทั้งหมด"
 msgid "Show fewer top songs"
 msgstr "แสดงเพลงยอดนิยมน้อยลง"
 
+msgid "Show in the tray"
+msgstr "แสดงในถาดระบบ"
+
 msgid "SHOW LESS"
 msgstr "แสดงน้อยลง"
 
@@ -1511,6 +1535,9 @@ msgstr "สถานี"
 
 msgid "Stay signed in"
 msgstr "คงสถานะลงชื่อเข้าใช้"
+
+msgid "Stop"
+msgstr "หยุด"
 
 msgid "Stop {}"
 msgstr "หยุด {}"

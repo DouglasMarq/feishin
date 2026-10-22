@@ -8,11 +8,11 @@ msgstr ""
 msgid "\"{}\""
 msgstr "\"{}\""
 
+msgid "\"{}\" ({}) wants to control this player. Allow it? You will not be asked again for this device."
+msgstr "\"{}\" ({}) vēlas vadīt šo atskaņotāju. Atļaut? Par šo ierīci vairs netiks jautāts."
+
 msgid "\"{}\" plays next"
 msgstr "\"{}\" tiks atskaņota nākamā"
-
-msgid "\"{}\" wants to control this player. Allow it? You will not be asked again for this device."
-msgstr "\"{}\" vēlas vadīt šo atskaņotāju. Atļaut? Par šo ierīci vairs netiks jautāts."
 
 msgid "\"{}\" will play next"
 msgstr "\"{}\" tiks atskaņota nākamā"
@@ -239,6 +239,9 @@ msgstr "Notīrīt filtrus"
 msgid "Clear rating"
 msgstr "Notīrīt vērtējumu"
 
+msgid "Clear search"
+msgstr "Notīrīt meklēšanu"
+
 msgid "Clear the favorites and genre filters"
 msgstr "Notīrīt izlases un žanru filtrus"
 
@@ -254,6 +257,9 @@ msgstr "Aizvērt"
 msgid "Close now playing"
 msgstr "Aizvērt pašlaik atskaņoto"
 
+msgid "Close to the tray"
+msgstr "Aizvērt uz paziņojumu joslu"
+
 msgid "Close without adding the songs"
 msgstr "Aizvērt, nepievienojot dziesmas"
 
@@ -262,6 +268,9 @@ msgstr "Aizvērt bez izmaiņām"
 
 msgid "Close without saving"
 msgstr "Aizvērt bez saglabāšanas"
+
+msgid "Closing the window keeps the music playing; quit from the tray icon."
+msgstr "Aizverot logu, mūzika turpina skanēt; iziet var no paziņojumu joslas ikonas."
 
 msgid "Colors used across the whole app."
 msgstr "Krāsas, kas tiek izmantotas visā lietotnē."
@@ -731,6 +740,9 @@ msgstr "Saskarne"
 msgid "Internet radio"
 msgstr "Interneta radio"
 
+msgid "it could not be reached; check that its firewall allows TCP port {}"
+msgstr "to nevarēja sasniegt; pārbaudiet, vai tā ugunsmūris atļauj TCP portu {}"
+
 msgid "it did not answer in time"
 msgstr "tā neatbildēja laikā"
 
@@ -754,6 +766,9 @@ msgstr "vienums"
 
 msgid "Jump to this line"
 msgstr "Pāriet uz šo rindu"
+
+msgid "Keep a Cadence icon with playback controls in the menu bar or system tray."
+msgstr "Rādīt Cadence ikonu ar atskaņošanas vadīklām izvēļņu joslā vai paziņojumu joslā."
 
 msgid "Keep this station in the favorites on this device"
 msgstr "Saglabāt šo staciju izlasē šajā ierīcē"
@@ -1142,6 +1157,9 @@ msgstr "Atskaņot {} kā nākamo"
 msgid "Play {} with its subfolders"
 msgstr "Atskaņot {} ar apakšmapēm"
 
+msgid "Play/Pause"
+msgstr "Atskaņot/Pauze"
+
 msgid "Playback"
 msgstr "Atskaņošana"
 
@@ -1186,6 +1204,9 @@ msgstr "Violeta"
 
 msgid "Queue"
 msgstr "Rinda"
+
+msgid "Quit"
+msgstr "Iziet"
 
 msgid "Radio"
 msgstr "Radio"
@@ -1406,6 +1427,9 @@ msgstr "Rādīt visas populārākās dziesmas"
 msgid "Show fewer top songs"
 msgstr "Rādīt mazāk populārāko dziesmu"
 
+msgid "Show in the tray"
+msgstr "Rādīt paziņojumu joslā"
+
 msgid "SHOW LESS"
 msgstr "RĀDĪT MAZĀK"
 
@@ -1537,6 +1561,9 @@ msgstr "Stacijas"
 
 msgid "Stay signed in"
 msgstr "Palikt pieteiktam"
+
+msgid "Stop"
+msgstr "Apturēt"
 
 msgid "Stop {}"
 msgstr "Apturēt {}"

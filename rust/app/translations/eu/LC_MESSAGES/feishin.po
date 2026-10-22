@@ -8,11 +8,11 @@ msgstr ""
 msgid "\"{}\""
 msgstr "\"{}\""
 
+msgid "\"{}\" ({}) wants to control this player. Allow it? You will not be asked again for this device."
+msgstr "\"{}\" ({}) gailuak erreproduzitzaile hau kontrolatu nahi du. Baimendu? Ez zaizu berriro galdetuko gailu honengatik."
+
 msgid "\"{}\" plays next"
 msgstr "\"{}\" hurrengoa da"
-
-msgid "\"{}\" wants to control this player. Allow it? You will not be asked again for this device."
-msgstr "\"{}\" gailuak erreproduzitzaile hau kontrolatu nahi du. Baimendu? Ez zaizu berriro galdetuko gailu honengatik."
 
 msgid "\"{}\" will play next"
 msgstr "\"{}\" hurrengo erreproduzituko da"
@@ -233,6 +233,9 @@ msgstr "Garbitu iragazkiak"
 msgid "Clear rating"
 msgstr "Kendu balorazioa"
 
+msgid "Clear search"
+msgstr "Garbitu bilaketa"
+
 msgid "Clear the favorites and genre filters"
 msgstr "Garbitu gogokoen eta generoen iragazkiak"
 
@@ -248,6 +251,9 @@ msgstr "Itxi"
 msgid "Close now playing"
 msgstr "Itxi \"Orain erreproduzitzen\""
 
+msgid "Close to the tray"
+msgstr "Itxi erretilura"
+
 msgid "Close without adding the songs"
 msgstr "Itxi abestiak gehitu gabe"
 
@@ -256,6 +262,9 @@ msgstr "Itxi aldaketarik gabe"
 
 msgid "Close without saving"
 msgstr "Itxi gorde gabe"
+
+msgid "Closing the window keeps the music playing; quit from the tray icon."
+msgstr "Leihoa ixtean musikak jotzen jarraitzen du; irten erretiluko ikonotik."
 
 msgid "Colors used across the whole app."
 msgstr "Aplikazio osoan erabilitako koloreak."
@@ -722,6 +731,9 @@ msgstr "Interfazea"
 msgid "Internet radio"
 msgstr "Interneteko irratia"
 
+msgid "it could not be reached; check that its firewall allows TCP port {}"
+msgstr "ezin izan da iritsi; egiaztatu bere suebakiak {} TCP ataka baimentzen duela"
+
 msgid "it did not answer in time"
 msgstr "ez du garaiz erantzun"
 
@@ -745,6 +757,9 @@ msgstr "elementua"
 
 msgid "Jump to this line"
 msgstr "Joan lerro honetara"
+
+msgid "Keep a Cadence icon with playback controls in the menu bar or system tray."
+msgstr "Mantendu Cadence ikono bat erreprodukzio-kontrolekin menu-barran edo sistemaren erretiluan."
 
 msgid "Keep this station in the favorites on this device"
 msgstr "Gorde irrati hau gailu honetako gogokoetan"
@@ -1131,6 +1146,9 @@ msgstr "Erreproduzitu {} hurrengo"
 msgid "Play {} with its subfolders"
 msgstr "Erreproduzitu {} bere azpikarpetekin"
 
+msgid "Play/Pause"
+msgstr "Erreproduzitu/Pausatu"
+
 msgid "Playback"
 msgstr "Erreprodukzioa"
 
@@ -1175,6 +1193,9 @@ msgstr "Morea"
 
 msgid "Queue"
 msgstr "Ilara"
+
+msgid "Quit"
+msgstr "Irten"
 
 msgid "Radio"
 msgstr "Irratia"
@@ -1393,6 +1414,9 @@ msgstr "Erakutsi abesti nagusi guztiak"
 msgid "Show fewer top songs"
 msgstr "Erakutsi abesti nagusi gutxiago"
 
+msgid "Show in the tray"
+msgstr "Erakutsi erretiluan"
+
 msgid "SHOW LESS"
 msgstr "ERAKUTSI GUTXIAGO"
 
@@ -1524,6 +1548,9 @@ msgstr "Irratiak"
 
 msgid "Stay signed in"
 msgstr "Mantendu saioa hasita"
+
+msgid "Stop"
+msgstr "Gelditu"
 
 msgid "Stop {}"
 msgstr "Gelditu {}"

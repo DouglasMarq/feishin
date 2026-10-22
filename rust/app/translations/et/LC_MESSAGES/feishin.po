@@ -8,11 +8,11 @@ msgstr ""
 msgid "\"{}\""
 msgstr "\"{}\""
 
+msgid "\"{}\" ({}) wants to control this player. Allow it? You will not be asked again for this device."
+msgstr "\"{}\" ({}) soovib seda mängijat juhtida. Kas lubada? Selle seadme kohta enam ei küsita."
+
 msgid "\"{}\" plays next"
 msgstr "\"{}\" esitatakse järgmisena"
-
-msgid "\"{}\" wants to control this player. Allow it? You will not be asked again for this device."
-msgstr "\"{}\" soovib seda mängijat juhtida. Kas lubada? Selle seadme kohta enam ei küsita."
 
 msgid "\"{}\" will play next"
 msgstr "\"{}\" esitatakse järgmisena"
@@ -233,6 +233,9 @@ msgstr "Tühjenda filtrid"
 msgid "Clear rating"
 msgstr "Eemalda hinne"
 
+msgid "Clear search"
+msgstr "Tühjenda otsing"
+
 msgid "Clear the favorites and genre filters"
 msgstr "Tühjenda lemmikute ja žanrite filtrid"
 
@@ -248,6 +251,9 @@ msgstr "Sulge"
 msgid "Close now playing"
 msgstr "Sulge praegu mängiv"
 
+msgid "Close to the tray"
+msgstr "Sulge salve"
+
 msgid "Close without adding the songs"
 msgstr "Sulge lugusid lisamata"
 
@@ -256,6 +262,9 @@ msgstr "Sulge muudatusteta"
 
 msgid "Close without saving"
 msgstr "Sulge salvestamata"
+
+msgid "Closing the window keeps the music playing; quit from the tray icon."
+msgstr "Akna sulgemine ei peata muusikat; välju salve ikooni kaudu."
 
 msgid "Colors used across the whole app."
 msgstr "Kogu rakenduses kasutatavad värvid."
@@ -722,6 +731,9 @@ msgstr "Liides"
 msgid "Internet radio"
 msgstr "Internetiraadio"
 
+msgid "it could not be reached; check that its firewall allows TCP port {}"
+msgstr "sellega ei saadud ühendust; kontrolli, et selle tulemüür lubab TCP-pordi {}"
+
 msgid "it did not answer in time"
 msgstr "see ei vastanud õigel ajal"
 
@@ -745,6 +757,9 @@ msgstr "üksus"
 
 msgid "Jump to this line"
 msgstr "Mine sellele reale"
+
+msgid "Keep a Cadence icon with playback controls in the menu bar or system tray."
+msgstr "Hoia Cadence'i ikooni koos esitusnuppudega menüüribal või süsteemisalves."
 
 msgid "Keep this station in the favorites on this device"
 msgstr "Hoia see jaam selles seadmes lemmikutes"
@@ -1131,6 +1146,9 @@ msgstr "Esita {} järgmisena"
 msgid "Play {} with its subfolders"
 msgstr "Esita {} koos alamkaustadega"
 
+msgid "Play/Pause"
+msgstr "Esita/Peata"
+
 msgid "Playback"
 msgstr "Taasesitus"
 
@@ -1175,6 +1193,9 @@ msgstr "Lilla"
 
 msgid "Queue"
 msgstr "Järjekord"
+
+msgid "Quit"
+msgstr "Välju"
 
 msgid "Radio"
 msgstr "Raadio"
@@ -1393,6 +1414,9 @@ msgstr "Näita kõiki populaarseimaid lugusid"
 msgid "Show fewer top songs"
 msgstr "Näita vähem populaarseimaid lugusid"
 
+msgid "Show in the tray"
+msgstr "Näita salves"
+
 msgid "SHOW LESS"
 msgstr "NÄITA VÄHEM"
 
@@ -1524,6 +1548,9 @@ msgstr "Jaamad"
 
 msgid "Stay signed in"
 msgstr "Jää sisselogituks"
+
+msgid "Stop"
+msgstr "Seiska"
 
 msgid "Stop {}"
 msgstr "Peata {}"

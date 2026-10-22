@@ -8,11 +8,11 @@ msgstr ""
 msgid "\"{}\""
 msgstr "「{}」"
 
+msgid "\"{}\" ({}) wants to control this player. Allow it? You will not be asked again for this device."
+msgstr "「{}」（{}）がこのプレーヤーの操作を求めています。許可しますか？このデバイスについては今後確認しません。"
+
 msgid "\"{}\" plays next"
 msgstr "「{}」を次に再生します"
-
-msgid "\"{}\" wants to control this player. Allow it? You will not be asked again for this device."
-msgstr "「{}」がこのプレーヤーの操作を求めています。許可しますか？このデバイスについては今後確認しません。"
 
 msgid "\"{}\" will play next"
 msgstr "「{}」が次に再生されます"
@@ -227,6 +227,9 @@ msgstr "フィルターを削除"
 msgid "Clear rating"
 msgstr "評価をクリア"
 
+msgid "Clear search"
+msgstr "検索をクリア"
+
 msgid "Clear the favorites and genre filters"
 msgstr "お気に入りとジャンルのフィルターをクリア"
 
@@ -242,6 +245,9 @@ msgstr "閉じる"
 msgid "Close now playing"
 msgstr "再生中の画面を閉じる"
 
+msgid "Close to the tray"
+msgstr "閉じるとトレイに格納"
+
 msgid "Close without adding the songs"
 msgstr "曲を追加せずに閉じる"
 
@@ -250,6 +256,9 @@ msgstr "変更せずに閉じる"
 
 msgid "Close without saving"
 msgstr "保存せずに閉じる"
+
+msgid "Closing the window keeps the music playing; quit from the tray icon."
+msgstr "ウィンドウを閉じても音楽は再生を続けます。終了はトレイアイコンから行います。"
 
 msgid "Colors used across the whole app."
 msgstr "アプリ全体で使われる色です。"
@@ -713,6 +722,9 @@ msgstr "インターフェース"
 msgid "Internet radio"
 msgstr "インターネット ラジオ"
 
+msgid "it could not be reached; check that its firewall allows TCP port {}"
+msgstr "接続できませんでした。ファイアウォールで TCP ポート {} が許可されているか確認してください"
+
 msgid "it did not answer in time"
 msgstr "時間内に応答がありませんでした"
 
@@ -736,6 +748,9 @@ msgstr "アイテム"
 
 msgid "Jump to this line"
 msgstr "この行へ移動"
+
+msgid "Keep a Cadence icon with playback controls in the menu bar or system tray."
+msgstr "メニューバーまたはシステムトレイに再生コントロール付きの Cadence アイコンを表示します。"
 
 msgid "Keep this station in the favorites on this device"
 msgstr "このステーションをこのデバイスのお気に入りに保存"
@@ -1120,6 +1135,9 @@ msgstr "{} を次に再生"
 msgid "Play {} with its subfolders"
 msgstr "{} をサブフォルダーごと再生"
 
+msgid "Play/Pause"
+msgstr "再生/一時停止"
+
 msgid "Playback"
 msgstr "再生"
 
@@ -1164,6 +1182,9 @@ msgstr "パープル"
 
 msgid "Queue"
 msgstr "キュー"
+
+msgid "Quit"
+msgstr "終了"
 
 msgid "Radio"
 msgstr "ラジオ"
@@ -1380,6 +1401,9 @@ msgstr "人気曲をすべて表示"
 msgid "Show fewer top songs"
 msgstr "人気曲の表示を減らす"
 
+msgid "Show in the tray"
+msgstr "トレイに表示"
+
 msgid "SHOW LESS"
 msgstr "折りたたむ"
 
@@ -1511,6 +1535,9 @@ msgstr "ステーション"
 
 msgid "Stay signed in"
 msgstr "サインインしたままにする"
+
+msgid "Stop"
+msgstr "停止"
 
 msgid "Stop {}"
 msgstr "{} を停止"

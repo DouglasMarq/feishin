@@ -8,11 +8,11 @@ msgstr ""
 msgid "\"{}\""
 msgstr "„{}”"
 
+msgid "\"{}\" ({}) wants to control this player. Allow it? You will not be asked again for this device."
+msgstr "A(z) „{}” ({}) vezérelni szeretné ezt a lejátszót. Engedélyezed? Erről az eszközről többé nem kérdezünk."
+
 msgid "\"{}\" plays next"
 msgstr "„{}” következik"
-
-msgid "\"{}\" wants to control this player. Allow it? You will not be asked again for this device."
-msgstr "A(z) „{}” vezérelni szeretné ezt a lejátszót. Engedélyezed? Erről az eszközről többé nem kérdezünk."
 
 msgid "\"{}\" will play next"
 msgstr "„{}” következik a lejátszásban"
@@ -233,6 +233,9 @@ msgstr "Szűrők törlése"
 msgid "Clear rating"
 msgstr "Értékelés törlése"
 
+msgid "Clear search"
+msgstr "Keresés törlése"
+
 msgid "Clear the favorites and genre filters"
 msgstr "A kedvencek- és műfajszűrők törlése"
 
@@ -248,6 +251,9 @@ msgstr "Bezárás"
 msgid "Close now playing"
 msgstr "Most játszott bezárása"
 
+msgid "Close to the tray"
+msgstr "Bezárás a tálcára"
+
 msgid "Close without adding the songs"
 msgstr "Bezárás a dalok hozzáadása nélkül"
 
@@ -256,6 +262,9 @@ msgstr "Bezárás változtatás nélkül"
 
 msgid "Close without saving"
 msgstr "Bezárás mentés nélkül"
+
+msgid "Closing the window keeps the music playing; quit from the tray icon."
+msgstr "Az ablak bezárása után a zene tovább szól; a tálcaikonról léphetsz ki."
 
 msgid "Colors used across the whole app."
 msgstr "Az egész alkalmazásban használt színek."
@@ -722,6 +731,9 @@ msgstr "Felület"
 msgid "Internet radio"
 msgstr "Internetes rádió"
 
+msgid "it could not be reached; check that its firewall allows TCP port {}"
+msgstr "nem érhető el; ellenőrizd, hogy a tűzfala engedélyezi-e a(z) {} TCP-portot"
+
 msgid "it did not answer in time"
 msgstr "nem válaszolt időben"
 
@@ -745,6 +757,9 @@ msgstr "elem"
 
 msgid "Jump to this line"
 msgstr "Ugrás erre a sorra"
+
+msgid "Keep a Cadence icon with playback controls in the menu bar or system tray."
+msgstr "Cadence ikon lejátszásvezérlőkkel a menüsorban vagy a rendszertálcán."
 
 msgid "Keep this station in the favorites on this device"
 msgstr "Az állomás megtartása a kedvencek között ezen az eszközön"
@@ -1131,6 +1146,9 @@ msgstr "{} lejátszása következőként"
 msgid "Play {} with its subfolders"
 msgstr "{} lejátszása az almappáival együtt"
 
+msgid "Play/Pause"
+msgstr "Lejátszás/Szünet"
+
 msgid "Playback"
 msgstr "Lejátszás"
 
@@ -1175,6 +1193,9 @@ msgstr "Lila"
 
 msgid "Queue"
 msgstr "Lejátszási sor"
+
+msgid "Quit"
+msgstr "Kilépés"
 
 msgid "Radio"
 msgstr "Rádió"
@@ -1393,6 +1414,9 @@ msgstr "Az összes legnépszerűbb dal megjelenítése"
 msgid "Show fewer top songs"
 msgstr "Kevesebb legnépszerűbb dal megjelenítése"
 
+msgid "Show in the tray"
+msgstr "Megjelenítés a tálcán"
+
 msgid "SHOW LESS"
 msgstr "KEVESEBB"
 
@@ -1524,6 +1548,9 @@ msgstr "Állomások"
 
 msgid "Stay signed in"
 msgstr "Maradj bejelentkezve"
+
+msgid "Stop"
+msgstr "Leállítás"
 
 msgid "Stop {}"
 msgstr "{} leállítása"

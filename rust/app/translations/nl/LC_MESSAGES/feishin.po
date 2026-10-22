@@ -8,11 +8,11 @@ msgstr ""
 msgid "\"{}\""
 msgstr "\"{}\""
 
+msgid "\"{}\" ({}) wants to control this player. Allow it? You will not be asked again for this device."
+msgstr "\"{}\" ({}) wil deze speler bedienen. Toestaan? Voor dit apparaat wordt dit niet meer gevraagd."
+
 msgid "\"{}\" plays next"
 msgstr "\"{}\" wordt hierna afgespeeld"
-
-msgid "\"{}\" wants to control this player. Allow it? You will not be asked again for this device."
-msgstr "\"{}\" wil deze speler bedienen. Toestaan? Voor dit apparaat wordt dit niet meer gevraagd."
 
 msgid "\"{}\" will play next"
 msgstr "\"{}\" wordt hierna afgespeeld"
@@ -233,6 +233,9 @@ msgstr "Filters wissen"
 msgid "Clear rating"
 msgstr "Beoordeling wissen"
 
+msgid "Clear search"
+msgstr "Zoekopdracht wissen"
+
 msgid "Clear the favorites and genre filters"
 msgstr "De favorieten- en genrefilters wissen"
 
@@ -248,6 +251,9 @@ msgstr "Sluiten"
 msgid "Close now playing"
 msgstr "Nu afspelen sluiten"
 
+msgid "Close to the tray"
+msgstr "Sluiten naar het systeemvak"
+
 msgid "Close without adding the songs"
 msgstr "Sluiten zonder de nummers toe te voegen"
 
@@ -256,6 +262,9 @@ msgstr "Sluiten zonder wijzigingen"
 
 msgid "Close without saving"
 msgstr "Sluiten zonder opslaan"
+
+msgid "Closing the window keeps the music playing; quit from the tray icon."
+msgstr "Bij het sluiten van het venster blijft de muziek spelen; afsluiten via het pictogram in het systeemvak."
 
 msgid "Colors used across the whole app."
 msgstr "Kleuren die in de hele app worden gebruikt."
@@ -722,6 +731,9 @@ msgstr "Interface"
 msgid "Internet radio"
 msgstr "Internetradio"
 
+msgid "it could not be reached; check that its firewall allows TCP port {}"
+msgstr "het is niet bereikbaar; controleer of de firewall TCP-poort {} toestaat"
+
 msgid "it did not answer in time"
 msgstr "het antwoordde niet op tijd"
 
@@ -745,6 +757,9 @@ msgstr "item"
 
 msgid "Jump to this line"
 msgstr "Naar deze regel springen"
+
+msgid "Keep a Cadence icon with playback controls in the menu bar or system tray."
+msgstr "Een Cadence-pictogram met afspeelknoppen in de menubalk of het systeemvak tonen."
 
 msgid "Keep this station in the favorites on this device"
 msgstr "Deze zender op dit apparaat in de favorieten bewaren"
@@ -1131,6 +1146,9 @@ msgstr "{} hierna afspelen"
 msgid "Play {} with its subfolders"
 msgstr "{} met de submappen afspelen"
 
+msgid "Play/Pause"
+msgstr "Afspelen/Pauzeren"
+
 msgid "Playback"
 msgstr "Afspelen"
 
@@ -1175,6 +1193,9 @@ msgstr "Paars"
 
 msgid "Queue"
 msgstr "Wachtrij"
+
+msgid "Quit"
+msgstr "Afsluiten"
 
 msgid "Radio"
 msgstr "Radio"
@@ -1393,6 +1414,9 @@ msgstr "Alle topnummers tonen"
 msgid "Show fewer top songs"
 msgstr "Minder topnummers tonen"
 
+msgid "Show in the tray"
+msgstr "Tonen in het systeemvak"
+
 msgid "SHOW LESS"
 msgstr "MINDER TONEN"
 
@@ -1524,6 +1548,9 @@ msgstr "Zenders"
 
 msgid "Stay signed in"
 msgstr "Ingelogd blijven"
+
+msgid "Stop"
+msgstr "Stoppen"
 
 msgid "Stop {}"
 msgstr "{} stoppen"

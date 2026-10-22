@@ -8,11 +8,11 @@ msgstr ""
 msgid "\"{}\""
 msgstr "« {} »"
 
+msgid "\"{}\" ({}) wants to control this player. Allow it? You will not be asked again for this device."
+msgstr "« {} » ({}) souhaite contrôler ce lecteur. L'autoriser ? Cette question ne sera plus posée pour cet appareil."
+
 msgid "\"{}\" plays next"
 msgstr "« {} » sera lu ensuite"
-
-msgid "\"{}\" wants to control this player. Allow it? You will not be asked again for this device."
-msgstr "« {} » souhaite contrôler ce lecteur. L'autoriser ? Cette question ne sera plus posée pour cet appareil."
 
 msgid "\"{}\" will play next"
 msgstr "« {} » sera lu ensuite"
@@ -233,6 +233,9 @@ msgstr "Réinitialiser les filtres"
 msgid "Clear rating"
 msgstr "Effacer la note"
 
+msgid "Clear search"
+msgstr "Effacer la recherche"
+
 msgid "Clear the favorites and genre filters"
 msgstr "Effacer les filtres de favoris et de genre"
 
@@ -248,6 +251,9 @@ msgstr "Fermer"
 msgid "Close now playing"
 msgstr "Fermer la lecture en cours"
 
+msgid "Close to the tray"
+msgstr "Fermer dans la barre d'état"
+
 msgid "Close without adding the songs"
 msgstr "Fermer sans ajouter les titres"
 
@@ -256,6 +262,9 @@ msgstr "Fermer sans modifier"
 
 msgid "Close without saving"
 msgstr "Fermer sans enregistrer"
+
+msgid "Closing the window keeps the music playing; quit from the tray icon."
+msgstr "Fermer la fenêtre laisse la musique jouer ; quittez depuis l'icône de la barre d'état."
 
 msgid "Colors used across the whole app."
 msgstr "Couleurs utilisées dans toute l'application."
@@ -722,6 +731,9 @@ msgstr "Interface"
 msgid "Internet radio"
 msgstr "Radio Internet"
 
+msgid "it could not be reached; check that its firewall allows TCP port {}"
+msgstr "il est injoignable ; vérifiez que son pare-feu autorise le port TCP {}"
+
 msgid "it did not answer in time"
 msgstr "il n'a pas répondu à temps"
 
@@ -745,6 +757,9 @@ msgstr "l'élément"
 
 msgid "Jump to this line"
 msgstr "Aller à cette ligne"
+
+msgid "Keep a Cadence icon with playback controls in the menu bar or system tray."
+msgstr "Garder une icône Cadence avec les commandes de lecture dans la barre des menus ou la zone de notification."
 
 msgid "Keep this station in the favorites on this device"
 msgstr "Garder cette station dans les favoris sur cet appareil"
@@ -1131,6 +1146,9 @@ msgstr "Lire {} ensuite"
 msgid "Play {} with its subfolders"
 msgstr "Lire {} avec ses sous-dossiers"
 
+msgid "Play/Pause"
+msgstr "Lecture/Pause"
+
 msgid "Playback"
 msgstr "Lecture"
 
@@ -1175,6 +1193,9 @@ msgstr "Violet"
 
 msgid "Queue"
 msgstr "File d'attente"
+
+msgid "Quit"
+msgstr "Quitter"
 
 msgid "Radio"
 msgstr "Radio"
@@ -1393,6 +1414,9 @@ msgstr "Afficher tous les titres populaires"
 msgid "Show fewer top songs"
 msgstr "Afficher moins de titres populaires"
 
+msgid "Show in the tray"
+msgstr "Afficher dans la barre d'état"
+
 msgid "SHOW LESS"
 msgstr "AFFICHER MOINS"
 
@@ -1524,6 +1548,9 @@ msgstr "Stations"
 
 msgid "Stay signed in"
 msgstr "Rester connecté"
+
+msgid "Stop"
+msgstr "Arrêter"
 
 msgid "Stop {}"
 msgstr "Arrêter {}"

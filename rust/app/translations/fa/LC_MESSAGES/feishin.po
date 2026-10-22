@@ -8,11 +8,11 @@ msgstr ""
 msgid "\"{}\""
 msgstr "\"{}\""
 
+msgid "\"{}\" ({}) wants to control this player. Allow it? You will not be asked again for this device."
+msgstr "\"{}\" ({}) می‌خواهد این پخش‌کننده را کنترل کند. اجازه می‌دهید؟ برای این دستگاه دوباره پرسیده نمی‌شود."
+
 msgid "\"{}\" plays next"
 msgstr "\"{}\" بعدی پخش می‌شود"
-
-msgid "\"{}\" wants to control this player. Allow it? You will not be asked again for this device."
-msgstr "\"{}\" می‌خواهد این پخش‌کننده را کنترل کند. اجازه می‌دهید؟ برای این دستگاه دوباره پرسیده نمی‌شود."
 
 msgid "\"{}\" will play next"
 msgstr "\"{}\" در نوبت بعد پخش خواهد شد"
@@ -233,6 +233,9 @@ msgstr "پاک کردن پالایش‌ها"
 msgid "Clear rating"
 msgstr "پاک کردن امتیاز"
 
+msgid "Clear search"
+msgstr "پاک کردن جستجو"
+
 msgid "Clear the favorites and genre filters"
 msgstr "پاک کردن پالایش‌های علاقه‌مندی و ژانر"
 
@@ -248,6 +251,9 @@ msgstr "بستن"
 msgid "Close now playing"
 msgstr "بستن صفحه‌ی در حال پخش"
 
+msgid "Close to the tray"
+msgstr "بستن به سینی سیستم"
+
 msgid "Close without adding the songs"
 msgstr "بستن بدون افزودن آهنگ‌ها"
 
@@ -256,6 +262,9 @@ msgstr "بستن بدون تغییر"
 
 msgid "Close without saving"
 msgstr "بستن بدون ذخیره"
+
+msgid "Closing the window keeps the music playing; quit from the tray icon."
+msgstr "بستن پنجره پخش موسیقی را متوقف نمی‌کند؛ از نماد سینی خارج شوید."
 
 msgid "Colors used across the whole app."
 msgstr "رنگ‌هایی که در کل برنامه به کار می‌روند."
@@ -722,6 +731,9 @@ msgstr "رابط کاربری"
 msgid "Internet radio"
 msgstr "رادیوی اینترنتی"
 
+msgid "it could not be reached; check that its firewall allows TCP port {}"
+msgstr "به آن دسترسی نشد؛ بررسی کنید که دیوار آتش آن درگاه TCP {} را مجاز می‌کند"
+
 msgid "it did not answer in time"
 msgstr "به‌موقع پاسخ نداد"
 
@@ -745,6 +757,9 @@ msgstr "مورد"
 
 msgid "Jump to this line"
 msgstr "رفتن به این خط"
+
+msgid "Keep a Cadence icon with playback controls in the menu bar or system tray."
+msgstr "نگه داشتن نماد Cadence با کنترل‌های پخش در نوار منو یا سینی سیستم."
 
 msgid "Keep this station in the favorites on this device"
 msgstr "نگه‌داشتن این ایستگاه در علاقه‌مندی‌ها روی این دستگاه"
@@ -1131,6 +1146,9 @@ msgstr "پخش {} در نوبت بعد"
 msgid "Play {} with its subfolders"
 msgstr "پخش {} با زیرپوشه‌هایش"
 
+msgid "Play/Pause"
+msgstr "پخش/مکث"
+
 msgid "Playback"
 msgstr "پخش"
 
@@ -1175,6 +1193,9 @@ msgstr "بنفش"
 
 msgid "Queue"
 msgstr "صف"
+
+msgid "Quit"
+msgstr "خروج"
 
 msgid "Radio"
 msgstr "رادیو"
@@ -1393,6 +1414,9 @@ msgstr "نمایش همه‌ی آهنگ‌های برتر"
 msgid "Show fewer top songs"
 msgstr "نمایش آهنگ‌های برتر کمتر"
 
+msgid "Show in the tray"
+msgstr "نمایش در سینی سیستم"
+
 msgid "SHOW LESS"
 msgstr "نمایش کمتر"
 
@@ -1524,6 +1548,9 @@ msgstr "ایستگاه‌ها"
 
 msgid "Stay signed in"
 msgstr "وارد بمانید"
+
+msgid "Stop"
+msgstr "توقف"
 
 msgid "Stop {}"
 msgstr "توقف {}"

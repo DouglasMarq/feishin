@@ -8,11 +8,11 @@ msgstr ""
 msgid "\"{}\""
 msgstr "„{}“"
 
+msgid "\"{}\" ({}) wants to control this player. Allow it? You will not be asked again for this device."
+msgstr "„{}“ ({}) želi upravljati ta predvajalnik. Dovolite? Za to napravo vas ne bomo več vprašali."
+
 msgid "\"{}\" plays next"
 msgstr "Naslednje se predvaja „{}“"
-
-msgid "\"{}\" wants to control this player. Allow it? You will not be asked again for this device."
-msgstr "„{}“ želi upravljati ta predvajalnik. Dovolite? Za to napravo vas ne bomo več vprašali."
 
 msgid "\"{}\" will play next"
 msgstr "Naslednje bo predvajano: „{}“"
@@ -245,6 +245,9 @@ msgstr "Počisti filtre"
 msgid "Clear rating"
 msgstr "Počisti oceno"
 
+msgid "Clear search"
+msgstr "Počisti iskanje"
+
 msgid "Clear the favorites and genre filters"
 msgstr "Počisti filtra priljubljenih in zvrsti"
 
@@ -260,6 +263,9 @@ msgstr "Zapri"
 msgid "Close now playing"
 msgstr "Zapri pogled predvajanja"
 
+msgid "Close to the tray"
+msgstr "Zapri v sistemsko vrstico"
+
 msgid "Close without adding the songs"
 msgstr "Zapri brez dodajanja skladb"
 
@@ -268,6 +274,9 @@ msgstr "Zapri brez sprememb"
 
 msgid "Close without saving"
 msgstr "Zapri brez shranjevanja"
+
+msgid "Closing the window keeps the music playing; quit from the tray icon."
+msgstr "Zapiranje okna ne ustavi glasbe; program zaprete prek ikone v sistemski vrstici."
 
 msgid "Colors used across the whole app."
 msgstr "Barve, uporabljene v celotni aplikaciji."
@@ -740,6 +749,9 @@ msgstr "Vmesnik"
 msgid "Internet radio"
 msgstr "Internetni radio"
 
+msgid "it could not be reached; check that its firewall allows TCP port {}"
+msgstr "ni ga bilo mogoče doseči; preverite, ali njegov požarni zid dovoljuje vrata TCP {}"
+
 msgid "it did not answer in time"
 msgstr "ni odgovorila pravočasno"
 
@@ -763,6 +775,9 @@ msgstr "element"
 
 msgid "Jump to this line"
 msgstr "Skoči na to vrstico"
+
+msgid "Keep a Cadence icon with playback controls in the menu bar or system tray."
+msgstr "Prikaži ikono Cadence s kontrolniki predvajanja v menijski ali sistemski vrstici."
 
 msgid "Keep this station in the favorites on this device"
 msgstr "Obdrži to postajo med priljubljenimi na tej napravi"
@@ -1153,6 +1168,9 @@ msgstr "Predvajaj {} naslednje"
 msgid "Play {} with its subfolders"
 msgstr "Predvajaj {} s podmapami"
 
+msgid "Play/Pause"
+msgstr "Predvajaj/Premor"
+
 msgid "Playback"
 msgstr "Predvajanje"
 
@@ -1197,6 +1215,9 @@ msgstr "Vijolična"
 
 msgid "Queue"
 msgstr "Čakalna vrsta"
+
+msgid "Quit"
+msgstr "Končaj"
 
 msgid "Radio"
 msgstr "Radio"
@@ -1419,6 +1440,9 @@ msgstr "Prikaži vse najboljše skladbe"
 msgid "Show fewer top songs"
 msgstr "Prikaži manj najboljših skladb"
 
+msgid "Show in the tray"
+msgstr "Prikaži v sistemski vrstici"
+
 msgid "SHOW LESS"
 msgstr "PRIKAŽI MANJ"
 
@@ -1550,6 +1574,9 @@ msgstr "Postaje"
 
 msgid "Stay signed in"
 msgstr "Ostani prijavljen"
+
+msgid "Stop"
+msgstr "Ustavi"
 
 msgid "Stop {}"
 msgstr "Ustavi {}"

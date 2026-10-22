@@ -8,11 +8,11 @@ msgstr ""
 msgid "\"{}\""
 msgstr "„{}“"
 
+msgid "\"{}\" ({}) wants to control this player. Allow it? You will not be asked again for this device."
+msgstr "„{}“ ({}) chce ovládať tento prehrávač. Povoliť? Na toto zariadenie sa už nebudeme pýtať."
+
 msgid "\"{}\" plays next"
 msgstr "Ako ďalšie: „{}“"
-
-msgid "\"{}\" wants to control this player. Allow it? You will not be asked again for this device."
-msgstr "„{}“ chce ovládať tento prehrávač. Povoliť? Na toto zariadenie sa už nebudeme pýtať."
 
 msgid "\"{}\" will play next"
 msgstr "„{}“ sa prehrá ako ďalšie"
@@ -239,6 +239,9 @@ msgstr "Vymazať filtre"
 msgid "Clear rating"
 msgstr "Zrušiť hodnotenie"
 
+msgid "Clear search"
+msgstr "Vymazať hľadanie"
+
 msgid "Clear the favorites and genre filters"
 msgstr "Vymazať filtre obľúbených a žánrov"
 
@@ -254,6 +257,9 @@ msgstr "Zavrieť"
 msgid "Close now playing"
 msgstr "Zavrieť Práve hrá"
 
+msgid "Close to the tray"
+msgstr "Zatvárať do oblasti oznámení"
+
 msgid "Close without adding the songs"
 msgstr "Zavrieť bez pridania skladieb"
 
@@ -262,6 +268,9 @@ msgstr "Zavrieť bez zmien"
 
 msgid "Close without saving"
 msgstr "Zavrieť bez uloženia"
+
+msgid "Closing the window keeps the music playing; quit from the tray icon."
+msgstr "Zatvorenie okna nezastaví hudbu; aplikáciu ukončíte z ikony v oblasti oznámení."
 
 msgid "Colors used across the whole app."
 msgstr "Farby používané v celej aplikácii."
@@ -731,6 +740,9 @@ msgstr "Rozhranie"
 msgid "Internet radio"
 msgstr "Internetové rádio"
 
+msgid "it could not be reached; check that its firewall allows TCP port {}"
+msgstr "nedá sa k nemu pripojiť; skontrolujte, či jeho firewall povoľuje TCP port {}"
+
 msgid "it did not answer in time"
 msgstr "neodpovedalo včas"
 
@@ -754,6 +766,9 @@ msgstr "položka"
 
 msgid "Jump to this line"
 msgstr "Prejsť na tento riadok"
+
+msgid "Keep a Cadence icon with playback controls in the menu bar or system tray."
+msgstr "Ikona Cadence s ovládaním prehrávania na lište ponuky alebo v oblasti oznámení."
 
 msgid "Keep this station in the favorites on this device"
 msgstr "Ponechať túto stanicu v obľúbených na tomto zariadení"
@@ -1142,6 +1157,9 @@ msgstr "Prehrať {} ako ďalšie"
 msgid "Play {} with its subfolders"
 msgstr "Prehrať {} aj s podpriečinkami"
 
+msgid "Play/Pause"
+msgstr "Prehrať/Pozastaviť"
+
 msgid "Playback"
 msgstr "Prehrávanie"
 
@@ -1186,6 +1204,9 @@ msgstr "Fialová"
 
 msgid "Queue"
 msgstr "Fronta"
+
+msgid "Quit"
+msgstr "Ukončiť"
 
 msgid "Radio"
 msgstr "Rádio"
@@ -1406,6 +1427,9 @@ msgstr "Zobraziť všetky top skladby"
 msgid "Show fewer top songs"
 msgstr "Zobraziť menej top skladieb"
 
+msgid "Show in the tray"
+msgstr "Zobraziť v oblasti oznámení"
+
 msgid "SHOW LESS"
 msgstr "ZOBRAZIŤ MENEJ"
 
@@ -1537,6 +1561,9 @@ msgstr "Stanice"
 
 msgid "Stay signed in"
 msgstr "Zostať prihlásený"
+
+msgid "Stop"
+msgstr "Zastaviť"
 
 msgid "Stop {}"
 msgstr "Zastaviť {}"

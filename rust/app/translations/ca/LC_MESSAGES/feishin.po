@@ -8,11 +8,11 @@ msgstr ""
 msgid "\"{}\""
 msgstr "«{}»"
 
+msgid "\"{}\" ({}) wants to control this player. Allow it? You will not be asked again for this device."
+msgstr "\"{}\" ({}) vol controlar aquest reproductor. Ho permets? No se't tornarà a preguntar per aquest dispositiu."
+
 msgid "\"{}\" plays next"
 msgstr "«{}» sona a continuació"
-
-msgid "\"{}\" wants to control this player. Allow it? You will not be asked again for this device."
-msgstr "\"{}\" vol controlar aquest reproductor. Ho permets? No se't tornarà a preguntar per aquest dispositiu."
 
 msgid "\"{}\" will play next"
 msgstr "«{}» sonarà a continuació"
@@ -233,6 +233,9 @@ msgstr "Neteja els filtres"
 msgid "Clear rating"
 msgstr "Esborra la valoració"
 
+msgid "Clear search"
+msgstr "Esborra la cerca"
+
 msgid "Clear the favorites and genre filters"
 msgstr "Neteja els filtres de preferits i de gènere"
 
@@ -248,6 +251,9 @@ msgstr "Tanca"
 msgid "Close now playing"
 msgstr "Tanca la reproducció actual"
 
+msgid "Close to the tray"
+msgstr "Tanca a la safata"
+
 msgid "Close without adding the songs"
 msgstr "Tanca sense afegir les cançons"
 
@@ -256,6 +262,9 @@ msgstr "Tanca sense canvis"
 
 msgid "Close without saving"
 msgstr "Tanca sense desar"
+
+msgid "Closing the window keeps the music playing; quit from the tray icon."
+msgstr "Tancar la finestra manté la música sonant; surt des de la icona de la safata."
 
 msgid "Colors used across the whole app."
 msgstr "Colors usats a tota l'aplicació."
@@ -722,6 +731,9 @@ msgstr "Interfície"
 msgid "Internet radio"
 msgstr "Ràdio per internet"
 
+msgid "it could not be reached; check that its firewall allows TCP port {}"
+msgstr "no s'hi ha pogut arribar; comproveu que el seu tallafoc permeti el port TCP {}"
+
 msgid "it did not answer in time"
 msgstr "no ha respost a temps"
 
@@ -745,6 +757,9 @@ msgstr "element"
 
 msgid "Jump to this line"
 msgstr "Salta a aquesta línia"
+
+msgid "Keep a Cadence icon with playback controls in the menu bar or system tray."
+msgstr "Mantén una icona de Cadence amb controls de reproducció a la barra de menús o a la safata del sistema."
 
 msgid "Keep this station in the favorites on this device"
 msgstr "Desa aquesta emissora als preferits d'aquest dispositiu"
@@ -1131,6 +1146,9 @@ msgstr "Reprodueix {} a continuació"
 msgid "Play {} with its subfolders"
 msgstr "Reprodueix {} amb les seves subcarpetes"
 
+msgid "Play/Pause"
+msgstr "Reprodueix/Pausa"
+
 msgid "Playback"
 msgstr "Reproducció"
 
@@ -1175,6 +1193,9 @@ msgstr "Lila"
 
 msgid "Queue"
 msgstr "Cua"
+
+msgid "Quit"
+msgstr "Surt"
 
 msgid "Radio"
 msgstr "Ràdio"
@@ -1393,6 +1414,9 @@ msgstr "Mostra totes les millors cançons"
 msgid "Show fewer top songs"
 msgstr "Mostra menys millors cançons"
 
+msgid "Show in the tray"
+msgstr "Mostra a la safata"
+
 msgid "SHOW LESS"
 msgstr "MOSTRA'N MENYS"
 
@@ -1524,6 +1548,9 @@ msgstr "Emissores"
 
 msgid "Stay signed in"
 msgstr "Mantén la sessió iniciada"
+
+msgid "Stop"
+msgstr "Atura"
 
 msgid "Stop {}"
 msgstr "Atura {}"

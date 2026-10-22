@@ -8,11 +8,11 @@ msgstr ""
 msgid "\"{}\""
 msgstr "\"{}\""
 
+msgid "\"{}\" ({}) wants to control this player. Allow it? You will not be asked again for this device."
+msgstr "\"{}\" ({}) quere controlar este reprodutor. Permitilo? Non se che volverá preguntar por este dispositivo."
+
 msgid "\"{}\" plays next"
 msgstr "\"{}\" soa a continuación"
-
-msgid "\"{}\" wants to control this player. Allow it? You will not be asked again for this device."
-msgstr "\"{}\" quere controlar este reprodutor. Permitilo? Non se che volverá preguntar por este dispositivo."
 
 msgid "\"{}\" will play next"
 msgstr "\"{}\" soará a continuación"
@@ -233,6 +233,9 @@ msgstr "Limpar os filtros"
 msgid "Clear rating"
 msgstr "Quitar a puntuación"
 
+msgid "Clear search"
+msgstr "Borrar a busca"
+
 msgid "Clear the favorites and genre filters"
 msgstr "Limpar os filtros de favoritos e xénero"
 
@@ -248,6 +251,9 @@ msgstr "Pechar"
 msgid "Close now playing"
 msgstr "Pechar a reprodución actual"
 
+msgid "Close to the tray"
+msgstr "Pechar na bandexa"
+
 msgid "Close without adding the songs"
 msgstr "Pechar sen engadir as cancións"
 
@@ -256,6 +262,9 @@ msgstr "Pechar sen cambios"
 
 msgid "Close without saving"
 msgstr "Pechar sen gardar"
+
+msgid "Closing the window keeps the music playing; quit from the tray icon."
+msgstr "Pechar a xanela mantén a música soando; sae desde a icona da bandexa."
 
 msgid "Colors used across the whole app."
 msgstr "Cores usadas en toda a aplicación."
@@ -722,6 +731,9 @@ msgstr "Interface"
 msgid "Internet radio"
 msgstr "Radio por internet"
 
+msgid "it could not be reached; check that its firewall allows TCP port {}"
+msgstr "non se puido chegar a el; comproba que a súa devasa permita o porto TCP {}"
+
 msgid "it did not answer in time"
 msgstr "non respondeu a tempo"
 
@@ -745,6 +757,9 @@ msgstr "elemento"
 
 msgid "Jump to this line"
 msgstr "Saltar a esta liña"
+
+msgid "Keep a Cadence icon with playback controls in the menu bar or system tray."
+msgstr "Manter unha icona de Cadence con controis de reprodución na barra de menús ou na bandexa do sistema."
 
 msgid "Keep this station in the favorites on this device"
 msgstr "Gardar esta emisora nos favoritos deste dispositivo"
@@ -1131,6 +1146,9 @@ msgstr "Reproducir {} a continuación"
 msgid "Play {} with its subfolders"
 msgstr "Reproducir {} cos seus subcartafoles"
 
+msgid "Play/Pause"
+msgstr "Reproducir/Pausar"
+
 msgid "Playback"
 msgstr "Reprodución"
 
@@ -1175,6 +1193,9 @@ msgstr "Morado"
 
 msgid "Queue"
 msgstr "Cola"
+
+msgid "Quit"
+msgstr "Saír"
 
 msgid "Radio"
 msgstr "Radio"
@@ -1393,6 +1414,9 @@ msgstr "Amosar todas as cancións máis populares"
 msgid "Show fewer top songs"
 msgstr "Amosar menos cancións máis populares"
 
+msgid "Show in the tray"
+msgstr "Amosar na bandexa"
+
 msgid "SHOW LESS"
 msgstr "MOSTRAR MENOS"
 
@@ -1524,6 +1548,9 @@ msgstr "Emisoras"
 
 msgid "Stay signed in"
 msgstr "Manter a sesión iniciada"
+
+msgid "Stop"
+msgstr "Deter"
 
 msgid "Stop {}"
 msgstr "Deter {}"

@@ -8,11 +8,11 @@ msgstr ""
 msgid "\"{}\""
 msgstr "\"{}\""
 
+msgid "\"{}\" ({}) wants to control this player. Allow it? You will not be asked again for this device."
+msgstr "يريد \"{}\" ({}) التحكم في هذا المشغل. هل تسمح بذلك؟ لن يُطلب منك ذلك مرة أخرى لهذا الجهاز."
+
 msgid "\"{}\" plays next"
 msgstr "\"{}\" يُشغَّل تاليًا"
-
-msgid "\"{}\" wants to control this player. Allow it? You will not be asked again for this device."
-msgstr "يريد \"{}\" التحكم في هذا المشغل. هل تسمح بذلك؟ لن يُطلب منك ذلك مرة أخرى لهذا الجهاز."
 
 msgid "\"{}\" will play next"
 msgstr "سيُشغَّل \"{}\" تاليًا"
@@ -257,6 +257,9 @@ msgstr "مسح عوامل التصفية"
 msgid "Clear rating"
 msgstr "مسح التقييم"
 
+msgid "Clear search"
+msgstr "مسح البحث"
+
 msgid "Clear the favorites and genre filters"
 msgstr "مسح تصفية المفضلة والأنواع"
 
@@ -272,6 +275,9 @@ msgstr "إغلاق"
 msgid "Close now playing"
 msgstr "إغلاق شاشة التشغيل الحالي"
 
+msgid "Close to the tray"
+msgstr "الإغلاق إلى شريط النظام"
+
 msgid "Close without adding the songs"
 msgstr "إغلاق دون إضافة الأغاني"
 
@@ -280,6 +286,9 @@ msgstr "إغلاق دون تغييرات"
 
 msgid "Close without saving"
 msgstr "إغلاق دون حفظ"
+
+msgid "Closing the window keeps the music playing; quit from the tray icon."
+msgstr "إغلاق النافذة يُبقي الموسيقى قيد التشغيل؛ اخرج من أيقونة شريط النظام."
 
 msgid "Colors used across the whole app."
 msgstr "الألوان المستخدمة في التطبيق بأكمله."
@@ -758,6 +767,9 @@ msgstr "الواجهة"
 msgid "Internet radio"
 msgstr "راديو الإنترنت"
 
+msgid "it could not be reached; check that its firewall allows TCP port {}"
+msgstr "تعذّر الوصول إليه؛ تحقّق من أن جداره الناري يسمح بمنفذ TCP {}"
+
 msgid "it did not answer in time"
 msgstr "لم يستجب في الوقت المناسب"
 
@@ -781,6 +793,9 @@ msgstr "العنصر"
 
 msgid "Jump to this line"
 msgstr "الانتقال إلى هذا السطر"
+
+msgid "Keep a Cadence icon with playback controls in the menu bar or system tray."
+msgstr "إبقاء أيقونة Cadence مع أزرار التشغيل في شريط القوائم أو شريط النظام."
 
 msgid "Keep this station in the favorites on this device"
 msgstr "الاحتفاظ بهذه المحطة في المفضلة على هذا الجهاز"
@@ -1175,6 +1190,9 @@ msgstr "تشغيل {} تاليًا"
 msgid "Play {} with its subfolders"
 msgstr "تشغيل {} مع مجلداته الفرعية"
 
+msgid "Play/Pause"
+msgstr "تشغيل/إيقاف مؤقت"
+
 msgid "Playback"
 msgstr "التشغيل"
 
@@ -1219,6 +1237,9 @@ msgstr "بنفسجي"
 
 msgid "Queue"
 msgstr "قائمة الانتظار"
+
+msgid "Quit"
+msgstr "إنهاء"
 
 msgid "Radio"
 msgstr "الراديو"
@@ -1445,6 +1466,9 @@ msgstr "عرض كل أفضل الأغاني"
 msgid "Show fewer top songs"
 msgstr "عرض عدد أقل من أفضل الأغاني"
 
+msgid "Show in the tray"
+msgstr "إظهار في شريط النظام"
+
 msgid "SHOW LESS"
 msgstr "عرض أقل"
 
@@ -1576,6 +1600,9 @@ msgstr "المحطات"
 
 msgid "Stay signed in"
 msgstr "البقاء مسجلاً الدخول"
+
+msgid "Stop"
+msgstr "إيقاف"
 
 msgid "Stop {}"
 msgstr "إيقاف {}"

@@ -8,11 +8,11 @@ msgstr ""
 msgid "\"{}\""
 msgstr "\"{}\""
 
+msgid "\"{}\" ({}) wants to control this player. Allow it? You will not be asked again for this device."
+msgstr "\"{}\" ({}) bu çaları kontrol etmek istiyor. İzin verilsin mi? Bu cihaz için bir daha sorulmayacak."
+
 msgid "\"{}\" plays next"
 msgstr "Sıradaki: \"{}\""
-
-msgid "\"{}\" wants to control this player. Allow it? You will not be asked again for this device."
-msgstr "\"{}\" bu çaları kontrol etmek istiyor. İzin verilsin mi? Bu cihaz için bir daha sorulmayacak."
 
 msgid "\"{}\" will play next"
 msgstr "\"{}\" sıradaki olarak çalınacak"
@@ -233,6 +233,9 @@ msgstr "Filtreleri temizle"
 msgid "Clear rating"
 msgstr "Puanı temizle"
 
+msgid "Clear search"
+msgstr "Aramayı temizle"
+
 msgid "Clear the favorites and genre filters"
 msgstr "Favori ve tür filtrelerini temizle"
 
@@ -248,6 +251,9 @@ msgstr "Kapat"
 msgid "Close now playing"
 msgstr "Şimdi çalınanı kapat"
 
+msgid "Close to the tray"
+msgstr "Kapatınca sistem tepsisine küçült"
+
 msgid "Close without adding the songs"
 msgstr "Şarkıları eklemeden kapat"
 
@@ -256,6 +262,9 @@ msgstr "Değişiklik yapmadan kapat"
 
 msgid "Close without saving"
 msgstr "Kaydetmeden kapat"
+
+msgid "Closing the window keeps the music playing; quit from the tray icon."
+msgstr "Pencereyi kapatmak müziği durdurmaz; tepsi simgesinden çıkın."
 
 msgid "Colors used across the whole app."
 msgstr "Uygulamanın genelinde kullanılan renkler."
@@ -722,6 +731,9 @@ msgstr "Arayüz"
 msgid "Internet radio"
 msgstr "İnternet radyosu"
 
+msgid "it could not be reached; check that its firewall allows TCP port {}"
+msgstr "ulaşılamadı; güvenlik duvarının {} numaralı TCP bağlantı noktasına izin verdiğini kontrol edin"
+
 msgid "it did not answer in time"
 msgstr "zamanında yanıt vermedi"
 
@@ -745,6 +757,9 @@ msgstr "öğe"
 
 msgid "Jump to this line"
 msgstr "Bu satıra atla"
+
+msgid "Keep a Cadence icon with playback controls in the menu bar or system tray."
+msgstr "Menü çubuğunda veya sistem tepsisinde oynatma denetimli bir Cadence simgesi göster."
 
 msgid "Keep this station in the favorites on this device"
 msgstr "Bu istasyonu bu cihazda favorilerde tut"
@@ -1131,6 +1146,9 @@ msgstr "Sıradaki olarak çal: {}"
 msgid "Play {} with its subfolders"
 msgstr "Alt klasörleriyle çal: {}"
 
+msgid "Play/Pause"
+msgstr "Oynat/Duraklat"
+
 msgid "Playback"
 msgstr "Oynatma"
 
@@ -1175,6 +1193,9 @@ msgstr "Mor"
 
 msgid "Queue"
 msgstr "Sıra"
+
+msgid "Quit"
+msgstr "Çık"
 
 msgid "Radio"
 msgstr "Radyo"
@@ -1393,6 +1414,9 @@ msgstr "Tüm popüler şarkıları göster"
 msgid "Show fewer top songs"
 msgstr "Daha az popüler şarkı göster"
 
+msgid "Show in the tray"
+msgstr "Sistem tepsisinde göster"
+
 msgid "SHOW LESS"
 msgstr "DAHA AZ GÖSTER"
 
@@ -1524,6 +1548,9 @@ msgstr "İstasyonlar"
 
 msgid "Stay signed in"
 msgstr "Oturum açık kalsın"
+
+msgid "Stop"
+msgstr "Durdur"
 
 msgid "Stop {}"
 msgstr "Durdur: {}"

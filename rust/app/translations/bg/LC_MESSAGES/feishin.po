@@ -8,11 +8,11 @@ msgstr ""
 msgid "\"{}\""
 msgstr "„{}“"
 
+msgid "\"{}\" ({}) wants to control this player. Allow it? You will not be asked again for this device."
+msgstr "„{}“ ({}) иска да управлява този плейър. Разрешаване? Няма да бъдете питани отново за това устройство."
+
 msgid "\"{}\" plays next"
 msgstr "„{}“ звучи следващ"
-
-msgid "\"{}\" wants to control this player. Allow it? You will not be asked again for this device."
-msgstr "„{}“ иска да управлява този плейър. Разрешаване? Няма да бъдете питани отново за това устройство."
 
 msgid "\"{}\" will play next"
 msgstr "„{}“ ще се възпроизведе следващ"
@@ -233,6 +233,9 @@ msgstr "Изчистване на филтрите"
 msgid "Clear rating"
 msgstr "Изчистване на оценката"
 
+msgid "Clear search"
+msgstr "Изчистване на търсенето"
+
 msgid "Clear the favorites and genre filters"
 msgstr "Изчистване на филтрите за любими и жанр"
 
@@ -248,6 +251,9 @@ msgstr "Затваряне"
 msgid "Close now playing"
 msgstr "Затваряне на „Сега звучи“"
 
+msgid "Close to the tray"
+msgstr "Затваряне в системната област"
+
 msgid "Close without adding the songs"
 msgstr "Затваряне без добавяне на песните"
 
@@ -256,6 +262,9 @@ msgstr "Затваряне без промени"
 
 msgid "Close without saving"
 msgstr "Затваряне без запазване"
+
+msgid "Closing the window keeps the music playing; quit from the tray icon."
+msgstr "Затварянето на прозореца не спира музиката; излезте от иконата в системната област."
 
 msgid "Colors used across the whole app."
 msgstr "Цветове, използвани в цялото приложение."
@@ -722,6 +731,9 @@ msgstr "Интерфейс"
 msgid "Internet radio"
 msgstr "Интернет радио"
 
+msgid "it could not be reached; check that its firewall allows TCP port {}"
+msgstr "не може да бъде достигнат; проверете дали защитната му стена разрешава TCP порт {}"
+
 msgid "it did not answer in time"
 msgstr "не отговори навреме"
 
@@ -745,6 +757,9 @@ msgstr "елемент"
 
 msgid "Jump to this line"
 msgstr "Към този ред"
+
+msgid "Keep a Cadence icon with playback controls in the menu bar or system tray."
+msgstr "Икона на Cadence с бутони за възпроизвеждане в лентата с менюта или системната област."
 
 msgid "Keep this station in the favorites on this device"
 msgstr "Запазване на тази станция в любимите на това устройство"
@@ -1131,6 +1146,9 @@ msgstr "Възпроизвеждане на {} следващ"
 msgid "Play {} with its subfolders"
 msgstr "Възпроизвеждане на {} с подпапките ѝ"
 
+msgid "Play/Pause"
+msgstr "Пускане/Пауза"
+
 msgid "Playback"
 msgstr "Възпроизвеждане"
 
@@ -1175,6 +1193,9 @@ msgstr "Лилаво"
 
 msgid "Queue"
 msgstr "Опашка"
+
+msgid "Quit"
+msgstr "Изход"
 
 msgid "Radio"
 msgstr "Радио"
@@ -1393,6 +1414,9 @@ msgstr "Показване на всички най-популярни песн�
 msgid "Show fewer top songs"
 msgstr "Показване на по-малко най-популярни песни"
 
+msgid "Show in the tray"
+msgstr "Показване в системната област"
+
 msgid "SHOW LESS"
 msgstr "ПОКАЖИ ПО-МАЛКО"
 
@@ -1524,6 +1548,9 @@ msgstr "Станции"
 
 msgid "Stay signed in"
 msgstr "Оставане в профила"
+
+msgid "Stop"
+msgstr "Стоп"
 
 msgid "Stop {}"
 msgstr "Спиране на {}"

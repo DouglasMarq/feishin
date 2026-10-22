@@ -8,11 +8,11 @@ msgstr ""
 msgid "\"{}\""
 msgstr "\"{}\""
 
+msgid "\"{}\" ({}) wants to control this player. Allow it? You will not be asked again for this device."
+msgstr "\"{}\" ({}) vill styra den här spelaren. Tillåta? Du får inte frågan igen för den här enheten."
+
 msgid "\"{}\" plays next"
 msgstr "\"{}\" spelas härnäst"
-
-msgid "\"{}\" wants to control this player. Allow it? You will not be asked again for this device."
-msgstr "\"{}\" vill styra den här spelaren. Tillåta? Du får inte frågan igen för den här enheten."
 
 msgid "\"{}\" will play next"
 msgstr "\"{}\" kommer att spelas härnäst"
@@ -233,6 +233,9 @@ msgstr "Rensa filter"
 msgid "Clear rating"
 msgstr "Rensa betyg"
 
+msgid "Clear search"
+msgstr "Rensa sökning"
+
 msgid "Clear the favorites and genre filters"
 msgstr "Rensa filtren för favoriter och genrer"
 
@@ -248,6 +251,9 @@ msgstr "Stäng"
 msgid "Close now playing"
 msgstr "Stäng Spelas nu"
 
+msgid "Close to the tray"
+msgstr "Stäng till systemfältet"
+
 msgid "Close without adding the songs"
 msgstr "Stäng utan att lägga till låtarna"
 
@@ -256,6 +262,9 @@ msgstr "Stäng utan ändringar"
 
 msgid "Close without saving"
 msgstr "Stäng utan att spara"
+
+msgid "Closing the window keeps the music playing; quit from the tray icon."
+msgstr "När fönstret stängs fortsätter musiken; avsluta från ikonen i systemfältet."
 
 msgid "Colors used across the whole app."
 msgstr "Färger som används i hela appen."
@@ -722,6 +731,9 @@ msgstr "Gränssnitt"
 msgid "Internet radio"
 msgstr "Internetradio"
 
+msgid "it could not be reached; check that its firewall allows TCP port {}"
+msgstr "den gick inte att nå; kontrollera att dess brandvägg tillåter TCP-port {}"
+
 msgid "it did not answer in time"
 msgstr "den svarade inte i tid"
 
@@ -745,6 +757,9 @@ msgstr "objekt"
 
 msgid "Jump to this line"
 msgstr "Hoppa till den här raden"
+
+msgid "Keep a Cadence icon with playback controls in the menu bar or system tray."
+msgstr "Visa en Cadence-ikon med uppspelningsknappar i menyraden eller systemfältet."
 
 msgid "Keep this station in the favorites on this device"
 msgstr "Behåll stationen bland favoriterna på den här enheten"
@@ -1131,6 +1146,9 @@ msgstr "Spela {} härnäst"
 msgid "Play {} with its subfolders"
 msgstr "Spela {} med undermappar"
 
+msgid "Play/Pause"
+msgstr "Spela/Pausa"
+
 msgid "Playback"
 msgstr "Uppspelning"
 
@@ -1175,6 +1193,9 @@ msgstr "Lila"
 
 msgid "Queue"
 msgstr "Kö"
+
+msgid "Quit"
+msgstr "Avsluta"
 
 msgid "Radio"
 msgstr "Radio"
@@ -1393,6 +1414,9 @@ msgstr "Visa alla topplåtar"
 msgid "Show fewer top songs"
 msgstr "Visa färre topplåtar"
 
+msgid "Show in the tray"
+msgstr "Visa i systemfältet"
+
 msgid "SHOW LESS"
 msgstr "VISA MINDRE"
 
@@ -1524,6 +1548,9 @@ msgstr "Stationer"
 
 msgid "Stay signed in"
 msgstr "Förbli inloggad"
+
+msgid "Stop"
+msgstr "Stoppa"
 
 msgid "Stop {}"
 msgstr "Stoppa {}"

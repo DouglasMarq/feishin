@@ -8,11 +8,11 @@ msgstr ""
 msgid "\"{}\""
 msgstr "«{}»"
 
+msgid "\"{}\" ({}) wants to control this player. Allow it? You will not be asked again for this device."
+msgstr "«{}» ({}) хоче керувати цим плеєром. Дозволити? Для цього пристрою питання більше не з’явиться."
+
 msgid "\"{}\" plays next"
 msgstr "«{}» гратиме наступним"
-
-msgid "\"{}\" wants to control this player. Allow it? You will not be asked again for this device."
-msgstr "«{}» хоче керувати цим плеєром. Дозволити? Для цього пристрою питання більше не з’явиться."
 
 msgid "\"{}\" will play next"
 msgstr "«{}» буде відтворено наступним"
@@ -239,6 +239,9 @@ msgstr "Очистити фільтри"
 msgid "Clear rating"
 msgstr "Скинути оцінку"
 
+msgid "Clear search"
+msgstr "Очистити пошук"
+
 msgid "Clear the favorites and genre filters"
 msgstr "Скинути фільтри улюбленого й жанрів"
 
@@ -254,6 +257,9 @@ msgstr "Закрити"
 msgid "Close now playing"
 msgstr "Закрити «Зараз грає»"
 
+msgid "Close to the tray"
+msgstr "Згортати в трей під час закриття"
+
 msgid "Close without adding the songs"
 msgstr "Закрити без додавання пісень"
 
@@ -262,6 +268,9 @@ msgstr "Закрити без змін"
 
 msgid "Close without saving"
 msgstr "Закрити без збереження"
+
+msgid "Closing the window keeps the music playing; quit from the tray icon."
+msgstr "Після закриття вікна музика грає далі; вийти можна через значок у треї."
 
 msgid "Colors used across the whole app."
 msgstr "Кольори, що використовуються в усьому застосунку."
@@ -731,6 +740,9 @@ msgstr "Інтерфейс"
 msgid "Internet radio"
 msgstr "Інтернет-радіо"
 
+msgid "it could not be reached; check that its firewall allows TCP port {}"
+msgstr "не вдалося під'єднатися; перевірте, що його брандмауер дозволяє TCP-порт {}"
+
 msgid "it did not answer in time"
 msgstr "він не відповів вчасно"
 
@@ -754,6 +766,9 @@ msgstr "елемент"
 
 msgid "Jump to this line"
 msgstr "Перейти до цього рядка"
+
+msgid "Keep a Cadence icon with playback controls in the menu bar or system tray."
+msgstr "Показувати значок Cadence з кнопками відтворення в рядку меню або в системному треї."
 
 msgid "Keep this station in the favorites on this device"
 msgstr "Зберігати цю станцію в улюбленому на цьому пристрої"
@@ -1142,6 +1157,9 @@ msgstr "Відтворити {} наступним"
 msgid "Play {} with its subfolders"
 msgstr "Відтворити {} разом із підпапками"
 
+msgid "Play/Pause"
+msgstr "Відтворення/Пауза"
+
 msgid "Playback"
 msgstr "Відтворення"
 
@@ -1186,6 +1204,9 @@ msgstr "Фіолетовий"
 
 msgid "Queue"
 msgstr "Черга"
+
+msgid "Quit"
+msgstr "Вийти"
 
 msgid "Radio"
 msgstr "Радіо"
@@ -1406,6 +1427,9 @@ msgstr "Показати всі найпопулярніші пісні"
 msgid "Show fewer top songs"
 msgstr "Показати менше найпопулярніших пісень"
 
+msgid "Show in the tray"
+msgstr "Показувати в треї"
+
 msgid "SHOW LESS"
 msgstr "ПОКАЗАТИ МЕНШЕ"
 
@@ -1537,6 +1561,9 @@ msgstr "Станції"
 
 msgid "Stay signed in"
 msgstr "Залишатися в системі"
+
+msgid "Stop"
+msgstr "Зупинити"
 
 msgid "Stop {}"
 msgstr "Зупинити {}"

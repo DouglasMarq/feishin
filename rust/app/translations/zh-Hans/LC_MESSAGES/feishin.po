@@ -8,11 +8,11 @@ msgstr ""
 msgid "\"{}\""
 msgstr "“{}”"
 
+msgid "\"{}\" ({}) wants to control this player. Allow it? You will not be asked again for this device."
+msgstr "“{}”（{}）想要控制此播放器。是否允许？此设备以后不会再询问。"
+
 msgid "\"{}\" plays next"
 msgstr "“{}”将在下一首播放"
-
-msgid "\"{}\" wants to control this player. Allow it? You will not be asked again for this device."
-msgstr "“{}”想要控制此播放器。是否允许？此设备以后不会再询问。"
 
 msgid "\"{}\" will play next"
 msgstr "“{}”将接着播放"
@@ -227,6 +227,9 @@ msgstr "清除筛选"
 msgid "Clear rating"
 msgstr "清除评分"
 
+msgid "Clear search"
+msgstr "清除搜索"
+
 msgid "Clear the favorites and genre filters"
 msgstr "清除收藏和流派筛选"
 
@@ -242,6 +245,9 @@ msgstr "关闭"
 msgid "Close now playing"
 msgstr "关闭正在播放"
 
+msgid "Close to the tray"
+msgstr "关闭到托盘"
+
 msgid "Close without adding the songs"
 msgstr "关闭且不添加歌曲"
 
@@ -250,6 +256,9 @@ msgstr "关闭且不做更改"
 
 msgid "Close without saving"
 msgstr "关闭且不保存"
+
+msgid "Closing the window keeps the music playing; quit from the tray icon."
+msgstr "关闭窗口后音乐继续播放；从托盘图标退出。"
 
 msgid "Colors used across the whole app."
 msgstr "整个应用使用的颜色。"
@@ -713,6 +722,9 @@ msgstr "界面"
 msgid "Internet radio"
 msgstr "网络电台"
 
+msgid "it could not be reached; check that its firewall allows TCP port {}"
+msgstr "无法连接到它；请检查其防火墙是否允许 TCP 端口 {}"
+
 msgid "it did not answer in time"
 msgstr "未及时响应"
 
@@ -736,6 +748,9 @@ msgstr "项目"
 
 msgid "Jump to this line"
 msgstr "跳转到此行"
+
+msgid "Keep a Cadence icon with playback controls in the menu bar or system tray."
+msgstr "在菜单栏或系统托盘中显示带播放控制的 Cadence 图标。"
 
 msgid "Keep this station in the favorites on this device"
 msgstr "在此设备的收藏中保留此电台"
@@ -1120,6 +1135,9 @@ msgstr "下一首播放 {}"
 msgid "Play {} with its subfolders"
 msgstr "播放 {} 及其子文件夹"
 
+msgid "Play/Pause"
+msgstr "播放/暂停"
+
 msgid "Playback"
 msgstr "播放"
 
@@ -1164,6 +1182,9 @@ msgstr "紫色"
 
 msgid "Queue"
 msgstr "播放队列"
+
+msgid "Quit"
+msgstr "退出"
 
 msgid "Radio"
 msgstr "电台"
@@ -1380,6 +1401,9 @@ msgstr "显示全部热门歌曲"
 msgid "Show fewer top songs"
 msgstr "显示较少热门歌曲"
 
+msgid "Show in the tray"
+msgstr "在托盘中显示"
+
 msgid "SHOW LESS"
 msgstr "收起"
 
@@ -1511,6 +1535,9 @@ msgstr "电台"
 
 msgid "Stay signed in"
 msgstr "保持登录"
+
+msgid "Stop"
+msgstr "停止"
 
 msgid "Stop {}"
 msgstr "停止 {}"

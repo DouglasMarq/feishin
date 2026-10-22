@@ -8,11 +8,11 @@ msgstr ""
 msgid "\"{}\""
 msgstr "\"{}\""
 
+msgid "\"{}\" ({}) wants to control this player. Allow it? You will not be asked again for this device."
+msgstr "Gustong kontrolin ng \"{}\" ({}) ang player na ito. Payagan? Hindi ka na tatanungin ulit para sa device na ito."
+
 msgid "\"{}\" plays next"
 msgstr "Susunod na tutugtog ang \"{}\""
-
-msgid "\"{}\" wants to control this player. Allow it? You will not be asked again for this device."
-msgstr "Gustong kontrolin ng \"{}\" ang player na ito. Payagan? Hindi ka na tatanungin ulit para sa device na ito."
 
 msgid "\"{}\" will play next"
 msgstr "Susunod na tutugtugin ang \"{}\""
@@ -233,6 +233,9 @@ msgstr "I-clear ang mga filter"
 msgid "Clear rating"
 msgstr "I-clear ang rating"
 
+msgid "Clear search"
+msgstr "I-clear ang paghahanap"
+
 msgid "Clear the favorites and genre filters"
 msgstr "I-clear ang mga filter ng paborito at genre"
 
@@ -248,6 +251,9 @@ msgstr "Isara"
 msgid "Close now playing"
 msgstr "Isara ang now playing"
 
+msgid "Close to the tray"
+msgstr "Isara sa tray"
+
 msgid "Close without adding the songs"
 msgstr "Isara nang hindi idinadagdag ang mga kanta"
 
@@ -256,6 +262,9 @@ msgstr "Isara nang walang pagbabago"
 
 msgid "Close without saving"
 msgstr "Isara nang hindi sine-save"
+
+msgid "Closing the window keeps the music playing; quit from the tray icon."
+msgstr "Kapag isinara ang window, tuloy ang musika; mag-quit mula sa icon sa tray."
 
 msgid "Colors used across the whole app."
 msgstr "Mga kulay na ginagamit sa buong app."
@@ -722,6 +731,9 @@ msgstr "Interface"
 msgid "Internet radio"
 msgstr "Internet radio"
 
+msgid "it could not be reached; check that its firewall allows TCP port {}"
+msgstr "hindi ito maabot; tiyaking pinapayagan ng firewall nito ang TCP port {}"
+
 msgid "it did not answer in time"
 msgstr "hindi ito sumagot sa tamang oras"
 
@@ -745,6 +757,9 @@ msgstr "item"
 
 msgid "Jump to this line"
 msgstr "Pumunta sa linyang ito"
+
+msgid "Keep a Cadence icon with playback controls in the menu bar or system tray."
+msgstr "Panatilihin ang icon ng Cadence na may mga kontrol sa pag-play sa menu bar o system tray."
 
 msgid "Keep this station in the favorites on this device"
 msgstr "Itago ang istasyong ito sa mga paborito sa device na ito"
@@ -1131,6 +1146,9 @@ msgstr "I-play nang susunod ang {}"
 msgid "Play {} with its subfolders"
 msgstr "I-play ang {} kasama ang mga subfolder nito"
 
+msgid "Play/Pause"
+msgstr "I-play/I-pause"
+
 msgid "Playback"
 msgstr "Pag-play"
 
@@ -1175,6 +1193,9 @@ msgstr "Lila"
 
 msgid "Queue"
 msgstr "Pila"
+
+msgid "Quit"
+msgstr "Umalis"
 
 msgid "Radio"
 msgstr "Radyo"
@@ -1393,6 +1414,9 @@ msgstr "Ipakita ang lahat ng nangungunang kanta"
 msgid "Show fewer top songs"
 msgstr "Magpakita ng mas kaunting nangungunang kanta"
 
+msgid "Show in the tray"
+msgstr "Ipakita sa tray"
+
 msgid "SHOW LESS"
 msgstr "IPAKITA ANG MAS KAUNTI"
 
@@ -1524,6 +1548,9 @@ msgstr "Mga istasyon"
 
 msgid "Stay signed in"
 msgstr "Manatiling naka-sign in"
+
+msgid "Stop"
+msgstr "Ihinto"
 
 msgid "Stop {}"
 msgstr "Ihinto ang {}"

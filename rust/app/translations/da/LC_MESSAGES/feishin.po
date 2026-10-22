@@ -8,11 +8,11 @@ msgstr ""
 msgid "\"{}\""
 msgstr "\"{}\""
 
+msgid "\"{}\" ({}) wants to control this player. Allow it? You will not be asked again for this device."
+msgstr "\"{}\" ({}) vil styre denne afspiller. Tillad? Du bliver ikke spurgt igen for denne enhed."
+
 msgid "\"{}\" plays next"
 msgstr "\"{}\" afspilles som den næste"
-
-msgid "\"{}\" wants to control this player. Allow it? You will not be asked again for this device."
-msgstr "\"{}\" vil styre denne afspiller. Tillad? Du bliver ikke spurgt igen for denne enhed."
 
 msgid "\"{}\" will play next"
 msgstr "\"{}\" afspilles som den næste"
@@ -233,6 +233,9 @@ msgstr "Ryd filtre"
 msgid "Clear rating"
 msgstr "Ryd bedømmelse"
 
+msgid "Clear search"
+msgstr "Ryd søgning"
+
 msgid "Clear the favorites and genre filters"
 msgstr "Ryd filtrene for favoritter og genrer"
 
@@ -248,6 +251,9 @@ msgstr "Luk"
 msgid "Close now playing"
 msgstr "Luk Afspiller nu"
 
+msgid "Close to the tray"
+msgstr "Luk til systembakken"
+
 msgid "Close without adding the songs"
 msgstr "Luk uden at tilføje sangene"
 
@@ -256,6 +262,9 @@ msgstr "Luk uden ændringer"
 
 msgid "Close without saving"
 msgstr "Luk uden at gemme"
+
+msgid "Closing the window keeps the music playing; quit from the tray icon."
+msgstr "Når vinduet lukkes, fortsætter musikken; afslut fra ikonet i systembakken."
 
 msgid "Colors used across the whole app."
 msgstr "Farver, der bruges i hele appen."
@@ -722,6 +731,9 @@ msgstr "Brugerflade"
 msgid "Internet radio"
 msgstr "Internetradio"
 
+msgid "it could not be reached; check that its firewall allows TCP port {}"
+msgstr "den kunne ikke nås; kontrollér, at dens firewall tillader TCP-port {}"
+
 msgid "it did not answer in time"
 msgstr "den svarede ikke i tide"
 
@@ -745,6 +757,9 @@ msgstr "element"
 
 msgid "Jump to this line"
 msgstr "Gå til denne linje"
+
+msgid "Keep a Cadence icon with playback controls in the menu bar or system tray."
+msgstr "Vis et Cadence-ikon med afspilningsknapper i menulinjen eller systembakken."
 
 msgid "Keep this station in the favorites on this device"
 msgstr "Behold denne station i favoritterne på denne enhed"
@@ -1131,6 +1146,9 @@ msgstr "Afspil {} som den næste"
 msgid "Play {} with its subfolders"
 msgstr "Afspil {} med undermapper"
 
+msgid "Play/Pause"
+msgstr "Afspil/Pause"
+
 msgid "Playback"
 msgstr "Afspilning"
 
@@ -1175,6 +1193,9 @@ msgstr "Lilla"
 
 msgid "Queue"
 msgstr "Kø"
+
+msgid "Quit"
+msgstr "Afslut"
 
 msgid "Radio"
 msgstr "Radio"
@@ -1393,6 +1414,9 @@ msgstr "Vis alle populære sange"
 msgid "Show fewer top songs"
 msgstr "Vis færre populære sange"
 
+msgid "Show in the tray"
+msgstr "Vis i systembakken"
+
 msgid "SHOW LESS"
 msgstr "VIS MINDRE"
 
@@ -1524,6 +1548,9 @@ msgstr "Stationer"
 
 msgid "Stay signed in"
 msgstr "Forbliv logget ind"
+
+msgid "Stop"
+msgstr "Stop"
 
 msgid "Stop {}"
 msgstr "Stop {}"
