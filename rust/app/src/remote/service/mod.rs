@@ -6,7 +6,7 @@ mod transfers;
 use std::sync::Arc;
 use std::time::Duration;
 
-use feishin_remote::{DeviceInfo, Discovered, Discovery, HostState};
+use feishin_remote::{DeviceInfo, Discovered, Discovery, Host, HostState};
 use tokio::sync::{mpsc, watch};
 use tokio::task::JoinHandle;
 
@@ -16,7 +16,7 @@ use super::target::PlayerTarget;
 use super::trust::FileTrust;
 use crate::controller::{Command, UiSink};
 use crate::session::Session;
-use crate::ui::{AppWindow, on_ui, show_status};
+use crate::ui::{AppWindow, devices, on_ui, show_status};
 use client_link::{ActiveLink, next_link_event};
 use discovery::next_devices;
 
@@ -38,7 +38,7 @@ pub struct RemoteService {
     deps: ServiceDeps,
     discovery: Option<Discovery>,
     found: Vec<Discovered>,
-    hosting: Option<JoinHandle<()>>,
+    hosting: Option<(Arc<Host>, JoinHandle<()>)>,
     link: Option<ActiveLink>,
 }
 
@@ -62,6 +62,7 @@ impl RemoteService {
         is_hosting: bool,
     ) {
         let mut devices = self.browse();
+        self.show_banned();
         self.set_hosting(is_hosting).await;
         loop {
             tokio::select! {
@@ -88,7 +89,30 @@ impl RemoteService {
                 self.deps.trust.forget_trusted();
                 self.status(tr!("Approved devices were forgotten"));
             }
+            RemoteRequest::Disconnect(id) => self.with_host(|host| host.disconnect(&id)),
+            RemoteRequest::Ban(id) => {
+                self.with_host(|host| host.ban(&id));
+                self.show_banned();
+            }
+            RemoteRequest::Unban(id) => {
+                self.deps.trust.unban(&id);
+                self.show_banned();
+            }
         }
+    }
+
+    fn with_host(&self, acting: impl FnOnce(&Host)) {
+        match &self.hosting {
+            Some((host, _serving)) => acting(host),
+            None => tracing::debug!("remote control is off, no device to act on"),
+        }
+    }
+
+    fn show_banned(&self) {
+        let banned = self.deps.trust.banned();
+        on_ui(&self.deps.window, move |window| {
+            devices::show_banned(window, &banned)
+        });
     }
 
     fn status(&self, message: String) {

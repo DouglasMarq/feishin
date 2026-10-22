@@ -152,6 +152,9 @@ msgstr "Salli"
 msgid "Allow remote control?"
 msgstr "Sallitaanko etäohjaus?"
 
+msgid "Allow without asking"
+msgstr "Salli kysymättä"
+
 msgid "Already at the end"
 msgstr "Ollaan jo lopussa"
 
@@ -166,6 +169,9 @@ msgstr "On jo palvelimella"
 
 msgid "Amber"
 msgstr "Meripihka"
+
+msgid "Any device on this network can control this player without your approval. Banned devices are still refused."
+msgstr "Mikä tahansa tämän verkon laite voi ohjata tätä soitinta ilman hyväksyntääsi. Estetyt laitteet hylätään edelleen."
 
 msgid "Appearance"
 msgstr "Ulkoasu"
@@ -199,6 +205,12 @@ msgstr "Automaattinen ({})"
 
 msgid "Back"
 msgstr "Takaisin"
+
+msgid "Ban"
+msgstr "Estä"
+
+msgid "Banned devices"
+msgstr "Estetyt laitteet"
 
 msgid "Blue"
 msgstr "Sininen"
@@ -278,6 +290,9 @@ msgstr "Yhdistä musiikkipalvelimeesi"
 msgid "Connect to {}"
 msgstr "Yhdistä palvelimeen {}"
 
+msgid "Connected devices: {}"
+msgstr "Yhdistetyt laitteet: {}"
+
 msgid "Connecting..."
 msgstr "Yhdistetään..."
 
@@ -286,6 +301,12 @@ msgstr "Ohjaa tällä tietokoneella soivaa musiikkia"
 
 msgid "Control the music playing on {}"
 msgstr "Ohjaa laitteessa {} soivaa musiikkia"
+
+msgid "Controlled by {}"
+msgstr "Ohjaaja: {}"
+
+msgid "Controlling this player"
+msgstr "Ohjaavat tätä soitinta"
 
 msgid "Could not add to \"{}\": {}"
 msgstr "Soittolistaan \"{}\" lisääminen epäonnistui: {}"
@@ -543,6 +564,9 @@ msgstr "Esittelytila: nämä valinnat ovat keksittyjä ja ne toistetaan esittely
 msgid "Devices you allowed can control this player without asking again."
 msgstr "Sallimasi laitteet voivat ohjata tätä soitinta kysymättä uudelleen."
 
+msgid "Devices: controlled by {}"
+msgstr "Laitteet: ohjaaja {}"
+
 msgid "Devices: controlling {}"
 msgstr "Laitteet: ohjataan {}"
 
@@ -554,6 +578,15 @@ msgstr "Hakemisto"
 
 msgid "Disc {}"
 msgstr "Levy {}"
+
+msgid "Disconnect"
+msgstr "Katkaise yhteys"
+
+msgid "Disconnect \"{}\" and never let it control this player again"
+msgstr "Katkaise yhteys laitteeseen \"{}\" äläkä anna sen enää ohjata tätä soitinta"
+
+msgid "Disconnect \"{}\"; it has to be allowed again to control this player"
+msgstr "Katkaise yhteys laitteeseen \"{}\"; se on sallittava uudelleen tämän soittimen ohjaamiseen"
 
 msgid "Discord Rich Presence"
 msgstr "Discord Rich Presence"
@@ -769,6 +802,9 @@ msgstr "Säilytä {}"
 
 msgid "Language"
 msgstr "Kieli"
+
+msgid "Let \"{}\" ask to control this player again"
+msgstr "Anna laitteen \"{}\" pyytää taas tämän soittimen ohjausta"
 
 msgid "Let \"{}\" control this player"
 msgstr "Anna laitteen \"{}\" ohjata tätä soitinta"
@@ -1785,6 +1821,9 @@ msgstr "{} (demo)"
 
 msgid "{} (unavailable)"
 msgstr "{} (ei käytettävissä)"
+
+msgid "{} ({})"
+msgstr "{} ({})"
 
 msgid "{} at {}"
 msgstr "{0} osoitteessa {1}"

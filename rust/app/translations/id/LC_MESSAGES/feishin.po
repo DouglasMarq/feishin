@@ -146,6 +146,9 @@ msgstr "Izinkan"
 msgid "Allow remote control?"
 msgstr "Izinkan kendali jarak jauh?"
 
+msgid "Allow without asking"
+msgstr "Izinkan tanpa bertanya"
+
 msgid "Already at the end"
 msgstr "Sudah di akhir"
 
@@ -160,6 +163,9 @@ msgstr "Sudah ada di server"
 
 msgid "Amber"
 msgstr "Kuning amber"
+
+msgid "Any device on this network can control this player without your approval. Banned devices are still refused."
+msgstr "Perangkat apa pun di jaringan ini dapat mengontrol pemutar ini tanpa persetujuanmu. Perangkat yang diblokir tetap ditolak."
 
 msgid "Appearance"
 msgstr "Tampilan"
@@ -193,6 +199,12 @@ msgstr "Otomatis ({})"
 
 msgid "Back"
 msgstr "Kembali"
+
+msgid "Ban"
+msgstr "Blokir"
+
+msgid "Banned devices"
+msgstr "Perangkat yang diblokir"
 
 msgid "Blue"
 msgstr "Biru"
@@ -272,6 +284,9 @@ msgstr "Hubungkan ke server musik Anda"
 msgid "Connect to {}"
 msgstr "Hubungkan ke {}"
 
+msgid "Connected devices: {}"
+msgstr "Perangkat terhubung: {}"
+
 msgid "Connecting..."
 msgstr "Menghubungkan..."
 
@@ -280,6 +295,12 @@ msgstr "Kendalikan musik yang diputar di komputer ini"
 
 msgid "Control the music playing on {}"
 msgstr "Kendalikan musik yang diputar di {}"
+
+msgid "Controlled by {}"
+msgstr "Dikontrol oleh {}"
+
+msgid "Controlling this player"
+msgstr "Mengontrol pemutar ini"
 
 msgid "Could not add to \"{}\": {}"
 msgstr "Tidak dapat menambahkan ke \"{}\": {}"
@@ -535,6 +556,9 @@ msgstr "Mode demo: pilihan ini dibuat-buat dan diputar dari pustaka demo Anda"
 msgid "Devices you allowed can control this player without asking again."
 msgstr "Perangkat yang kamu izinkan dapat mengendalikan pemutar ini tanpa bertanya lagi."
 
+msgid "Devices: controlled by {}"
+msgstr "Perangkat: dikontrol oleh {}"
+
 msgid "Devices: controlling {}"
 msgstr "Perangkat: mengendalikan {}"
 
@@ -546,6 +570,15 @@ msgstr "Direktori"
 
 msgid "Disc {}"
 msgstr "Disk {}"
+
+msgid "Disconnect"
+msgstr "Putuskan"
+
+msgid "Disconnect \"{}\" and never let it control this player again"
+msgstr "Putuskan \"{}\" dan jangan pernah izinkan lagi mengontrol pemutar ini"
+
+msgid "Disconnect \"{}\"; it has to be allowed again to control this player"
+msgstr "Putuskan \"{}\"; perangkat harus diizinkan lagi untuk mengontrol pemutar ini"
 
 msgid "Discord Rich Presence"
 msgstr "Discord Rich Presence"
@@ -760,6 +793,9 @@ msgstr "Pertahankan {}"
 
 msgid "Language"
 msgstr "Bahasa"
+
+msgid "Let \"{}\" ask to control this player again"
+msgstr "Izinkan \"{}\" meminta kontrol pemutar ini lagi"
 
 msgid "Let \"{}\" control this player"
 msgstr "Izinkan \"{}\" mengendalikan pemutar ini"
@@ -1763,6 +1799,9 @@ msgstr "{} (demo)"
 
 msgid "{} (unavailable)"
 msgstr "{} (tidak tersedia)"
+
+msgid "{} ({})"
+msgstr "{} ({})"
 
 msgid "{} at {}"
 msgstr "{} di {}"

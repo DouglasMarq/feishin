@@ -68,6 +68,11 @@ fn apply_integrations(window: &AppWindow, context: &Context, shared: &Arc<Shared
     view.settings.integrations.is_mpris_enabled = state.get_is_mpris_enabled();
     view.settings.integrations.is_discord_rich_presence_enabled = state.get_is_discord_enabled();
     view.settings.integrations.is_remote_control_enabled = state.get_is_remote_control_enabled();
+    view.settings.integrations.is_remote_approval_skipped = state.get_is_remote_approval_skipped();
+    context
+        .remote
+        .approvals
+        .skip_asking(state.get_is_remote_approval_skipped());
     context.remote.request(RemoteRequest::SetHosting(
         state.get_is_remote_control_enabled(),
     ));

@@ -152,6 +152,9 @@ msgstr "Baimendu"
 msgid "Allow remote control?"
 msgstr "Urruneko kontrola baimendu?"
 
+msgid "Allow without asking"
+msgstr "Baimendu galdetu gabe"
+
 msgid "Already at the end"
 msgstr "Dagoeneko amaieran zaude"
 
@@ -166,6 +169,9 @@ msgstr "Dagoeneko zerbitzarian dago"
 
 msgid "Amber"
 msgstr "Anbarra"
+
+msgid "Any device on this network can control this player without your approval. Banned devices are still refused."
+msgstr "Sare honetako edozein gailuk erreproduzigailu hau kontrola dezake zure onespenik gabe. Blokeatutako gailuak baztertzen jarraitzen dira."
 
 msgid "Appearance"
 msgstr "Itxura"
@@ -199,6 +205,12 @@ msgstr "Automatikoa ({})"
 
 msgid "Back"
 msgstr "Atzera"
+
+msgid "Ban"
+msgstr "Blokeatu"
+
+msgid "Banned devices"
+msgstr "Blokeatutako gailuak"
 
 msgid "Blue"
 msgstr "Urdina"
@@ -278,6 +290,9 @@ msgstr "Konektatu zure musika-zerbitzarira"
 msgid "Connect to {}"
 msgstr "Konektatu hona: {}"
 
+msgid "Connected devices: {}"
+msgstr "Konektatutako gailuak: {}"
+
 msgid "Connecting..."
 msgstr "Konektatzen..."
 
@@ -286,6 +301,12 @@ msgstr "Kontrolatu ordenagailu honetan jotzen ari den musika"
 
 msgid "Control the music playing on {}"
 msgstr "Kontrolatu {} gailuan jotzen ari den musika"
+
+msgid "Controlled by {}"
+msgstr "{} gailuak kontrolatzen du"
+
+msgid "Controlling this player"
+msgstr "Erreproduzigailu hau kontrolatzen dute"
 
 msgid "Could not add to \"{}\": {}"
 msgstr "Ezin izan da \"{}\" zerrendara gehitu: {}"
@@ -543,6 +564,9 @@ msgstr "Demo modua: hautaketa hauek asmatuak dira eta zure demo-liburutegitik er
 msgid "Devices you allowed can control this player without asking again."
 msgstr "Baimendutako gailuek erreproduzitzaile hau kontrola dezakete berriro galdetu gabe."
 
+msgid "Devices: controlled by {}"
+msgstr "Gailuak: {} gailuak kontrolatzen du"
+
 msgid "Devices: controlling {}"
 msgstr "Gailuak: {} kontrolatzen"
 
@@ -554,6 +578,15 @@ msgstr "Direktorioa"
 
 msgid "Disc {}"
 msgstr "{}. diskoa"
+
+msgid "Disconnect"
+msgstr "Deskonektatu"
+
+msgid "Disconnect \"{}\" and never let it control this player again"
+msgstr "Deskonektatu \"{}\" eta ez utzi berriro erreproduzigailu hau kontrolatzen"
+
+msgid "Disconnect \"{}\"; it has to be allowed again to control this player"
+msgstr "Deskonektatu \"{}\"; berriro baimendu beharko da erreproduzigailu hau kontrolatzeko"
 
 msgid "Discord Rich Presence"
 msgstr "Discord Rich Presence"
@@ -769,6 +802,9 @@ msgstr "Mantendu {}"
 
 msgid "Language"
 msgstr "Hizkuntza"
+
+msgid "Let \"{}\" ask to control this player again"
+msgstr "Utzi \"{}\" berriro erreproduzigailu hau kontrolatzeko eskatzen"
 
 msgid "Let \"{}\" control this player"
 msgstr "Utzi \"{}\" gailuari erreproduzitzaile hau kontrolatzen"
@@ -1785,6 +1821,9 @@ msgstr "{} (demoa)"
 
 msgid "{} (unavailable)"
 msgstr "{} (ez dago erabilgarri)"
+
+msgid "{} ({})"
+msgstr "{} ({})"
 
 msgid "{} at {}"
 msgstr "{0}, {1} zerbitzarian"

@@ -14,7 +14,7 @@ pub use discord::{DEFAULT_DISCORD_CLIENT_ID, DiscordDisplayType, DiscordOptions,
 pub use freedesktop::{MediaControls, SleepInhibitor, current_color_scheme, watch_color_scheme};
 #[cfg(target_os = "macos")]
 pub use macos::{MediaControls, SleepInhibitor, current_color_scheme, watch_color_scheme};
-pub use tray::{Tray, TrayLabels};
+pub use tray::{ConnectedDevices, Tray, TrayLabels};
 pub use url_opener::open_url;
 
 #[derive(Debug, Clone, Copy)]

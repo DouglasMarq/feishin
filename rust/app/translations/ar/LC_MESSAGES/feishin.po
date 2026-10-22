@@ -176,6 +176,9 @@ msgstr "السماح"
 msgid "Allow remote control?"
 msgstr "السماح بالتحكم عن بُعد؟"
 
+msgid "Allow without asking"
+msgstr "السماح دون سؤال"
+
 msgid "Already at the end"
 msgstr "في النهاية بالفعل"
 
@@ -190,6 +193,9 @@ msgstr "موجودة بالفعل على الخادم"
 
 msgid "Amber"
 msgstr "كهرماني"
+
+msgid "Any device on this network can control this player without your approval. Banned devices are still refused."
+msgstr "يمكن لأي جهاز على هذه الشبكة التحكم في هذا المشغل دون موافقتك. الأجهزة المحظورة تظل مرفوضة."
 
 msgid "Appearance"
 msgstr "المظهر"
@@ -223,6 +229,12 @@ msgstr "تلقائي ({})"
 
 msgid "Back"
 msgstr "رجوع"
+
+msgid "Ban"
+msgstr "حظر"
+
+msgid "Banned devices"
+msgstr "الأجهزة المحظورة"
 
 msgid "Blue"
 msgstr "أزرق"
@@ -302,6 +314,9 @@ msgstr "اتصل بخادم الموسيقى الخاص بك"
 msgid "Connect to {}"
 msgstr "الاتصال بـ {}"
 
+msgid "Connected devices: {}"
+msgstr "الأجهزة المتصلة: {}"
+
 msgid "Connecting..."
 msgstr "جارٍ الاتصال..."
 
@@ -310,6 +325,12 @@ msgstr "التحكم في الموسيقى التي تعمل على هذا ال�
 
 msgid "Control the music playing on {}"
 msgstr "التحكم في الموسيقى التي تعمل على {}"
+
+msgid "Controlled by {}"
+msgstr "يتحكم فيه {}"
+
+msgid "Controlling this player"
+msgstr "يتحكم في هذا المشغل"
 
 msgid "Could not add to \"{}\": {}"
 msgstr "تعذرت الإضافة إلى \"{}\": {}"
@@ -575,6 +596,9 @@ msgstr "الوضع التجريبي: هذه الاختيارات وهمية وت
 msgid "Devices you allowed can control this player without asking again."
 msgstr "يمكن للأجهزة التي سمحت بها التحكم في هذا المشغل دون السؤال مجددًا."
 
+msgid "Devices: controlled by {}"
+msgstr "الأجهزة: يتحكم فيه {}"
+
 msgid "Devices: controlling {}"
 msgstr "الأجهزة: التحكم في {}"
 
@@ -586,6 +610,15 @@ msgstr "الدليل"
 
 msgid "Disc {}"
 msgstr "القرص {}"
+
+msgid "Disconnect"
+msgstr "قطع الاتصال"
+
+msgid "Disconnect \"{}\" and never let it control this player again"
+msgstr "قطع اتصال \"{}\" وعدم السماح له بالتحكم في هذا المشغل مجددًا"
+
+msgid "Disconnect \"{}\"; it has to be allowed again to control this player"
+msgstr "قطع اتصال \"{}\"؛ يجب السماح له مجددًا للتحكم في هذا المشغل"
 
 msgid "Discord Rich Presence"
 msgstr "Discord Rich Presence"
@@ -805,6 +838,9 @@ msgstr "الإبقاء على {}"
 
 msgid "Language"
 msgstr "اللغة"
+
+msgid "Let \"{}\" ask to control this player again"
+msgstr "السماح لـ \"{}\" بطلب التحكم في هذا المشغل مجددًا"
 
 msgid "Let \"{}\" control this player"
 msgstr "السماح لـ \"{}\" بالتحكم في هذا المشغل"
@@ -1873,6 +1909,9 @@ msgstr "{} (تجريبي)"
 
 msgid "{} (unavailable)"
 msgstr "{} (غير متاح)"
+
+msgid "{} ({})"
+msgstr "{} ({})"
 
 msgid "{} at {}"
 msgstr "{} على {}"

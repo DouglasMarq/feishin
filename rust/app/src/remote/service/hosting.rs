@@ -1,3 +1,5 @@
+use std::sync::Arc;
+
 use feishin_remote::{Host, PREFERRED_PORT};
 use tokio::net::TcpListener;
 
@@ -31,13 +33,15 @@ impl RemoteService {
             self.deps.trust.clone(),
             self.deps.host_state.clone(),
         );
-        self.hosting = Some(tokio::spawn(host.serve(listener)));
+        let serving = tokio::spawn(Arc::clone(&host).serve(listener));
+        self.hosting = Some((host, serving));
         tracing::info!("other players can control this one on port {port}");
     }
 
     fn stop_hosting(&mut self) {
-        if let Some(task) = self.hosting.take() {
-            task.abort();
+        if let Some((host, serving)) = self.hosting.take() {
+            serving.abort();
+            host.disconnect_all();
         }
         if let Some(discovery) = &self.discovery {
             discovery.withdraw();

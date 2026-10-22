@@ -1,3 +1,4 @@
+use std::net::IpAddr;
 use std::sync::{Arc, Mutex, PoisonError};
 
 use feishin_remote::{DeviceId, DeviceInfo, PairingToken, TrustStore, new_device_id};
@@ -14,6 +15,13 @@ struct TrustedDevice {
     token: PairingToken,
 }
 
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+pub struct BannedDevice {
+    pub id: DeviceId,
+    pub name: String,
+    pub address: IpAddr,
+}
+
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 struct KnownHost {
     id: DeviceId,
@@ -26,6 +34,8 @@ struct DeviceBook {
     device_id: DeviceId,
     trusted: Vec<TrustedDevice>,
     hosts: Vec<KnownHost>,
+    #[serde(default)]
+    banned: Vec<BannedDevice>,
 }
 
 impl DeviceBook {
@@ -35,6 +45,7 @@ impl DeviceBook {
             device_id: DeviceId(new_device_id()),
             trusted: Vec::new(),
             hosts: Vec::new(),
+            banned: Vec::new(),
         }
     }
 }
@@ -73,6 +84,14 @@ impl FileTrust {
 
     pub fn forget_trusted(&self) {
         self.change(|book| book.trusted.clear());
+    }
+
+    pub fn banned(&self) -> Vec<BannedDevice> {
+        self.read(|book| book.banned.clone())
+    }
+
+    pub fn unban(&self, device: &DeviceId) {
+        self.change(|book| book.banned.retain(|banned| banned.id != *device));
     }
 
     fn read<Output>(&self, reading: impl FnOnce(&DeviceBook) -> Output) -> Output {
@@ -133,6 +152,30 @@ impl TrustStore for FileTrust {
         });
     }
 
+    fn forget(&self, device: &DeviceId) {
+        self.change(|book| book.trusted.retain(|trusted| trusted.id != *device));
+    }
+
+    fn ban(&self, device: &DeviceInfo, address: IpAddr) {
+        self.change(|book| {
+            book.trusted.retain(|trusted| trusted.id != device.id);
+            book.banned.retain(|banned| banned.id != device.id);
+            book.banned.push(BannedDevice {
+                id: device.id.clone(),
+                name: device.name.clone(),
+                address,
+            });
+        });
+    }
+
+    fn is_banned(&self, device: &DeviceId, address: IpAddr) -> bool {
+        self.read(|book| {
+            book.banned
+                .iter()
+                .any(|banned| banned.id == *device || banned.address == address)
+        })
+    }
+
     fn host_token(&self, host: &DeviceId) -> Option<PairingToken> {
         self.read(|book| {
             book.hosts
@@ -180,6 +223,54 @@ mod tests {
         again.forget_trusted();
         assert_eq!(again.trusted_token(&DeviceId("phone".into())), None);
         assert_eq!(again.host_token(&DeviceId("tv".into())), Some(token));
+    }
+
+    const KITCHEN: [u8; 4] = [192, 168, 0, 7];
+
+    #[test]
+    fn given_a_banned_device_it_stays_banned_after_a_restart_until_removed() {
+        let directory = tempfile::tempdir().unwrap();
+        let store: Arc<dyn Store> = Arc::new(JsonStore::new(directory.path()));
+        let first = FileTrust::load(Arc::clone(&store));
+        first.trust(&device("phone"), PairingToken::random().unwrap());
+        first.ban(&device("phone"), IpAddr::from(KITCHEN));
+        let again = FileTrust::load(store);
+        assert_eq!(again.trusted_token(&DeviceId("phone".into())), None);
+        assert!(again.is_banned(&DeviceId("phone".into()), IpAddr::from([10, 0, 0, 2])));
+        assert!(again.is_banned(&DeviceId("tablet".into()), IpAddr::from(KITCHEN)));
+        assert_eq!(again.banned()[0].name, "PHONE");
+
+        again.unban(&DeviceId("phone".into()));
+
+        assert!(!again.is_banned(&DeviceId("phone".into()), IpAddr::from(KITCHEN)));
+        assert!(again.banned().is_empty());
+    }
+
+    #[test]
+    fn given_a_forgotten_device_only_its_approval_is_removed() {
+        let directory = tempfile::tempdir().unwrap();
+        let trust = FileTrust::load(Arc::new(JsonStore::new(directory.path())));
+        let token = PairingToken::random().unwrap();
+        trust.trust(&device("phone"), token);
+        trust.trust(&device("tablet"), token);
+
+        trust.forget(&DeviceId("phone".into()));
+
+        assert_eq!(trust.trusted_token(&DeviceId("phone".into())), None);
+        assert_eq!(trust.trusted_token(&DeviceId("tablet".into())), Some(token));
+    }
+
+    #[test]
+    fn given_an_old_device_file_it_loads_with_no_bans() {
+        let directory = tempfile::tempdir().unwrap();
+        let store: Arc<dyn Store> = Arc::new(JsonStore::new(directory.path()));
+        let old = br#"{"version":1,"device_id":"me","trusted":[],"hosts":[]}"#;
+        store.write_state(StateFile::RemoteDevices, old).unwrap();
+
+        let trust = FileTrust::load(store);
+
+        assert_eq!(trust.device_id(), DeviceId("me".into()));
+        assert!(trust.banned().is_empty());
     }
 
     #[test]

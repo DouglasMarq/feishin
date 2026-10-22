@@ -1,28 +1,51 @@
-use std::cell::Cell;
+use std::cell::{Cell, RefCell};
+use std::net::IpAddr;
 use std::rc::Rc;
 
+use feishin_platform::ConnectedDevices;
+use feishin_remote::{Controller, DeviceId, DeviceInfo};
 use feishin_storage::settings::TraySettings;
 use slint::ComponentHandle;
 use tokio::sync::mpsc::{self, UnboundedReceiver};
 
-use super::{TrayHost, install};
+use super::{ConnectedMenu, TrayHost, install};
 use crate::controller::Command;
+use crate::ui::devices::show_controllers;
 use crate::ui::{AppWindow, SettingsState};
+
+type Shown = Rc<RefCell<Vec<Option<ConnectedDevices>>>>;
+
+struct FakeIcon(Shown);
+
+impl ConnectedMenu for FakeIcon {
+    fn show_connected(&self, connected: Option<&ConnectedDevices>) {
+        self.0.borrow_mut().push(connected.cloned());
+    }
+}
 
 const CLOSE_TO_TRAY: TraySettings = TraySettings {
     is_enabled: true,
     is_close_to_tray: true,
 };
 
-fn host(starts: &Rc<Cell<u32>>, is_available: bool) -> Rc<TrayHost<()>> {
+fn host(starts: &Rc<Cell<u32>>, is_available: bool) -> Rc<TrayHost<FakeIcon>> {
+    showing_host(starts, is_available, &Shown::default())
+}
+
+fn showing_host(
+    starts: &Rc<Cell<u32>>,
+    is_available: bool,
+    shown: &Shown,
+) -> Rc<TrayHost<FakeIcon>> {
     let counted = Rc::clone(starts);
+    let shown = Rc::clone(shown);
     TrayHost::with_start(Box::new(move || {
         counted.set(counted.get() + 1);
-        is_available.then_some(())
+        is_available.then(|| FakeIcon(Rc::clone(&shown)))
     }))
 }
 
-fn open(host: &Rc<TrayHost<()>>) -> (AppWindow, UnboundedReceiver<Command>) {
+fn open(host: &Rc<TrayHost<FakeIcon>>) -> (AppWindow, UnboundedReceiver<Command>) {
     i_slint_backend_testing::init_no_event_loop();
     let window = AppWindow::new().unwrap();
     let (commands, received) = mpsc::unbounded_channel();
@@ -96,4 +119,59 @@ fn given_the_close_to_tray_switch_is_turned_on_it_is_applied_and_saved() {
         _ => None,
     });
     assert_eq!(saved, Some(CLOSE_TO_TRAY));
+}
+
+fn kitchen() -> Controller {
+    Controller {
+        device: DeviceInfo {
+            id: DeviceId("kitchen".into()),
+            name: "Kitchen".into(),
+        },
+        address: IpAddr::from([192, 168, 0, 7]),
+    }
+}
+
+fn kitchen_connected() -> Option<ConnectedDevices> {
+    Some(ConnectedDevices {
+        title: "Connected devices: 1".into(),
+        devices: vec!["Kitchen (192.168.0.7)".into()],
+    })
+}
+
+#[test]
+fn given_a_device_connects_the_tray_lists_it_with_a_counter() {
+    let shown = Shown::default();
+    let host = showing_host(&Rc::new(Cell::new(0)), true, &shown);
+    let (window, _received) = open(&host);
+    slint::platform::update_timers_and_animations();
+
+    show_controllers(&window, &[kitchen()]);
+
+    assert_eq!(shown.borrow().last(), Some(&kitchen_connected()));
+}
+
+#[test]
+fn given_the_last_device_leaves_the_tray_line_is_removed() {
+    let shown = Shown::default();
+    let host = showing_host(&Rc::new(Cell::new(0)), true, &shown);
+    let (window, _received) = open(&host);
+    slint::platform::update_timers_and_animations();
+    show_controllers(&window, &[kitchen()]);
+
+    show_controllers(&window, &[]);
+
+    assert_eq!(shown.borrow().last(), Some(&None));
+}
+
+#[test]
+fn given_the_tray_is_turned_on_later_it_shows_the_connected_devices() {
+    let shown = Shown::default();
+    let host = showing_host(&Rc::new(Cell::new(0)), true, &shown);
+    let (window, _received) = open(&host);
+    show_controllers(&window, &[kitchen()]);
+    assert!(shown.borrow().is_empty());
+
+    slint::platform::update_timers_and_animations();
+
+    assert_eq!(shown.borrow().last(), Some(&kitchen_connected()));
 }

@@ -1,10 +1,10 @@
 use std::net::IpAddr;
 
-use feishin_remote::{DeviceId, DeviceInfo};
+use feishin_remote::{Controller, DeviceId, DeviceInfo};
 use slint::{ComponentHandle, ModelRc, VecModel};
 
-use super::{AppWindow, Context, DevicesState, RemoteDevice};
-use crate::remote::RemoteRequest;
+use super::{AppWindow, ConnectedDevice, Context, DevicesState, RemoteDevice};
+use crate::remote::{BannedDevice, RemoteRequest};
 
 pub fn install(window: &AppWindow, context: &Context) {
     let state = window.global::<DevicesState>();
@@ -14,6 +14,9 @@ pub fn install(window: &AppWindow, context: &Context) {
     };
     state.on_control_device(with_device(RemoteRequest::Control));
     state.on_move_playback_to(with_device(RemoteRequest::MovePlaybackTo));
+    state.on_disconnect_device(with_device(RemoteRequest::Disconnect));
+    state.on_ban_device(with_device(RemoteRequest::Ban));
+    state.on_unban_device(with_device(RemoteRequest::Unban));
     let local_context = context.clone();
     state.on_control_local(move || local_context.remote.request(RemoteRequest::ControlLocal));
     let here_context = context.clone();
@@ -72,4 +75,41 @@ pub fn show_approval(window: &AppWindow, request: Option<(&str, IpAddr)>) {
             .unwrap_or_default()
             .into(),
     );
+}
+
+fn connected_row(device: &DeviceInfo, address: IpAddr) -> ConnectedDevice {
+    ConnectedDevice {
+        id: device.id.0.as_str().into(),
+        name: device.name.as_str().into(),
+        address: address.to_string().into(),
+    }
+}
+
+pub fn show_controllers(window: &AppWindow, controllers: &[Controller]) {
+    let state = window.global::<DevicesState>();
+    let names: Vec<&str> = controllers
+        .iter()
+        .map(|controller| controller.device.name.as_str())
+        .collect();
+    state.set_controller_names(names.join(", ").into());
+    let rows: Vec<ConnectedDevice> = controllers
+        .iter()
+        .map(|controller| connected_row(&controller.device, controller.address))
+        .collect();
+    state.set_controllers(ModelRc::new(VecModel::from(rows)));
+    state.invoke_controllers_shown();
+}
+
+pub fn show_banned(window: &AppWindow, banned: &[BannedDevice]) {
+    let rows: Vec<ConnectedDevice> = banned
+        .iter()
+        .map(|banned| ConnectedDevice {
+            id: banned.id.0.as_str().into(),
+            name: banned.name.as_str().into(),
+            address: banned.address.to_string().into(),
+        })
+        .collect();
+    window
+        .global::<DevicesState>()
+        .set_banned(ModelRc::new(VecModel::from(rows)));
 }

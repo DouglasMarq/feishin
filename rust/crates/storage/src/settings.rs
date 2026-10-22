@@ -141,6 +141,8 @@ pub struct IntegrationSettings {
     pub lyrics_sources: Vec<LyricsSourceSetting>,
     #[serde(rename = "remote_control")]
     pub is_remote_control_enabled: bool,
+    #[serde(rename = "remote_control_without_asking")]
+    pub is_remote_approval_skipped: bool,
 }
 
 impl Default for IntegrationSettings {
@@ -155,6 +157,7 @@ impl Default for IntegrationSettings {
                 LyricsSourceSetting::NetEase,
             ],
             is_remote_control_enabled: false,
+            is_remote_approval_skipped: false,
         }
     }
 }
@@ -507,6 +510,38 @@ use_theme_accent = false
 
         assert!(tray.is_enabled);
         assert!(!tray.is_close_to_tray);
+    }
+
+    #[test]
+    fn given_settings_from_before_allow_without_asking_devices_are_still_asked() {
+        let (_directory, paths) = temp_paths();
+        write_settings(&paths, PREVIOUS_RELEASE_FLAGS);
+
+        let integrations = Settings::load(&paths).unwrap().integrations;
+
+        assert!(integrations.is_remote_control_enabled);
+        assert!(!integrations.is_remote_approval_skipped);
+    }
+
+    #[test]
+    fn given_allow_without_asking_is_saved_it_loads_back() {
+        let (_directory, paths) = temp_paths();
+        let mut settings = Settings::default();
+        settings.integrations.is_remote_approval_skipped = true;
+        settings.save(&paths).unwrap();
+
+        let saved = std::fs::read_to_string(paths.config_dir.join(SETTINGS_FILE)).unwrap();
+
+        assert!(
+            saved.contains("remote_control_without_asking = true\n"),
+            "{saved}"
+        );
+        assert!(
+            Settings::load(&paths)
+                .unwrap()
+                .integrations
+                .is_remote_approval_skipped
+        );
     }
 
     #[test]

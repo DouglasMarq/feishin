@@ -158,6 +158,9 @@ msgstr "Atļaut"
 msgid "Allow remote control?"
 msgstr "Atļaut tālvadību?"
 
+msgid "Allow without asking"
+msgstr "Atļaut bez jautāšanas"
+
 msgid "Already at the end"
 msgstr "Jau beigās"
 
@@ -172,6 +175,9 @@ msgstr "Jau ir serverī"
 
 msgid "Amber"
 msgstr "Dzintara"
+
+msgid "Any device on this network can control this player without your approval. Banned devices are still refused."
+msgstr "Jebkura ierīce šajā tīklā var vadīt šo atskaņotāju bez jūsu apstiprinājuma. Bloķētās ierīces joprojām tiek atteiktas."
 
 msgid "Appearance"
 msgstr "Izskats"
@@ -205,6 +211,12 @@ msgstr "Automātiski ({})"
 
 msgid "Back"
 msgstr "Atpakaļ"
+
+msgid "Ban"
+msgstr "Bloķēt"
+
+msgid "Banned devices"
+msgstr "Bloķētās ierīces"
 
 msgid "Blue"
 msgstr "Zila"
@@ -284,6 +296,9 @@ msgstr "Savienoties ar savu mūzikas serveri"
 msgid "Connect to {}"
 msgstr "Savienoties ar {}"
 
+msgid "Connected devices: {}"
+msgstr "Pievienotās ierīces: {}"
+
 msgid "Connecting..."
 msgstr "Savieno..."
 
@@ -292,6 +307,12 @@ msgstr "Vadīt mūziku, kas skan šajā datorā"
 
 msgid "Control the music playing on {}"
 msgstr "Vadīt mūziku, kas skan ierīcē {}"
+
+msgid "Controlled by {}"
+msgstr "Vada {}"
+
+msgid "Controlling this player"
+msgstr "Vada šo atskaņotāju"
 
 msgid "Could not add to \"{}\": {}"
 msgstr "Neizdevās pievienot sarakstam \"{}\": {}"
@@ -551,6 +572,9 @@ msgstr "Demonstrācijas režīms: šie ieteikumi ir izdomāti un tiek atskaņoti
 msgid "Devices you allowed can control this player without asking again."
 msgstr "Atļautās ierīces var vadīt šo atskaņotāju, vairs nejautājot."
 
+msgid "Devices: controlled by {}"
+msgstr "Ierīces: vada {}"
+
 msgid "Devices: controlling {}"
 msgstr "Ierīces: tiek vadīta {}"
 
@@ -562,6 +586,15 @@ msgstr "Katalogs"
 
 msgid "Disc {}"
 msgstr "Disks {}"
+
+msgid "Disconnect"
+msgstr "Atvienot"
+
+msgid "Disconnect \"{}\" and never let it control this player again"
+msgstr "Atvienot \"{}\" un nekad vairs neļaut vadīt šo atskaņotāju"
+
+msgid "Disconnect \"{}\"; it has to be allowed again to control this player"
+msgstr "Atvienot \"{}\"; lai vadītu šo atskaņotāju, tā būs jāatļauj atkal"
 
 msgid "Discord Rich Presence"
 msgstr "Discord Rich Presence"
@@ -778,6 +811,9 @@ msgstr "Paturēt {}"
 
 msgid "Language"
 msgstr "Valoda"
+
+msgid "Let \"{}\" ask to control this player again"
+msgstr "Ļaut \"{}\" atkal lūgt vadīt šo atskaņotāju"
 
 msgid "Let \"{}\" control this player"
 msgstr "Ļaut ierīcei \"{}\" vadīt šo atskaņotāju"
@@ -1807,6 +1843,9 @@ msgstr "{} (demo)"
 
 msgid "{} (unavailable)"
 msgstr "{} (nav pieejams)"
+
+msgid "{} ({})"
+msgstr "{} ({})"
 
 msgid "{} at {}"
 msgstr "{0} serverī {1}"

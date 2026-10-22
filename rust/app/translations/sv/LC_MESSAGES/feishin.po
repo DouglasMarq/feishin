@@ -152,6 +152,9 @@ msgstr "Tillåt"
 msgid "Allow remote control?"
 msgstr "Tillåta fjärrstyrning?"
 
+msgid "Allow without asking"
+msgstr "Tillåt utan att fråga"
+
 msgid "Already at the end"
 msgstr "Redan i slutet"
 
@@ -166,6 +169,9 @@ msgstr "Finns redan på servern"
 
 msgid "Amber"
 msgstr "Bärnsten"
+
+msgid "Any device on this network can control this player without your approval. Banned devices are still refused."
+msgstr "Alla enheter i det här nätverket kan styra den här spelaren utan ditt godkännande. Blockerade enheter nekas fortfarande."
 
 msgid "Appearance"
 msgstr "Utseende"
@@ -199,6 +205,12 @@ msgstr "Automatiskt ({})"
 
 msgid "Back"
 msgstr "Tillbaka"
+
+msgid "Ban"
+msgstr "Blockera"
+
+msgid "Banned devices"
+msgstr "Blockerade enheter"
 
 msgid "Blue"
 msgstr "Blå"
@@ -278,6 +290,9 @@ msgstr "Anslut till din musikserver"
 msgid "Connect to {}"
 msgstr "Anslut till {}"
 
+msgid "Connected devices: {}"
+msgstr "Anslutna enheter: {}"
+
 msgid "Connecting..."
 msgstr "Ansluter..."
 
@@ -286,6 +301,12 @@ msgstr "Styr musiken som spelas på den här datorn"
 
 msgid "Control the music playing on {}"
 msgstr "Styr musiken som spelas på {}"
+
+msgid "Controlled by {}"
+msgstr "Styrs av {}"
+
+msgid "Controlling this player"
+msgstr "Styr den här spelaren"
 
 msgid "Could not add to \"{}\": {}"
 msgstr "Kunde inte lägga till i \"{}\": {}"
@@ -543,6 +564,9 @@ msgstr "Demoläge: förslagen är påhittade och spelas från ditt demobibliotek
 msgid "Devices you allowed can control this player without asking again."
 msgstr "Enheter du har tillåtit kan styra den här spelaren utan att fråga igen."
 
+msgid "Devices: controlled by {}"
+msgstr "Enheter: styrs av {}"
+
 msgid "Devices: controlling {}"
 msgstr "Enheter: styr {}"
 
@@ -554,6 +578,15 @@ msgstr "Katalog"
 
 msgid "Disc {}"
 msgstr "Skiva {}"
+
+msgid "Disconnect"
+msgstr "Koppla från"
+
+msgid "Disconnect \"{}\" and never let it control this player again"
+msgstr "Koppla från \"{}\" och låt den aldrig styra den här spelaren igen"
+
+msgid "Disconnect \"{}\"; it has to be allowed again to control this player"
+msgstr "Koppla från \"{}\"; den måste tillåtas igen för att styra den här spelaren"
 
 msgid "Discord Rich Presence"
 msgstr "Discord Rich Presence"
@@ -769,6 +802,9 @@ msgstr "Behåll {}"
 
 msgid "Language"
 msgstr "Språk"
+
+msgid "Let \"{}\" ask to control this player again"
+msgstr "Låt \"{}\" be om att styra den här spelaren igen"
 
 msgid "Let \"{}\" control this player"
 msgstr "Låt \"{}\" styra den här spelaren"
@@ -1785,6 +1821,9 @@ msgstr "{} (demo)"
 
 msgid "{} (unavailable)"
 msgstr "{} (inte tillgänglig)"
+
+msgid "{} ({})"
+msgstr "{} ({})"
 
 msgid "{} at {}"
 msgstr "{} på {}"

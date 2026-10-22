@@ -152,6 +152,9 @@ msgstr "Engedélyezés"
 msgid "Allow remote control?"
 msgstr "Engedélyezed a távvezérlést?"
 
+msgid "Allow without asking"
+msgstr "Engedélyezés kérdés nélkül"
+
 msgid "Already at the end"
 msgstr "Már a végén van"
 
@@ -166,6 +169,9 @@ msgstr "Már a szerveren van"
 
 msgid "Amber"
 msgstr "Borostyán"
+
+msgid "Any device on this network can control this player without your approval. Banned devices are still refused."
+msgstr "A hálózat bármely eszköze vezérelheti ezt a lejátszót a jóváhagyásod nélkül. A kitiltott eszközök továbbra is el vannak utasítva."
 
 msgid "Appearance"
 msgstr "Megjelenés"
@@ -199,6 +205,12 @@ msgstr "Automatikus ({})"
 
 msgid "Back"
 msgstr "Vissza"
+
+msgid "Ban"
+msgstr "Kitiltás"
+
+msgid "Banned devices"
+msgstr "Kitiltott eszközök"
 
 msgid "Blue"
 msgstr "Kék"
@@ -278,6 +290,9 @@ msgstr "Csatlakozás a zeneszerveredhez"
 msgid "Connect to {}"
 msgstr "Csatlakozás ehhez: {}"
 
+msgid "Connected devices: {}"
+msgstr "Csatlakozott eszközök: {}"
+
 msgid "Connecting..."
 msgstr "Csatlakozás..."
 
@@ -286,6 +301,12 @@ msgstr "A számítógépen szóló zene vezérlése"
 
 msgid "Control the music playing on {}"
 msgstr "A(z) {} eszközön szóló zene vezérlése"
+
+msgid "Controlled by {}"
+msgstr "Vezérli: {}"
+
+msgid "Controlling this player"
+msgstr "Ezt a lejátszót vezérlik"
 
 msgid "Could not add to \"{}\": {}"
 msgstr "Nem sikerült hozzáadni ehhez: „{}”: {}"
@@ -543,6 +564,9 @@ msgstr "Bemutató mód: ezek az ajánlások kitaláltak, és a bemutató könyvt
 msgid "Devices you allowed can control this player without asking again."
 msgstr "Az engedélyezett eszközök újabb kérdés nélkül vezérelhetik ezt a lejátszót."
 
+msgid "Devices: controlled by {}"
+msgstr "Eszközök: vezérli {}"
+
 msgid "Devices: controlling {}"
 msgstr "Eszközök: {} vezérlése"
 
@@ -554,6 +578,15 @@ msgstr "Katalógus"
 
 msgid "Disc {}"
 msgstr "{}. lemez"
+
+msgid "Disconnect"
+msgstr "Leválasztás"
+
+msgid "Disconnect \"{}\" and never let it control this player again"
+msgstr "\"{}\" leválasztása, és soha többé nem vezérelheti ezt a lejátszót"
+
+msgid "Disconnect \"{}\"; it has to be allowed again to control this player"
+msgstr "\"{}\" leválasztása; újra engedélyezni kell, hogy vezérelhesse ezt a lejátszót"
 
 msgid "Discord Rich Presence"
 msgstr "Discord Rich Presence"
@@ -769,6 +802,9 @@ msgstr "{} megtartása"
 
 msgid "Language"
 msgstr "Nyelv"
+
+msgid "Let \"{}\" ask to control this player again"
+msgstr "\"{}\" újra kérheti a lejátszó vezérlését"
 
 msgid "Let \"{}\" control this player"
 msgstr "Engedd, hogy „{}” vezérelje ezt a lejátszót"
@@ -1785,6 +1821,9 @@ msgstr "{} (demó)"
 
 msgid "{} (unavailable)"
 msgstr "{} (nem érhető el)"
+
+msgid "{} ({})"
+msgstr "{} ({})"
 
 msgid "{} at {}"
 msgstr "{0} @ {1}"

@@ -6,16 +6,17 @@ use async_trait::async_trait;
 use tokio::io::BufReader;
 use tokio::net::tcp::{OwnedReadHalf, OwnedWriteHalf};
 use tokio::net::{TcpListener, TcpStream};
-use tokio::sync::{Mutex, OwnedSemaphorePermit, Semaphore, mpsc, watch};
+use tokio::sync::{Mutex, OwnedSemaphorePermit, Semaphore, mpsc, oneshot, watch};
 
+use crate::controllers::{Controller, Controllers};
 use crate::error::RemoteError;
 use crate::frame::{MAX_HANDSHAKE_FRAME_BYTES, read_message, read_message_within, write_message};
 use crate::host_state::{HostState, Outbox};
 use crate::lan::is_lan_peer;
 use crate::pairing::{Nonce, PairingToken, proves};
 use crate::protocol::{
-    ClientMessage, DeviceInfo, HostMessage, PROTOCOL_VERSION, RemoteControl, RemoteFailure,
-    ServerKey, TransferPayload,
+    ClientMessage, DeviceId, DeviceInfo, HostMessage, PROTOCOL_VERSION, RemoteControl,
+    RemoteFailure, ServerKey, TransferPayload,
 };
 use crate::refusals::Refusals;
 use crate::trust::TrustStore;
@@ -32,6 +33,7 @@ pub trait HostDelegate: Send + Sync {
     async fn adopt(&self, payload: TransferPayload) -> Result<(), RemoteFailure>;
     async fn hand_over(&self) -> Result<TransferPayload, RemoteFailure>;
     fn server(&self) -> Option<ServerKey>;
+    fn controllers_changed(&self, controllers: Vec<Controller>);
 }
 
 pub struct Host {
@@ -42,6 +44,7 @@ pub struct Host {
     approving: Mutex<()>,
     handshakes: Arc<Semaphore>,
     refusals: Refusals,
+    controllers: Controllers,
 }
 
 impl Host {
@@ -59,7 +62,28 @@ impl Host {
             approving: Mutex::new(()),
             handshakes: Arc::new(Semaphore::new(MAX_PENDING_HANDSHAKES)),
             refusals: Refusals::default(),
+            controllers: Controllers::default(),
         })
+    }
+
+    pub fn disconnect(&self, device: &DeviceId) {
+        self.trust.forget(device);
+        self.controllers.stop(device);
+    }
+
+    pub fn ban(&self, device: &DeviceId) {
+        match self.controllers.stop(device) {
+            Some(controller) => self.trust.ban(&controller.device, controller.address),
+            None => self.trust.forget(device),
+        }
+    }
+
+    pub fn disconnect_all(&self) {
+        self.controllers.stop_all();
+    }
+
+    fn controllers_changed(&self) {
+        self.delegate.controllers_changed(self.controllers.list());
     }
 
     pub async fn serve(self: Arc<Self>, listener: TcpListener) {
@@ -102,6 +126,12 @@ impl Host {
         let device = self.handshake(&mut reader, &mut writer, peer).await?;
         drop(handshake);
         tracing::info!("{} is controlling this player", device.name);
+        let (id, stop) = self.controllers.open(Controller {
+            device: device.clone(),
+            address: peer,
+        });
+        let _open = OpenSession { host: self, id };
+        self.controllers_changed();
         let incoming = spawn_reader(reader);
         Session {
             host: self,
@@ -109,7 +139,7 @@ impl Host {
             writer,
             outbox: Outbox::default(),
         }
-        .run(incoming)
+        .run(incoming, stop)
         .await
     }
 
@@ -141,11 +171,7 @@ impl Host {
             return Err(RemoteError::Protocol("expected a hello"));
         };
         let device = device.cleaned();
-        if version != PROTOCOL_VERSION {
-            let failure = RemoteFailure::VersionMismatch;
-            write_message(writer, &HostMessage::Failed { failure }).await?;
-            return Err(RemoteError::Failed(failure));
-        }
+        self.admit(&device, version, peer, writer).await?;
         let known = self
             .trust
             .trusted_token(&device.id)
@@ -157,6 +183,25 @@ impl Host {
         let server = self.delegate.server();
         write_message(writer, &HostMessage::Welcome { server }).await?;
         Ok(device)
+    }
+
+    async fn admit(
+        &self,
+        device: &DeviceInfo,
+        version: u16,
+        peer: IpAddr,
+        writer: &mut OwnedWriteHalf,
+    ) -> Result<(), RemoteError> {
+        if self.trust.is_banned(&device.id, peer) {
+            tracing::info!("refused a banned device");
+            return deny(writer).await;
+        }
+        if version != PROTOCOL_VERSION {
+            let failure = RemoteFailure::VersionMismatch;
+            write_message(writer, &HostMessage::Failed { failure }).await?;
+            return Err(RemoteError::Failed(failure));
+        }
+        Ok(())
     }
 
     async fn pair(
@@ -231,6 +276,18 @@ async fn next_state(state: &mut Option<watch::Receiver<HostState>>) -> HostState
     }
 }
 
+struct OpenSession<'host> {
+    host: &'host Host,
+    id: u64,
+}
+
+impl Drop for OpenSession<'_> {
+    fn drop(&mut self) {
+        self.host.controllers.close(self.id);
+        self.host.controllers_changed();
+    }
+}
+
 struct Session<'host> {
     host: &'host Host,
     device: DeviceInfo,
@@ -239,12 +296,20 @@ struct Session<'host> {
 }
 
 impl Session<'_> {
-    async fn run(mut self, mut incoming: mpsc::Receiver<ClientMessage>) -> Result<(), RemoteError> {
+    async fn run(
+        mut self,
+        mut incoming: mpsc::Receiver<ClientMessage>,
+        mut stop: oneshot::Receiver<()>,
+    ) -> Result<(), RemoteError> {
         let mut state = Some(self.host.state.clone());
         let initial = self.host.state.borrow().clone();
         self.push_state(&initial).await?;
         loop {
             tokio::select! {
+                _ = &mut stop => {
+                    tracing::info!("{} was disconnected from this player", self.device.name);
+                    return Ok(());
+                }
                 message = incoming.recv() => match message {
                     Some(message) => self.on_message(message).await?,
                     None => return Ok(()),

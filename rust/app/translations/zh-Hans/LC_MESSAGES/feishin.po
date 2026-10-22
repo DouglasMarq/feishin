@@ -146,6 +146,9 @@ msgstr "允许"
 msgid "Allow remote control?"
 msgstr "允许远程控制？"
 
+msgid "Allow without asking"
+msgstr "无需询问即允许"
+
 msgid "Already at the end"
 msgstr "已经是最后一项"
 
@@ -160,6 +163,9 @@ msgstr "已在服务器上"
 
 msgid "Amber"
 msgstr "琥珀色"
+
+msgid "Any device on this network can control this player without your approval. Banned devices are still refused."
+msgstr "此网络上的任何设备都可以在未经你批准的情况下控制此播放器。已封禁的设备仍会被拒绝。"
 
 msgid "Appearance"
 msgstr "外观"
@@ -193,6 +199,12 @@ msgstr "自动（{}）"
 
 msgid "Back"
 msgstr "返回"
+
+msgid "Ban"
+msgstr "封禁"
+
+msgid "Banned devices"
+msgstr "已封禁的设备"
 
 msgid "Blue"
 msgstr "蓝色"
@@ -272,6 +284,9 @@ msgstr "连接到你的音乐服务器"
 msgid "Connect to {}"
 msgstr "连接到 {}"
 
+msgid "Connected devices: {}"
+msgstr "已连接的设备：{}"
+
 msgid "Connecting..."
 msgstr "正在连接..."
 
@@ -280,6 +295,12 @@ msgstr "控制此电脑上正在播放的音乐"
 
 msgid "Control the music playing on {}"
 msgstr "控制 {} 上正在播放的音乐"
+
+msgid "Controlled by {}"
+msgstr "由 {} 控制"
+
+msgid "Controlling this player"
+msgstr "正在控制此播放器"
 
 msgid "Could not add to \"{}\": {}"
 msgstr "无法添加到“{}”：{}"
@@ -535,6 +556,9 @@ msgstr "演示模式：这些推荐是虚构的，将从演示媒体库播放"
 msgid "Devices you allowed can control this player without asking again."
 msgstr "已允许的设备无需再次询问即可控制此播放器。"
 
+msgid "Devices: controlled by {}"
+msgstr "设备：由 {} 控制"
+
 msgid "Devices: controlling {}"
 msgstr "设备：正在控制 {}"
 
@@ -546,6 +570,15 @@ msgstr "目录"
 
 msgid "Disc {}"
 msgstr "碟片 {}"
+
+msgid "Disconnect"
+msgstr "断开连接"
+
+msgid "Disconnect \"{}\" and never let it control this player again"
+msgstr "断开 \"{}\" 并且不再允许它控制此播放器"
+
+msgid "Disconnect \"{}\"; it has to be allowed again to control this player"
+msgstr "断开 \"{}\"；需要再次允许它才能控制此播放器"
 
 msgid "Discord Rich Presence"
 msgstr "Discord Rich Presence"
@@ -760,6 +793,9 @@ msgstr "保留 {}"
 
 msgid "Language"
 msgstr "语言"
+
+msgid "Let \"{}\" ask to control this player again"
+msgstr "允许 \"{}\" 再次请求控制此播放器"
 
 msgid "Let \"{}\" control this player"
 msgstr "允许“{}”控制此播放器"
@@ -1763,6 +1799,9 @@ msgstr "{}（演示）"
 
 msgid "{} (unavailable)"
 msgstr "{}（不可用）"
+
+msgid "{} ({})"
+msgstr "{}（{}）"
 
 msgid "{} at {}"
 msgstr "{1} 上的 {0}"

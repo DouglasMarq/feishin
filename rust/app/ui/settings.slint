@@ -3,7 +3,7 @@ import { Behaviour, Theme, Icons } from "theme.slint";
 import { AppState, PlayerState } from "globals.slint";
 import { Bar, IconButton, TooltipAnchor, TooltipButton, TooltipComboBox, TooltipSwitch } from "widgets.slint";
 import { AppearanceOptions } from "appearance_settings.slint";
-import { TextAction } from "devices.slint";
+import { DevicesState, TextAction } from "devices.slint";
 
 export struct ServerRow {
     id: string,
@@ -37,6 +37,7 @@ export global SettingsState {
     in-out property <bool> is-mpris-enabled: true;
     in-out property <bool> is-discord-enabled;
     in-out property <bool> is-remote-control-enabled;
+    in-out property <bool> is-remote-approval-skipped;
     in property <[LyricsSourceRow]> lyrics-sources;
     in property <[ServerRow]> servers;
     in property <string> switching;
@@ -666,6 +667,19 @@ export component SettingsView inherits Rectangle {
                     }
                 }
 
+                if SettingsState.is-remote-control-enabled: Option {
+                    title: @tr("Allow without asking");
+                    description: @tr("Any device on this network can control this player without your approval. Banned devices are still refused.");
+
+                    TooltipSwitch {
+                        label: @tr("Allow without asking");
+                        is-checked <=> SettingsState.is-remote-approval-skipped;
+                        toggled => {
+                            SettingsState.integrations-changed();
+                        }
+                    }
+                }
+
                 Option {
                     title: @tr("Approved devices");
                     description: @tr("Devices you allowed can control this player without asking again.");
@@ -675,6 +689,24 @@ export component SettingsView inherits Rectangle {
                         tooltip: @tr("Ask again before any device can control this player");
                         clicked => {
                             SettingsState.forget-devices();
+                        }
+                    }
+                }
+
+                if DevicesState.banned.length > 0: Text {
+                    text: @tr("Banned devices");
+                    color: Theme.foreground;
+                }
+
+                for device in DevicesState.banned: Option {
+                    title: device.name;
+                    description: device.address;
+
+                    TextAction {
+                        text: @tr("Remove");
+                        tooltip: @tr("Let \"{}\" ask to control this player again", device.name);
+                        clicked => {
+                            DevicesState.unban-device(device.id);
                         }
                     }
                 }

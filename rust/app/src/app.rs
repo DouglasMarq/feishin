@@ -341,6 +341,7 @@ pub fn run(mode: Mode) -> Result<()> {
         RemoteStart {
             mode,
             is_hosting: settings.integrations.is_remote_control_enabled,
+            is_asking_skipped: settings.integrations.is_remote_approval_skipped,
             window: window.as_weak(),
             host_state: host_state_receiver,
             mirror: Arc::new(ui::player::SlintSink::new(

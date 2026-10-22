@@ -152,6 +152,13 @@ pub struct TestWindow {
 
 impl TestWindow {
     pub fn open(server: Arc<dyn MusicServer>) -> Option<Self> {
+        Self::open_with_remote(server, crate::remote::Remote::default())
+    }
+
+    pub fn open_with_remote(
+        server: Arc<dyn MusicServer>,
+        remote: crate::remote::Remote,
+    ) -> Option<Self> {
         let window = MinimalSoftwareWindow::new(RepaintBufferType::NewBuffer);
         let clipboard = CopiedText::default();
         if !claim_platform(&window, &clipboard) {
@@ -169,7 +176,7 @@ impl TestWindow {
             store: Arc::new(JsonStore::new(dir.path())),
             connector: Arc::new(DemoConnector::default()),
             covers: Arc::new(DemoCovers),
-            remote: crate::remote::Remote::default(),
+            remote,
         };
         context.session.set(Some(Arc::clone(&server)));
         let app = AppWindow::new().unwrap();

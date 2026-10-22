@@ -152,6 +152,9 @@ msgstr "İzin ver"
 msgid "Allow remote control?"
 msgstr "Uzaktan kontrole izin verilsin mi?"
 
+msgid "Allow without asking"
+msgstr "Sormadan izin ver"
+
 msgid "Already at the end"
 msgstr "Zaten sonda"
 
@@ -166,6 +169,9 @@ msgstr "Zaten sunucuda"
 
 msgid "Amber"
 msgstr "Kehribar"
+
+msgid "Any device on this network can control this player without your approval. Banned devices are still refused."
+msgstr "Bu ağdaki her cihaz, onayın olmadan bu oynatıcıyı kontrol edebilir. Yasaklı cihazlar yine reddedilir."
 
 msgid "Appearance"
 msgstr "Görünüm"
@@ -199,6 +205,12 @@ msgstr "Otomatik ({})"
 
 msgid "Back"
 msgstr "Geri"
+
+msgid "Ban"
+msgstr "Yasakla"
+
+msgid "Banned devices"
+msgstr "Yasaklı cihazlar"
 
 msgid "Blue"
 msgstr "Mavi"
@@ -278,6 +290,9 @@ msgstr "Müzik sunucunuza bağlanın"
 msgid "Connect to {}"
 msgstr "Bağlan: {}"
 
+msgid "Connected devices: {}"
+msgstr "Bağlı cihazlar: {}"
+
 msgid "Connecting..."
 msgstr "Bağlanıyor..."
 
@@ -286,6 +301,12 @@ msgstr "Bu bilgisayarda çalan müziği kontrol et"
 
 msgid "Control the music playing on {}"
 msgstr "{} cihazında çalan müziği kontrol et"
+
+msgid "Controlled by {}"
+msgstr "{} tarafından kontrol ediliyor"
+
+msgid "Controlling this player"
+msgstr "Bu oynatıcıyı kontrol ediyor"
 
 msgid "Could not add to \"{}\": {}"
 msgstr "\"{}\" listesine eklenemedi: {}"
@@ -543,6 +564,9 @@ msgstr "Demo modu: bu öneriler uydurmadır ve demo kitaplığınızdan çalın�
 msgid "Devices you allowed can control this player without asking again."
 msgstr "İzin verdiğin cihazlar bu çaları tekrar sormadan kontrol edebilir."
 
+msgid "Devices: controlled by {}"
+msgstr "Cihazlar: {} tarafından kontrol ediliyor"
+
 msgid "Devices: controlling {}"
 msgstr "Cihazlar: {} kontrol ediliyor"
 
@@ -554,6 +578,15 @@ msgstr "Dizin"
 
 msgid "Disc {}"
 msgstr "Disk {}"
+
+msgid "Disconnect"
+msgstr "Bağlantıyı kes"
+
+msgid "Disconnect \"{}\" and never let it control this player again"
+msgstr "\"{}\" bağlantısını kes ve bu oynatıcıyı bir daha kontrol etmesine izin verme"
+
+msgid "Disconnect \"{}\"; it has to be allowed again to control this player"
+msgstr "\"{}\" bağlantısını kes; bu oynatıcıyı kontrol etmek için yeniden izin verilmesi gerekir"
 
 msgid "Discord Rich Presence"
 msgstr "Discord Rich Presence"
@@ -769,6 +802,9 @@ msgstr "Koru: {}"
 
 msgid "Language"
 msgstr "Dil"
+
+msgid "Let \"{}\" ask to control this player again"
+msgstr "\"{}\" yeniden bu oynatıcıyı kontrol etmeyi isteyebilsin"
 
 msgid "Let \"{}\" control this player"
 msgstr "\"{}\" bu çaları kontrol edebilsin"
@@ -1785,6 +1821,9 @@ msgstr "{} (demo)"
 
 msgid "{} (unavailable)"
 msgstr "{} (kullanılamıyor)"
+
+msgid "{} ({})"
+msgstr "{} ({})"
 
 msgid "{} at {}"
 msgstr "{1} üzerinde {0}"

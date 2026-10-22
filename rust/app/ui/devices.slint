@@ -7,6 +7,12 @@ export struct RemoteDevice {
     name: string,
 }
 
+export struct ConnectedDevice {
+    id: string,
+    name: string,
+    address: string,
+}
+
 export global DevicesState {
     in property <[RemoteDevice]> devices;
     in property <string> active-id;
@@ -16,6 +22,9 @@ export global DevicesState {
     in property <bool> is-approval-open;
     in property <string> approval-name;
     in property <string> approval-address;
+    in property <[ConnectedDevice]> controllers;
+    in property <string> controller-names;
+    in property <[ConnectedDevice]> banned;
     out property <string> icon: "M4 6h18V4H4c-1.1 0-2 .9-2 2v11H0v3h14v-3H4V6zm19 2h-6c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h6c.55 0 1-.45 1-1V9c0-.55-.45-1-1-1zm-1 9h-4v-7h4v7z";
     callback control-device(string);
     callback move-playback-to(string);
@@ -23,6 +32,10 @@ export global DevicesState {
     callback move-playback-here();
     callback allow-device();
     callback deny-device();
+    callback disconnect-device(string);
+    callback ban-device(string);
+    callback unban-device(string);
+    callback controllers-shown();
 }
 
 export component TextAction inherits Rectangle {
@@ -117,6 +130,48 @@ component DeviceRow inherits Rectangle {
     }
 }
 
+component ControllerRow inherits HorizontalLayout {
+    in property <ConnectedDevice> device;
+    height: 36px;
+    padding-left: 10px;
+    spacing: 6px;
+
+    VerticalLayout {
+        alignment: center;
+        horizontal-stretch: 1;
+
+        Text {
+            text: root.device.name;
+            color: Theme.foreground;
+            overflow: elide;
+        }
+
+        Text {
+            text: root.device.address;
+            color: Theme.muted;
+            font-size: 11px;
+        }
+    }
+
+    TextAction {
+        y: (parent.height - self.height) / 2;
+        text: @tr("Disconnect");
+        tooltip: @tr("Disconnect \"{}\"; it has to be allowed again to control this player", root.device.name);
+        clicked => {
+            DevicesState.disconnect-device(root.device.id);
+        }
+    }
+
+    TextAction {
+        y: (parent.height - self.height) / 2;
+        text: @tr("Ban");
+        tooltip: @tr("Disconnect \"{}\" and never let it control this player again", root.device.name);
+        clicked => {
+            DevicesState.ban-device(root.device.id);
+        }
+    }
+}
+
 export component DevicesButton inherits Rectangle {
     property <length> menu-width: 300px;
     height: 32px;
@@ -127,8 +182,8 @@ export component DevicesButton inherits Rectangle {
 
         IconButton {
             icon: DevicesState.icon;
-            is-active: DevicesState.is-controlling;
-            tooltip: DevicesState.is-controlling ? @tr("Devices: controlling {}", DevicesState.active-name) : @tr("Devices: this computer");
+            is-active: DevicesState.is-controlling || DevicesState.controllers.length > 0;
+            tooltip: DevicesState.is-controlling ? @tr("Devices: controlling {}", DevicesState.active-name) : (DevicesState.controllers.length > 0 ? @tr("Devices: controlled by {}", DevicesState.controller-names) : @tr("Devices: this computer"));
             clicked => {
                 menu.show();
             }
@@ -136,6 +191,14 @@ export component DevicesButton inherits Rectangle {
 
         if DevicesState.is-controlling: Text {
             text: DevicesState.active-name;
+            color: Theme.primary;
+            font-size: 11px;
+            vertical-alignment: center;
+            overflow: elide;
+        }
+
+        if !DevicesState.is-controlling && DevicesState.controllers.length > 0: Text {
+            text: @tr("Controlled by {}", DevicesState.controller-names);
             color: Theme.primary;
             font-size: 11px;
             vertical-alignment: center;
@@ -208,6 +271,17 @@ export component DevicesButton inherits Rectangle {
                 text: @tr("Connecting...");
                 color: Theme.muted;
                 font-size: 12px;
+            }
+
+            if DevicesState.controllers.length > 0: Text {
+                text: @tr("Controlling this player");
+                color: Theme.muted;
+                font-size: 11px;
+                font-weight: 600;
+            }
+
+            for device in DevicesState.controllers: ControllerRow {
+                device: device;
             }
         }
     }

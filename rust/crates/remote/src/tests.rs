@@ -16,6 +16,7 @@ use crate::protocol::PROTOCOL_VERSION;
 #[derive(Default)]
 struct MemoryTrust {
     trusted: Mutex<HashMap<DeviceId, PairingToken>>,
+    banned: Mutex<Vec<DeviceId>>,
     hosts: Mutex<HashMap<DeviceId, PairingToken>>,
 }
 
@@ -28,6 +29,16 @@ impl TrustStore for MemoryTrust {
             .lock()
             .unwrap()
             .insert(device.id.clone(), token);
+    }
+    fn forget(&self, device: &DeviceId) {
+        self.trusted.lock().unwrap().remove(device);
+    }
+    fn ban(&self, device: &DeviceInfo, _address: std::net::IpAddr) {
+        self.forget(&device.id);
+        self.banned.lock().unwrap().push(device.id.clone());
+    }
+    fn is_banned(&self, device: &DeviceId, _address: std::net::IpAddr) -> bool {
+        self.banned.lock().unwrap().contains(device)
     }
     fn host_token(&self, host: &DeviceId) -> Option<PairingToken> {
         self.hosts.lock().unwrap().get(host).copied()
@@ -42,6 +53,7 @@ struct FakeDelegate {
     approvals: Mutex<usize>,
     controls: mpsc::UnboundedSender<RemoteControl>,
     adopted: Mutex<Vec<TransferPayload>>,
+    controllers: watch::Sender<Vec<Controller>>,
 }
 
 #[async_trait]
@@ -71,11 +83,16 @@ impl HostDelegate for FakeDelegate {
     fn server(&self) -> Option<ServerKey> {
         None
     }
+    fn controllers_changed(&self, controllers: Vec<Controller>) {
+        self.controllers.send_replace(controllers);
+    }
 }
 
 struct Running {
     address: SocketAddr,
+    host: Arc<Host>,
     delegate: Arc<FakeDelegate>,
+    controllers: watch::Receiver<Vec<Controller>>,
     controls: mpsc::UnboundedReceiver<RemoteControl>,
     state: watch::Sender<HostState>,
 }
@@ -96,7 +113,9 @@ async fn start_host(is_allowed: bool) -> Running {
         approvals: Mutex::new(0),
         controls: controls_sender,
         adopted: Mutex::new(Vec::new()),
+        controllers: watch::Sender::new(Vec::new()),
     });
+    let controllers = delegate.controllers.subscribe();
     let (state, state_receiver) = watch::channel(HostState::default());
     let host = Host::new(
         device("host"),
@@ -104,10 +123,12 @@ async fn start_host(is_allowed: bool) -> Running {
         Arc::new(MemoryTrust::default()),
         state_receiver,
     );
-    tokio::spawn(host.serve(listener));
+    tokio::spawn(Arc::clone(&host).serve(listener));
     Running {
         address,
+        host,
         delegate,
+        controllers,
         controls,
         state,
     }
@@ -390,4 +411,128 @@ async fn given_an_oversized_hello_rejects_the_connection() {
 
     assert!(answer.is_empty(), "{}", String::from_utf8_lossy(&answer));
     assert_eq!(*host.delegate.approvals.lock().unwrap(), 0);
+}
+
+async fn controller_names(
+    controllers: &mut watch::Receiver<Vec<Controller>>,
+    wanted: &[&str],
+) -> Vec<String> {
+    let names = |list: &Vec<Controller>| -> Vec<String> {
+        list.iter()
+            .map(|controller| controller.device.name.clone())
+            .collect()
+    };
+    let reached = tokio::time::timeout(
+        Duration::from_secs(5),
+        controllers.wait_for(|list| names(list) == wanted),
+    )
+    .await
+    .is_ok();
+    names(&controllers.borrow())
+        .into_iter()
+        .chain((!reached).then(|| "timed out".to_owned()))
+        .collect()
+}
+
+async fn closed(link: &mut ClientLink) -> bool {
+    loop {
+        match tokio::time::timeout(Duration::from_secs(5), link.incoming.recv()).await {
+            Ok(Some(_)) => {}
+            Ok(None) => return true,
+            Err(_) => return false,
+        }
+    }
+}
+
+#[tokio::test]
+async fn given_a_client_connects_the_host_reports_it_as_a_controller() {
+    let (mut host, _link) = connected_device().await;
+
+    let names = controller_names(&mut host.controllers, &["Device phone"]).await;
+
+    assert_eq!(names, ["Device phone"]);
+    assert_eq!(
+        host.controllers.borrow()[0].address,
+        std::net::IpAddr::from([127, 0, 0, 1])
+    );
+}
+
+#[tokio::test]
+async fn given_the_client_disconnects_it_is_no_longer_reported() {
+    let (mut host, link) = connected_device().await;
+    controller_names(&mut host.controllers, &["Device phone"]).await;
+
+    drop(link);
+
+    assert!(
+        controller_names(&mut host.controllers, &[])
+            .await
+            .is_empty()
+    );
+}
+
+#[tokio::test]
+async fn given_a_refused_client_it_is_never_reported() {
+    let host = start_host(false).await;
+
+    let refused = connect(
+        host.address,
+        device("phone"),
+        Arc::new(MemoryTrust::default()),
+    )
+    .await;
+
+    assert!(matches!(refused, Err(RemoteError::Denied)));
+    assert!(host.controllers.borrow().is_empty());
+}
+
+#[tokio::test]
+async fn given_a_disconnected_device_it_must_pair_again() {
+    let (mut host, mut link) = connected_device().await;
+    controller_names(&mut host.controllers, &["Device phone"]).await;
+
+    host.host.disconnect(&DeviceId("phone".to_owned()));
+
+    assert!(closed(&mut link).await);
+    assert!(
+        controller_names(&mut host.controllers, &[])
+            .await
+            .is_empty()
+    );
+    let trust: Arc<dyn TrustStore> = Arc::new(MemoryTrust::default());
+    let _again = connect(host.address, device("phone"), trust).await.unwrap();
+    assert_eq!(*host.delegate.approvals.lock().unwrap(), 2);
+}
+
+#[tokio::test]
+async fn given_a_banned_device_it_is_refused_without_a_prompt() {
+    let (mut host, mut link) = connected_device().await;
+    controller_names(&mut host.controllers, &["Device phone"]).await;
+
+    host.host.ban(&DeviceId("phone".to_owned()));
+
+    assert!(closed(&mut link).await);
+    let refused = connect(
+        host.address,
+        device("phone"),
+        Arc::new(MemoryTrust::default()),
+    )
+    .await;
+    assert!(matches!(refused, Err(RemoteError::Denied)));
+    assert_eq!(*host.delegate.approvals.lock().unwrap(), 1);
+}
+
+#[tokio::test]
+async fn given_remote_control_is_turned_off_every_controller_is_disconnected() {
+    let (mut host, mut link) = connected_device().await;
+    controller_names(&mut host.controllers, &["Device phone"]).await;
+
+    host.host.disconnect_all();
+
+    assert!(closed(&mut link).await);
+    assert!(
+        controller_names(&mut host.controllers, &[])
+            .await
+            .is_empty()
+    );
 }

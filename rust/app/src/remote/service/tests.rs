@@ -4,7 +4,8 @@ use async_trait::async_trait;
 use feishin_core::queue::{Queue, QueueTrack, YouTubeTrack};
 use feishin_platform::MediaControlEvent;
 use feishin_remote::{
-    DeviceId, Host, HostDelegate, RemoteControl, RemoteFailure, ServerKey, TransferPayload,
+    Controller, DeviceId, Host, HostDelegate, RemoteControl, RemoteFailure, ServerKey,
+    TransferPayload,
 };
 use tokio::net::TcpListener;
 
@@ -35,6 +36,7 @@ impl HostDelegate for SpeakerDelegate {
     fn server(&self) -> Option<ServerKey> {
         None
     }
+    fn controllers_changed(&self, _controllers: Vec<Controller>) {}
 }
 
 struct Shown(mpsc::UnboundedSender<crate::controller::UiUpdate>);

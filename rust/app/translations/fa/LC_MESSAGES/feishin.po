@@ -152,6 +152,9 @@ msgstr "اجازه دادن"
 msgid "Allow remote control?"
 msgstr "کنترل از راه دور مجاز شود؟"
 
+msgid "Allow without asking"
+msgstr "اجازه بدون پرسش"
+
 msgid "Already at the end"
 msgstr "از قبل در انتها است"
 
@@ -166,6 +169,9 @@ msgstr "از قبل روی سرور وجود دارد"
 
 msgid "Amber"
 msgstr "کهربایی"
+
+msgid "Any device on this network can control this player without your approval. Banned devices are still refused."
+msgstr "هر دستگاهی در این شبکه می‌تواند بدون تأیید شما این پخش‌کننده را کنترل کند. دستگاه‌های مسدودشده همچنان رد می‌شوند."
 
 msgid "Appearance"
 msgstr "ظاهر"
@@ -199,6 +205,12 @@ msgstr "خودکار ({})"
 
 msgid "Back"
 msgstr "بازگشت"
+
+msgid "Ban"
+msgstr "مسدود کردن"
+
+msgid "Banned devices"
+msgstr "دستگاه‌های مسدودشده"
 
 msgid "Blue"
 msgstr "آبی"
@@ -278,6 +290,9 @@ msgstr "به سرور موسیقی خود متصل شوید"
 msgid "Connect to {}"
 msgstr "اتصال به {}"
 
+msgid "Connected devices: {}"
+msgstr "دستگاه‌های متصل: {}"
+
 msgid "Connecting..."
 msgstr "در حال اتصال..."
 
@@ -286,6 +301,12 @@ msgstr "کنترل موسیقی در حال پخش روی این رایانه"
 
 msgid "Control the music playing on {}"
 msgstr "کنترل موسیقی در حال پخش روی {}"
+
+msgid "Controlled by {}"
+msgstr "در کنترل {}"
+
+msgid "Controlling this player"
+msgstr "در حال کنترل این پخش‌کننده"
 
 msgid "Could not add to \"{}\": {}"
 msgstr "افزودن به \"{}\" ممکن نشد: {}"
@@ -543,6 +564,9 @@ msgstr "حالت نمایشی: این پیشنهادها ساختگی‌اند �
 msgid "Devices you allowed can control this player without asking again."
 msgstr "دستگاه‌هایی که اجازه داده‌اید می‌توانند بدون پرسش دوباره این پخش‌کننده را کنترل کنند."
 
+msgid "Devices: controlled by {}"
+msgstr "دستگاه‌ها: در کنترل {}"
+
 msgid "Devices: controlling {}"
 msgstr "دستگاه‌ها: در حال کنترل {}"
 
@@ -554,6 +578,15 @@ msgstr "دایرکتوری"
 
 msgid "Disc {}"
 msgstr "دیسک {}"
+
+msgid "Disconnect"
+msgstr "قطع اتصال"
+
+msgid "Disconnect \"{}\" and never let it control this player again"
+msgstr "قطع اتصال \"{}\" و جلوگیری همیشگی از کنترل این پخش‌کننده"
+
+msgid "Disconnect \"{}\"; it has to be allowed again to control this player"
+msgstr "قطع اتصال \"{}\"؛ برای کنترل این پخش‌کننده باید دوباره اجازه داده شود"
 
 msgid "Discord Rich Presence"
 msgstr "Discord Rich Presence"
@@ -769,6 +802,9 @@ msgstr "نگه داشتن {}"
 
 msgid "Language"
 msgstr "زبان"
+
+msgid "Let \"{}\" ask to control this player again"
+msgstr "اجازه به \"{}\" برای درخواست دوباره کنترل این پخش‌کننده"
 
 msgid "Let \"{}\" control this player"
 msgstr "اجازه دهید \"{}\" این پخش‌کننده را کنترل کند"
@@ -1785,6 +1821,9 @@ msgstr "{} (نمایشی)"
 
 msgid "{} (unavailable)"
 msgstr "{} (در دسترس نیست)"
+
+msgid "{} ({})"
+msgstr "{} ({})"
 
 msgid "{} at {}"
 msgstr "{} در {}"

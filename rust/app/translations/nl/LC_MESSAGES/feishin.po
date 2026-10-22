@@ -152,6 +152,9 @@ msgstr "Toestaan"
 msgid "Allow remote control?"
 msgstr "Bediening op afstand toestaan?"
 
+msgid "Allow without asking"
+msgstr "Toestaan zonder te vragen"
+
 msgid "Already at the end"
 msgstr "Al aan het einde"
 
@@ -166,6 +169,9 @@ msgstr "Al op de server"
 
 msgid "Amber"
 msgstr "Amber"
+
+msgid "Any device on this network can control this player without your approval. Banned devices are still refused."
+msgstr "Elk apparaat op dit netwerk kan deze speler bedienen zonder jouw toestemming. Geblokkeerde apparaten worden nog steeds geweigerd."
 
 msgid "Appearance"
 msgstr "Uiterlijk"
@@ -199,6 +205,12 @@ msgstr "Automatisch ({})"
 
 msgid "Back"
 msgstr "Terug"
+
+msgid "Ban"
+msgstr "Blokkeren"
+
+msgid "Banned devices"
+msgstr "Geblokkeerde apparaten"
 
 msgid "Blue"
 msgstr "Blauw"
@@ -278,6 +290,9 @@ msgstr "Verbind met je muziekserver"
 msgid "Connect to {}"
 msgstr "Met {} verbinden"
 
+msgid "Connected devices: {}"
+msgstr "Verbonden apparaten: {}"
+
 msgid "Connecting..."
 msgstr "Verbinden..."
 
@@ -286,6 +301,12 @@ msgstr "De muziek op deze computer bedienen"
 
 msgid "Control the music playing on {}"
 msgstr "De muziek op {} bedienen"
+
+msgid "Controlled by {}"
+msgstr "Bediend door {}"
+
+msgid "Controlling this player"
+msgstr "Bedienen deze speler"
 
 msgid "Could not add to \"{}\": {}"
 msgstr "Kan niet toevoegen aan \"{}\": {}"
@@ -543,6 +564,9 @@ msgstr "Demomodus: deze suggesties zijn verzonnen en spelen af uit je demobiblio
 msgid "Devices you allowed can control this player without asking again."
 msgstr "Toegestane apparaten kunnen deze speler bedienen zonder opnieuw te vragen."
 
+msgid "Devices: controlled by {}"
+msgstr "Apparaten: bediend door {}"
+
 msgid "Devices: controlling {}"
 msgstr "Apparaten: {} wordt bediend"
 
@@ -554,6 +578,15 @@ msgstr "Gids"
 
 msgid "Disc {}"
 msgstr "Schijf {}"
+
+msgid "Disconnect"
+msgstr "Verbinding verbreken"
+
+msgid "Disconnect \"{}\" and never let it control this player again"
+msgstr "Verbinding met \"{}\" verbreken en het deze speler nooit meer laten bedienen"
+
+msgid "Disconnect \"{}\"; it has to be allowed again to control this player"
+msgstr "Verbinding met \"{}\" verbreken; het moet opnieuw worden toegestaan om deze speler te bedienen"
 
 msgid "Discord Rich Presence"
 msgstr "Discord Rich Presence"
@@ -769,6 +802,9 @@ msgstr "{} behouden"
 
 msgid "Language"
 msgstr "Taal"
+
+msgid "Let \"{}\" ask to control this player again"
+msgstr "\"{}\" opnieuw laten vragen om deze speler te bedienen"
 
 msgid "Let \"{}\" control this player"
 msgstr "\"{}\" deze speler laten bedienen"
@@ -1785,6 +1821,9 @@ msgstr "{} (demo)"
 
 msgid "{} (unavailable)"
 msgstr "{} (niet beschikbaar)"
+
+msgid "{} ({})"
+msgstr "{} ({})"
 
 msgid "{} at {}"
 msgstr "{} op {}"

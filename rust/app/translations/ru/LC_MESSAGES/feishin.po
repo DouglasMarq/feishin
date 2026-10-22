@@ -158,6 +158,9 @@ msgstr "Разрешить"
 msgid "Allow remote control?"
 msgstr "Разрешить удалённое управление?"
 
+msgid "Allow without asking"
+msgstr "Разрешать без запроса"
+
 msgid "Already at the end"
 msgstr "Уже в конце"
 
@@ -172,6 +175,9 @@ msgstr "Уже на сервере"
 
 msgid "Amber"
 msgstr "Янтарный"
+
+msgid "Any device on this network can control this player without your approval. Banned devices are still refused."
+msgstr "Любое устройство в этой сети сможет управлять этим плеером без вашего одобрения. Заблокированные устройства по-прежнему отклоняются."
 
 msgid "Appearance"
 msgstr "Внешний вид"
@@ -205,6 +211,12 @@ msgstr "Автоматически ({})"
 
 msgid "Back"
 msgstr "Назад"
+
+msgid "Ban"
+msgstr "Заблокировать"
+
+msgid "Banned devices"
+msgstr "Заблокированные устройства"
 
 msgid "Blue"
 msgstr "Синий"
@@ -284,6 +296,9 @@ msgstr "Подключитесь к своему музыкальному сер
 msgid "Connect to {}"
 msgstr "Подключиться к {}"
 
+msgid "Connected devices: {}"
+msgstr "Подключённые устройства: {}"
+
 msgid "Connecting..."
 msgstr "Подключение..."
 
@@ -292,6 +307,12 @@ msgstr "Управлять музыкой на этом компьютере"
 
 msgid "Control the music playing on {}"
 msgstr "Управлять музыкой на {}"
+
+msgid "Controlled by {}"
+msgstr "Управляет {}"
+
+msgid "Controlling this player"
+msgstr "Управляют этим плеером"
 
 msgid "Could not add to \"{}\": {}"
 msgstr "Не удалось добавить в «{}»: {}"
@@ -551,6 +572,9 @@ msgstr "Демо-режим: эти подборки вымышлены и во�
 msgid "Devices you allowed can control this player without asking again."
 msgstr "Разрешённые устройства могут управлять этим плеером без повторного вопроса."
 
+msgid "Devices: controlled by {}"
+msgstr "Устройства: управляет {}"
+
 msgid "Devices: controlling {}"
 msgstr "Устройства: управление {}"
 
@@ -562,6 +586,15 @@ msgstr "Каталог"
 
 msgid "Disc {}"
 msgstr "Диск {}"
+
+msgid "Disconnect"
+msgstr "Отключить"
+
+msgid "Disconnect \"{}\" and never let it control this player again"
+msgstr "Отключить \"{}\" и больше никогда не давать ему управлять этим плеером"
+
+msgid "Disconnect \"{}\"; it has to be allowed again to control this player"
+msgstr "Отключить \"{}\"; чтобы управлять этим плеером, его нужно будет снова разрешить"
 
 msgid "Discord Rich Presence"
 msgstr "Discord Rich Presence"
@@ -778,6 +811,9 @@ msgstr "Оставить {}"
 
 msgid "Language"
 msgstr "Язык"
+
+msgid "Let \"{}\" ask to control this player again"
+msgstr "Разрешить \"{}\" снова запрашивать управление этим плеером"
 
 msgid "Let \"{}\" control this player"
 msgstr "Разрешить устройству «{}» управлять этим плеером"
@@ -1807,6 +1843,9 @@ msgstr "{} (демо)"
 
 msgid "{} (unavailable)"
 msgstr "{} (недоступно)"
+
+msgid "{} ({})"
+msgstr "{} ({})"
 
 msgid "{} at {}"
 msgstr "{} на {}"

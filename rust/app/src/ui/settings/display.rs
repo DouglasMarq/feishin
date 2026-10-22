@@ -79,6 +79,7 @@ pub(super) fn show(window: &AppWindow, shared: &Shared, snapshot: SettingsSnapsh
     state.set_is_mpris_enabled(settings.integrations.is_mpris_enabled);
     state.set_is_discord_enabled(settings.integrations.is_discord_rich_presence_enabled);
     state.set_is_remote_control_enabled(settings.integrations.is_remote_control_enabled);
+    state.set_is_remote_approval_skipped(settings.integrations.is_remote_approval_skipped);
     set_lyrics_rows(&state, &view.lyrics);
     show_youtube(&state, &view);
     state.set_servers(ModelRc::new(VecModel::from(server_rows(settings))));

@@ -158,6 +158,9 @@ msgstr "Povoliť"
 msgid "Allow remote control?"
 msgstr "Povoliť diaľkové ovládanie?"
 
+msgid "Allow without asking"
+msgstr "Povoliť bez pýtania"
+
 msgid "Already at the end"
 msgstr "Už ste na konci"
 
@@ -172,6 +175,9 @@ msgstr "Už je na serveri"
 
 msgid "Amber"
 msgstr "Jantárová"
+
+msgid "Any device on this network can control this player without your approval. Banned devices are still refused."
+msgstr "Akékoľvek zariadenie v tejto sieti môže ovládať tento prehrávač bez vášho schválenia. Zablokované zariadenia sú naďalej odmietané."
 
 msgid "Appearance"
 msgstr "Vzhľad"
@@ -205,6 +211,12 @@ msgstr "Automaticky ({})"
 
 msgid "Back"
 msgstr "Späť"
+
+msgid "Ban"
+msgstr "Zablokovať"
+
+msgid "Banned devices"
+msgstr "Zablokované zariadenia"
 
 msgid "Blue"
 msgstr "Modrá"
@@ -284,6 +296,9 @@ msgstr "Pripojte sa k svojmu hudobnému serveru"
 msgid "Connect to {}"
 msgstr "Pripojiť k {}"
 
+msgid "Connected devices: {}"
+msgstr "Pripojené zariadenia: {}"
+
 msgid "Connecting..."
 msgstr "Pripája sa..."
 
@@ -292,6 +307,12 @@ msgstr "Ovládať hudbu hrajúcu na tomto počítači"
 
 msgid "Control the music playing on {}"
 msgstr "Ovládať hudbu hrajúcu na {}"
+
+msgid "Controlled by {}"
+msgstr "Ovláda {}"
+
+msgid "Controlling this player"
+msgstr "Ovládajú tento prehrávač"
 
 msgid "Could not add to \"{}\": {}"
 msgstr "Nedá sa pridať do „{}“: {}"
@@ -551,6 +572,9 @@ msgstr "Ukážkový režim: tieto tipy sú vymyslené a prehrávajú sa z ukáž
 msgid "Devices you allowed can control this player without asking again."
 msgstr "Povolené zariadenia môžu ovládať tento prehrávač bez ďalšieho pýtania."
 
+msgid "Devices: controlled by {}"
+msgstr "Zariadenia: ovláda {}"
+
 msgid "Devices: controlling {}"
 msgstr "Zariadenia: ovládate {}"
 
@@ -562,6 +586,15 @@ msgstr "Katalóg"
 
 msgid "Disc {}"
 msgstr "Disk {}"
+
+msgid "Disconnect"
+msgstr "Odpojiť"
+
+msgid "Disconnect \"{}\" and never let it control this player again"
+msgstr "Odpojiť \"{}\" a už mu nikdy nedovoliť ovládať tento prehrávač"
+
+msgid "Disconnect \"{}\"; it has to be allowed again to control this player"
+msgstr "Odpojiť \"{}\"; na ovládanie tohto prehrávača ho bude treba znova povoliť"
 
 msgid "Discord Rich Presence"
 msgstr "Discord Rich Presence"
@@ -778,6 +811,9 @@ msgstr "Ponechať {}"
 
 msgid "Language"
 msgstr "Jazyk"
+
+msgid "Let \"{}\" ask to control this player again"
+msgstr "Povoliť \"{}\" znova požiadať o ovládanie tohto prehrávača"
 
 msgid "Let \"{}\" control this player"
 msgstr "Povoliť zariadeniu „{}“ ovládať tento prehrávač"
@@ -1807,6 +1843,9 @@ msgstr "{} (demo)"
 
 msgid "{} (unavailable)"
 msgstr "{} (nedostupné)"
+
+msgid "{} ({})"
+msgstr "{} ({})"
 
 msgid "{} at {}"
 msgstr "{} na {}"

@@ -20,6 +20,7 @@ pub use delegate::AppHostDelegate;
 pub use gate::LocalGate;
 pub use host_feed::HostFeed;
 pub use target::PlayerTarget;
+pub use trust::BannedDevice;
 
 use crate::app::Mode;
 use crate::controller::UiSink;
@@ -35,6 +36,9 @@ pub enum RemoteRequest {
     MovePlaybackHere,
     SetHosting(bool),
     ForgetDevices,
+    Disconnect(DeviceId),
+    Ban(DeviceId),
+    Unban(DeviceId),
 }
 
 #[derive(Clone, Default)]
@@ -66,6 +70,7 @@ impl Remote {
 pub struct RemoteStart {
     pub mode: Mode,
     pub is_hosting: bool,
+    pub is_asking_skipped: bool,
     pub window: slint::Weak<AppWindow>,
     pub host_state: watch::Receiver<HostState>,
     pub mirror: Arc<dyn UiSink>,
@@ -83,6 +88,10 @@ pub fn start(context: &Context, start: RemoteStart) {
             tr!("{} (demo)", default_device_name()),
         ),
     };
+    context
+        .remote
+        .approvals
+        .skip_asking(start.is_asking_skipped);
     let trust = Arc::new(trust);
     let me = DeviceInfo {
         id: trust.device_id(),

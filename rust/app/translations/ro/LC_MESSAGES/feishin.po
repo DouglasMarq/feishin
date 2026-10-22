@@ -158,6 +158,9 @@ msgstr "Permite"
 msgid "Allow remote control?"
 msgstr "Permiți controlul de la distanță?"
 
+msgid "Allow without asking"
+msgstr "Permite fără să întrebi"
+
 msgid "Already at the end"
 msgstr "Ești deja la final"
 
@@ -172,6 +175,9 @@ msgstr "Deja pe server"
 
 msgid "Amber"
 msgstr "Chihlimbar"
+
+msgid "Any device on this network can control this player without your approval. Banned devices are still refused."
+msgstr "Orice dispozitiv din această rețea poate controla acest player fără aprobarea ta. Dispozitivele blocate sunt în continuare refuzate."
 
 msgid "Appearance"
 msgstr "Aspect"
@@ -205,6 +211,12 @@ msgstr "Automat ({})"
 
 msgid "Back"
 msgstr "Înapoi"
+
+msgid "Ban"
+msgstr "Blochează"
+
+msgid "Banned devices"
+msgstr "Dispozitive blocate"
 
 msgid "Blue"
 msgstr "Albastru"
@@ -284,6 +296,9 @@ msgstr "Conectează-te la serverul tău de muzică"
 msgid "Connect to {}"
 msgstr "Conectează-te la {}"
 
+msgid "Connected devices: {}"
+msgstr "Dispozitive conectate: {}"
+
 msgid "Connecting..."
 msgstr "Se conectează..."
 
@@ -292,6 +307,12 @@ msgstr "Controlează muzica redată pe acest computer"
 
 msgid "Control the music playing on {}"
 msgstr "Controlează muzica redată pe {}"
+
+msgid "Controlled by {}"
+msgstr "Controlat de {}"
+
+msgid "Controlling this player"
+msgstr "Controlează acest player"
 
 msgid "Could not add to \"{}\": {}"
 msgstr "Nu s-a putut adăuga în „{}”: {}"
@@ -551,6 +572,9 @@ msgstr "Mod demo: aceste recomandări sunt inventate și se redau din biblioteca
 msgid "Devices you allowed can control this player without asking again."
 msgstr "Dispozitivele permise pot controla acest player fără să întrebe din nou."
 
+msgid "Devices: controlled by {}"
+msgstr "Dispozitive: controlat de {}"
+
 msgid "Devices: controlling {}"
 msgstr "Dispozitive: controlezi {}"
 
@@ -562,6 +586,15 @@ msgstr "Catalog"
 
 msgid "Disc {}"
 msgstr "Discul {}"
+
+msgid "Disconnect"
+msgstr "Deconectează"
+
+msgid "Disconnect \"{}\" and never let it control this player again"
+msgstr "Deconectează \"{}\" și nu-l mai lăsa niciodată să controleze acest player"
+
+msgid "Disconnect \"{}\"; it has to be allowed again to control this player"
+msgstr "Deconectează \"{}\"; va trebui permis din nou pentru a controla acest player"
 
 msgid "Discord Rich Presence"
 msgstr "Discord Rich Presence"
@@ -778,6 +811,9 @@ msgstr "Păstrează {}"
 
 msgid "Language"
 msgstr "Limbă"
+
+msgid "Let \"{}\" ask to control this player again"
+msgstr "Lasă \"{}\" să ceară din nou controlul acestui player"
 
 msgid "Let \"{}\" control this player"
 msgstr "Permite ca „{}” să controleze acest player"
@@ -1807,6 +1843,9 @@ msgstr "{} (demo)"
 
 msgid "{} (unavailable)"
 msgstr "{} (indisponibil)"
+
+msgid "{} ({})"
+msgstr "{} ({})"
 
 msgid "{} at {}"
 msgstr "{} la {}"

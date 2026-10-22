@@ -1,7 +1,7 @@
 use std::sync::Arc;
 
 use image::ImageFormat;
-use tray_icon::menu::{Menu, MenuEvent, MenuItem, PredefinedMenuItem};
+use tray_icon::menu::{Menu, MenuEvent, MenuItem, PredefinedMenuItem, Submenu};
 use tray_icon::{Icon, TrayIcon, TrayIconBuilder};
 
 use crate::{ErrorCause, MediaControlEvent, MediaIdentity, PlatformError, Result};
@@ -31,8 +31,15 @@ pub struct TrayLabels {
     pub quit: String,
 }
 
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct ConnectedDevices {
+    pub title: String,
+    pub devices: Vec<String>,
+}
+
 pub struct Tray {
-    _icon: TrayIcon,
+    icon: TrayIcon,
+    labels: TrayLabels,
 }
 
 impl Tray {
@@ -49,10 +56,19 @@ impl Tray {
             .with_tooltip(identity.name)
             .with_icon(tray_icon_image()?)
             .with_icon_as_template(IS_TEMPLATE_ICON)
-            .with_menu(Box::new(menu(labels)?))
+            .with_menu(Box::new(menu(labels, None)?))
             .build()
             .map_err(tray_error)?;
-        Ok(Self { _icon: icon })
+        Ok(Self {
+            icon,
+            labels: labels.clone(),
+        })
+    }
+
+    pub fn show_connected(&self, connected: Option<&ConnectedDevices>) -> Result<()> {
+        let menu = menu(&self.labels, connected)?;
+        self.icon.set_menu(Some(Box::new(menu)));
+        Ok(())
     }
 }
 
@@ -93,8 +109,24 @@ fn listen_to_clicks(on_event: EventHandler) {
     }));
 }
 
-fn menu(labels: &TrayLabels) -> Result<Menu> {
+fn connected_menu(connected: &ConnectedDevices) -> Result<Submenu> {
+    let submenu = Submenu::new(&connected.title, true);
+    for device in &connected.devices {
+        submenu
+            .append(&MenuItem::new(device, false, None))
+            .map_err(tray_error)?;
+    }
+    Ok(submenu)
+}
+
+fn menu(labels: &TrayLabels, connected: Option<&ConnectedDevices>) -> Result<Menu> {
     let menu = Menu::new();
+    if let Some(connected) = connected {
+        menu.append(&connected_menu(connected)?)
+            .map_err(tray_error)?;
+        menu.append(&PredefinedMenuItem::separator())
+            .map_err(tray_error)?;
+    }
     let playback = [
         (PLAY_PAUSE, &labels.play_pause),
         (NEXT, &labels.next),

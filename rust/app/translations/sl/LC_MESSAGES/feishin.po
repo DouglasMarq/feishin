@@ -164,6 +164,9 @@ msgstr "Dovoli"
 msgid "Allow remote control?"
 msgstr "Dovolite oddaljeno upravljanje?"
 
+msgid "Allow without asking"
+msgstr "Dovoli brez vprašanja"
+
 msgid "Already at the end"
 msgstr "Že na koncu"
 
@@ -178,6 +181,9 @@ msgstr "Že na strežniku"
 
 msgid "Amber"
 msgstr "Jantarna"
+
+msgid "Any device on this network can control this player without your approval. Banned devices are still refused."
+msgstr "Katera koli naprava v tem omrežju lahko upravlja ta predvajalnik brez vaše odobritve. Blokirane naprave so še vedno zavrnjene."
 
 msgid "Appearance"
 msgstr "Videz"
@@ -211,6 +217,12 @@ msgstr "Samodejno ({})"
 
 msgid "Back"
 msgstr "Nazaj"
+
+msgid "Ban"
+msgstr "Blokiraj"
+
+msgid "Banned devices"
+msgstr "Blokirane naprave"
 
 msgid "Blue"
 msgstr "Modra"
@@ -290,6 +302,9 @@ msgstr "Povežite se s svojim glasbenim strežnikom"
 msgid "Connect to {}"
 msgstr "Poveži z {}"
 
+msgid "Connected devices: {}"
+msgstr "Povezane naprave: {}"
+
 msgid "Connecting..."
 msgstr "Povezovanje..."
 
@@ -298,6 +313,12 @@ msgstr "Upravljaj glasbo, ki se predvaja na tem računalniku"
 
 msgid "Control the music playing on {}"
 msgstr "Upravljaj glasbo, ki se predvaja na {}"
+
+msgid "Controlled by {}"
+msgstr "Upravlja {}"
+
+msgid "Controlling this player"
+msgstr "Upravljajo ta predvajalnik"
 
 msgid "Could not add to \"{}\": {}"
 msgstr "Dodajanje v „{}“ ni uspelo: {}"
@@ -559,6 +580,9 @@ msgstr "Predstavitveni način: ti predlogi so izmišljeni in se predvajajo iz va
 msgid "Devices you allowed can control this player without asking again."
 msgstr "Odobrene naprave lahko upravljajo ta predvajalnik brez ponovnega vprašanja."
 
+msgid "Devices: controlled by {}"
+msgstr "Naprave: upravlja {}"
+
 msgid "Devices: controlling {}"
 msgstr "Naprave: upravljate {}"
 
@@ -570,6 +594,15 @@ msgstr "Imenik"
 
 msgid "Disc {}"
 msgstr "Disk {}"
+
+msgid "Disconnect"
+msgstr "Prekini povezavo"
+
+msgid "Disconnect \"{}\" and never let it control this player again"
+msgstr "Prekini povezavo z \"{}\" in mu nikoli več ne dovoli upravljati tega predvajalnika"
+
+msgid "Disconnect \"{}\"; it has to be allowed again to control this player"
+msgstr "Prekini povezavo z \"{}\"; za upravljanje tega predvajalnika ga bo treba znova dovoliti"
 
 msgid "Discord Rich Presence"
 msgstr "Discord Rich Presence"
@@ -787,6 +820,9 @@ msgstr "Obdrži {}"
 
 msgid "Language"
 msgstr "Jezik"
+
+msgid "Let \"{}\" ask to control this player again"
+msgstr "Dovoli, da \"{}\" znova zaprosi za upravljanje tega predvajalnika"
 
 msgid "Let \"{}\" control this player"
 msgstr "Dovoli napravi „{}“ upravljati ta predvajalnik"
@@ -1829,6 +1865,9 @@ msgstr "{} (demo)"
 
 msgid "{} (unavailable)"
 msgstr "{} (ni na voljo)"
+
+msgid "{} ({})"
+msgstr "{} ({})"
 
 msgid "{} at {}"
 msgstr "{} na {}"

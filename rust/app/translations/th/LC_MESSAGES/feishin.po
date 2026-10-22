@@ -146,6 +146,9 @@ msgstr "อนุญาต"
 msgid "Allow remote control?"
 msgstr "อนุญาตการควบคุมระยะไกลหรือไม่"
 
+msgid "Allow without asking"
+msgstr "อนุญาตโดยไม่ถาม"
+
 msgid "Already at the end"
 msgstr "อยู่ที่ท้ายสุดแล้ว"
 
@@ -160,6 +163,9 @@ msgstr "มีอยู่บนเซิร์ฟเวอร์แล้ว"
 
 msgid "Amber"
 msgstr "สีอำพัน"
+
+msgid "Any device on this network can control this player without your approval. Banned devices are still refused."
+msgstr "อุปกรณ์ใดก็ได้ในเครือข่ายนี้ควบคุมเครื่องเล่นนี้ได้โดยไม่ต้องได้รับการอนุมัติจากคุณ อุปกรณ์ที่ถูกแบนยังคงถูกปฏิเสธ"
 
 msgid "Appearance"
 msgstr "รูปลักษณ์"
@@ -193,6 +199,12 @@ msgstr "อัตโนมัติ ({})"
 
 msgid "Back"
 msgstr "ย้อนกลับ"
+
+msgid "Ban"
+msgstr "แบน"
+
+msgid "Banned devices"
+msgstr "อุปกรณ์ที่ถูกแบน"
 
 msgid "Blue"
 msgstr "สีน้ำเงิน"
@@ -272,6 +284,9 @@ msgstr "เชื่อมต่อกับเซิร์ฟเวอร์เ
 msgid "Connect to {}"
 msgstr "เชื่อมต่อกับ {}"
 
+msgid "Connected devices: {}"
+msgstr "อุปกรณ์ที่เชื่อมต่อ: {}"
+
 msgid "Connecting..."
 msgstr "กำลังเชื่อมต่อ..."
 
@@ -280,6 +295,12 @@ msgstr "ควบคุมเพลงที่เล่นอยู่บนค
 
 msgid "Control the music playing on {}"
 msgstr "ควบคุมเพลงที่เล่นอยู่บน {}"
+
+msgid "Controlled by {}"
+msgstr "ควบคุมโดย {}"
+
+msgid "Controlling this player"
+msgstr "กำลังควบคุมเครื่องเล่นนี้"
 
 msgid "Could not add to \"{}\": {}"
 msgstr "เพิ่มลงใน \"{}\" ไม่ได้: {}"
@@ -535,6 +556,9 @@ msgstr "โหมดสาธิต: รายการแนะนำเหล�
 msgid "Devices you allowed can control this player without asking again."
 msgstr "อุปกรณ์ที่คุณอนุญาตสามารถควบคุมเครื่องเล่นนี้ได้โดยไม่ต้องถามอีก"
 
+msgid "Devices: controlled by {}"
+msgstr "อุปกรณ์: ควบคุมโดย {}"
+
 msgid "Devices: controlling {}"
 msgstr "อุปกรณ์: กำลังควบคุม {}"
 
@@ -546,6 +570,15 @@ msgstr "ไดเรกทอรี"
 
 msgid "Disc {}"
 msgstr "แผ่นที่ {}"
+
+msgid "Disconnect"
+msgstr "ตัดการเชื่อมต่อ"
+
+msgid "Disconnect \"{}\" and never let it control this player again"
+msgstr "ตัดการเชื่อมต่อ \"{}\" และไม่ให้ควบคุมเครื่องเล่นนี้อีก"
+
+msgid "Disconnect \"{}\"; it has to be allowed again to control this player"
+msgstr "ตัดการเชื่อมต่อ \"{}\" ต้องอนุญาตใหม่จึงจะควบคุมเครื่องเล่นนี้ได้"
 
 msgid "Discord Rich Presence"
 msgstr "Discord Rich Presence"
@@ -760,6 +793,9 @@ msgstr "เก็บ {} ไว้"
 
 msgid "Language"
 msgstr "ภาษา"
+
+msgid "Let \"{}\" ask to control this player again"
+msgstr "ให้ \"{}\" ขอควบคุมเครื่องเล่นนี้ได้อีกครั้ง"
 
 msgid "Let \"{}\" control this player"
 msgstr "อนุญาตให้ \"{}\" ควบคุมเครื่องเล่นนี้"
@@ -1763,6 +1799,9 @@ msgstr "{} (สาธิต)"
 
 msgid "{} (unavailable)"
 msgstr "{} (ไม่พร้อมใช้งาน)"
+
+msgid "{} ({})"
+msgstr "{} ({})"
 
 msgid "{} at {}"
 msgstr "{} ที่ {}"

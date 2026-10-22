@@ -152,6 +152,9 @@ msgstr "Permet"
 msgid "Allow remote control?"
 msgstr "Permetre el control remot?"
 
+msgid "Allow without asking"
+msgstr "Permet sense preguntar"
+
 msgid "Already at the end"
 msgstr "Ja és al final"
 
@@ -166,6 +169,9 @@ msgstr "Ja és al servidor"
 
 msgid "Amber"
 msgstr "Ambre"
+
+msgid "Any device on this network can control this player without your approval. Banned devices are still refused."
+msgstr "Qualsevol dispositiu d'aquesta xarxa pot controlar aquest reproductor sense la teva aprovació. Els dispositius bloquejats continuen rebutjats."
 
 msgid "Appearance"
 msgstr "Aparença"
@@ -199,6 +205,12 @@ msgstr "Automàtic ({})"
 
 msgid "Back"
 msgstr "Enrere"
+
+msgid "Ban"
+msgstr "Bloqueja"
+
+msgid "Banned devices"
+msgstr "Dispositius bloquejats"
 
 msgid "Blue"
 msgstr "Blau"
@@ -278,6 +290,9 @@ msgstr "Connecteu-vos al vostre servidor de música"
 msgid "Connect to {}"
 msgstr "Connecta amb {}"
 
+msgid "Connected devices: {}"
+msgstr "Dispositius connectats: {}"
+
 msgid "Connecting..."
 msgstr "S'està connectant..."
 
@@ -286,6 +301,12 @@ msgstr "Controla la música que sona en aquest ordinador"
 
 msgid "Control the music playing on {}"
 msgstr "Controla la música que sona a {}"
+
+msgid "Controlled by {}"
+msgstr "Controlat per {}"
+
+msgid "Controlling this player"
+msgstr "Controlen aquest reproductor"
 
 msgid "Could not add to \"{}\": {}"
 msgstr "No s'ha pogut afegir a «{}»: {}"
@@ -543,6 +564,9 @@ msgstr "Mode de demostració: aquests suggeriments són inventats i sonen des de
 msgid "Devices you allowed can control this player without asking again."
 msgstr "Els dispositius que has permès poden controlar aquest reproductor sense tornar a preguntar."
 
+msgid "Devices: controlled by {}"
+msgstr "Dispositius: controlat per {}"
+
 msgid "Devices: controlling {}"
 msgstr "Dispositius: controlant {}"
 
@@ -554,6 +578,15 @@ msgstr "Directori"
 
 msgid "Disc {}"
 msgstr "Disc {}"
+
+msgid "Disconnect"
+msgstr "Desconnecta"
+
+msgid "Disconnect \"{}\" and never let it control this player again"
+msgstr "Desconnecta \"{}\" i no el deixis tornar a controlar aquest reproductor"
+
+msgid "Disconnect \"{}\"; it has to be allowed again to control this player"
+msgstr "Desconnecta \"{}\"; s'haurà de tornar a permetre per controlar aquest reproductor"
 
 msgid "Discord Rich Presence"
 msgstr "Discord Rich Presence"
@@ -769,6 +802,9 @@ msgstr "Conserva {}"
 
 msgid "Language"
 msgstr "Llengua"
+
+msgid "Let \"{}\" ask to control this player again"
+msgstr "Deixa que \"{}\" torni a demanar controlar aquest reproductor"
 
 msgid "Let \"{}\" control this player"
 msgstr "Permet que «{}» controli aquest reproductor"
@@ -1785,6 +1821,9 @@ msgstr "{} (demo)"
 
 msgid "{} (unavailable)"
 msgstr "{} (no disponible)"
+
+msgid "{} ({})"
+msgstr "{} ({})"
 
 msgid "{} at {}"
 msgstr "{} a {}"

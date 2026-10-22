@@ -152,6 +152,9 @@ msgstr "Payagan"
 msgid "Allow remote control?"
 msgstr "Payagan ang remote control?"
 
+msgid "Allow without asking"
+msgstr "Payagan nang hindi nagtatanong"
+
 msgid "Already at the end"
 msgstr "Nasa dulo na"
 
@@ -166,6 +169,9 @@ msgstr "Nasa server na"
 
 msgid "Amber"
 msgstr "Amber"
+
+msgid "Any device on this network can control this player without your approval. Banned devices are still refused."
+msgstr "Puwedeng kontrolin ng anumang device sa network na ito ang player na ito nang walang pahintulot mo. Tinatanggihan pa rin ang mga naka-ban na device."
 
 msgid "Appearance"
 msgstr "Itsura"
@@ -199,6 +205,12 @@ msgstr "Awtomatiko ({})"
 
 msgid "Back"
 msgstr "Bumalik"
+
+msgid "Ban"
+msgstr "I-ban"
+
+msgid "Banned devices"
+msgstr "Mga naka-ban na device"
 
 msgid "Blue"
 msgstr "Asul"
@@ -278,6 +290,9 @@ msgstr "Kumonekta sa iyong music server"
 msgid "Connect to {}"
 msgstr "Kumonekta sa {}"
 
+msgid "Connected devices: {}"
+msgstr "Mga nakakonektang device: {}"
+
 msgid "Connecting..."
 msgstr "Kumokonekta..."
 
@@ -286,6 +301,12 @@ msgstr "Kontrolin ang musikang tumutugtog sa computer na ito"
 
 msgid "Control the music playing on {}"
 msgstr "Kontrolin ang musikang tumutugtog sa {}"
+
+msgid "Controlled by {}"
+msgstr "Kinokontrol ng {}"
+
+msgid "Controlling this player"
+msgstr "Kumokontrol sa player na ito"
 
 msgid "Could not add to \"{}\": {}"
 msgstr "Hindi maidagdag sa \"{}\": {}"
@@ -543,6 +564,9 @@ msgstr "Demo mode: gawa-gawa lang ang mga mungkahing ito at tumutugtog mula sa i
 msgid "Devices you allowed can control this player without asking again."
 msgstr "Makokontrol ng mga pinayagang device ang player na ito nang hindi na nagtatanong."
 
+msgid "Devices: controlled by {}"
+msgstr "Mga device: kinokontrol ng {}"
+
 msgid "Devices: controlling {}"
 msgstr "Mga device: kinokontrol ang {}"
 
@@ -554,6 +578,15 @@ msgstr "Direktoryo"
 
 msgid "Disc {}"
 msgstr "Disc {}"
+
+msgid "Disconnect"
+msgstr "Idiskonekta"
+
+msgid "Disconnect \"{}\" and never let it control this player again"
+msgstr "Idiskonekta ang \"{}\" at huwag na itong payagang kontrolin ang player na ito"
+
+msgid "Disconnect \"{}\"; it has to be allowed again to control this player"
+msgstr "Idiskonekta ang \"{}\"; kailangan itong payagan muli para makontrol ang player na ito"
 
 msgid "Discord Rich Presence"
 msgstr "Discord Rich Presence"
@@ -769,6 +802,9 @@ msgstr "Panatilihin ang {}"
 
 msgid "Language"
 msgstr "Wika"
+
+msgid "Let \"{}\" ask to control this player again"
+msgstr "Payagan ang \"{}\" na humiling muli na kontrolin ang player na ito"
 
 msgid "Let \"{}\" control this player"
 msgstr "Hayaang kontrolin ng \"{}\" ang player na ito"
@@ -1785,6 +1821,9 @@ msgstr "{} (demo)"
 
 msgid "{} (unavailable)"
 msgstr "{} (hindi magagamit)"
+
+msgid "{} ({})"
+msgstr "{} ({})"
 
 msgid "{} at {}"
 msgstr "{} sa {}"

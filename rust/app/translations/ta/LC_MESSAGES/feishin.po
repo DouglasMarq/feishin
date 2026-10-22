@@ -152,6 +152,9 @@ msgstr "அனுமதி"
 msgid "Allow remote control?"
 msgstr "தொலைக் கட்டுப்பாட்டை அனுமதிக்கவா?"
 
+msgid "Allow without asking"
+msgstr "கேட்காமல் அனுமதி"
+
 msgid "Already at the end"
 msgstr "ஏற்கனவே இறுதியில் உள்ளது"
 
@@ -166,6 +169,9 @@ msgstr "ஏற்கனவே சேவையகத்தில் உள்ள�
 
 msgid "Amber"
 msgstr "அம்பர்"
+
+msgid "Any device on this network can control this player without your approval. Banned devices are still refused."
+msgstr "இந்த நெட்வொர்க்கில் உள்ள எந்தச் சாதனமும் உங்கள் ஒப்புதல் இன்றி இந்த பிளேயரைக் கட்டுப்படுத்தலாம். தடைசெய்த சாதனங்கள் தொடர்ந்து மறுக்கப்படும்."
 
 msgid "Appearance"
 msgstr "தோற்றம்"
@@ -199,6 +205,12 @@ msgstr "தானியங்கு ({})"
 
 msgid "Back"
 msgstr "பின்செல்"
+
+msgid "Ban"
+msgstr "தடைசெய்"
+
+msgid "Banned devices"
+msgstr "தடைசெய்த சாதனங்கள்"
 
 msgid "Blue"
 msgstr "நீலம்"
@@ -278,6 +290,9 @@ msgstr "உங்கள் இசைச் சேவையகத்துடன�
 msgid "Connect to {}"
 msgstr "{} உடன் இணை"
 
+msgid "Connected devices: {}"
+msgstr "இணைந்த சாதனங்கள்: {}"
+
 msgid "Connecting..."
 msgstr "இணைக்கிறது..."
 
@@ -286,6 +301,12 @@ msgstr "இந்தக் கணினியில் இயங்கும் 
 
 msgid "Control the music playing on {}"
 msgstr "{} இல் இயங்கும் இசையைக் கட்டுப்படுத்து"
+
+msgid "Controlled by {}"
+msgstr "{} கட்டுப்படுத்துகிறது"
+
+msgid "Controlling this player"
+msgstr "இந்த பிளேயரைக் கட்டுப்படுத்துகின்றன"
 
 msgid "Could not add to \"{}\": {}"
 msgstr "\"{}\" இல் சேர்க்க முடியவில்லை: {}"
@@ -543,6 +564,9 @@ msgstr "டெமோ பயன்முறை: இந்தத் தேர்�
 msgid "Devices you allowed can control this player without asking again."
 msgstr "நீங்கள் அனுமதித்த சாதனங்கள் மீண்டும் கேட்காமல் இந்த பிளேயரைக் கட்டுப்படுத்தலாம்."
 
+msgid "Devices: controlled by {}"
+msgstr "சாதனங்கள்: {} கட்டுப்படுத்துகிறது"
+
 msgid "Devices: controlling {}"
 msgstr "சாதனங்கள்: {} கட்டுப்படுத்தப்படுகிறது"
 
@@ -554,6 +578,15 @@ msgstr "அடைவு"
 
 msgid "Disc {}"
 msgstr "வட்டு {}"
+
+msgid "Disconnect"
+msgstr "துண்டி"
+
+msgid "Disconnect \"{}\" and never let it control this player again"
+msgstr "\"{}\" ஐத் துண்டித்து, இனி இந்த பிளேயரைக் கட்டுப்படுத்த விடாதே"
+
+msgid "Disconnect \"{}\"; it has to be allowed again to control this player"
+msgstr "\"{}\" ஐத் துண்டி; இந்த பிளேயரைக் கட்டுப்படுத்த மீண்டும் அனுமதிக்க வேண்டும்"
 
 msgid "Discord Rich Presence"
 msgstr "Discord Rich Presence"
@@ -769,6 +802,9 @@ msgstr "{}-ஐ வைத்திரு"
 
 msgid "Language"
 msgstr "மொழி"
+
+msgid "Let \"{}\" ask to control this player again"
+msgstr "\"{}\" மீண்டும் இந்த பிளேயரைக் கட்டுப்படுத்தக் கேட்க அனுமதி"
 
 msgid "Let \"{}\" control this player"
 msgstr "\"{}\" இந்த பிளேயரைக் கட்டுப்படுத்த அனுமதி"
@@ -1785,6 +1821,9 @@ msgstr "{} (டெமோ)"
 
 msgid "{} (unavailable)"
 msgstr "{} (கிடைக்கவில்லை)"
+
+msgid "{} ({})"
+msgstr "{} ({})"
 
 msgid "{} at {}"
 msgstr "{1} இல் {0}"

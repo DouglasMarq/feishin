@@ -1,4 +1,5 @@
 mod client;
+mod controllers;
 mod discovery;
 mod error;
 mod frame;
@@ -14,6 +15,7 @@ mod trust;
 mod tests;
 
 pub use client::{ClientLink, connect};
+pub use controllers::Controller;
 pub use discovery::{Discovered, Discovery};
 pub use error::RemoteError;
 pub use host::{Host, HostDelegate};

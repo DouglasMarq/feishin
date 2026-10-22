@@ -3,7 +3,7 @@ use std::time::Duration;
 
 use async_trait::async_trait;
 use feishin_remote::{
-    DeviceInfo, HostDelegate, RemoteControl, RemoteFailure, ServerKey, TrackPlacement,
+    Controller, DeviceInfo, HostDelegate, RemoteControl, RemoteFailure, ServerKey, TrackPlacement,
     TransferPayload,
 };
 use tokio::sync::{mpsc, oneshot};
@@ -14,7 +14,7 @@ use super::transfer::{LocalServer, adapt_payload, adapt_tracks};
 use crate::controller::{Command, RemoteCommand, TrackCommand, forward_command};
 use crate::list_stream::ListRow;
 use crate::session::Session;
-use crate::ui::AppWindow;
+use crate::ui::{AppWindow, devices, on_ui};
 
 const HAND_OVER_TIMEOUT: Duration = Duration::from_secs(5);
 
@@ -67,6 +67,12 @@ impl HostDelegate for AppHostDelegate {
 
     fn server(&self) -> Option<ServerKey> {
         self.local_server().map(|local| local.key)
+    }
+
+    fn controllers_changed(&self, controllers: Vec<Controller>) {
+        on_ui(&self.window, move |window| {
+            devices::show_controllers(window, &controllers)
+        });
     }
 }
 

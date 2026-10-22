@@ -158,6 +158,9 @@ msgstr "Dozvoli"
 msgid "Allow remote control?"
 msgstr "Dozvoliti daljinsko upravljanje?"
 
+msgid "Allow without asking"
+msgstr "Дозволи без питања"
+
 msgid "Already at the end"
 msgstr "Već je na kraju"
 
@@ -172,6 +175,9 @@ msgstr "Već je na serveru"
 
 msgid "Amber"
 msgstr "Ćilibar"
+
+msgid "Any device on this network can control this player without your approval. Banned devices are still refused."
+msgstr "Сваки уређај на овој мрежи може да управља овим плејером без вашег одобрења. Блокирани уређаји се и даље одбијају."
 
 msgid "Appearance"
 msgstr "Izgled"
@@ -205,6 +211,12 @@ msgstr "Automatski ({})"
 
 msgid "Back"
 msgstr "Nazad"
+
+msgid "Ban"
+msgstr "Блокирај"
+
+msgid "Banned devices"
+msgstr "Блокирани уређаји"
 
 msgid "Blue"
 msgstr "Plava"
@@ -284,6 +296,9 @@ msgstr "Povežite se sa svojim muzičkim serverom"
 msgid "Connect to {}"
 msgstr "Poveži se sa {}"
 
+msgid "Connected devices: {}"
+msgstr "Повезани уређаји: {}"
+
 msgid "Connecting..."
 msgstr "Povezivanje..."
 
@@ -292,6 +307,12 @@ msgstr "Upravljaj muzikom koja svira na ovom računaru"
 
 msgid "Control the music playing on {}"
 msgstr "Upravljaj muzikom koja svira na {}"
+
+msgid "Controlled by {}"
+msgstr "Управља {}"
+
+msgid "Controlling this player"
+msgstr "Управљају овим плејером"
 
 msgid "Could not add to \"{}\": {}"
 msgstr "Dodavanje u \"{}\" nije uspelo: {}"
@@ -551,6 +572,9 @@ msgstr "Demo režim: ovi predlozi su izmišljeni i puštaju se iz demo bibliotek
 msgid "Devices you allowed can control this player without asking again."
 msgstr "Uređaji koje ste dozvolili mogu da upravljaju ovim plejerom bez ponovnog pitanja."
 
+msgid "Devices: controlled by {}"
+msgstr "Уређаји: управља {}"
+
 msgid "Devices: controlling {}"
 msgstr "Uređaji: upravljate {}"
 
@@ -562,6 +586,15 @@ msgstr "Imenik"
 
 msgid "Disc {}"
 msgstr "Disk {}"
+
+msgid "Disconnect"
+msgstr "Прекини везу"
+
+msgid "Disconnect \"{}\" and never let it control this player again"
+msgstr "Прекини везу са \"{}\" и никад му више не дозволи да управља овим плејером"
+
+msgid "Disconnect \"{}\"; it has to be allowed again to control this player"
+msgstr "Прекини везу са \"{}\"; мора поново да буде дозвољен да би управљао овим плејером"
 
 msgid "Discord Rich Presence"
 msgstr "Discord Rich Presence"
@@ -778,6 +811,9 @@ msgstr "Zadrži {}"
 
 msgid "Language"
 msgstr "Jezik"
+
+msgid "Let \"{}\" ask to control this player again"
+msgstr "Дозволи да \"{}\" поново затражи управљање овим плејером"
 
 msgid "Let \"{}\" control this player"
 msgstr "Dozvoli uređaju \"{}\" da upravlja ovim plejerom"
@@ -1807,6 +1843,9 @@ msgstr "{} (demo)"
 
 msgid "{} (unavailable)"
 msgstr "{} (nedostupno)"
+
+msgid "{} ({})"
+msgstr "{} ({})"
 
 msgid "{} at {}"
 msgstr "{} na {}"

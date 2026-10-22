@@ -146,6 +146,9 @@ msgstr "許可"
 msgid "Allow remote control?"
 msgstr "リモート操作を許可しますか？"
 
+msgid "Allow without asking"
+msgstr "確認せずに許可"
+
 msgid "Already at the end"
 msgstr "すでに最後です"
 
@@ -160,6 +163,9 @@ msgstr "すでにサーバーにあります"
 
 msgid "Amber"
 msgstr "アンバー"
+
+msgid "Any device on this network can control this player without your approval. Banned devices are still refused."
+msgstr "このネットワーク上のどのデバイスも、承認なしでこのプレーヤーを操作できます。禁止したデバイスは引き続き拒否されます。"
 
 msgid "Appearance"
 msgstr "外観"
@@ -193,6 +199,12 @@ msgstr "自動 ({})"
 
 msgid "Back"
 msgstr "戻る"
+
+msgid "Ban"
+msgstr "禁止"
+
+msgid "Banned devices"
+msgstr "禁止したデバイス"
 
 msgid "Blue"
 msgstr "ブルー"
@@ -272,6 +284,9 @@ msgstr "音楽サーバーに接続"
 msgid "Connect to {}"
 msgstr "{} に接続"
 
+msgid "Connected devices: {}"
+msgstr "接続中のデバイス: {}"
+
 msgid "Connecting..."
 msgstr "接続中..."
 
@@ -280,6 +295,12 @@ msgstr "このコンピューターで再生中の音楽を操作"
 
 msgid "Control the music playing on {}"
 msgstr "{} で再生中の音楽を操作"
+
+msgid "Controlled by {}"
+msgstr "{} が操作中"
+
+msgid "Controlling this player"
+msgstr "このプレーヤーを操作中"
 
 msgid "Could not add to \"{}\": {}"
 msgstr "「{}」に追加できませんでした: {}"
@@ -535,6 +556,9 @@ msgstr "デモ モード: これらのおすすめは架空のもので、デモ
 msgid "Devices you allowed can control this player without asking again."
 msgstr "許可したデバイスは確認なしでこのプレーヤーを操作できます。"
 
+msgid "Devices: controlled by {}"
+msgstr "デバイス: {} が操作中"
+
 msgid "Devices: controlling {}"
 msgstr "デバイス: {} を操作中"
 
@@ -546,6 +570,15 @@ msgstr "ディレクトリ"
 
 msgid "Disc {}"
 msgstr "ディスク {}"
+
+msgid "Disconnect"
+msgstr "切断"
+
+msgid "Disconnect \"{}\" and never let it control this player again"
+msgstr "\"{}\" を切断し、今後このプレーヤーを操作させない"
+
+msgid "Disconnect \"{}\"; it has to be allowed again to control this player"
+msgstr "\"{}\" を切断します。このプレーヤーを操作するには再度許可が必要です"
 
 msgid "Discord Rich Presence"
 msgstr "Discord Rich Presence"
@@ -760,6 +793,9 @@ msgstr "{} を残す"
 
 msgid "Language"
 msgstr "言語"
+
+msgid "Let \"{}\" ask to control this player again"
+msgstr "\"{}\" が再びこのプレーヤーの操作を要求できるようにする"
 
 msgid "Let \"{}\" control this player"
 msgstr "「{}」にこのプレーヤーの操作を許可"
@@ -1763,6 +1799,9 @@ msgstr "{} (デモ)"
 
 msgid "{} (unavailable)"
 msgstr "{} (利用不可)"
+
+msgid "{} ({})"
+msgstr "{} ({})"
 
 msgid "{} at {}"
 msgstr "{1} の {0}"

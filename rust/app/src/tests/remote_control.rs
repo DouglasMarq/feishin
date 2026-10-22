@@ -5,8 +5,8 @@ use async_trait::async_trait;
 use feishin_core::queue::{Queue, QueueTrack, YouTubeTrack};
 use feishin_player::PlayerEvent;
 use feishin_remote::{
-    ClientMessage, DeviceId, DeviceInfo, Host, HostDelegate, HostMessage, HostState, PairingToken,
-    RemoteControl, RemoteFailure, ServerKey, TransferPayload, TrustStore, connect,
+    ClientMessage, Controller, DeviceId, DeviceInfo, Host, HostDelegate, HostMessage, HostState,
+    PairingToken, RemoteControl, RemoteFailure, ServerKey, TransferPayload, TrustStore, connect,
 };
 use tokio::net::TcpListener;
 use tokio::sync::{mpsc, oneshot, watch};
@@ -94,6 +94,15 @@ impl TrustStore for MemoryTrust {
     fn trust(&self, device: &DeviceInfo, token: PairingToken) {
         self.0.lock().unwrap().push((device.id.clone(), token));
     }
+    fn forget(&self, device: &DeviceId) {
+        self.0.lock().unwrap().retain(|(id, _)| id != device);
+    }
+    fn ban(&self, device: &DeviceInfo, _address: std::net::IpAddr) {
+        self.forget(&device.id);
+    }
+    fn is_banned(&self, _device: &DeviceId, _address: std::net::IpAddr) -> bool {
+        false
+    }
     fn host_token(&self, host: &DeviceId) -> Option<PairingToken> {
         self.find(host)
     }
@@ -144,6 +153,9 @@ impl HostDelegate for ApprovingDelegate {
     }
     fn server(&self) -> Option<ServerKey> {
         self.0.server()
+    }
+    fn controllers_changed(&self, controllers: Vec<Controller>) {
+        self.0.controllers_changed(controllers);
     }
 }
 
