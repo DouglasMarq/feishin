@@ -46,7 +46,7 @@ struct FakeDelegate {
 
 #[async_trait]
 impl HostDelegate for FakeDelegate {
-    async fn approve(&self, _device: DeviceInfo) -> bool {
+    async fn approve(&self, _device: DeviceInfo, _peer: std::net::IpAddr) -> bool {
         *self.approvals.lock().unwrap() += 1;
         self.is_allowed
     }
@@ -193,6 +193,55 @@ async fn a_denied_device_cannot_connect() {
     )
     .await;
     assert!(matches!(refused, Err(RemoteError::Denied)));
+}
+
+#[tokio::test]
+async fn given_a_refused_address_it_is_not_asked_again() {
+    let host = start_host(false).await;
+    for name in ["phone", "tablet"] {
+        let refused = connect(host.address, device(name), Arc::new(MemoryTrust::default())).await;
+        assert!(matches!(refused, Err(RemoteError::Denied)));
+    }
+    assert_eq!(*host.delegate.approvals.lock().unwrap(), 1);
+}
+
+async fn read_challenge(stream: TcpStream) -> (BufReader<TcpStream>, usize) {
+    let mut reader = BufReader::new(stream);
+    let mut line = String::new();
+    let read = tokio::time::timeout(Duration::from_secs(5), reader.read_line(&mut line))
+        .await
+        .unwrap()
+        .unwrap();
+    (reader, read)
+}
+
+#[tokio::test]
+async fn given_more_handshakes_than_the_cap_the_extra_connection_is_closed() {
+    let host = start_host(true).await;
+    let mut waiting = Vec::new();
+    for _ in 0..crate::host::MAX_PENDING_HANDSHAKES {
+        let (reader, read) = read_challenge(TcpStream::connect(host.address).await.unwrap()).await;
+        assert!(read > 0, "a challenge is sent");
+        waiting.push(reader);
+    }
+
+    let (_extra, read) = read_challenge(TcpStream::connect(host.address).await.unwrap()).await;
+
+    assert_eq!(
+        read, 0,
+        "the extra connection is closed without a challenge"
+    );
+}
+
+#[tokio::test]
+async fn given_nothing_listens_on_the_port_the_device_is_unreachable() {
+    let closed = TcpListener::bind("127.0.0.1:0")
+        .await
+        .unwrap()
+        .local_addr()
+        .unwrap();
+    let refused = connect(closed, device("phone"), Arc::new(MemoryTrust::default())).await;
+    assert!(matches!(refused, Err(RemoteError::Unreachable)));
 }
 
 #[tokio::test]

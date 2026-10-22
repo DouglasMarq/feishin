@@ -14,6 +14,8 @@ pub enum RemoteError {
     Denied,
     #[error("the other device did not answer in time")]
     TimedOut,
+    #[error("the other device could not be reached")]
+    Unreachable,
     #[error("device discovery failed: {0}")]
     Discovery(#[source] Arc<mdns_sd::Error>),
     #[error("the system random source failed: {0}")]

@@ -1,3 +1,4 @@
+use std::net::IpAddr;
 use std::time::Duration;
 
 use async_trait::async_trait;
@@ -34,8 +35,8 @@ impl AppHostDelegate {
 
 #[async_trait]
 impl HostDelegate for AppHostDelegate {
-    async fn approve(&self, device: DeviceInfo) -> bool {
-        self.approvals.ask(&self.window, &device).await
+    async fn approve(&self, device: DeviceInfo, peer: IpAddr) -> bool {
+        self.approvals.ask(&self.window, &device, peer).await
     }
 
     fn control(&self, device: &DeviceInfo, control: RemoteControl) -> Result<(), RemoteFailure> {

@@ -1,4 +1,4 @@
-use std::net::SocketAddr;
+use std::net::{IpAddr, SocketAddr};
 use std::sync::Arc;
 use std::time::{Duration, Instant};
 
@@ -6,7 +6,7 @@ use async_trait::async_trait;
 use tokio::io::BufReader;
 use tokio::net::tcp::{OwnedReadHalf, OwnedWriteHalf};
 use tokio::net::{TcpListener, TcpStream};
-use tokio::sync::{Mutex, mpsc, watch};
+use tokio::sync::{Mutex, OwnedSemaphorePermit, Semaphore, mpsc, watch};
 
 use crate::error::RemoteError;
 use crate::frame::{MAX_HANDSHAKE_FRAME_BYTES, read_message, read_message_within, write_message};
@@ -17,15 +17,17 @@ use crate::protocol::{
     ClientMessage, DeviceInfo, HostMessage, PROTOCOL_VERSION, RemoteControl, RemoteFailure,
     ServerKey, TransferPayload,
 };
+use crate::refusals::Refusals;
 use crate::trust::TrustStore;
 
 const HELLO_TIMEOUT: Duration = Duration::from_secs(10);
 const APPROVAL_TIMEOUT: Duration = Duration::from_secs(60);
 const INCOMING_MESSAGE_CAPACITY: usize = 64;
+pub(crate) const MAX_PENDING_HANDSHAKES: usize = 8;
 
 #[async_trait]
 pub trait HostDelegate: Send + Sync {
-    async fn approve(&self, device: DeviceInfo) -> bool;
+    async fn approve(&self, device: DeviceInfo, peer: IpAddr) -> bool;
     fn control(&self, device: &DeviceInfo, control: RemoteControl) -> Result<(), RemoteFailure>;
     async fn adopt(&self, payload: TransferPayload) -> Result<(), RemoteFailure>;
     async fn hand_over(&self) -> Result<TransferPayload, RemoteFailure>;
@@ -38,6 +40,8 @@ pub struct Host {
     trust: Arc<dyn TrustStore>,
     state: watch::Receiver<HostState>,
     approving: Mutex<()>,
+    handshakes: Arc<Semaphore>,
+    refusals: Refusals,
 }
 
 impl Host {
@@ -53,6 +57,8 @@ impl Host {
             trust,
             state,
             approving: Mutex::new(()),
+            handshakes: Arc::new(Semaphore::new(MAX_PENDING_HANDSHAKES)),
+            refusals: Refusals::default(),
         })
     }
 
@@ -73,18 +79,28 @@ impl Host {
             tracing::warn!("refused a remote control connection from outside the local network");
             return;
         }
+        let Ok(handshake) = Arc::clone(&self.handshakes).try_acquire_owned() else {
+            tracing::warn!("refused a remote control connection: too many are being set up");
+            return;
+        };
         let host = Arc::clone(self);
         tokio::spawn(async move {
-            if let Err(error) = host.run_session(stream).await {
+            if let Err(error) = host.run_session(stream, peer.ip(), handshake).await {
                 tracing::info!("a remote control session ended: {error}");
             }
         });
     }
 
-    async fn run_session(&self, stream: TcpStream) -> Result<(), RemoteError> {
+    async fn run_session(
+        &self,
+        stream: TcpStream,
+        peer: IpAddr,
+        handshake: OwnedSemaphorePermit,
+    ) -> Result<(), RemoteError> {
         let (read_half, mut writer) = stream.into_split();
         let mut reader = BufReader::new(read_half);
-        let device = self.handshake(&mut reader, &mut writer).await?;
+        let device = self.handshake(&mut reader, &mut writer, peer).await?;
+        drop(handshake);
         tracing::info!("{} is controlling this player", device.name);
         let incoming = spawn_reader(reader);
         Session {
@@ -101,6 +117,7 @@ impl Host {
         &self,
         reader: &mut BufReader<OwnedReadHalf>,
         writer: &mut OwnedWriteHalf,
+        peer: IpAddr,
     ) -> Result<DeviceInfo, RemoteError> {
         let nonce = Nonce::random()?;
         let challenge = HostMessage::Challenge {
@@ -123,6 +140,7 @@ impl Host {
         else {
             return Err(RemoteError::Protocol("expected a hello"));
         };
+        let device = device.cleaned();
         if version != PROTOCOL_VERSION {
             let failure = RemoteFailure::VersionMismatch;
             write_message(writer, &HostMessage::Failed { failure }).await?;
@@ -134,7 +152,7 @@ impl Host {
             .zip(proof)
             .is_some_and(|(token, proof)| proves(&proof, &token, &nonce));
         if !known {
-            self.pair(&device, writer).await?;
+            self.pair(&device, peer, writer).await?;
         }
         let server = self.delegate.server();
         write_message(writer, &HostMessage::Welcome { server }).await?;
@@ -144,28 +162,40 @@ impl Host {
     async fn pair(
         &self,
         device: &DeviceInfo,
+        peer: IpAddr,
         writer: &mut OwnedWriteHalf,
     ) -> Result<(), RemoteError> {
+        if self.refusals.is_cooling_down(peer, Instant::now()) {
+            tracing::info!("not asking again about {peer}, it was refused a moment ago");
+            return deny(writer).await;
+        }
         let Ok(_approving) = self.approving.try_lock() else {
             let failure = RemoteFailure::Busy;
             write_message(writer, &HostMessage::Failed { failure }).await?;
             return Err(RemoteError::Failed(failure));
         };
-        let approved =
-            tokio::time::timeout(APPROVAL_TIMEOUT, self.delegate.approve(device.clone()))
-                .await
-                .unwrap_or_else(|_| {
-                    tracing::info!("nobody approved {} in time", device.name);
-                    false
-                });
+        let approved = tokio::time::timeout(
+            APPROVAL_TIMEOUT,
+            self.delegate.approve(device.clone(), peer),
+        )
+        .await
+        .unwrap_or_else(|_| {
+            tracing::info!("nobody approved {} in time", device.name);
+            false
+        });
         if !approved {
-            write_message(writer, &HostMessage::Denied).await?;
-            return Err(RemoteError::Denied);
+            self.refusals.remember(peer, Instant::now());
+            return deny(writer).await;
         }
         let token = PairingToken::random()?;
         self.trust.trust(device, token);
         write_message(writer, &HostMessage::Paired { token }).await
     }
+}
+
+async fn deny(writer: &mut OwnedWriteHalf) -> Result<(), RemoteError> {
+    write_message(writer, &HostMessage::Denied).await?;
+    Err(RemoteError::Denied)
 }
 
 fn spawn_reader(mut reader: BufReader<OwnedReadHalf>) -> mpsc::Receiver<ClientMessage> {

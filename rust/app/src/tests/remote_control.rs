@@ -130,7 +130,7 @@ struct ApprovingDelegate(AppHostDelegate);
 
 #[async_trait]
 impl HostDelegate for ApprovingDelegate {
-    async fn approve(&self, _device: DeviceInfo) -> bool {
+    async fn approve(&self, _device: DeviceInfo, _peer: std::net::IpAddr) -> bool {
         true
     }
     fn control(&self, device: &DeviceInfo, control: RemoteControl) -> Result<(), RemoteFailure> {

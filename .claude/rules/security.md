@@ -10,7 +10,8 @@
 
 - !IMPORTANT: Remote control is off by default (Settings > Integrations > Remote control). NEVER enable it by default or start the listener while it is off.
 - !IMPORTANT: The host accepts connections only from local-network peers (`is_lan_peer` in `crates/remote/src/lan.rs`, checked by `host.rs` and discovery: loopback, private, link-local, unique local). NEVER widen this check.
-- A new device needs an explicit approval on the controlled player (with a timeout), then proves itself on every connection with a challenge on a SHA-256 of its pairing token (`pairing::proof_of` / `proves`, random nonce). Pairing tokens are stored in `data_dir/remote-devices.json`; NEVER send the token itself over the wire after pairing.
+- A new device needs an explicit approval on the controlled player (with a timeout) that shows its address, then proves itself on every connection with a challenge on a SHA-256 of its pairing token (`pairing::proof_of` / `proves`, random nonce). Pairing tokens are stored in `data_dir/remote-devices.json`; NEVER send the token itself over the wire after pairing.
+- Unpaired peers are bounded: at most 8 connections in the handshake at once (`MAX_PENDING_HANDSHAKES`), an address that was refused is not asked again for 2 minutes (`refusals.rs`), and device names from the network go through `DeviceInfo::cleaned`. YouTube tracks from another device get their thumbnail rebuilt from the video id (`remote::transfer::with_own_thumbnail`); NEVER fetch a URL another device sent.
 - Traffic is not encrypted, so it carries only metadata and commands - NEVER passwords, credentials or stream URLs. Server songs move between players only when both use the same server (URL and user); the receiving player streams them with its own credential.
 - Messages are newline-delimited JSON decoded into typed enums; unknown or malformed messages are rejected, never interpreted loosely.
 

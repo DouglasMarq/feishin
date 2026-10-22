@@ -1,10 +1,11 @@
 use std::sync::Arc;
 
-use feishin_core::queue::{Queue, QueueSnapshot, RepeatMode};
+use feishin_core::queue::{Queue, QueueItem, QueueSnapshot, RepeatMode};
 use feishin_remote::{HostMessage, RemoteFailure, RemoteQueue, StateUpdate, TransferPayload};
 use tokio::sync::mpsc;
 use tokio::task::JoinHandle;
 
+use super::transfer::with_own_thumbnail;
 use crate::controller::{UiSink, UiUpdate};
 
 #[derive(Debug)]
@@ -30,7 +31,9 @@ impl Mirror {
 
     pub fn show(&mut self, update: StateUpdate) {
         let shown = match update {
-            StateUpdate::NowPlaying { track } => UiUpdate::NowPlaying(track.map(Box::new)),
+            StateUpdate::NowPlaying { track } => {
+                UiUpdate::NowPlaying(track.map(|track| Box::new(with_own_thumbnail(track))))
+            }
             StateUpdate::Playback {
                 is_playing,
                 position_ms,
@@ -65,7 +68,14 @@ impl Mirror {
 
 fn mirrored_queue(queue: RemoteQueue) -> Queue {
     Queue::from_snapshot(QueueSnapshot {
-        items: queue.items,
+        items: queue
+            .items
+            .into_iter()
+            .map(|item| QueueItem {
+                uid: item.uid,
+                track: Arc::new(with_own_thumbnail(Arc::unwrap_or_clone(item.track))),
+            })
+            .collect(),
         shuffled: None,
         current_uid: queue.current_uid,
         repeat: RepeatMode::None,
@@ -142,6 +152,50 @@ mod tests {
             items: queue.items().to_vec(),
             current_uid: Some(current_uid),
         }
+    }
+
+    fn shown_thumbnail(update: &UiUpdate) -> Option<String> {
+        match update {
+            UiUpdate::NowPlaying(Some(track)) => track.thumbnail_url().map(str::to_owned),
+            UiUpdate::Queue(view) => view
+                .item_at(0)
+                .and_then(|item| item.track.thumbnail_url().map(str::to_owned)),
+            _ => None,
+        }
+    }
+
+    #[test]
+    fn given_a_mirrored_track_its_thumbnail_comes_from_the_video_id() {
+        let shown = Arc::new(Shown::default());
+        let mut mirror = Mirror::new(shown.clone());
+        let track = QueueTrack::from(&YouTubeTrack {
+            video_id: "abc".into(),
+            title: "Song".into(),
+            artists: Vec::new(),
+            album: None,
+            thumbnail_url: Some("http://127.0.0.1:8080/".into()),
+            duration_ms: 1_000,
+        });
+        let mut queue = Queue::with_seed(1);
+        queue.play_tracks_now(vec![track.clone()], Some(0));
+
+        mirror.show(StateUpdate::NowPlaying { track: Some(track) });
+        mirror.show(StateUpdate::Queue {
+            queue: RemoteQueue {
+                items: queue.items().to_vec(),
+                current_uid: None,
+            },
+        });
+
+        let thumbnails: Vec<Option<String>> = shown
+            .0
+            .lock()
+            .unwrap()
+            .iter()
+            .map(shown_thumbnail)
+            .collect();
+        let expected = Some("https://i.ytimg.com/vi/abc/hqdefault.jpg".to_owned());
+        assert_eq!(thumbnails, [expected.clone(), expected]);
     }
 
     #[test]

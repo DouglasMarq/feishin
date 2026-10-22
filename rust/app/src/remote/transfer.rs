@@ -1,8 +1,9 @@
 use std::sync::Arc;
 
 use feishin_api::MusicServer;
-use feishin_core::queue::{QueueItem, QueueSnapshot, QueueTrack};
+use feishin_core::queue::{QueueItem, QueueSnapshot, QueueTrack, TrackSource, YouTubeVideo};
 use feishin_remote::{RemoteFailure, ServerKey, TransferPayload};
+use feishin_youtube::{is_video_id, thumbnail_url};
 
 use crate::controller::AdoptedQueue;
 
@@ -39,13 +40,28 @@ impl<'local> TrackAdapter<'local> {
 
     fn adapt(&self, track: QueueTrack) -> Option<QueueTrack> {
         match (track.source.is_server(), self.is_same_server, self.local) {
-            (false, _, _) => Some(track),
+            (false, _, _) => Some(with_own_thumbnail(track)),
             (true, true, Some(local)) => Some(QueueTrack {
                 server_id: Arc::clone(&local.id),
                 ..track
             }),
             (true, _, _) => None,
         }
+    }
+}
+
+pub fn with_own_thumbnail(track: QueueTrack) -> QueueTrack {
+    let TrackSource::YouTube(video) = &track.source else {
+        return track;
+    };
+    let video = YouTubeVideo {
+        thumbnail_url: is_video_id(&video.video_id)
+            .then(|| Box::from(thumbnail_url(&video.video_id))),
+        video_id: video.video_id.clone(),
+    };
+    QueueTrack {
+        source: TrackSource::YouTube(Arc::new(video)),
+        ..track
     }
 }
 
@@ -156,14 +172,63 @@ mod tests {
     }
 
     fn youtube_track(id: &str) -> QueueTrack {
+        youtube_track_showing(id, None)
+    }
+
+    fn youtube_track_showing(id: &str, thumbnail_url: Option<&str>) -> QueueTrack {
         QueueTrack::from(&YouTubeTrack {
             video_id: id.into(),
             title: id.into(),
             artists: Vec::new(),
             album: None,
-            thumbnail_url: None,
+            thumbnail_url: thumbnail_url.map(Into::into),
             duration_ms: 1_000,
         })
+    }
+
+    #[test]
+    fn given_a_track_from_another_device_its_thumbnail_comes_from_the_video_id() {
+        let tracks = vec![
+            youtube_track_showing("dQw4w9WgXcQ", Some("http://192.168.0.1/admin")),
+            youtube_track_showing("../reboot", Some("file:///etc/passwd")),
+        ];
+
+        let adapted = adapt_tracks(tracks, None, None, None).unwrap();
+
+        let thumbnails: Vec<Option<&str>> = adapted
+            .tracks
+            .iter()
+            .map(QueueTrack::thumbnail_url)
+            .collect();
+        assert_eq!(
+            thumbnails,
+            [
+                Some("https://i.ytimg.com/vi/dQw4w9WgXcQ/hqdefault.jpg"),
+                None
+            ]
+        );
+    }
+
+    #[test]
+    fn given_a_transferred_queue_its_thumbnails_come_from_the_video_ids() {
+        let adopted = adapt_payload(
+            payload(
+                vec![youtube_track_showing("abc", Some("http://10.0.0.1/"))],
+                "http://other",
+            ),
+            None,
+        )
+        .unwrap();
+
+        let thumbnail = adopted
+            .snapshot
+            .items
+            .first()
+            .and_then(|item| item.track.thumbnail_url().map(str::to_owned));
+        assert_eq!(
+            thumbnail.as_deref(),
+            Some("https://i.ytimg.com/vi/abc/hqdefault.jpg")
+        );
     }
 
     #[test]

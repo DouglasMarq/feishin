@@ -30,9 +30,17 @@ pub async fn connect(
     me: DeviceInfo,
     trust: Arc<dyn TrustStore>,
 ) -> Result<ClientLink, RemoteError> {
-    let stream = tokio::time::timeout(CONNECT_TIMEOUT, TcpStream::connect(address))
-        .await
-        .map_err(|_| RemoteError::TimedOut)??;
+    let stream = match tokio::time::timeout(CONNECT_TIMEOUT, TcpStream::connect(address)).await {
+        Ok(Ok(stream)) => stream,
+        Ok(Err(error)) => {
+            tracing::info!("connecting to the remote player at {address} failed: {error}");
+            return Err(RemoteError::Unreachable);
+        }
+        Err(_) => {
+            tracing::info!("the remote player at {address} did not accept the connection");
+            return Err(RemoteError::Unreachable);
+        }
+    };
     let (read_half, mut writer) = stream.into_split();
     let mut reader = BufReader::new(read_half);
     let host = greet(&mut reader, &mut writer, me, trust.as_ref()).await?;
@@ -62,6 +70,7 @@ async fn greet(
     else {
         return Err(RemoteError::Protocol("expected a challenge"));
     };
+    let host = host.cleaned();
     if version != PROTOCOL_VERSION {
         return Err(RemoteError::Failed(
             crate::protocol::RemoteFailure::VersionMismatch,

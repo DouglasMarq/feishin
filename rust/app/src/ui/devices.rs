@@ -1,3 +1,5 @@
+use std::net::IpAddr;
+
 use feishin_remote::{DeviceId, DeviceInfo};
 use slint::{ComponentHandle, ModelRc, VecModel};
 
@@ -60,8 +62,14 @@ pub fn show_connecting(window: &AppWindow, is_connecting: bool) {
         .set_is_connecting(is_connecting);
 }
 
-pub fn show_approval(window: &AppWindow, device_name: Option<&str>) {
+pub fn show_approval(window: &AppWindow, request: Option<(&str, IpAddr)>) {
     let state = window.global::<DevicesState>();
-    state.set_is_approval_open(device_name.is_some());
-    state.set_approval_name(device_name.unwrap_or_default().into());
+    state.set_is_approval_open(request.is_some());
+    state.set_approval_name(request.map(|(name, _peer)| name).unwrap_or_default().into());
+    state.set_approval_address(
+        request
+            .map(|(_name, peer)| peer.to_string())
+            .unwrap_or_default()
+            .into(),
+    );
 }

@@ -1,4 +1,4 @@
-use feishin_remote::{RemoteError, RemoteFailure};
+use feishin_remote::{PREFERRED_PORT, RemoteError, RemoteFailure};
 
 pub fn failure_text(failure: RemoteFailure) -> String {
     match failure {
@@ -15,6 +15,10 @@ pub fn error_text(error: &RemoteError) -> String {
     match error {
         RemoteError::Denied => tr!("the connection was not allowed"),
         RemoteError::TimedOut => tr!("it did not answer in time"),
+        RemoteError::Unreachable => tr!(
+            "it could not be reached; check that its firewall allows TCP port {}",
+            PREFERRED_PORT
+        ),
         RemoteError::Failed(failure) => failure_text(*failure),
         RemoteError::Io(_)
         | RemoteError::Protocol(_)

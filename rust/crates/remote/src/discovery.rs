@@ -149,7 +149,8 @@ fn discovered_of(service: &ResolvedService, me: &DeviceId) -> Option<Discovered>
         device: DeviceInfo {
             id: DeviceId(id.to_owned()),
             name: name.to_owned(),
-        },
+        }
+        .cleaned(),
         address: SocketAddr::new(address, service.get_port()),
     })
 }

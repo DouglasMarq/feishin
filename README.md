@@ -33,7 +33,11 @@ Cadence is a fork of [Feishin](https://github.com/jeffvli/feishin) by jeffvli.
 - Control another Cadence on your network, Spotify Connect style: the Devices button in the player
   bar lists the other players, controls one of them and moves the music (queue and position)
   between them. Being controlled is off by default (Settings > Integrations > Remote control) and
-  each device has to be approved the first time.
+  each device has to be approved the first time. A player that is controlled listens on TCP port
+  47390; open it in its firewall for your local network only, for example
+  `sudo ufw allow from 192.168.0.0/24 to any port 47390 proto tcp` or `sudo firewall-cmd --permanent
+  --zone=home --add-source=192.168.0.0/24 --add-port=47390/tcp && sudo firewall-cmd --reload`
+  (use your own network's address range).
 - 32 themes with light/dark following the system and an accent color, 39 languages.
 - The screen does not lock and the system does not sleep while music is playing.
 

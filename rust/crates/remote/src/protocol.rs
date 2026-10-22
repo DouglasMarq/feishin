@@ -9,6 +9,8 @@ use crate::pairing::{Nonce, PairingToken, Proof};
 
 pub const PROTOCOL_VERSION: u16 = 1;
 pub const SERVICE_TYPE: &str = "_feishin-remote._tcp.local.";
+pub const PREFERRED_PORT: u16 = 47_390;
+const MAX_DEVICE_NAME_CHARS: usize = 64;
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Serialize, Deserialize)]
 pub struct DeviceId(pub String);
@@ -17,6 +19,30 @@ pub struct DeviceId(pub String);
 pub struct DeviceInfo {
     pub id: DeviceId,
     pub name: String,
+}
+
+impl DeviceInfo {
+    pub fn cleaned(self) -> Self {
+        let printable: String = self
+            .name
+            .chars()
+            .filter(|character| !character.is_control() && !is_bidi_control(*character))
+            .collect();
+        let shortened: String = printable
+            .trim()
+            .chars()
+            .take(MAX_DEVICE_NAME_CHARS)
+            .collect();
+        let name = match shortened.trim_end() {
+            "" => self.id.0.chars().take(MAX_DEVICE_NAME_CHARS).collect(),
+            trimmed => trimmed.to_owned(),
+        };
+        Self { id: self.id, name }
+    }
+}
+
+fn is_bidi_control(character: char) -> bool {
+    matches!(character, '\u{200e}' | '\u{200f}' | '\u{202a}'..='\u{202e}' | '\u{2066}'..='\u{2069}')
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Hash, Serialize, Deserialize)]
@@ -261,6 +287,37 @@ mod tests {
         assert_eq!(
             ServerKey::of(&config("navidrome.example", "feishin")).url,
             "navidrome.example"
+        );
+    }
+
+    fn named(name: &str) -> DeviceInfo {
+        DeviceInfo {
+            id: DeviceId("d90da1a118b14ea57b1a969e".into()),
+            name: name.into(),
+        }
+    }
+
+    #[test]
+    fn given_a_name_with_control_characters_they_are_removed() {
+        assert_eq!(
+            named(" Living\u{202e}room\n\u{0007} speaker ")
+                .cleaned()
+                .name,
+            "Livingroom speaker"
+        );
+    }
+
+    #[test]
+    fn given_a_long_name_it_is_cut_to_the_limit() {
+        let cleaned = named(&"a".repeat(16_000)).cleaned();
+        assert_eq!(cleaned.name.chars().count(), MAX_DEVICE_NAME_CHARS);
+    }
+
+    #[test]
+    fn given_an_empty_name_the_id_is_shown() {
+        assert_eq!(
+            named("\u{202e} \t").cleaned().name,
+            "d90da1a118b14ea57b1a969e"
         );
     }
 

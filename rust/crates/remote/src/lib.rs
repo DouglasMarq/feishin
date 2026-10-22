@@ -7,6 +7,7 @@ mod host_state;
 mod lan;
 mod pairing;
 mod protocol;
+mod refusals;
 mod trust;
 
 #[cfg(test)]
@@ -19,8 +20,9 @@ pub use host::{Host, HostDelegate};
 pub use host_state::HostState;
 pub use pairing::{PairingToken, new_device_id};
 pub use protocol::{
-    ClientMessage, DeviceId, DeviceInfo, HostMessage, ListPlacement, RemoteControl, RemoteFailure,
-    RemoteList, RemoteQueue, ServerKey, StateUpdate, TrackPlacement, TransferPayload,
+    ClientMessage, DeviceId, DeviceInfo, HostMessage, ListPlacement, PREFERRED_PORT, RemoteControl,
+    RemoteFailure, RemoteList, RemoteQueue, ServerKey, StateUpdate, TrackPlacement,
+    TransferPayload,
 };
 pub use trust::TrustStore;
 

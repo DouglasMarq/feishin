@@ -1,3 +1,4 @@
+use std::net::IpAddr;
 use std::sync::{Arc, Mutex, PoisonError};
 use std::time::Duration;
 
@@ -14,12 +15,17 @@ pub struct Approvals {
 }
 
 impl Approvals {
-    pub async fn ask(&self, window: &slint::Weak<AppWindow>, device: &DeviceInfo) -> bool {
+    pub async fn ask(
+        &self,
+        window: &slint::Weak<AppWindow>,
+        device: &DeviceInfo,
+        peer: IpAddr,
+    ) -> bool {
         let (answer, answered) = oneshot::channel();
         *self.pending.lock().unwrap_or_else(PoisonError::into_inner) = Some(answer);
         let name = device.name.clone();
         on_ui(window, move |window| {
-            devices::show_approval(window, Some(&name))
+            devices::show_approval(window, Some((&name, peer)))
         });
         let approved = tokio::time::timeout(ANSWER_TIMEOUT, answered)
             .await

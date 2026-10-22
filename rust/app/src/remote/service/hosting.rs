@@ -1,4 +1,4 @@
-use feishin_remote::Host;
+use feishin_remote::{Host, PREFERRED_PORT};
 use tokio::net::TcpListener;
 
 use super::RemoteService;
@@ -45,12 +45,10 @@ impl RemoteService {
     }
 
     async fn open_listener(&self) -> Option<(TcpListener, u16)> {
-        let opened = TcpListener::bind(("0.0.0.0", 0))
-            .await
-            .and_then(|listener| {
-                let port = listener.local_addr()?.port();
-                Ok((listener, port))
-            });
+        let opened = bind_preferring(PREFERRED_PORT).await.and_then(|listener| {
+            let port = listener.local_addr()?.port();
+            Ok((listener, port))
+        });
         match opened {
             Ok(opened) => Some(opened),
             Err(error) => {
@@ -61,5 +59,46 @@ impl RemoteService {
                 None
             }
         }
+    }
+}
+
+async fn bind_preferring(port: u16) -> std::io::Result<TcpListener> {
+    match TcpListener::bind(("0.0.0.0", port)).await {
+        Ok(listener) => Ok(listener),
+        Err(error) => {
+            tracing::warn!(
+                "port {port} is unavailable for remote control ({error}), using another"
+            );
+            TcpListener::bind(("0.0.0.0", 0)).await
+        }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[tokio::test]
+    async fn given_the_preferred_port_is_taken_another_one_is_used() {
+        let taken = TcpListener::bind(("0.0.0.0", 0)).await.unwrap();
+        let port = taken.local_addr().unwrap().port();
+
+        let listener = bind_preferring(port).await.unwrap();
+
+        assert_ne!(listener.local_addr().unwrap().port(), port);
+    }
+
+    #[tokio::test]
+    async fn given_the_preferred_port_is_free_it_is_used() {
+        let port = TcpListener::bind(("0.0.0.0", 0))
+            .await
+            .unwrap()
+            .local_addr()
+            .unwrap()
+            .port();
+
+        let listener = bind_preferring(port).await.unwrap();
+
+        assert_eq!(listener.local_addr().unwrap().port(), port);
     }
 }

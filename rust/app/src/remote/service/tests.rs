@@ -19,7 +19,7 @@ struct SpeakerDelegate {
 
 #[async_trait]
 impl HostDelegate for SpeakerDelegate {
-    async fn approve(&self, _device: DeviceInfo) -> bool {
+    async fn approve(&self, _device: DeviceInfo, _peer: std::net::IpAddr) -> bool {
         true
     }
     fn control(&self, _device: &DeviceInfo, _control: RemoteControl) -> Result<(), RemoteFailure> {
