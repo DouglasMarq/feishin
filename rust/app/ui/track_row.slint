@@ -1,10 +1,11 @@
 import { Motion, Theme, Icons } from "theme.slint";
-import { AppState, Route, TracksState, TrackRow } from "globals.slint";
+import { AppState, Route, TrackColumn, TracksState, TrackRow } from "globals.slint";
 import { Icon, TooltipAnchor } from "widgets.slint";
 import { Cell, FavoriteCell, LinkCell, RatingCell, Skeleton } from "track_cells.slint";
 
 export component TrackRowView inherits Rectangle {
     in property <TrackRow> track;
+    in property <length> list-width;
     callback play();
     callback clicked();
     callback select(is-control-held: bool, is-shift-held: bool);
@@ -44,7 +45,7 @@ export component TrackRowView inherits Rectangle {
 
         HorizontalLayout {
             Rectangle {
-                width: TracksState.w-index;
+                width: TracksState.shown-width(TrackColumn.index, root.list-width);
 
                 if !touch.has-hover && !root.track.is-playing: Text {
                     x: 0;
@@ -92,13 +93,13 @@ export component TrackRowView inherits Rectangle {
 
             if root.track.is-loaded: HorizontalLayout {
                 Cell {
-                    width: TracksState.w-title;
+                    width: TracksState.shown-width(TrackColumn.title, root.list-width);
                     text: root.track.title;
                     text-color: root.track.is-playing ? Theme.primary : Theme.foreground;
                 }
 
                 if TracksState.is-artist-shown: LinkCell {
-                    width: TracksState.w-artist;
+                    width: TracksState.shown-width(TrackColumn.artist, root.list-width);
                     text: root.track.artists;
                     is-enabled: root.track.artist-id != "";
                     clicked => {
@@ -110,7 +111,7 @@ export component TrackRowView inherits Rectangle {
                 }
 
                 if TracksState.is-album-shown: LinkCell {
-                    width: TracksState.w-album;
+                    width: TracksState.shown-width(TrackColumn.album, root.list-width);
                     text: root.track.album;
                     is-enabled: root.track.album-id != "";
                     clicked => {
@@ -122,22 +123,22 @@ export component TrackRowView inherits Rectangle {
                 }
 
                 if TracksState.is-year-shown: Cell {
-                    width: TracksState.w-year;
+                    width: TracksState.shown-width(TrackColumn.year, root.list-width);
                     text: root.track.year;
                 }
 
                 if TracksState.is-plays-shown: Cell {
-                    width: TracksState.w-plays;
+                    width: TracksState.shown-width(TrackColumn.plays, root.list-width);
                     text: root.track.plays;
                 }
 
                 if TracksState.is-duration-shown: Cell {
-                    width: TracksState.w-duration;
+                    width: TracksState.shown-width(TrackColumn.duration, root.list-width);
                     text: root.track.duration;
                 }
 
                 if TracksState.is-favorite-shown: FavoriteCell {
-                    width: TracksState.w-favorite;
+                    width: TracksState.shown-width(TrackColumn.favorite, root.list-width);
                     is-favorite: root.track.is-favorite;
                     is-row-hovered: touch.has-hover;
                     toggle => {
@@ -149,7 +150,7 @@ export component TrackRowView inherits Rectangle {
                 }
 
                 if TracksState.is-rating-shown: RatingCell {
-                    width: TracksState.w-rating;
+                    width: TracksState.shown-width(TrackColumn.rating, root.list-width);
                     rating: root.track.rating;
                     rate(value) => {
                         root.rate(value);
@@ -167,7 +168,7 @@ export component TrackRowView inherits Rectangle {
                 padding-right: 24px;
 
                 Rectangle {
-                    width: TracksState.w-title - 24px;
+                    width: TracksState.shown-width(TrackColumn.title, root.list-width) - 24px;
 
                     Skeleton {
                         width: parent.width * 0.6;
@@ -175,7 +176,7 @@ export component TrackRowView inherits Rectangle {
                 }
 
                 Rectangle {
-                    width: TracksState.w-artist - 24px;
+                    width: TracksState.shown-width(TrackColumn.artist, root.list-width) - 24px;
 
                     Skeleton {
                         width: parent.width * 0.5;

@@ -1,7 +1,6 @@
-import { LineEdit } from "std-widgets.slint";
 import { Theme, Icons } from "theme.slint";
 import { AppState, Route } from "globals.slint";
-import { IconButton, TooltipComboBox } from "widgets.slint";
+import { IconButton, SearchField, TooltipComboBox } from "widgets.slint";
 import { AlbumGrid, AlbumGridRow } from "album_grid.slint";
 
 export global AlbumsState {
@@ -63,7 +62,7 @@ component AlbumsControls inherits HorizontalLayout {
         }
     }
 
-    LineEdit {
+    SearchField {
         min-width: 80px;
         preferred-width: 240px;
         max-width: root.search-max-width;

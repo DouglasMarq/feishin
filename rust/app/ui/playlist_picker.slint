@@ -1,6 +1,6 @@
 import { LineEdit, ListView } from "std-widgets.slint";
 import { Theme, Icons } from "theme.slint";
-import { Icon, TooltipAnchor, TooltipButton } from "widgets.slint";
+import { Icon, SearchField, TooltipAnchor, TooltipButton } from "widgets.slint";
 
 export struct PickerRow {
     id: string,
@@ -223,7 +223,7 @@ component PickerList inherits Modal {
         filter-edit.focus();
     }
 
-    filter-edit := LineEdit {
+    filter-edit := SearchField {
         placeholder-text: @tr("Filter playlists");
         text: PlaylistPickerState.filter;
         edited(text) => {

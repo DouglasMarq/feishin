@@ -32,6 +32,7 @@ const SIZE: PhysicalSize = PhysicalSize::new(1280, 820);
 const TOOLBAR_HEIGHT: f32 = 76.0;
 const COLUMN_HEADER_HEIGHT: f32 = 33.0;
 const TRACK_ROW_HEIGHT: f32 = 36.0;
+const TITLE_CELL_X: f32 = 300.0;
 
 fn vertical_center_of_row(row_index: u8) -> f32 {
     TOOLBAR_HEIGHT + COLUMN_HEADER_HEIGHT + TRACK_ROW_HEIGHT * (f32::from(row_index) + 0.5)
@@ -82,7 +83,7 @@ impl Harness {
     }
 
     fn click(&self, button: PointerEventButton, vertical_position: f32) {
-        let position = LogicalPosition::new(400.0, vertical_position);
+        let position = LogicalPosition::new(TITLE_CELL_X, vertical_position);
         self.app
             .window()
             .dispatch_event(WindowEvent::PointerPressed { position, button });

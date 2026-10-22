@@ -38,6 +38,7 @@ export component TracksView inherits Rectangle {
 
             TracksHeader {
                 content-x: list.content-x;
+                list-width: list.visible-width;
             }
 
             list-area := Rectangle {
@@ -176,6 +177,7 @@ export component TracksView inherits Rectangle {
                     list := ListView {
                         for row in TracksState.rows: TrackRowView {
                             track: row;
+                            list-width: list.visible-width;
                             clicked => {
                                 root.row-clicked();
                                 keys.focus();

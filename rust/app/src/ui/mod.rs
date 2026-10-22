@@ -56,6 +56,8 @@ mod detail_navigation_tests;
 #[cfg(test)]
 mod devices_view_tests;
 #[cfg(test)]
+mod field_widgets_tests;
+#[cfg(test)]
 mod sharing_view_tests;
 #[cfg(test)]
 pub mod test_window;

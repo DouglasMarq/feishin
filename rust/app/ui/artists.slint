@@ -1,7 +1,7 @@
-import { LineEdit, ListView } from "std-widgets.slint";
+import { ListView } from "std-widgets.slint";
 import { Motion, Theme, Icons } from "theme.slint";
 import { AppState, Route } from "globals.slint";
-import { Icon, IconButton, TooltipAnchor, TooltipComboBox } from "widgets.slint";
+import { Icon, IconButton, SearchField, TooltipAnchor, TooltipComboBox } from "widgets.slint";
 import { CoverArt, PlayBadge } from "cover_art.slint";
 import { Cell, Skeleton } from "tracks.slint";
 
@@ -295,7 +295,7 @@ component ArtistsControls inherits HorizontalLayout {
         }
     }
 
-    LineEdit {
+    SearchField {
         min-width: 80px;
         preferred-width: 240px;
         max-width: root.search-max-width;

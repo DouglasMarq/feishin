@@ -2,6 +2,7 @@ mod eviction;
 mod headless;
 mod listed;
 mod ranges;
+mod widths;
 
 use std::cell::RefCell;
 use std::rc::Rc;

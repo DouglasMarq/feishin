@@ -327,6 +327,7 @@ export component ArtistDetailView inherits Rectangle {
                         x: 8px;
                         y: song-index * 36px;
                         width: parent.width - 16px;
+                        list-width: self.width;
                         track: song;
                         play => {
                             ArtistDetailState.play-top(song.id);

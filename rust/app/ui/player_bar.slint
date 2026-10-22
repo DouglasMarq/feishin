@@ -6,6 +6,23 @@ import { SleepTimerButton } from "sleep_timer.slint";
 import { DevicesButton } from "devices.slint";
 import { RadioIcons, RadioState } from "radio.slint";
 
+component PlayerWash inherits Rectangle {
+    in property <color> wash;
+    background: @linear-gradient(90deg, root.wash.with-alpha(0.55) 0%, root.wash.with-alpha(0.12) 35%, transparent 60%);
+}
+
+export component PlayerGlow inherits Rectangle {
+    in property <color> wash;
+
+    PlayerWash {
+        wash: root.wash;
+    }
+
+    Rectangle {
+        background: @linear-gradient(180deg, Theme.canvas 0%, Theme.canvas.with-alpha(0) 100%);
+    }
+}
+
 export component PlayerBar inherits Rectangle {
     property <bool> is-radio: RadioState.is-active;
     property <bool> can-play: PlayerState.has-song || root.is-radio;
@@ -20,7 +37,7 @@ export component PlayerBar inherits Rectangle {
             AppState.navigate(Route.now-playing, "");
         }
     }
-    property <color> wash: PlayerState.has-tint && !root.is-radio ? Theme.ambient(PlayerState.tint) : Theme.canvas;
+    out property <color> wash: PlayerState.has-tint && !root.is-radio ? Theme.ambient(PlayerState.tint) : Theme.canvas;
     height: 84px;
     background: Theme.canvas;
 
@@ -29,8 +46,8 @@ export component PlayerBar inherits Rectangle {
         easing: ease-in-out;
     }
 
-    Rectangle {
-        background: @linear-gradient(90deg, root.wash.with-alpha(0.55) 0%, root.wash.with-alpha(0.12) 35%, transparent 60%);
+    PlayerWash {
+        wash: root.wash;
     }
 
     HorizontalLayout {

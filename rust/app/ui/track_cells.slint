@@ -14,10 +14,15 @@ export component HeaderCell inherits Rectangle {
     in property <bool> is-sortable: true;
     in property <TextHorizontalAlignment> align: left;
     in-out property <length> column-width;
+    callback resized(width: length);
     property <bool> is-sorted: root.is-sortable && TracksState.sort-column == root.column;
     callback context-menu(window-x: length, window-y: length);
     width: root.column-width;
     height: 32px;
+
+    resized(width) => {
+        root.column-width = width;
+    }
 
     TooltipAnchor {
         text: !root.is-sortable ? "" : !root.is-sorted ? @tr("Sort by {}", root.text) : TracksState.is-sort-descending ? @tr("Sort by {}: descending", root.text) : @tr("Sort by {}: ascending", root.text);
@@ -87,7 +92,7 @@ export component HeaderCell inherits Rectangle {
 
         moved => {
             if (self.pressed) {
-                root.column-width = max(40px, root.column-width + self.mouse-x - self.pressed-x);
+                root.resized(max(40px, root.column-width + self.mouse-x - self.pressed-x));
             }
         }
     }

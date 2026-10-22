@@ -4,6 +4,7 @@ import { HeaderCell } from "track_cells.slint";
 
 export component TracksHeader inherits Rectangle {
     in property <length> content-x;
+    in property <length> list-width;
     height: 33px;
     min-width: 0px;
     clip: true;
@@ -65,7 +66,10 @@ export component TracksHeader inherits Rectangle {
                 column: TrackColumn.index;
                 is-sortable: false;
                 align: right;
-                column-width <=> TracksState.w-index;
+                column-width: TracksState.shown-width(TrackColumn.index, root.list-width);
+                resized(width) => {
+                    TracksState.resize(TrackColumn.index, width, root.list-width);
+                }
                 context-menu(window-x, window-y) => {
                     root.show-column-menu(window-x, window-y);
                 }
@@ -74,7 +78,10 @@ export component TracksHeader inherits Rectangle {
             HeaderCell {
                 text: @tr("Title");
                 column: TrackColumn.title;
-                column-width <=> TracksState.w-title;
+                column-width: TracksState.shown-width(TrackColumn.title, root.list-width);
+                resized(width) => {
+                    TracksState.resize(TrackColumn.title, width, root.list-width);
+                }
                 context-menu(window-x, window-y) => {
                     root.show-column-menu(window-x, window-y);
                 }
@@ -83,7 +90,10 @@ export component TracksHeader inherits Rectangle {
             if TracksState.is-artist-shown: HeaderCell {
                 text: @tr("Artist");
                 column: TrackColumn.artist;
-                column-width <=> TracksState.w-artist;
+                column-width: TracksState.shown-width(TrackColumn.artist, root.list-width);
+                resized(width) => {
+                    TracksState.resize(TrackColumn.artist, width, root.list-width);
+                }
                 context-menu(window-x, window-y) => {
                     root.show-column-menu(window-x, window-y);
                 }
@@ -92,7 +102,10 @@ export component TracksHeader inherits Rectangle {
             if TracksState.is-album-shown: HeaderCell {
                 text: @tr("Album");
                 column: TrackColumn.album;
-                column-width <=> TracksState.w-album;
+                column-width: TracksState.shown-width(TrackColumn.album, root.list-width);
+                resized(width) => {
+                    TracksState.resize(TrackColumn.album, width, root.list-width);
+                }
                 context-menu(window-x, window-y) => {
                     root.show-column-menu(window-x, window-y);
                 }
@@ -101,7 +114,10 @@ export component TracksHeader inherits Rectangle {
             if TracksState.is-year-shown: HeaderCell {
                 text: @tr("Year");
                 column: TrackColumn.year;
-                column-width <=> TracksState.w-year;
+                column-width: TracksState.shown-width(TrackColumn.year, root.list-width);
+                resized(width) => {
+                    TracksState.resize(TrackColumn.year, width, root.list-width);
+                }
                 context-menu(window-x, window-y) => {
                     root.show-column-menu(window-x, window-y);
                 }
@@ -110,7 +126,10 @@ export component TracksHeader inherits Rectangle {
             if TracksState.is-plays-shown: HeaderCell {
                 text: @tr("Plays");
                 column: TrackColumn.plays;
-                column-width <=> TracksState.w-plays;
+                column-width: TracksState.shown-width(TrackColumn.plays, root.list-width);
+                resized(width) => {
+                    TracksState.resize(TrackColumn.plays, width, root.list-width);
+                }
                 context-menu(window-x, window-y) => {
                     root.show-column-menu(window-x, window-y);
                 }
@@ -119,7 +138,10 @@ export component TracksHeader inherits Rectangle {
             if TracksState.is-duration-shown: HeaderCell {
                 text: @tr("Time");
                 column: TrackColumn.duration;
-                column-width <=> TracksState.w-duration;
+                column-width: TracksState.shown-width(TrackColumn.duration, root.list-width);
+                resized(width) => {
+                    TracksState.resize(TrackColumn.duration, width, root.list-width);
+                }
                 context-menu(window-x, window-y) => {
                     root.show-column-menu(window-x, window-y);
                 }
@@ -129,7 +151,10 @@ export component TracksHeader inherits Rectangle {
                 text: @tr("Favorite");
                 icon: Icons.heart;
                 column: TrackColumn.favorite;
-                column-width <=> TracksState.w-favorite;
+                column-width: TracksState.shown-width(TrackColumn.favorite, root.list-width);
+                resized(width) => {
+                    TracksState.resize(TrackColumn.favorite, width, root.list-width);
+                }
                 context-menu(window-x, window-y) => {
                     root.show-column-menu(window-x, window-y);
                 }
@@ -138,7 +163,10 @@ export component TracksHeader inherits Rectangle {
             if TracksState.is-rating-shown: HeaderCell {
                 text: @tr("Rating");
                 column: TrackColumn.rating;
-                column-width <=> TracksState.w-rating;
+                column-width: TracksState.shown-width(TrackColumn.rating, root.list-width);
+                resized(width) => {
+                    TracksState.resize(TrackColumn.rating, width, root.list-width);
+                }
                 context-menu(window-x, window-y) => {
                     root.show-column-menu(window-x, window-y);
                 }

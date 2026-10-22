@@ -5,7 +5,7 @@ import { LoginView } from "login.slint";
 import { Sidebar } from "sidebar.slint";
 import { TracksView } from "tracks.slint";
 import { QueuePanel } from "queue_panel.slint";
-import { PlayerBar } from "player_bar.slint";
+import { PlayerBar, PlayerGlow } from "player_bar.slint";
 import { PageFade, TooltipAnchor, TooltipOverlay } from "widgets.slint";
 import { HomeView } from "home.slint";
 import { AlbumsView } from "albums.slint";
@@ -107,82 +107,91 @@ export component AppWindow inherits Window {
             height: parent.height;
         }
 
-        if AppState.page == Page.main: VerticalLayout {
+        if AppState.page == Page.main: Rectangle {
             width: parent.width;
             height: parent.height;
 
-            HorizontalLayout {
-                padding-left: Theme.panel-gap;
-                padding-right: Theme.panel-gap;
-                padding-top: AppState.has-inset-title-bar ? title-bar.height : Theme.panel-gap;
-                spacing: Theme.panel-gap;
-
-                Sidebar { }
-
-                Rectangle {
-                    horizontal-stretch: 1;
-                    border-radius: Theme.radius-panel;
-                    background: Theme.panel;
-                    clip: true;
-
-                    if AppState.route == Route.tracks: PageFade {
-                        TracksView {
-                            row-clicked => {
-                                key-scope.focus();
-                            }
-                        }
-                    }
-                    if AppState.route == Route.home: PageFade {
-                        HomeView { }
-                    }
-                    if AppState.route == Route.albums: PageFade {
-                        AlbumsView { }
-                    }
-                    if AppState.route == Route.album-detail: PageFade {
-                        AlbumDetailView { }
-                    }
-                    if AppState.route == Route.artists: PageFade {
-                        ArtistsView { }
-                    }
-                    if AppState.route == Route.artist-detail: PageFade {
-                        ArtistDetailView { }
-                    }
-                    if AppState.route == Route.genres: PageFade {
-                        GenresView { }
-                    }
-                    if AppState.route == Route.playlists: PageFade {
-                        PlaylistsView { }
-                    }
-                    if AppState.route == Route.playlist-detail: PageFade {
-                        PlaylistDetailView { }
-                    }
-                    if AppState.route == Route.favorites: PageFade {
-                        FavoritesView { }
-                    }
-                    if AppState.route == Route.search: PageFade {
-                        SearchView { }
-                    }
-                    if AppState.route == Route.settings: PageFade {
-                        SettingsView { }
-                    }
-                    if AppState.route == Route.now-playing: PageFade {
-                        NowPlayingView { }
-                    }
-                    if AppState.route == Route.folders: PageFade {
-                        FoldersView { }
-                    }
-                    if AppState.route == Route.radio: PageFade {
-                        RadioView { }
-                    }
-                    if AppState.route == Route.discover: PageFade {
-                        DiscoverView { }
-                    }
-                }
-
-                if AppState.is-queue-open: QueuePanel { }
+            PlayerGlow {
+                y: parent.height - player-bar.height - self.height;
+                height: Theme.panel-gap * 3;
+                wash: player-bar.wash;
             }
 
-            PlayerBar { }
+            VerticalLayout {
+                HorizontalLayout {
+                    padding-left: Theme.panel-gap;
+                    padding-right: Theme.panel-gap;
+                    padding-top: AppState.has-inset-title-bar ? title-bar.height : Theme.panel-gap;
+                    padding-bottom: Theme.panel-gap;
+                    spacing: Theme.panel-gap;
+
+                    Sidebar { }
+
+                    Rectangle {
+                        horizontal-stretch: 1;
+                        border-radius: Theme.radius-panel;
+                        background: Theme.panel;
+                        clip: true;
+
+                        if AppState.route == Route.tracks: PageFade {
+                            TracksView {
+                                row-clicked => {
+                                    key-scope.focus();
+                                }
+                            }
+                        }
+                        if AppState.route == Route.home: PageFade {
+                            HomeView { }
+                        }
+                        if AppState.route == Route.albums: PageFade {
+                            AlbumsView { }
+                        }
+                        if AppState.route == Route.album-detail: PageFade {
+                            AlbumDetailView { }
+                        }
+                        if AppState.route == Route.artists: PageFade {
+                            ArtistsView { }
+                        }
+                        if AppState.route == Route.artist-detail: PageFade {
+                            ArtistDetailView { }
+                        }
+                        if AppState.route == Route.genres: PageFade {
+                            GenresView { }
+                        }
+                        if AppState.route == Route.playlists: PageFade {
+                            PlaylistsView { }
+                        }
+                        if AppState.route == Route.playlist-detail: PageFade {
+                            PlaylistDetailView { }
+                        }
+                        if AppState.route == Route.favorites: PageFade {
+                            FavoritesView { }
+                        }
+                        if AppState.route == Route.search: PageFade {
+                            SearchView { }
+                        }
+                        if AppState.route == Route.settings: PageFade {
+                            SettingsView { }
+                        }
+                        if AppState.route == Route.now-playing: PageFade {
+                            NowPlayingView { }
+                        }
+                        if AppState.route == Route.folders: PageFade {
+                            FoldersView { }
+                        }
+                        if AppState.route == Route.radio: PageFade {
+                            RadioView { }
+                        }
+                        if AppState.route == Route.discover: PageFade {
+                            DiscoverView { }
+                        }
+                    }
+
+                    if AppState.is-queue-open: QueuePanel { }
+                }
+
+                player-bar := PlayerBar { }
+            }
         }
 
         title-bar := Rectangle {

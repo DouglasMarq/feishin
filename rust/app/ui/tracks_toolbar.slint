@@ -1,7 +1,6 @@
-import { LineEdit } from "std-widgets.slint";
 import { Theme, Icons } from "theme.slint";
 import { TracksState } from "globals.slint";
-import { Icon, TooltipAnchor, TooltipComboBox } from "widgets.slint";
+import { Icon, SearchField, TooltipAnchor, TooltipComboBox } from "widgets.slint";
 
 component FilterChip inherits Rectangle {
     in property <string> text;
@@ -134,7 +133,7 @@ export component TracksToolbar inherits VerticalLayout {
             horizontal-stretch: 1;
         }
 
-        LineEdit {
+        SearchField {
             y: (parent.height - self.height) / 2;
             min-width: 120px;
             preferred-width: 280px;

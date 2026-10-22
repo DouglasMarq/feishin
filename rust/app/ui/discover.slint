@@ -1,7 +1,6 @@
-import { ComboBox, LineEdit } from "std-widgets.slint";
 import { Theme } from "theme.slint";
 import { AppState } from "globals.slint";
-import { Icon, IconButton, TooltipAnchor } from "widgets.slint";
+import { Icon, IconButton, SearchField, TooltipAnchor, TooltipComboBox } from "widgets.slint";
 import { DiscoverIcons, DiscoverNotice, DiscoverSection, DiscoverState } from "discover_state.slint";
 import { DiscoverShelfView, MoodGrid, SkeletonShelf } from "discover_cards.slint";
 import { DiscoverCollectionPage } from "discover_page.slint";
@@ -78,22 +77,14 @@ component CountryPicker inherits HorizontalLayout {
         vertical-alignment: center;
     }
 
-    hover := TouchArea {
+    TooltipComboBox {
+        y: (parent.height - self.height) / 2;
         width: 240px;
-
-        ComboBox {
-            width: parent.width;
-            height: parent.height;
-            model: DiscoverState.countries;
-            current-index <=> DiscoverState.country-index;
-            selected => {
-                DiscoverState.select-country(self.current-index);
-            }
-        }
-
-        TooltipAnchor {
-            text: @tr("Showing the charts for {}", root.country);
-            is-hovered: hover.has-hover;
+        tooltip: @tr("Showing the charts for {}", root.country);
+        model: DiscoverState.countries;
+        current-index <=> DiscoverState.country-index;
+        selected => {
+            DiscoverState.select-country(self.current-index);
         }
     }
 }
@@ -113,7 +104,7 @@ component SectionHeader inherits VerticalLayout {
             horizontal-stretch: 1;
         }
 
-        search := LineEdit {
+        search := SearchField {
             width: 280px;
             placeholder-text: @tr("Search songs on YouTube Music");
             text <=> DiscoverState.search-text;

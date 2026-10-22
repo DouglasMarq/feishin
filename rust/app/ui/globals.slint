@@ -88,6 +88,88 @@ export global TracksState {
     in-out property <bool> is-rating-shown: true;
     in-out property <length> w-favorite: 44px;
     in-out property <length> w-rating: 104px;
+    out property <length> min-flexible-width: 80px;
+    out property <length> trailing-gap: 16px;
+
+    pure function is-flexible(column: TrackColumn) -> bool {
+        return column == TrackColumn.title || column == TrackColumn.artist || column == TrackColumn.album;
+    }
+
+    pure function saved-width(column: TrackColumn) -> length {
+        if (column == TrackColumn.index) {
+            return self.w-index;
+        } else if (column == TrackColumn.title) {
+            return self.w-title;
+        } else if (column == TrackColumn.artist) {
+            return self.w-artist;
+        } else if (column == TrackColumn.album) {
+            return self.w-album;
+        } else if (column == TrackColumn.year) {
+            return self.w-year;
+        } else if (column == TrackColumn.plays) {
+            return self.w-plays;
+        } else if (column == TrackColumn.duration) {
+            return self.w-duration;
+        } else if (column == TrackColumn.favorite) {
+            return self.w-favorite;
+        }
+        return self.w-rating;
+    }
+
+    function save-width(column: TrackColumn, width: length) {
+        if (column == TrackColumn.index) {
+            self.w-index = width;
+        } else if (column == TrackColumn.title) {
+            self.w-title = width;
+        } else if (column == TrackColumn.artist) {
+            self.w-artist = width;
+        } else if (column == TrackColumn.album) {
+            self.w-album = width;
+        } else if (column == TrackColumn.year) {
+            self.w-year = width;
+        } else if (column == TrackColumn.plays) {
+            self.w-plays = width;
+        } else if (column == TrackColumn.duration) {
+            self.w-duration = width;
+        } else if (column == TrackColumn.favorite) {
+            self.w-favorite = width;
+        } else {
+            self.w-rating = width;
+        }
+    }
+
+    pure function fixed-columns-width() -> length {
+        return self.w-index + (self.is-year-shown ? self.w-year : 0px) + (self.is-plays-shown ? self.w-plays : 0px) + (self.is-duration-shown ? self.w-duration : 0px) + (self.is-favorite-shown ? self.w-favorite : 0px) + (self.is-rating-shown ? self.w-rating : 0px);
+    }
+
+    pure function flexible-columns-width() -> length {
+        return self.w-title + (self.is-artist-shown ? self.w-artist : 0px) + (self.is-album-shown ? self.w-album : 0px);
+    }
+
+    pure function flexible-space(list-width: length) -> length {
+        return list-width - self.trailing-gap - self.fixed-columns-width();
+    }
+
+    pure public function shown-width(column: TrackColumn, list-width: length) -> length {
+        if (!self.is-flexible(column) || list-width <= 0px) {
+            return self.saved-width(column);
+        }
+        return max(self.min-flexible-width, self.saved-width(column) * (self.flexible-space(list-width) / self.flexible-columns-width()));
+    }
+
+    public function resize(column: TrackColumn, width: length, list-width: length) {
+        if (!self.is-flexible(column) || list-width <= 0px) {
+            self.save-width(column, width);
+            return;
+        }
+        let others = self.flexible-columns-width() - self.saved-width(column);
+        let left-over = self.flexible-space(list-width) - width;
+        if (others <= 0px) {
+            self.save-width(column, width);
+        } else if (left-over >= self.min-flexible-width) {
+            self.save-width(column, others * (width / left-over));
+        }
+    }
     in-out property <string> search-text;
     in-out property <bool> is-favorite-filter-on;
     in property <[string]> genres: [@tr("All genres")];
