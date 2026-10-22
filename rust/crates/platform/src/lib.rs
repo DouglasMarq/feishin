@@ -4,6 +4,7 @@ mod freedesktop;
 mod image_url;
 #[cfg(target_os = "macos")]
 mod macos;
+mod tray;
 mod url_opener;
 
 use std::path::PathBuf;
@@ -13,6 +14,7 @@ pub use discord::{DEFAULT_DISCORD_CLIENT_ID, DiscordDisplayType, DiscordOptions,
 pub use freedesktop::{MediaControls, SleepInhibitor, current_color_scheme, watch_color_scheme};
 #[cfg(target_os = "macos")]
 pub use macos::{MediaControls, SleepInhibitor, current_color_scheme, watch_color_scheme};
+pub use tray::{Tray, TrayLabels};
 pub use url_opener::open_url;
 
 #[derive(Debug, Clone, Copy)]
@@ -43,6 +45,8 @@ pub enum PlatformError {
     SleepInhibitor(#[source] ErrorCause),
     #[error("could not open the link: {0}")]
     OpenUrl(#[source] ErrorCause),
+    #[error("tray icon error: {0}")]
+    Tray(#[source] ErrorCause),
 }
 
 pub type Result<T> = std::result::Result<T, PlatformError>;

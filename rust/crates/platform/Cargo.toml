@@ -7,6 +7,7 @@ publish.workspace = true
 
 [dependencies]
 discord-rich-presence = "1.1"
+image = { workspace = true, features = ["png"] }
 thiserror.workspace = true
 tokio = { workspace = true, features = ["rt", "time"] }
 tracing.workspace = true
@@ -15,11 +16,13 @@ url.workspace = true
 [target.'cfg(all(unix, not(target_os = "macos")))'.dependencies]
 futures-util = { version = "0.3.34", default-features = false, features = ["std"] }
 mpris-server = { version = "0.10", features = ["tokio"] }
+tray-icon = { version = "0.25.1", default-features = false, features = ["ksni"] }
 
 [target.'cfg(target_os = "macos")'.dependencies]
 keepawake = "0.6.1"
 objc2-foundation = { version = "0.3.2", default-features = false, features = ["std", "NSString", "NSUserDefaults"] }
 souvlaki = { version = "0.8.3", default-features = false }
+tray-icon = { version = "0.24.1", default-features = false }
 
 [dev-dependencies]
 serde_json.workspace = true

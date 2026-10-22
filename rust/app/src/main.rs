@@ -23,6 +23,7 @@ mod session;
 mod sleep_timer;
 mod store;
 mod termination;
+mod tray;
 mod ui;
 mod window_chrome;
 mod youtube;

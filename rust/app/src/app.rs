@@ -22,6 +22,7 @@ use crate::session::Session;
 use crate::sleep_timer::{self, SleepTimerUi};
 use crate::store::{JsonStore, Store, SystemStore};
 use crate::termination;
+use crate::tray;
 use crate::ui::{self, AppWindow, Context, login, on_ui};
 use feishin_remote as remote_state;
 
@@ -297,6 +298,25 @@ fn save_state_on_exit(
     });
 }
 
+fn install_views(
+    window: &AppWindow,
+    context: &Context,
+    settings: &Settings,
+    discover: Arc<dyn DiscoverSource>,
+) {
+    ui::install(window, context, settings);
+    ui::appearance::watch_system_scheme(window, context);
+    ui::discover::install(window, context, discover);
+    sleep_timer::install(window, context);
+    tray::start(window, settings.ui.tray, &context.commands);
+}
+
+fn run_until_quit(window: &AppWindow) -> Result<()> {
+    window.show().context("showing the window")?;
+    slint::run_event_loop_until_quit().context("running the window")?;
+    window.hide().context("hiding the window")
+}
+
 pub fn run(mode: Mode) -> Result<()> {
     let runtime = build_runtime()?;
     let backends = backends(mode)?;
@@ -310,10 +330,7 @@ pub fn run(mode: Mode) -> Result<()> {
     let (host_state, host_state_receiver) = watch::channel(remote_state::HostState::default());
     let discover = Arc::clone(&backends.discover);
     let context = app_context(&runtime, backends, &commands, Remote::new(remote_requests));
-    ui::install(&window, &context, &settings);
-    ui::appearance::watch_system_scheme(&window, &context);
-    ui::discover::install(&window, &context, discover);
-    sleep_timer::install(&window, &context);
+    install_views(&window, &context, &settings, discover);
 
     let deps = controller_deps(mode, &settings, &window, &context, host_state)?;
     let mut controller = Controller::new(deps, settings.clone(), None, None);
@@ -337,7 +354,7 @@ pub fn run(mode: Mode) -> Result<()> {
     restore_session(&window, &context, &settings, mode);
     restore_saved_queue_once_shown(&context);
     termination::quit_on_termination_signals(runtime.handle());
-    window.run().context("running the window")?;
+    run_until_quit(&window)?;
 
     save_state_on_exit(&runtime, &window, &context, &settings);
     runtime.shutdown_timeout(RUNTIME_SHUTDOWN_TIMEOUT);

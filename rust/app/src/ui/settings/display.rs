@@ -83,6 +83,8 @@ pub(super) fn show(window: &AppWindow, shared: &Shared, snapshot: SettingsSnapsh
     show_youtube(&state, &view);
     state.set_servers(ModelRc::new(VecModel::from(server_rows(settings))));
     state.set_is_following_current_song(settings.ui.is_following_current_song);
+    state.set_is_tray_enabled(settings.ui.tray.is_enabled);
+    state.set_is_close_to_tray(settings.ui.tray.is_close_to_tray);
     show_languages(&state, settings.ui.language.as_deref());
     state.set_switching("".into());
     state.set_is_loaded(true);

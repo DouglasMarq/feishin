@@ -10,7 +10,7 @@ bincode = { version = "2.0.1", default-features = false, features = ["std", "ser
 feishin-api.workspace = true
 feishin-core.workspace = true
 feishin-youtube.workspace = true
-image = { version = "0.25.10", default-features = false, features = ["jpeg", "png", "webp", "gif", "bmp"] }
+image = { workspace = true, features = ["jpeg", "png", "webp", "gif", "bmp"] }
 keyring-core = "1.0.1"
 lru.workspace = true
 reqwest.workspace = true

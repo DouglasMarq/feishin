@@ -7,7 +7,7 @@ use feishin_player::{AudioDevice, PlayerEvent};
 use feishin_storage::appearance::{AccentColor, AppearanceSettings, ThemeId};
 use feishin_storage::settings::{
     IntegrationSettings, LyricsSourceSetting, PlaybackSettings, ReplayGainSetting, Settings,
-    UiSettings,
+    TraySettings, UiSettings,
 };
 use tokio::sync::{mpsc, oneshot};
 
@@ -273,6 +273,11 @@ async fn interface_and_integrations_are_saved_and_survive_shutdown() {
     harness
         .controller
         .handle(Command::SaveLanguage(Some("de".into())));
+    let tray = TraySettings {
+        is_enabled: false,
+        is_close_to_tray: true,
+    };
+    harness.controller.handle(Command::SaveTray(tray));
     let integrations = IntegrationSettings {
         is_discord_rich_presence_enabled: true,
         lyrics_sources: vec![LyricsSourceSetting::Genius],
@@ -295,6 +300,7 @@ async fn interface_and_integrations_are_saved_and_survive_shutdown() {
     let saved = harness.saved();
     assert!(saved.ui.is_following_current_song);
     assert_eq!(saved.ui.language.as_deref(), Some("de"));
+    assert_eq!(saved.ui.tray, tray);
     assert!(!saved.ui.is_queue_panel_open);
     assert_eq!(saved.integrations, integrations);
 }

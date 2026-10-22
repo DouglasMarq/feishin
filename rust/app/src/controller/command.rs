@@ -8,7 +8,7 @@ use feishin_player::{AudioDevice, PlayerEvent};
 use feishin_storage::appearance::AppearanceSettings;
 use feishin_storage::feishin_import::ImportedServer;
 use feishin_storage::settings::{
-    IntegrationSettings, PlaybackSettings, Settings, UiSettings, YouTubeSettings,
+    IntegrationSettings, PlaybackSettings, Settings, TraySettings, UiSettings, YouTubeSettings,
 };
 use tokio::sync::{mpsc, oneshot};
 
@@ -76,6 +76,7 @@ pub enum Command {
         is_following_current_song: bool,
     },
     SaveLanguage(Option<String>),
+    SaveTray(TraySettings),
     SaveAppearance(AppearanceSettings),
     RemoveServer(String),
     Radio(RadioCommand),

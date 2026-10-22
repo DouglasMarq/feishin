@@ -44,6 +44,7 @@ impl Controller {
         self.settings.ui = UiSettings {
             is_following_current_song: self.settings.ui.is_following_current_song,
             language: self.settings.ui.language.clone(),
+            tray: self.settings.ui.tray,
             ..ui
         };
         self.save_settings();

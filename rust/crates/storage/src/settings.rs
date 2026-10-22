@@ -108,6 +108,25 @@ pub struct UiSettings {
     #[serde(rename = "follow_current_song")]
     pub is_following_current_song: bool,
     pub language: Option<String>,
+    pub tray: TraySettings,
+}
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(default)]
+pub struct TraySettings {
+    #[serde(rename = "enabled")]
+    pub is_enabled: bool,
+    #[serde(rename = "close_to_tray")]
+    pub is_close_to_tray: bool,
+}
+
+impl Default for TraySettings {
+    fn default() -> Self {
+        Self {
+            is_enabled: true,
+            is_close_to_tray: false,
+        }
+    }
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -219,6 +238,7 @@ mod tests {
                 is_queue_panel_open: true,
                 is_following_current_song: true,
                 language: Some("pt-BR".into()),
+                tray: TraySettings::default(),
             },
             integrations: IntegrationSettings {
                 is_discord_rich_presence_enabled: true,
@@ -476,6 +496,33 @@ use_theme_accent = false
         assert!(integrations.is_remote_control_enabled);
         assert!(settings.appearance.is_following_system);
         assert!(!settings.appearance.is_using_theme_accent);
+    }
+
+    #[test]
+    fn given_settings_without_a_tray_section_the_tray_is_shown_and_closing_quits() {
+        let (_directory, paths) = temp_paths();
+        write_settings(&paths, PREVIOUS_RELEASE_FLAGS);
+
+        let tray = Settings::load(&paths).unwrap().ui.tray;
+
+        assert!(tray.is_enabled);
+        assert!(!tray.is_close_to_tray);
+    }
+
+    #[test]
+    fn given_saved_tray_settings_they_load_back() {
+        let (_directory, paths) = temp_paths();
+        let mut settings = Settings::default();
+        settings.ui.tray = TraySettings {
+            is_enabled: false,
+            is_close_to_tray: true,
+        };
+        settings.save(&paths).unwrap();
+
+        let saved = std::fs::read_to_string(paths.config_dir.join(SETTINGS_FILE)).unwrap();
+
+        assert!(saved.contains("close_to_tray = true\n"), "{saved}");
+        assert_eq!(Settings::load(&paths).unwrap().ui.tray, settings.ui.tray);
     }
 
     #[test]

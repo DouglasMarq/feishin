@@ -38,6 +38,7 @@ feishin-radio-browser = { path = "crates/radio-browser" }
 feishin-remote = { path = "crates/remote" }
 feishin-storage = { path = "crates/storage" }
 feishin-youtube = { path = "crates/youtube" }
+image = { version = "0.25.10", default-features = false }
 lru = "0.18.5"
 rand = "0.10.3"
 reqwest = { version = "0.13", default-features = false, features = ["json", "rustls", "query"] }

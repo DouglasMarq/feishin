@@ -44,6 +44,7 @@ impl Controller {
                 is_following_current_song,
             } => self.save_interface(is_queue_panel_open, is_following_current_song),
             Command::SaveLanguage(language) => self.save_language(language),
+            Command::SaveTray(tray) => self.save_tray(tray),
             Command::SaveAppearance(appearance) => self.save_appearance(appearance),
             command => self.dispatch_source_command(command),
         }

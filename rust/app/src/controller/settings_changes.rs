@@ -1,5 +1,5 @@
 use feishin_storage::appearance::AppearanceSettings;
-use feishin_storage::settings::{IntegrationSettings, PlaybackSettings};
+use feishin_storage::settings::{IntegrationSettings, PlaybackSettings, TraySettings};
 use tokio::sync::oneshot;
 
 use super::{Controller, SettingsSnapshot, UiUpdate};
@@ -91,6 +91,11 @@ impl Controller {
 
     pub(super) fn save_language(&mut self, language: Option<String>) {
         self.settings.ui.language = language;
+        self.save_settings();
+    }
+
+    pub(super) fn save_tray(&mut self, tray: TraySettings) {
+        self.settings.ui.tray = tray;
         self.save_settings();
     }
 
