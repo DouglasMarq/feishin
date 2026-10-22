@@ -743,8 +743,8 @@ msgstr "povezan je sa drugim serverom"
 msgid "it is not connected to a server"
 msgstr "nije povezan ni sa jednim serverom"
 
-msgid "it runs a different version of Feishin"
-msgstr "koristi drugu verziju Feishina"
+msgid "it runs a different version of Cadence"
+msgstr "koristi drugu verziju Cadencea"
 
 msgid "it stopped"
 msgstr "zaustavio se"
@@ -767,8 +767,8 @@ msgstr "Jezik"
 msgid "Let \"{}\" control this player"
 msgstr "Dozvoli uređaju \"{}\" da upravlja ovim plejerom"
 
-msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
-msgstr "Dozvoli drugim Feishin plejerima na ovoj mreži da upravljaju ovim. Svaki uređaj prvi put traži vaše odobrenje."
+msgid "Let other Cadence players on this network control this one. Each device asks for your approval the first time."
+msgstr "Dozvoli drugim Cadence plejerima na ovoj mreži da upravljaju ovim. Svaki uređaj prvi put traži vaše odobrenje."
 
 msgid "LIBRARY"
 msgstr "BIBLIOTEKA"
@@ -923,8 +923,8 @@ msgstr "Nije pronađen nijedan žanr"
 msgid "No lyrics found"
 msgstr "Tekst pesme nije pronađen"
 
-msgid "No other Feishin found on this network"
-msgstr "Na ovoj mreži nije pronađen drugi Feishin"
+msgid "No other Cadence found on this network"
+msgstr "Na ovoj mreži nije pronađen drugi Cadence"
 
 msgid "No playlists found"
 msgstr "Nije pronađena nijedna plejlista"
@@ -1679,8 +1679,8 @@ msgstr "Koristi se dok radna površina daje prednost svetloj temi."
 msgid "Username"
 msgstr "Korisničko ime"
 
-msgid "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Feishin deletes right after reading."
-msgstr "Koristi vašu YouTube sesiju u ovom pregledaču za personalizovanu početnu stranu odeljka Otkrij i Premium zvuk. yt-dlp kopira njene kolačiće u privatnu privremenu datoteku koju Feishin briše odmah nakon čitanja."
+msgid "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Cadence deletes right after reading."
+msgstr "Koristi vašu YouTube sesiju u ovom pregledaču za personalizovanu početnu stranu odeljka Otkrij i Premium zvuk. yt-dlp kopira njene kolačiće u privatnu privremenu datoteku koju Cadence briše odmah nakon čitanja."
 
 msgid "Volume"
 msgstr "Jačina zvuka"

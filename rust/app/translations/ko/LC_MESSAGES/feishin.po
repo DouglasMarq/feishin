@@ -725,8 +725,8 @@ msgstr "다른 서버에 연결되어 있습니다"
 msgid "it is not connected to a server"
 msgstr "서버에 연결되어 있지 않습니다"
 
-msgid "it runs a different version of Feishin"
-msgstr "다른 버전의 Feishin을 실행 중입니다"
+msgid "it runs a different version of Cadence"
+msgstr "다른 버전의 Cadence을 실행 중입니다"
 
 msgid "it stopped"
 msgstr "중지되었습니다"
@@ -749,8 +749,8 @@ msgstr "언어"
 msgid "Let \"{}\" control this player"
 msgstr "\"{}\"이(가) 이 플레이어를 제어하도록 허용"
 
-msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
-msgstr "이 네트워크의 다른 Feishin 플레이어가 이 플레이어를 제어하도록 허용합니다. 각 기기는 처음에 승인을 요청합니다."
+msgid "Let other Cadence players on this network control this one. Each device asks for your approval the first time."
+msgstr "이 네트워크의 다른 Cadence 플레이어가 이 플레이어를 제어하도록 허용합니다. 각 기기는 처음에 승인을 요청합니다."
 
 msgid "LIBRARY"
 msgstr "라이브러리"
@@ -903,8 +903,8 @@ msgstr "장르를 찾을 수 없습니다"
 msgid "No lyrics found"
 msgstr "가사 없음"
 
-msgid "No other Feishin found on this network"
-msgstr "이 네트워크에서 다른 Feishin을 찾을 수 없습니다"
+msgid "No other Cadence found on this network"
+msgstr "이 네트워크에서 다른 Cadence을 찾을 수 없습니다"
 
 msgid "No playlists found"
 msgstr "플레이리스트를 찾을 수 없습니다"
@@ -1653,8 +1653,8 @@ msgstr "데스크톱이 밝은 모드를 선호할 때 사용됩니다."
 msgid "Username"
 msgstr "사용자 이름"
 
-msgid "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Feishin deletes right after reading."
-msgstr "이 브라우저의 YouTube 세션을 사용해 맞춤 둘러보기 홈과 Premium 음질을 제공합니다. yt-dlp가 쿠키를 비공개 임시 파일에 복사하며, Feishin은 읽은 직후 이 파일을 삭제합니다."
+msgid "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Cadence deletes right after reading."
+msgstr "이 브라우저의 YouTube 세션을 사용해 맞춤 둘러보기 홈과 Premium 음질을 제공합니다. yt-dlp가 쿠키를 비공개 임시 파일에 복사하며, Cadence은 읽은 직후 이 파일을 삭제합니다."
 
 msgid "Volume"
 msgstr "음량"

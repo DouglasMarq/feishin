@@ -14,7 +14,7 @@ fn url_builders() {
     assert_eq!(
         server.stream_url("a b/c", &StreamOptions::default()),
         format!(
-            "https://music.example.com/rest/stream.view?id=a%20b%2Fc&v=1.13.0&c=Feishin&{CREDENTIAL}"
+            "https://music.example.com/rest/stream.view?id=a%20b%2Fc&v=1.13.0&c=Cadence&{CREDENTIAL}"
         )
     );
     let options = StreamOptions {
@@ -24,19 +24,19 @@ fn url_builders() {
     assert_eq!(
         server.stream_url("a b/c", &options),
         format!(
-            "https://music.example.com/rest/stream.view?id=a%20b%2Fc&v=1.13.0&c=Feishin&{CREDENTIAL}&format=opus&maxBitRate=192"
+            "https://music.example.com/rest/stream.view?id=a%20b%2Fc&v=1.13.0&c=Cadence&{CREDENTIAL}&format=opus&maxBitRate=192"
         )
     );
     assert_eq!(
         server.cover_art_url("al-1", Some(300)),
         format!(
-            "https://music.example.com/rest/getCoverArt.view?id=al-1&{CREDENTIAL}&v=1.13.0&c=Feishin&size=300"
+            "https://music.example.com/rest/getCoverArt.view?id=al-1&{CREDENTIAL}&v=1.13.0&c=Cadence&size=300"
         )
     );
     assert_eq!(
         server.cover_art_url("al-1", None),
         format!(
-            "https://music.example.com/rest/getCoverArt.view?id=al-1&{CREDENTIAL}&v=1.13.0&c=Feishin"
+            "https://music.example.com/rest/getCoverArt.view?id=al-1&{CREDENTIAL}&v=1.13.0&c=Cadence"
         )
     );
 }

@@ -5,7 +5,7 @@ pub fn failure_text(failure: RemoteFailure) -> String {
         RemoteFailure::DifferentServer => tr!("it is connected to a different server"),
         RemoteFailure::NotConnected => tr!("it is not connected to a server"),
         RemoteFailure::NothingToTransfer => tr!("nothing is playing"),
-        RemoteFailure::VersionMismatch => tr!("it runs a different version of Feishin"),
+        RemoteFailure::VersionMismatch => tr!("it runs a different version of Cadence"),
         RemoteFailure::Busy => tr!("it is busy with another request"),
         RemoteFailure::Stopped => tr!("it stopped"),
     }

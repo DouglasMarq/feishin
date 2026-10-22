@@ -743,8 +743,8 @@ msgstr "este conectat la alt server"
 msgid "it is not connected to a server"
 msgstr "nu este conectat la niciun server"
 
-msgid "it runs a different version of Feishin"
-msgstr "folosește altă versiune de Feishin"
+msgid "it runs a different version of Cadence"
+msgstr "folosește altă versiune de Cadence"
 
 msgid "it stopped"
 msgstr "s-a oprit"
@@ -767,8 +767,8 @@ msgstr "Limbă"
 msgid "Let \"{}\" control this player"
 msgstr "Permite ca „{}” să controleze acest player"
 
-msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
-msgstr "Permite altor playere Feishin din această rețea să controleze acest player. Fiecare dispozitiv cere aprobarea ta prima dată."
+msgid "Let other Cadence players on this network control this one. Each device asks for your approval the first time."
+msgstr "Permite altor playere Cadence din această rețea să controleze acest player. Fiecare dispozitiv cere aprobarea ta prima dată."
 
 msgid "LIBRARY"
 msgstr "BIBLIOTECĂ"
@@ -923,8 +923,8 @@ msgstr "Nu s-au găsit genuri"
 msgid "No lyrics found"
 msgstr "Nu s-au găsit versuri"
 
-msgid "No other Feishin found on this network"
-msgstr "Nu a fost găsit alt Feishin în această rețea"
+msgid "No other Cadence found on this network"
+msgstr "Nu a fost găsit alt Cadence în această rețea"
 
 msgid "No playlists found"
 msgstr "Nu s-au găsit playlisturi"
@@ -1679,8 +1679,8 @@ msgstr "Folosită cât timp desktopul preferă tema luminoasă."
 msgid "Username"
 msgstr "Nume de utilizator"
 
-msgid "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Feishin deletes right after reading."
-msgstr "Folosește sesiunea ta YouTube din acest browser pentru o pagină Descoperă personalizată și audio Premium. yt-dlp copiază cookie-urile într-un fișier temporar privat pe care Feishin îl șterge imediat după citire."
+msgid "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Cadence deletes right after reading."
+msgstr "Folosește sesiunea ta YouTube din acest browser pentru o pagină Descoperă personalizată și audio Premium. yt-dlp copiază cookie-urile într-un fișier temporar privat pe care Cadence îl șterge imediat după citire."
 
 msgid "Volume"
 msgstr "Volum"

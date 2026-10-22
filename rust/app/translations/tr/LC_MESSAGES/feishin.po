@@ -734,8 +734,8 @@ msgstr "başka bir sunucuya bağlı"
 msgid "it is not connected to a server"
 msgstr "hiçbir sunucuya bağlı değil"
 
-msgid "it runs a different version of Feishin"
-msgstr "farklı bir Feishin sürümü çalıştırıyor"
+msgid "it runs a different version of Cadence"
+msgstr "farklı bir Cadence sürümü çalıştırıyor"
 
 msgid "it stopped"
 msgstr "durdu"
@@ -758,8 +758,8 @@ msgstr "Dil"
 msgid "Let \"{}\" control this player"
 msgstr "\"{}\" bu çaları kontrol edebilsin"
 
-msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
-msgstr "Bu ağdaki diğer Feishin çalarların bunu kontrol etmesine izin ver. Her cihaz ilk seferde onayını ister."
+msgid "Let other Cadence players on this network control this one. Each device asks for your approval the first time."
+msgstr "Bu ağdaki diğer Cadence çalarların bunu kontrol etmesine izin ver. Her cihaz ilk seferde onayını ister."
 
 msgid "LIBRARY"
 msgstr "KİTAPLIK"
@@ -913,8 +913,8 @@ msgstr "Tür bulunamadı"
 msgid "No lyrics found"
 msgstr "Şarkı sözü bulunamadı"
 
-msgid "No other Feishin found on this network"
-msgstr "Bu ağda başka Feishin bulunamadı"
+msgid "No other Cadence found on this network"
+msgstr "Bu ağda başka Cadence bulunamadı"
 
 msgid "No playlists found"
 msgstr "Çalma listesi bulunamadı"
@@ -1666,8 +1666,8 @@ msgstr "Masaüstü açık temayı tercih ettiğinde kullanılır."
 msgid "Username"
 msgstr "Kullanıcı adı"
 
-msgid "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Feishin deletes right after reading."
-msgstr "Kişiselleştirilmiş bir Keşfet ana sayfası ve Premium ses için bu tarayıcıdaki YouTube oturumunuzu kullanır. yt-dlp, çerezlerini Feishin'in okuduktan hemen sonra sildiği özel bir geçici dosyaya kopyalar."
+msgid "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Cadence deletes right after reading."
+msgstr "Kişiselleştirilmiş bir Keşfet ana sayfası ve Premium ses için bu tarayıcıdaki YouTube oturumunuzu kullanır. yt-dlp, çerezlerini Cadence'in okuduktan hemen sonra sildiği özel bir geçici dosyaya kopyalar."
 
 msgid "Volume"
 msgstr "Ses düzeyi"

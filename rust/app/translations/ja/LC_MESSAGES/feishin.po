@@ -725,8 +725,8 @@ msgstr "別のサーバーに接続しています"
 msgid "it is not connected to a server"
 msgstr "サーバーに接続していません"
 
-msgid "it runs a different version of Feishin"
-msgstr "異なるバージョンの Feishin を使用しています"
+msgid "it runs a different version of Cadence"
+msgstr "異なるバージョンの Cadence を使用しています"
 
 msgid "it stopped"
 msgstr "停止しました"
@@ -749,8 +749,8 @@ msgstr "言語"
 msgid "Let \"{}\" control this player"
 msgstr "「{}」にこのプレーヤーの操作を許可"
 
-msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
-msgstr "このネットワーク上の他の Feishin プレーヤーからの操作を許可します。各デバイスは初回に許可を求めます。"
+msgid "Let other Cadence players on this network control this one. Each device asks for your approval the first time."
+msgstr "このネットワーク上の他の Cadence プレーヤーからの操作を許可します。各デバイスは初回に許可を求めます。"
 
 msgid "LIBRARY"
 msgstr "ライブラリ"
@@ -903,8 +903,8 @@ msgstr "ジャンルが見つかりません"
 msgid "No lyrics found"
 msgstr "歌詞が見つかりません"
 
-msgid "No other Feishin found on this network"
-msgstr "このネットワークに他の Feishin が見つかりません"
+msgid "No other Cadence found on this network"
+msgstr "このネットワークに他の Cadence が見つかりません"
 
 msgid "No playlists found"
 msgstr "プレイリストが見つかりません"
@@ -1653,8 +1653,8 @@ msgstr "デスクトップがライトを優先しているときに使用され
 msgid "Username"
 msgstr "ユーザー名"
 
-msgid "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Feishin deletes right after reading."
-msgstr "このブラウザーの YouTube セッションを使って、パーソナライズされたディスカバーのホームと Premium 音質を利用します。yt-dlp は Cookie を非公開の一時ファイルにコピーし、Feishin は読み取り後すぐにそのファイルを削除します。"
+msgid "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Cadence deletes right after reading."
+msgstr "このブラウザーの YouTube セッションを使って、パーソナライズされたディスカバーのホームと Premium 音質を利用します。yt-dlp は Cookie を非公開の一時ファイルにコピーし、Cadence は読み取り後すぐにそのファイルを削除します。"
 
 msgid "Volume"
 msgstr "音量"

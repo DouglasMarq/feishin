@@ -743,8 +743,8 @@ msgstr "tā ir savienota ar citu serveri"
 msgid "it is not connected to a server"
 msgstr "tā nav savienota ar serveri"
 
-msgid "it runs a different version of Feishin"
-msgstr "tajā ir cita Feishin versija"
+msgid "it runs a different version of Cadence"
+msgstr "tajā ir cita Cadence versija"
 
 msgid "it stopped"
 msgstr "tā apstājās"
@@ -767,8 +767,8 @@ msgstr "Valoda"
 msgid "Let \"{}\" control this player"
 msgstr "Ļaut ierīcei \"{}\" vadīt šo atskaņotāju"
 
-msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
-msgstr "Ļauj citiem Feishin atskaņotājiem šajā tīklā vadīt šo. Katra ierīce pirmajā reizē lūdz jūsu apstiprinājumu."
+msgid "Let other Cadence players on this network control this one. Each device asks for your approval the first time."
+msgstr "Ļauj citiem Cadence atskaņotājiem šajā tīklā vadīt šo. Katra ierīce pirmajā reizē lūdz jūsu apstiprinājumu."
 
 msgid "LIBRARY"
 msgstr "BIBLIOTĒKA"
@@ -923,8 +923,8 @@ msgstr "Nav atrasts neviens žanrs"
 msgid "No lyrics found"
 msgstr "Nav atrasts teksts"
 
-msgid "No other Feishin found on this network"
-msgstr "Šajā tīklā netika atrasts cits Feishin"
+msgid "No other Cadence found on this network"
+msgstr "Šajā tīklā netika atrasts cits Cadence"
 
 msgid "No playlists found"
 msgstr "Nav atrasts neviens atskaņošanas saraksts"
@@ -1679,8 +1679,8 @@ msgstr "Tiek izmantots, kad darbvirsma dod priekšroku gaišajam."
 msgid "Username"
 msgstr "Lietotājvārds"
 
-msgid "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Feishin deletes right after reading."
-msgstr "Izmanto jūsu YouTube sesiju šajā pārlūkā personalizētam sadaļas Atklāt sākumam un Premium audio. yt-dlp nokopē tās sīkfailus privātā pagaidu failā, ko Feishin izdzēš uzreiz pēc nolasīšanas."
+msgid "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Cadence deletes right after reading."
+msgstr "Izmanto jūsu YouTube sesiju šajā pārlūkā personalizētam sadaļas Atklāt sākumam un Premium audio. yt-dlp nokopē tās sīkfailus privātā pagaidu failā, ko Cadence izdzēš uzreiz pēc nolasīšanas."
 
 msgid "Volume"
 msgstr "Skaļums"

@@ -725,8 +725,8 @@ msgstr "เชื่อมต่อกับเซิร์ฟเวอร์อ
 msgid "it is not connected to a server"
 msgstr "ไม่ได้เชื่อมต่อกับเซิร์ฟเวอร์"
 
-msgid "it runs a different version of Feishin"
-msgstr "ใช้ Feishin คนละเวอร์ชัน"
+msgid "it runs a different version of Cadence"
+msgstr "ใช้ Cadence คนละเวอร์ชัน"
 
 msgid "it stopped"
 msgstr "หยุดทำงานแล้ว"
@@ -749,8 +749,8 @@ msgstr "ภาษา"
 msgid "Let \"{}\" control this player"
 msgstr "อนุญาตให้ \"{}\" ควบคุมเครื่องเล่นนี้"
 
-msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
-msgstr "ให้เครื่องเล่น Feishin อื่นในเครือข่ายนี้ควบคุมเครื่องนี้ได้ แต่ละอุปกรณ์จะขอการอนุญาตจากคุณในครั้งแรก"
+msgid "Let other Cadence players on this network control this one. Each device asks for your approval the first time."
+msgstr "ให้เครื่องเล่น Cadence อื่นในเครือข่ายนี้ควบคุมเครื่องนี้ได้ แต่ละอุปกรณ์จะขอการอนุญาตจากคุณในครั้งแรก"
 
 msgid "LIBRARY"
 msgstr "คลังเพลง"
@@ -903,8 +903,8 @@ msgstr "ไม่พบแนวเพลง"
 msgid "No lyrics found"
 msgstr "ไม่พบเนื้อเพลง"
 
-msgid "No other Feishin found on this network"
-msgstr "ไม่พบ Feishin อื่นในเครือข่ายนี้"
+msgid "No other Cadence found on this network"
+msgstr "ไม่พบ Cadence อื่นในเครือข่ายนี้"
 
 msgid "No playlists found"
 msgstr "ไม่พบเพลย์ลิสต์"
@@ -1653,8 +1653,8 @@ msgstr "ใช้เมื่อเดสก์ท็อปใช้โหมด
 msgid "Username"
 msgstr "ชื่อผู้ใช้"
 
-msgid "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Feishin deletes right after reading."
-msgstr "ใช้เซสชัน YouTube ในเบราว์เซอร์นี้สำหรับหน้าสำรวจที่ปรับให้เหมาะกับคุณและเสียงคุณภาพ Premium โดย yt-dlp จะคัดลอกคุกกี้ไปยังไฟล์ชั่วคราวส่วนตัว ซึ่ง Feishin จะลบทันทีหลังจากอ่าน"
+msgid "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Cadence deletes right after reading."
+msgstr "ใช้เซสชัน YouTube ในเบราว์เซอร์นี้สำหรับหน้าสำรวจที่ปรับให้เหมาะกับคุณและเสียงคุณภาพ Premium โดย yt-dlp จะคัดลอกคุกกี้ไปยังไฟล์ชั่วคราวส่วนตัว ซึ่ง Cadence จะลบทันทีหลังจากอ่าน"
 
 msgid "Volume"
 msgstr "ระดับเสียง"

@@ -734,8 +734,8 @@ msgstr "se on yhteydessä toiseen palvelimeen"
 msgid "it is not connected to a server"
 msgstr "se ei ole yhteydessä palvelimeen"
 
-msgid "it runs a different version of Feishin"
-msgstr "siinä on eri Feishin-versio"
+msgid "it runs a different version of Cadence"
+msgstr "siinä on eri Cadence-versio"
 
 msgid "it stopped"
 msgstr "se pysähtyi"
@@ -758,8 +758,8 @@ msgstr "Kieli"
 msgid "Let \"{}\" control this player"
 msgstr "Anna laitteen \"{}\" ohjata tätä soitinta"
 
-msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
-msgstr "Anna muiden tämän verkon Feishin-soittimien ohjata tätä. Jokainen laite pyytää lupaasi ensimmäisellä kerralla."
+msgid "Let other Cadence players on this network control this one. Each device asks for your approval the first time."
+msgstr "Anna muiden tämän verkon Cadence-soittimien ohjata tätä. Jokainen laite pyytää lupaasi ensimmäisellä kerralla."
 
 msgid "LIBRARY"
 msgstr "KIRJASTO"
@@ -913,8 +913,8 @@ msgstr "Genrejä ei löytynyt"
 msgid "No lyrics found"
 msgstr "Sanoja ei löytynyt"
 
-msgid "No other Feishin found on this network"
-msgstr "Tästä verkosta ei löytynyt muita Feishin-soittimia"
+msgid "No other Cadence found on this network"
+msgstr "Tästä verkosta ei löytynyt muita Cadence-soittimia"
 
 msgid "No playlists found"
 msgstr "Soittolistoja ei löytynyt"
@@ -1666,8 +1666,8 @@ msgstr "Käytössä, kun työpöytä suosii vaaleaa."
 msgid "Username"
 msgstr "Käyttäjänimi"
 
-msgid "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Feishin deletes right after reading."
-msgstr "Käyttää tämän selaimen YouTube-istuntoa henkilökohtaiseen Löydä-etusivuun ja Premium-ääneen. yt-dlp kopioi sen evästeet yksityiseen väliaikaistiedostoon, jonka Feishin poistaa heti lukemisen jälkeen."
+msgid "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Cadence deletes right after reading."
+msgstr "Käyttää tämän selaimen YouTube-istuntoa henkilökohtaiseen Löydä-etusivuun ja Premium-ääneen. yt-dlp kopioi sen evästeet yksityiseen väliaikaistiedostoon, jonka Cadence poistaa heti lukemisen jälkeen."
 
 msgid "Volume"
 msgstr "Äänenvoimakkuus"

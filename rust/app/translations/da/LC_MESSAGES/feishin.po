@@ -734,8 +734,8 @@ msgstr "den er forbundet til en anden server"
 msgid "it is not connected to a server"
 msgstr "den er ikke forbundet til en server"
 
-msgid "it runs a different version of Feishin"
-msgstr "den kører en anden version af Feishin"
+msgid "it runs a different version of Cadence"
+msgstr "den kører en anden version af Cadence"
 
 msgid "it stopped"
 msgstr "den stoppede"
@@ -758,8 +758,8 @@ msgstr "Sprog"
 msgid "Let \"{}\" control this player"
 msgstr "Lad \"{}\" styre denne afspiller"
 
-msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
-msgstr "Lad andre Feishin-afspillere på dette netværk styre denne. Hver enhed beder om din godkendelse første gang."
+msgid "Let other Cadence players on this network control this one. Each device asks for your approval the first time."
+msgstr "Lad andre Cadence-afspillere på dette netværk styre denne. Hver enhed beder om din godkendelse første gang."
 
 msgid "LIBRARY"
 msgstr "BIBLIOTEK"
@@ -913,8 +913,8 @@ msgstr "Ingen genrer fundet"
 msgid "No lyrics found"
 msgstr "Ingen sangtekster fundet"
 
-msgid "No other Feishin found on this network"
-msgstr "Ingen anden Feishin fundet på dette netværk"
+msgid "No other Cadence found on this network"
+msgstr "Ingen anden Cadence fundet på dette netværk"
 
 msgid "No playlists found"
 msgstr "Ingen playlister fundet"
@@ -1666,8 +1666,8 @@ msgstr "Bruges, når skrivebordet foretrækker lyst."
 msgid "Username"
 msgstr "Brugernavn"
 
-msgid "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Feishin deletes right after reading."
-msgstr "Bruger din YouTube-session i denne browser til en personlig Opdag-startside og Premium-lyd. yt-dlp kopierer dens cookies til en privat midlertidig fil, som Feishin sletter lige efter læsning."
+msgid "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Cadence deletes right after reading."
+msgstr "Bruger din YouTube-session i denne browser til en personlig Opdag-startside og Premium-lyd. yt-dlp kopierer dens cookies til en privat midlertidig fil, som Cadence sletter lige efter læsning."
 
 msgid "Volume"
 msgstr "Lydstyrke"

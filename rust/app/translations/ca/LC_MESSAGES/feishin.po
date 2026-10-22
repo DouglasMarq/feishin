@@ -734,8 +734,8 @@ msgstr "està connectat a un altre servidor"
 msgid "it is not connected to a server"
 msgstr "no està connectat a cap servidor"
 
-msgid "it runs a different version of Feishin"
-msgstr "fa servir una altra versió de Feishin"
+msgid "it runs a different version of Cadence"
+msgstr "fa servir una altra versió de Cadence"
 
 msgid "it stopped"
 msgstr "s'ha aturat"
@@ -758,8 +758,8 @@ msgstr "Llengua"
 msgid "Let \"{}\" control this player"
 msgstr "Permet que «{}» controli aquest reproductor"
 
-msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
-msgstr "Permet que altres reproductors Feishin d'aquesta xarxa controlin aquest. Cada dispositiu demana la teva aprovació la primera vegada."
+msgid "Let other Cadence players on this network control this one. Each device asks for your approval the first time."
+msgstr "Permet que altres reproductors Cadence d'aquesta xarxa controlin aquest. Cada dispositiu demana la teva aprovació la primera vegada."
 
 msgid "LIBRARY"
 msgstr "BIBLIOTECA"
@@ -913,8 +913,8 @@ msgstr "No s'ha trobat cap gènere"
 msgid "No lyrics found"
 msgstr "No s'ha trobat cap lletra"
 
-msgid "No other Feishin found on this network"
-msgstr "No s'ha trobat cap altre Feishin en aquesta xarxa"
+msgid "No other Cadence found on this network"
+msgstr "No s'ha trobat cap altre Cadence en aquesta xarxa"
 
 msgid "No playlists found"
 msgstr "No s'ha trobat cap llista de reproducció"
@@ -1666,8 +1666,8 @@ msgstr "S'usa quan l'escriptori prefereix el clar."
 msgid "Username"
 msgstr "Nom d'usuari"
 
-msgid "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Feishin deletes right after reading."
-msgstr "Usa la vostra sessió de YouTube en aquest navegador per a un inici de Descobreix personalitzat i àudio Premium. yt-dlp en copia les galetes a un fitxer temporal privat que el Feishin elimina just després de llegir-lo."
+msgid "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Cadence deletes right after reading."
+msgstr "Usa la vostra sessió de YouTube en aquest navegador per a un inici de Descobreix personalitzat i àudio Premium. yt-dlp en copia les galetes a un fitxer temporal privat que el Cadence elimina just després de llegir-lo."
 
 msgid "Volume"
 msgstr "Volum"

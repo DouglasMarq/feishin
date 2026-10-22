@@ -743,8 +743,8 @@ msgstr "je pripojené k inému serveru"
 msgid "it is not connected to a server"
 msgstr "nie je pripojené k žiadnemu serveru"
 
-msgid "it runs a different version of Feishin"
-msgstr "používa inú verziu Feishinu"
+msgid "it runs a different version of Cadence"
+msgstr "používa inú verziu Cadenceu"
 
 msgid "it stopped"
 msgstr "zastavilo sa"
@@ -767,8 +767,8 @@ msgstr "Jazyk"
 msgid "Let \"{}\" control this player"
 msgstr "Povoliť zariadeniu „{}“ ovládať tento prehrávač"
 
-msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
-msgstr "Povolí ostatným prehrávačom Feishin v tejto sieti ovládať tento. Každé zariadenie prvýkrát požiada o vaše schválenie."
+msgid "Let other Cadence players on this network control this one. Each device asks for your approval the first time."
+msgstr "Povolí ostatným prehrávačom Cadence v tejto sieti ovládať tento. Každé zariadenie prvýkrát požiada o vaše schválenie."
 
 msgid "LIBRARY"
 msgstr "KNIŽNICA"
@@ -923,8 +923,8 @@ msgstr "Nenašli sa žiadne žánre"
 msgid "No lyrics found"
 msgstr "Nenašli sa žiadne texty"
 
-msgid "No other Feishin found on this network"
-msgstr "V tejto sieti sa nenašiel žiadny ďalší Feishin"
+msgid "No other Cadence found on this network"
+msgstr "V tejto sieti sa nenašiel žiadny ďalší Cadence"
 
 msgid "No playlists found"
 msgstr "Nenašli sa žiadne playlisty"
@@ -1679,8 +1679,8 @@ msgstr "Použije sa, keď prostredie uprednostňuje svetlú tému."
 msgid "Username"
 msgstr "Používateľské meno"
 
-msgid "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Feishin deletes right after reading."
-msgstr "Používa vašu reláciu YouTube v tomto prehliadači na prispôsobenú domovskú stránku Objavovať a zvuk Premium. yt-dlp skopíruje jeho súbory cookie do súkromného dočasného súboru, ktorý Feishin hneď po prečítaní odstráni."
+msgid "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Cadence deletes right after reading."
+msgstr "Používa vašu reláciu YouTube v tomto prehliadači na prispôsobenú domovskú stránku Objavovať a zvuk Premium. yt-dlp skopíruje jeho súbory cookie do súkromného dočasného súboru, ktorý Cadence hneď po prečítaní odstráni."
 
 msgid "Volume"
 msgstr "Hlasitosť"

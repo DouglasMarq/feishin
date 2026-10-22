@@ -5,7 +5,7 @@ script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 rust_dir="$(cd "$script_dir/../.." && pwd)"
 repo_dir="$(cd "$rust_dir/.." && pwd)"
 out_dir="${OUT_DIR:-$rust_dir/target/macos}"
-app="$out_dir/Feishin.app"
+app="$out_dir/Cadence.app"
 contents="$app/Contents"
 
 for tool in cargo dylibbundler iconutil sips codesign ditto; do
@@ -23,7 +23,7 @@ mkdir -p "$contents/MacOS" "$contents/Resources" "$contents/Frameworks"
 cp "$rust_dir/target/release/feishin" "$contents/MacOS/feishin"
 sed "s/@VERSION@/$version/g" "$script_dir/Info.plist" > "$contents/Info.plist"
 
-iconset="$(mktemp -d)/Feishin.iconset"
+iconset="$(mktemp -d)/Cadence.iconset"
 mkdir -p "$iconset"
 source_icon="$repo_dir/assets/icons/512x512.png"
 for size in 16 32 128 256 512; do
@@ -33,7 +33,7 @@ for size in 16 32 128 256 512; do
         sips -z "$double" "$double" "$source_icon" --out "$iconset/icon_${size}x${size}@2x.png" >/dev/null
     fi
 done
-iconutil -c icns "$iconset" -o "$contents/Resources/Feishin.icns"
+iconutil -c icns "$iconset" -o "$contents/Resources/Cadence.icns"
 
 dylibbundler --overwrite-dir --bundle-deps --create-dir \
     --fix-file "$contents/MacOS/feishin" \
@@ -56,7 +56,7 @@ done
 
 codesign --force --deep --sign - "$app"
 
-archive="$out_dir/Feishin-$version-macos-$arch.zip"
+archive="$out_dir/Cadence-$version-macos-$arch.zip"
 rm -f "$archive"
 ditto -c -k --keepParent "$app" "$archive"
 echo "$app"

@@ -725,8 +725,8 @@ msgstr "terhubung ke server lain"
 msgid "it is not connected to a server"
 msgstr "tidak terhubung ke server"
 
-msgid "it runs a different version of Feishin"
-msgstr "menjalankan versi Feishin yang berbeda"
+msgid "it runs a different version of Cadence"
+msgstr "menjalankan versi Cadence yang berbeda"
 
 msgid "it stopped"
 msgstr "berhenti"
@@ -749,8 +749,8 @@ msgstr "Bahasa"
 msgid "Let \"{}\" control this player"
 msgstr "Izinkan \"{}\" mengendalikan pemutar ini"
 
-msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
-msgstr "Izinkan pemutar Feishin lain di jaringan ini mengendalikan pemutar ini. Setiap perangkat meminta persetujuanmu pada kali pertama."
+msgid "Let other Cadence players on this network control this one. Each device asks for your approval the first time."
+msgstr "Izinkan pemutar Cadence lain di jaringan ini mengendalikan pemutar ini. Setiap perangkat meminta persetujuanmu pada kali pertama."
 
 msgid "LIBRARY"
 msgstr "PUSTAKA"
@@ -903,8 +903,8 @@ msgstr "Genre tidak ditemukan"
 msgid "No lyrics found"
 msgstr "Lirik tidak ditemukan"
 
-msgid "No other Feishin found on this network"
-msgstr "Tidak ada Feishin lain di jaringan ini"
+msgid "No other Cadence found on this network"
+msgstr "Tidak ada Cadence lain di jaringan ini"
 
 msgid "No playlists found"
 msgstr "Daftar putar tidak ditemukan"
@@ -1653,8 +1653,8 @@ msgstr "Digunakan saat desktop memilih terang."
 msgid "Username"
 msgstr "Nama pengguna"
 
-msgid "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Feishin deletes right after reading."
-msgstr "Menggunakan sesi YouTube Anda di browser ini untuk beranda Jelajahi yang dipersonalisasi dan audio Premium. yt-dlp menyalin cookie-nya ke file sementara pribadi yang langsung dihapus Feishin setelah dibaca."
+msgid "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Cadence deletes right after reading."
+msgstr "Menggunakan sesi YouTube Anda di browser ini untuk beranda Jelajahi yang dipersonalisasi dan audio Premium. yt-dlp menyalin cookie-nya ke file sementara pribadi yang langsung dihapus Cadence setelah dibaca."
 
 msgid "Volume"
 msgstr "Volume"

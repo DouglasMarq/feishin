@@ -1,6 +1,6 @@
 # Packaging the native app
 
-Everything needed to ship Feishin on Linux and macOS. The package conflicts with the packages of the old
+Everything needed to ship Cadence on Linux and macOS. The package conflicts with the packages of the old
 Electron app because both install a `feishin` binary.
 
 | Path | What it is |
@@ -10,7 +10,7 @@ Electron app because both install a `feishin` binary.
 | `install-desktop-integration.sh` | Installs the desktop entry, metainfo and hicolor icons under a prefix |
 | `arch/PKGBUILD` | `feishin-native-git` package for Arch Linux |
 | `appimage/build-appimage.sh` | Builds a portable AppImage with libmpv bundled |
-| `macos/build-app.sh` | Builds `Feishin.app` (and a zip of it) with libmpv bundled |
+| `macos/build-app.sh` | Builds `Cadence.app` (and a zip of it) with libmpv bundled |
 | `macos/Info.plist` | Bundle metadata, including the local network and Bonjour declarations |
 
 The app id is `org.jeffvli.feishin.native`. The binary sets it as the Wayland app id and X11
@@ -72,7 +72,7 @@ pacman -U --noconfirm ~builder/feishin-native-git-*.pkg.tar.zst
 ## AppImage
 
 ```sh
-rust/packaging/appimage/build-appimage.sh            # writes rust/target/appimage/Feishin-<version>-x86_64.AppImage
+rust/packaging/appimage/build-appimage.sh            # writes rust/target/appimage/Cadence-<version>-x86_64.AppImage
 rust/packaging/appimage/build-appimage.sh ~/out      # another output directory
 ```
 
@@ -120,12 +120,12 @@ git config --global --add safe.directory '*'
 git clone /src /build && bash /build/rust/packaging/appimage/build-appimage.sh /out
 ```
 
-The result is about 106 MB. Run it with `chmod +x Feishin-*.AppImage && ./Feishin-*.AppImage`;
-on systems without FUSE use `./Feishin-*.AppImage --appimage-extract-and-run`. A headless smoke
+The result is about 106 MB. Run it with `chmod +x Cadence-*.AppImage && ./Cadence-*.AppImage`;
+on systems without FUSE use `./Cadence-*.AppImage --appimage-extract-and-run`. A headless smoke
 test that expects exit status 0 (the app saves its state and quits on `SIGTERM`):
 
 ```sh
-xvfb-run -a dbus-run-session -- timeout --preserve-status -s TERM 5 ./Feishin-*.AppImage --demo
+xvfb-run -a dbus-run-session -- timeout --preserve-status -s TERM 5 ./Cadence-*.AppImage --demo
 echo $?
 ```
 
@@ -144,11 +144,11 @@ brew install mpv dylibbundler
 rust/packaging/macos/build-app.sh
 ```
 
-The script builds the release binary, writes `rust/target/macos/Feishin.app` with the version
+The script builds the release binary, writes `rust/target/macos/Cadence.app` with the version
 from `Cargo.toml`, makes the icon from `assets/icons/512x512.png`, copies libmpv and every
 Homebrew library it links into `Contents/Frameworks` with `dylibbundler`, drops the duplicate
 `LC_RPATH` entries that make dyld refuse to load libmpv, signs the bundle ad hoc and zips it as
-`Feishin-<version>-macos-<arch>.zip`. `OUT_DIR` changes the output folder.
+`Cadence-<version>-macos-<arch>.zip`. `OUT_DIR` changes the output folder.
 
 The bundle is not notarized: on another Mac, open it once from Finder with right-click > Open,
 or allow it in System Settings > Privacy & Security. yt-dlp is not bundled; the app finds it in

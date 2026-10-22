@@ -770,8 +770,8 @@ msgstr "إنه متصل بخادم مختلف"
 msgid "it is not connected to a server"
 msgstr "إنه غير متصل بأي خادم"
 
-msgid "it runs a different version of Feishin"
-msgstr "يعمل بإصدار مختلف من Feishin"
+msgid "it runs a different version of Cadence"
+msgstr "يعمل بإصدار مختلف من Cadence"
 
 msgid "it stopped"
 msgstr "توقف"
@@ -794,8 +794,8 @@ msgstr "اللغة"
 msgid "Let \"{}\" control this player"
 msgstr "السماح لـ \"{}\" بالتحكم في هذا المشغل"
 
-msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
-msgstr "السماح لمشغلات Feishin الأخرى على هذه الشبكة بالتحكم في هذا المشغل. يطلب كل جهاز موافقتك في المرة الأولى."
+msgid "Let other Cadence players on this network control this one. Each device asks for your approval the first time."
+msgstr "السماح لمشغلات Cadence الأخرى على هذه الشبكة بالتحكم في هذا المشغل. يطلب كل جهاز موافقتك في المرة الأولى."
 
 msgid "LIBRARY"
 msgstr "المكتبة"
@@ -953,8 +953,8 @@ msgstr "لم يُعثر على أنواع"
 msgid "No lyrics found"
 msgstr "لم يُعثر على كلمات"
 
-msgid "No other Feishin found on this network"
-msgstr "لم يُعثر على Feishin آخر على هذه الشبكة"
+msgid "No other Cadence found on this network"
+msgstr "لم يُعثر على Cadence آخر على هذه الشبكة"
 
 msgid "No playlists found"
 msgstr "لم يُعثر على قوائم تشغيل"
@@ -1718,8 +1718,8 @@ msgstr "تُستخدم عندما يفضّل سطح المكتب الوضع ال
 msgid "Username"
 msgstr "اسم المستخدم"
 
-msgid "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Feishin deletes right after reading."
-msgstr "يستخدم جلسة YouTube الخاصة بك في هذا المتصفح لصفحة استكشاف رئيسية مخصصة وصوت Premium. ينسخ yt-dlp ملفات تعريف الارتباط الخاصة به إلى ملف مؤقت خاص يحذفه Feishin فور قراءته."
+msgid "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Cadence deletes right after reading."
+msgstr "يستخدم جلسة YouTube الخاصة بك في هذا المتصفح لصفحة استكشاف رئيسية مخصصة وصوت Premium. ينسخ yt-dlp ملفات تعريف الارتباط الخاصة به إلى ملف مؤقت خاص يحذفه Cadence فور قراءته."
 
 msgid "Volume"
 msgstr "مستوى الصوت"

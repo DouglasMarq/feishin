@@ -734,8 +734,8 @@ msgstr "see on ühendatud teise serveriga"
 msgid "it is not connected to a server"
 msgstr "see pole ühendatud ühegi serveriga"
 
-msgid "it runs a different version of Feishin"
-msgstr "selles on teine Feishini versioon"
+msgid "it runs a different version of Cadence"
+msgstr "selles on teine Cadencei versioon"
 
 msgid "it stopped"
 msgstr "see peatus"
@@ -758,8 +758,8 @@ msgstr "Keel"
 msgid "Let \"{}\" control this player"
 msgstr "Luba seadmel \"{}\" seda mängijat juhtida"
 
-msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
-msgstr "Luba teistel selle võrgu Feishini mängijatel seda juhtida. Iga seade küsib esimesel korral sinu luba."
+msgid "Let other Cadence players on this network control this one. Each device asks for your approval the first time."
+msgstr "Luba teistel selle võrgu Cadencei mängijatel seda juhtida. Iga seade küsib esimesel korral sinu luba."
 
 msgid "LIBRARY"
 msgstr "KOGU"
@@ -913,8 +913,8 @@ msgstr "Žanre ei leitud"
 msgid "No lyrics found"
 msgstr "Laulusõnu ei leitud"
 
-msgid "No other Feishin found on this network"
-msgstr "Selles võrgus ei leitud teist Feishini"
+msgid "No other Cadence found on this network"
+msgstr "Selles võrgus ei leitud teist Cadencei"
 
 msgid "No playlists found"
 msgstr "Esitusloendeid ei leitud"
@@ -1666,8 +1666,8 @@ msgstr "Kasutatakse, kui töölaud eelistab heledat."
 msgid "Username"
 msgstr "Kasutajanimi"
 
-msgid "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Feishin deletes right after reading."
-msgstr "Kasutab selle brauseri YouTube'i seanssi isikupärastatud Avasta avalehe ja Premium-heli jaoks. yt-dlp kopeerib selle küpsised privaatsesse ajutisse faili, mille Feishin kohe pärast lugemist kustutab."
+msgid "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Cadence deletes right after reading."
+msgstr "Kasutab selle brauseri YouTube'i seanssi isikupärastatud Avasta avalehe ja Premium-heli jaoks. yt-dlp kopeerib selle küpsised privaatsesse ajutisse faili, mille Cadence kohe pärast lugemist kustutab."
 
 msgid "Volume"
 msgstr "Helitugevus"

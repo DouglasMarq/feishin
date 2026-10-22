@@ -1,8 +1,8 @@
 [Desktop Entry]
 Type=Application
-Name=Feishin
+Name=Cadence
 GenericName=Music Player
-Comment=Self-hosted music player for Navidrome, Subsonic and Jellyfin
+Comment=Fast native music player for Navidrome, OpenSubsonic and Jellyfin
 Exec=feishin
 Icon=org.jeffvli.feishin.native
 Terminal=false

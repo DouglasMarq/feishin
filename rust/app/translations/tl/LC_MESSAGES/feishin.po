@@ -734,8 +734,8 @@ msgstr "nakakonekta ito sa ibang server"
 msgid "it is not connected to a server"
 msgstr "hindi ito nakakonekta sa server"
 
-msgid "it runs a different version of Feishin"
-msgstr "iba ang bersyon ng Feishin nito"
+msgid "it runs a different version of Cadence"
+msgstr "iba ang bersyon ng Cadence nito"
 
 msgid "it stopped"
 msgstr "huminto ito"
@@ -758,8 +758,8 @@ msgstr "Wika"
 msgid "Let \"{}\" control this player"
 msgstr "Hayaang kontrolin ng \"{}\" ang player na ito"
 
-msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
-msgstr "Payagan ang ibang Feishin player sa network na ito na kontrolin ang isang ito. Bawat device ay hihingi ng pahintulot mo sa unang beses."
+msgid "Let other Cadence players on this network control this one. Each device asks for your approval the first time."
+msgstr "Payagan ang ibang Cadence player sa network na ito na kontrolin ang isang ito. Bawat device ay hihingi ng pahintulot mo sa unang beses."
 
 msgid "LIBRARY"
 msgstr "LIBRARY"
@@ -913,8 +913,8 @@ msgstr "Walang nahanap na genre"
 msgid "No lyrics found"
 msgstr "Walang nahanap na liriko"
 
-msgid "No other Feishin found on this network"
-msgstr "Walang ibang Feishin sa network na ito"
+msgid "No other Cadence found on this network"
+msgstr "Walang ibang Cadence sa network na ito"
 
 msgid "No playlists found"
 msgstr "Walang nahanap na playlist"
@@ -1666,8 +1666,8 @@ msgstr "Ginagamit habang maliwanag ang gusto ng desktop."
 msgid "Username"
 msgstr "Username"
 
-msgid "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Feishin deletes right after reading."
-msgstr "Ginagamit ang iyong YouTube session sa browser na ito para sa personalized na home ng Tuklasin at Premium na audio. Kinokopya ng yt-dlp ang mga cookie nito sa isang pribadong pansamantalang file na agad binubura ng Feishin pagkatapos basahin."
+msgid "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Cadence deletes right after reading."
+msgstr "Ginagamit ang iyong YouTube session sa browser na ito para sa personalized na home ng Tuklasin at Premium na audio. Kinokopya ng yt-dlp ang mga cookie nito sa isang pribadong pansamantalang file na agad binubura ng Cadence pagkatapos basahin."
 
 msgid "Volume"
 msgstr "Volume"

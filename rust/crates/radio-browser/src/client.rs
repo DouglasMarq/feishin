@@ -11,9 +11,9 @@ use crate::station::{RawStation, StationPage, playable_stations};
 
 pub const PUBLIC_DIRECTORY_URL: &str = "https://all.api.radio-browser.info";
 pub const USER_AGENT: &str = concat!(
-    "Feishin/",
+    "Cadence/",
     env!("CARGO_PKG_VERSION"),
-    " (+https://github.com/jeffvli/feishin)"
+    " (+https://github.com/DouglasMarq/feishin)"
 );
 
 const CONNECT_TIMEOUT: Duration = Duration::from_secs(10);

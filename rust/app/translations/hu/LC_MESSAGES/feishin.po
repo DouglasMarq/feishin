@@ -734,8 +734,8 @@ msgstr "másik szerverhez csatlakozik"
 msgid "it is not connected to a server"
 msgstr "nem csatlakozik szerverhez"
 
-msgid "it runs a different version of Feishin"
-msgstr "a Feishin másik verzióját futtatja"
+msgid "it runs a different version of Cadence"
+msgstr "a Cadence másik verzióját futtatja"
 
 msgid "it stopped"
 msgstr "leállt"
@@ -758,8 +758,8 @@ msgstr "Nyelv"
 msgid "Let \"{}\" control this player"
 msgstr "Engedd, hogy „{}” vezérelje ezt a lejátszót"
 
-msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
-msgstr "Engedi, hogy a hálózat más Feishin lejátszói vezéreljék ezt. Minden eszköz első alkalommal engedélyt kér."
+msgid "Let other Cadence players on this network control this one. Each device asks for your approval the first time."
+msgstr "Engedi, hogy a hálózat más Cadence lejátszói vezéreljék ezt. Minden eszköz első alkalommal engedélyt kér."
 
 msgid "LIBRARY"
 msgstr "KÖNYVTÁR"
@@ -913,8 +913,8 @@ msgstr "Nem található műfaj"
 msgid "No lyrics found"
 msgstr "Nem található dalszöveg"
 
-msgid "No other Feishin found on this network"
-msgstr "Nem található más Feishin ezen a hálózaton"
+msgid "No other Cadence found on this network"
+msgstr "Nem található más Cadence ezen a hálózaton"
 
 msgid "No playlists found"
 msgstr "Nem található lejátszási lista"
@@ -1666,8 +1666,8 @@ msgstr "Akkor használatos, ha az asztal a világosat részesíti előnyben."
 msgid "Username"
 msgstr "Felhasználónév"
 
-msgid "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Feishin deletes right after reading."
-msgstr "A böngészőben lévő YouTube-munkamenetedet használja a személyre szabott Felfedezés kezdőoldalhoz és a Premium hanghoz. A yt-dlp a sütiket egy privát ideiglenes fájlba másolja, amelyet a Feishin a beolvasás után azonnal töröl."
+msgid "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Cadence deletes right after reading."
+msgstr "A böngészőben lévő YouTube-munkamenetedet használja a személyre szabott Felfedezés kezdőoldalhoz és a Premium hanghoz. A yt-dlp a sütiket egy privát ideiglenes fájlba másolja, amelyet a Cadence a beolvasás után azonnal töröl."
 
 msgid "Volume"
 msgstr "Hangerő"

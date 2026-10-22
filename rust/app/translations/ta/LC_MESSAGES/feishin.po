@@ -734,8 +734,8 @@ msgstr "அது வேறு சேவையகத்துடன் இணை
 msgid "it is not connected to a server"
 msgstr "அது எந்தச் சேவையகத்துடனும் இணைக்கப்படவில்லை"
 
-msgid "it runs a different version of Feishin"
-msgstr "அது Feishin இன் வேறு பதிப்பை இயக்குகிறது"
+msgid "it runs a different version of Cadence"
+msgstr "அது Cadence இன் வேறு பதிப்பை இயக்குகிறது"
 
 msgid "it stopped"
 msgstr "அது நின்றுவிட்டது"
@@ -758,8 +758,8 @@ msgstr "மொழி"
 msgid "Let \"{}\" control this player"
 msgstr "\"{}\" இந்த பிளேயரைக் கட்டுப்படுத்த அனுமதி"
 
-msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
-msgstr "இந்த வலையமைப்பில் உள்ள மற்ற Feishin பிளேயர்கள் இதைக் கட்டுப்படுத்த அனுமதி. ஒவ்வொரு சாதனமும் முதல் முறை உங்கள் ஒப்புதலைக் கேட்கும்."
+msgid "Let other Cadence players on this network control this one. Each device asks for your approval the first time."
+msgstr "இந்த வலையமைப்பில் உள்ள மற்ற Cadence பிளேயர்கள் இதைக் கட்டுப்படுத்த அனுமதி. ஒவ்வொரு சாதனமும் முதல் முறை உங்கள் ஒப்புதலைக் கேட்கும்."
 
 msgid "LIBRARY"
 msgstr "நூலகம்"
@@ -913,8 +913,8 @@ msgstr "வகைகள் எதுவும் கிடைக்கவில�
 msgid "No lyrics found"
 msgstr "பாடல் வரிகள் இல்லை"
 
-msgid "No other Feishin found on this network"
-msgstr "இந்த வலையமைப்பில் வேறு Feishin இல்லை"
+msgid "No other Cadence found on this network"
+msgstr "இந்த வலையமைப்பில் வேறு Cadence இல்லை"
 
 msgid "No playlists found"
 msgstr "பிளேலிஸ்ட்கள் எதுவும் கிடைக்கவில்லை"
@@ -1666,8 +1666,8 @@ msgstr "டெஸ்க்டாப் ஒளிர்வை விரும்�
 msgid "Username"
 msgstr "பயனர்பெயர்"
 
-msgid "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Feishin deletes right after reading."
-msgstr "தனிப்பயனாக்கப்பட்ட கண்டறி முகப்பு மற்றும் Premium ஆடியோவுக்காக இந்த உலாவியில் உள்ள உங்கள் YouTube அமர்வைப் பயன்படுத்துகிறது. yt-dlp அதன் குக்கீகளை ஒரு தனிப்பட்ட தற்காலிகக் கோப்பில் நகலெடுக்கிறது, அதை Feishin படித்தவுடன் நீக்கிவிடும்."
+msgid "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Cadence deletes right after reading."
+msgstr "தனிப்பயனாக்கப்பட்ட கண்டறி முகப்பு மற்றும் Premium ஆடியோவுக்காக இந்த உலாவியில் உள்ள உங்கள் YouTube அமர்வைப் பயன்படுத்துகிறது. yt-dlp அதன் குக்கீகளை ஒரு தனிப்பட்ட தற்காலிகக் கோப்பில் நகலெடுக்கிறது, அதை Cadence படித்தவுடன் நீக்கிவிடும்."
 
 msgid "Volume"
 msgstr "ஒலியளவு"

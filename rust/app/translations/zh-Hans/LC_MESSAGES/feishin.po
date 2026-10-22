@@ -725,8 +725,8 @@ msgstr "连接到了其他服务器"
 msgid "it is not connected to a server"
 msgstr "未连接到服务器"
 
-msgid "it runs a different version of Feishin"
-msgstr "运行的 Feishin 版本不同"
+msgid "it runs a different version of Cadence"
+msgstr "运行的 Cadence 版本不同"
 
 msgid "it stopped"
 msgstr "已停止"
@@ -749,8 +749,8 @@ msgstr "语言"
 msgid "Let \"{}\" control this player"
 msgstr "允许“{}”控制此播放器"
 
-msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
-msgstr "允许此网络中的其他 Feishin 播放器控制此播放器。每台设备首次连接时都会请求你的允许。"
+msgid "Let other Cadence players on this network control this one. Each device asks for your approval the first time."
+msgstr "允许此网络中的其他 Cadence 播放器控制此播放器。每台设备首次连接时都会请求你的允许。"
 
 msgid "LIBRARY"
 msgstr "媒体库"
@@ -903,8 +903,8 @@ msgstr "未找到流派"
 msgid "No lyrics found"
 msgstr "未找到歌词"
 
-msgid "No other Feishin found on this network"
-msgstr "此网络中未找到其他 Feishin"
+msgid "No other Cadence found on this network"
+msgstr "此网络中未找到其他 Cadence"
 
 msgid "No playlists found"
 msgstr "未找到播放列表"
@@ -1653,8 +1653,8 @@ msgstr "在桌面偏好浅色时使用。"
 msgid "Username"
 msgstr "用户名"
 
-msgid "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Feishin deletes right after reading."
-msgstr "使用此浏览器中的 YouTube 会话，提供个性化的“发现”主页和 Premium 音质。yt-dlp 会将其 Cookie 复制到一个私有临时文件，Feishin 读取后会立即删除该文件。"
+msgid "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Cadence deletes right after reading."
+msgstr "使用此浏览器中的 YouTube 会话，提供个性化的“发现”主页和 Premium 音质。yt-dlp 会将其 Cookie 复制到一个私有临时文件，Cadence 读取后会立即删除该文件。"
 
 msgid "Volume"
 msgstr "音量"

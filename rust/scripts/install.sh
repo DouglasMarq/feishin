@@ -29,7 +29,7 @@ uninstall() {
     bash "$desktop_integration" --uninstall "$prefix"
     remove_legacy_entry
     refresh_menus
-    echo "Removed Feishin from $prefix (settings in ~/.config/feishin-rs were kept)"
+    echo "Removed Cadence from $prefix (settings in ~/.config/feishin-rs were kept)"
 }
 
 warn_about_electron_package() {

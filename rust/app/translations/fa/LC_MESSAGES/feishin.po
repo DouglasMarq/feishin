@@ -734,8 +734,8 @@ msgstr "به سرور دیگری متصل است"
 msgid "it is not connected to a server"
 msgstr "به هیچ سروری متصل نیست"
 
-msgid "it runs a different version of Feishin"
-msgstr "نسخهٔ دیگری از Feishin را اجرا می‌کند"
+msgid "it runs a different version of Cadence"
+msgstr "نسخهٔ دیگری از Cadence را اجرا می‌کند"
 
 msgid "it stopped"
 msgstr "متوقف شد"
@@ -758,8 +758,8 @@ msgstr "زبان"
 msgid "Let \"{}\" control this player"
 msgstr "اجازه دهید \"{}\" این پخش‌کننده را کنترل کند"
 
-msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
-msgstr "به دیگر پخش‌کننده‌های Feishin در این شبکه اجازه می‌دهد این یکی را کنترل کنند. هر دستگاه بار اول از شما اجازه می‌گیرد."
+msgid "Let other Cadence players on this network control this one. Each device asks for your approval the first time."
+msgstr "به دیگر پخش‌کننده‌های Cadence در این شبکه اجازه می‌دهد این یکی را کنترل کنند. هر دستگاه بار اول از شما اجازه می‌گیرد."
 
 msgid "LIBRARY"
 msgstr "کتابخانه"
@@ -913,8 +913,8 @@ msgstr "ژانری پیدا نشد"
 msgid "No lyrics found"
 msgstr "هیچ متن شعری پیدا نشد"
 
-msgid "No other Feishin found on this network"
-msgstr "Feishin دیگری در این شبکه پیدا نشد"
+msgid "No other Cadence found on this network"
+msgstr "Cadence دیگری در این شبکه پیدا نشد"
 
 msgid "No playlists found"
 msgstr "فهرست پخشی پیدا نشد"
@@ -1666,8 +1666,8 @@ msgstr "هنگامی که میزکار حالت روشن را ترجیح می‌
 msgid "Username"
 msgstr "نام کاربری"
 
-msgid "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Feishin deletes right after reading."
-msgstr "از نشست YouTube شما در این مرورگر برای صفحه‌ی خانه‌ی شخصی‌سازی‌شده‌ی کاوش و صدای Premium استفاده می‌کند. yt-dlp کوکی‌های آن را در یک فایل موقت خصوصی کپی می‌کند که Feishin بلافاصله پس از خواندن حذف می‌کند."
+msgid "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Cadence deletes right after reading."
+msgstr "از نشست YouTube شما در این مرورگر برای صفحه‌ی خانه‌ی شخصی‌سازی‌شده‌ی کاوش و صدای Premium استفاده می‌کند. yt-dlp کوکی‌های آن را در یک فایل موقت خصوصی کپی می‌کند که Cadence بلافاصله پس از خواندن حذف می‌کند."
 
 msgid "Volume"
 msgstr "بلندی صدا"

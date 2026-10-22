@@ -734,8 +734,8 @@ msgstr "свързан е с друг сървър"
 msgid "it is not connected to a server"
 msgstr "не е свързан със сървър"
 
-msgid "it runs a different version of Feishin"
-msgstr "използва друга версия на Feishin"
+msgid "it runs a different version of Cadence"
+msgstr "използва друга версия на Cadence"
 
 msgid "it stopped"
 msgstr "спря"
@@ -758,8 +758,8 @@ msgstr "Език"
 msgid "Let \"{}\" control this player"
 msgstr "Разрешаване на „{}“ да управлява този плейър"
 
-msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
-msgstr "Позволява на други плейъри Feishin в тази мрежа да управляват този. Всяко устройство иска одобрението ви първия път."
+msgid "Let other Cadence players on this network control this one. Each device asks for your approval the first time."
+msgstr "Позволява на други плейъри Cadence в тази мрежа да управляват този. Всяко устройство иска одобрението ви първия път."
 
 msgid "LIBRARY"
 msgstr "БИБЛИОТЕКА"
@@ -913,8 +913,8 @@ msgstr "Не са намерени жанрове"
 msgid "No lyrics found"
 msgstr "Не е намерен текст"
 
-msgid "No other Feishin found on this network"
-msgstr "Не е намерен друг Feishin в тази мрежа"
+msgid "No other Cadence found on this network"
+msgstr "Не е намерен друг Cadence в тази мрежа"
 
 msgid "No playlists found"
 msgstr "Не са намерени плейлисти"
@@ -1666,8 +1666,8 @@ msgstr "Използва се, когато работният плот пред
 msgid "Username"
 msgstr "Потребителско име"
 
-msgid "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Feishin deletes right after reading."
-msgstr "Използва сесията ви в YouTube в този браузър за персонализирана начална страница в „Откриване“ и Premium аудио. yt-dlp копира бисквитките ѝ във временен личен файл, който Feishin изтрива веднага след прочитането."
+msgid "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Cadence deletes right after reading."
+msgstr "Използва сесията ви в YouTube в този браузър за персонализирана начална страница в „Откриване“ и Premium аудио. yt-dlp копира бисквитките ѝ във временен личен файл, който Cadence изтрива веднага след прочитането."
 
 msgid "Volume"
 msgstr "Сила на звука"

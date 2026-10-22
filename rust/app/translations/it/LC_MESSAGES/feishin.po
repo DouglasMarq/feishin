@@ -734,8 +734,8 @@ msgstr "è connesso a un altro server"
 msgid "it is not connected to a server"
 msgstr "non è connesso a nessun server"
 
-msgid "it runs a different version of Feishin"
-msgstr "usa un'altra versione di Feishin"
+msgid "it runs a different version of Cadence"
+msgstr "usa un'altra versione di Cadence"
 
 msgid "it stopped"
 msgstr "si è fermato"
@@ -758,8 +758,8 @@ msgstr "Lingua"
 msgid "Let \"{}\" control this player"
 msgstr "Consenti a \"{}\" di controllare questo lettore"
 
-msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
-msgstr "Consenti ad altri lettori Feishin di questa rete di controllare questo. Ogni dispositivo chiede la tua approvazione la prima volta."
+msgid "Let other Cadence players on this network control this one. Each device asks for your approval the first time."
+msgstr "Consenti ad altri lettori Cadence di questa rete di controllare questo. Ogni dispositivo chiede la tua approvazione la prima volta."
 
 msgid "LIBRARY"
 msgstr "LIBRERIA"
@@ -913,8 +913,8 @@ msgstr "Nessun genere trovato"
 msgid "No lyrics found"
 msgstr "Nessun testo trovato"
 
-msgid "No other Feishin found on this network"
-msgstr "Nessun altro Feishin trovato su questa rete"
+msgid "No other Cadence found on this network"
+msgstr "Nessun altro Cadence trovato su questa rete"
 
 msgid "No playlists found"
 msgstr "Nessuna playlist trovata"
@@ -1666,8 +1666,8 @@ msgstr "Usato quando il desktop preferisce il tema chiaro."
 msgid "Username"
 msgstr "Nome utente"
 
-msgid "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Feishin deletes right after reading."
-msgstr "Usa la tua sessione di YouTube in questo browser per una home di Scopri personalizzata e l'audio Premium. yt-dlp copia i cookie in un file temporaneo privato che Feishin elimina subito dopo la lettura."
+msgid "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Cadence deletes right after reading."
+msgstr "Usa la tua sessione di YouTube in questo browser per una home di Scopri personalizzata e l'audio Premium. yt-dlp copia i cookie in un file temporaneo privato che Cadence elimina subito dopo la lettura."
 
 msgid "Volume"
 msgstr "Volume"

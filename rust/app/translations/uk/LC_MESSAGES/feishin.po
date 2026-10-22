@@ -743,8 +743,8 @@ msgstr "він під’єднаний до іншого сервера"
 msgid "it is not connected to a server"
 msgstr "він не під’єднаний до сервера"
 
-msgid "it runs a different version of Feishin"
-msgstr "на ньому інша версія Feishin"
+msgid "it runs a different version of Cadence"
+msgstr "на ньому інша версія Cadence"
 
 msgid "it stopped"
 msgstr "він зупинився"
@@ -767,8 +767,8 @@ msgstr "Мова"
 msgid "Let \"{}\" control this player"
 msgstr "Дозволити пристрою «{}» керувати цим плеєром"
 
-msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
-msgstr "Дозволити іншим плеєрам Feishin у цій мережі керувати цим. Кожен пристрій уперше просить вашого дозволу."
+msgid "Let other Cadence players on this network control this one. Each device asks for your approval the first time."
+msgstr "Дозволити іншим плеєрам Cadence у цій мережі керувати цим. Кожен пристрій уперше просить вашого дозволу."
 
 msgid "LIBRARY"
 msgstr "БІБЛІОТЕКА"
@@ -923,8 +923,8 @@ msgstr "Жанрів не знайдено"
 msgid "No lyrics found"
 msgstr "Текст пісні не знайдено"
 
-msgid "No other Feishin found on this network"
-msgstr "Інших Feishin у цій мережі не знайдено"
+msgid "No other Cadence found on this network"
+msgstr "Інших Cadence у цій мережі не знайдено"
 
 msgid "No playlists found"
 msgstr "Плейлистів не знайдено"
@@ -1679,8 +1679,8 @@ msgstr "Використовується, коли робочий стіл на�
 msgid "Username"
 msgstr "Ім’я користувача"
 
-msgid "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Feishin deletes right after reading."
-msgstr "Використовує ваш сеанс YouTube у цьому браузері для персоналізованого «Огляду» та аудіо Premium. yt-dlp копіює його файли cookie до приватного тимчасового файлу, який Feishin видаляє одразу після читання."
+msgid "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Cadence deletes right after reading."
+msgstr "Використовує ваш сеанс YouTube у цьому браузері для персоналізованого «Огляду» та аудіо Premium. yt-dlp копіює його файли cookie до приватного тимчасового файлу, який Cadence видаляє одразу після читання."
 
 msgid "Volume"
 msgstr "Гучність"

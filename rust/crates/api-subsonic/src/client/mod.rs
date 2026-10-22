@@ -18,7 +18,7 @@ pub use payload::Payload;
 use envelope::unwrap_subsonic_response;
 
 pub const API_VERSION: &str = "1.13.0";
-pub const CLIENT_NAME: &str = "Feishin";
+pub const CLIENT_NAME: &str = "Cadence";
 
 const CONNECT_TIMEOUT: Duration = Duration::from_secs(15);
 const REQUEST_TIMEOUT: Duration = Duration::from_secs(60);

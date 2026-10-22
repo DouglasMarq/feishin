@@ -1,4 +1,4 @@
-const CLIENT_NAME: &str = "Feishin";
+const CLIENT_NAME: &str = "Cadence";
 const DEVICE_NAME: &str = "Desktop Client";
 const CLIENT_VERSION: &str = env!("CARGO_PKG_VERSION");
 

@@ -1,7 +1,7 @@
 pkgname=feishin-native-git
 pkgver=0.1.0.r0.g0000000
 pkgrel=1
-pkgdesc="Native Rust build of Feishin, a self-hosted music player for Navidrome, Subsonic and Jellyfin"
+pkgdesc="Cadence, a fast native music player for Navidrome, OpenSubsonic and Jellyfin"
 arch=('x86_64' 'aarch64')
 url="https://github.com/DouglasMarq/feishin"
 license=('GPL-3.0-only')

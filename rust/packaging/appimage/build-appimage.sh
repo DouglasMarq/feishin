@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Usage: build-appimage.sh [output-dir]
-# Builds Feishin-<version>-<arch>.AppImage with libmpv and its libraries bundled.
+# Builds Cadence-<version>-<arch>.AppImage with libmpv and its libraries bundled.
 # FEISHIN_BINARY=<path> packages an already built binary instead of running cargo.
 # LINUXDEPLOY=<path>, APPIMAGETOOL=<path> and APPIMAGE_RUNTIME=<path> pick the tools;
 # otherwise pinned releases are downloaded into a temporary directory and their
@@ -89,7 +89,7 @@ pack_app_image() {
     local appimagetool runtime target
     appimagetool="$(tool_path appimagetool "${APPIMAGETOOL:-}")"
     runtime="$(tool_path runtime "${APPIMAGE_RUNTIME:-}")"
-    target="$output_dir/Feishin-$(workspace_version)-$machine.AppImage"
+    target="$output_dir/Cadence-$(workspace_version)-$machine.AppImage"
     ARCH="$machine" "$appimagetool" --runtime-file "$runtime" "$app_dir" "$target" >&2
     echo "$target"
 }

@@ -52,7 +52,7 @@ async fn login_sends_mediabrowser_header_and_returns_credential() {
 fn auth_header_matches_feishin_format() {
     let header = auth_header("dev", Some("t"));
     assert!(header.starts_with(
-        r#"MediaBrowser Client="Feishin", Device="Desktop Client", DeviceId="dev", Version=""#
+        r#"MediaBrowser Client="Cadence", Device="Desktop Client", DeviceId="dev", Version=""#
     ));
     assert!(header.ends_with(r#"", Token="t""#));
     assert!(!auth_header("dev", None).contains("Token"));

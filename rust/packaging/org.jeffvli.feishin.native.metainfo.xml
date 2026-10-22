@@ -3,16 +3,17 @@
   <id>org.jeffvli.feishin.native</id>
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-3.0-only</project_license>
-  <name>Feishin</name>
-  <summary>Self-hosted music player for Navidrome, Subsonic and Jellyfin</summary>
+  <name>Cadence</name>
+  <summary>Fast native music player for Navidrome, OpenSubsonic and Jellyfin</summary>
   <developer id="org.jeffvli">
-    <name>Feishin contributors</name>
+    <name>Cadence contributors</name>
   </developer>
   <description>
     <p>
-      Feishin is a desktop music player for your own music server. This is the native
-      build of Feishin: a small, fast application written in Rust that plays audio
-      through mpv.
+      Cadence is a fast, native music player for your self-hosted library (Navidrome,
+      OpenSubsonic, Jellyfin), with YouTube Music discovery, personal mixes and
+      player-to-player control. It is written in Rust, plays audio through mpv and is a
+      fork of Feishin by jeffvli.
     </p>
     <ul>
       <li>Connects to Navidrome, OpenSubsonic, Subsonic and Jellyfin servers</li>
@@ -38,7 +39,7 @@
   </keywords>
   <provides>
     <binary>feishin</binary>
-    <dbus type="user">org.mpris.MediaPlayer2.feishin</dbus>
+    <dbus type="user">org.mpris.MediaPlayer2.cadence</dbus>
   </provides>
   <supports>
     <control>pointing</control>
@@ -51,7 +52,7 @@
   <releases>
     <release version="0.1.0" date="2026-10-13" type="development">
       <description>
-        <p>First native build of Feishin.</p>
+        <p>First native build, released as Cadence.</p>
       </description>
     </release>
   </releases>

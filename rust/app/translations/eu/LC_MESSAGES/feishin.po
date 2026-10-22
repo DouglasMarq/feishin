@@ -734,8 +734,8 @@ msgstr "beste zerbitzari batera konektatuta dago"
 msgid "it is not connected to a server"
 msgstr "ez dago zerbitzari batera konektatuta"
 
-msgid "it runs a different version of Feishin"
-msgstr "Feishinen beste bertsio bat darabil"
+msgid "it runs a different version of Cadence"
+msgstr "Cadenceen beste bertsio bat darabil"
 
 msgid "it stopped"
 msgstr "gelditu egin da"
@@ -758,8 +758,8 @@ msgstr "Hizkuntza"
 msgid "Let \"{}\" control this player"
 msgstr "Utzi \"{}\" gailuari erreproduzitzaile hau kontrolatzen"
 
-msgid "Let other Feishin players on this network control this one. Each device asks for your approval the first time."
-msgstr "Utzi sare honetako beste Feishin erreproduzitzaileei hau kontrolatzen. Gailu bakoitzak zure baimena eskatzen du lehen aldian."
+msgid "Let other Cadence players on this network control this one. Each device asks for your approval the first time."
+msgstr "Utzi sare honetako beste Cadence erreproduzitzaileei hau kontrolatzen. Gailu bakoitzak zure baimena eskatzen du lehen aldian."
 
 msgid "LIBRARY"
 msgstr "LIBURUTEGIA"
@@ -913,8 +913,8 @@ msgstr "Ez da generorik aurkitu"
 msgid "No lyrics found"
 msgstr "Ez da letrarik aurkitu"
 
-msgid "No other Feishin found on this network"
-msgstr "Ez da beste Feishinik aurkitu sare honetan"
+msgid "No other Cadence found on this network"
+msgstr "Ez da beste Cadenceik aurkitu sare honetan"
 
 msgid "No playlists found"
 msgstr "Ez da erreprodukzio-zerrendarik aurkitu"
@@ -1666,8 +1666,8 @@ msgstr "Mahaigainak argia nahiago duenean erabiltzen da."
 msgid "Username"
 msgstr "Erabiltzaile-izena"
 
-msgid "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Feishin deletes right after reading."
-msgstr "Nabigatzaile honetako zure YouTube saioa erabiltzen du Aurkitu ataleko hasiera pertsonalizatua eta Premium audioa izateko. yt-dlp-k bere cookieak aldi baterako fitxategi pribatu batera kopiatzen ditu, eta Feishin-ek irakurri eta berehala ezabatzen du."
+msgid "Uses your YouTube session in this browser for a personalized Discover home and Premium audio. yt-dlp copies its cookies to a private temporary file that Cadence deletes right after reading."
+msgstr "Nabigatzaile honetako zure YouTube saioa erabiltzen du Aurkitu ataleko hasiera pertsonalizatua eta Premium audioa izateko. yt-dlp-k bere cookieak aldi baterako fitxategi pribatu batera kopiatzen ditu, eta Cadence-ek irakurri eta berehala ezabatzen du."
 
 msgid "Volume"
 msgstr "Bolumena"

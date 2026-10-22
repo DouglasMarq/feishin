@@ -1,6 +1,6 @@
 use feishin_platform::MediaIdentity;
 
-pub const APP_NAME: &str = "Feishin";
+pub const APP_NAME: &str = "Cadence";
 pub const XDG_APP_ID: &str = "org.jeffvli.feishin.native";
 
 pub const MEDIA_IDENTITY: MediaIdentity<'static> = MediaIdentity {

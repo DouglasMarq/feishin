@@ -212,7 +212,7 @@ pub enum RemoteFailure {
     NotConnected,
     #[error("there is nothing to move")]
     NothingToTransfer,
-    #[error("the device runs a different version of Feishin")]
+    #[error("the device runs a different version of Cadence")]
     VersionMismatch,
     #[error("the device is answering another request")]
     Busy,
