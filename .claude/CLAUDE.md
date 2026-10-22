@@ -1,6 +1,6 @@
-# Feishin (native)
+# Cadence (native Feishin fork)
 
-Feishin is a desktop music player for self-hosted servers (Navidrome, Subsonic/OpenSubsonic, Jellyfin). This branch (`feat/rust-native`) replaces the Electron app with a native Rust + Slint app in `rust/` that uses a fraction of the RAM. It is a single desktop binary (`rust/app`) for Linux and macOS, with no HTTP API; it also announces itself on the local network for player-to-player remote control. History, scope and status of the rewrite: `rust/MIGRATION.md`.
+Cadence is a fast, native music player for self-hosted servers (Navidrome, Subsonic/OpenSubsonic, Jellyfin), with YouTube Music discovery, personal mixes and player-to-player control. It is a fork of Feishin: this branch (`feat/rust-native`) replaces the Electron app with a native Rust + Slint app in `rust/` that uses a fraction of the RAM. Only the visible brand is Cadence: crates, the `feishin` binary, the app id, the `feishin-rs` folders and the mDNS service keep the Feishin names, and "Feishin" in user text means the Electron app (server import). It is a single desktop binary (`rust/app`) for Linux and macOS, with no HTTP API; it also announces itself on the local network for player-to-player remote control. History, scope and status of the rewrite: `rust/MIGRATION.md`.
 
 The root `CLAUDE.md` (mirrored in `AGENTS.md`) holds the agent workflow: em dash ban, commit requests, issue tracker, triage labels, domain docs, translations, commit scopes (`docs/agents/commits.md`) and the `ponytail` working mode. This file does not repeat them. Rust code standards live in `rust/CLAUDE.md`.
 
@@ -72,7 +72,7 @@ Strong success criteria let you loop independently. Weak criteria ("make it work
 - External tools at runtime: `yt-dlp` (optional, YouTube)
 - Live tests: podman, ffmpeg, curl, jq (`scripts/live-servers.sh`)
 - CI: GitHub Actions `rust.yml` (fmt, clippy, test on Ubuntu), `rust-appimage.yml` (manual AppImage), `commitlint.yml`
-- Distributed as AppImage, Arch `feishin-native-git` PKGBUILD and an ad hoc signed macOS `Feishin.app` (`rust/packaging/`); app id `org.jeffvli.feishin.native`
+- Distributed as AppImage, Arch `feishin-native-git` PKGBUILD and an ad hoc signed macOS `Cadence.app` (`rust/packaging/`); app id `org.jeffvli.feishin.native`
 
 ## 6. Commands
 
@@ -94,7 +94,7 @@ Run from `rust/`.
 | `scripts/measure-ram.sh` | Measure RSS/PSS of a running app |
 | `scripts/install.sh` | Build and install the app locally |
 | `packaging/appimage/build-appimage.sh` | Build the AppImage |
-| `packaging/macos/build-app.sh` | Build `Feishin.app` with libmpv bundled |
+| `packaging/macos/build-app.sh` | Build `Cadence.app` with libmpv bundled |
 
 ## 7. Before Finishing
 

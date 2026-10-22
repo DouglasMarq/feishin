@@ -1,13 +1,19 @@
-<img src="assets/icons/icon.png" alt="logo" title="feishin" align="right" height="60px" width="60px" />
+<img src="assets/icons/icon.png" alt="Cadence logo" title="Cadence" align="right" height="60px" width="60px" />
 
-# Feishin
+# Cadence
 
-A native desktop music player for self-hosted music servers, written in Rust with a
-[Slint](https://slint.dev) interface and [mpv](https://mpv.io) for playback. It is a rewrite of
-the Electron [Feishin](https://github.com/jeffvli/feishin) that uses a fraction of its memory
-(about 90 MB PSS with every view open, against about 530 MB for the Electron app).
+Cadence is a fast, native music player for your self-hosted library (Navidrome, OpenSubsonic,
+Jellyfin), with YouTube Music discovery, personal mixes and player-to-player control.
 
-Runs on Linux and macOS.
+<p align="center">
+  <img src="assets/readme/cadence.gif" alt="Cadence playing music: home, album, now playing, Discover mixes and the light and dark themes" width="960" />
+</p>
+
+It is written in Rust with a [Slint](https://slint.dev) interface and [mpv](https://mpv.io) for
+playback, and uses a fraction of the memory of an Electron player (about 90 MB PSS with every
+view open, against about 530 MB for the Electron Feishin). Runs on Linux and macOS.
+
+Cadence is a fork of [Feishin](https://github.com/jeffvli/feishin) by jeffvli.
 
 ## Features
 
@@ -24,7 +30,7 @@ Runs on Linux and macOS.
   library play from your server, others through `yt-dlp`. Personal mixes built from what you
   play and favorite: up to four Daily Mixes that blend your songs with similar ones, and a
   Discover Weekly of songs you do not have, renewed every Monday.
-- Control another Feishin on your network, Spotify Connect style: the Devices button in the player
+- Control another Cadence on your network, Spotify Connect style: the Devices button in the player
   bar lists the other players, controls one of them and moves the music (queue and position)
   between them. Being controlled is off by default (Settings > Integrations > Remote control) and
   each device has to be approved the first time.
@@ -50,7 +56,7 @@ Settings live in `~/.config/feishin-rs`, passwords in the system keyring (Secret
 
 ### macOS
 
-`rust/packaging/macos/build-app.sh` builds `Feishin.app` with libmpv bundled, plus a zip of it,
+`rust/packaging/macos/build-app.sh` builds `Cadence.app` with libmpv bundled, plus a zip of it,
 under `rust/target/macos`. It needs `brew install mpv dylibbundler` and Xcode's command line
 tools. The app is signed ad hoc, so the first launch has to be allowed in System Settings >
 Privacy & Security. Discover needs `brew install yt-dlp`.
@@ -82,6 +88,14 @@ After adding or changing text in the app, run `rust/scripts/translations.py` to 
 strings to every catalog, then fill in the `msgstr` entries of your language. Strings that
 existed in the Electron app reuse its community translations; the rest were machine translated
 and corrections are welcome (`rust/scripts/translations.py check <language>` validates a catalog).
+
+## Credits
+
+Cadence started as a native rewrite of [Feishin](https://github.com/jeffvli/feishin) by
+[jeffvli](https://github.com/jeffvli) and its contributors, and keeps its GPL-3.0 license. The
+Electron Feishin's community translations live on in the catalogs, and its saved servers can be
+imported on first launch. The README animation is made with [Remotion](https://www.remotion.dev)
+in [`docs/promo`](docs/promo).
 
 ## License
 

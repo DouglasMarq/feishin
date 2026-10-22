@@ -1,0 +1,21 @@
+{
+  "name": "cadence-promo",
+  "private": true,
+  "license": "GPL-3.0-only",
+  "scripts": {
+    "assets": "cp ../../assets/icons/cadence.svg public/cadence.svg && cp ../../rust/app/ui/fonts/InterVariable.ttf public/InterVariable.ttf",
+    "studio": "npm run assets && remotion studio",
+    "icon": "npm run assets && remotion still Icon out/icon-1024.png",
+    "gif": "npm run assets && remotion render Promo out/cadence.gif --codec=gif --every-nth-frame=2 --number-of-gif-loops=0"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.537",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "remotion": "4.0.537"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.2",
+    "typescript": "5.9.3"
+  }
+}

@@ -1,4 +1,4 @@
-# Contributing to Feishin
+# Contributing to Cadence
 
 Thanks for your interest in contributing!
 
@@ -12,7 +12,7 @@ Bug fixes are likely to be accepted without discussion.
 
 ## Development environment
 
-Feishin is a Rust workspace in `rust/` (Slint UI, libmpv playback). You need a stable Rust toolchain and the `libmpv`, `fontconfig`, `xkbcommon` and `dbus` development files.
+Cadence is a Rust workspace in `rust/` (Slint UI, libmpv playback). You need a stable Rust toolchain and the `libmpv`, `fontconfig`, `xkbcommon` and `dbus` development files.
 
 - `cargo run -p feishin` - run the app
 - `cargo run -p feishin -- --demo` - run against a generated library, without a server
