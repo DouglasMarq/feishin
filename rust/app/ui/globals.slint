@@ -39,6 +39,7 @@ export global AppState {
     in property <Route> route: Route.tracks;
     in property <string> detail-id;
     in property <bool> can-go-back;
+    in property <bool> has-inset-title-bar;
     callback navigate(route: Route, detail-id: string);
     callback back();
 }
@@ -69,7 +70,7 @@ export global TracksState {
     in-out property <TrackColumn> sort-column: TrackColumn.title;
     in-out property <bool> is-sort-descending;
     in-out property <length> w-index: 56px;
-    in-out property <length> w-title: 320px;
+    in-out property <length> w-title: 300px;
     in-out property <length> w-artist: 200px;
     in-out property <length> w-album: 240px;
     in-out property <length> w-year: 64px;
@@ -115,6 +116,8 @@ export global TracksState {
 export enum RepeatState { off, all, one }
 
 export global PlayerState {
+    in property <color> tint;
+    in property <bool> has-tint;
     in property <bool> has-song;
     in property <string> song-id;
     in property <string> title;

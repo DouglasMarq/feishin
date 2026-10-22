@@ -1,7 +1,7 @@
 import { ScrollView } from "std-widgets.slint";
-import { Theme, Icons } from "theme.slint";
+import { Motion, Theme, Icons, Typography } from "theme.slint";
 import { Actions, AppState, PlayerState, Route } from "globals.slint";
-import { Icon, IconButton, TooltipAnchor } from "widgets.slint";
+import { AmbientBackdrop, Icon, IconButton, TooltipAnchor } from "widgets.slint";
 import { Cell, Skeleton } from "tracks.slint";
 import { ShareButton, ShareKind, ShareState } from "share.slint";
 
@@ -24,6 +24,8 @@ export struct AlbumDetailTrack {
 }
 
 export global AlbumDetailState {
+    in property <color> tint;
+    in property <bool> has-tint;
     in property <string> album-id;
     in property <bool> is-loading;
     in property <string> error;
@@ -216,6 +218,10 @@ component AlbumTrackRowView inherits Rectangle {
             border-radius: Theme.radius;
             background: touch.has-hover ? Theme.hover : transparent;
 
+            animate background {
+                duration: Motion.quick;
+            }
+
             touch := TouchArea {
                 double-clicked => {
                     AlbumDetailState.play-track(root.track.id);
@@ -339,7 +345,7 @@ component AlbumTrackRows inherits Rectangle {
 
 export component AlbumDetailView inherits Rectangle {
     property <string> id: AppState.detail-id;
-    background: Theme.background;
+    background: Theme.panel;
 
     init => {
         AlbumDetailState.load(root.id);
@@ -355,23 +361,33 @@ export component AlbumDetailView inherits Rectangle {
         content-width: self.visible-width;
         content-height: content.preferred-height;
 
+        AmbientBackdrop {
+            y: 0;
+            width: scroll.visible-width;
+            height: 360px;
+            tint: AlbumDetailState.tint;
+            has-tint: AlbumDetailState.has-tint;
+        }
+
         content := VerticalLayout {
             width: scroll.visible-width;
             alignment: start;
 
             HorizontalLayout {
-                padding: 24px;
-                spacing: 24px;
+                padding: 28px;
+                padding-top: 44px;
+                spacing: 28px;
                 alignment: start;
 
                 Rectangle {
-                    width: 220px;
-                    height: 220px;
-                    border-radius: Theme.radius;
+                    width: 232px;
+                    height: 232px;
+                    border-radius: Theme.radius-card;
                     background: Theme.surface-raised;
                     clip: true;
-                    drop-shadow-blur: 16px;
-                    drop-shadow-color: #00000080;
+                    drop-shadow-blur: 32px;
+                    drop-shadow-offset-y: 8px;
+                    drop-shadow-color: Theme.shadow;
 
                     if AlbumDetailState.has-cover: Image {
                         source: AlbumDetailState.cover;
@@ -395,9 +411,10 @@ export component AlbumDetailView inherits Rectangle {
 
                     Text {
                         text: @tr("ALBUM");
-                        color: Theme.muted;
-                        font-size: 11px;
-                        font-weight: 600;
+                        color: Theme.foreground.with-alpha(0.75);
+                        font-size: Typography.caption;
+                        font-weight: 700;
+                        letter-spacing: Typography.caption-spacing;
                     }
 
                     if AlbumDetailState.is-loading: Skeleton {
@@ -409,8 +426,9 @@ export component AlbumDetailView inherits Rectangle {
                     if !AlbumDetailState.is-loading: Text {
                         text: AlbumDetailState.error != "" ? AlbumDetailState.error : AlbumDetailState.name;
                         color: Theme.foreground;
-                        font-size: 32px;
-                        font-weight: 800;
+                        font-size: Typography.display;
+                        font-weight: Typography.display-weight;
+                        letter-spacing: -1px;
                         wrap: word-wrap;
                     }
 

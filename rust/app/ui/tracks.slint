@@ -12,7 +12,7 @@ export { TrackRowView } from "track_row.slint";
 export component TracksView inherits Rectangle {
     callback row-clicked();
     min-width: 320px;
-    background: Theme.background;
+    background: Theme.panel;
 
     init => {
         TracksState.load-genres();

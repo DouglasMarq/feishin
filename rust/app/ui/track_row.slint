@@ -1,4 +1,4 @@
-import { Theme, Icons } from "theme.slint";
+import { Motion, Theme, Icons } from "theme.slint";
 import { AppState, Route, TracksState, TrackRow } from "globals.slint";
 import { Icon, TooltipAnchor } from "widgets.slint";
 import { Cell, FavoriteCell, LinkCell, RatingCell, Skeleton } from "track_cells.slint";
@@ -13,6 +13,10 @@ export component TrackRowView inherits Rectangle {
     callback rate(rating: int);
     height: 36px;
     background: root.track.is-selected ? Theme.selected : (touch.has-hover ? Theme.hover : transparent);
+
+    animate background {
+        duration: Motion.quick;
+    }
 
     touch := TouchArea {
         clicked => {
@@ -53,7 +57,7 @@ export component TrackRowView inherits Rectangle {
 
                 if !touch.has-hover && root.track.is-playing: Icon {
                     x: parent.width - 16px - self.width;
-                    path: Icons.note;
+                    path: Icons.equalizer;
                     color: Theme.primary;
                     width: 16px;
                     height: 16px;

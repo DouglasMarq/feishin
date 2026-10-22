@@ -1,4 +1,4 @@
-import { Theme, Icons } from "theme.slint";
+import { Motion, Theme, Icons } from "theme.slint";
 import { IconButton, TooltipAnchor } from "widgets.slint";
 import { RadioIcons } from "radio_widgets.slint";
 
@@ -129,6 +129,10 @@ export component RadioRowView inherits Rectangle {
     property <bool> is-playing: RadioState.is-active && RadioState.playing-id == root.item.id;
     height: 56px;
     background: touch.has-hover ? Theme.hover : transparent;
+
+    animate background {
+        duration: Motion.quick;
+    }
 
     touch := TouchArea {
         double-clicked => {

@@ -249,7 +249,7 @@ component SectionsPage inherits Rectangle {
 export component DiscoverView inherits Rectangle {
     property <string> id: AppState.detail-id;
     min-width: 320px;
-    background: Theme.background;
+    background: Theme.panel;
 
     init => {
         DiscoverState.open(root.id);

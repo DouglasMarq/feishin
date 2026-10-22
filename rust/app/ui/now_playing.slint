@@ -1,5 +1,5 @@
 import { ListView } from "std-widgets.slint";
-import { Theme, Icons } from "theme.slint";
+import { Motion, Theme, Icons } from "theme.slint";
 import { AppState, PlayerState, QueueRow, QueueState, Route, TrackRow } from "globals.slint";
 import { Icon, IconButton, TooltipAnchor } from "widgets.slint";
 import { TabButton } from "radio_widgets.slint";
@@ -154,7 +154,12 @@ component LyricsPanel inherits Rectangle {
                     font-size: NowPlayingState.has-synced-lyrics ? 24px : 16px;
                     font-weight: NowPlayingState.has-synced-lyrics ? 700 : 400;
                     color: !NowPlayingState.has-synced-lyrics ? Theme.foreground : (line-view.is-active ? Theme.foreground : (touch.has-hover ? Theme.foreground.mix(Theme.background, 0.8826) : Theme.foreground.mix(Theme.background, 0.385)));
+                    transform-scale: NowPlayingState.has-synced-lyrics && line-view.is-active ? 1.04 : 1;
                     animate color { duration: 200ms; }
+                    animate transform-scale {
+                        duration: Motion.quick * 3;
+                        easing: ease-out;
+                    }
                 }
 
                 touch := TouchArea {
@@ -344,7 +349,7 @@ export component NowPlayingView inherits Rectangle {
     property <string> current-song: PlayerState.song-id;
     property <int> position: PlayerState.position-ms;
     property <string> queue-probe: QueueState.revision + ":" + QueueState.current-position;
-    background: Theme.background;
+    background: Theme.panel;
     clip: true;
 
     init => {
@@ -360,16 +365,33 @@ export component NowPlayingView inherits Rectangle {
         NowPlayingState.refresh-up-next();
     }
 
-    if NowPlayingState.has-cover: Image {
-        width: parent.width;
-        height: parent.height;
-        source: NowPlayingState.cover;
-        image-fit: cover;
-        opacity: 0.14;
+    property <color> glow: PlayerState.has-tint ? Theme.ambient(PlayerState.tint) : Theme.surface-raised;
+    property <color> second-glow: PlayerState.has-tint ? Theme.ambient-glow(PlayerState.tint) : Theme.surface;
+    property <length> glow-size: max(root.width, root.height) * 1.1;
+
+    animate glow, second-glow {
+        duration: Motion.ambient;
+        easing: ease-in-out;
     }
 
     Rectangle {
-        background: @linear-gradient(180deg, Theme.background.with-alpha(0.4) 0%, Theme.background 85%);
+        background: @linear-gradient(160deg, root.glow.mix(Theme.panel, 0.55) 0%, Theme.panel 70%);
+    }
+
+    Rectangle {
+        x: -root.glow-size * 0.35;
+        y: -root.glow-size * 0.45;
+        width: root.glow-size;
+        height: root.glow-size;
+        background: @radial-gradient(circle, root.glow.with-alpha(0.7) 0%, root.glow.with-alpha(0.25) 40%, transparent 70%);
+    }
+
+    Rectangle {
+        x: root.width - root.glow-size * 0.6;
+        y: root.height - root.glow-size * 0.5;
+        width: root.glow-size;
+        height: root.glow-size;
+        background: @radial-gradient(circle, root.second-glow.with-alpha(0.45) 0%, root.second-glow.with-alpha(0.12) 45%, transparent 70%);
     }
 
     if !PlayerState.has-song: Placeholder {
@@ -405,9 +427,12 @@ export component NowPlayingView inherits Rectangle {
                 y: 0;
                 width: cover-column.cover-side;
                 height: cover-column.cover-side;
-                border-radius: 10px;
+                border-radius: Theme.radius-panel;
                 background: Theme.surface-raised;
                 clip: true;
+                drop-shadow-blur: 48px;
+                drop-shadow-offset-y: 16px;
+                drop-shadow-color: Theme.shadow;
 
                 if NowPlayingState.has-cover: Image {
                     width: parent.width;

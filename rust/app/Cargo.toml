@@ -31,6 +31,9 @@ tokio = { workspace = true, features = ["signal"] }
 tracing.workspace = true
 tracing-subscriber = { version = "0.3.23", features = ["env-filter"] }
 
+[target.'cfg(target_os = "macos")'.dependencies]
+slint = { version = "1.18", features = ["unstable-winit-030"] }
+
 [dev-dependencies]
 i-slint-backend-testing = "1.18"
 tempfile = "3.27.0"

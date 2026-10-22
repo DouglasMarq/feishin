@@ -1,5 +1,5 @@
 import { ListView } from "std-widgets.slint";
-import { Theme, Icons } from "theme.slint";
+import { Motion, Theme, Icons } from "theme.slint";
 import { Actions, AppState, PlayerState, Route, TrackRow } from "globals.slint";
 import { Icon, IconButton, TooltipAnchor } from "widgets.slint";
 import { Cell, LinkCell, Skeleton } from "track_cells.slint";
@@ -96,6 +96,10 @@ component FolderRowView inherits Rectangle {
     in property <FolderListRow> item;
     height: 36px;
     background: touch.has-hover ? Theme.hover : transparent;
+
+    animate background {
+        duration: Motion.quick;
+    }
 
     TooltipAnchor {
         text: @tr("Open {}", root.item.name);
@@ -257,6 +261,10 @@ component SongRowView inherits Rectangle {
     height: 36px;
     background: touch.has-hover ? Theme.hover : transparent;
 
+    animate background {
+        duration: Motion.quick;
+    }
+
     touch := TouchArea {
         double-clicked => {
             if (root.item.track.is-loaded) {
@@ -415,7 +423,7 @@ component FolderActions inherits HorizontalLayout {
 export component FoldersView inherits Rectangle {
     property <string> id: AppState.detail-id;
     min-width: 320px;
-    background: Theme.background;
+    background: Theme.panel;
 
     init => {
         FoldersState.load(root.id);

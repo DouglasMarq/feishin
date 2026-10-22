@@ -5,7 +5,7 @@ use feishin_core::model::ArtistDetail;
 use feishin_storage::cover_cache::DecodedImage;
 use slint::{ComponentHandle, Image};
 
-use super::super::images::to_image;
+use super::super::images::{tint_of, to_image};
 use super::super::{AppWindow, ArtistDetailState, Context, on_ui};
 use super::current::{begin, is_current, update_current};
 use super::view::{clear, set_album_image, show};
@@ -34,8 +34,9 @@ fn show_result(
 ) {
     match detail {
         Ok(detail) => {
+            let tint = image.as_deref().and_then(tint_of);
             let image = image.as_deref().and_then(to_image);
-            show(window, detail, image);
+            show(window, detail, image, tint);
         }
         Err(error) => {
             update_current(|current| current.id.clear());

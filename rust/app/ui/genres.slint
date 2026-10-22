@@ -1,8 +1,9 @@
 import { LineEdit, ListView } from "std-widgets.slint";
-import { Theme, Icons } from "theme.slint";
+import { Motion, Theme, Icons } from "theme.slint";
 import { AppState, PlayerState, Route, TrackRow, TracksState } from "globals.slint";
 import { HeaderCell, Skeleton, TrackRowView } from "tracks.slint";
 import { Icon, IconButton, TooltipAnchor } from "widgets.slint";
+import { CoverArt } from "cover_art.slint";
 
 export enum GenresTab { albums, tracks }
 
@@ -71,6 +72,10 @@ export component Tab inherits Rectangle {
     border-radius: 16px;
     background: root.is-active ? Theme.surface-raised : (touch.has-hover ? Theme.hover : transparent);
 
+    animate background {
+        duration: Motion.quick;
+    }
+
     layout := HorizontalLayout {
         padding-left: 14px;
         padding-right: 14px;
@@ -116,6 +121,10 @@ export component FavoriteButton inherits Rectangle {
     border-radius: 14px;
     background: touch.has-hover ? Theme.hover : transparent;
 
+    animate background {
+        duration: Motion.quick;
+    }
+
     Icon {
         path: root.is-favorite ? Icons.heart : LibraryIcons.heart-outline;
         color: root.is-favorite ? Theme.primary : (touch.has-hover ? Theme.foreground : Theme.muted);
@@ -158,32 +167,16 @@ export component CardView inherits Rectangle {
         is-hovered: touch.has-hover;
     }
 
-    Rectangle {
+    CoverArt {
         x: 0;
         y: 0;
         width: root.width;
         height: root.width;
-        border-radius: root.is-round ? self.width / 2 : Theme.radius;
-        background: Theme.surface-raised;
-        clip: true;
-
-        if root.card.has-cover: Image {
-            width: parent.width;
-            height: parent.height;
-            source: root.card.cover;
-            image-fit: cover;
-        }
-
-        if !root.card.has-cover && root.card.is-loaded: Icon {
-            path: root.is-round ? Icons.artist : Icons.album;
-            color: Theme.muted;
-            width: parent.width * 0.35;
-            height: parent.width * 0.35;
-        }
-
-        if touch.has-hover: Rectangle {
-            background: Theme.tint.with-alpha(16 / 255);
-        }
+        source: root.card.cover;
+        has-source: root.card.has-cover;
+        icon: root.is-round ? Icons.artist : Icons.album;
+        is-round: root.is-round;
+        is-hovered: touch.has-hover;
     }
 
     if root.is-favorite-shown && root.card.is-loaded && (touch.has-hover || !root.card.is-favorite): Rectangle {
@@ -488,6 +481,10 @@ component GenreList inherits VerticalLayout {
                 height: 40px;
                 background: touch.has-hover ? Theme.hover : transparent;
 
+                animate background {
+                    duration: Motion.quick;
+                }
+
                 touch := TouchArea {
                     mouse-cursor: pointer;
                     clicked => {
@@ -624,7 +621,7 @@ component GenreDetail inherits VerticalLayout {
 export component GenresView inherits Rectangle {
     property <string> id: AppState.detail-id;
     min-width: 320px;
-    background: Theme.background;
+    background: Theme.panel;
 
     init => {
         GenresState.load(root.id);

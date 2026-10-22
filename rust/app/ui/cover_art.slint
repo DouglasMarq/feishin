@@ -1,0 +1,103 @@
+import { Motion, Theme, Icons } from "theme.slint";
+import { Icon, TooltipAnchor } from "widgets.slint";
+
+export component CoverArt inherits Rectangle {
+    in property <image> source;
+    in property <bool> has-source;
+    in property <string> icon: Icons.album;
+    in property <bool> is-hovered;
+    in property <bool> is-round;
+    border-radius: root.is-round ? root.width / 2 : Theme.radius-card;
+    background: Theme.placeholder;
+    clip: true;
+
+    if !root.has-source: Icon {
+        path: root.icon;
+        color: Theme.foreground.with-alpha(0.3);
+        width: parent.width * 0.32;
+        height: parent.width * 0.32;
+    }
+
+    if root.has-source: Image {
+        width: parent.width;
+        height: parent.height;
+        source: root.source;
+        image-fit: cover;
+        transform-scale: root.is-hovered ? 1.05 : 1;
+
+        animate transform-scale {
+            duration: Motion.quick * 3;
+            easing: ease-out;
+        }
+    }
+
+    Rectangle {
+        background: root.is-hovered ? #00000033 : #00000000;
+
+        animate background {
+            duration: Motion.quick;
+        }
+    }
+
+    @children
+}
+
+export component PlayBadge inherits Rectangle {
+    in property <bool> is-shown;
+    in property <string> tooltip;
+    in property <length> size: 44px;
+    out property <bool> is-hovered: touch.has-hover;
+    callback clicked();
+    width: root.size;
+    height: root.size;
+    accessible-role: button;
+    accessible-label: root.tooltip;
+    accessible-action-default => {
+        root.clicked();
+    }
+
+    if root.is-shown: Rectangle {
+        y: 8px;
+        width: root.size;
+        height: root.size;
+        border-radius: root.size / 2;
+        background: touch.has-hover ? Theme.primary.brighter(15%) : Theme.primary;
+        opacity: 0;
+        transform-scale: touch.pressed ? 0.92 : (touch.has-hover ? 1.06 : 1);
+
+        init => {
+            self.y = 0px;
+            self.opacity = 1;
+        }
+
+        animate y, opacity {
+            duration: Motion.quick * 1.5;
+            easing: ease-out;
+        }
+
+        animate transform-scale {
+            duration: Motion.quick;
+            easing: ease-out;
+        }
+
+        Icon {
+            path: Icons.play;
+            color: Theme.on-primary;
+            width: root.size * 0.55;
+            height: root.size * 0.55;
+        }
+    }
+
+    TooltipAnchor {
+        text: root.tooltip;
+        is-hovered: touch.has-hover;
+    }
+
+    touch := TouchArea {
+        enabled: root.is-shown;
+        mouse-cursor: pointer;
+        clicked => {
+            root.clicked();
+        }
+    }
+}

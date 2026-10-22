@@ -461,7 +461,7 @@ component ServerItem inherits Rectangle {
 export component SettingsView inherits Rectangle {
     property <string> confirming;
     property <bool> is-confirming-logout;
-    background: Theme.background;
+    background: Theme.panel;
 
     init => {
         SettingsState.load(AppState.detail-id);

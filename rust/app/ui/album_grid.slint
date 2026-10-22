@@ -1,6 +1,7 @@
 import { ListView } from "std-widgets.slint";
 import { Theme, Icons } from "theme.slint";
 import { Icon, TooltipAnchor } from "widgets.slint";
+import { CoverArt, PlayBadge } from "cover_art.slint";
 import { Skeleton } from "tracks.slint";
 import { ShareKind, ShareState } from "share.slint";
 
@@ -28,6 +29,11 @@ export component AlbumGridCardView inherits Rectangle {
     callback add-to-playlist();
     callback open-artist();
     height: self.width + 52px;
+    accessible-role: button;
+    accessible-label: root.card.name;
+    accessible-action-default => {
+        root.open();
+    }
 
     ContextMenuArea {
         enabled: root.card.is-loaded;
@@ -83,25 +89,11 @@ export component AlbumGridCardView inherits Rectangle {
         VerticalLayout {
             spacing: 8px;
 
-            Rectangle {
+            CoverArt {
                 height: root.width;
-                border-radius: Theme.radius;
-                background: Theme.surface-raised;
-                clip: true;
-
-                if root.card.has-cover: Image {
-                    source: root.card.cover;
-                    width: parent.width;
-                    height: parent.height;
-                    image-fit: cover;
-                }
-
-                if !root.card.has-cover: Icon {
-                    path: Icons.album;
-                    color: Theme.border;
-                    width: parent.width * 0.4;
-                    height: parent.width * 0.4;
-                }
+                source: root.card.cover;
+                has-source: root.card.has-cover;
+                is-hovered: touch.has-hover;
 
                 touch := TouchArea {
                     enabled: root.card.is-loaded;
@@ -115,37 +107,13 @@ export component AlbumGridCardView inherits Rectangle {
                         is-hovered: touch.has-hover;
                     }
 
-                    if touch.has-hover: Rectangle {
-                        background: #00000059;
-
-                        Rectangle {
-                            x: 12px;
-                            y: parent.height - self.height - 12px;
-                            width: 44px;
-                            height: 44px;
-                            border-radius: 22px;
-                            background: play-touch.has-hover ? Theme.primary.brighter(20%) : Theme.primary;
-                            drop-shadow-blur: 8px;
-                            drop-shadow-color: #00000080;
-
-                            Icon {
-                                path: Icons.play;
-                                color: Theme.on-primary;
-                                width: 24px;
-                                height: 24px;
-                            }
-
-                            TooltipAnchor {
-                                text: @tr("Play");
-                                is-hovered: play-touch.has-hover;
-                            }
-
-                            play-touch := TouchArea {
-                                mouse-cursor: pointer;
-                                clicked => {
-                                    root.play();
-                                }
-                            }
+                    PlayBadge {
+                        x: parent.width - self.width - 12px;
+                        y: parent.height - self.height - 12px;
+                        is-shown: touch.has-hover;
+                        tooltip: @tr("Play");
+                        clicked => {
+                            root.play();
                         }
                     }
                 }

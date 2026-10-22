@@ -1,7 +1,7 @@
 import { ScrollView } from "std-widgets.slint";
-import { Behaviour, Theme, Icons } from "theme.slint";
+import { Behaviour, Theme, Icons, Typography } from "theme.slint";
 import { AppState, Route, TrackRow } from "globals.slint";
-import { Icon, IconButton, TooltipAnchor } from "widgets.slint";
+import { AmbientBackdrop, Icon, IconButton, TooltipAnchor } from "widgets.slint";
 import { Skeleton, TrackRowView } from "tracks.slint";
 import { ArtistIcons, ArtistImage, PlayOverlay } from "artists.slint";
 
@@ -14,6 +14,8 @@ export struct ArtistAlbumCard {
 }
 
 export global ArtistDetailState {
+    in property <color> tint;
+    in property <bool> has-tint;
     in property <bool> is-loading;
     in property <string> error;
     in property <string> name;
@@ -141,7 +143,7 @@ export component ArtistDetailView inherits Rectangle {
     property <length> tile-height: root.tile-width + 34px;
     property <length> bio-collapsed: 66px;
     property <int> top-shown: ArtistDetailState.is-top-expanded ? ArtistDetailState.top-songs.length : min(Behaviour.collapsed-top-songs, ArtistDetailState.top-songs.length);
-    background: Theme.background;
+    background: Theme.panel;
     min-width: 320px;
 
     init => {
@@ -159,13 +161,22 @@ export component ArtistDetailView inherits Rectangle {
         content-width: self.visible-width;
         content-height: content.preferred-height;
 
+        AmbientBackdrop {
+            y: 0;
+            width: page.visible-width;
+            height: 340px;
+            tint: ArtistDetailState.tint;
+            has-tint: ArtistDetailState.has-tint;
+        }
+
         content := VerticalLayout {
             width: page.visible-width;
             padding-bottom: 24px;
             spacing: 24px;
 
             HorizontalLayout {
-                padding: 24px;
+                padding: 28px;
+                padding-top: 44px;
                 padding-bottom: 0px;
                 spacing: 24px;
 
@@ -182,9 +193,10 @@ export component ArtistDetailView inherits Rectangle {
 
                     Text {
                         text: @tr("ARTIST");
-                        color: Theme.muted;
-                        font-size: 12px;
+                        color: Theme.foreground.with-alpha(0.75);
+                        font-size: Typography.caption;
                         font-weight: 700;
+                        letter-spacing: Typography.caption-spacing;
                     }
 
                     if ArtistDetailState.is-loading && ArtistDetailState.name == "": Skeleton {
@@ -196,8 +208,9 @@ export component ArtistDetailView inherits Rectangle {
                     Text {
                         text: ArtistDetailState.error != "" ? ArtistDetailState.error : ArtistDetailState.name;
                         color: ArtistDetailState.error != "" ? Theme.danger : Theme.foreground;
-                        font-size: ArtistDetailState.error != "" ? 16px : 40px;
-                        font-weight: 800;
+                        font-size: ArtistDetailState.error != "" ? 16px : Typography.display;
+                        font-weight: Typography.display-weight;
+                        letter-spacing: ArtistDetailState.error != "" ? 0px : -1px;
                         overflow: elide;
                     }
 

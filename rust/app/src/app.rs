@@ -302,7 +302,7 @@ pub fn run(mode: Mode) -> Result<()> {
     let backends = backends(mode)?;
     let settings = load_settings_or_default(backends.store.as_ref());
 
-    let window = AppWindow::new().context("creating the window")?;
+    let window = crate::window_chrome::create_window()?;
     crate::i18n::select_language(settings.ui.language.as_deref());
     crate::identity::announce_xdg_app_id();
     let (commands, receiver) = mpsc::unbounded_channel();

@@ -5,7 +5,7 @@ use feishin_core::model::AlbumDetail;
 use slint::{ComponentHandle, ModelRc, SharedString, VecModel, Weak};
 
 use super::super::album_grid::credited_artists;
-use super::super::images::to_image;
+use super::super::images::{tint_of, to_image};
 use super::super::{AlbumDetailArtist, AlbumDetailState, AppWindow, Context, on_ui, show_status};
 use super::info::album_info;
 use super::tracks::show_tracks;
@@ -53,6 +53,7 @@ fn clear(window: &AppWindow, album_id: &SharedString) {
     state.set_info(SharedString::default());
     state.set_has_cover(false);
     state.set_cover(slint::Image::default());
+    state.set_has_tint(false);
     state.set_is_favorite(false);
     state.set_rating(0);
     show_tracks(window, Vec::new());
@@ -73,6 +74,10 @@ async fn load_cover(
                 let state = window.global::<AlbumDetailState>();
                 state.set_cover(image);
                 state.set_has_cover(true);
+                if let Some(tint) = tint_of(&cover) {
+                    state.set_tint(tint);
+                    state.set_has_tint(true);
+                }
             }
         }),
         Err(error) => tracing::debug!("cover {cover_id}: {error:#}"),

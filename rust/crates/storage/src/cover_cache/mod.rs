@@ -2,6 +2,7 @@ mod cache_state;
 mod disk_index;
 mod image_file;
 mod locking;
+mod tint;
 
 use std::collections::HashMap;
 use std::num::NonZeroUsize;
@@ -15,6 +16,7 @@ use crate::Result;
 use cache_state::{CacheState, ImageKey, SharedLoad};
 use disk_index::DiskIndex;
 use locking::lock;
+pub use tint::Rgb;
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct DecodedImage {

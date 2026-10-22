@@ -1,4 +1,4 @@
-import { Behaviour, Theme, Icons, Format } from "theme.slint";
+import { Behaviour, Motion, Theme, Icons, Format } from "theme.slint";
 import { AppState, PlayerState, RepeatState, Route } from "globals.slint";
 import { NowPlayingState, NowPlayingTab } from "now_playing.slint";
 import { Bar, Icon, IconButton, TooltipAnchor } from "widgets.slint";
@@ -9,13 +9,28 @@ import { RadioIcons, RadioState } from "radio.slint";
 export component PlayerBar inherits Rectangle {
     property <bool> is-radio: RadioState.is-active;
     property <bool> can-play: PlayerState.has-song || root.is-radio;
-    height: 88px;
-    background: Theme.background-alt;
+    property <string> info-tooltip: root.is-radio ? (AppState.route == Route.radio ? @tr("Listening to {}", RadioState.station-name) : @tr("Open radio")) : AppState.route == Route.now-playing ? @tr("Close now playing") : @tr("Open now playing");
+
+    function open-song-info() {
+        if (root.is-radio) {
+            AppState.navigate(Route.radio, "");
+        } else if (AppState.route == Route.now-playing) {
+            AppState.back();
+        } else {
+            AppState.navigate(Route.now-playing, "");
+        }
+    }
+    property <color> wash: PlayerState.has-tint && !root.is-radio ? Theme.ambient(PlayerState.tint) : Theme.canvas;
+    height: 84px;
+    background: Theme.canvas;
+
+    animate wash {
+        duration: Motion.ambient;
+        easing: ease-in-out;
+    }
 
     Rectangle {
-        y: 0;
-        height: 1px;
-        background: Theme.border;
+        background: @linear-gradient(90deg, root.wash.with-alpha(0.55) 0%, root.wash.with-alpha(0.12) 35%, transparent 60%);
     }
 
     HorizontalLayout {
@@ -30,11 +45,14 @@ export component PlayerBar inherits Rectangle {
 
             Rectangle {
                 y: (parent.height - self.height) / 2;
-                width: 60px;
-                height: 60px;
+                width: 56px;
+                height: 56px;
                 border-radius: Theme.radius;
                 background: Theme.surface-raised;
                 clip: true;
+                drop-shadow-blur: 12px;
+                drop-shadow-offset-y: 2px;
+                drop-shadow-color: Theme.shadow;
 
                 if PlayerState.has-cover && !root.is-radio: Image {
                     source: PlayerState.cover;
@@ -105,6 +123,12 @@ export component PlayerBar inherits Rectangle {
                     border-radius: 19px;
                     background: play-touch.has-hover ? (Theme.is-dark ? #ffffff : Theme.foreground.mix(Theme.background, 0.8)) : Theme.foreground;
                     opacity: root.can-play ? 1 : 0.4;
+                    transform-scale: play-touch.pressed && root.can-play ? 0.92 : (play-touch.has-hover && root.can-play ? 1.06 : 1);
+
+                    animate transform-scale {
+                        duration: Motion.quick;
+                        easing: ease-out;
+                    }
 
                     Icon {
                         path: PlayerState.is-playing ? Icons.pause : Icons.play;
@@ -246,7 +270,7 @@ export component PlayerBar inherits Rectangle {
     TooltipAnchor {
         x: song-info.x;
         width: song-info.width;
-        text: root.is-radio ? (AppState.route == Route.radio ? @tr("Listening to {}", RadioState.station-name) : @tr("Open radio")) : AppState.route == Route.now-playing ? @tr("Close now playing") : @tr("Open now playing");
+        text: root.info-tooltip;
         is-hovered: info-touch.has-hover;
     }
 
@@ -255,14 +279,14 @@ export component PlayerBar inherits Rectangle {
         width: song-info.width;
         enabled: root.can-play;
         mouse-cursor: pointer;
+        accessible-role: button;
+        accessible-label: root.info-tooltip;
+        accessible-enabled: root.can-play;
+        accessible-action-default => {
+            root.open-song-info();
+        }
         clicked => {
-            if (root.is-radio) {
-                AppState.navigate(Route.radio, "");
-            } else if (AppState.route == Route.now-playing) {
-                AppState.back();
-            } else {
-                AppState.navigate(Route.now-playing, "");
-            }
+            root.open-song-info();
         }
     }
 }

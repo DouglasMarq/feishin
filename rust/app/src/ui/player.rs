@@ -2,7 +2,7 @@ use feishin_core::queue::{QueueTrack, RepeatMode};
 use feishin_storage::cover_cache::DecodedImage;
 use slint::{ComponentHandle, Image};
 
-use super::images::{CoverSource, to_image};
+use super::images::{CoverSource, tint_of, to_image};
 use super::{
     AppWindow, Context, PlayerState, RepeatState, clamp_i32, on_ui, queue, radio, show_status,
     tracks,
@@ -69,6 +69,11 @@ fn show_cover(window: &AppWindow, song_id: &str, cover: &DecodedImage) {
         state.set_cover(image);
         state.set_has_cover(true);
     }
+    let tint = tint_of(cover);
+    state.set_has_tint(tint.is_some());
+    if let Some(tint) = tint {
+        state.set_tint(tint);
+    }
 }
 
 impl UiSink for SlintSink {
@@ -90,6 +95,7 @@ fn show_song(window: &AppWindow, track: &QueueTrack) {
     if state.get_song_id() != song_id {
         state.set_has_cover(false);
         state.set_cover(Image::default());
+        state.set_has_tint(false);
     }
     state.set_has_song(true);
     state.set_song_id(song_id.into());
@@ -103,6 +109,7 @@ fn clear_song(window: &AppWindow) {
     let state = window.global::<PlayerState>();
     state.set_has_song(false);
     state.set_has_cover(false);
+    state.set_has_tint(false);
     state.set_cover(Image::default());
     state.set_song_id("".into());
     state.set_title("".into());

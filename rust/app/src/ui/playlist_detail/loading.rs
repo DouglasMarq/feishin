@@ -9,7 +9,7 @@ use super::binding::with_model;
 use super::detail::{SharedDetail, lock};
 use super::pages::paging_for_page;
 use super::rows::{HeaderSummary, header_info};
-use crate::ui::images::to_image;
+use crate::ui::images::{tint_of, to_image};
 use crate::ui::{AppState, AppWindow, Context, PlaylistDetailState, Route, on_ui, show_status};
 
 const COVER_SIZE: u32 = 300;
@@ -35,6 +35,7 @@ fn reset_view(window: &AppWindow, generation: u64, playlist_id: &str) {
     state.set_info("".into());
     state.set_has_cover(false);
     state.set_cover(slint::Image::default());
+    state.set_has_tint(false);
     state.set_selected_count(0);
     state.set_is_busy(false);
     with_model(window, |model| model.reset(generation, playlist_id));
@@ -113,6 +114,10 @@ fn show_cover(window: &AppWindow, shared: &SharedDetail, generation: u64, cover:
     let state = window.global::<PlaylistDetailState>();
     state.set_cover(image);
     state.set_has_cover(true);
+    if let Some(tint) = tint_of(cover) {
+        state.set_tint(tint);
+        state.set_has_tint(true);
+    }
 }
 
 fn apply_loaded(window: &AppWindow, shared: &SharedDetail, loaded: Loaded) {

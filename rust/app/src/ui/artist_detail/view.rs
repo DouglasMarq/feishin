@@ -1,5 +1,5 @@
 use feishin_core::model::ArtistDetail;
-use slint::{ComponentHandle, Image, Model, ModelRc, VecModel};
+use slint::{Color, ComponentHandle, Image, Model, ModelRc, VecModel};
 
 use super::super::tracks::track_row;
 use super::super::{AppWindow, ArtistAlbumCard, ArtistDetailState, TrackRow};
@@ -23,6 +23,7 @@ pub fn clear(window: &AppWindow) {
     state.set_info("".into());
     state.set_image(Image::default());
     state.set_has_image(false);
+    state.set_has_tint(false);
     state.set_is_favorite(false);
     state.set_biography("".into());
     state.set_is_bio_expanded(false);
@@ -44,7 +45,7 @@ fn remember_loaded(detail: ArtistDetail) {
     });
 }
 
-pub fn show(window: &AppWindow, detail: ArtistDetail, image: Option<Image>) {
+pub fn show(window: &AppWindow, detail: ArtistDetail, image: Option<Image>, tint: Option<Color>) {
     let state = window.global::<ArtistDetailState>();
     state.set_is_loading(false);
     state.set_name(detail.artist.name.as_str().into());
@@ -54,6 +55,10 @@ pub fn show(window: &AppWindow, detail: ArtistDetail, image: Option<Image>) {
     if let Some(image) = image {
         state.set_image(image);
         state.set_has_image(true);
+    }
+    if let Some(tint) = tint {
+        state.set_tint(tint);
+        state.set_has_tint(true);
     }
     let rows: Vec<TrackRow> = detail
         .top_songs

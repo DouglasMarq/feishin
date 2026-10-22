@@ -1,7 +1,8 @@
 import { LineEdit, ScrollView } from "std-widgets.slint";
-import { Theme, Icons } from "theme.slint";
+import { Motion, Theme, Icons } from "theme.slint";
 import { Actions, AppState, PlayerState, Route, TrackRow } from "globals.slint";
 import { Icon, TooltipAnchor } from "widgets.slint";
+import { CoverArt } from "cover_art.slint";
 import { Cell, HeaderCell } from "tracks.slint";
 import { ShareKind, ShareState } from "share.slint";
 
@@ -108,6 +109,10 @@ component SongRow inherits Rectangle {
     property <bool> is-playing: root.track.id == PlayerState.song-id;
     property <int> position: root.track.index - 1;
     background: touch.has-hover ? Theme.hover : transparent;
+
+    animate background {
+        duration: Motion.quick;
+    }
 
     menu := ContextMenuArea {
         Menu {
@@ -296,31 +301,15 @@ component CardView inherits Rectangle {
         }
     }
 
-    art := Rectangle {
+    art := CoverArt {
         y: 0;
         width: root.width;
         height: root.width;
-        border-radius: root.is-round ? self.width / 2 : Theme.radius;
-        background: Theme.surface-raised;
-        clip: true;
-
-        if root.card.has-cover: Image {
-            width: parent.width;
-            height: parent.height;
-            source: root.card.cover;
-            image-fit: cover;
-        }
-
-        if !root.card.has-cover: Icon {
-            path: root.is-round ? Icons.artist : Icons.album;
-            color: Theme.muted;
-            width: 48px;
-            height: 48px;
-        }
-
-        if touch.has-hover: Rectangle {
-            background: #00000040;
-        }
+        source: root.card.cover;
+        has-source: root.card.has-cover;
+        icon: root.is-round ? Icons.artist : Icons.album;
+        is-round: root.is-round;
+        is-hovered: touch.has-hover;
     }
 
     VerticalLayout {
@@ -395,7 +384,7 @@ export component SearchView inherits Rectangle {
     property <length> artist-width: max(120px, (scroll.visible-width - 40px - 48px - 72px) * 0.3);
     property <length> album-width: max(120px, (scroll.visible-width - 40px - 48px - 72px) * 0.3);
     min-width: 320px;
-    background: Theme.background;
+    background: Theme.panel;
 
     init => {
         SearchState.load(AppState.detail-id);

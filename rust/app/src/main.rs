@@ -24,6 +24,7 @@ mod sleep_timer;
 mod store;
 mod termination;
 mod ui;
+mod window_chrome;
 mod youtube;
 
 #[cfg(test)]

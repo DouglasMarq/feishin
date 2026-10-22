@@ -1,7 +1,8 @@
 import { LineEdit, ListView } from "std-widgets.slint";
-import { Theme, Icons } from "theme.slint";
+import { Motion, Theme, Icons } from "theme.slint";
 import { AppState, Route } from "globals.slint";
 import { Icon, IconButton, TooltipAnchor, TooltipComboBox } from "widgets.slint";
+import { CoverArt, PlayBadge } from "cover_art.slint";
 import { Cell, Skeleton } from "tracks.slint";
 
 export struct ArtistCard {
@@ -100,8 +101,17 @@ export component PlayOverlay inherits Rectangle {
 
 component ArtistCardView inherits Rectangle {
     in property <ArtistCard> card;
-    border-radius: Theme.radius;
+    border-radius: Theme.radius-card;
     background: touch.has-hover ? Theme.hover : transparent;
+    accessible-role: button;
+    accessible-label: root.card.name;
+    accessible-action-default => {
+        AppState.navigate(Route.artist-detail, root.card.id);
+    }
+
+    animate background {
+        duration: Motion.quick;
+    }
 
     touch := TouchArea {
         mouse-cursor: pointer;
@@ -110,18 +120,24 @@ component ArtistCardView inherits Rectangle {
         }
     }
 
-    image := ArtistImage {
+    image := CoverArt {
         x: 12px;
         y: 12px;
         width: parent.width - 24px;
         height: self.width;
-        image: root.card.image;
-        has-image: root.card.has-image;
+        source: root.card.image;
+        has-source: root.card.has-image;
+        icon: Icons.artist;
+        is-round: true;
+        is-hovered: touch.has-hover || play-badge.is-hovered;
     }
 
-    if touch.has-hover: PlayOverlay {
+    play-badge := PlayBadge {
         x: image.x + image.width - self.width - 4px;
         y: image.y + image.height - self.height - 4px;
+        size: 40px;
+        is-shown: touch.has-hover || self.is-hovered;
+        tooltip: @tr("Play");
         clicked => {
             ArtistsState.play(root.card.id);
         }
@@ -155,6 +171,10 @@ component ArtistRowView inherits Rectangle {
     in property <int> index;
     height: 48px;
     background: touch.has-hover ? Theme.hover : transparent;
+
+    animate background {
+        duration: Motion.quick;
+    }
 
     touch := TouchArea {
         mouse-cursor: pointer;
@@ -294,7 +314,7 @@ export component ArtistsView inherits Rectangle {
     property <length> grid-width: body.width - 44px;
     property <int> columns: max(1, floor((root.grid-width + root.gap) / (root.min-card + root.gap)));
     property <length> card-width: (root.grid-width - root.gap * (root.columns - 1)) / root.columns;
-    background: Theme.background;
+    background: Theme.panel;
     min-width: 320px;
 
     init => {

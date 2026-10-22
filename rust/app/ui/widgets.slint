@@ -1,5 +1,5 @@
 import { Button, ComboBox, Switch } from "std-widgets.slint";
-import { Behaviour, Theme } from "theme.slint";
+import { Behaviour, Motion, Theme } from "theme.slint";
 
 export global Tooltip {
     out property <string> text;
@@ -36,12 +36,44 @@ export global Tooltip {
     }
 }
 
+export component AmbientBackdrop inherits Rectangle {
+    in property <color> tint;
+    in property <bool> has-tint;
+    property <color> base: root.has-tint ? Theme.ambient(root.tint) : Theme.surface-raised.mix(Theme.panel, 0.6);
+    background: @linear-gradient(180deg, root.base 0%, root.base.mix(Theme.panel, 0.55) 45%, Theme.panel 100%);
+
+    animate base {
+        duration: Motion.ambient;
+        easing: ease-in-out;
+    }
+}
+
+export component PageFade inherits Rectangle {
+    opacity: 0;
+
+    init => {
+        self.opacity = 1;
+    }
+
+    animate opacity {
+        duration: Motion.page;
+        easing: ease-out;
+    }
+
+    @children
+}
+
 export component TooltipOverlay inherits Rectangle {
     property <length> gap: 6px;
     property <length> above-y: Tooltip.anchor-y - bubble.height - root.gap;
 
     bubble := Rectangle {
-        visible: Tooltip.is-visible;
+        opacity: Tooltip.is-visible ? 1 : 0;
+
+        animate opacity {
+            duration: Motion.quick;
+        }
+
         width: label.preferred-width + 16px;
         height: label.preferred-height + 10px;
         x: max(4px, min(root.width - self.width - 4px, Tooltip.anchor-x + Tooltip.anchor-width / 2 - self.width / 2));
@@ -228,11 +260,21 @@ export component IconButton inherits Rectangle {
     background: touch.has-hover && root.is-enabled ? Theme.hover : transparent;
     opacity: root.is-enabled ? 1 : 0.4;
 
+    animate background {
+        duration: Motion.quick;
+    }
+
     Icon {
         path: root.icon;
         color: root.icon-color;
         width: root.icon-size;
         height: root.icon-size;
+        transform-scale: touch.pressed && root.is-enabled ? 0.88 : 1;
+
+        animate transform-scale {
+            duration: Motion.quick;
+            easing: ease-out;
+        }
     }
 
     TooltipAnchor {
@@ -290,27 +332,47 @@ export component Bar inherits Rectangle {
         }
     }
 
+    property <bool> is-engaged: (touch.has-hover && root.is-enabled) || root.is-dragging;
+
     track := Rectangle {
         y: (parent.height - self.height) / 2;
-        height: 4px;
-        border-radius: 2px;
-        background: Theme.surface-raised;
+        height: root.is-engaged ? 6px : 4px;
+        border-radius: self.height / 2;
+        background: Theme.foreground.with-alpha(0.16);
+
+        animate height {
+            duration: Motion.quick;
+            easing: ease-out;
+        }
 
         Rectangle {
             x: 0;
             width: parent.width * max(0, min(1, root.shown));
-            border-radius: 2px;
-            background: (touch.has-hover && root.is-enabled) || root.is-dragging ? Theme.primary : Theme.foreground;
+            border-radius: parent.border-radius;
+            background: root.is-engaged ? Theme.primary : Theme.foreground.with-alpha(0.85);
+
+            animate background {
+                duration: Motion.quick;
+            }
         }
     }
 
-    if (touch.has-hover && root.is-enabled) || root.is-dragging: Rectangle {
+    Rectangle {
         x: root.width * max(0, min(1, root.shown)) - self.width / 2;
         y: (parent.height - self.height) / 2;
         width: 12px;
         height: 12px;
         border-radius: 6px;
         background: Theme.foreground;
+        opacity: root.is-engaged ? 1 : 0;
+        transform-scale: root.is-engaged ? 1 : 0.4;
+        drop-shadow-blur: 4px;
+        drop-shadow-color: #00000066;
+
+        animate opacity, transform-scale {
+            duration: Motion.quick;
+            easing: ease-out;
+        }
     }
 
     TooltipAnchor {

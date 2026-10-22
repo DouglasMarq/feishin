@@ -1,6 +1,7 @@
 import { Theme, Icons } from "theme.slint";
 import { AppState, Route } from "globals.slint";
 import { Icon, IconButton, TooltipAnchor } from "widgets.slint";
+import { CoverArt, PlayBadge } from "cover_art.slint";
 
 export struct HomeAlbum {
     id: string,
@@ -40,6 +41,11 @@ component AlbumCard inherits Rectangle {
     callback cover-needed();
     width: 160px;
     height: 214px;
+    accessible-role: button;
+    accessible-label: root.album.name;
+    accessible-action-default => {
+        AppState.navigate(Route.album-detail, root.album.id);
+    }
 
     init => {
         if (root.wants-cover) {
@@ -64,59 +70,22 @@ component AlbumCard inherits Rectangle {
         is-hovered: card-touch.has-hover;
     }
 
-    Rectangle {
+    CoverArt {
         y: 0;
         width: root.width;
         height: root.width;
-        border-radius: Theme.radius;
-        background: Theme.surface-raised;
-        clip: true;
+        source: root.album.cover;
+        has-source: root.album.has-cover;
+        is-hovered: card-touch.has-hover || play-badge.is-hovered;
 
-        if !root.album.has-cover: Icon {
-            path: Icons.album;
-            color: Theme.border;
-            width: 56px;
-            height: 56px;
-        }
-
-        if root.album.has-cover: Image {
-            width: parent.width;
-            height: parent.height;
-            source: root.album.cover;
-            image-fit: cover;
-        }
-
-        if card-touch.has-hover || play-touch.has-hover: Rectangle {
-            background: #00000040;
-        }
-
-        Rectangle {
+        play-badge := PlayBadge {
             x: parent.width - self.width - 10px;
             y: parent.height - self.height - 10px;
-            width: 40px;
-            height: 40px;
-            border-radius: self.height / 2;
-            background: play-touch.has-hover ? Theme.primary.brighter(15%) : Theme.primary;
-            opacity: card-touch.has-hover || play-touch.has-hover ? 1 : 0;
-
-            Icon {
-                path: Icons.play;
-                color: Theme.on-primary;
-                width: 22px;
-                height: 22px;
-            }
-
-            TooltipAnchor {
-                text: @tr("Play");
-                is-hovered: play-touch.has-hover;
-            }
-
-            play-touch := TouchArea {
-                enabled: card-touch.has-hover || self.has-hover;
-                mouse-cursor: pointer;
-                clicked => {
-                    HomeState.play(root.album.id);
-                }
+            size: 40px;
+            is-shown: card-touch.has-hover || self.is-hovered;
+            tooltip: @tr("Play");
+            clicked => {
+                HomeState.play(root.album.id);
             }
         }
     }
@@ -270,7 +239,7 @@ component ShelfView inherits VerticalLayout {
 
 export component HomeView inherits Rectangle {
     min-width: 320px;
-    background: Theme.background;
+    background: Theme.panel;
 
     init => {
         HomeState.load(AppState.detail-id);

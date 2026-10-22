@@ -3,7 +3,7 @@ use std::sync::Arc;
 use feishin_api::MusicServer;
 use feishin_core::queue::{QueueTrack, YouTubeVideo};
 use feishin_storage::cover_cache::DecodedImage;
-use slint::{Image, Rgba8Pixel, SharedPixelBuffer};
+use slint::{Color, Image, Rgba8Pixel, SharedPixelBuffer};
 
 use crate::covers::CoverProvider;
 
@@ -17,6 +17,12 @@ pub fn to_image(cover: &DecodedImage) -> Option<Image> {
     let buffer =
         SharedPixelBuffer::<Rgba8Pixel>::clone_from_slice(&cover.rgba, cover.width, cover.height);
     Some(Image::from_rgba8(buffer))
+}
+
+pub fn tint_of(cover: &DecodedImage) -> Option<Color> {
+    cover
+        .dominant_tint()
+        .map(|tint| Color::from_rgb_u8(tint.red, tint.green, tint.blue))
 }
 
 fn thumbnail_cache_key(video: &YouTubeVideo) -> String {
@@ -132,5 +138,25 @@ mod tests {
         assert!(to_image(&cover(16)).is_some());
         assert!(to_image(&cover(15)).is_none());
         assert!(to_image(&cover(0)).is_none());
+    }
+
+    #[test]
+    fn given_a_colorful_cover_its_tint_becomes_a_color() {
+        let cover = DecodedImage {
+            width: 2,
+            height: 2,
+            rgba: [10, 200, 90, 255].repeat(4),
+        };
+        assert_eq!(tint_of(&cover), Some(Color::from_rgb_u8(10, 200, 90)));
+    }
+
+    #[test]
+    fn given_a_grey_cover_there_is_no_tint() {
+        let cover = DecodedImage {
+            width: 2,
+            height: 2,
+            rgba: [120, 120, 120, 255].repeat(4),
+        };
+        assert_eq!(tint_of(&cover), None);
     }
 }

@@ -79,7 +79,7 @@ component AlbumsControls inherits HorizontalLayout {
 export component AlbumsView inherits Rectangle {
     property <bool> has-compact-header: root.width < 580px;
     min-width: 320px;
-    background: Theme.background;
+    background: Theme.panel;
 
     init => {
         AlbumsState.load(AppState.detail-id);
