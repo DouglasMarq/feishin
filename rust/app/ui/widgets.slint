@@ -202,8 +202,12 @@ export component TooltipSwitch inherits Rectangle {
 export component Icon inherits Path {
     in property <string> path;
     in property <color> color: Theme.foreground;
+    property <bool> is-outlined: Icons.is-outlined(root.path);
     commands: root.path;
-    fill: root.color;
+    fill: root.is-outlined ? transparent : root.color;
+    stroke: root.is-outlined ? root.color : transparent;
+    stroke-width: root.is-outlined ? 2px * root.width / 24px : 0px;
+    stroke-line-cap: round;
     viewbox-width: 24;
     viewbox-height: 24;
     width: 20px;
