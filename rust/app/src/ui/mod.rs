@@ -52,6 +52,8 @@ pub mod sharing;
 pub mod tracks;
 
 #[cfg(test)]
+mod detail_navigation_tests;
+#[cfg(test)]
 mod sharing_view_tests;
 #[cfg(test)]
 pub mod test_window;

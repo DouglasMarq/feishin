@@ -226,7 +226,9 @@ export component PlaylistDetailView inherits Rectangle {
     }
 
     changed id => {
-        PlaylistDetailState.load(root.id);
+        if (AppState.route == Route.playlist-detail) {
+            PlaylistDetailState.load(root.id);
+        }
     }
 
     keys := FocusScope {

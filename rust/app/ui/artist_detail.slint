@@ -149,8 +149,10 @@ export component ArtistDetailView inherits Rectangle {
     }
 
     changed id => {
-        page.content-y = 0;
-        ArtistDetailState.load(root.id);
+        if (AppState.route == Route.artist-detail) {
+            page.content-y = 0;
+            ArtistDetailState.load(root.id);
+        }
     }
 
     page := ScrollView {

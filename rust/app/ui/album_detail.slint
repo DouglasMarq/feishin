@@ -346,7 +346,9 @@ export component AlbumDetailView inherits Rectangle {
     }
 
     changed id => {
-        AlbumDetailState.load(root.id);
+        if (AppState.route == Route.album-detail) {
+            AlbumDetailState.load(root.id);
+        }
     }
 
     scroll := ScrollView {
