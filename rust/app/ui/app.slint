@@ -132,6 +132,9 @@ export component AppWindow inherits Window {
                         border-radius: Theme.radius-panel;
                         background: Theme.panel;
                         clip: true;
+                        drop-shadow-blur: 16px;
+                        drop-shadow-offset-y: 4px;
+                        drop-shadow-color: Theme.shadow;
 
                         if AppState.route == Route.tracks: PageFade {
                             TracksView {

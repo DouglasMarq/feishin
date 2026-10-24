@@ -13,6 +13,9 @@ export component QueuePanel inherits Rectangle {
     border-radius: Theme.radius-panel;
     background: Theme.panel;
     clip: true;
+    drop-shadow-blur: 16px;
+    drop-shadow-offset-y: 4px;
+    drop-shadow-color: Theme.shadow;
 
     init => {
         self.reveal-current();
