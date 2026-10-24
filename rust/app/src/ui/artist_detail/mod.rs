@@ -7,6 +7,8 @@ mod view;
 
 #[cfg(test)]
 mod demo_tests;
+#[cfg(test)]
+mod view_tests;
 
 use slint::ComponentHandle;
 

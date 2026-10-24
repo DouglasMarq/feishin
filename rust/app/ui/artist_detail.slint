@@ -3,6 +3,7 @@ import { Behaviour, Theme, Icons, Typography } from "theme.slint";
 import { AppState, Route, TrackRow } from "globals.slint";
 import { AmbientBackdrop, Icon, IconButton, TooltipAnchor } from "widgets.slint";
 import { Skeleton, TrackRowView } from "tracks.slint";
+import { TracksHeader } from "tracks_header.slint";
 import { ArtistIcons, ArtistImage, PlayOverlay } from "artists.slint";
 
 export struct ArtistAlbumCard {
@@ -316,6 +317,16 @@ export component ArtistDetailView inherits Rectangle {
                         clicked => {
                             ArtistDetailState.is-top-expanded = !ArtistDetailState.is-top-expanded;
                         }
+                    }
+                }
+
+                HorizontalLayout {
+                    padding-left: 8px;
+                    padding-right: 8px;
+
+                    TracksHeader {
+                        list-width: self.width;
+                        is-sortable: false;
                     }
                 }
 

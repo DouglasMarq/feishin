@@ -5,6 +5,7 @@ import { HeaderCell } from "track_cells.slint";
 export component TracksHeader inherits Rectangle {
     in property <length> content-x;
     in property <length> list-width;
+    in property <bool> is-sortable: true;
     height: 33px;
     min-width: 0px;
     clip: true;
@@ -78,6 +79,7 @@ export component TracksHeader inherits Rectangle {
             HeaderCell {
                 text: @tr("Title");
                 column: TrackColumn.title;
+                is-sortable: root.is-sortable;
                 column-width: TracksState.shown-width(TrackColumn.title, root.list-width);
                 resized(width) => {
                     TracksState.resize(TrackColumn.title, width, root.list-width);
@@ -90,6 +92,7 @@ export component TracksHeader inherits Rectangle {
             if TracksState.is-artist-shown: HeaderCell {
                 text: @tr("Artist");
                 column: TrackColumn.artist;
+                is-sortable: root.is-sortable;
                 column-width: TracksState.shown-width(TrackColumn.artist, root.list-width);
                 resized(width) => {
                     TracksState.resize(TrackColumn.artist, width, root.list-width);
@@ -102,6 +105,7 @@ export component TracksHeader inherits Rectangle {
             if TracksState.is-album-shown: HeaderCell {
                 text: @tr("Album");
                 column: TrackColumn.album;
+                is-sortable: root.is-sortable;
                 column-width: TracksState.shown-width(TrackColumn.album, root.list-width);
                 resized(width) => {
                     TracksState.resize(TrackColumn.album, width, root.list-width);
@@ -114,6 +118,7 @@ export component TracksHeader inherits Rectangle {
             if TracksState.is-year-shown: HeaderCell {
                 text: @tr("Year");
                 column: TrackColumn.year;
+                is-sortable: root.is-sortable;
                 column-width: TracksState.shown-width(TrackColumn.year, root.list-width);
                 resized(width) => {
                     TracksState.resize(TrackColumn.year, width, root.list-width);
@@ -126,6 +131,7 @@ export component TracksHeader inherits Rectangle {
             if TracksState.is-plays-shown: HeaderCell {
                 text: @tr("Plays");
                 column: TrackColumn.plays;
+                is-sortable: root.is-sortable;
                 column-width: TracksState.shown-width(TrackColumn.plays, root.list-width);
                 resized(width) => {
                     TracksState.resize(TrackColumn.plays, width, root.list-width);
@@ -138,6 +144,7 @@ export component TracksHeader inherits Rectangle {
             if TracksState.is-duration-shown: HeaderCell {
                 text: @tr("Time");
                 column: TrackColumn.duration;
+                is-sortable: root.is-sortable;
                 column-width: TracksState.shown-width(TrackColumn.duration, root.list-width);
                 resized(width) => {
                     TracksState.resize(TrackColumn.duration, width, root.list-width);
@@ -151,6 +158,7 @@ export component TracksHeader inherits Rectangle {
                 text: @tr("Favorite");
                 icon: Icons.heart;
                 column: TrackColumn.favorite;
+                is-sortable: root.is-sortable;
                 column-width: TracksState.shown-width(TrackColumn.favorite, root.list-width);
                 resized(width) => {
                     TracksState.resize(TrackColumn.favorite, width, root.list-width);
@@ -163,6 +171,7 @@ export component TracksHeader inherits Rectangle {
             if TracksState.is-rating-shown: HeaderCell {
                 text: @tr("Rating");
                 column: TrackColumn.rating;
+                is-sortable: root.is-sortable;
                 column-width: TracksState.shown-width(TrackColumn.rating, root.list-width);
                 resized(width) => {
                     TracksState.resize(TrackColumn.rating, width, root.list-width);

@@ -1,7 +1,8 @@
 import { ListView } from "std-widgets.slint";
 import { Motion, Theme, Icons } from "theme.slint";
-import { AppState, PlayerState, Route, TrackColumn, TrackRow, TracksState } from "globals.slint";
-import { HeaderCell, Skeleton, TrackRowView } from "tracks.slint";
+import { AppState, PlayerState, Route, TrackRow } from "globals.slint";
+import { Skeleton, TrackRowView } from "tracks.slint";
+import { TracksHeader } from "tracks_header.slint";
 import { Icon, IconButton, SearchField, TooltipAnchor } from "widgets.slint";
 import { CoverArt } from "cover_art.slint";
 
@@ -288,93 +289,10 @@ export component TrackTable inherits Rectangle {
     min-width: 320px;
 
     VerticalLayout {
-        Rectangle {
-            height: 33px;
-            min-width: 0px;
-            clip: true;
-
-            HorizontalLayout {
-                x: list.content-x;
-
-                HeaderCell {
-                    text: "#";
-                    is-sortable: false;
-                    align: right;
-                    column: TrackColumn.index;
-                    column-width: TracksState.shown-width(TrackColumn.index, list.visible-width);
-                    resized(width) => {
-                        TracksState.resize(TrackColumn.index, width, list.visible-width);
-                    }
-                }
-
-                HeaderCell {
-                    text: @tr("Title");
-                    is-sortable: false;
-                    column: TrackColumn.title;
-                    column-width: TracksState.shown-width(TrackColumn.title, list.visible-width);
-                    resized(width) => {
-                        TracksState.resize(TrackColumn.title, width, list.visible-width);
-                    }
-                }
-
-                HeaderCell {
-                    text: @tr("Artist");
-                    is-sortable: false;
-                    column: TrackColumn.artist;
-                    column-width: TracksState.shown-width(TrackColumn.artist, list.visible-width);
-                    resized(width) => {
-                        TracksState.resize(TrackColumn.artist, width, list.visible-width);
-                    }
-                }
-
-                HeaderCell {
-                    text: @tr("Album");
-                    is-sortable: false;
-                    column: TrackColumn.album;
-                    column-width: TracksState.shown-width(TrackColumn.album, list.visible-width);
-                    resized(width) => {
-                        TracksState.resize(TrackColumn.album, width, list.visible-width);
-                    }
-                }
-
-                HeaderCell {
-                    text: @tr("Year");
-                    is-sortable: false;
-                    column: TrackColumn.year;
-                    column-width: TracksState.shown-width(TrackColumn.year, list.visible-width);
-                    resized(width) => {
-                        TracksState.resize(TrackColumn.year, width, list.visible-width);
-                    }
-                }
-
-                HeaderCell {
-                    text: @tr("Plays");
-                    is-sortable: false;
-                    column: TrackColumn.plays;
-                    column-width: TracksState.shown-width(TrackColumn.plays, list.visible-width);
-                    resized(width) => {
-                        TracksState.resize(TrackColumn.plays, width, list.visible-width);
-                    }
-                }
-
-                HeaderCell {
-                    text: @tr("Time");
-                    is-sortable: false;
-                    column: TrackColumn.duration;
-                    column-width: TracksState.shown-width(TrackColumn.duration, list.visible-width);
-                    resized(width) => {
-                        TracksState.resize(TrackColumn.duration, width, list.visible-width);
-                    }
-                }
-
-                Rectangle { }
-            }
-
-            Rectangle {
-                y: parent.height - 1px;
-                height: 1px;
-                background: Theme.border;
-            }
+        TracksHeader {
+            content-x: list.content-x;
+            list-width: list.visible-width;
+            is-sortable: false;
         }
 
         Rectangle {
