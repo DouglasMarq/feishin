@@ -115,10 +115,6 @@ impl ArtistList {
         }
     }
 
-    pub fn generation(&self) -> u64 {
-        self.state.borrow().generation
-    }
-
     pub fn len(&self) -> usize {
         self.state.borrow().items.len()
     }

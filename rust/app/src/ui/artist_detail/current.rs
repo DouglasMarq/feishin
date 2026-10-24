@@ -46,7 +46,7 @@ pub fn update_current<Output>(action: impl FnOnce(&mut CurrentArtist) -> Output)
 
 pub fn begin(artist_id: &str) -> Option<u64> {
     update_current(|current| {
-        if artist_id.is_empty() || current.id == artist_id {
+        if artist_id.is_empty() {
             return None;
         }
         *current = CurrentArtist {
@@ -69,11 +69,18 @@ mod tests {
     #[test]
     fn generations_guard_navigation() {
         let first = begin("artist-1");
-        assert_eq!(begin("artist-1"), None);
         let second = begin("artist-2");
         assert!(first.is_some() && second > first);
         assert!(first.is_some_and(|generation| !is_current(generation)));
         assert!(second.is_some_and(is_current));
         assert_eq!(begin(""), None);
+    }
+
+    #[test]
+    fn given_the_same_artist_is_opened_again_it_reloads() {
+        let first = begin("artist-1");
+        let again = begin("artist-1");
+        assert!(again > first);
+        assert!(again.is_some_and(is_current));
     }
 }
